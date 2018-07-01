@@ -5,6 +5,7 @@ import { createConnection, subscribeEntities } from 'home-assistant-js-websocket
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import Main from './Main';
+import { CircularProgress, Typography } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
@@ -12,21 +13,30 @@ const styles = theme => ({
     paddingBottom: 8,
     minHeight: '100%',
     minWidth: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
     backgroundColor: theme.palette.mainBackground,
   },
   flex: {
     flex: 1,
   },
-  progress: {
+  center: {
+    justifyContent: 'center',
+    textAlign: 'center',
     position: 'fixed',
-    top: `calc(50% - 25px)`,
-    left: `calc(50% - 25px)`,
+    top: '50%',
+    left: '50%',
+    transform: 'translateX(-50%) translateY(-50%)',
+  },
+  progress: {
+    marginBottom: theme.spacing.unit,
   },
 });
 
 class Root extends Component {
   state = {
     snackMessage: { open: false, text: '' },
+    connected: false,
   };
 
   componentWillMount = () => {
@@ -46,6 +56,7 @@ class Root extends Component {
     if (process.env.REACT_APP_HASS_HOST) {
       createConnection(`wss://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
         .then(conn => {
+          this.setState({ connected: true });
           console.log(`Connected`);
           conn.removeEventListener('ready', this.eventHandler);
           conn.addEventListener('ready', this.eventHandler);
@@ -142,15 +153,28 @@ class Root extends Component {
 
   render() {
     const { classes } = this.props;
-    const { snackMessage, entities } = this.state;
+    const { snackMessage, entities, connected } = this.state;
 
     return (
       <div className={classes.root}>
 
-        {entities &&
+        {entities ?
           <Main
             entities={entities}
             handleChange={this.handleChange} />
+          :
+          <div className={classes.center}>
+            <CircularProgress className={classes.progress} />
+            {connected ?
+              <Typography variant="subheading">
+                Loading HASS data...
+              </Typography>
+              :
+              <Typography variant="subheading">
+                Attempting to connect to HASS...
+              </Typography>
+            }
+          </div>
         }
 
         <Snackbar
