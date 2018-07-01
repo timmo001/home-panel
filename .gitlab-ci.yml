@@ -1,11 +1,4 @@
-# Auto DevOps
-# This CI/CD configuration provides a standard pipeline for
-# * building a Docker image (using a buildpack if necessary),
-# * storing the image in the container registry,
-# * running tests from a buildpack,
-# * creating a staging app for each topic branch,
-# * and continuous deployment to production
-
+---
 image: alpine:latest
 
 variables:
@@ -14,9 +7,11 @@ variables:
   DOCKER_HUB_USER: timmo001
 
 stages:
+  - preflight
   - build
   - test
   - deploy
+  - performance
 
 # Generic DIND template
 .dind: &dind
@@ -26,11 +21,88 @@ stages:
     - name: docker:dind
       command: ["--experimental"]
 
+# Generic preflight template
+.preflight: &preflight
+  stage: preflight
+  tags:
+    - preflight
+
+# Preflight jobs
+hadolint:
+  <<: *preflight
+  image: hadolint/hadolint:v1.6.6
+  before_script:
+    - hadolint --version
+  script:
+    - hadolint "Dockerfile"
+
+shellcheck:
+  <<: *preflight
+  image:
+    name: koalaman/shellcheck-alpine:stable
+    entrypoint: [""]
+  before_script:
+    - shellcheck --version
+    - apk --no-cache add grep
+    - |
+      find . -type f -print0 | \
+        xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
+  script:
+    - |
+      for file in $(grep -IRl "#\!\(/usr/bin/env \|/bin/\)" --exclude-dir \
+        ".git" --exclude ".gitlab-ci.yml"); do
+        if ! shellcheck $file; then
+          export FAILED=1
+        else
+          echo "$file OK"
+        fi
+      done
+      if [ "${FAILED}" = "1" ]; then
+        exit 1
+      fi
+
+yamllint:
+  <<: *preflight
+  image: sdesbure/yamllint
+  before_script:
+    - yamllint --version
+  script:
+    - yamllint .
+
+jsonlint:
+  <<: *preflight
+  image: sahsu/docker-jsonlint
+  before_script:
+    - jsonlint --version || true
+  script:
+    - |
+      for file in $(find . -type f -name "*.json"); do
+        if ! jsonlint -q $file; then
+          export FAILED=1
+        else
+          echo "$file OK"
+        fi
+      done
+      if [ "${FAILED}" = "1" ]; then
+        exit 1
+      fi
+markdownlint:
+  <<: *preflight
+  image:
+    name: ruby:alpine
+    entrypoint: [""]
+  before_script:
+    - gem install mdl
+    - mdl --version
+  script:
+    - mdl --style all --warnings .
+
+# Build jobs
 build:
   stage: build
   image: docker:stable-git
   services:
-  - docker:stable-dind
+    - docker:stable-dind
   variables:
     DOCKER_DRIVER: overlay2
   script:
@@ -39,6 +111,7 @@ build:
   only:
     - branches
 
+# Test jobs
 test:
   services:
     - postgres:latest
@@ -89,6 +162,28 @@ license_management:
     variables:
       - $LICENSE_MANAGEMENT_DISABLED
 
+performance:
+  stage: performance
+  image: docker:stable
+  variables:
+    DOCKER_DRIVER: overlay2
+  allow_failure: true
+  services:
+    - docker:stable-dind
+  script:
+    - setup_docker
+    - performance
+  artifacts:
+    paths:
+      - performance.json
+      - sitespeed-results/
+  only:
+    refs:
+      - branches
+  except:
+    variables:
+      - $PERFORMANCE_DISABLED
+
 dependency_scanning:
   stage: test
   image: docker:stable
@@ -123,13 +218,16 @@ container_scanning:
     variables:
       - $CONTAINER_SCANNING_DISABLED
 
+# Deploy jobs
 deploy: &deploy
   <<: *dind
   stage: deploy
   image: docker:latest
   before_script:
     - docker info
-    - docker pull "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}"
+    - |
+      docker pull \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}"
     - |
       echo "${CI_JOB_TOKEN}" | docker login \
         --username gitlab-ci-token \
@@ -238,38 +336,6 @@ deploy: &deploy
     esac
   }
 
-  function get_replicas() {
-    track="${1:-stable}"
-    percentage="${2:-100}"
-
-    env_track=$( echo $track | tr -s  '[:lower:]'  '[:upper:]' )
-    env_slug=$( echo ${CI_ENVIRONMENT_SLUG//-/_} | tr -s  '[:lower:]'  '[:upper:]' )
-
-    if [[ "$track" == "stable" ]] || [[ "$track" == "rollout" ]]; then
-      # for stable track get number of replicas from `PRODUCTION_REPLICAS`
-      eval new_replicas=\$${env_slug}_REPLICAS
-      if [[ -z "$new_replicas" ]]; then
-        new_replicas=$REPLICAS
-      fi
-    else
-      # for all tracks get number of replicas from `CANARY_PRODUCTION_REPLICAS`
-      eval new_replicas=\$${env_track}_${env_slug}_REPLICAS
-      if [[ -z "$new_replicas" ]]; then
-        eval new_replicas=\${env_track}_REPLICAS
-      fi
-    fi
-
-    replicas="${new_replicas:-1}"
-    replicas="$(($replicas * $percentage / 100))"
-
-    # always return at least one replicas
-    if [[ $replicas -gt 0 ]]; then
-      echo "$replicas"
-    else
-      echo 1
-    fi
-  }
-
   function setup_docker() {
     if ! docker info &>/dev/null; then
       if [ -z "$DOCKER_HOST" -a "$KUBERNETES_PORT" ]; then
@@ -316,32 +382,6 @@ deploy: &deploy
     echo ""
   }
 
-  function install_tiller() {
-    echo "Checking Tiller..."
-    helm init --upgrade
-    kubectl rollout status -n "$TILLER_NAMESPACE" -w "deployment/tiller-deploy"
-    if ! helm version --debug; then
-      echo "Failed to init Tiller."
-      return 1
-    fi
-    echo ""
-  }
-
-  function create_secret() {
-    echo "Create secret..."
-    if [[ "$CI_PROJECT_VISIBILITY" == "public" ]]; then
-      return
-    fi
-
-    kubectl create secret -n "$KUBE_NAMESPACE" \
-      docker-registry gitlab-registry \
-      --docker-server="$CI_REGISTRY" \
-      --docker-username="${CI_DEPLOY_USER:-$CI_REGISTRY_USER}" \
-      --docker-password="${CI_DEPLOY_PASSWORD:-$CI_REGISTRY_PASSWORD}" \
-      --docker-email="$GITLAB_USER_EMAIL" \
-      -o yaml --dry-run | kubectl replace -n "$KUBE_NAMESPACE" --force -f -
-  }
-
   function dast() {
     export CI_ENVIRONMENT_URL=$(cat environment_url.txt)
 
@@ -361,29 +401,12 @@ deploy: &deploy
     if [ -f .gitlab-urls.txt ]
     then
       sed -i -e 's@^@'"$CI_ENVIRONMENT_URL"'@' .gitlab-urls.txt
-      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:6.3.1 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results .gitlab-urls.txt
+      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results .gitlab-urls.txt
     else
-      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:6.3.1 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results "$CI_ENVIRONMENT_URL"
+      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results "$CI_ENVIRONMENT_URL"
     fi
 
     mv sitespeed-results/data/performance.json performance.json
-  }
-
-  function persist_environment_url() {
-      echo $CI_ENVIRONMENT_URL > environment_url.txt
-  }
-
-  function delete() {
-    track="${1-stable}"
-    name="$CI_ENVIRONMENT_SLUG"
-
-    if [[ "$track" != "stable" ]]; then
-      name="$name-$track"
-    fi
-
-    if [[ -n "$(helm ls -q "^$name$")" ]]; then
-      helm delete "$name"
-    fi
   }
 
 before_script:
