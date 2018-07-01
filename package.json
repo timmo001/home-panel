@@ -1,0 +1,27 @@
+{
+  "name": "home-panel",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/icons": "^1.1.0",
+    "@material-ui/lab": "^1.0.0-alpha.5",
+    "@mdi/font": "^2.4.85",
+    "classnames": "^2.2.6",
+    "home-assistant-js-websocket": "^2.0.1",
+    "material-ui-rc-color-picker": "^1.0.4",
+    "moment": "^2.22.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-moment": "^0.7.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^1.1.4",
+    "superagent": "^3.8.3",
+    "typeface-roboto": "^0.0.54"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
