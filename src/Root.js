@@ -53,8 +53,6 @@ class Root extends Component {
         }, err => {
           console.error('Connection failed with code', err);
           this.setState({ snackMessage: { open: true, text: 'Connection failed' }, entities: undefined });
-          localStorage.setItem('host', '');
-          sessionStorage.setItem('password', '');
         });
     }
   }
@@ -69,8 +67,6 @@ class Root extends Component {
       }, err => {
         console.error('Connection failed with code', err);
         this.setState({ snackMessage: { open: true, text: 'Connection failed' }, entities: undefined });
-        localStorage.setItem('host', '');
-        sessionStorage.setItem('password', '');
       });
   };
 
