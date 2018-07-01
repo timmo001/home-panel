@@ -43,8 +43,11 @@ const styles = theme => ({
   },
   group: {
     height: `calc(100% + ${theme.spacing.unit}px)`,
-    width: '24rem',
+    width: '18rem',
     overflow: 'hidden',
+  },
+  title: {
+    color: theme.palette.defaultText.light,
   },
   gridInnerContainer: {
     height: `calc(100% - ${theme.spacing.unit * 6}px)`,
@@ -53,9 +56,6 @@ const styles = theme => ({
   },
   gridInner: {
     width: '100%',
-  },
-  title: {
-    color: theme.palette.defaultText.light,
   },
   cardContainer: {
     position: 'relative',
