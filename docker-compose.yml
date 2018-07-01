@@ -1,0 +1,11 @@
+---
+version: '3'
+
+services:
+  home-panel:
+    image: home-panel
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8234:80
