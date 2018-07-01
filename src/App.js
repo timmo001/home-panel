@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 import blueGrey from '@material-ui/core/colors/blueGrey';
@@ -18,7 +17,11 @@ const themes = [
         primary: lightBlue,
         secondary: blueGrey,
         mainBackground: grey[100],
-        defaultText: grey[900],
+        defaultText: {
+          light: grey[700],
+          main: grey[800],
+          dark: grey[900],
+        },
         error: red,
         contrastThreshold: 3,
         tonalOffset: 0.2,
@@ -33,7 +36,11 @@ const themes = [
         primary: blueGrey,
         secondary: blueGrey,
         mainBackground: grey[900],
-        defaultText: grey[100],
+        defaultText: {
+          light: grey[50],
+          main: grey[100],
+          dark: grey[200],
+        },
         error: red,
         contrastThreshold: 3,
         tonalOffset: 0.2,
@@ -52,14 +59,7 @@ class App extends Component {
   render() {
     return (
       <MuiThemeProvider theme={this.state.theme}>
-        <Router>
-          <div>
-            <Switch>
-              <Route exact path="/view/:entity_id" render={() => <Root setTheme={this.setTheme} />} />
-              <Redirect from="/" to="/view/group.default_view" />
-            </Switch>
-          </div>
-        </Router>
+        <Root setTheme={this.setTheme} />
       </MuiThemeProvider>
     );
   }

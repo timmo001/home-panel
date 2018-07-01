@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { createConnection, subscribeEntities } from 'home-assistant-js-websocket';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,12 +9,12 @@ import { CircularProgress, Typography } from '@material-ui/core';
 const styles = theme => ({
   root: {
     position: 'absolute',
-    paddingBottom: 8,
-    minHeight: '100%',
-    minWidth: '100%',
+    height: '100%',
+    width: '100%',
     maxHeight: '100%',
     maxWidth: '100%',
     backgroundColor: theme.palette.mainBackground,
+    overflowX: 'hidden',
   },
   flex: {
     flex: 1,
@@ -82,43 +81,9 @@ class Root extends Component {
   };
 
   updateEntities = entities => {
-    const allEntities = Object.entries(entities);
-    const page = allEntities.find(entity => {
-      return entity[0] === this.props.match.params.entity_id
+    this.setState({ entities: Object.entries(entities) }, () => {
+      this.setTheme();
     });
-
-    // Pages
-    const pages = allEntities.filter(entity => {
-      return entity[0].startsWith('group.') && entity[1].attributes.view
-    });
-
-    this.setState({ allEntities, pages, page }, () => this.getEntities());
-  };
-
-  getEntities = () => {
-    // Get groups and entites
-    const groups = this.state.allEntities.filter(thePage => {
-      return this.state.page[1].attributes.entity_id.indexOf(thePage[0]) > -1
-    });
-    // console.log('groups:', groups);
-    const entitiesItemsArr = [];
-    groups.map(group => {
-      const items = this.state.allEntities.filter(entity => {
-        return group[1].attributes.entity_id.indexOf(entity[0]) > -1
-      });
-      return entitiesItemsArr.push({
-        name: group[0],
-        friendly_name: group[1].attributes.friendly_name,
-        order: group[1].attributes.order,
-        state: group[1].state,
-        items,
-      });
-    });
-    entitiesItemsArr.sort((a, b) => a.order > b.order);
-    // console.log('entitiesItemsArr:', entitiesItemsArr);
-    this.setState({ entities: entitiesItemsArr });
-
-    this.setTheme();
   };
 
   setTheme = (themeId = undefined) => {
@@ -128,7 +93,7 @@ class Root extends Component {
       themeId = -1;
     if (themeId === -1) {
       // theme from sunlight
-      const sun = this.state.allEntities.find(entity => {
+      const sun = this.state.entities.find(entity => {
         return entity[0] === 'sun.sun'
       });
       if (sun)
@@ -147,7 +112,7 @@ class Root extends Component {
 
   handlePageChange = (page) => {
     this.setState({ page }, () => {
-      this.getEntities(this.state.allEntities, page);
+      this.getEntities(this.state.entities, page);
     });
   };
 
@@ -200,4 +165,4 @@ Root.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(withRouter(Root));
+export default withStyles(styles)(Root);
