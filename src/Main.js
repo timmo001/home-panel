@@ -32,7 +32,6 @@ const styles = theme => ({
   gridContainer: {
     height: `calc(100% - 150px)`,
     overflowY: 'auto',
-    // overflowX: 'hidden',
   },
   grid: {
     height: '100%',
