@@ -42,10 +42,8 @@ const styles = theme => ({
     flexWrap: 'nowrap',
   },
   group: {
+    height: `calc(100% + ${theme.spacing.unit}px)`,
     width: '24rem',
-    paddingTop: theme.spacing.unit * 2,
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
     overflow: 'hidden',
   },
   gridInnerContainer: {
