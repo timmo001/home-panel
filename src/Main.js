@@ -15,14 +15,17 @@ const styles = theme => ({
   header: {
     textAlign: 'center',
   },
-  timeDate: {
-  },
   time: {
     color: grey[100],
     fontSize: '6rem',
   },
+  timePeriod: {
+    marginLeft: theme.spacing.unit * 2,
+    fontSize: '3rem',
+  },
   date: {
     color: grey[100],
+    marginTop: theme.spacing.unit * -2.5,
   },
   card: {
     minHeight: '10rem',
@@ -58,11 +61,12 @@ class Navigation extends React.Component {
           justify="center"
           className={classes.header}
           spacing={16}>
-          <Grid item>
+          <Grid item zeroMinWidth>
             <Typography className={classes.time} variant="display4">
-              <Moment format="hh:mm a" />
+              <Moment format="hh:mm" />
+              <Moment className={classes.timePeriod} format="a" />
             </Typography>
-            <Typography className={classes.date} variant="display2" gutterBottom>
+            <Typography className={classes.date} variant="display2">
               <Moment format="Do MMMM YYYY" />
             </Typography>
           </Grid>
