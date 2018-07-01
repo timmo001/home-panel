@@ -30,17 +30,22 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * -2.5,
   },
   gridContainer: {
-    height: `calc(100% - 150px)`,
+    height: `calc(100% - 153px)`,
     overflowY: 'auto',
   },
   grid: {
     height: '100%',
     width: 'fit-content',
-    padding: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
     flexWrap: 'nowrap',
   },
   group: {
     width: '24rem',
+    paddingTop: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
     overflow: 'hidden',
   },
   gridInnerContainer: {
@@ -57,6 +62,7 @@ const styles = theme => ({
   cardContainer: {
     position: 'relative',
     width: '50%',
+    padding: theme.spacing.unit / 2,
   },
   card: {
     minHeight: '8rem',
@@ -227,8 +233,7 @@ class Main extends React.Component {
                     <Grid
                       container
                       className={classes.gridInner}
-                      alignItems="stretch"
-                      spacing={8}>
+                      alignItems="stretch">
                       {group.cards.map((card, y) => {
                         return (
                           <Grid key={y} className={classes.cardContainer} item>

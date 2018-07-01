@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { createConnection, subscribeEntities } from 'home-assistant-js-websocket';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import Main from './Main';
 import { CircularProgress, Typography } from '@material-ui/core';
+import Main from './Main';
 
 const styles = theme => ({
   root: {
