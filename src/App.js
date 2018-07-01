@@ -17,6 +17,11 @@ const themes = [
         primary: lightBlue,
         secondary: blueGrey,
         mainBackground: grey[100],
+        backgrounds: {
+          light: grey[50],
+          main: grey[100],
+          dark: grey[200],
+        },
         defaultText: {
           light: grey[700],
           main: grey[800],
@@ -36,6 +41,11 @@ const themes = [
         primary: blueGrey,
         secondary: blueGrey,
         mainBackground: grey[900],
+        backgrounds: {
+          light: grey[700],
+          main: grey[800],
+          dark: grey[900],
+        },
         defaultText: {
           light: grey[50],
           main: grey[100],
