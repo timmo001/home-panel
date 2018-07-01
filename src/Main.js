@@ -264,9 +264,11 @@ class Main extends React.Component {
                                 <Typography className={classes.name} variant="headline">
                                   {card.name}
                                 </Typography>
-                                <Typography className={classes.state} variant="body1">
-                                  {state}
-                                </Typography>
+                                {domain === 'sensor' &&
+                                  <Typography className={classes.state} variant="body1">
+                                    {state}
+                                  </Typography>
+                                }
                               </CardContent>
                             </Card>
                           </Grid>
