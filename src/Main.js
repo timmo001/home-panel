@@ -163,6 +163,19 @@ const items = [
     ]
   },
   {
+    name: 'Computers',
+    cards: [
+      {
+        name: 'Server',
+        entity_id: 'switch.server',
+      },
+      {
+        name: 'PC',
+        entity_id: 'switch.pc',
+      },
+    ]
+  },
+  {
     name: 'Living Room',
     cards: [
       {
