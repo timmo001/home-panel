@@ -218,10 +218,6 @@ const items = [
         entity_id: 'light.kettle_light',
       },
       {
-        name: 'Table Light',
-        entity_id: 'light.table_light',
-      },
-      {
         name: 'Toaster Light',
         entity_id: 'light.toaster_light',
       },
