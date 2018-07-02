@@ -117,7 +117,7 @@ class Root extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, theme } = this.props;
     const { snackMessage, entities, connected } = this.state;
 
     return (
@@ -125,6 +125,7 @@ class Root extends Component {
 
         {entities ?
           <Main
+            theme={theme}
             entities={entities}
             handleChange={this.handleChange} />
           :
@@ -163,6 +164,7 @@ class Root extends Component {
 
 Root.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Root);

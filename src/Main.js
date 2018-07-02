@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
+import Skycons from 'react-skycons';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -16,9 +17,17 @@ const styles = theme => ({
     maxWidth: '100%',
   },
   header: {
-    textAlign: 'center',
+    display: 'block',
+    width: '100%',
+    height: 160,
+  },
+  timeDateContainer: {
+    position: 'fixed',
+    left: '50%',
+    transform: 'translateX(-50%)',
   },
   time: {
+    textAlign: 'center',
     color: theme.palette.defaultText.main,
     fontSize: '6rem',
   },
@@ -29,6 +38,45 @@ const styles = theme => ({
   date: {
     color: theme.palette.defaultText.main,
     marginTop: theme.spacing.unit * -2.5,
+  },
+  weatherContainer: {
+    position: 'fixed',
+    top: 80,
+    left: 0,
+    transform: 'translateY(-50%)',
+    textAlign: 'left',
+  },
+  weather: {
+    paddingLeft: theme.spacing.unit * 15,
+    color: theme.palette.defaultText.main,
+    fontSize: '3.2rem',
+  },
+  weatherIcon: {
+    position: 'fixed',
+    transform: 'translateX(-136px)',
+    width: '190px !important',
+    height: '90px !important',
+  },
+  temperature: {
+    paddingLeft: theme.spacing.unit * 15,
+    color: theme.palette.defaultText.main,
+    fontSize: '2.0rem',
+  },
+  humidity: {
+    paddingLeft: theme.spacing.unit * 4,
+  },
+  indoorContainer: {
+    position: 'fixed',
+    top: 84,
+    right: 0,
+    transform: 'translateY(-50%)',
+    textAlign: 'right',
+  },
+  indoor: {
+    minWidth: 200,
+    paddingRight: theme.spacing.unit * 12,
+    color: theme.palette.defaultText.main,
+    fontSize: '2.0rem',
   },
   gridContainer: {
     height: `calc(100% - 153px)`,
@@ -199,7 +247,7 @@ const items = [
     name: 'Outside',
     cards: [
       {
-        name: 'Fountain Light',
+        name: 'Fountain',
         entity_id: 'switch.sonoff_006_plug',
       },
     ]
@@ -209,17 +257,41 @@ const items = [
 
 class Main extends React.Component {
 
+  getState = (entities, entity, endAdornment = '') => {
+    const state = entities.find(i => {
+      return i[1].entity_id === entity;
+    })[1].state;
+    return !state || state === 'unknown' ? '' : state + endAdornment;
+  };
+
   render() {
-    const { classes, entities, handleChange } = this.props;
+    const { classes, entities, theme, handleChange } = this.props;
+
+    const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replace('-', '_').toUpperCase();
+    const weather = this.getState(entities, 'sensor.pws_weather');
+    const temperature = this.getState(entities, 'sensor.pws_temp_c', '°C');
+    const humidity = this.getState(entities, 'sensor.pws_relative_humidity', '%');
+    const temperatureIndoor = this.getState(entities, 'sensor.dht22_01_temperature', '°C');
+    const humidityIndoor = this.getState(entities, 'sensor.dht22_01_humidity', '%');
 
     return (
       <div className={classes.root}>
-        <Grid
-          container
-          justify="center"
-          className={classes.header}
-          spacing={8}>
-          <Grid item zeroMinWidth>
+        <div className={classes.header}>
+          <div className={classes.weatherContainer}>
+            <Typography className={classes.weather} variant="display2">
+              <Skycons
+                className={classes.weatherIcon}
+                color={theme.palette.defaultText.main}
+                icon={weatherIcon}
+                autoplay={true} />
+              {weather}
+            </Typography>
+            <Typography className={classes.temperature} variant="display2">
+              {temperature}
+              <span className={classes.humidity}>{humidity}</span>
+            </Typography>
+          </div>
+          <div className={classes.timeDateContainer}>
             <Typography className={classes.time} variant="display4">
               <Moment format="hh:mm" />
               <Moment className={classes.timePeriod} format="a" />
@@ -227,8 +299,16 @@ class Main extends React.Component {
             <Typography className={classes.date} variant="display2">
               <Moment format="Do MMMM YYYY" />
             </Typography>
-          </Grid>
-        </Grid>
+          </div>
+          <div className={classes.indoorContainer}>
+            <Typography className={classes.indoor} variant="display2">
+              {temperatureIndoor}
+            </Typography>
+            <Typography className={classes.indoor} variant="display2">
+              {humidityIndoor}
+            </Typography>
+          </div>
+        </div>
         <div className={classes.gridContainer}>
           <Grid
             container
@@ -288,6 +368,7 @@ class Main extends React.Component {
 
 Main.propTypes = {
   classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

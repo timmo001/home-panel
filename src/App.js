@@ -67,9 +67,10 @@ class App extends Component {
   setTheme = (id) => this.setState({ theme: themes[id].theme });
 
   render() {
+    const { theme } = this.state;
     return (
-      <MuiThemeProvider theme={this.state.theme}>
-        <Root setTheme={this.setTheme} />
+      <MuiThemeProvider theme={theme}>
+        <Root theme={theme} setTheme={this.setTheme} />
       </MuiThemeProvider>
     );
   }
