@@ -53,7 +53,7 @@ const styles = theme => ({
   },
   weatherIcon: {
     position: 'fixed',
-    transform: 'translateX(-136px)',
+    transform: 'translateX(-146px)',
     width: '190px !important',
     height: '90px !important',
   },
