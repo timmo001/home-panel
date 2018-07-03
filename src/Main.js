@@ -330,7 +330,7 @@ class Main extends React.Component {
             <Typography className={classes.weather} variant="display2">
               <Skycons
                 className={classes.weatherIcon}
-                color={theme.palette.defaultText.main}
+                color={theme.palette.defaultText.light}
                 icon={weatherIcon}
                 autoplay={true} />
               {weather}
