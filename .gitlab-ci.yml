@@ -135,6 +135,7 @@ test:
   stage: test
   image: node:latest
   script:
+    - yarn install && yarn cache clean
     - yarn run test
   only:
     - branches
