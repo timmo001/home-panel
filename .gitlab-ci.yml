@@ -132,16 +132,10 @@ build:
 # Test jobs
 test:
   <<: *before
-  services:
-    - postgres:latest
-  variables:
-    POSTGRES_DB: test
   stage: test
-  image: gliderlabs/herokuish:latest
+  image: node:latest
   script:
-    - setup_test_db
-    - cp -R . /tmp/app
-    - /bin/herokuish buildpack test
+    - yarn run test
   only:
     - branches
   except:
@@ -169,31 +163,6 @@ code_quality:
   except:
     variables:
       - $CODE_QUALITY_DISABLED
-
-license_management:
-  <<: *before
-  image: docker:stable
-  variables:
-    DOCKER_DRIVER: overlay2
-  allow_failure: true
-  services:
-    - docker:stable-dind
-  script:
-    - |
-      if echo $GITLAB_FEATURES |grep license_management > /dev/null ; then
-        # Extract "MAJOR.MINOR" from CI_SERVER_VERSION and generate "MAJOR-MINOR-stable"
-        LICENSE_MANAGEMENT_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-
-        docker run --volume "$PWD:/code" \
-                  "registry.gitlab.com/gitlab-org/security-products/license-management:$LICENSE_MANAGEMENT_VERSION" analyze /code
-      else
-        echo "License management is not available in your subscription"
-      fi
-  artifacts:
-    paths: [gl-license-management-report.json]
-  except:
-    variables:
-      - $LICENSE_MANAGEMENT_DISABLED
 
 performance:
   <<: *before
