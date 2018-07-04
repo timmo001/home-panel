@@ -20,6 +20,17 @@ const styles = theme => ({
     maxHeight: '100%',
     maxWidth: '100%',
   },
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#000000',
+    zIndex: 10000,
+    opacity: 0,
+    transition: 'opacity 60s ease-in',
+  },
   header: {
     display: 'block',
     width: '100%',
@@ -276,14 +287,23 @@ const items = [
 
 ];
 
-var hoverTimeout;
+var hoverTimeout, opacityTimerTimeout, opacityTimeout;
+
+// eslint-disable-next-line
+String.prototype.replaceAll = function (search, replacement) {
+  var target = this;
+  return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 class Main extends React.Component {
   state = {
     anchorEl: null,
     moved: false,
     hovered: false,
+    overlayOpacity: 0.00,
   };
+
+  componentWillMount = () => this.onMouseMoveHandler;
 
   getState = (entities, entity, endAdornment = '') => {
     const state = entities.find(i => {
@@ -292,9 +312,7 @@ class Main extends React.Component {
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
+  handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (themeId) => {
     this.setState({ anchorEl: null });
@@ -302,21 +320,41 @@ class Main extends React.Component {
   };
 
   onMouseMoveHandler = () => {
-    clearTimeout(hoverTimeout);
+    clearInterval(hoverTimeout);
     if (!this.state.over) {
-      this.setState({ moved: true }, () => { hoverTimeout = setTimeout(() => { this.setState({ moved: false }); }, 2000); });
+      this.setState({ moved: true }, () => {
+        hoverTimeout = setTimeout(() => {
+          this.setState({ moved: false });
+        }, 2000);
+      });
     }
-  }
+    // setTimeout(opacityTimerTimeout);
+    // clearInterval(opacityTimeout);
+    // this.setState({ overlayOpacity: 0.00 }, () => {
+    //   opacityTimerTimeout = setTimeout(() => {
+    //     console.log('Start dimming..');
+    //     opacityTimeout = setInterval(() => {
+    //       this.setState({ overlayOpacity: this.state.overlayOpacity + 0.001 }, () => {
+    //         if (this.state.overlayOpacity === 1) {
+    //           setTimeout(opacityTimerTimeout);
+    //           clearInterval(opacityTimeout);
+    //         }
+    //         console.log(this.state.overlayOpacity);
+    //       });
+    //     }, 500);
+    //   }, 10000);
+    // });
+  };
 
-  onMouseOverHandler = () => { clearTimeout(hoverTimeout);; }
+  onMouseOverHandler = () => clearInterval(hoverTimeout);
 
   onMouseLeaveHandler = () => this.setState({ over: false });
 
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, overlayOpacity } = this.state;
 
-    const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replace('-', '_').toUpperCase();
+    const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replaceAll('-', '_').toUpperCase();
     const weather = this.getState(entities, 'sensor.pws_weather');
     const temperature = this.getState(entities, 'sensor.pws_temp_c', '°C');
     const humidity = this.getState(entities, 'sensor.pws_relative_humidity', '%');
@@ -325,6 +363,7 @@ class Main extends React.Component {
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
+        <div className={classes.overlay} />
         <div className={classes.header}>
           <div className={classes.weatherContainer}>
             <Typography className={classes.weather} variant="display2">
