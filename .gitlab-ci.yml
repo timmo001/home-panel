@@ -120,27 +120,12 @@ build:
         echo ""
       fi
 
-      if [[ -f Dockerfile ]]; then
-        echo "Building Dockerfile-based application..."
-        docker build -t "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG" .
-      else
-        echo "Building Heroku-based application using gliderlabs/herokuish docker image..."
-        docker run -i -e BUILDPACK_URL --name="$CI_CONTAINER_NAME" -v "$(pwd):/tmp/app:ro" gliderlabs/herokuish /bin/herokuish buildpack build
-        docker commit "$CI_CONTAINER_NAME" "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
-        docker rm "$CI_CONTAINER_NAME" >/dev/null
-        echo ""
-
-        echo "Configuring $CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG docker image..."
-        docker create --expose 5000 --env PORT=5000 --name="$CI_CONTAINER_NAME" "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG" /bin/herokuish procfile start web
-        docker commit "$CI_CONTAINER_NAME" "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
-        docker rm "$CI_CONTAINER_NAME" >/dev/null
-        echo ""
-      fi
+      echo "Building Dockerfile-based application..."
+      docker build -t "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA" .
 
       echo "Pushing to GitLab Container Registry..."
-      docker push "$CI_APPLICATION_REPOSITORY:$CI_APPLICATION_TAG"
+      docker push "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
       echo ""
-
   only:
     - branches
 
