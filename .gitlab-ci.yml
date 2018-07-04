@@ -91,6 +91,7 @@ jsonlint:
       if [ "${FAILED}" = "1" ]; then
         exit 1
       fi
+
 markdownlint:
   <<: *preflight
   image:
@@ -112,7 +113,6 @@ build:
   variables:
     DOCKER_DRIVER: overlay2
   script:
-    - setup_docker
     - build
   only:
     - branches
@@ -146,7 +146,6 @@ code_quality:
   services:
     - docker:stable-dind
   script:
-    - setup_docker
     - code_quality
   artifacts:
     paths: [gl-code-quality-report.json]
@@ -163,7 +162,6 @@ license_management:
   services:
     - docker:stable-dind
   script:
-    - setup_docker
     - license_management
   artifacts:
     paths: [gl-license-management-report.json]
@@ -181,7 +179,6 @@ performance:
   services:
     - docker:stable-dind
   script:
-    - setup_docker
     - performance
   artifacts:
     paths:
@@ -204,7 +201,6 @@ dependency_scanning:
   services:
     - docker:stable-dind
   script:
-    - setup_docker
     - dependency_scanning
   artifacts:
     paths: [gl-dependency-scanning-report.json]
@@ -222,7 +218,6 @@ container_scanning:
   services:
     - docker:stable-dind
   script:
-    - setup_docker
     - container_scanning
   artifacts:
     paths: [gl-container-scanning-report.json]
@@ -347,14 +342,6 @@ deploy: &deploy
         echo "GitLab EE is required"
         ;;
     esac
-  }
-
-  function setup_docker() {
-    if ! docker info &>/dev/null; then
-      if [ -z "$DOCKER_HOST" -a "$KUBERNETES_PORT" ]; then
-        export DOCKER_HOST='tcp://localhost:2375'
-      fi
-    fi
   }
 
   function setup_test_db() {
