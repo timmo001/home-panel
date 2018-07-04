@@ -24,6 +24,8 @@ stages:
 # Generic preflight template
 .preflight: &preflight
   stage: preflight
+  tags:
+    - preflight
 
 # Preflight jobs
 hadolint:
