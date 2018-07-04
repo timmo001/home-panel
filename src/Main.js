@@ -137,27 +137,21 @@ const items = [
     name: 'Scenes',
     cards: [
       {
-        name: 'Reset Lights',
         entity_id: 'scene.reset_lights',
       },
       {
-        name: 'Reset Kitchen Lights',
         entity_id: 'scene.reset_kitchen_lights',
       },
       {
-        name: 'Lights on',
         entity_id: 'scene.lights_on',
       },
       {
-        name: 'Lights off',
         entity_id: 'scene.lights_off',
       },
       {
-        name: 'All Lights on',
         entity_id: 'scene.all_lights_on',
       },
       {
-        name: 'Night Mode',
         entity_id: 'scene.night_mode',
       },
     ]
@@ -166,11 +160,9 @@ const items = [
     name: 'Computers',
     cards: [
       {
-        name: 'Server',
         entity_id: 'switch.server',
       },
       {
-        name: 'PC',
         entity_id: 'switch.pc',
       },
     ]
@@ -179,23 +171,18 @@ const items = [
     name: 'Living Room',
     cards: [
       {
-        name: 'Setee Light',
         entity_id: 'light.setee_light',
       },
       {
-        name: 'TV Light',
         entity_id: 'light.tv_light',
       },
       {
-        name: 'PC Light',
         entity_id: 'light.pc_light',
       },
       {
-        name: 'Floor Lights',
         entity_id: 'light.floor_lights',
       },
       {
-        name: 'Crystal Lights',
         entity_id: 'light.crystal_lights',
       },
 
@@ -205,7 +192,6 @@ const items = [
     name: 'Dining Room',
     cards: [
       {
-        name: 'Table Light',
         entity_id: 'light.table_light',
       },
     ]
@@ -214,11 +200,9 @@ const items = [
     name: 'Desk',
     cards: [
       {
-        name: 'Desk Lights',
         entity_id: 'light.desk_lights',
       },
       {
-        name: 'Matrix Clock',
         entity_id: 'light.matrix_clock',
       },
     ]
@@ -227,27 +211,21 @@ const items = [
     name: 'Kitchen',
     cards: [
       {
-        name: 'Kettle Light',
         entity_id: 'light.kettle_light',
       },
       {
-        name: 'Toaster Light',
         entity_id: 'light.toaster_light',
       },
       {
-        name: 'Ceiling Light',
         entity_id: 'light.ceiling_light',
       },
       {
-        name: 'Under Bar Light',
         entity_id: 'light.under_bar_light',
       },
       {
-        name: 'Bar Light',
         entity_id: 'switch.sonoff_002_plug',
       },
       {
-        name: 'Jar Lights',
         entity_id: 'light.jar_lights',
       },
     ]
@@ -256,12 +234,10 @@ const items = [
     name: 'Outside',
     cards: [
       {
-        name: 'Fountain',
-        entity_id: 'switch.sonoff_006_plug',
+        entity_id: 'switch.sonoff_005_plug',
       },
     ]
   },
-
 ];
 
 var hoverTimeout;
@@ -373,9 +349,10 @@ class Main extends React.Component {
                       className={classes.gridInner}
                       alignItems="stretch">
                       {group.cards.map((card, y) => {
-                        const { entity_id, state, /*attributes*/ } =
+                        const { entity_id, state, attributes } =
                           entities.find(i => { return i[1].entity_id === card.entity_id })[1];
                         const domain = entity_id.substring(0, entity_id.indexOf('.'));
+                        console.log('attributes:', attributes);
                         return (
                           <Grid key={y} className={classes.cardContainer} item>
                             <Card className={classnames(
@@ -389,7 +366,7 @@ class Main extends React.Component {
                             }}>
                               <CardContent className={classes.cardContent}>
                                 <Typography className={classes.name} variant="headline">
-                                  {card.name}
+                                  {card.name ? card.name : attributes.friendly_name}
                                 </Typography>
                                 {domain === 'sensor' &&
                                   <Typography className={classes.state} variant="body1">
