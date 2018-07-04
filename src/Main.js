@@ -8,10 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import BrushIcon from '@material-ui/icons/Brush';
 
 const styles = theme => ({
   root: {
@@ -81,14 +77,6 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 12,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
-  },
-  theme: {
-    position: 'fixed',
-    top: theme.spacing.unit,
-    right: theme.spacing.unit,
-  },
-  formControl: {
-    width: '10rem',
   },
   gridContainer: {
     height: `calc(100% - 153px)`,
@@ -276,6 +264,7 @@ const items = [
 
 ];
 
+<<<<<<< HEAD
 var hoverTimeout;
 
 // eslint-disable-next-line
@@ -291,6 +280,9 @@ class Main extends React.Component {
     hovered: false,
     overlayOpacity: 0.00,
   };
+=======
+class Main extends React.Component {
+>>>>>>> 77f9d4ddc2569f0a03b91186678d3d72f16be286
 
   componentWillMount = () => this.onMouseMoveHandler;
 
@@ -301,6 +293,7 @@ class Main extends React.Component {
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
+<<<<<<< HEAD
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (themeId) => {
@@ -323,9 +316,10 @@ class Main extends React.Component {
 
   onMouseLeaveHandler = () => this.setState({ over: false });
 
+=======
+>>>>>>> 77f9d4ddc2569f0a03b91186678d3d72f16be286
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { anchorEl } = this.state;
 
     const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replaceAll('-', '_').toUpperCase();
     const weather = this.getState(entities, 'sensor.pws_weather');
@@ -335,7 +329,7 @@ class Main extends React.Component {
     const humidityIndoor = this.getState(entities, 'sensor.dht22_01_humidity', '%');
 
     return (
-      <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
+      <div className={classes.root}>
         <div className={classes.header}>
           <div className={classes.weatherContainer}>
             <Typography className={classes.weather} variant="display2">
@@ -367,24 +361,6 @@ class Main extends React.Component {
             <Typography className={classes.indoor} variant="display2">
               {humidityIndoor}
             </Typography>
-          </div>
-          <div className={classes.theme} onMouseOver={this.onMouseOverHandler} onMouseLeave={this.onMouseLeaveHandler}>
-            <div style={{ opacity: this.state.hovered | this.state.moved | this.state.prefsOpen ? 1 : 0 }}>
-              <IconButton
-                aria-owns={anchorEl ? 'simple-menu' : null}
-                aria-haspopup="true"
-                onClick={this.handleClick}>
-                <BrushIcon />
-              </IconButton>
-              <Menu
-                id="simple-menu"
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}>
-                <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
-                <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
-                <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
-              </Menu>
-            </div>
           </div>
         </div>
         <div className={classes.gridContainer}>
@@ -439,7 +415,7 @@ class Main extends React.Component {
             })}
           </Grid>
         </div>
-      </div >
+      </div>
     );
   }
 }
@@ -449,7 +425,6 @@ Main.propTypes = {
   theme: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Main);
