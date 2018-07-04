@@ -20,17 +20,6 @@ const styles = theme => ({
     maxHeight: '100%',
     maxWidth: '100%',
   },
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: '#000000',
-    zIndex: 10000,
-    opacity: 0,
-    transition: 'opacity 60s ease-in',
-  },
   header: {
     display: 'block',
     width: '100%',
@@ -287,7 +276,7 @@ const items = [
 
 ];
 
-var hoverTimeout, opacityTimerTimeout, opacityTimeout;
+var hoverTimeout;
 
 // eslint-disable-next-line
 String.prototype.replaceAll = function (search, replacement) {
@@ -328,22 +317,6 @@ class Main extends React.Component {
         }, 2000);
       });
     }
-    // setTimeout(opacityTimerTimeout);
-    // clearInterval(opacityTimeout);
-    // this.setState({ overlayOpacity: 0.00 }, () => {
-    //   opacityTimerTimeout = setTimeout(() => {
-    //     console.log('Start dimming..');
-    //     opacityTimeout = setInterval(() => {
-    //       this.setState({ overlayOpacity: this.state.overlayOpacity + 0.001 }, () => {
-    //         if (this.state.overlayOpacity === 1) {
-    //           setTimeout(opacityTimerTimeout);
-    //           clearInterval(opacityTimeout);
-    //         }
-    //         console.log(this.state.overlayOpacity);
-    //       });
-    //     }, 500);
-    //   }, 10000);
-    // });
   };
 
   onMouseOverHandler = () => clearInterval(hoverTimeout);
@@ -352,7 +325,7 @@ class Main extends React.Component {
 
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { anchorEl, overlayOpacity } = this.state;
+    const { anchorEl } = this.state;
 
     const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replaceAll('-', '_').toUpperCase();
     const weather = this.getState(entities, 'sensor.pws_weather');
@@ -363,7 +336,6 @@ class Main extends React.Component {
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
-        <div className={classes.overlay} />
         <div className={classes.header}>
           <div className={classes.weatherContainer}>
             <Typography className={classes.weather} variant="display2">
