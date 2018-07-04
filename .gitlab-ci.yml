@@ -15,7 +15,7 @@ stages:
 
 .before: &before
   before_script:
-    - mv config.default.json config.json
+    - mv config.default.json src/config.json
 
 # Generic DIND template
 .dind: &dind
