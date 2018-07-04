@@ -133,8 +133,9 @@ build:
 test:
   <<: *before
   stage: test
-  image: node:latest
+  image: node:alpine
   script:
+    - config.json src/
     - yarn install && yarn cache clean
     - yarn run test
   only:
