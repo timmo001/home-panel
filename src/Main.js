@@ -264,7 +264,6 @@ const items = [
 
 ];
 
-<<<<<<< HEAD
 var hoverTimeout;
 
 // eslint-disable-next-line
@@ -280,9 +279,6 @@ class Main extends React.Component {
     hovered: false,
     overlayOpacity: 0.00,
   };
-=======
-class Main extends React.Component {
->>>>>>> 77f9d4ddc2569f0a03b91186678d3d72f16be286
 
   componentWillMount = () => this.onMouseMoveHandler;
 
@@ -293,7 +289,6 @@ class Main extends React.Component {
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
-<<<<<<< HEAD
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (themeId) => {
@@ -316,8 +311,6 @@ class Main extends React.Component {
 
   onMouseLeaveHandler = () => this.setState({ over: false });
 
-=======
->>>>>>> 77f9d4ddc2569f0a03b91186678d3d72f16be286
   render() {
     const { classes, entities, theme, handleChange } = this.props;
 
