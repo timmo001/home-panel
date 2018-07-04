@@ -158,7 +158,12 @@ code_quality:
   services:
     - docker:stable-dind
   script:
-    - code_quality
+    - |
+      docker run --env SOURCE_CODE="$PWD" \
+                --volume "$PWD":/code \
+                --volume /var/run/docker.sock:/var/run/docker.sock \
+                "registry.gitlab.com/gitlab-org/security-products/codequality:$(echo "$CI_SERVER_VERSION" | \
+                  sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')" /code
   artifacts:
     paths: [gl-code-quality-report.json]
   except:
@@ -174,7 +179,16 @@ license_management:
   services:
     - docker:stable-dind
   script:
-    - license_management
+    - |
+      if echo $GITLAB_FEATURES |grep license_management > /dev/null ; then
+        # Extract "MAJOR.MINOR" from CI_SERVER_VERSION and generate "MAJOR-MINOR-stable"
+        LICENSE_MANAGEMENT_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
+
+        docker run --volume "$PWD:/code" \
+                  "registry.gitlab.com/gitlab-org/security-products/license-management:$LICENSE_MANAGEMENT_VERSION" analyze /code
+      else
+        echo "License management is not available in your subscription"
+      fi
   artifacts:
     paths: [gl-license-management-report.json]
   except:
@@ -191,7 +205,25 @@ performance:
   services:
     - docker:stable-dind
   script:
-    - performance
+    - |
+      export CI_ENVIRONMENT_URL=$(cat environment_url.txt)
+
+      mkdir gitlab-exporter
+      wget -O gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/10-5/index.js
+
+      mkdir sitespeed-results
+
+      if [ -f .gitlab-urls.txt ]
+      then
+        sed -i -e 's@^@'"$CI_ENVIRONMENT_URL"'@' .gitlab-urls.txt
+        docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 \
+          --plugins.add ./gitlab-exporter --outputFolder sitespeed-results .gitlab-urls.txt
+      else
+        docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 \
+          --plugins.add ./gitlab-exporter --outputFolder sitespeed-results "$CI_ENVIRONMENT_URL"
+      fi
+
+      mv sitespeed-results/data/performance.json performance.json
   artifacts:
     paths:
       - performance.json
@@ -213,7 +245,19 @@ dependency_scanning:
   services:
     - docker:stable-dind
   script:
-    - dependency_scanning
+    - |
+      case "$CI_SERVER_VERSION" in
+        *-ee)
+          docker run --env DEP_SCAN_DISABLE_REMOTE_CHECKS="${DEP_SCAN_DISABLE_REMOTE_CHECKS:-false}" \
+                    --volume "$PWD:/code" \
+                    --volume /var/run/docker.sock:/var/run/docker.sock \
+                    "registry.gitlab.com/gitlab-org/security-products/dependency-scanning:$(echo "$CI_SERVER_VERSION" | \
+                      sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')" /code
+          ;;
+        *)
+          echo "GitLab EE is required"
+          ;;
+      esac
   artifacts:
     paths: [gl-dependency-scanning-report.json]
   except:
@@ -230,7 +274,28 @@ container_scanning:
   services:
     - docker:stable-dind
   script:
-    - container_scanning
+    - |
+      if [[ -n "$CI_REGISTRY_USER" ]]; then
+        echo "Logging to GitLab Container Registry with CI credentials..."
+        docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+        echo ""
+      fi
+
+      docker run -d --name db arminc/clair-db:latest
+      docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:v2.0.1
+      apk add -U wget ca-certificates
+      docker pull $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA
+      wget https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
+      mv clair-scanner_linux_amd64 clair-scanner
+      chmod +x clair-scanner
+      touch clair-whitelist.yml
+      retries=0
+      echo "Waiting for clair daemon to start"
+      while( ! wget -T 10 -q -O /dev/null http://docker:6060/v1/namespaces ) ; \
+        do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; \
+          retries=$(($retries+1)) ; done
+      ./clair-scanner -c http://docker:6060 --ip $(hostname -i) -r gl-container-scanning-report.json \
+        -l clair.log -w clair-whitelist.yml $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA || true
   artifacts:
     paths: [gl-container-scanning-report.json]
   except:
@@ -287,105 +352,3 @@ deploy: &deploy
     - schedules
   except:
     - /^(?!master).+@/
-
-# ---------------------------------------------------------------------------
-
-.auto_devops: &auto_devops |
-  # Auto DevOps variables and functions
-  [[ "$TRACE" ]] && set -x
-  auto_database_url=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${CI_ENVIRONMENT_SLUG}-postgres:5432/${POSTGRES_DB}
-  export DATABASE_URL=${DATABASE_URL-$auto_database_url}
-  export CI_APPLICATION_REPOSITORY=$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG
-  export CI_APPLICATION_TAG=$CI_COMMIT_SHA
-  export CI_CONTAINER_NAME=ci_job_build_${CI_JOB_ID}
-  # Extract "MAJOR.MINOR" from CI_SERVER_VERSION and generate "MAJOR-MINOR-stable" for Security Products
-  export SP_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-
-  function container_scanning() {
-    if [[ -n "$CI_REGISTRY_USER" ]]; then
-      echo "Logging to GitLab Container Registry with CI credentials..."
-      docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-      echo ""
-    fi
-
-    docker run -d --name db arminc/clair-db:latest
-    docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:v2.0.1
-    apk add -U wget ca-certificates
-    docker pull ${CI_APPLICATION_REPOSITORY}:${CI_APPLICATION_TAG}
-    wget https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
-    mv clair-scanner_linux_amd64 clair-scanner
-    chmod +x clair-scanner
-    touch clair-whitelist.yml
-    retries=0
-    echo "Waiting for clair daemon to start"
-    while( ! wget -T 10 -q -O /dev/null http://docker:6060/v1/namespaces ) ; do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; retries=$(($retries+1)) ; done
-    ./clair-scanner -c http://docker:6060 --ip $(hostname -i) -r gl-container-scanning-report.json -l clair.log -w clair-whitelist.yml ${CI_APPLICATION_REPOSITORY}:${CI_APPLICATION_TAG} || true
-  }
-
-  function code_quality() {
-    docker run --env SOURCE_CODE="$PWD" \
-               --volume "$PWD":/code \
-               --volume /var/run/docker.sock:/var/run/docker.sock \
-               "registry.gitlab.com/gitlab-org/security-products/codequality:$SP_VERSION" /code
-  }
-
-  function license_management() {
-    if echo $GITLAB_FEATURES |grep license_management > /dev/null ; then
-      # Extract "MAJOR.MINOR" from CI_SERVER_VERSION and generate "MAJOR-MINOR-stable"
-      LICENSE_MANAGEMENT_VERSION=$(echo "$CI_SERVER_VERSION" | sed 's/^\([0-9]*\)\.\([0-9]*\).*/\1-\2-stable/')
-
-      docker run --volume "$PWD:/code" \
-                 "registry.gitlab.com/gitlab-org/security-products/license-management:$LICENSE_MANAGEMENT_VERSION" analyze /code
-    else
-      echo "License management is not available in your subscription"
-    fi
-  }
-
-  function dependency_scanning() {
-    case "$CI_SERVER_VERSION" in
-      *-ee)
-        docker run --env DEP_SCAN_DISABLE_REMOTE_CHECKS="${DEP_SCAN_DISABLE_REMOTE_CHECKS:-false}" \
-                   --volume "$PWD:/code" \
-                   --volume /var/run/docker.sock:/var/run/docker.sock \
-                   "registry.gitlab.com/gitlab-org/security-products/dependency-scanning:$SP_VERSION" /code
-        ;;
-      *)
-        echo "GitLab EE is required"
-        ;;
-    esac
-  }
-
-  function setup_test_db() {
-    DB_HOST=localhost
-    export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${DB_HOST}:5432/${POSTGRES_DB}"
-  }
-
-  function dast() {
-    export CI_ENVIRONMENT_URL=$(cat environment_url.txt)
-
-    mkdir /zap/wrk/
-    /zap/zap-baseline.py -J gl-dast-report.json -t "$CI_ENVIRONMENT_URL" || true
-    cp /zap/wrk/gl-dast-report.json .
-  }
-
-  function performance() {
-    export CI_ENVIRONMENT_URL=$(cat environment_url.txt)
-
-    mkdir gitlab-exporter
-    wget -O gitlab-exporter/index.js https://gitlab.com/gitlab-org/gl-performance/raw/10-5/index.js
-
-    mkdir sitespeed-results
-
-    if [ -f .gitlab-urls.txt ]
-    then
-      sed -i -e 's@^@'"$CI_ENVIRONMENT_URL"'@' .gitlab-urls.txt
-      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results .gitlab-urls.txt
-    else
-      docker run --shm-size=1g --rm -v "$(pwd)":/sitespeed.io sitespeedio/sitespeed.io:7.1.2 --plugins.add ./gitlab-exporter --outputFolder sitespeed-results "$CI_ENVIRONMENT_URL"
-    fi
-
-    mv sitespeed-results/data/performance.json performance.json
-  }
-
-before_script:
-  - *auto_devops
