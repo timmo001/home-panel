@@ -48,18 +48,18 @@ const styles = theme => ({
     textAlign: 'left',
   },
   weather: {
-    paddingLeft: theme.spacing.unit * 15,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.defaultText.main,
     fontSize: '3.2rem',
   },
   weatherIcon: {
     position: 'fixed',
-    transform: 'translateX(-146px)',
+    transform: 'translateX(-158px)',
     width: '190px !important',
     height: '90px !important',
   },
   temperature: {
-    paddingLeft: theme.spacing.unit * 15,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
   },
