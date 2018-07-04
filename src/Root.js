@@ -126,7 +126,6 @@ class Root extends Component {
         {entities ?
           <Main
             theme={theme}
-            setTheme={this.setTheme}
             entities={entities}
             handleChange={this.handleChange} />
           :
