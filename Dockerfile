@@ -4,10 +4,11 @@ FROM node:alpine as build
 # Copy files
 COPY . /usr/src/build
 
-COPY config.json /usr/src/build/
-
 # Set working directory as build dir
 WORKDIR /usr/src/build
+
+# Copy config
+COPY /config.json ./src/
 
 # Install deps and build
 RUN yarn install && yarn cache clean
