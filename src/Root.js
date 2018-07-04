@@ -52,9 +52,9 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    console.log(`Connect to wss://${config.home_assistant.host}/api/websocket?latest`);
+    console.log(`Connect to ${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`);
     if (config.home_assistant.host) {
-      createConnection(`wss://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
+      createConnection(`${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
@@ -69,7 +69,7 @@ class Root extends Component {
   }
 
   handleChange = (domain, state, data = undefined) => {
-    createConnection(`wss://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
+    createConnection(`${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
