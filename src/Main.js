@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import config from './config.json';
 
 const styles = theme => ({
   root: {
@@ -132,114 +133,6 @@ const styles = theme => ({
   },
 });
 
-const items = [
-  {
-    name: 'Scenes',
-    cards: [
-      {
-        entity_id: 'scene.reset_lights',
-      },
-      {
-        entity_id: 'scene.reset_kitchen_lights',
-      },
-      {
-        entity_id: 'scene.lights_on',
-      },
-      {
-        entity_id: 'scene.lights_off',
-      },
-      {
-        entity_id: 'scene.all_lights_on',
-      },
-      {
-        entity_id: 'scene.night_mode',
-      },
-    ]
-  },
-  {
-    name: 'Computers',
-    cards: [
-      {
-        entity_id: 'switch.server',
-      },
-      {
-        entity_id: 'switch.pc',
-      },
-    ]
-  },
-  {
-    name: 'Living Room',
-    cards: [
-      {
-        entity_id: 'light.setee_light',
-      },
-      {
-        entity_id: 'light.tv_light',
-      },
-      {
-        entity_id: 'light.pc_light',
-      },
-      {
-        entity_id: 'light.floor_lights',
-      },
-      {
-        entity_id: 'light.crystal_lights',
-      },
-
-    ]
-  },
-  {
-    name: 'Dining Room',
-    cards: [
-      {
-        entity_id: 'light.table_light',
-      },
-    ]
-  },
-  {
-    name: 'Desk',
-    cards: [
-      {
-        entity_id: 'light.desk_lights',
-      },
-      {
-        entity_id: 'light.matrix_clock',
-      },
-    ]
-  },
-  {
-    name: 'Kitchen',
-    cards: [
-      {
-        entity_id: 'light.kettle_light',
-      },
-      {
-        entity_id: 'light.toaster_light',
-      },
-      {
-        entity_id: 'light.ceiling_light',
-      },
-      {
-        entity_id: 'light.under_bar_light',
-      },
-      {
-        entity_id: 'switch.sonoff_002_plug',
-      },
-      {
-        entity_id: 'light.jar_lights',
-      },
-    ]
-  },
-  {
-    name: 'Outside',
-    cards: [
-      {
-        entity_id: 'switch.sonoff_005_plug',
-      },
-    ]
-  },
-];
-
 var hoverTimeout;
 
 // eslint-disable-next-line
@@ -337,7 +230,7 @@ class Main extends React.Component {
             container
             className={classes.grid}
             spacing={16}>
-            {items && items.map((group, x) => {
+            {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
                   <Typography className={classes.title} variant="display1" gutterBottom>

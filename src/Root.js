@@ -4,6 +4,7 @@ import { createConnection, subscribeEntities } from 'home-assistant-js-websocket
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
+import config from './config.json';
 import Main from './Main';
 
 const styles = theme => ({
@@ -51,9 +52,9 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    console.log(`Connect to wss://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`);
-    if (process.env.REACT_APP_HASS_HOST) {
-      createConnection(`wss://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+    console.log(`Connect to wss://${config.home_assistant.host}/api/websocket?latest`);
+    if (config.home_assistant.host) {
+      createConnection(`wss://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
@@ -68,7 +69,7 @@ class Root extends Component {
   }
 
   handleChange = (domain, state, data = undefined) => {
-    createConnection(`wss://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+    createConnection(`wss://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
