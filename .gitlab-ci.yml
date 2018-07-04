@@ -13,6 +13,10 @@ stages:
   - deploy
   - performance
 
+.before: &before
+  before_script:
+    - mv config.default.json config.json
+
 # Generic DIND template
 .dind: &dind
   before_script:
@@ -23,6 +27,7 @@ stages:
 
 # Generic preflight template
 .preflight: &preflight
+  <<: *before
   stage: preflight
   tags:
     - preflight
@@ -99,6 +104,7 @@ markdownlint:
 
 # Build jobs
 build:
+  <<: *before
   stage: build
   image: docker:stable-git
   services:
@@ -113,6 +119,7 @@ build:
 
 # Test jobs
 test:
+  <<: *before
   services:
     - postgres:latest
   variables:
@@ -130,6 +137,7 @@ test:
       - $TEST_DISABLED
 
 code_quality:
+  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -147,6 +155,7 @@ code_quality:
       - $CODE_QUALITY_DISABLED
 
 license_management:
+  <<: *before
   image: docker:stable
   variables:
     DOCKER_DRIVER: overlay2
@@ -163,6 +172,7 @@ license_management:
       - $LICENSE_MANAGEMENT_DISABLED
 
 performance:
+  <<: *before
   stage: performance
   image: docker:stable
   variables:
@@ -185,6 +195,7 @@ performance:
       - $PERFORMANCE_DISABLED
 
 dependency_scanning:
+  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -202,6 +213,7 @@ dependency_scanning:
       - $DEPENDENCY_SCANNING_DISABLED
 
 container_scanning:
+  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -220,6 +232,7 @@ container_scanning:
 
 # Deploy jobs
 deploy: &deploy
+  <<: *before
   <<: *dind
   stage: deploy
   image: docker:latest

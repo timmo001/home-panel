@@ -1,0 +1,25 @@
+{
+  "home_assistant": {
+    "host": "hassio.local:8123",
+    "password": "password",
+    "ssl": true
+  },
+  "items": [
+    {
+      "name": "Living Room",
+      "cards": [
+        {
+          "entity_id": "light.tv_light"
+        }
+      ]
+    },
+    {
+      "name": "Dining Room",
+      "cards": [
+        {
+          "entity_id": "light.table_light"
+        }
+      ]
+    }
+  ]
+}
