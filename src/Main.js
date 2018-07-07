@@ -8,6 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import BrushIcon from '@material-ui/icons/Brush';
 import config from './config.json';
 
 const styles = theme => ({
@@ -21,6 +25,11 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
     height: 160,
+  },
+  buttons: {
+    position: 'fixed',
+    top: theme.spacing.unit,
+    right: theme.spacing.unit,
   },
   timeDateContainer: {
     position: 'fixed',
@@ -152,7 +161,8 @@ String.prototype.replaceAll = function (search, replacement) {
 class Main extends React.Component {
   state = {
     anchorEl: null,
-    moved: false,
+    moved: true,
+    over: false,
     hovered: false,
     overlayOpacity: 0.00,
   };
@@ -174,22 +184,30 @@ class Main extends React.Component {
   };
 
   onMouseMoveHandler = () => {
-    clearInterval(hoverTimeout);
+    clearTimeout(hoverTimeout);
     if (!this.state.over) {
       this.setState({ moved: true }, () => {
         hoverTimeout = setTimeout(() => {
           this.setState({ moved: false });
-        }, 2000);
+        }, 5000);
       });
     }
   };
 
-  onMouseOverHandler = () => clearInterval(hoverTimeout);
+  onMouseOverHandler = () => this.setState({ over: true });
 
   onMouseLeaveHandler = () => this.setState({ over: false });
 
+  handleClick = event => this.setState({ anchorEl: event.currentTarget });
+
+  handleClose = (value) => this.setState({ anchorEl: null }, () => {
+    console.log(value);
+    this.props.setTheme(value);
+  });
+
   render() {
     const { classes, entities, theme, handleChange } = this.props;
+    const { anchorEl, moved, over } = this.state;
 
     const weather = {
       outdoor: {
@@ -206,7 +224,7 @@ class Main extends React.Component {
     };
 
     return (
-      <div className={classes.root}>
+      <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <div className={classes.header}>
           <div className={classes.weatherContainer}>
             <Typography className={classes.condition} variant="display2">
@@ -240,6 +258,31 @@ class Main extends React.Component {
               <span className={classes.humidity}>{weather.indoor.humidity}</span>
             </Typography>
           </div>
+          {(moved || over) &&
+            <div
+              className={classes.buttons}
+              onMouseOver={this.onMouseOverHandler}
+              onMouseLeave={this.onMouseLeaveHandler}>
+              <IconButton
+                className={classes.button}
+                aria-label="Theme"
+                aria-owns={anchorEl ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleClick}>
+                <BrushIcon />
+              </IconButton>
+              <Menu
+                id="theme"
+                value={theme}
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={this.handleClose}>
+                <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
+                <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
+                <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
+              </Menu>
+            </div>
+          }
         </div>
         <div className={classes.gridContainer}>
           <Grid
@@ -301,6 +344,7 @@ class Main extends React.Component {
 Main.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  setTheme: PropTypes.func.isRequired,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

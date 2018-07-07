@@ -118,6 +118,7 @@ class Root extends Component {
   };
 
   render() {
+    const { setTheme } = this;
     const { classes, theme } = this.props;
     const { snackMessage, entities, connected } = this.state;
 
@@ -127,6 +128,7 @@ class Root extends Component {
         {entities ?
           <Main
             theme={theme}
+            setTheme={setTheme}
             entities={entities}
             handleChange={this.handleChange} />
           :
@@ -166,6 +168,7 @@ class Root extends Component {
 Root.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  setTheme: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Root);
