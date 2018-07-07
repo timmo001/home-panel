@@ -6,3 +6,19 @@ html, body {
   margin: 0;
   overflow: hidden;
 }
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(66, 66, 66, 0.8); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(66, 66, 66, 0.4); 
+}
