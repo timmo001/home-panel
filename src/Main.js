@@ -201,7 +201,6 @@ class Main extends React.Component {
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (value) => this.setState({ anchorEl: null }, () => {
-    console.log(value);
     this.props.setTheme(value);
   });
 
