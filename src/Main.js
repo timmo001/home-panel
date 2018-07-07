@@ -48,7 +48,7 @@ const styles = theme => ({
     transform: 'translateY(-50%)',
     textAlign: 'left',
   },
-  weather: {
+  condition: {
     paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.defaultText.main,
     fontSize: '3.2rem',
@@ -74,7 +74,12 @@ const styles = theme => ({
     top: 84,
     right: 0,
     transform: 'translateY(-50%)',
-    textAlign: 'right',
+  },
+  indoorLabel: {
+    minWidth: 200,
+    paddingRight: theme.spacing.unit * 12,
+    color: theme.palette.defaultText.main,
+    fontSize: '2.6rem',
   },
   indoor: {
     minWidth: 200,
@@ -186,28 +191,35 @@ class Main extends React.Component {
   render() {
     const { classes, entities, theme, handleChange } = this.props;
 
-    const weatherIcon = this.getState(entities, 'sensor.dark_sky_icon').replaceAll('-', '_').toUpperCase();
-    const weather = this.getState(entities, 'sensor.pws_weather');
-    const temperature = this.getState(entities, 'sensor.pws_temp_c', '°C');
-    const humidity = this.getState(entities, 'sensor.pws_relative_humidity', '%');
-    const temperatureIndoor = this.getState(entities, 'sensor.dht22_01_temperature', '°C');
-    const humidityIndoor = this.getState(entities, 'sensor.dht22_01_humidity', '%');
+    const weather = {
+      outdoor: {
+        icon: this.getState(entities, config.weather.outdoor.dark_sky_icon).replaceAll('-', '_').toUpperCase(),
+        condition: this.getState(entities, config.weather.outdoor.condition),
+        temperature: this.getState(entities, config.weather.outdoor.temperature, '°C'),
+        humidity: this.getState(entities, config.weather.outdoor.humidity, '%')
+      },
+      indoor: {
+        label: config.weather.indoor.label,
+        temperature: this.getState(entities, config.weather.indoor.temperature, '°C'),
+        humidity: this.getState(entities, config.weather.indoor.humidity, '%'),
+      }
+    };
 
     return (
       <div className={classes.root}>
         <div className={classes.header}>
           <div className={classes.weatherContainer}>
-            <Typography className={classes.weather} variant="display2">
+            <Typography className={classes.condition} variant="display2">
               <Skycons
                 className={classes.weatherIcon}
                 color={theme.palette.defaultText.light}
-                icon={weatherIcon}
+                icon={weather.outdoor.icon}
                 autoplay={true} />
-              {weather}
+              {weather.outdoor.condition}
             </Typography>
             <Typography className={classes.temperature} variant="display2">
-              {temperature}
-              <span className={classes.humidity}>{humidity}</span>
+              {weather.outdoor.temperature}
+              <span className={classes.humidity}>{weather.outdoor.humidity}</span>
             </Typography>
           </div>
           <div className={classes.timeDateContainer}>
@@ -220,11 +232,12 @@ class Main extends React.Component {
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
-            <Typography className={classes.indoor} variant="display2">
-              {temperatureIndoor}
+            <Typography className={classes.indoorLabel} variant="display2">
+              {weather.indoor.label}
             </Typography>
             <Typography className={classes.indoor} variant="display2">
-              {humidityIndoor}
+              {weather.indoor.temperature}
+              <span className={classes.humidity}>{weather.indoor.humidity}</span>
             </Typography>
           </div>
         </div>

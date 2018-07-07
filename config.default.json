@@ -4,6 +4,19 @@
     "password": "password",
     "ssl": true
   },
+  "weather": {
+    "outdoor":{
+      "dark_sky_icon": "sensor.dark_sky_icon",
+      "condition": "sensor.pws_weather",
+      "temperature": "sensor.pws_temp_c",
+      "humidity": "sensor.pws_relative_humidity"
+    },
+    "indoor":{
+      "label": "Living Room",
+      "temperature": "sensor.dht22001_temperature",
+      "humidity": "sensor.dht22001_humidity"
+    }
+  },
   "items": [
     {
       "name": "Living Room",
