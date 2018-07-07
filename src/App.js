@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
 import lightBlue from '@material-ui/core/colors/lightBlue';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import red from '@material-ui/core/colors/red';
@@ -42,9 +43,9 @@ const themes = [
         secondary: blueGrey,
         mainBackground: grey[900],
         backgrounds: {
-          light: grey[700],
-          main: grey[800],
-          dark: grey[900],
+          light: blueGrey[900],
+          main: blueGrey[800],
+          dark: blueGrey[600],
         },
         defaultText: {
           light: grey[50],
