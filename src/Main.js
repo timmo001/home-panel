@@ -42,6 +42,7 @@ const styles = theme => ({
   },
   weatherContainer: {
     position: 'fixed',
+    maxWidth: 360,
     top: 80,
     left: 0,
     transform: 'translateY(-50%)',
@@ -54,7 +55,8 @@ const styles = theme => ({
   },
   weatherIcon: {
     position: 'fixed',
-    transform: 'translateX(-158px)',
+    transform: `translateX(-158px)`,
+    top: 'calc(50% - 45px)',
     width: '190px !important',
     height: '90px !important',
   },
@@ -68,6 +70,7 @@ const styles = theme => ({
   },
   indoorContainer: {
     position: 'fixed',
+    maxWidth: 360,
     top: 84,
     right: 0,
     transform: 'translateY(-50%)',
