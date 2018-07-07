@@ -55,7 +55,7 @@ const styles = theme => ({
     top: 80,
     left: 0,
     transform: 'translateY(-50%)',
-    textAlign: 'left',
+    textAlign: 'start',
   },
   condition: {
     paddingLeft: theme.spacing.unit * 17,
@@ -83,16 +83,17 @@ const styles = theme => ({
     top: 84,
     right: 0,
     transform: 'translateY(-50%)',
+    textAlign: 'end',
   },
   indoorLabel: {
     minWidth: 200,
-    paddingRight: theme.spacing.unit * 12,
+    paddingRight: theme.spacing.unit * 8,
     color: theme.palette.defaultText.main,
     fontSize: '2.6rem',
   },
   indoor: {
     minWidth: 200,
-    paddingRight: theme.spacing.unit * 12,
+    paddingRight: theme.spacing.unit * 8,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
   },
