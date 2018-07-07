@@ -48,6 +48,7 @@ const styles = theme => ({
   date: {
     color: theme.palette.defaultText.main,
     marginTop: theme.spacing.unit * -2.5,
+    textAlign: 'center',
   },
   weatherContainer: {
     position: 'fixed',
