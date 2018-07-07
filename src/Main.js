@@ -261,7 +261,6 @@ class Main extends React.Component {
                         const { entity_id, state, attributes } =
                           entities.find(i => { return i[1].entity_id === card.entity_id })[1];
                         const domain = entity_id.substring(0, entity_id.indexOf('.'));
-                        console.log('attributes:', attributes);
                         return (
                           <Grid key={y} className={classes.cardContainer} item>
                             <Card className={classnames(
