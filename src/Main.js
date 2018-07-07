@@ -97,7 +97,7 @@ const styles = theme => ({
     fontSize: '2.0rem',
   },
   gridContainer: {
-    height: `calc(100% - 153px)`,
+    height: `calc(100% - 160px)`,
     overflowY: 'auto',
   },
   grid: {
