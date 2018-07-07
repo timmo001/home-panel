@@ -93,14 +93,21 @@ class Root extends Component {
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      // theme from sunlight
-      const sun = this.state.entities.find(entity => {
-        return entity[0] === 'sun.sun'
-      });
-      if (sun)
-        this.props.setTheme(sun[1].state === 'below_horizon' ? 1 : 0);
-      else
-        this.props.setTheme(0);
+      if (config.theme.auto) {
+        const state = this.state.entities.find(entity => {
+          return entity[0] === config.theme.auto.sensor
+        })[1].state;
+        this.props.setTheme(state <= config.theme.auto.below ? 1 : 0);
+      } else {
+        // theme from sunlight
+        const sun = this.state.entities.find(entity => {
+          return entity[0] === 'sun.sun'
+        });
+        if (sun)
+          this.props.setTheme(sun[1].state === 'below_horizon' ? 1 : 0);
+        else
+          this.props.setTheme(0);
+      }
     } else
       this.props.setTheme(themeId);
     localStorage.setItem('theme', themeId);

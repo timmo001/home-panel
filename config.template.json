@@ -4,14 +4,15 @@
     "password": "password",
     "ssl": true
   },
+  "theme": {},
   "weather": {
-    "outdoor":{
+    "outdoor": {
       "dark_sky_icon": "sensor.dark_sky_icon",
       "condition": "sensor.pws_weather",
       "temperature": "sensor.pws_temp_c",
       "humidity": "sensor.pws_relative_humidity"
     },
-    "indoor":{
+    "indoor": {
       "label": "Living Room",
       "temperature": "sensor.dht22001_temperature",
       "humidity": "sensor.dht22001_humidity"
