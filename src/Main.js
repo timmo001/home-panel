@@ -151,6 +151,14 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     fontSize: '0.9rem',
   },
+  cameraContainer: {
+    position: 'relative',
+    width: '100%',
+    padding: theme.spacing.unit / 2,
+  },
+  camera: {
+    width: '100%',
+  }
 });
 
 var hoverTimeout;
@@ -168,6 +176,7 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     overlayOpacity: 0.00,
+    cameraShow: false,
   };
 
   componentWillMount = () => this.onMouseMoveHandler;
@@ -206,6 +215,10 @@ class Main extends React.Component {
   handleClose = (value) => this.setState({ anchorEl: null }, () => {
     this.props.setTheme(value);
   });
+
+  handleShowCamera = (url) =>{
+    this.setState({cameraShow: true});
+  }
 
   render() {
     const { classes, entities, theme, handleChange } = this.props;
@@ -303,33 +316,44 @@ class Main extends React.Component {
                       className={classes.gridInner}
                       alignItems="stretch">
                       {group.cards.map((card, y) => {
-                        const { entity_id, state, attributes } =
-                          entities.find(i => { return i[1].entity_id === card.entity_id })[1];
-                        const domain = entity_id.substring(0, entity_id.indexOf('.'));
-                        return (
-                          <Grid key={y} className={classes.cardContainer} item>
-                            <Card className={classnames(
-                              classes.card,
-                              state === 'on' ? classes.cardOn : classes.cardOff
-                            )} elevation={1} onClick={() => {
-                              if (domain === 'light' || domain === 'switch')
-                                handleChange(domain, state === 'on' ? false : true, { entity_id });
-                              else if (domain === 'scene' || domain === 'script')
-                                handleChange(domain, true, { entity_id });
-                            }}>
-                              <CardContent className={classes.cardContent}>
-                                <Typography className={classes.name} variant="headline">
-                                  {card.name ? card.name : attributes.friendly_name}
-                                </Typography>
-                                {domain === 'sensor' &&
-                                  <Typography className={classes.state} variant="body1">
-                                    {state}
+                        const type = !card.type ? 'hass' : card.type;
+                        if (type === 'hass') {
+                          const { entity_id, state, attributes } =
+                            entities.find(i => { return i[1].entity_id === card.entity_id })[1];
+                          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+                          return (
+                            <Grid key={y} className={classes.cardContainer} item>
+                              <Card className={classnames(
+                                classes.card,
+                                state === 'on' ? classes.cardOn : classes.cardOff
+                              )} elevation={1} onClick={() => {
+                                if (domain === 'light' || domain === 'switch')
+                                  handleChange(domain, state === 'on' ? false : true, { entity_id });
+                                else if (domain === 'scene' || domain === 'script')
+                                  handleChange(domain, true, { entity_id });
+                              }}>
+                                <CardContent className={classes.cardContent}>
+                                  <Typography className={classes.name} variant="headline">
+                                    {card.name ? card.name : attributes.friendly_name}
                                   </Typography>
-                                }
-                              </CardContent>
-                            </Card>
-                          </Grid>
-                        )
+                                  {domain === 'sensor' &&
+                                    <Typography className={classes.state} variant="body1">
+                                      {state}
+                                    </Typography>
+                                  }
+                                </CardContent>
+                              </Card>
+                            </Grid>
+                          );
+                        } else if (type === 'camera') {
+                          const { url } = card;
+                          const still_url = `${card.still_url}?${new Date().getTime()}`;
+                          return (
+                            <Grid key={y} className={classes.cameraContainer} item>
+                              <img className={classes.camera} src={still_url} onClick={() => this.handleShowCamera(url)} />
+                            </Grid>
+                          );
+                        } else { return null; }
                       })}
                     </Grid>
                   </div>
