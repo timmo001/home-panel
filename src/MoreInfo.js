@@ -30,10 +30,15 @@ class MoreInfo extends React.Component {
     return (
       <Dialog
         open={data.open}
-        onClose={this.handleClose}
+        onClose={() => data.open = false}
         aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">{attributes.friendly_name}</DialogTitle>
         <DialogContent>
+          {attributes.brightness &&
+            <div>
+              {Number(attributes.brightness)}
+            </div>
+          }
         </DialogContent>
         <DialogActions>
         </DialogActions>
