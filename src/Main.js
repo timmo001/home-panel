@@ -13,6 +13,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import BrushIcon from '@material-ui/icons/Brush';
 import config from './config.json';
+import Camera from './Camera';
 
 const styles = theme => ({
   root: {
@@ -176,7 +177,7 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     overlayOpacity: 0.00,
-    cameraShow: false,
+    camera: { open: false, data: null },
   };
 
   componentWillMount = () => this.onMouseMoveHandler;
@@ -216,13 +217,13 @@ class Main extends React.Component {
     this.props.setTheme(value);
   });
 
-  handleShowCamera = (url) =>{
-    this.setState({cameraShow: true});
-  }
+  handleShowCamera = (name, still_url, url) => this.setState({
+    camera: { open: true, data: { name, still_url, url } }
+  });
 
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { anchorEl, moved, over } = this.state;
+    const { anchorEl, moved, over, camera } = this.state;
 
     const weather = {
       outdoor: {
@@ -346,11 +347,15 @@ class Main extends React.Component {
                             </Grid>
                           );
                         } else if (type === 'camera') {
-                          const { url } = card;
+                          const { name, url } = card;
                           const still_url = `${card.still_url}?${new Date().getTime()}`;
                           return (
                             <Grid key={y} className={classes.cameraContainer} item>
-                              <img className={classes.camera} src={still_url} onClick={() => this.handleShowCamera(url)} />
+                              <img
+                                className={classes.camera}
+                                src={still_url}
+                                alt={name}
+                                onClick={() => this.handleShowCamera(name, still_url, url)} />
                             </Grid>
                           );
                         } else { return null; }
@@ -362,6 +367,11 @@ class Main extends React.Component {
             })}
           </Grid>
         </div>
+        {camera.open &&
+          <Camera
+            data={camera}
+            handleClose={() => this.setState({ camera: { open: false } })} />
+        }
       </div>
     );
   }
