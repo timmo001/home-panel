@@ -252,14 +252,14 @@ class Main extends React.Component {
       right_indoor: []
     };
     config.header.left_outdoor_weather.data.map(d => {
-      header.left_outdoor_weather.data.push(
+      return header.left_outdoor_weather.data.push(
         this.getState(entities, d.entity_id, d.unit_of_measurement)
       );
     });
     config.header.right_indoor.map(i => {
       var data = [];
       i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
-      header.right_indoor.push({ label: i.label, data });
+      return header.right_indoor.push({ label: i.label, data });
     });
 
     return (
@@ -275,8 +275,8 @@ class Main extends React.Component {
               {header.left_outdoor_weather.condition}
             </Typography>
             <Typography className={classes.data} variant="display2">
-              {header.left_outdoor_weather.data.map(d => {
-                return <span>{d}</span>
+              {header.left_outdoor_weather.data.map((d, id) => {
+                return <span key={id}>{d}</span>
               })}
             </Typography>
           </div>
@@ -290,15 +290,15 @@ class Main extends React.Component {
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
-            {header.right_indoor.map(i => {
+            {header.right_indoor.map((i, id) => {
               return (
-                <div className={classes.indoorInnerContainer}>
+                <div key={id} className={classes.indoorInnerContainer}>
                   <Typography className={classes.indoorLabel} variant="display2">
                     {i.label}
                   </Typography>
                   <Typography className={classes.indoor} variant="display2">
-                    {i.data.map(d => {
-                      return <span>{d}</span>
+                    {i.data.map((d, id) => {
+                      return <span key={id}>{d}</span>
                     })}
                   </Typography>
                 </div>
