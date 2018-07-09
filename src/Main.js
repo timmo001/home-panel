@@ -25,7 +25,7 @@ const styles = theme => ({
   header: {
     display: 'block',
     width: '100%',
-    height: 160,
+    height: 180,
   },
   buttons: {
     position: 'fixed',
@@ -34,6 +34,7 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
+    top: 12,
     left: '50%',
     transform: 'translateX(-50%)',
   },
@@ -54,7 +55,7 @@ const styles = theme => ({
   weatherContainer: {
     position: 'fixed',
     maxWidth: 360,
-    top: 80,
+    top: 90,
     left: 0,
     transform: 'translateY(-50%)',
     textAlign: 'start',
@@ -85,10 +86,16 @@ const styles = theme => ({
   indoorContainer: {
     position: 'fixed',
     maxWidth: 360,
-    top: 84,
+    top: 94,
     right: 0,
     transform: 'translateY(-50%)',
     textAlign: 'end',
+  },
+  indoorInnerContainer: {
+    paddingTop: theme.spacing.unit,
+    '&:first-child': {
+      paddingTop: 0,
+    }
   },
   indoorLabel: {
     minWidth: 200,
@@ -285,7 +292,7 @@ class Main extends React.Component {
           <div className={classes.indoorContainer}>
             {header.right_indoor.map(i => {
               return (
-                <div>
+                <div className={classes.indoorInnerContainer}>
                   <Typography className={classes.indoorLabel} variant="display2">
                     {i.label}
                   </Typography>
