@@ -94,7 +94,7 @@ const styles = theme => ({
     minWidth: 200,
     paddingRight: theme.spacing.unit * 8,
     color: theme.palette.defaultText.main,
-    fontSize: '2.4rem',
+    fontSize: '2.2rem',
   },
   indoor: {
     minWidth: 200,
