@@ -76,7 +76,7 @@ const styles = theme => ({
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing.unit * 3,
     },
     '& span:first-child': {
       paddingLeft: 0,
@@ -102,7 +102,7 @@ const styles = theme => ({
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing.unit * 3,
     },
     '& span:first-child': {
       paddingLeft: 0,
