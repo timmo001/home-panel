@@ -20,6 +20,7 @@ const styles = theme => ({
     position: 'absolute',
     height: '100%',
     width: '100%',
+    cursor: 'pointer',
   },
   cameraOverlay: {
     position: 'fixed',
@@ -35,10 +36,13 @@ class Camera extends React.Component {
     const { data } = this.props.data;
     return (
       <Dialog open fullScreen>
-        <div className={classes.camera}>
-          <iframe className={classes.cameraContent} title={data.title} src={data.url} scrolling="no" frameBorder="0" />
+        <div className={classes.camera} >
+          <img
+            className={classes.cameraContent}
+            onClick={handleClose}
+            src={data.url}
+            alt={data.title} />
         </div>
-        <div className={classes.cameraOverlay} onClick={handleClose} />
       </Dialog>
     );
   }
