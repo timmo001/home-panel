@@ -21,18 +21,36 @@ A touch-compatible web-app for controlling the home.
     "ssl": true
   },
   "theme": {},
-  "weather": {
-    "outdoor": {
+  "header": {
+    "left_outdoor_weather": {
       "dark_sky_icon": "sensor.dark_sky_icon",
       "condition": "sensor.pws_weather",
-      "temperature": "sensor.pws_temp_c",
-      "humidity": "sensor.pws_relative_humidity"
+      "data": [
+        {
+          "entity_id": "sensor.pws_temp_c",
+          "unit_of_measurement": "°C"
+        },
+        {
+          "entity_id": "sensor.pws_relative_humidity",
+          "unit_of_measurement": "%"
+        }
+      ]
     },
-    "indoor": {
-      "label": "Living Room",
-      "temperature": "sensor.dht22001_temperature",
-      "humidity": "sensor.dht22001_humidity"
-    }
+    "right_indoor": [
+      {
+        "label": "Living Room",
+        "data": [
+          {
+            "entity_id": "sensor.dht22_01_temperature",
+            "unit_of_measurement": "°C"
+          },
+          {
+            "entity_id": "sensor.dht22_01_humidity",
+            "unit_of_measurement": "%"
+          }
+        ]
+      }
+    ]
   },
   "items": [
     {
