@@ -156,6 +156,7 @@ const styles = theme => ({
     position: 'relative',
     width: '100%',
     padding: theme.spacing.unit / 2,
+    cursor: 'pointer',
   },
   camera: {
     width: '100%',
