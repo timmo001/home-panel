@@ -71,13 +71,16 @@ const styles = theme => ({
     width: '190px !important',
     height: '90px !important',
   },
-  temperature: {
+  data: {
     paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
-  },
-  humidity: {
-    paddingLeft: theme.spacing.unit * 4,
+    '& span': {
+      paddingLeft: theme.spacing.unit * 4,
+    },
+    '& span:first-child': {
+      paddingLeft: 0,
+    }
   },
   indoorContainer: {
     position: 'fixed',
@@ -98,6 +101,12 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 8,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
+    '& span': {
+      paddingLeft: theme.spacing.unit * 4,
+    },
+    '& span:first-child': {
+      paddingLeft: 0,
+    }
   },
   gridContainer: {
     height: `calc(100% - 160px)`,
@@ -226,19 +235,25 @@ class Main extends React.Component {
     const { classes, entities, theme, handleChange } = this.props;
     const { anchorEl, moved, over, camera } = this.state;
 
-    const weather = {
-      outdoor: {
-        icon: this.getState(entities, config.weather.outdoor.dark_sky_icon).replaceAll('-', '_').toUpperCase(),
-        condition: this.getState(entities, config.weather.outdoor.condition),
-        temperature: this.getState(entities, config.weather.outdoor.temperature, '°C'),
-        humidity: this.getState(entities, config.weather.outdoor.humidity, '%')
+    const header = {
+      left_outdoor_weather: {
+        icon: this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon)
+          .replaceAll('-', '_').toUpperCase(),
+        condition: this.getState(entities, config.header.left_outdoor_weather.condition),
+        data: []
       },
-      indoor: {
-        label: config.weather.indoor.label,
-        temperature: this.getState(entities, config.weather.indoor.temperature, '°C'),
-        humidity: this.getState(entities, config.weather.indoor.humidity, '%'),
-      }
+      right_indoor: []
     };
+    config.header.left_outdoor_weather.data.map(d => {
+      header.left_outdoor_weather.data.push(
+        this.getState(entities, d.entity_id, d.unit_of_measurement)
+      );
+    });
+    config.header.right_indoor.map(i => {
+      var data = [];
+      i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+      header.right_indoor.push({ label: i.label, data });
+    });
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -248,13 +263,14 @@ class Main extends React.Component {
               <Skycons
                 className={classes.weatherIcon}
                 color={theme.palette.defaultText.light}
-                icon={weather.outdoor.icon}
+                icon={header.left_outdoor_weather.icon}
                 autoplay={true} />
-              {weather.outdoor.condition}
+              {header.left_outdoor_weather.condition}
             </Typography>
-            <Typography className={classes.temperature} variant="display2">
-              {weather.outdoor.temperature}
-              <span className={classes.humidity}>{weather.outdoor.humidity}</span>
+            <Typography className={classes.data} variant="display2">
+              {header.left_outdoor_weather.data.map(d => {
+                return <span>{d}</span>
+              })}
             </Typography>
           </div>
           <div className={classes.timeDateContainer}>
@@ -267,13 +283,20 @@ class Main extends React.Component {
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
-            <Typography className={classes.indoorLabel} variant="display2">
-              {weather.indoor.label}
-            </Typography>
-            <Typography className={classes.indoor} variant="display2">
-              {weather.indoor.temperature}
-              <span className={classes.humidity}>{weather.indoor.humidity}</span>
-            </Typography>
+            {header.right_indoor.map(i => {
+              return (
+                <div>
+                  <Typography className={classes.indoorLabel} variant="display2">
+                    {i.label}
+                  </Typography>
+                  <Typography className={classes.indoor} variant="display2">
+                    {i.data.map(d => {
+                      return <span>{d}</span>
+                    })}
+                  </Typography>
+                </div>
+              );
+            })}
           </div>
           {(moved || over) &&
             <div
