@@ -156,10 +156,10 @@ const styles = theme => ({
     position: 'relative',
     width: '100%',
     padding: theme.spacing.unit / 2,
-    cursor: 'pointer',
   },
   camera: {
     width: '100%',
+    height: '100%',
   }
 });
 
@@ -352,11 +352,13 @@ class Main extends React.Component {
                           const still_url = `${card.still_url}?${new Date().getTime()}`;
                           return (
                             <Grid key={y} className={classes.cameraContainer} item>
-                              <img
-                                className={classes.camera}
-                                src={still_url}
-                                alt={name}
-                                onClick={() => this.handleShowCamera(name, still_url, url)} />
+                              <Card className={classes.card} elevation={1}>
+                                <img
+                                  className={classes.camera}
+                                  src={still_url}
+                                  alt={name}
+                                  onClick={() => this.handleShowCamera(name, still_url, url)} />
+                              </Card>
                             </Grid>
                           );
                         } else { return null; }
