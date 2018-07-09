@@ -62,7 +62,7 @@ const styles = theme => ({
   condition: {
     paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.defaultText.main,
-    fontSize: '3.2rem',
+    fontSize: '3.0rem',
   },
   weatherIcon: {
     position: 'fixed',
