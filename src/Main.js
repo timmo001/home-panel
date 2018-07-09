@@ -244,6 +244,11 @@ class Main extends React.Component {
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
+  handleButtonPress = (entity) => this.buttonPressTimer =
+    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }), 1000);
+
+  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
+
   render() {
     const { classes, entities, theme, handleChange } = this.props;
     const { anchorEl, moved, over, camera, moreInfo } = this.state;
@@ -356,8 +361,8 @@ class Main extends React.Component {
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
                         if (type === 'hass') {
-                          const { entity_id, state, attributes } =
-                            entities.find(i => { return i[1].entity_id === card.entity_id })[1];
+                          const entity = entities.find(i => { return i[1].entity_id === card.entity_id })[1];
+                          const { entity_id, state, attributes } = entity;
                           const domain = entity_id.substring(0, entity_id.indexOf('.'));
                           return (
                             <Grid key={y} className={classes.cardContainer} item>
