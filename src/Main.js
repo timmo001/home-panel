@@ -249,6 +249,11 @@ class Main extends React.Component {
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
+  handleButtonPress = (entity) => this.buttonPressTimer =
+    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
+
+  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
+
   render() {
     const { classes, entities, theme, handleChange } = this.props;
     const { anchorEl, moved, over, camera, moreInfo } = this.state;
