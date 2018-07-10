@@ -1,6 +1,7 @@
 # Home Panel
 
 [![pipeline status](https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg)](https://gitlab.com/timmo/home-panel/commits/master)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/timmo001/home-panel.svg?columns=To%20Do,On%20Hold,In%20Progress,Done)](https://waffle.io/timmo001/home-panel)
 
 A touch-compatible web-app for controlling the home.
 
@@ -70,4 +71,5 @@ A touch-compatible web-app for controlling the home.
       ]
     }
   ]
-}```
+}
+```
