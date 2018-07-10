@@ -140,19 +140,9 @@ class Main extends React.Component {
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
-  handleButtonPress = (entity) => this.buttonPressTimer =
-    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
-
-  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
-
-  handleButtonPress = (entity) => this.buttonPressTimer =
-    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
-
-  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
-
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { anchorEl, moved, over, camera, moreInfo } = this.state;
+    const { moved, over, camera, moreInfo } = this.state;
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -212,12 +202,6 @@ class Main extends React.Component {
                                   }
                                 </CardContent>
                               </Card>
-                              {moreInfo.open &&
-                                <MoreInfo
-                                  theme={theme}
-                                  data={moreInfo}
-                                  handleChange={handleChange} />
-                              }
                             </Grid>
                           );
                         } else if (type === 'camera') {
@@ -247,6 +231,12 @@ class Main extends React.Component {
           <Camera
             data={camera}
             handleClose={() => this.setState({ camera: { open: false } })} />
+        }
+        {moreInfo.open &&
+          <MoreInfo
+            theme={theme}
+            data={moreInfo}
+            handleChange={handleChange} />
         }
       </div>
     );
