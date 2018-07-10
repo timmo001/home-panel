@@ -162,7 +162,8 @@ class Main extends React.Component {
           moved={moved}
           over={over}
           handleMouseOver={this.onMouseMoveHandler}
-          handleMouseLeave={this.onMouseLeaveHandler} />
+          handleMouseLeave={this.onMouseLeaveHandler}
+          setTheme={this.props.setTheme} />
         <div className={classes.gridContainer}>
           <Grid
             container

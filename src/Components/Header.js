@@ -228,6 +228,7 @@ Header.propTypes = {
   over: PropTypes.bool.isRequired,
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);
