@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import config from './config.json';
-import Camera from './Camera';
+import Camera from './Components/Camera';
 import Header from './Components/Header';
 
 const styles = theme => ({
