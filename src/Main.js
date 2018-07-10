@@ -97,10 +97,7 @@ class Main extends React.Component {
     hovered: false,
     overlayOpacity: 0.00,
     camera: { open: false, data: null },
-    moreInfo: {
-      open: false,
-      entity: null,
-    },
+    moreInfo: { open: false, entity: null, },
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -227,12 +224,12 @@ class Main extends React.Component {
             })}
           </Grid>
         </div>
-        {camera.open &&
+        {camera.data && camera.open &&
           <Camera
             data={camera}
             handleClose={() => this.setState({ camera: { open: false } })} />
         }
-        {moreInfo.open &&
+        {moreInfo.entity && moreInfo.open &&
           <MoreInfo
             theme={theme}
             data={moreInfo}

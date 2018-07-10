@@ -37,6 +37,8 @@ class MoreInfo extends React.Component {
           {attributes.brightness &&
             <div>
               {Number(attributes.brightness)}
+
+              {Number(attributes.color_temp)}
             </div>
           }
         </DialogContent>
