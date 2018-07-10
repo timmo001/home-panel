@@ -96,6 +96,10 @@ class Main extends React.Component {
     hovered: false,
     overlayOpacity: 0.00,
     camera: { open: false, data: null },
+    moreInfo: {
+      open: false,
+      entity: null,
+    },
   };
 
   getState = (entities, entity, endAdornment = '') => {
@@ -131,9 +135,50 @@ class Main extends React.Component {
     camera: { open: true, data: { name, still_url, url } }
   });
 
+  handleClick = event => this.setState({ anchorEl: event.currentTarget });
+
+  handleClose = (value) => this.setState({ anchorEl: null }, () => {
+    this.props.setTheme(value);
+  });
+
+  handleButtonPress = (entity) => this.buttonPressTimer =
+    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
+
+  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
+
+  handleButtonPress = (entity) => this.buttonPressTimer =
+    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
+
+  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
+
+  handleButtonPress = (entity) => this.buttonPressTimer =
+    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
+
+  handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
+
   render() {
     const { classes, entities, theme, handleChange } = this.props;
-    const { moved, over, camera } = this.state;
+    const { anchorEl, moved, over, camera, moreInfo } = this.state;
+
+    const header = {
+      left_outdoor_weather: {
+        icon: this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon)
+          .replaceAll('-', '_').toUpperCase(),
+        condition: this.getState(entities, config.header.left_outdoor_weather.condition),
+        data: []
+      },
+      right_indoor: []
+    };
+    config.header.left_outdoor_weather.data.map(d => {
+      return header.left_outdoor_weather.data.push(
+        this.getState(entities, d.entity_id, d.unit_of_measurement)
+      );
+    });
+    config.header.right_indoor.map(i => {
+      var data = [];
+      i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+      return header.right_indoor.push({ label: i.label, data });
+    });
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -163,8 +208,8 @@ class Main extends React.Component {
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
                         if (type === 'hass') {
-                          const { entity_id, state, attributes } =
-                            entities.find(i => { return i[1].entity_id === card.entity_id })[1];
+                          const entity = entities.find(i => { return i[1].entity_id === card.entity_id })[1];
+                          const { entity_id, state, attributes } = entity;
                           const domain = entity_id.substring(0, entity_id.indexOf('.'));
                           return (
                             <Grid key={y} className={classes.cardContainer} item>
@@ -176,7 +221,11 @@ class Main extends React.Component {
                                   handleChange(domain, state === 'on' ? false : true, { entity_id });
                                 else if (domain === 'scene' || domain === 'script')
                                   handleChange(domain, true, { entity_id });
-                              }}>
+                              }}
+                                onTouchStart={() => this.handleButtonPress(entity)}
+                                onMouseDown={() => this.handleButtonPress(entity)}
+                                onTouchEnd={this.handleButtonRelease}
+                                onMouseUp={this.handleButtonRelease}>
                                 <CardContent className={classes.cardContent}>
                                   <Typography className={classes.name} variant="headline">
                                     {card.name ? card.name : attributes.friendly_name}
@@ -188,6 +237,12 @@ class Main extends React.Component {
                                   }
                                 </CardContent>
                               </Card>
+                              {moreInfo.open &&
+                                <MoreInfo
+                                  theme={theme}
+                                  data={moreInfo}
+                                  handleChange={handleChange} />
+                              }
                             </Grid>
                           );
                         } else if (type === 'camera') {
