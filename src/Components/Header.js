@@ -106,9 +106,16 @@ const styles = theme => ({
   },
 });
 
-class Camera extends React.Component {
+class Header extends React.Component {
   state = {
     anchorEl: null,
+  };
+
+  getState = (entities, entity, endAdornment = '') => {
+    const state = entities.find(i => {
+      return i[1].entity_id === entity;
+    })[1].state;
+    return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -213,15 +220,14 @@ class Camera extends React.Component {
   }
 }
 
-Camera.propTypes = {
+Header.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
-  moved: PropTypes.object.isRequired,
-  over: PropTypes.object.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  moved: PropTypes.bool.isRequired,
+  over: PropTypes.bool.isRequired,
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Camera);
+export default withStyles(styles)(Header);

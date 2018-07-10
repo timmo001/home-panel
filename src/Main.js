@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import config from './config.json';
 import Camera from './Components/Camera';
 import Header from './Components/Header';
+import MoreInfo from './Components/MoreInfo';
 
 const styles = theme => ({
   root: {
@@ -102,13 +103,6 @@ class Main extends React.Component {
     },
   };
 
-  getState = (entities, entity, endAdornment = '') => {
-    const state = entities.find(i => {
-      return i[1].entity_id === entity;
-    })[1].state;
-    return !state || state === 'unknown' ? '' : state + endAdornment;
-  };
-
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (themeId) => {
@@ -159,26 +153,6 @@ class Main extends React.Component {
   render() {
     const { classes, entities, theme, handleChange } = this.props;
     const { anchorEl, moved, over, camera, moreInfo } = this.state;
-
-    const header = {
-      left_outdoor_weather: {
-        icon: this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon)
-          .replaceAll('-', '_').toUpperCase(),
-        condition: this.getState(entities, config.header.left_outdoor_weather.condition),
-        data: []
-      },
-      right_indoor: []
-    };
-    config.header.left_outdoor_weather.data.map(d => {
-      return header.left_outdoor_weather.data.push(
-        this.getState(entities, d.entity_id, d.unit_of_measurement)
-      );
-    });
-    config.header.right_indoor.map(i => {
-      var data = [];
-      i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
-      return header.right_indoor.push({ label: i.label, data });
-    });
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
