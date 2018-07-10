@@ -91,14 +91,12 @@ String.prototype.replaceAll = function (search, replacement) {
 
 class Main extends React.Component {
   state = {
-    moved: true,
+    moved: false,
     over: false,
     hovered: false,
     overlayOpacity: 0.00,
     camera: { open: false, data: null },
   };
-
-  componentWillMount = () => this.onMouseMoveHandler;
 
   getState = (entities, entity, endAdornment = '') => {
     const state = entities.find(i => {
@@ -139,7 +137,6 @@ class Main extends React.Component {
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
-
         <Header
           entities={entities}
           theme={theme}
@@ -147,7 +144,6 @@ class Main extends React.Component {
           over={over}
           handleMouseOver={this.onMouseMoveHandler}
           handleMouseLeave={this.onMouseLeaveHandler} />
-
         <div className={classes.gridContainer}>
           <Grid
             container
