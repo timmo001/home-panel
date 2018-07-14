@@ -45,6 +45,7 @@ const styles = theme => ({
   },
   gridInner: {
     width: '100%',
+    paddingBottom: theme.spacing.unit * 3,
   },
   cardContainer: {
     position: 'relative',
