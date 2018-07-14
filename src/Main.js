@@ -97,8 +97,6 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     overlayOpacity: 0.00,
-    camera: { open: false, data: null },
-    moreInfo: { open: false, entity: null, },
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -124,7 +122,7 @@ class Main extends React.Component {
   onMouseLeaveHandler = () => this.setState({ over: false });
 
   handleShowCamera = (name, still_url, url) => this.setState({
-    camera: { open: true, data: { name, still_url, url } }
+    camera: { name, still_url, url }
   });
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -134,11 +132,16 @@ class Main extends React.Component {
   });
 
   handleButtonPress = (entity) => this.buttonPressTimer =
-    setTimeout(() => this.setState({ moreInfo: { open: true, entity } }, () => { console.log('open') }), 1000);
+    setTimeout(() => this.setState({ moreInfo: entity }, () => { console.log('open', this.state.moreInfo) }), 1000);
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
+  handleCameraClose = () => this.setState({ camera: undefined }, () => console.log('camera:', this.state.camera));
+
+  handleMoreInfoClose = () => this.setState({ moreInfo: undefined }, () => console.log('moreInfo:', this.state.moreInfo));
+
   render() {
+    const { handleCameraClose, handleMoreInfoClose } = this;
     const { classes, entities, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo } = this.state;
 
@@ -225,16 +228,17 @@ class Main extends React.Component {
             })}
           </Grid>
         </div>
-        {camera.data && camera.open &&
+        {camera &&
           <Camera
             data={camera}
-            handleClose={() => this.setState({ camera: { open: false } })} />
+            handleClose={handleCameraClose} />
         }
-        {moreInfo.entity && moreInfo.open &&
+        {moreInfo &&
           <MoreInfo
             theme={theme}
             data={moreInfo}
-            handleChange={handleChange} />
+            handleChange={handleChange}
+            handleClose={handleMoreInfoClose} />
         }
       </div>
     );
