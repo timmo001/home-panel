@@ -73,14 +73,14 @@ class MoreInfo extends React.Component {
     return (
       <Dialog
         open={open}
-        onClose={() => this.handleClose}
+        onClose={() => this.handleClose()}
         aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">
           {attributes.friendly_name}
           <IconButton
             className={classes.button}
             aria-label="Close"
-            onClick={() => this.handleClose}>
+            onClick={() => this.handleClose()}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
