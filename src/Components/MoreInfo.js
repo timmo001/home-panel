@@ -94,8 +94,8 @@ class MoreInfo extends React.Component {
                 min={1}
                 max={255}
                 step={1}
-                onChange={(e, brightness) => {
-                  this.setState({ brightness });
+                onChange={(e, value) => {
+                  this.setState({ brightness: value });
                 }}
                 onDragEnd={() => {
                   handleChange(domain, true, {
@@ -114,8 +114,8 @@ class MoreInfo extends React.Component {
                 min={attributes.min_mireds}
                 max={attributes.max_mireds}
                 step={1}
-                onChange={(e, color_temp) => {
-                  this.setState({ color_temp });
+                onChange={(e, value) => {
+                  this.setState({ color_temp: value });
                 }}
                 onDragEnd={() => {
                   handleChange(domain, true, {
