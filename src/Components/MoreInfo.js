@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
-import { SwatchesPicker } from 'react-color';
+import { CirclePicker } from 'react-color';
 
 const styles = theme => ({
   button: {
@@ -25,12 +25,9 @@ const styles = theme => ({
     margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
     minWidth: 120,
   },
-  swatches: {
-    '&div': {
-      background: 'transparent !imporatant',
-      boxShadow: 'none !imporatant',
-    },
-  },
+  picker: {
+    marginTop: theme.spacing.unit * 2,
+  }
 });
 
 // eslint-disable-next-line
@@ -151,8 +148,9 @@ class MoreInfo extends React.Component {
           }
           {attributes.rgb_color &&
             <FormControl className={classes.formControl}>
-              <SwatchesPicker
-                className={classes.swatches}
+              <CirclePicker
+                className={classes.picker}
+                circleSize={36}
                 onChangeComplete={(color) => handleChange(domain, true, {
                   entity_id,
                   rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
