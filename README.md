@@ -7,10 +7,48 @@ A touch-compatible web-app for controlling the home.
 
 ## Setup
 
+### Docker
+
 - Lorem Ipsum
 - Lorem Ipsum
 - Lorem Ipsum
 - Lorem Ipsum
+
+### Node JS
+
+- Clone this repository
+- Checkout the version you want via releases
+- Copy `config.template.json` into `src/config.json`
+
+  ```cp config.template.json src/config.json```
+
+- Update `src/config.json` to your configuration. (See below)
+
+- Install packages
+
+  ```yarn install```
+
+- Build a production version
+
+  ```yarn build```
+
+#### Development
+
+- Run the app
+  
+  ```yarn start```
+
+- The app should open in your default browser under ```http://localhost:3000```
+
+#### Production - Quick and easy (Not Secure)
+
+- Install serve
+
+  ```sudo yarn global add serve```
+
+- Serve the site
+
+```serve -s build```
 
 ## Starter Template
 
