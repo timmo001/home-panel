@@ -2,37 +2,28 @@
 FROM node:alpine as build
 
 # Copy files
-COPY . /usr/src/build
+COPY . /usr/src/app
 
 # Set working directory as build dir
-WORKDIR /usr/src/build
+WORKDIR /usr/src/app
 
 # Copy config
 COPY /config.json ./src/
 
 # Install deps and build
 RUN yarn install && yarn cache clean
-RUN yarn run build --production
-
-# # Create app dir
-# RUN mkdir /usr/src/app
-
-# # Copy files
-# COPY ./build/. /usr/src/app
+RUN yarn build --production
 
 # # Delete build files
 # RUN rm -rf *
 
-# # Move to nginx:alpine
-# FROM nginx:alpine
+# Move to nginx:alpine
+FROM nginx:alpine
 
-# COPY --from=build /usr/src/app /usr/share/nginx/html
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
-# # Set working directory as app dir
-# WORKDIR /usr/src/app
+# Expose outbound port
+EXPOSE 80
 
-# # Expose outbound port
-# EXPOSE 80
-
-# # Set run CMD
-# CMD ["nginx", "-g", "daemon off;"]
+# Set run CMD
+CMD ["nginx", "-g", "daemon off;"]
