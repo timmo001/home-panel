@@ -7,6 +7,19 @@
 
 A touch-compatible web-app for controlling the home.
 
+![Light Theme Screenshot](/docs/resources/light-theme.png "Light Theme Screenshot")
+
+![Dark Theme Screenshot](/docs/resources/dark-theme.png "Dark Theme Screenshot")
+
+![More Info Screenshot](/docs/resources/more-info.png "More Info Screenshot")
+
+---
+
+## Features
+
+- Supports and can be used as alternate frontend for [Home Assistant](https://www.home-assistant.io/)
+- Supports MJPEG and related image-based 
+
 ---
 
 ## Setup
