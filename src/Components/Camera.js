@@ -32,13 +32,13 @@ const styles = theme => ({
 class Camera extends React.Component {
 
   render() {
-    const { classes,data } = this.props;
+    const { classes, data, handleClose } = this.props;
     return (
       <Dialog open fullScreen>
         <div className={classes.camera} >
           <img
             className={classes.cameraContent}
-            onClick={() => this.handleClose}
+            onClick={() => handleClose()}
             src={data.url}
             alt={data.title} />
         </div>
