@@ -18,7 +18,9 @@ A touch-compatible web-app for controlling the home.
 ## Features
 
 - Supports and can be used as alternate frontend for [Home Assistant](https://www.home-assistant.io/)
-- Supports MJPEG and related image-based 
+- Supports MJPEG and related image-based camera/image feeds
+- Add weather and weather icons using Home Assistant's [Dark Sky](https://www.home-assistant.io/components/weather.darksky/) component
+- Made for touch screens with a sideways scrolling Material Design interface. (Compatible with deskops also)
 
 ---
 
