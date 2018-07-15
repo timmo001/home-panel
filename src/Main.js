@@ -132,13 +132,13 @@ class Main extends React.Component {
   });
 
   handleButtonPress = (entity) => this.buttonPressTimer =
-    setTimeout(() => this.setState({ moreInfo: entity }, () => { console.log('open', this.state.moreInfo) }), 1000);
+    setTimeout(() => this.setState({ moreInfo: entity }), 1000);
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
-  handleCameraClose = () => this.setState({ camera: undefined }, () => console.log('camera:', this.state.camera));
+  handleCameraClose = () => this.setState({ camera: undefined });
 
-  handleMoreInfoClose = () => this.setState({ moreInfo: undefined }, () => console.log('moreInfo:', this.state.moreInfo));
+  handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
     const { handleCameraClose, handleMoreInfoClose } = this;
