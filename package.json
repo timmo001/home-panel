@@ -9,15 +9,14 @@
     "@mdi/font": "^2.5.94",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^2.0.1",
-    "material-ui-rc-color-picker": "^1.0.4",
     "moment": "^2.22.2",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-color": "^2.14.1",
     "react-dom": "^16.4.1",
     "react-moment": "^0.7.9",
     "react-scripts": "^1.1.4",
     "react-skycons": "^0.7.0",
-    "superagent": "^3.8.3",
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {
