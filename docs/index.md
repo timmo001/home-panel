@@ -9,10 +9,7 @@ A touch-compatible web-app for controlling the home.
 
 ### Docker
 
-- Lorem Ipsum
-- Lorem Ipsum
-- Lorem Ipsum
-- Lorem Ipsum
+- TBD
 
 ### Node JS
 
@@ -34,13 +31,17 @@ A touch-compatible web-app for controlling the home.
 
 #### Development
 
+> **This option is not secure. Do not open to the outside world!**
+
 - Run the app
   
   ```yarn start```
 
-- The app should open in your default browser under ```http://localhost:3000```
+- The app should open in your default browser under `http://localhost:3000`
 
-#### Production - Quick and easy (Not Secure)
+#### Production - Quick and easy
+
+> **This option is not secure. Do not open to the outside world!**
 
 - Install serve
 
@@ -48,7 +49,13 @@ A touch-compatible web-app for controlling the home.
 
 - Serve the site
 
-```serve -s build```
+  ```serve -s build```
+
+- Open the app in your browser at `http://localhost:5000`
+
+#### Production - Secure
+
+- TBD
 
 ## Starter Template
 
