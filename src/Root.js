@@ -69,6 +69,7 @@ class Root extends Component {
   }
 
   handleChange = (domain, state, data = undefined) => {
+    console.log('Change:', domain, state, data);
     createConnection(`${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
