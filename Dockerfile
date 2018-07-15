@@ -14,8 +14,8 @@ COPY /config.json ./src/
 RUN yarn install && yarn cache clean
 RUN yarn build --production
 
-# # Delete build files
-# RUN rm -rf *
+# Delete source files
+RUN find . -maxdepth 1 \! \( -name build -o -name . \) -exec rm -rf '{}' \;
 
 # Move to nginx:alpine
 FROM nginx:alpine
