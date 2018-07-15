@@ -53,7 +53,7 @@ A touch-compatible web-app for controlling the home.
 > **This option is not secure. Do not open to the outside world!**
 
 - Run the app
-  
+
   ```yarn start```
 
 - The app should open in your default browser under `http://localhost:3000`
