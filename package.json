@@ -3,16 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "^1.1.0",
-    "@material-ui/lab": "^1.0.0-alpha.5",
-    "@mdi/font": "^2.4.85",
+    "@material-ui/lab": "^1.0.0-alpha.6",
+    "@mdi/font": "^2.5.94",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^2.0.1",
     "material-ui-rc-color-picker": "^1.0.4",
     "moment": "^2.22.2",
     "react": "^16.4.1",
+    "react-color": "^2.14.1",
     "react-dom": "^16.4.1",
-    "react-moment": "^0.7.7",
+    "react-moment": "^0.7.9",
     "react-scripts": "^1.1.4",
     "react-skycons": "^0.7.0",
     "superagent": "^3.8.3",
@@ -25,7 +27,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint": "^5.0.1",
-    "eslint-config-google": "^0.9.1"
+    "eslint": "^5.1.0",
+    "eslint-plugin-react": "^7.10.0"
   }
 }
