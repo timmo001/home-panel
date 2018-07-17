@@ -36,7 +36,7 @@ A touch-compatible web-app for controlling the home.
 
 - Clone this repository
 - Checkout the version you want via releases
-- Copy `config.template.json` into `src/config.json`
+- Rename `config.template.json` to `config.json`
 
   ```cp config.template.json src/config.json```
 
@@ -46,19 +46,13 @@ A touch-compatible web-app for controlling the home.
 
   ```yarn install```
 
+- Copy or symlink `config.json` into `node_modules/config.json`
+
+```cp config.json node_modules``` OR ```ln -s config.json node_modules```
+
 - Build a production version
 
   ```yarn build```
-
-#### Development
-
-> **This option is not secure. Do not open to the outside world!**
-
-- Run the app
-
-  ```yarn start```
-
-- The app should open in your default browser under `http://localhost:3000`
 
 #### Production - Quick and easy
 
@@ -78,11 +72,22 @@ A touch-compatible web-app for controlling the home.
 
 - TBD
 
+#### Development
+
+> **This option is not secure. Do not open to the outside world!**
+
+- Run the app
+
+  ```yarn start```
+
+- The app should open in your default browser under `http://localhost:3000`
+
 ---
 
 ## Starter Template
 
 ```json
+
 {
   "home_assistant": {
     "host": "hassio.local:8123",
@@ -140,6 +145,7 @@ A touch-compatible web-app for controlling the home.
     }
   ]
 }
+
 ```
 
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
