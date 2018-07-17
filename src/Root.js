@@ -4,7 +4,7 @@ import { createConnection, subscribeEntities } from 'home-assistant-js-websocket
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
-import config from './config.json';
+import config from 'config.json';
 import Main from './Main';
 
 const styles = theme => ({
