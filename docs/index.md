@@ -48,7 +48,7 @@ A touch-compatible web-app for controlling the home.
 
 - Copy `config.json` into `node_modules/config.json`
 
-```cp config.json node_modules```
+```cp config.json node_modules/```
 
 - Build a production version
 
