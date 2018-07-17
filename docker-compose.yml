@@ -8,4 +8,6 @@ services:
     environment:
       NODE_ENV: production
     ports:
-      - 8234:80
+      - 8234:443
+    volumes:
+      - ~/ssl:/ssl
