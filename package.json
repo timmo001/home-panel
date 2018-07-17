@@ -8,6 +8,8 @@
     "@material-ui/lab": "^1.0.0-alpha.6",
     "@mdi/font": "^2.5.94",
     "classnames": "^2.2.6",
+    "dotenv": "^6.0.0",
+    "dotenv-expand": "^4.2.0",
     "home-assistant-js-websocket": "^2.0.1",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",

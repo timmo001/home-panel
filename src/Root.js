@@ -4,7 +4,7 @@ import { createConnection, subscribeEntities } from 'home-assistant-js-websocket
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
-import config from 'config.json';
+// import config from 'config.json';
 import Main from './Main';
 
 const styles = theme => ({
@@ -52,9 +52,9 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    console.log(`Connect to ${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`);
-    if (config.home_assistant.host) {
-      createConnection(`${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
+    if (process.env.HASS_HOST) {
+      console.log(`Connect to ${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`);
+      createConnection(`${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`, { authToken: process.env.HASS_PASSWORD })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
@@ -70,7 +70,7 @@ class Root extends Component {
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    createConnection(`${config.home_assistant.ssl ? 'wss' : 'ws'}://${config.home_assistant.host}/api/websocket?latest`, { authToken: config.home_assistant.password })
+    createConnection(`${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`, { authToken: process.env.HASS_PASSWORD })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
@@ -94,21 +94,21 @@ class Root extends Component {
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      if (config.theme.auto) {
-        const state = this.state.entities.find(entity => {
-          return entity[0] === config.theme.auto.sensor
-        })[1].state;
-        this.props.setTheme(state <= config.theme.auto.below ? 1 : 0);
-      } else {
-        // theme from sunlight
-        const sun = this.state.entities.find(entity => {
-          return entity[0] === 'sun.sun'
-        });
-        if (sun)
-          this.props.setTheme(sun[1].state === 'below_horizon' ? 1 : 0);
-        else
-          this.props.setTheme(0);
-      }
+      // if (config.theme.auto) {
+      //   const state = this.state.entities.find(entity => {
+      //     return entity[0] === config.theme.auto.sensor
+      //   })[1].state;
+      //   this.props.setTheme(state <= config.theme.auto.below ? 1 : 0);
+      // } else {
+      // theme from sunlight
+      const sun = this.state.entities.find(entity => {
+        return entity[0] === 'sun.sun'
+      });
+      if (sun)
+        this.props.setTheme(sun[1].state === 'below_horizon' ? 1 : 0);
+      else
+        this.props.setTheme(0);
+      // }
     } else
       this.props.setTheme(themeId);
     localStorage.setItem('theme', themeId);

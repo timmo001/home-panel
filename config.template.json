@@ -1,9 +1,4 @@
 {
-  "home_assistant": {
-    "host": "hassio.local:8123",
-    "password": "password",
-    "ssl": true
-  },
   "theme": {},
   "header": {
     "left_outdoor_weather": {
