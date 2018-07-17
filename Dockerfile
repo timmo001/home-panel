@@ -22,8 +22,25 @@ FROM nginx:alpine
 
 COPY --from=build /usr/src/app/build /usr/share/nginx/html
 
+# Add SSL enabled config
+RUN echo "server {\
+  listen 80 default_server;\
+  listen [::]:80 default_server;\
+  listen 443 ssl http2 default_server;\
+  listen [::]:443 ssl http2 default_server;\
+  root /usr/share/nginx/html;\
+  index index.html;\
+  server_name 172.0.0.1;\
+  ssl_certificate /ssl/fullchain.pem;\
+  ssl_certificate_key /ssl/privkey.pem;\
+  location / {\
+    try_files \$uri /index.html;\
+  }\
+}" > /etc/nginx/conf.d/default.conf
+
 # Expose outbound port
 EXPOSE 80
+EXPOSE 443
 
 # Set run CMD
 CMD ["nginx", "-g", "daemon off;"]
