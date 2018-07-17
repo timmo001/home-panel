@@ -36,11 +36,14 @@ A touch-compatible web-app for controlling the home.
 
 - Clone this repository
 - Checkout the version you want via releases
+
+- Copy `.env` to `.env.local` and update it to use your Home Assistant info
+
 - Rename `config.template.json` to `config.json`
 
   ```cp config.template.json src/config.json```
 
-- Update `src/config.json` to your configuration. (See below)
+- Update `src/config.json` to your configuration. (See below for sample and options)
 
 - Install packages
 
@@ -54,7 +57,7 @@ A touch-compatible web-app for controlling the home.
 
   ```yarn build```
 
-#### Production - Quick and easy
+#### Production
 
 > **This option is not secure. Do not open to the outside world!**
 
