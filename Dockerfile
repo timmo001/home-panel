@@ -7,11 +7,13 @@ COPY . /usr/src/app
 # Set working directory as build dir
 WORKDIR /usr/src/app
 
-# Copy config
-COPY /config.json ./src/
-
-# Install deps and build
+# Install dependencies
 RUN yarn install && yarn cache clean
+
+# Copy config
+COPY /config.json ./node_modules/
+
+# Build app
 RUN yarn build --production
 
 # Delete source files
