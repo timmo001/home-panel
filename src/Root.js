@@ -52,9 +52,9 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    if (process.env.HASS_HOST) {
-      console.log(`Connect to ${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`);
-      createConnection(`${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`, { authToken: process.env.HASS_PASSWORD })
+    if (process.env.REACT_APP_HASS_HOST) {
+      console.log(`Connect to ${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`);
+      createConnection(`${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
@@ -70,7 +70,7 @@ class Root extends Component {
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    createConnection(`${process.env.HASS_SSL ? 'wss' : 'ws'}://${process.env.HASS_HOST}/api/websocket?latest`, { authToken: process.env.HASS_PASSWORD })
+    createConnection(`${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
