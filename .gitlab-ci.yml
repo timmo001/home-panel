@@ -135,7 +135,7 @@ test:
   stage: test
   image: node:alpine
   script:
-    - mv config.json src/
+    - mv config.json node_modules/
     - yarn install && yarn cache clean
     - yarn run test
   only:

@@ -46,9 +46,9 @@ A touch-compatible web-app for controlling the home.
 
   ```yarn install```
 
-- Copy or symlink `config.json` into `node_modules/config.json`
+- Copy `config.json` into `node_modules/config.json`
 
-```cp config.json node_modules``` OR ```ln -s config.json node_modules```
+```cp config.json node_modules```
 
 - Build a production version
 
@@ -89,11 +89,6 @@ A touch-compatible web-app for controlling the home.
 ```json
 
 {
-  "home_assistant": {
-    "host": "hassio.local:8123",
-    "password": "password",
-    "ssl": true
-  },
   "theme": {},
   "header": {
     "left_outdoor_weather": {
