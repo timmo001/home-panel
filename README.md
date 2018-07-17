@@ -7,11 +7,11 @@
 
 A touch-compatible web-app for controlling the home.
 
-![Light Theme Screenshot](/docs/resources/light-theme.png "Light Theme Screenshot")
+![Light Theme Screenshot](https://github.com/timmo001/home-panel/blob/master/docs/resources/light-theme.png "Light Theme Screenshot")
 
-![Dark Theme Screenshot](/docs/resources/dark-theme.png "Dark Theme Screenshot")
+![Dark Theme Screenshot](https://github.com/timmo001/home-panel/blob/master/docs/resources/dark-theme.png "Dark Theme Screenshot")
 
-![More Info Screenshot](/docs/resources/more-info.png "More Info Screenshot")
+![More Info Screenshot](https://github.com/timmo001/home-panel/blob/master/docs/resources/more-info.png "More Info Screenshot")
 
 ---
 
