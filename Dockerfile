@@ -1,28 +1,19 @@
-# Base image
-FROM node:alpine as build
+FROM alpine:3.8
 
-# Copy files
-COPY . /usr/src/app
-
-# Set working directory as build dir
 WORKDIR /usr/src/app
 
-# Install dependencies
-RUN yarn install && yarn cache clean
+# Copy source files
+COPY . .
 
-# Copy config
-COPY /config.json ./node_modules/
+# Install packages
+RUN \
+    apk add --no-cache \
+     nodejs-current=9.11.1-r2 \
+     yarn=1.7.0-r0 \
+     nginx=1.14.0-r0
 
-# Build app
-RUN yarn build --production
-
-# Delete source files
-RUN find . -maxdepth 1 \! \( -name build -o -name . \) -exec rm -rf '{}' \;
-
-# Move to nginx:alpine
-FROM nginx:alpine
-
-COPY --from=build /usr/src/app/build /usr/share/nginx/html
+# Create nginx directories
+RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
 
 # Add SSL enabled config
 RUN echo "server {\
@@ -40,9 +31,25 @@ RUN echo "server {\
   }\
 }" > /etc/nginx/conf.d/default.conf
 
-# Expose outbound port
+# Install dependencies
+RUN yarn install
+
+# Expose outbound ports
 EXPOSE 80
 EXPOSE 443
 
 # Set run CMD
-CMD ["nginx", "-g", "daemon off;"]
+CMD \
+    echo ""\
+    && echo "Copy config.."\
+    && cp config.json ./node_modules/\
+    && echo ""\
+    && echo "Build app.."\
+    && yarn build --production\
+    && echo ""\
+    && echo "Move build files to html directory.."\
+    && rm -Rf /usr/share/nginx/html/*\
+    && mv build/* /usr/share/nginx/html\
+    && echo ""\
+    && echo "Run nginx server.."\
+    && nginx -g "daemon off;"
