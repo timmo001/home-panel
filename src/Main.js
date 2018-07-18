@@ -65,6 +65,8 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
   },
   name: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     fontSize: '1.2rem',
   },
   state: {
