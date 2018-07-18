@@ -3,8 +3,12 @@ npm-debug.log
 Dockerfile*
 docker-compose*
 .dockerignore
-.git
-.gitignore
+.git*
 README.md
-LICENSE
+LICENSE.md
 .vscode
+config.template.json
+docs/
+.yamllint
+.mdlrc
+.eslintrc.json
