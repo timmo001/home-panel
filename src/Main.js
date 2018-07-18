@@ -177,37 +177,40 @@ class Main extends React.Component {
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
                         if (type === 'hass') {
-                          const entity = entities.find(i => { return i[1].entity_id === card.entity_id })[1];
-                          const { entity_id, state, attributes } = entity;
-                          const domain = entity_id.substring(0, entity_id.indexOf('.'));
-                          return (
-                            <Grid key={y} className={classes.cardContainer} item>
-                              <Card className={classnames(
-                                classes.card,
-                                state === 'on' ? classes.cardOn : classes.cardOff
-                              )} elevation={1} onClick={() => {
-                                if (domain === 'light' || domain === 'switch')
-                                  handleChange(domain, state === 'on' ? false : true, { entity_id });
-                                else if (domain === 'scene' || domain === 'script')
-                                  handleChange(domain, true, { entity_id });
-                              }}
-                                onTouchStart={() => this.handleButtonPress(domain, entity)}
-                                onMouseDown={() => this.handleButtonPress(domain, entity)}
-                                onTouchEnd={this.handleButtonRelease}
-                                onMouseUp={this.handleButtonRelease}>
-                                <CardContent className={classes.cardContent}>
-                                  <Typography className={classes.name} variant="headline">
-                                    {card.name ? card.name : attributes.friendly_name}
-                                  </Typography>
-                                  {domain === 'sensor' &&
-                                    <Typography className={classes.state} variant="body1">
-                                      {state}
+                          const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+                          if (entity_outer) {
+                            const entity = entity_outer[1];
+                            const { entity_id, state, attributes } = entity;
+                            const domain = entity_id.substring(0, entity_id.indexOf('.'));
+                            return (
+                              <Grid key={y} className={classes.cardContainer} item>
+                                <Card className={classnames(
+                                  classes.card,
+                                  state === 'on' ? classes.cardOn : classes.cardOff
+                                )} elevation={1} square onClick={() => {
+                                  if (domain === 'light' || domain === 'switch')
+                                    handleChange(domain, state === 'on' ? false : true, { entity_id });
+                                  else if (domain === 'scene' || domain === 'script')
+                                    handleChange(domain, true, { entity_id });
+                                }}
+                                  onTouchStart={() => this.handleButtonPress(domain, entity)}
+                                  onMouseDown={() => this.handleButtonPress(domain, entity)}
+                                  onTouchEnd={this.handleButtonRelease}
+                                  onMouseUp={this.handleButtonRelease}>
+                                  <CardContent className={classes.cardContent}>
+                                    <Typography className={classes.name} variant="headline">
+                                      {card.name ? card.name : attributes.friendly_name}
                                     </Typography>
-                                  }
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                          );
+                                    {domain === 'sensor' &&
+                                      <Typography className={classes.state} variant="body1">
+                                        {state}
+                                      </Typography>
+                                    }
+                                  </CardContent>
+                                </Card>
+                              </Grid>
+                            );
+                          }
                         } else if (type === 'camera') {
                           const { name, url } = card;
                           const still_url = `${card.still_url}?${new Date().getTime()}`;
