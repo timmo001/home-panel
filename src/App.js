@@ -18,9 +18,9 @@ const themes = [
         secondary: blueGrey,
         mainBackground: grey[100],
         backgrounds: {
-          light: grey[50],
-          main: grey[100],
-          dark: grey[200],
+          light: blueGrey[600],
+          main: blueGrey[400],
+          dark: blueGrey[200],
         },
         defaultText: {
           light: grey[700],
