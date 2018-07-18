@@ -218,7 +218,7 @@ class Main extends React.Component {
                           const still_url = `${card.still_url}?${new Date().getTime()}`;
                           return (
                             <Grid key={y} className={classes.cameraContainer} item>
-                              <Card className={classes.card} elevation={1}>
+                              <Card className={classes.card} elevation={1} square>
                                 <img
                                   className={classes.camera}
                                   src={still_url}
