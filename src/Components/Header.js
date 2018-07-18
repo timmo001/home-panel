@@ -121,7 +121,8 @@ class Header extends React.Component {
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (value) => this.setState({ anchorEl: null }, () => {
-    this.props.setTheme(value);
+    if (Number(value))
+      this.props.setTheme(value);
   });
 
   render() {

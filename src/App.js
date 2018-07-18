@@ -21,6 +21,7 @@ const themes = [
           light: blueGrey[600],
           main: blueGrey[400],
           dark: blueGrey[200],
+          disabled: grey[200],
         },
         defaultText: {
           light: grey[700],
@@ -45,6 +46,7 @@ const themes = [
           light: blueGrey[900],
           main: blueGrey[800],
           dark: blueGrey[600],
+          disabled: grey[700],
         },
         defaultText: {
           light: grey[50],
