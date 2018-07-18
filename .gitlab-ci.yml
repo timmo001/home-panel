@@ -311,10 +311,10 @@ deploy: &deploy
     - |
       docker tag \
         "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}" \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}"
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:latest"
     - |
       docker push \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}"
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:latest"
   tags:
     - deploy
   only:
