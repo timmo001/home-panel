@@ -131,8 +131,11 @@ class Main extends React.Component {
     this.props.setTheme(value);
   });
 
-  handleButtonPress = (entity) => this.buttonPressTimer =
-    setTimeout(() => this.setState({ moreInfo: entity }), 1000);
+  handleButtonPress = (domain, entity) => {
+    if (domain === 'light' && entity.state === 'on')
+      this.buttonPressTimer =
+        setTimeout(() => this.setState({ moreInfo: entity }), 1000);
+  };
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
@@ -188,8 +191,8 @@ class Main extends React.Component {
                                 else if (domain === 'scene' || domain === 'script')
                                   handleChange(domain, true, { entity_id });
                               }}
-                                onTouchStart={() => this.handleButtonPress(entity)}
-                                onMouseDown={() => this.handleButtonPress(entity)}
+                                onTouchStart={() => this.handleButtonPress(domain, entity)}
+                                onMouseDown={() => this.handleButtonPress(domain, entity)}
                                 onTouchEnd={this.handleButtonRelease}
                                 onMouseUp={this.handleButtonRelease}>
                                 <CardContent className={classes.cardContent}>
