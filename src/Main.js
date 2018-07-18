@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -215,7 +216,7 @@ class Main extends React.Component {
                           } else return null;
                         } else if (type === 'camera') {
                           const { name, url } = card;
-                          const still_url = `${card.still_url}?${new Date().getTime()}`;
+                          const still_url = `${card.still_url}?${moment().format('HHmm')}`;
                           return (
                             <Grid key={y} className={classes.cameraContainer} item>
                               <Card className={classes.card} elevation={1} square>
