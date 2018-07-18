@@ -212,7 +212,7 @@ class Main extends React.Component {
                                 </Card>
                               </Grid>
                             );
-                          }
+                          } else return null;
                         } else if (type === 'camera') {
                           const { name, url } = card;
                           const still_url = `${card.still_url}?${new Date().getTime()}`;
