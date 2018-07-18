@@ -5,6 +5,11 @@
 [![pipeline status](https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg)](https://gitlab.com/timmo/home-panel/commits/master)
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/timmo001/home-panel.svg?columns=To%20Do,On%20Hold,In%20Progress,Done)](https://waffle.io/timmo001/home-panel)
 
+[![Docker Version][version-shield]][microbadger]
+[![Docker Layers][layers-shield]][microbadger]
+[![Docker Pulls][pulls-shield]][dockerhub]
+[![Anchore Image Overview][anchore-shield]][anchore]
+
 A touch-compatible web-app for controlling the home.
 
 ![Light Theme Screenshot][light-theme]
@@ -224,3 +229,10 @@ A touch-compatible web-app for controlling the home.
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [more-info]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info.png
+[anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
+[anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
+[dockerhub]: https://hub.docker.com/r/timmo001/home-panel
+[layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
+[microbadger]: https://microbadger.com/images/timmo001/home-panel
+[pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
+[version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
