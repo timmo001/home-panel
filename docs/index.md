@@ -13,8 +13,6 @@ A touch-compatible web-app for controlling the home.
 
 ![More Info Screenshot][more-info]
 
----
-
 ## Features
 
 - Supports and can be used as alternate frontend for [Home Assistant](https://www.home-assistant.io/)
