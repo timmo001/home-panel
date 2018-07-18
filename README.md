@@ -29,6 +29,7 @@ A touch-compatible web-app for controlling the home.
 - Install [Docker](https://www.docker.com/community-edition) and
  [Docker Compose](https://docs.docker.com/compose/install/)
 - Create a directory for your compose file. For example, `home-panel`
+- Create a `config.json` using the template below
 - Create a `docker-compose.yml` file:
 
   > This example maps the `ssl` directory in the home directory.
@@ -52,6 +53,7 @@ A touch-compatible web-app for controlling the home.
         - 8234:443
       volumes:
         - ~/ssl:/ssl
+        - $(pwd)/config.json:/usr/src/app/config.json
   ```
 
 ---
@@ -59,6 +61,7 @@ A touch-compatible web-app for controlling the home.
 ### Docker
 
 - Install [Docker](https://www.docker.com/community-edition)
+- Create a `config.json` using the template below
 - Run image
 
   ```bash
@@ -68,6 +71,7 @@ A touch-compatible web-app for controlling the home.
   -e REACT_APP_HASS_SSL='true' \
   -p 8234:443 \
   -v ~/ssl:/ssl \
+  -v $(pwd)/config.json:/usr/src/app/config.json \
   timmo001/home-panel
   ```
 
