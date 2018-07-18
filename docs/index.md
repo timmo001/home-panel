@@ -24,8 +24,6 @@ A touch-compatible web-app for controlling the home.
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with deskops also)
 
----
-
 ## Setup
 
 ### Docker Compose
@@ -58,6 +56,8 @@ services:
       - ~/ssl:/ssl
 ```
 
+---
+
 ### Docker
 
 - Install [Docker](https://www.docker.com/community-edition)
@@ -66,6 +66,8 @@ services:
   ```bash
   docker run -d -e REACT_APP_HASS_HOST='hassioserver.com' -e REACT_APP_HASS_PASSWORD='supersecurepassword' -e REACT_APP_HASS_SSL='true' -p 8234:443 -v ~/ssl:/ssl  timmo001/home-panel
   ```
+
+---
 
 ### Node JS
 
@@ -139,8 +141,6 @@ server {
   ```yarn start```
 
 - The app should open in your default browser under `http://localhost:3000`
-
----
 
 ## Starter Template
 
