@@ -116,6 +116,8 @@ pages:
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Git"
+    - git pull github master
+    - git status
     - apk add --no-cache hugo=0.39-r0
     - cd hugo/ && hugo -t hugo-material-docs && cd ../
     - git remote add github $GITHUB_URL
