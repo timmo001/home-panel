@@ -107,8 +107,6 @@ markdownlint:
 pages:
   stage: pages
   image: alpine:3.8
-  only:
-    - master
   script:
     - apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2
     - ssh-add $(echo "$GIT_SSH_PRIV_KEY")
@@ -122,6 +120,8 @@ pages:
     - git add docs/
     - 'git commit -m ":books: update docs"'
     - git push github master
+  only:
+    - master
   tags:
     - pages
 
