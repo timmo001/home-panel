@@ -108,6 +108,7 @@ pages:
   stage: pages
   image: alpine:3.8
   script:
+    - rm -f ~/.gitconfig && rm -Rf  ~/.ssh
     - apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2 bash=4.4.19-r1
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
@@ -116,6 +117,7 @@ pages:
     - ssh-keyscan github.com >> ~/.ssh/known_hosts
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Git"
+    - git status
     - git remote add github $GITHUB_URL
     - git pull
     - git status
