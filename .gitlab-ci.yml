@@ -110,7 +110,7 @@ pages:
   script:
     - apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2 bash=4.4.19-r1
     - eval $(ssh-agent -s)
-    - bash -c 'ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - bash -c 'ssh-add <(echo "$GIT_SSH_PRIV_KEY")
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Git"
     - mkdir -p ~/.ssh
