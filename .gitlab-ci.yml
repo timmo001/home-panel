@@ -8,10 +8,10 @@ variables:
 
 stages:
   - preflight
+  - pages
   - build
   - test
   - deploy
-  - pages
 
 .before: &before
   before_script:
@@ -102,6 +102,20 @@ markdownlint:
     - mdl --version
   script:
     - mdl --style all --warnings .
+
+# Pages jobs
+pages:
+  stage: pages
+  image: alpine:3.8
+  script:
+    - apk add --no-cache hugo=0.39-r0
+    - cd hugo/ && hugo -t hugo-material-docs && cd ../
+    - git add docs/
+    - 'git commit -m ":books: update docs"'
+  tags:
+    - pages
+  except:
+    - /^(?!master).+@/
 
 # Build jobs
 build:
@@ -281,19 +295,5 @@ deploy: &deploy
     - tags
     - triggers
     - schedules
-  except:
-    - /^(?!master).+@/
-
-# Pages jobs
-pages:
-  stage: pages
-  image: alpine:3.8
-  script:
-    - apk add --no-cache hugo=0.39-r0
-    - cd hugo/ && hugo -t hugo-material-docs && cd ../
-    - git add docs/
-    - 'git commit -m ":books: update docs"'
-  tags:
-    - pages
   except:
     - /^(?!master).+@/
