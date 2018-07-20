@@ -123,7 +123,7 @@ pages:
     - cd hugo/ && hugo -t hugo-material-docs && cd ../
     - git add docs/
     - 'git commit -m ":books: update docs"'
-    - git push github master
+    - git push origin master
   only:
     - master
   tags:
