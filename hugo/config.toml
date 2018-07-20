@@ -1,5 +1,5 @@
 baseURL = "http://git.timmo.xyz/home-panel"
-publishDir = "docs"
+publishDir = "../docs"
 languageCode = "en-gb"
 title = "Home Panel"
 theme = "hugo-material-docs"
