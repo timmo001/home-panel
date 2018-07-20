@@ -1,0 +1,76 @@
+baseURL = "http://git.timmo.xyz/home-panel"
+languageCode = "en-gb"
+title = "Home Panel"
+theme = "hugo-material-docs"
+metadataformat = "yaml"
+canonifyurls = true
+# Enable Google Analytics by entering your tracking id
+googleAnalytics = ""
+
+[params]
+	# General information
+	author = "Timmo"
+	description = "A touch-compatible web-app for controlling the home"
+	copyright = "Released under the MIT license"
+
+	# Repository
+	provider = "GitHub"
+	repo_url = "https://github.com/timmo001/home-panel"
+
+	version = "1.0.0"
+	logo = "images/logo.png"
+	favicon = ""
+
+	permalink = "#"
+
+	# Custom assets
+	custom_css = []
+	custom_js  = []
+
+	# Syntax highlighting theme
+	highlight_css  = ""
+
+	[params.palette]
+    	primary = "red"
+    	accent  = "teal"
+
+    [params.font]
+    	text = "Ubuntu"
+    	code = "Ubuntu Mono"
+
+[social]
+	github  = "timmo001"
+
+[[menu.main]]
+	name   = "Home Panel"
+	url    = "/"
+	weight = 0
+
+[[menu.main]]
+	identifier = "setup"
+	name   = "Setup"
+	url    = "setup/"
+	weight = 10
+
+[[menu.main]]
+	parent = "setup"
+	name   = "Docker Compose"
+	url    = "setup/docker-compose/"
+	weight = 20
+
+[[menu.main]]
+	parent = "setup"
+	name   = "Docker"
+	url    = "setup/docker/"
+	weight = 30
+
+[[menu.main]]
+	parent = "setup"
+	name   = "NodeJS"
+	url    = "setup/node-js/"
+	weight = 34
+
+[[menu.main]]
+	name   = "License"
+	url    = "license/"
+	weight = 50
