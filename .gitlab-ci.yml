@@ -289,7 +289,7 @@ pages:
   stage: pages
   image: alpine:3.8
   script:
-    - apk apk add --no-cache hugo=0.39-r0
+    - apk add --no-cache hugo=0.39-r0
     - cd hugo/ && hugo -t hugo-material-docs && cd ../
     - git add docs/
     - 'git commit -m ":books: update docs"'
