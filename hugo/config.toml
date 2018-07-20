@@ -16,8 +16,8 @@ canonifyurls = true
 	provider = "GitHub"
 	repo_url = "https://github.com/timmo001/home-panel"
 
-	logo = "static/logo.svg"
-	favicon = "static/favicon.ico"
+	logo = "/static/logo.png"
+	favicon = "/static/favicon.ico"
 
 	permalink = "#"
 
@@ -47,40 +47,40 @@ canonifyurls = true
 [[menu.main]]
 	identifier = "setup"
 	name   = "Setup"
-	url    = "setup/"
+	url    = "/setup/"
 	weight = 20
 
 [[menu.main]]
 	parent = "setup"
 	name   = "Docker Compose"
-	url    = "setup/docker-compose/"
+	url    = "/setup/docker-compose/"
 	weight = 30
 
 [[menu.main]]
 	parent = "setup"
 	name   = "Docker"
-	url    = "setup/docker/"
+	url    = "/setup/docker/"
 	weight = 40
 
 [[menu.main]]
 	parent = "setup"
 	name   = "NodeJS"
-	url    = "setup/node-js/"
+	url    = "/setup/node-js/"
 	weight = 50
 
 [[menu.main]]
 	identifier = "configuration"
 	name   = "Configuration"
-	url    = "configuration/"
+	url    = "/configuration/"
 	weight = 60
 
 [[menu.main]]
 	parent = "configuration"
 	name   = "Starter Template"
-	url    = "configuration/starter/"
+	url    = "/configuration/starter/"
 	weight = 70
 
 [[menu.main]]
 	name   = "License"
-	url    = "license/"
+	url    = "/license/"
 	weight = 90
