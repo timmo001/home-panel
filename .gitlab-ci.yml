@@ -107,15 +107,30 @@ markdownlint:
 pages:
   stage: pages
   image: alpine:3.8
+  only:
+    - master
+  before_script:
+    - 'which ssh-agent || ( \
+        apk add --no-cache \
+        git=2.18.0-r0 \
+        openssh-client=7.7_p1-r2 \
+        )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$GIT_SSH_PRIV_KEY")
+    - git config --global user.email "$GIT_EMAIL"
+    - git config --global user.name "Git"
+    - mkdir -p ~/.ssh
+    - cat gitlab-known-hosts >> ~/.ssh/known_hosts
   script:
-    - apk add --no-cache hugo=0.39-r0
+    - apk add --no-cache \
+        hugo=0.39-r0
     - cd hugo/ && hugo -t hugo-material-docs && cd ../
+    - git remote add github $GITHUB_URL
     - git add docs/
     - 'git commit -m ":books: update docs"'
+    - git push github master
   tags:
     - pages
-  except:
-    - /^(?!master).+@/
 
 # Build jobs
 build:
