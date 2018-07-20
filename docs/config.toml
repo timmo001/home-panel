@@ -1,11 +1,10 @@
 baseURL = "http://git.timmo.xyz/home-panel"
+publishDir = "docs"
 languageCode = "en-gb"
 title = "Home Panel"
 theme = "hugo-material-docs"
 metadataformat = "yaml"
 canonifyurls = true
-# Enable Google Analytics by entering your tracking id
-googleAnalytics = ""
 
 [params]
 	# General information
@@ -17,9 +16,8 @@ googleAnalytics = ""
 	provider = "GitHub"
 	repo_url = "https://github.com/timmo001/home-panel"
 
-	version = "1.0.0"
-	logo = "images/logo.png"
-	favicon = ""
+	logo = "resources/logo.svg"
+	favicon = "resources/favicon.ico"
 
 	permalink = "#"
 
@@ -31,12 +29,12 @@ googleAnalytics = ""
 	highlight_css  = ""
 
 	[params.palette]
-    	primary = "red"
-    	accent  = "teal"
+    	primary = "grey"
+    	accent  = "blue-grey"
 
     [params.font]
-    	text = "Ubuntu"
-    	code = "Ubuntu Mono"
+    	text = "Roboto"
+    	code = "Roboto Mono"
 
 [social]
 	github  = "timmo001"
@@ -44,33 +42,45 @@ googleAnalytics = ""
 [[menu.main]]
 	name   = "Home Panel"
 	url    = "/"
-	weight = 0
+	weight = 10
 
 [[menu.main]]
 	identifier = "setup"
 	name   = "Setup"
 	url    = "setup/"
-	weight = 10
+	weight = 20
 
 [[menu.main]]
 	parent = "setup"
 	name   = "Docker Compose"
 	url    = "setup/docker-compose/"
-	weight = 20
+	weight = 30
 
 [[menu.main]]
 	parent = "setup"
 	name   = "Docker"
 	url    = "setup/docker/"
-	weight = 30
+	weight = 40
 
 [[menu.main]]
 	parent = "setup"
 	name   = "NodeJS"
 	url    = "setup/node-js/"
-	weight = 34
+	weight = 50
+
+[[menu.main]]
+	identifier = "configuration"
+	name   = "Configuration"
+	url    = "configuration/"
+	weight = 60
+
+[[menu.main]]
+	parent = "configuration"
+	name   = "Starter Template"
+	url    = "configuration/starter/"
+	weight = 70
 
 [[menu.main]]
 	name   = "License"
 	url    = "license/"
-	weight = 50
+	weight = 90
