@@ -1,4 +1,4 @@
-baseURL = "http://git.timmo.xyz/home-panel"
+baseURL = "https://git.timmo.xyz/home-panel"
 publishDir = "../docs"
 languageCode = "en-gb"
 title = "Home Panel"
