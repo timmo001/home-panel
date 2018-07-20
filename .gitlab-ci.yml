@@ -111,7 +111,9 @@ pages:
     - master
   script:
     - |
-      'which ssh-agent || ( apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2 )'
+      apk add --no-cache \
+        git=2.18.0-r0 \
+        openssh-client=7.7_p1-r2
       eval $(ssh-agent -s)
       ssh-add <(echo "$GIT_SSH_PRIV_KEY")
       git config --global user.email "$GIT_EMAIL"
