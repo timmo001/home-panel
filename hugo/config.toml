@@ -12,7 +12,7 @@ canonifyurls = true
 	description = "A touch-compatible web-app for controlling the home"
 	copyright = "Released under the MIT license"
 
-	# Repository
+  # Repository
 	provider = "GitHub"
 	repo_url = "https://github.com/timmo001/home-panel"
 
