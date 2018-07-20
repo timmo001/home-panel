@@ -113,8 +113,6 @@ pages:
     - echo "$GIT_SSH_PRIV_KEY" | ssh-add -
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Git"
-    - mkdir -p ~/.ssh
-    - cat gitlab-known-hosts >> ~/.ssh/known_hosts
     - apk add --no-cache hugo=0.39-r0
     - cd hugo/ && hugo -t hugo-material-docs && cd ../
     - git remote add github $GITHUB_URL
