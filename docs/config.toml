@@ -29,8 +29,8 @@ canonifyurls = true
 	highlight_css  = ""
 
 	[params.palette]
-    	primary = "grey"
-    	accent  = "blue-grey"
+    	primary = "blue-grey"
+    	accent  = "cyan"
 
     [params.font]
     	text = "Roboto"
