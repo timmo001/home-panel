@@ -16,8 +16,8 @@ canonifyurls = true
 	provider = "GitHub"
 	repo_url = "https://github.com/timmo001/home-panel"
 
-	logo = "resources/logo.svg"
-	favicon = "resources/favicon.ico"
+	logo = "static/logo.svg"
+	favicon = "static/favicon.ico"
 
 	permalink = "#"
 
