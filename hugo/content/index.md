@@ -33,9 +33,9 @@ draft: false
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with deskops also)
 
-[light-theme]: static/light-theme.png
-[dark-theme]: static/dark-theme.png
-[more-info]: static/more-info.png
+[light-theme]: /static/light-theme.png
+[dark-theme]: /static/dark-theme.png
+[more-info]: /static/more-info.png
 [anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
 [anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
