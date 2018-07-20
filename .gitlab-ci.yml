@@ -113,6 +113,7 @@ pages:
     - mkdir -p ~/.ssh
     - echo "$GIT_SSH_PUB_KEY" > ~/.ssh/id_rsa.pub
     - echo "$GIT_SSH_PRIV_KEY" | ssh-add -
+    - ssh-keyscan github.com >> ~/.ssh/known_hosts
     - git config --global user.email "$GIT_EMAIL"
     - git config --global user.name "Git"
     - apk add --no-cache hugo=0.39-r0
