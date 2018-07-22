@@ -7,7 +7,7 @@ import grey from '@material-ui/core/colors/grey';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 import './App.css';
-import Root from './Root';
+import Root from './Components/Root';
 
 const themes = [
   {
