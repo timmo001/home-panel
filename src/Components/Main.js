@@ -9,9 +9,9 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import config from 'config.json';
-import Camera from './Components/Camera';
-import Header from './Components/Header';
-import MoreInfo from './Components/MoreInfo';
+import Camera from './Camera';
+import Header from './Header';
+import MoreInfo from './MoreInfo';
 
 const styles = theme => ({
   root: {
