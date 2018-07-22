@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
 import config from 'config.json';
 
@@ -18,6 +19,7 @@ const styles = theme => ({
   },
   buttons: {
     position: 'fixed',
+    display: 'grid',
     top: theme.spacing.unit,
     right: theme.spacing.unit,
   },
@@ -196,6 +198,12 @@ class Header extends React.Component {
             className={classes.buttons}
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}>
+            <IconButton
+              className={classes.button}
+              aria-label="Refresh"
+              onClick={() => window.location.reload(true)}>
+              <RefreshIcon />
+            </IconButton>
             <IconButton
               className={classes.button}
               aria-label="Theme"
