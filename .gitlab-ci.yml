@@ -8,7 +8,7 @@ variables:
 
 stages:
   - preflight
-  - pages
+  # - pages
   - build
   - test
   - deploy
@@ -104,30 +104,30 @@ markdownlint:
     - mdl --style all --warnings .
 
 # Pages jobs
-pages:
-  stage: pages
-  image: alpine:3.8
-  script:
-    - rm -f ~/.gitconfig && rm -Rf  ~/.ssh
-    - apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2 bash=4.4.19-r1
-    - eval $(ssh-agent -s)
-    - mkdir -p ~/.ssh
-    - echo "$GIT_SSH_PUB_KEY" > ~/.ssh/id_rsa.pub
-    - echo "$GIT_SSH_PRIV_KEY" | ssh-add -
-    - ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - git config --global user.email "$GIT_EMAIL"
-    - git config --global user.name "Git"
-    - git clone $GITHUB_URL git-src/ && cd git-src/
-    - git status
-    - apk add --no-cache hugo=0.39-r0
-    - cd hugo/ && hugo -t hugo-material-docs && cd ../
-    - git add docs/
-    - 'git commit -m ":books: update docs"'
-    - git push origin master
-  only:
-    - master
-  tags:
-    - pages
+# pages:
+#   stage: pages
+#   image: alpine:3.8
+#   script:
+#     - rm -f ~/.gitconfig && rm -Rf  ~/.ssh
+#     - apk add --no-cache git=2.18.0-r0 openssh-client=7.7_p1-r2 bash=4.4.19-r1
+#     - eval $(ssh-agent -s)
+#     - mkdir -p ~/.ssh
+#     - echo "$GIT_SSH_PUB_KEY" > ~/.ssh/id_rsa.pub
+#     - echo "$GIT_SSH_PRIV_KEY" | ssh-add -
+#     - ssh-keyscan github.com >> ~/.ssh/known_hosts
+#     - git config --global user.email "$GIT_EMAIL"
+#     - git config --global user.name "Git"
+#     - git clone $GITHUB_URL git-src/ && cd git-src/
+#     - git status
+#     - apk add --no-cache hugo=0.39-r0
+#     - cd hugo/ && hugo -t hugo-material-docs && cd ../
+#     - git add docs/
+#     - 'git commit -m ":books: update docs"'
+#     - git push origin master
+#   only:
+#     - master
+#   tags:
+#     - pages
 
 # Build jobs
 build:
