@@ -231,6 +231,25 @@ class Main extends React.Component {
                               </Grid>
                             );
                           } else return null;
+                        } else if (type === 'link') {
+                          const { name, url } = card;
+                          return (
+                            <Grid key={y} className={classes.cardContainer} item>
+                              <ButtonBase
+                                className={classes.cardOuter}
+                                focusRipple
+                                href={url}
+                                target="_blank">
+                                <Card className={classes.card} elevation={1} square>
+                                  <CardContent className={classes.cardContent}>
+                                    <Typography className={classes.name} variant="headline">
+                                      {name}
+                                    </Typography>
+                                  </CardContent>
+                                </Card>
+                              </ButtonBase>
+                            </Grid>
+                          );
                         } else if (type === 'camera') {
                           const { name, url } = card;
                           const still_url = `${card.still_url}?${moment().format('HHmm')}`;
