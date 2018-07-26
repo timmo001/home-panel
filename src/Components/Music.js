@@ -54,12 +54,15 @@ const styles = theme => ({
   },
 });
 
+const defaultSource = {
+  entity: null,
+  image: sourcePlaceholder,
+  playing: false,
+};
+
 class Music extends React.Component {
   state = {
-    playing: false,
-    source: {
-      image: sourcePlaceholder,
-    },
+    source: defaultSource,
     dialogOpen: false,
   };
 
@@ -71,16 +74,19 @@ class Music extends React.Component {
     this.setState({ dialogOpen: true });
   };
 
-  handleInputDialogChange = (value) => {
-    this.setState({ dialogOpen: false, source: { image: sourcePlaceholder, } });
+  handleInputDialogChange = (value = null) => {
+    var source = thie.state.source;
+    if (value) {
+      source.entity == this.props.entities.findOne((i) => i[1].entity_id === value);
+    }
+    this.setState({ dialogOpen: false, source });
   };
 
   render() {
     const { handleMusicChange, handleInputDialog, handleInputDialogChange } = this;
-    const { playing, source, dialogOpen } = this.state;
+    const { source, dialogOpen } = this.state;
     const { classes, entities, handleChange } = this.props;
-    const { image, shuffle, repeat } = source;
-    // const domain = entity_id.substring(0, entity_id.indexOf('.'));
+    const { image, playing, shuffle, repeat } = source;
 
     return (
       <Paper
