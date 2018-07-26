@@ -12,6 +12,7 @@ import config from 'config.json';
 import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
+import Music from './Music';
 
 const styles = theme => ({
   root: {
@@ -110,7 +111,7 @@ class Main extends React.Component {
     moved: false,
     over: false,
     hovered: false,
-    overlayOpacity: 0.00,
+    musicShown: false,
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -157,10 +158,14 @@ class Main extends React.Component {
 
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
+  handleMusicShow = () => this.setState({ musicShown: true });
+
+  handleMusicHide = () => this.setState({ musicShown: false });
+
   render() {
-    const { handleCameraClose, handleMoreInfoClose } = this;
+    const { handleCameraClose, handleMoreInfoClose, handleMusicHide } = this;
     const { classes, entities, theme, handleChange } = this.props;
-    const { moved, over, camera, moreInfo } = this.state;
+    const { moved, over, camera, moreInfo, musicShown } = this.state;
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -171,7 +176,8 @@ class Main extends React.Component {
           over={over}
           handleMouseOver={this.onMouseMoveHandler}
           handleMouseLeave={this.onMouseLeaveHandler}
-          setTheme={this.props.setTheme} />
+          setTheme={this.props.setTheme}
+          handleMusicShow={this.handleMusicShow} />
         <div className={classes.gridContainer}>
           <Grid
             container
@@ -268,6 +274,11 @@ class Main extends React.Component {
             handleChange={handleChange}
             handleClose={handleMoreInfoClose} />
         }
+        <Music
+          show={musicShown}
+          handleMusicHide={handleMusicHide}
+          entities={entities}
+          handleChange={handleChange} />
       </div>
     );
   }
