@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import config from 'config.json';
 
 const styles = theme => ({
@@ -212,18 +213,24 @@ class Header extends React.Component {
               onClick={this.handleClick}>
               <BrushIcon />
             </IconButton>
-            <Menu
-              id="theme"
-              value={theme}
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={this.handleClose}>
-              <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
-              <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
-              <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
-            </Menu>
+            <IconButton
+              className={classes.button}
+              aria-label="Music"
+              onClick={this.props.handleMusicShow}>
+              <MusicNoteIcon />
+            </IconButton>
           </div>
         }
+        <Menu
+          id="theme"
+          value={theme}
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}>
+          <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
+          <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
+          <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
+        </Menu>
       </div>
     );
   }
@@ -238,6 +245,7 @@ Header.propTypes = {
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
+  handleMusicShow: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);
