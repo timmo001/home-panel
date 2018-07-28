@@ -1,9 +1,11 @@
 // eslint-disable-next-line
 import React from 'react';
+import request from 'superagent';
 import PropTypes from 'prop-types';
+import Sound from 'react-sound';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -23,17 +25,17 @@ const styles = theme => ({
     transform: 'translateX(-50%)',
     zIndex: '1000',
     width: '28rem',
-    height: '16rem',
+    height: '18rem',
     backgroundColor: theme.palette.mainBackground,
   },
   backgroundOuter: {
     position: 'fixed',
     left: '50%',
     transform: 'translateX(-50%)',
-    height: '16rem',
+    height: '18rem',
   },
   background: {
-    height: '16rem',
+    height: '18rem',
   },
   controls: {
     position: 'fixed',
@@ -55,9 +57,12 @@ const styles = theme => ({
 });
 
 const defaultSource = {
-  entity: null,
-  image: sourcePlaceholder,
-  playing: false,
+  source: {
+    image: sourcePlaceholder,
+  },
+  playing: Sound.status.STOPPED,
+  shuffle: false,
+  repeat: false,
 };
 
 class Music extends React.Component {
@@ -66,8 +71,34 @@ class Music extends React.Component {
     dialogOpen: false,
   };
 
+  handleUpdateMusic = () => {
+    console.log('source:', this.state.source);
+  };
+
   handleMusicChange = (action) => {
     console.log('action:', action);
+    var source = this.state.source;
+    switch (action) {
+      default: break;
+      case 'play':
+        source.playing = Sound.status.PLAYING;
+        break;
+      case 'pause':
+        source.playing = Sound.status.PAUSED;
+        break;
+      case 'stop':
+        source.playing = Sound.status.STOPPED;
+        break;
+      case 'next':
+        break;
+      case 'previous':
+        break;
+      case 'repeat':
+        break;
+      case 'shuffle':
+        break;
+    }
+    this.setState({ source });
   };
 
   handleInputDialog = () => {
@@ -75,24 +106,50 @@ class Music extends React.Component {
   };
 
   handleInputDialogChange = (value = null) => {
-    var source = thie.state.source;
-    if (value) {
-      source.entity == this.props.entities.findOne((i) => i[1].entity_id === value);
-    }
-    this.setState({ dialogOpen: false, source });
+    var source = this.state.source;
+    if (value) source.source = value;
+    console.log('source:', source);
+    this.setState({ dialogOpen: false, source }, () =>
+      this.handleGetSource(this.state.source.source)
+    );
+  };
+
+  handleGetSource = (source) => {
+    request
+      .post(`${process.env.REACT_APP_API_URL}/radio/get`)
+      .send(source)
+      .set('Accept', 'application/json')
+      .then(res => {
+        var source = this.state.source;
+        source.source = res.body;
+        source.playing = Sound.status.PLAYING;
+        this.setState({ source }, () => console.log('source:', source));
+      })
+      .catch(err => {
+        console.error(err);
+      });
   };
 
   render() {
     const { handleMusicChange, handleInputDialog, handleInputDialogChange } = this;
-    const { source, dialogOpen } = this.state;
-    const { classes, entities, handleChange } = this.props;
-    const { image, playing, shuffle, repeat } = source;
+    const { classes } = this.props;
+    const { dialogOpen } = this.state;
+    const { source, playing, canSkip, canShuffle, canRepeat } = this.state.source;
+    const { image, streams } = source;
 
     return (
       <Paper
         className={classes.root}
         square
         elevation={2}>
+        {streams &&
+          <Sound
+            url={streams[0].url}
+            playStatus={playing}
+            onLoading={this.handleSongLoading}
+            onPlaying={this.handleSongPlaying}
+            onFinishedPlaying={this.handleSongFinishedPlaying} />
+        }
         <ButtonBase
           className={classes.backgroundOuter}
           focusRipple
@@ -104,11 +161,10 @@ class Music extends React.Component {
         </ButtonBase>
         <InputDialog
           open={dialogOpen}
-          entities={entities}
           handleChange={handleInputDialogChange} />
         <div className={classes.controls}>
           <div className={classes.controlsMain}>
-            {repeat &&
+            {canRepeat &&
               <Button
                 className={classes.button}
                 mini
@@ -119,16 +175,18 @@ class Music extends React.Component {
                 <RepeatIcon />
               </Button>
             }
-            <Button
-              className={classes.button}
-              mini
-              variant="fab"
-              color="primary"
-              aria-label="Previous"
-              onClick={() => handleMusicChange('previous')}>
-              <SkipPreviousIcon />
-            </Button>
-            {playing ?
+            {canSkip &&
+              <Button
+                className={classes.button}
+                mini
+                variant="fab"
+                color="primary"
+                aria-label="Previous"
+                onClick={() => handleMusicChange('previous')}>
+                <SkipPreviousIcon />
+              </Button>
+            }
+            {playing === Sound.status.PLAYING ?
               <Button
                 className={classes.buttonPlay}
                 variant="fab"
@@ -147,16 +205,18 @@ class Music extends React.Component {
                 <PlayArrowIcon />
               </Button>
             }
-            <Button
-              className={classes.button}
-              mini
-              variant="fab"
-              color="primary"
-              aria-label="Next"
-              onClick={() => handleMusicChange('next')}>
-              <SkipNextIcon />
-            </Button>
-            {shuffle &&
+            {canSkip &&
+              <Button
+                className={classes.button}
+                mini
+                variant="fab"
+                color="primary"
+                aria-label="Next"
+                onClick={() => handleMusicChange('next')}>
+                <SkipNextIcon />
+              </Button>
+            }
+            {canShuffle &&
               <Button
                 className={classes.button}
                 mini
@@ -176,8 +236,6 @@ class Music extends React.Component {
 
 Music.propTypes = {
   classes: PropTypes.object.isRequired,
-  entities: PropTypes.array.isRequired,
-  handleChange: PropTypes.func.isRequired,
   handleMusicHide: PropTypes.func.isRequired,
 };
 
