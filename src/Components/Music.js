@@ -35,7 +35,7 @@ const styles = theme => ({
     height: '18rem',
   },
   background: {
-    height: '18rem',
+    maxHeight: '18rem',
   },
   controls: {
     position: 'fixed',
