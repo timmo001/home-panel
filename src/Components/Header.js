@@ -9,7 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import RadioIcon from '@material-ui/icons/Radio';
 import config from 'config.json';
 
 const styles = theme => ({
@@ -215,9 +215,9 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
-              aria-label="Music"
-              onClick={this.props.handleMusicShow}>
-              <MusicNoteIcon />
+              aria-label="Radio"
+              onClick={this.props.handleRadioShow}>
+              <RadioIcon />
             </IconButton>
           </div>
         }
@@ -245,7 +245,7 @@ Header.propTypes = {
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  handleMusicShow: PropTypes.func.isRequired,
+  handleRadioShow: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);

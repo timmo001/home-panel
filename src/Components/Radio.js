@@ -20,7 +20,7 @@ import InputDialog from './InputDialog';
 const styles = theme => ({
   root: {
     position: 'fixed',
-    bottom: theme.spacing.unit * 2,
+    bottom: theme.spacing.unit * 2.2,
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: '1000',
@@ -41,7 +41,7 @@ const styles = theme => ({
   controls: {
     position: 'fixed',
     display: 'flex',
-    bottom: theme.spacing.unit * 6.4,
+    bottom: theme.spacing.unit * 5.8,
   },
   controlsMain: {
     position: 'fixed',
@@ -66,17 +66,17 @@ const defaultSource = {
   repeat: false,
 };
 
-class Music extends React.Component {
+class Radio extends React.Component {
   state = {
     source: defaultSource,
     dialogOpen: false,
   };
 
-  handleUpdateMusic = () => {
+  handleUpdateRadio = () => {
     console.log('source:', this.state.source);
   };
 
-  handleMusicChange = (action) => {
+  handleRadioChange = (action) => {
     console.log('action:', action);
     var source = this.state.source;
     switch (action) {
@@ -132,7 +132,7 @@ class Music extends React.Component {
   };
 
   render() {
-    const { handleMusicChange, handleInputDialog, handleInputDialogChange } = this;
+    const { handleRadioChange, handleInputDialog, handleInputDialogChange } = this;
     const { classes } = this.props;
     const { dialogOpen } = this.state;
     const { source, playing, canSkip, canShuffle, canRepeat } = this.state.source;
@@ -172,7 +172,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Repeat"
-                onClick={() => handleMusicChange('repeat')}>
+                onClick={() => handleRadioChange('repeat')}>
                 <RepeatIcon />
               </Button>
             }
@@ -183,7 +183,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Previous"
-                onClick={() => handleMusicChange('previous')}>
+                onClick={() => handleRadioChange('previous')}>
                 <SkipPreviousIcon />
               </Button>
             }
@@ -193,7 +193,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Pause"
-                onClick={() => handleMusicChange('pause')}>
+                onClick={() => handleRadioChange('pause')}>
                 <PauseIcon />
               </Button>
               :
@@ -202,7 +202,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Play"
-                onClick={() => handleMusicChange('play')}>
+                onClick={() => handleRadioChange('play')}>
                 <PlayArrowIcon />
               </Button>
             }
@@ -213,7 +213,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Next"
-                onClick={() => handleMusicChange('next')}>
+                onClick={() => handleRadioChange('next')}>
                 <SkipNextIcon />
               </Button>
             }
@@ -224,7 +224,7 @@ class Music extends React.Component {
                 variant="fab"
                 color="primary"
                 aria-label="Shuffle"
-                onClick={() => handleMusicChange('shuffle')}>
+                onClick={() => handleRadioChange('shuffle')}>
                 <ShuffleIcon />
               </Button>
             }
@@ -235,9 +235,9 @@ class Music extends React.Component {
   }
 }
 
-Music.propTypes = {
+Radio.propTypes = {
   classes: PropTypes.object.isRequired,
-  handleMusicHide: PropTypes.func.isRequired,
+  handleRadioHide: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Music);
+export default withStyles(styles)(Radio);
