@@ -24,7 +24,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: '1000',
-    width: '28rem',
+    width: '18rem',
     height: '18rem',
     backgroundColor: theme.palette.mainBackground,
   },
@@ -33,6 +33,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translateX(-50%)',
     height: '18rem',
+    width: '100%',
   },
   background: {
     maxHeight: '18rem',
