@@ -54,11 +54,20 @@ A touch-compatible web-app for controlling the home.
         REACT_APP_HASS_HOST: 'hassioserver.com'
         REACT_APP_HASS_PASSWORD: 'supersecurepassword'
         REACT_APP_HASS_SSL: 'true'
+        REACT_APP_API_URL: https://localhost:3234
       ports:
         - 8234:443
       volumes:
         - ~/ssl:/ssl
         - $(pwd)/config.json:/usr/src/app/config.json
+    home-panel-api:
+      image: timmo001/home-panel-api
+      environment:
+        CERTIFICATES_DIR: /ssl
+      ports:
+        - 3234:3234
+      volumes:
+        - ~/ssl:/ssl
   ```
 
 ---
@@ -80,9 +89,35 @@ A touch-compatible web-app for controlling the home.
   timmo001/home-panel
   ```
 
+  ```bash
+  docker run -d \
+  -e CERTIFICATES_DIR='/ssl' \
+  -p 3234:3234 \
+  -v ~/ssl:/ssl \
+  timmo001/home-panel-api
+  ```
+
 ---
 
 ### Node JS
+
+#### API Setup
+
+- First clone the [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
+- Checkout the version you want via releases
+- Install packages
+
+  ```bash
+  yarn install
+  ```
+
+- Run
+
+  ```bash
+  node index.js
+  ```
+
+#### Webapp
 
 - Clone this repository
 - Checkout the version you want via releases
@@ -112,25 +147,7 @@ A touch-compatible web-app for controlling the home.
   yarn build
   ```
 
-#### Production
-
-> **This option is not secure. Do not open to the outside world!**
-
-- Install serve
-
-  ```bash
-  sudo yarn global add serve
-  ```
-
-- Serve the site
-
-  ```bash
-  serve -s build
-  ```
-
-- Open the app in your browser at `http://localhost:5000`
-
-#### Production - Secure
+##### Production - Secure
 
 - Install nginx
 - Edit your server config `/etc/nginx/conf.d/default.conf`
@@ -157,7 +174,7 @@ A touch-compatible web-app for controlling the home.
  `/usr/share/nginx/html`
 - Start your server
 
-#### Development
+##### Development
 
 > **This option is not secure. Do not open to the outside world!**
 
