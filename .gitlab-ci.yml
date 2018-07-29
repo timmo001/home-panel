@@ -13,9 +13,8 @@ stages:
   - test
   - deploy
 
-.before: &before
-  before_script:
-    - mv config.template.json config.json
+before_script:
+  - mv config.template.json config.json
 
 # Generic DIND template
 .dind: &dind
@@ -27,7 +26,6 @@ stages:
 
 # Generic preflight template
 .preflight: &preflight
-  <<: *before
   stage: preflight
   tags:
     - preflight
@@ -131,7 +129,6 @@ markdownlint:
 
 # Build jobs
 build:
-  <<: *before
   stage: build
   image: docker:stable-git
   services:
@@ -157,7 +154,6 @@ build:
 
 # Test jobs
 test:
-  <<: *before
   stage: test
   image: node:alpine
   script:
@@ -171,7 +167,6 @@ test:
       - $TEST_DISABLED
 
 code_quality:
-  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -193,7 +188,6 @@ code_quality:
       - $CODE_QUALITY_DISABLED
 
 dependency_scanning:
-  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -222,7 +216,6 @@ dependency_scanning:
       - $DEPENDENCY_SCANNING_DISABLED
 
 container_scanning:
-  <<: *before
   stage: test
   image: docker:stable
   variables:
@@ -261,7 +254,6 @@ container_scanning:
 
 # Deploy jobs
 deploy: &deploy
-  <<: *before
   <<: *dind
   stage: deploy
   image: docker:latest

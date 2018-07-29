@@ -12,6 +12,7 @@ import config from 'config.json';
 import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
+import Radio from './Radio';
 
 const styles = theme => ({
   root: {
@@ -110,7 +111,7 @@ class Main extends React.Component {
     moved: false,
     over: false,
     hovered: false,
-    overlayOpacity: 0.00,
+    radioShown: false,
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -157,10 +158,16 @@ class Main extends React.Component {
 
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
+  handleRadioShow = () => this.setState({ radioShown: true });
+
+  handleRadioHide = () => this.setState({ radioShown: false });
+
+  handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
+
   render() {
-    const { handleCameraClose, handleMoreInfoClose } = this;
+    const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, theme, handleChange } = this.props;
-    const { moved, over, camera, moreInfo } = this.state;
+    const { moved, over, camera, moreInfo, radioShown } = this.state;
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -171,8 +178,10 @@ class Main extends React.Component {
           over={over}
           handleMouseOver={this.onMouseMoveHandler}
           handleMouseLeave={this.onMouseLeaveHandler}
-          setTheme={this.props.setTheme} />
-        <div className={classes.gridContainer}>
+          setTheme={this.props.setTheme}
+          handleRadioToggle={this.handleRadioToggle}
+          handleRadioHide={handleRadioHide} />
+        <div className={classes.gridContainer} onClick={handleRadioHide}>
           <Grid
             container
             className={classes.grid}
@@ -287,6 +296,9 @@ class Main extends React.Component {
             handleChange={handleChange}
             handleClose={handleMoreInfoClose} />
         }
+        <Radio
+          show={radioShown}
+          handleRadioHide={handleRadioHide} />
       </div>
     );
   }

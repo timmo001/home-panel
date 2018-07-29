@@ -40,16 +40,16 @@ EXPOSE 443
 
 # Set run CMD
 CMD \
-    echo ""\
-    && echo "Copy config.."\
-    && cp config.json ./node_modules/\
-    && echo ""\
-    && echo "Build app.."\
-    && yarn build --production\
-    && echo ""\
-    && echo "Move build files to html directory.."\
-    && rm -Rf /usr/share/nginx/html/*\
-    && mv build/* /usr/share/nginx/html\
-    && echo ""\
-    && echo "Run nginx server.."\
+    echo "" \
+    && echo "Copy config.." \
+    && cp config.json ./node_modules/ \
+    && echo "" \
+    && echo "Build app.." \
+    && yarn build --production \
+    && echo "" \
+    && echo "Move build files to html directory.." \
+    && rm -Rf /usr/share/nginx/html/* \
+    && mv build/* /usr/share/nginx/html \
+    && echo "" \
+    && echo "Run nginx server.." \
     && nginx -g "daemon off;"
