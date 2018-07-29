@@ -162,6 +162,8 @@ class Main extends React.Component {
 
   handleRadioHide = () => this.setState({ radioShown: false });
 
+  handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
+
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, theme, handleChange } = this.props;
@@ -177,8 +179,9 @@ class Main extends React.Component {
           handleMouseOver={this.onMouseMoveHandler}
           handleMouseLeave={this.onMouseLeaveHandler}
           setTheme={this.props.setTheme}
-          handleRadioShow={this.handleRadioShow} />
-        <div className={classes.gridContainer}>
+          handleRadioToggle={this.handleRadioToggle}
+          handleRadioHide={handleRadioHide} />
+        <div className={classes.gridContainer} onClick={handleRadioHide}>
           <Grid
             container
             className={classes.grid}
@@ -276,9 +279,7 @@ class Main extends React.Component {
         }
         <Radio
           show={radioShown}
-          handleRadioHide={handleRadioHide}
-          entities={entities}
-          handleChange={handleChange} />
+          handleRadioHide={handleRadioHide} />
       </div>
     );
   }

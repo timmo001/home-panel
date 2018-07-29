@@ -53,19 +53,19 @@ const styles = theme => ({
     textAlign: 'start',
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 17,
+    paddingLeft: theme.spacing.unit * 17.2,
     color: theme.palette.defaultText.main,
     fontSize: '3.0rem',
   },
   weatherIcon: {
     position: 'fixed',
-    transform: `translateX(-158px)`,
+    transform: `translateX(-154px)`,
     top: 'calc(50% - 45px)',
     width: '190px !important',
     height: '90px !important',
   },
   data: {
-    paddingLeft: theme.spacing.unit * 17,
+    paddingLeft: theme.spacing.unit * 17.2,
     color: theme.palette.defaultText.main,
     fontSize: '2.0rem',
     '& span': {
@@ -129,7 +129,7 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes, entities, theme, moved, over, handleMouseOver, handleMouseLeave } = this.props;
+    const { classes, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
     const header = {
@@ -153,46 +153,48 @@ class Header extends React.Component {
     });
 
     return (
-      <div className={classes.header}>
-        <div className={classes.weatherContainer}>
-          <Typography className={classes.condition} variant="display2">
-            <Skycons
-              className={classes.weatherIcon}
-              color={theme.palette.defaultText.light}
-              icon={header.left_outdoor_weather.icon}
-              autoplay={true} />
-            {header.left_outdoor_weather.condition}
-          </Typography>
-          <Typography className={classes.data} variant="display2">
-            {header.left_outdoor_weather.data.map((d, id) => {
-              return <span key={id}>{d}</span>
+      <div className={classes.root}>
+        <div className={classes.header} onClick={handleRadioHide}>
+          <div className={classes.weatherContainer}>
+            <Typography className={classes.condition} variant="display2">
+              <Skycons
+                className={classes.weatherIcon}
+                color={theme.palette.defaultText.light}
+                icon={header.left_outdoor_weather.icon}
+                autoplay={true} />
+              {header.left_outdoor_weather.condition}
+            </Typography>
+            <Typography className={classes.data} variant="display2">
+              {header.left_outdoor_weather.data.map((d, id) => {
+                return <span key={id}>{d}</span>
+              })}
+            </Typography>
+          </div>
+          <div className={classes.timeDateContainer}>
+            <Typography className={classes.time} variant="display4">
+              <Moment format="hh:mm" />
+              <Moment className={classes.timePeriod} format="a" />
+            </Typography>
+            <Typography className={classes.date} variant="display2">
+              <Moment format="Do MMMM YYYY" />
+            </Typography>
+          </div>
+          <div className={classes.indoorContainer}>
+            {header.right_indoor.map((i, id) => {
+              return (
+                <div key={id} className={classes.indoorInnerContainer}>
+                  <Typography className={classes.indoorLabel} variant="display2">
+                    {i.label}
+                  </Typography>
+                  <Typography className={classes.indoor} variant="display2">
+                    {i.data.map((d, id) => {
+                      return <span key={id}>{d}</span>
+                    })}
+                  </Typography>
+                </div>
+              );
             })}
-          </Typography>
-        </div>
-        <div className={classes.timeDateContainer}>
-          <Typography className={classes.time} variant="display4">
-            <Moment format="hh:mm" />
-            <Moment className={classes.timePeriod} format="a" />
-          </Typography>
-          <Typography className={classes.date} variant="display2">
-            <Moment format="Do MMMM YYYY" />
-          </Typography>
-        </div>
-        <div className={classes.indoorContainer}>
-          {header.right_indoor.map((i, id) => {
-            return (
-              <div key={id} className={classes.indoorInnerContainer}>
-                <Typography className={classes.indoorLabel} variant="display2">
-                  {i.label}
-                </Typography>
-                <Typography className={classes.indoor} variant="display2">
-                  {i.data.map((d, id) => {
-                    return <span key={id}>{d}</span>
-                  })}
-                </Typography>
-              </div>
-            );
-          })}
+          </div>
         </div>
         {(moved || over) &&
           <div
@@ -216,7 +218,7 @@ class Header extends React.Component {
             <IconButton
               className={classes.button}
               aria-label="Radio"
-              onClick={this.props.handleRadioShow}>
+              onClick={this.props.handleRadioToggle}>
               <RadioIcon />
             </IconButton>
           </div>
@@ -245,7 +247,8 @@ Header.propTypes = {
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  handleRadioShow: PropTypes.func.isRequired,
+  handleRadioToggle: PropTypes.func.isRequired,
+  handleRadioHide: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);

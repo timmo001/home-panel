@@ -1,11 +1,11 @@
-// eslint-disable-next-line
 import React from 'react';
 import request from 'superagent';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Sound from 'react-sound';
 import { withStyles } from '@material-ui/core/styles';
+import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
-// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -22,11 +22,15 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2.2,
     left: '50%',
-    transform: 'translateX(-50%)',
+    transform: 'translate(-25%, 100vh) translate(-25%, -380.406px) !important',
+    transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
     zIndex: '1000',
     width: '18rem',
     height: '18rem',
     backgroundColor: theme.palette.mainBackground,
+  },
+  rootShown: {
+    transform: 'translate(-50%, 0px) !important',
   },
   backgroundOuter: {
     position: 'fixed',
@@ -133,110 +137,113 @@ class Radio extends React.Component {
 
   render() {
     const { handleRadioChange, handleInputDialog, handleInputDialogChange } = this;
-    const { classes } = this.props;
+    const { classes, show } = this.props;
     const { dialogOpen } = this.state;
     const { source, playing, canSkip, canShuffle, canRepeat } = this.state.source;
     const { image, streams } = source;
 
     return (
-      <Paper
-        className={classes.root}
-        square
-        elevation={2}>
-        {streams &&
-          <Sound
-            url={streams[0].url}
-            playStatus={playing}
-            onLoading={this.handleSongLoading}
-            onPlaying={this.handleSongPlaying}
-            onFinishedPlaying={this.handleSongFinishedPlaying} />
-        }
-        <ButtonBase
-          className={classes.backgroundOuter}
-          focusRipple
-          onClick={handleInputDialog}>
-          <img
-            className={classes.background}
-            src={image}
-            alt="background" />
-        </ButtonBase>
-        <InputDialog
-          open={dialogOpen}
-          handleChange={handleInputDialogChange} />
-        <div className={classes.controls}>
-          <div className={classes.controlsMain}>
-            {canRepeat &&
-              <Button
-                className={classes.button}
-                mini
-                variant="fab"
-                color="primary"
-                aria-label="Repeat"
-                onClick={() => handleRadioChange('repeat')}>
-                <RepeatIcon />
-              </Button>
-            }
-            {canSkip &&
-              <Button
-                className={classes.button}
-                mini
-                variant="fab"
-                color="primary"
-                aria-label="Previous"
-                onClick={() => handleRadioChange('previous')}>
-                <SkipPreviousIcon />
-              </Button>
-            }
-            {playing === Sound.status.PLAYING ?
-              <Button
-                className={classes.buttonPlay}
-                variant="fab"
-                color="primary"
-                aria-label="Pause"
-                onClick={() => handleRadioChange('pause')}>
-                <PauseIcon />
-              </Button>
-              :
-              <Button
-                className={classes.buttonPlay}
-                variant="fab"
-                color="primary"
-                aria-label="Play"
-                onClick={() => handleRadioChange('play')}>
-                <PlayArrowIcon />
-              </Button>
-            }
-            {canSkip &&
-              <Button
-                className={classes.button}
-                mini
-                variant="fab"
-                color="primary"
-                aria-label="Next"
-                onClick={() => handleRadioChange('next')}>
-                <SkipNextIcon />
-              </Button>
-            }
-            {canShuffle &&
-              <Button
-                className={classes.button}
-                mini
-                variant="fab"
-                color="primary"
-                aria-label="Shuffle"
-                onClick={() => handleRadioChange('shuffle')}>
-                <ShuffleIcon />
-              </Button>
-            }
+      <Slide direction="up" in={show}>
+        <Paper
+          className={classNames(classes.root, show && classes.rootShown)}
+          square
+          elevation={2}>
+          {streams &&
+            <Sound
+              url={streams[0].url}
+              playStatus={playing}
+              onLoading={this.handleSongLoading}
+              onPlaying={this.handleSongPlaying}
+              onFinishedPlaying={this.handleSongFinishedPlaying} />
+          }
+          <ButtonBase
+            className={classes.backgroundOuter}
+            focusRipple
+            onClick={handleInputDialog}>
+            <img
+              className={classes.background}
+              src={image}
+              alt="background" />
+          </ButtonBase>
+          <InputDialog
+            open={dialogOpen}
+            handleChange={handleInputDialogChange} />
+          <div className={classes.controls}>
+            <div className={classes.controlsMain}>
+              {canRepeat &&
+                <Button
+                  className={classes.button}
+                  mini
+                  variant="fab"
+                  color="primary"
+                  aria-label="Repeat"
+                  onClick={() => handleRadioChange('repeat')}>
+                  <RepeatIcon />
+                </Button>
+              }
+              {canSkip &&
+                <Button
+                  className={classes.button}
+                  mini
+                  variant="fab"
+                  color="primary"
+                  aria-label="Previous"
+                  onClick={() => handleRadioChange('previous')}>
+                  <SkipPreviousIcon />
+                </Button>
+              }
+              {playing === Sound.status.PLAYING ?
+                <Button
+                  className={classes.buttonPlay}
+                  variant="fab"
+                  color="primary"
+                  aria-label="Pause"
+                  onClick={() => handleRadioChange('pause')}>
+                  <PauseIcon />
+                </Button>
+                :
+                <Button
+                  className={classes.buttonPlay}
+                  variant="fab"
+                  color="primary"
+                  aria-label="Play"
+                  onClick={() => handleRadioChange('play')}>
+                  <PlayArrowIcon />
+                </Button>
+              }
+              {canSkip &&
+                <Button
+                  className={classes.button}
+                  mini
+                  variant="fab"
+                  color="primary"
+                  aria-label="Next"
+                  onClick={() => handleRadioChange('next')}>
+                  <SkipNextIcon />
+                </Button>
+              }
+              {canShuffle &&
+                <Button
+                  className={classes.button}
+                  mini
+                  variant="fab"
+                  color="primary"
+                  aria-label="Shuffle"
+                  onClick={() => handleRadioChange('shuffle')}>
+                  <ShuffleIcon />
+                </Button>
+              }
+            </div>
           </div>
-        </div>
-      </Paper>
+        </Paper>
+      </Slide>
     );
   }
 }
 
 Radio.propTypes = {
   classes: PropTypes.object.isRequired,
+  show: PropTypes.bool.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
 };
 
