@@ -103,7 +103,8 @@ A touch-compatible web-app for controlling the home.
 
 #### API Setup
 
-- First clone the [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
+- First clone the
+- [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
 - Checkout the version you want via releases
 - Install packages
 
