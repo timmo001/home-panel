@@ -12,3 +12,4 @@ docs/
 .yamllint
 .mdlrc
 .eslintrc.json
+hugo/
