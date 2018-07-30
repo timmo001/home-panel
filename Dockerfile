@@ -32,7 +32,7 @@ RUN echo "server {\
 }" > /etc/nginx/conf.d/default.conf
 
 # Install dependencies
-RUN yarn install
+RUN yarn install && yarn cache clean
 
 # Expose outbound ports
 EXPOSE 80
