@@ -20,8 +20,8 @@ theme:
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-  favicon: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/favicon.ico'
-  logo: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/logo-white.svg'
+  favicon: 'favicon.ico'
+  logo: 'logo.svg'
 
 # Customization
 extra:
