@@ -1,0 +1,69 @@
+site_name: Home Panel
+site_description: A touch-compatible web-app for controlling the home
+site_author: Timmo
+site_url: https://git.timmo.xyz/home-panel/
+
+# Repository
+repo_name: timmo001/home-panel
+repo_url: https://github.com/timmo001/home-panel
+
+# Copyright
+copyright: 'Copyright &copy; Timmo'
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  palette:
+    primary: 'blue grey'
+    accent: 'light blue'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+  favicon: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/favicon.ico'
+  logo: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/logo-white.svg'
+
+# Customization
+extra:
+  search:
+    language: 'en'
+    tokenizer: '[\s\-\.]+'
+  social:
+    - type: 'github'
+      link: 'https://github.com/timmo001/home-panel'
+    - type: 'twitter'
+      link: 'https://twitter.com/timmo001'
+    - type: 'stack-overflow'
+      link: 'https://stackoverflow.com/users/1888770/timmo'
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Pages
+pages:
+  - Overview: index.md
+  - Setup: setup.md
+  - Configuration: configuration.md
+  - Template: template.md
+  - License: license.md
