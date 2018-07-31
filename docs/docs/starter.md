@@ -1,8 +1,4 @@
----
-title: "Starter Template"
-date: 2018-07-20T13:29:08+01:00
-draft: false
----
+# Starter Template
 
 ```json
 

@@ -1,10 +1,4 @@
----
-title: "Home Panel"
-date: 2018-07-20T13:51:46+01:00
-draft: false
----
-
-# A touch-compatible web-app for controlling the home
+# Home Panel
 
 [![GitHub Release](https://img.shields.io/github/release/timmo001/home-panel.svg)](https://github.com/timmo001/home-panel/releases)
 [![License](https://img.shields.io/github/license/timmo001/home-panel.svg)](LICENSE.md)
@@ -16,13 +10,7 @@ draft: false
 [![Docker Pulls][pulls-shield]][dockerhub]
 [![Anchore Image Overview][anchore-shield]][anchore]
 
-## Screenshots
-
-![Light Theme Screenshot][light-theme]
-
-![Dark Theme Screenshot][dark-theme]
-
-![More Info Screenshot][more-info]
+A touch-compatible web-app for controlling the home.
 
 ## Features
 
@@ -33,9 +21,17 @@ draft: false
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with deskops also)
 
-[light-theme]: /static/light-theme.png
-[dark-theme]: /static/dark-theme.png
-[more-info]: /static/more-info.png
+## Screenshots
+
+![Light Theme Screenshot][light-theme]
+
+![Dark Theme Screenshot][dark-theme]
+
+![More Info Screenshot][more-info]
+
+[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
+[dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
+[more-info]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info.png
 [anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
 [anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
