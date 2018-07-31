@@ -1,8 +1,4 @@
----
-title: "MIT License"
-date: 2018-07-20T13:08:01+01:00
-draft: false
----
+# MIT License
 
 Copyright (c) Timmo
 
