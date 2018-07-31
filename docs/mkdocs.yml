@@ -20,8 +20,8 @@ theme:
   font:
     text: 'Roboto'
     code: 'Roboto Mono'
-  favicon: 'resources/favicon.ico'
-  logo: 'resources/logo-white.svg'
+  favicon: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/favicon.ico'
+  logo: 'https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/logo-white.svg'
 
 # Customization
 extra:
@@ -64,5 +64,6 @@ markdown_extensions:
 pages:
   - Overview: index.md
   - Setup: setup.md
+  - Configuration: configuration.md
   - Template: template.md
   - License: license.md

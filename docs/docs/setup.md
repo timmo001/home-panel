@@ -100,7 +100,7 @@ node index.js
 cp config.template.json src/config.json
 ```
 
-- Update `src/config.json` to your configuration. (See below for sample and options)
+- Update `src/config.json` to your configuration
 - Install packages
 
 ```bash
