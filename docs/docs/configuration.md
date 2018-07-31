@@ -14,7 +14,7 @@ You can override the way the `auto` theme triggers between light and dark
  mode. The format is similar to the way [Home Assistant's][hass]
  automations work.
  You set the sensor's `entity_id` and the **below** threshhold.
- 
+
 The sensor below is an LDR sensor which sets the *dark* theme when below
 *600 LUX*:
 
