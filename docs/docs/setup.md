@@ -157,4 +157,4 @@ server {
 yarn start
 ```
 
-- The app should open in your default browser under `http://localhost:3000`
+- The app should open in your default browser under http://localhost:3000
