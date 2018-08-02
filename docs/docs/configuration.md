@@ -179,7 +179,8 @@ This is an array of the `entity_id`'s that describes the current weather
 ## items
 
 The main view. Where all the cards, cameras, links etc. go. First give the
- group of cards a name, then add what you want. See below for the avalible types of cards.
+ group of cards a name, then add what you want. See below for the avalible
+ types of cards.
 
 ```json
   "items": [
@@ -305,7 +306,8 @@ You can add any camera image supported by your browser. Set the `type` to
 
 #### url
 
-The url of the camera feed for use in full screen when the smaller camera card is clicked.
+The url of the camera feed for use in full screen when the smaller camera card
+ is clicked.
 
 ```json
           "url": "http://myserver.local:8080/accesscode/mjpeg/groupid/name"
