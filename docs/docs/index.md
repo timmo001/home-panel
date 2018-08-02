@@ -10,11 +10,11 @@
 [![Docker Pulls][pulls-shield]][dockerhub]
 [![Anchore Image Overview][anchore-shield]][anchore]
 
-A touch-compatible web-app for controlling the home.
+A touch-compatible web-app for controlling the home. Integrates with [Home Assistant][hass] as an alternative / additional frontend.
 
 ## Features
 
-- Supports and can be used as alternate frontend for [Home Assistant](https://www.home-assistant.io/)
+- Supports and can be used as alternate frontend for [Home Assistant][hass]
 - Supports MJPEG and related image-based camera/image feeds
 - Add weather and weather icons using Home Assistant's
  [Dark Sky](https://www.home-assistant.io/components/weather.darksky/) component
@@ -39,3 +39,4 @@ A touch-compatible web-app for controlling the home.
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
+[hass]: https://www.home-assistant.io/
