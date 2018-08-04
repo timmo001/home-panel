@@ -10,6 +10,7 @@ import Root from './Components/Root';
 
 const themes = [
   {
+    id: 1,
     name: 'Light',
     theme: createMuiTheme({
       palette: {
@@ -34,6 +35,7 @@ const themes = [
     })
   },
   {
+    id: 2,
     name: 'Dark',
     theme: createMuiTheme({
       palette: {
@@ -65,7 +67,10 @@ class App extends Component {
     theme: themes[0].theme,
   };
 
-  setTheme = (id) => this.setState({ theme: themes[id].theme });
+  setTheme = (id) => {
+    const theme = themes.find(t => t.id === id);
+    this.setState({ theme: theme ? theme.theme : themes[0].theme });
+  };
 
   render() {
     const { theme } = this.state;
