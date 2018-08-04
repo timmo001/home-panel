@@ -1,4 +1,4 @@
-## Description of issue
+## Description
 
 
 
