@@ -29,6 +29,11 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
 
 ## header
 
+This section can display weather and other sensor information in the top
+ section of the app alongside the time and date.
+
+![Header Screenshot][header]
+
 ```json
   "header": {
     "left_outdoor_weather": {
@@ -81,6 +86,8 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
 This section is used for setting the `entity_id`'s of weather sensors.
  These are meant for outdoor sensors, but can be anything that has a `state`.
 
+![Left Outdoor Weather Screenshot][weather-left]
+
 #### dark_sky_icon
 
 This is the `entity_id` of your [Dark Sky][dark-sky] icon sensor.
@@ -119,6 +126,8 @@ This is an array of the `entity_id`'s that describes the current weather
 ### right_indoor
 
 This is an array of grouped sensors which are labelled by a larger set of text.
+
+![Right Indoor Screenshot][weather-right]
 
 ```json
       {
@@ -257,14 +266,16 @@ This is the default type of card. You do not need to set the `type` here as
 
 The `entity_id` of the [HASS][hass] entity. Switches and lights act as buttons
  which can be toggled on and off and scenes, scripts etc. act as
- non-toggleable buttons. Lights can also be clicked and held / long pressed to
- set brightness, temperature, effect, color etc. in a more info dialog.
+ non-toggleable buttons.
 
 ```json
           "entity_id": "light.tv_light"
 ```
 
-![More Info Screenshot][more-info]
+Lights can also be clicked and held / long pressed to
+ set brightness, temperature, effect, color etc. in a more info dialog:
+
+![More Info Screenshot][more-info-dark]
 
 #### name
 
@@ -293,7 +304,7 @@ A simple hyperlink that opens up another webpage in a new tab/window. To
 
 You can add any camera image supported by your browser. Set the `type` to
  `camera` to use this. Set the `name` as appropriate. The camera type spans
- two cards. Clicking on the camera shows the camera's video feed.
+ two cards. Clicking on the camera shows the camera's feed.
 
 ```json
         {
@@ -303,6 +314,21 @@ You can add any camera image supported by your browser. Set the `type` to
           "url": "http://myserver.local:8080/accesscode/mjpeg/groupid/name"
         }
 ```
+
+Another use for the `camera` type is to show an image, instead of a camera, so your
+ screen acts as a photo frame.
+
+```json
+        {
+          "type": "camera",
+          "name": "Lake Scene",
+          "still_url": "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+          "url": "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        }
+```
+
+![Camera Picture Screenshot][camera-picture]
+![Camera Picture Full Screenshot][camera-picture-full]
 
 #### url
 
@@ -324,4 +350,9 @@ The url of a still image for use in the main view. This updates every minute.
 [template]: https://git.timmo.xyz/home-panel/template/
 [hass]: https://www.home-assistant.io/
 [dark-sky]: https://www.home-assistant.io/components/sensor.darksky/
-[more-info]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info.png
+[more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
+[camera-picture]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/camera-picture.png
+[camera-picture-full]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/camera-picture-full.png
+[header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/header.png
+[weather-left]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-left.png
+[weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
