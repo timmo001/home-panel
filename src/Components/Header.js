@@ -115,9 +115,11 @@ class Header extends React.Component {
   };
 
   getState = (entities, entity, endAdornment = '') => {
-    const state = entities.find(i => {
+    var state = entities.find(i => {
       return i[1].entity_id === entity;
-    })[1].state;
+    });
+    if (!state) return undefined;
+    state = state[1].state;
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
@@ -132,44 +134,53 @@ class Header extends React.Component {
     const { classes, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
+    const icon = config.header.left_outdoor_weather &&
+      config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
+
     const header = {
-      left_outdoor_weather: {
-        icon: this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon)
-          .replaceAll('-', '_').toUpperCase(),
-        condition: this.getState(entities, config.header.left_outdoor_weather.condition),
+      left_outdoor_weather: config.header.left_outdoor_weather && {
+        icon: icon && icon.replaceAll('-', '_').toUpperCase(),
+        condition: config.header.left_outdoor_weather.condition && this.getState(entities, config.header.left_outdoor_weather.condition),
         data: []
       },
       right_indoor: []
     };
-    config.header.left_outdoor_weather.data.map(d => {
-      return header.left_outdoor_weather.data.push(
-        this.getState(entities, d.entity_id, d.unit_of_measurement)
-      );
-    });
-    config.header.right_indoor.map(i => {
-      var data = [];
-      i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
-      return header.right_indoor.push({ label: i.label, data });
-    });
+    if (header.left_outdoor_weather)
+      config.header.left_outdoor_weather.data.map(d => {
+        return header.left_outdoor_weather.data.push(
+          this.getState(entities, d.entity_id, d.unit_of_measurement)
+        );
+      });
+    if (config.header.right_indoor)
+      config.header.right_indoor.map(i => {
+        var data = [];
+        i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+        return header.right_indoor.push({ label: i.label, data });
+      });
 
     return (
       <div className={classes.root}>
         <div className={classes.header} onClick={handleRadioHide}>
-          <div className={classes.weatherContainer}>
-            <Typography className={classes.condition} variant="display2">
-              <Skycons
-                className={classes.weatherIcon}
-                color={theme.palette.defaultText.light}
-                icon={header.left_outdoor_weather.icon}
-                autoplay={true} />
-              {header.left_outdoor_weather.condition}
-            </Typography>
-            <Typography className={classes.data} variant="display2">
-              {header.left_outdoor_weather.data.map((d, id) => {
-                return <span key={id}>{d}</span>
-              })}
-            </Typography>
-          </div>
+          {header.left_outdoor_weather &&
+            <div className={classes.weatherContainer}>
+              <Typography className={classes.condition} variant="display2">
+                {header.left_outdoor_weather.condition &&
+                  <Skycons
+                    className={classes.weatherIcon}
+                    color={theme.palette.defaultText.light}
+                    icon={header.left_outdoor_weather.icon}
+                    autoplay={true} />
+                }
+                {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
+              </Typography>
+
+              <Typography className={classes.data} variant="display2">
+                {header.left_outdoor_weather.data.map((d, id) => {
+                  return <span key={id}>{d}</span>
+                })}
+              </Typography>
+            </div>
+          }
           <div className={classes.timeDateContainer}>
             <Typography className={classes.time} variant="display4">
               <Moment format="hh:mm" />
@@ -196,7 +207,8 @@ class Header extends React.Component {
             })}
           </div>
         </div>
-        {(moved || over) &&
+        {
+          (moved || over) &&
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
@@ -233,7 +245,7 @@ class Header extends React.Component {
           <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
           <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
         </Menu>
-      </div>
+      </div >
     );
   }
 }
