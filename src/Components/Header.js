@@ -242,8 +242,8 @@ class Header extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}>
           <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
-          <MenuItem onClick={() => this.handleClose(0)}>Light</MenuItem>
-          <MenuItem onClick={() => this.handleClose(1)}>Dark</MenuItem>
+          <MenuItem onClick={() => this.handleClose(1)}>Light</MenuItem>
+          <MenuItem onClick={() => this.handleClose(2)}>Dark</MenuItem>
         </Menu>
       </div >
     );
