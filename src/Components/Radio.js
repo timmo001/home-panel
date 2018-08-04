@@ -22,7 +22,7 @@ const styles = theme => ({
     position: 'fixed',
     bottom: theme.spacing.unit * 2.2,
     left: '50%',
-    transform: 'translate(-25%, 100vh) translate(-25%, -380.406px) !important',
+    transform: 'translate(-25%, 100vh) translate(-25%, 0px) !important',
     transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
     zIndex: '1000',
     width: '18rem',
