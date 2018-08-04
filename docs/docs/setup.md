@@ -48,7 +48,9 @@ services:
 ### Non-SSL
 
 !!! warning ""
-    This example shows how to set up the app without ssl. This is useful for testing, but is **unsecure**, so don't expose the app to the outside world.
+    This example shows how to set up the app without ssl. This is useful for
+     testing, but is **unsecure**, so don't expose the app to the outside
+     world.
 
 ```yaml
 ---
@@ -111,7 +113,9 @@ docker run -d \
 ### Non-SSL
 
 !!! warning ""
-    This example shows how to set up the app without ssl. This is useful for testing, but is **unsecure**, so don't expose the app to the outside world.
+    This example shows how to set up the app without ssl. This is useful for
+     testing, but is **unsecure**, so don't expose the app to the outside
+     world.
 
 ```bash
 docker run -d \
