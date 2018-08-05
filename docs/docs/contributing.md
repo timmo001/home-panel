@@ -13,5 +13,5 @@ You are welcome to edit, fork and create pull requests as you like.
 ## Docs
 
 Feel free to improve documentation as you like by making a pull request in
- `/docs`. Once merged into the master branch, my ci server will update the
+ `/docs`. Once merged into the master branch, the GitLab CI server will update the
  docs in the `gh-pages` branch.
