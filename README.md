@@ -15,15 +15,25 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ## Features
 
-- Supports and can be used as alternate frontend for [Home Assistant][hass]
+---
+
+- Card based user interface with support for [HASS][hass] entities, links and
+ cameras.
+- Supports and can be used as alternate / additional frontend for
+ [Home Assistant][hass]
 - Supports MJPEG and related image-based camera/image feeds
-- Add weather and weather icons using Home Assistant's
- [Dark Sky](https://www.home-assistant.io/components/weather.darksky/) component
+ (can also be used as a photo frame)
+- Light control with brightness, temperature, color, effects etc. support
 - Supports Radio playback from TuneIn API
+- Add weather and weather icons using Home Assistant's
+ [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
+ component
 - Made for touch screens with a sideways scrolling Material
- Design interface. (Compatible with deskops also)
+ Design interface. (Compatible with deskops as well)
 
 ## Screenshots
+
+---
 
 ![Light Theme Screenshot][light-theme]
 ![More Info Light Screenshot][more-info-light]
@@ -34,6 +44,8 @@ A touch-compatible web-app for controlling the home. Integrates with
 ![Radio Screenshot][radio]
 
 ## Docs
+
+---
 
 Setup and configuration are avaliable [here][docs]
 
