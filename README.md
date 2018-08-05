@@ -27,7 +27,7 @@ A touch-compatible web-app for controlling the home. Integrates with
  [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
  component
 - Made for touch screens with a sideways scrolling Material
- Design interface. (Compatible with deskops as well)
+ Design interface. (Compatible with desktops as well)
 
 ## Screenshots
 
