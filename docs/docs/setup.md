@@ -7,7 +7,7 @@
 - Install [Docker](https://www.docker.com/community-edition) and
  [Docker Compose](https://docs.docker.com/compose/install/)
 - Create a directory for your compose file. For example, `home-panel`
-- Create a `config.json` using the template below
+- Create a `config.json` using the [template][template]
 - Create a `docker-compose.yml` file:
 
 ### SSL
@@ -79,7 +79,7 @@ services:
 ---
 
 - Install [Docker](https://www.docker.com/community-edition)
-- Create a `config.json` using the template below
+- Create a `config.json` using the [template][template]
 - Run image
 
 ### SSL
@@ -257,3 +257,5 @@ yarn start
 ```
 
 - The app should open in your default browser under [http://localhost:3000](http://localhost:3000)
+
+[template]: https://git.timmo.xyz/home-panel/template/
