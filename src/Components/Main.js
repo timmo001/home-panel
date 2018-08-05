@@ -100,12 +100,6 @@ const styles = theme => ({
 
 var hoverTimeout;
 
-// eslint-disable-next-line
-String.prototype.replaceAll = function (search, replacement) {
-  var target = this;
-  return target.replace(new RegExp(search, 'g'), replacement);
-};
-
 class Main extends React.Component {
   state = {
     moved: false,
