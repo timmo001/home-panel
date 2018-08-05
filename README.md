@@ -19,6 +19,7 @@ A touch-compatible web-app for controlling the home. Integrates with
 - Supports MJPEG and related image-based camera/image feeds
 - Add weather and weather icons using Home Assistant's
  [Dark Sky](https://www.home-assistant.io/components/weather.darksky/) component
+- Supports Radio playback from TuneIn API
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with deskops also)
 
