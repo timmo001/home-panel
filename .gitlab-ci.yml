@@ -120,7 +120,7 @@ mkdocs:
     - cd docs
     - python --version
     - pip --version
-    - pip install mkdocs==0.17.5 mkdocs-material
+    - pip install mkdocs mkdocs-material
     - 'mkdocs gh-deploy -v -c -m ":books: update docs"'
   only:
     - master
