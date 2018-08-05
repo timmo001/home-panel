@@ -13,7 +13,7 @@ Now, we will go over the sections you can configure inside the JSON file along
 You can override the way the `auto` theme triggers between light and dark
  mode. The format is similar to the way [Home Assistant's][hass]
  automations work.
- You set the sensor's `entity_id` and the **below** threshhold.
+ You set the sensor's `entity_id` and the **below** threshold.
 
 The sensor below is an LDR sensor which sets the *dark* theme when below
 *600 LUX*:
@@ -188,7 +188,7 @@ This is an array of the `entity_id`'s that describes the current weather
 ## items
 
 The main view. Where all the cards, cameras, links etc. go. First give the
- group of cards a name, then add what you want. See below for the avalible
+ group of cards a name, then add what you want. See below for the available
  types of cards.
 
 ```json
