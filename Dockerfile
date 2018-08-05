@@ -15,24 +15,6 @@ RUN \
 # Create nginx directories
 RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
 
-# Add SSL enabled config
-RUN if [ -f /ssl/fullchain.pem ]; then \
-  echo "server {\
-    listen 80 default_server;\
-    listen [::]:80 default_server;\
-    listen 443 ssl http2 default_server;\
-    listen [::]:443 ssl http2 default_server;\
-    root /usr/share/nginx/html;\
-    index index.html;\
-    server_name 172.0.0.1;\
-    ssl_certificate /ssl/fullchain.pem;\
-    ssl_certificate_key /ssl/privkey.pem;\
-    location / {\
-      try_files \$uri /index.html;\
-    }\
-  }" > /etc/nginx/conf.d/default.conf; \
-fi
-
 # Install dependencies
 RUN yarn install && yarn cache clean
 

@@ -11,3 +11,11 @@ services:
       - 8234:443
     volumes:
       - ~/ssl:/ssl
+  home-panel-api:
+    image: timmo001/home-panel-api
+    environment:
+      CERTIFICATES_DIR: /ssl
+    ports:
+      - 3234:3234
+    volumes:
+      - ~/ssl:/ssl
