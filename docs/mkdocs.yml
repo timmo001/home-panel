@@ -66,4 +66,5 @@ pages:
   - Setup: setup.md
   - Configuration: configuration.md
   - Template: template.md
+  - Contributing: contributing.md
   - License: license.md
