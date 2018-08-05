@@ -15,8 +15,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ## Features
 
----
-
 - Card based user interface with support for [HASS][hass] entities, links and
  cameras.
 - Supports and can be used as alternate / additional frontend for
@@ -33,8 +31,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ## Screenshots
 
----
-
 ![Light Theme Screenshot][light-theme]
 ![More Info Light Screenshot][more-info-light]
 
@@ -45,9 +41,7 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ## Docs
 
----
-
-Setup and configuration are avaliable [here][docs]
+Setup and configuration is available [here][docs]
 
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png

@@ -15,8 +15,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ## Features
 
----
-
 - Card based user interface with support for [HASS][hass] entities, links and
  cameras.
 - Supports and can be used as alternate / additional frontend for
@@ -32,8 +30,6 @@ A touch-compatible web-app for controlling the home. Integrates with
  Design interface. (Compatible with deskops as well)
 
 ## Screenshots
-
----
 
 ![Light Theme Screenshot][light-theme]
 ![More Info Light Screenshot][more-info-light]
