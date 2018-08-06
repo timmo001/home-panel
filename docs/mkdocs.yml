@@ -61,7 +61,7 @@ markdown_extensions:
   - pymdownx.tilde
 
 # Pages
-pages:
+nav:
   - Overview: index.md
   - Setup: setup.md
   - Configuration: configuration.md
