@@ -53,8 +53,8 @@ class Root extends Component {
 
   connectToHASS = () => {
     if (process.env.REACT_APP_HASS_HOST) {
-      const wsURL = `${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://` +
-        `${process.env.REACT_APP_HASS_HASSIO ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
+      const wsURL = `${process.env.REACT_APP_HASS_SSL === 'true' ? 'wss' : 'ws'}://` +
+        `${process.env.REACT_APP_HASS_HASSIO === 'true' ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
       console.log(`Connect to ${wsURL}`);
       createConnection(wsURL, { authToken: process.env.REACT_APP_HASS_PASSWORD })
         .then(conn => {
@@ -72,7 +72,10 @@ class Root extends Component {
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    createConnection(`${process.env.REACT_APP_HASS_SSL === true ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+    const wsURL = `${process.env.REACT_APP_HASS_SSL === 'true' ? 'wss' : 'ws'}://` +
+      `${process.env.REACT_APP_HASS_HASSIO === 'true' ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
+    console.log(`Connect to ${wsURL}`);
+    createConnection(wsURL, { authToken: process.env.REACT_APP_HASS_PASSWORD })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
