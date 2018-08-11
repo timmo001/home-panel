@@ -53,8 +53,10 @@ class Root extends Component {
 
   connectToHASS = () => {
     if (process.env.REACT_APP_HASS_HOST) {
-      console.log(`Connect to ${process.env.REACT_APP_HASS_SSL === true ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`);
-      createConnection(`${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+      const wsURL = `${process.env.REACT_APP_HASS_SSL ? 'wss' : 'ws'}://` +
+        `${process.env.REACT_APP_HASS_HASSIO ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
+      console.log(`Connect to ${wsURL}`);
+      createConnection(wsURL, { authToken: process.env.REACT_APP_HASS_PASSWORD })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
