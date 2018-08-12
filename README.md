@@ -3,7 +3,8 @@
 [![GitHub Release](https://img.shields.io/github/release/timmo001/home-panel.svg)](https://github.com/timmo001/home-panel/releases)
 [![License](https://img.shields.io/github/license/timmo001/home-panel.svg)](https://github.com/timmo001/home-panel/blob/master/LICENSE.md)
 [![pipeline status](https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg)](https://gitlab.com/timmo/home-panel/commits/master)
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/timmo001/home-panel.svg?columns=To%20Do,On%20Hold,In%20Progress,Done)](https://waffle.io/timmo001/home-panel) [![Greenkeeper badge](https://badges.greenkeeper.io/timmo001/home-panel.svg)](https://greenkeeper.io/)
+[![Waffle.io - Columns and their card count](https://badge.waffle.io/timmo001/home-panel.svg?columns=To%20Do,On%20Hold,In%20Progress,Done)](https://waffle.io/timmo001/home-panel)
+[![Greenkeeper badge](https://badges.greenkeeper.io/timmo001/home-panel.svg)](https://greenkeeper.io/)
 
 [![Docker Version][version-shield]][microbadger]
 [![Docker Layers][layers-shield]][microbadger]
