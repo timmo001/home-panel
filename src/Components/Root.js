@@ -39,7 +39,7 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config) => this.setState(config);
+  loggedIn = (config) => this.setState({ config }, () => this.connectToHASS());
 
   stateChanged = (event) => {
     console.log('state changed', event);
@@ -51,7 +51,7 @@ class Root extends Component {
 
   connectToHASS = () => {
     if (this.state.config.hass_host) {
-      const wsURL = `${this.state.config.hass_ssl === 'true' ? 'wss' : 'ws'}://` +
+      const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
         `${this.state.config.hass_host}/api/websocket?latest`;
       console.log(`Connect to ${wsURL}`);
       createConnection(wsURL, { authToken: this.state.config.hass_password })
@@ -63,14 +63,20 @@ class Root extends Component {
           subscribeEntities(conn, this.updateEntities);
         }, err => {
           console.error('Connection failed with code', err);
-          this.setState({ snackMessage: { open: true, text: 'Connection failed' }, entities: undefined });
+          // localStorage.removeItem('username');
+          sessionStorage.removeItem('password');
+          this.setState({
+            snackMessage: { open: true, text: 'Connection failed' },
+            entities: undefined,
+            config: undefined
+          });
         });
     }
   }
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    const wsURL = `${this.state.config.hass_ssl === 'true' ? 'wss' : 'ws'}://` +
+    const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
       `${this.state.config.hass_host}/api/websocket?latest`;
     console.log(`Connect to ${wsURL}`);
     createConnection(wsURL, { authToken: this.state.config.hass_password })
@@ -142,6 +148,7 @@ class Root extends Component {
             <Main
               theme={theme}
               setTheme={setTheme}
+              config={config}
               entities={entities}
               handleChange={this.handleChange} />
             :
