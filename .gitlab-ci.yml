@@ -155,7 +155,6 @@ test:
   image: node:alpine
   script:
     - yarn install && yarn cache clean
-    - mv config.json node_modules/
     - yarn run test
   only:
     - branches
