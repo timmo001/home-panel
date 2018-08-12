@@ -50,7 +50,7 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    if (this.state.config.hass_host) {
+    if (this.state.config && this.state.config.hass_host) {
       const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
         `${this.state.config.hass_host}/api/websocket?latest`;
       console.log(`Connect to ${wsURL}`);
