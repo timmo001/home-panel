@@ -2,7 +2,7 @@ import React from 'react';
 import request from 'superagent';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import Sound from 'react-sound';
+import Sound, { soundManager } from 'react-sound';
 import { withStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
@@ -76,9 +76,9 @@ class Radio extends React.Component {
     dialogOpen: false,
   };
 
-  handleUpdateRadio = () => {
-    console.log('source:', this.state.source);
-  };
+  componentDidMount = () => soundManager.setup({ debugMode: false });
+
+  handleUpdateRadio = () => console.log('source:', this.state.source);
 
   handleRadioChange = (action) => {
     console.log('action:', action);
