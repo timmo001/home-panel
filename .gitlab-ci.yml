@@ -13,9 +13,6 @@ stages:
   - test
   - deploy
 
-before_script:
-  - mv config.template.json config.json
-
 # Generic DIND template
 .dind: &dind
   before_script:
