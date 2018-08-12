@@ -8,7 +8,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import config from 'config.json';
 import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
@@ -180,7 +179,7 @@ class Main extends React.Component {
             container
             className={classes.grid}
             spacing={16}>
-            {config.items && config.items.map((group, x) => {
+            {this.props.config.items && this.props.config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
                   <Typography className={classes.title} variant="display1" gutterBottom>
