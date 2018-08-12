@@ -77,6 +77,8 @@ class Login extends React.Component {
       username: username ? username : '',
       password: password ? password : '',
       createAccount: username ? false : true
+    }, () => {
+      if (username && password && !this.state.createAccount) this.props.handleLogIn();
     });
   };
 
@@ -150,7 +152,6 @@ class Login extends React.Component {
     const { classes } = this.props;
     const { username, password, hass_host, hass_password, hass_ssl,
       showPassword, showHASSPassword, createAccount } = this.state;
-    if (username && password && !createAccount) this.props.handleLogIn();
 
     return (
       <Grid
@@ -200,47 +201,51 @@ class Login extends React.Component {
                     </InputAdornment>
                   } />
               </FormControl>
-              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                <InputLabel htmlFor="hass_host">HASS Host</InputLabel>
-                <Input
-                  required
-                  id="hass_host"
-                  type="text"
-                  value={hass_host}
-                  onChange={this.handleChange('hass_host')}
-                  onKeyPress={this.handleKeyPress} />
-              </FormControl>
-              <FormControl className={classNames(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="hass_password">HASS Password</InputLabel>
-                <Input
-                  required
-                  id="hass_password"
-                  type={showHASSPassword ? 'text' : 'password'}
-                  value={hass_password}
-                  onChange={this.handleChange('hass_password')}
-                  onKeyPress={this.handleKeyPress}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Toggle hass password visibility"
-                        onClick={this.handleClickShowHASSPassword}
-                        onMouseDown={this.handleMouseDownPassword}>
-                        {showHASSPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  } />
-              </FormControl>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={hass_ssl}
-                    onChange={this.handleCheckedChange('hass_ssl')}
-                    value="hass_ssl"
-                    color="primary"
+              {createAccount &&
+                <div>
+                  <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                    <InputLabel htmlFor="hass_host">Home Assistant Host</InputLabel>
+                    <Input
+                      required
+                      id="hass_host"
+                      type="text"
+                      value={hass_host}
+                      onChange={this.handleChange('hass_host')}
+                      onKeyPress={this.handleKeyPress} />
+                  </FormControl>
+                  <FormControl className={classNames(classes.margin, classes.textField)}>
+                    <InputLabel htmlFor="hass_password">Home Assistant Password</InputLabel>
+                    <Input
+                      required
+                      id="hass_password"
+                      type={showHASSPassword ? 'text' : 'password'}
+                      value={hass_password}
+                      onChange={this.handleChange('hass_password')}
+                      onKeyPress={this.handleKeyPress}
+                      endAdornment={
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="Toggle hass password visibility"
+                            onClick={this.handleClickShowHASSPassword}
+                            onMouseDown={this.handleMouseDownPassword}>
+                            {showHASSPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      } />
+                  </FormControl>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={hass_ssl}
+                        onChange={this.handleCheckedChange('hass_ssl')}
+                        value="hass_ssl"
+                        color="primary"
+                      />
+                    }
+                    label="Home Assistant SSL"
                   />
-                }
-                label="HASS SSL"
-              />
+                </div>
+              }
             </CardContent>
             {createAccount ?
               <CardActions>
