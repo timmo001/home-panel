@@ -162,8 +162,6 @@ class Main extends React.Component {
     const { classes, entities, config, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo, radioShown } = this.state;
 
-    console.log('config:', config);
-
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
