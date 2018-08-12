@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
 import RadioIcon from '@material-ui/icons/Radio';
-import config from 'config.json';
 
 const styles = theme => ({
   header: {
@@ -140,25 +139,25 @@ class Header extends React.Component {
     const { classes, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
-    const icon = config.header.left_outdoor_weather &&
-      config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
+    const icon = this.props.config.header.left_outdoor_weather &&
+      this.props.config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, this.props.config.header.left_outdoor_weather.dark_sky_icon);
 
     const header = {
-      left_outdoor_weather: config.header.left_outdoor_weather && {
+      left_outdoor_weather: this.props.config.header.left_outdoor_weather && {
         icon: icon && icon.replaceAll('-', '_').toUpperCase(),
-        condition: config.header.left_outdoor_weather.condition && this.getState(entities, config.header.left_outdoor_weather.condition),
+        condition: this.props.config.header.left_outdoor_weather.condition && this.getState(entities, this.props.config.header.left_outdoor_weather.condition),
         data: []
       },
       right_indoor: []
     };
     if (header.left_outdoor_weather)
-      config.header.left_outdoor_weather.data.map(d => {
+      this.props.config.header.left_outdoor_weather.data.map(d => {
         return header.left_outdoor_weather.data.push(
           this.getState(entities, d.entity_id, d.unit_of_measurement)
         );
       });
-    if (config.header.right_indoor)
-      config.header.right_indoor.map(i => {
+    if (this.props.config.header.right_indoor)
+      this.props.config.header.right_indoor.map(i => {
         var data = [];
         i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
         return header.right_indoor.push({ label: i.label, data });
