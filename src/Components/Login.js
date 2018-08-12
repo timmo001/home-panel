@@ -91,6 +91,7 @@ class Login extends React.Component {
   handleMouseDownPassword = event => event.preventDefault();
 
   handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
+
   handleClickShowHASSPassword = () => this.setState({ showHASSPassword: !this.state.showHASSPassword });
 
   handleKeyPress = (e) => {
@@ -169,7 +170,7 @@ class Login extends React.Component {
               <CardMedia
                 className={classes.media}
                 image={Logo}
-                title="Home Panel " />
+                title="Home Panel" />
             </CardContent>
             <CardContent className={classes.cardContent} align="center">
               <Typography variant="headline" component="h2">
