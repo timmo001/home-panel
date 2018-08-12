@@ -159,12 +159,15 @@ class Main extends React.Component {
 
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
-    const { classes, entities, theme, handleChange } = this.props;
+    const { classes, entities, config, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo, radioShown } = this.state;
+
+    console.log('config:', config);
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
+          config={config}
           entities={entities}
           theme={theme}
           moved={moved}
@@ -179,7 +182,7 @@ class Main extends React.Component {
             container
             className={classes.grid}
             spacing={16}>
-            {this.props.config.items && this.props.config.items.map((group, x) => {
+            {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
                   <Typography className={classes.title} variant="display1" gutterBottom>
@@ -301,6 +304,7 @@ Main.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
+  config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

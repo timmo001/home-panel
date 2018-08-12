@@ -78,7 +78,7 @@ class Login extends React.Component {
       password: password ? password : '',
       createAccount: username ? false : true
     }, () => {
-      if (username && password && !this.state.createAccount) this.props.handleLogIn();
+      if (username && password && !this.state.createAccount) this.handleLogIn();
     });
   };
 
@@ -114,9 +114,11 @@ class Login extends React.Component {
         })
         .set('Accept', 'application/json')
         .then(res => {
-          // localStorage.setItem('username', this.state.username);
-          // sessionStorage.setItem('password', this.state.password);    
-          // this.props.loggedIn(login);
+          if (res.status === 200) {
+            localStorage.setItem('username', this.state.username);
+            sessionStorage.setItem('password', this.state.password);    
+            this.props.loggedIn(res.body);
+          }
         })
         .catch(err => {
           console.error(err);
@@ -136,9 +138,11 @@ class Login extends React.Component {
         })
         .set('Accept', 'application/json')
         .then(res => {
-          // localStorage.setItem('username', this.state.username);
-          // sessionStorage.setItem('password', this.state.password);    
-          // this.props.loggedIn(login);
+          if (res.status === 200) {
+            localStorage.setItem('username', this.state.username);
+            sessionStorage.setItem('password', this.state.password);    
+            this.props.loggedIn(res.body);
+          }
         })
         .catch(err => {
           console.error(err);
