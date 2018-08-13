@@ -117,12 +117,18 @@ class Login extends React.Component {
         .then(res => {
           if (res.status === 200) {
             localStorage.setItem('username', this.state.username);
-            sessionStorage.setItem('password', this.state.password);    
+            sessionStorage.setItem('password', this.state.password);
             this.props.loggedIn(res.body);
+          } else {
+            console.error(`Error ${res.status}: ${res.body}`);
+            this.setState({ error: `Error ${res.status}: ${res.body}` }, () =>
+              setTimeout(() => this.setState({ error: undefined }), 8000));
           }
         })
         .catch(err => {
-          console.error(err);
+          console.error(String(err));
+          this.setState({ error: String(err) + '. Check your credentials and try again.' }, () =>
+            setTimeout(() => this.setState({ error: undefined }), 8000));
         });
     }
   };
@@ -130,7 +136,6 @@ class Login extends React.Component {
   handleLogIn = () => {
     if (this.state.username) {
       console.log('Log In');
-
       request
         .post(`${process.env.REACT_APP_API_URL}/login`)
         .send({
@@ -141,22 +146,26 @@ class Login extends React.Component {
         .then(res => {
           if (res.status === 200) {
             localStorage.setItem('username', this.state.username);
-            sessionStorage.setItem('password', this.state.password);    
+            sessionStorage.setItem('password', this.state.password);
             this.props.loggedIn(res.body);
+          } else {
+            console.error(`Error ${res.status}: ${res.body}`);
+            this.setState({ error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
+              setTimeout(() => this.setState({ error: undefined }), 8000));
           }
         })
         .catch(err => {
-          console.error(err);
+          console.error(String(err));
+          this.setState({ error: String(err) + '. Check your credentials and try again.' }, () =>
+            setTimeout(() => this.setState({ error: undefined }), 8000));
         });
-
-
     }
   };
 
   render() {
     const { classes } = this.props;
     const { username, password, hass_host, hass_password, hass_ssl,
-      showPassword, showHASSPassword, createAccount } = this.state;
+      showPassword, showHASSPassword, createAccount, error } = this.state;
 
     return (
       <Grid
@@ -250,6 +259,11 @@ class Login extends React.Component {
                     label="Home Assistant SSL"
                   />
                 </div>
+              }
+              {error &&
+                <Typography color="error">
+                  {error}
+                </Typography>
               }
             </CardContent>
             {createAccount ?
