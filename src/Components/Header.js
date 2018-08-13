@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
 import RadioIcon from '@material-ui/icons/Radio';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const styles = theme => ({
   header: {
@@ -136,7 +137,7 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes,config, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
+    const { classes, config, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
 
@@ -227,6 +228,12 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
+              aria-label="Log Out"
+              onClick={this.props.handleLogOut}>
+              <ExitToAppIcon />
+            </IconButton>
+            <IconButton
+              className={classes.button}
               aria-label="Theme"
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
@@ -267,6 +274,7 @@ Header.propTypes = {
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   handleRadioToggle: PropTypes.func.isRequired,
+  handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
 };
 
