@@ -157,6 +157,11 @@ class Main extends React.Component {
 
   handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
 
+  handleLogOut = () => {
+    sessionStorage.removeItem('password');
+    window.location.reload(true);
+  };
+
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, config, theme, handleChange } = this.props;
@@ -174,6 +179,7 @@ class Main extends React.Component {
           handleMouseLeave={this.onMouseLeaveHandler}
           setTheme={this.props.setTheme}
           handleRadioToggle={this.handleRadioToggle}
+          handleLogOut={this.handleLogOut}
           handleRadioHide={handleRadioHide} />
         <div className={classes.gridContainer} onClick={handleRadioHide}>
           <Grid
