@@ -26,15 +26,11 @@ services:
   home-panel:
     image: timmo001/home-panel
     environment:
-      REACT_APP_HASS_HOST: 'hassioserver.com'
-      REACT_APP_HASS_PASSWORD: 'supersecurepassword'
-      REACT_APP_HASS_SSL: 'true'
       REACT_APP_API_URL: https://localhost:3234
     ports:
       - 8234:443
     volumes:
       - ~/ssl:/ssl
-      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
   home-panel-api:
     image: timmo001/home-panel-api
     environment:
@@ -43,6 +39,7 @@ services:
       - 3234:3234
     volumes:
       - ~/ssl:/ssl
+      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
 ```
 
 ### Non-SSL
@@ -60,9 +57,6 @@ services:
   home-panel:
     image: timmo001/home-panel
     environment:
-      REACT_APP_HASS_HOST: 'hassioserver.com'
-      REACT_APP_HASS_PASSWORD: 'supersecurepassword'
-      REACT_APP_HASS_SSL: 'false'
       REACT_APP_API_URL: https://localhost:3123
     ports:
       - 8234:80
@@ -72,6 +66,8 @@ services:
     image: timmo001/home-panel-api
     ports:
       - 3123:3123
+    volumes:
+      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
 ```
 
 ## Docker
@@ -92,13 +88,9 @@ services:
 
 ```bash
 docker run -d \
-  -e REACT_APP_HASS_HOST='hassioserver.com' \
-  -e REACT_APP_HASS_PASSWORD='supersecurepassword' \
-  -e REACT_APP_HASS_SSL='true' \
   -e REACT_APP_API_URL='https://localhost:3234' \
   -p 8234:443 \
   -v ~/ssl:/ssl \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
   timmo001/home-panel
 ```
 
@@ -107,6 +99,7 @@ docker run -d \
   -e CERTIFICATES_DIR='/ssl' \
   -p 3234:3234 \
   -v ~/ssl:/ssl \
+  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
   timmo001/home-panel-api
 ```
 
@@ -119,18 +112,15 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -e REACT_APP_HASS_HOST='hassioserver.com' \
-  -e REACT_APP_HASS_PASSWORD='supersecurepassword' \
-  -e REACT_APP_HASS_SSL='false' \
   -e REACT_APP_API_URL='https://localhost:3123' \
   -p 8234:80 \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
   timmo001/home-panel
 ```
 
 ```bash
 docker run -d \
   -p 3123:3123 \
+  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
   timmo001/home-panel-api
 ```
 
@@ -143,6 +133,9 @@ docker run -d \
 - First clone the
   [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
 - Checkout the version you want via releases
+- Copy `.env` to `.env.local` and update it to use your own Home Assistant details
+- Copy `files/config.template.json` to `files/config.json`
+- Update `files/config.json` to your configuration
 - Install packages
 
 ```bash
@@ -159,33 +152,19 @@ node index.js
 
 - Clone this repository
 - Checkout the version you want via releases
-- Copy `.env` to `.env.local` and update it to use your own Home Assistant details
-- Rename `config.template.json` to `config.json`
-
-```bash
-cp config.template.json src/config.json
-```
-
-- Update `src/config.json` to your configuration
 - Install packages
 
 ```bash
 yarn install
 ```
 
-- Copy `config.json` into `node_modules/config.json`
-
-```bash
-cp config.json node_modules/
-```
+#### Production - SSL
 
 - Build a production version
 
 ```bash
 yarn build
 ```
-
-#### Production - SSL
 
 - Install nginx
 - Edit your server config `/etc/nginx/conf.d/default.conf`
@@ -220,6 +199,12 @@ nginx -g "daemon off;"
 
 !!! warning ""
     **This option is not secure. Do not open to the outside world!**
+
+- Build a production version
+
+```bash
+yarn build
+```
 
 - Install nginx
 - Edit your server config `/etc/nginx/conf.d/default.conf`
