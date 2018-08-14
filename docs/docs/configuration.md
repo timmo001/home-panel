@@ -1,7 +1,10 @@
 # Configuration
 
 To get started, copy the [starter template][template]
- to the `config.json` file.
+ to the `files/config.json` file in the API.
+
+Whenever you make a change, just reload the page and the latest `config.json`
+ file will be used.
 
 Now, we will go over the sections you can configure inside the JSON file along
  with examples you can adapt:
