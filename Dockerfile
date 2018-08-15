@@ -18,6 +18,12 @@ RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
 # Install dependencies
 RUN yarn install && yarn cache clean
 
+# Build app
+RUN yarn build --production \
+    && echo "Move build files to html directory.." \
+    && rm -Rf /usr/share/nginx/html/* \
+    && mv build/* /usr/share/nginx/html
+
 # Expose outbound ports
 EXPOSE 80
 EXPOSE 443
@@ -52,15 +58,6 @@ CMD \
         }\
       }" > /etc/nginx/conf.d/default.conf; \
     fi \
-    && echo "Copy config.." \
-    && cp config.json ./node_modules/ \
-    && echo "" \
-    && echo "Build app.." \
-    && yarn build --production \
-    && echo "" \
-    && echo "Move build files to html directory.." \
-    && rm -Rf /usr/share/nginx/html/* \
-    && mv build/* /usr/share/nginx/html \
     && echo "" \
     && echo "Run nginx server.." \
     && nginx -g "daemon off;"
