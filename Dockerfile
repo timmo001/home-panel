@@ -20,9 +20,9 @@ RUN yarn install && yarn cache clean
 
 # Build app
 RUN yarn build --production \
-    && echo "Move build files to html directory.." \
     && rm -Rf /usr/share/nginx/html/* \
-    && mv build/* /usr/share/nginx/html
+    && mv build/* /usr/share/nginx/html \
+    && rm -Rf ./*
 
 # Expose outbound ports
 EXPOSE 80
