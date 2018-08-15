@@ -10,7 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
 import RadioIcon from '@material-ui/icons/Radio';
-import config from 'config.json';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const styles = theme => ({
   header: {
@@ -137,8 +137,9 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
+    const { classes, config, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
+
 
     const icon = config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
@@ -227,6 +228,12 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
+              aria-label="Log Out"
+              onClick={this.props.handleLogOut}>
+              <ExitToAppIcon />
+            </IconButton>
+            <IconButton
+              className={classes.button}
               aria-label="Theme"
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
@@ -259,6 +266,7 @@ class Header extends React.Component {
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   moved: PropTypes.bool.isRequired,
   over: PropTypes.bool.isRequired,
@@ -266,6 +274,7 @@ Header.propTypes = {
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   handleRadioToggle: PropTypes.func.isRequired,
+  handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
 };
 

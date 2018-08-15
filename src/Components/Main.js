@@ -8,7 +8,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import config from 'config.json';
 import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
@@ -158,14 +157,20 @@ class Main extends React.Component {
 
   handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
 
+  handleLogOut = () => {
+    sessionStorage.removeItem('password');
+    window.location.reload(true);
+  };
+
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
-    const { classes, entities, theme, handleChange } = this.props;
+    const { classes, entities, config, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo, radioShown } = this.state;
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
+          config={config}
           entities={entities}
           theme={theme}
           moved={moved}
@@ -174,6 +179,7 @@ class Main extends React.Component {
           handleMouseLeave={this.onMouseLeaveHandler}
           setTheme={this.props.setTheme}
           handleRadioToggle={this.handleRadioToggle}
+          handleLogOut={this.handleLogOut}
           handleRadioHide={handleRadioHide} />
         <div className={classes.gridContainer} onClick={handleRadioHide}>
           <Grid
@@ -302,6 +308,7 @@ Main.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
+  config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
