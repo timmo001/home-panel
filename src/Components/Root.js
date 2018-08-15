@@ -4,7 +4,7 @@ import { createConnection, subscribeEntities } from 'home-assistant-js-websocket
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
-import config from 'config.json';
+import Login from './Login';
 import Main from './Main';
 
 const styles = theme => ({
@@ -39,9 +39,7 @@ class Root extends Component {
     connected: false,
   };
 
-  componentWillMount = () => {
-    this.connectToHASS();
-  };
+  loggedIn = (config) => this.setState({ config }, () => this.connectToHASS());
 
   stateChanged = (event) => {
     console.log('state changed', event);
@@ -52,11 +50,11 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    if (process.env.REACT_APP_HASS_HOST) {
-      const wsURL = `${process.env.REACT_APP_HASS_SSL === 'true' ? 'wss' : 'ws'}://` +
-        `${process.env.REACT_APP_HASS_HASSIO === 'true' ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
+    if (this.state.config && this.state.config.hass_host) {
+      const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
+        `${this.state.config.hass_host}/api/websocket?latest`;
       console.log(`Connect to ${wsURL}`);
-      createConnection(wsURL, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+      createConnection(wsURL, { authToken: this.state.config.hass_password })
         .then(conn => {
           this.setState({ connected: true });
           console.log(`Connected`);
@@ -65,17 +63,23 @@ class Root extends Component {
           subscribeEntities(conn, this.updateEntities);
         }, err => {
           console.error('Connection failed with code', err);
-          this.setState({ snackMessage: { open: true, text: 'Connection failed' }, entities: undefined });
+          // localStorage.removeItem('username');
+          sessionStorage.removeItem('password');
+          this.setState({
+            snackMessage: { open: true, text: 'Connection failed' },
+            entities: undefined,
+            config: undefined
+          });
         });
     }
   }
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    const wsURL = `${process.env.REACT_APP_HASS_SSL === 'true' ? 'wss' : 'ws'}://` +
-      `${process.env.REACT_APP_HASS_HASSIO === 'true' ? 'hassio/homeassistant/websocket' : `${process.env.REACT_APP_HASS_HOST}/api/websocket?latest`}`;
+    const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
+      `${this.state.config.hass_host}/api/websocket?latest`;
     console.log(`Connect to ${wsURL}`);
-    createConnection(wsURL, { authToken: process.env.REACT_APP_HASS_PASSWORD })
+    createConnection(wsURL, { authToken: this.state.config.hass_password })
       .then(conn => {
         conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
           this.setState({ snackMessage: { open: true, text: 'Changed.' } });
@@ -99,11 +103,11 @@ class Root extends Component {
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      if (config.theme.auto) {
+      if (this.state.config.theme.auto) {
         const state = this.state.entities.find(entity => {
-          return entity[0] === config.theme.auto.sensor
+          return entity[0] === this.state.config.theme.auto.sensor
         })[1].state;
-        this.props.setTheme(state <= config.theme.auto.below ? 2 : 1);
+        this.props.setTheme(state <= this.state.config.theme.auto.below ? 2 : 1);
       } else {
         // theme from sunlight
         const sun = this.state.entities.find(entity => {
@@ -131,34 +135,36 @@ class Root extends Component {
   };
 
   render() {
-    const { setTheme } = this;
+    const { loggedIn, setTheme } = this;
     const { classes, theme } = this.props;
-    const { snackMessage, entities, connected } = this.state;
+    const { config, snackMessage, entities, connected } = this.state;
 
     return (
       <div className={classes.root}>
-
-        {entities ?
-          <Main
-            theme={theme}
-            setTheme={setTheme}
-            entities={entities}
-            handleChange={this.handleChange} />
+        {!config ?
+          <Login loggedIn={loggedIn} />
           :
-          <div className={classes.center}>
-            <CircularProgress className={classes.progress} />
-            {connected ?
-              <Typography variant="subheading">
-                Loading HASS data...
+          entities ?
+            <Main
+              theme={theme}
+              setTheme={setTheme}
+              config={config}
+              entities={entities}
+              handleChange={this.handleChange} />
+            :
+            <div className={classes.center}>
+              <CircularProgress className={classes.progress} />
+              {connected ?
+                <Typography variant="subheading">
+                  Loading HASS data...
               </Typography>
-              :
-              <Typography variant="subheading">
-                Attempting to connect to HASS...
+                :
+                <Typography variant="subheading">
+                  Attempting to connect to HASS...
               </Typography>
-            }
-          </div>
+              }
+            </div>
         }
-
         <Snackbar
           open={snackMessage.open}
           autoHideDuration={2000}

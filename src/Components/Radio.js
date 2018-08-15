@@ -76,9 +76,7 @@ class Radio extends React.Component {
     dialogOpen: false,
   };
 
-  handleUpdateRadio = () => {
-    console.log('source:', this.state.source);
-  };
+  handleUpdateRadio = () => console.log('source:', this.state.source);
 
   handleRadioChange = (action) => {
     console.log('action:', action);

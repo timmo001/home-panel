@@ -13,9 +13,6 @@ stages:
   - test
   - deploy
 
-before_script:
-  - mv config.template.json config.json
-
 # Generic DIND template
 .dind: &dind
   before_script:
@@ -158,7 +155,6 @@ test:
   image: node:alpine
   script:
     - yarn install && yarn cache clean
-    - mv config.json node_modules/
     - yarn run test
   only:
     - branches
