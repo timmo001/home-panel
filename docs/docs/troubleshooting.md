@@ -35,6 +35,12 @@ Also check the main app logs. With Docker Compose, just `cd` into the
  docker-compose logs -f
  ```
 
+ If using Docker, run:
+
+  ```bash
+ docker logs -f CONTAINER_ID
+ ```
+
  If you are still stuck, post these logs to the [forum thread] (make sure to
   remove any personal data such as a public address etc.)
 
