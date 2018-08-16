@@ -12,7 +12,8 @@ docker pull timmo001/home-panel
 docker pull timmo001/home-panel-api
 ```
 
-and run the containers again.
+and run the containers again. You may have to clear the cache/cookies in your
+ browser.
 
 If running natively, checkout the latest version from the release page for
  the [app] and the [API] and rerun the app.
