@@ -67,5 +67,6 @@ nav:
   - Login: login.md
   - Configuration: configuration.md
   - Template: template.md
+  - Troubleshooting: troubleshooting
   - Contributing: contributing.md
   - License: license.md
