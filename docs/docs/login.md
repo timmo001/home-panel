@@ -26,6 +26,14 @@ The username you will use to login.
 
 The password you will use to login.
 
+### API URL
+
+The URL of the API. You should include the full address. For example:
+
+- `https://localhost:3234`
+- `http://localhost:3123`
+- `https://myserver.local:3234`
+
 ### Home Assistant Host
 
 Enter your Home Assistant instance's hostname including the port if required.

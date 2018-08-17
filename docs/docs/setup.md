@@ -25,8 +25,6 @@ version: '3'
 services:
   home-panel:
     image: timmo001/home-panel
-    environment:
-      REACT_APP_API_URL: https://localhost:3234
     ports:
       - 8234:443
     volumes:
@@ -56,8 +54,6 @@ version: '3'
 services:
   home-panel:
     image: timmo001/home-panel
-    environment:
-      REACT_APP_API_URL: https://localhost:3123
     ports:
       - 8234:80
     volumes:
@@ -88,7 +84,6 @@ services:
 
 ```bash
 docker run -d \
-  -e REACT_APP_API_URL='https://localhost:3234' \
   -p 8234:443 \
   -v ~/ssl:/ssl \
   timmo001/home-panel
@@ -112,7 +107,6 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -e REACT_APP_API_URL='https://localhost:3123' \
   -p 8234:80 \
   timmo001/home-panel
 ```
