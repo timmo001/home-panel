@@ -180,8 +180,7 @@ code_quality:
   artifacts:
     paths: [gl-code-quality-report.json]
   except:
-    variables:
-      - $CODE_QUALITY_DISABLED
+    - tags
 
 dependency_scanning:
   stage: test
@@ -208,8 +207,7 @@ dependency_scanning:
   artifacts:
     paths: [gl-dependency-scanning-report.json]
   except:
-    variables:
-      - $DEPENDENCY_SCANNING_DISABLED
+    - tags
 
 container_scanning:
   stage: test
@@ -245,8 +243,7 @@ container_scanning:
   artifacts:
     paths: [gl-container-scanning-report.json]
   except:
-    variables:
-      - $CONTAINER_SCANNING_DISABLED
+    - tags
 
 # Deploy jobs
 deploy: &deploy
@@ -289,6 +286,28 @@ deploy: &deploy
     - |
       docker push \
         "${DOCKER_HUB_USER}/${IMAGE_SLUG}:latest"
+  tags:
+    - deploy
+  only:
+    - tags
+    - triggers
+    - schedules
+  except:
+    - /^(?!master).+@/
+
+release-file:
+  stage: deploy
+  image: node:alpine
+  script:
+    - apk --no-cache add curl zip
+    - yarn install && yarn cache clean
+    - yarn build --production
+    - zip -r home-panel-built.zip build
+    - |
+      curl \
+        -d home-panel-built.zip \
+        -H "Content-Type: application/zip" \
+        -X POST https://<upload_url>/repos/:owner/:repo/releases/:release_id/assets?name=home-panel-built.zip
   tags:
     - deploy
   only:
