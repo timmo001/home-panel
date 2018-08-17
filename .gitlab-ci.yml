@@ -299,7 +299,7 @@ release-file:
   stage: deploy
   image: node:alpine
   script:
-    - apk --no-cache add curl zip
+    - apk --no-cache add curl zip jq
     - yarn install && yarn cache clean
     - yarn build --production
     - zip -r home-panel-built.zip build
