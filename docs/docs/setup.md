@@ -127,7 +127,6 @@ docker run -d \
 - First clone the
   [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
 - Checkout the version you want via releases
-- Copy `.env` to `.env.local` and update it to use your own Home Assistant details
 - Copy `files/config.template.json` to `files/config.json`
 - Update `files/config.json` to your configuration
 - Install packages
