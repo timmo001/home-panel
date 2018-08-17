@@ -307,7 +307,7 @@ release-file:
       curl \
         -d home-panel-built.zip \
         -H "Content-Type: application/zip" \
-        -X POST https://<upload_url>/repos/:owner/:repo/releases/:release_id/assets?name=home-panel-built.zip
+        -X POST https://github.com/repos/timmo001/home-panel/releases/${CI_COMMIT_SHA}/assets?name=home-panel-built.zip
   tags:
     - deploy
   only:
