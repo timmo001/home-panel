@@ -55,12 +55,17 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit / 2,
     paddingBottom: 0,
   },
+  switch: {
+    width: 256,
+    justifyContent: 'center',
+  }
 });
 
 class Login extends React.Component {
   state = {
     username: '',
     password: '',
+    api_url: '',
     hass_host: '',
     hass_password: '',
     hass_ssl: true,
@@ -105,7 +110,7 @@ class Login extends React.Component {
       console.log('Create account');
 
       request
-        .post(`${process.env.REACT_APP_API_URL}/login/setup`)
+        .post(`${this.state.api_url}/login/setup`)
         .send({
           username: this.state.username,
           password: this.state.password,
@@ -164,7 +169,7 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { username, password, hass_host, hass_password, hass_ssl,
+    const { username, password, api_url, hass_host, hass_password, hass_ssl,
       showPassword, showHASSPassword, createAccount, error } = this.state;
 
     return (
@@ -218,6 +223,16 @@ class Login extends React.Component {
               {createAccount &&
                 <div>
                   <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                    <InputLabel htmlFor="api_url">API URL</InputLabel>
+                    <Input
+                      required
+                      id="api_url"
+                      type="text"
+                      value={api_url}
+                      onChange={this.handleChange('api_url')}
+                      onKeyPress={this.handleKeyPress} />
+                  </FormControl>
+                  <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
                     <InputLabel htmlFor="hass_host">Home Assistant Host</InputLabel>
                     <Input
                       required
@@ -248,6 +263,7 @@ class Login extends React.Component {
                       } />
                   </FormControl>
                   <FormControlLabel
+                    className={classes.switch}
                     control={
                       <Switch
                         checked={hass_ssl}
