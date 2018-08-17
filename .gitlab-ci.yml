@@ -305,9 +305,10 @@ release-file:
     - zip -r home-panel-built.zip build
     - |
       curl \
-        -H "Content-Type: application/zip" \
         -H "Authorization: token ${GITHUB_TOKEN}" -H \
-        --data-binary @$FILE "https://uploads.github.com/repos/timmo001/home-panel/releases/${CI_COMMIT_SHA}/assets?name=home-panel-built.zip"
+        -H "Accept: application/vnd.github.manifold-preview" \
+        -H "Content-Type: application/zip" \
+        --data-binary @home-panel-built.zip "https://uploads.github.com/repos/timmo001/home-panel/releases/$(curl https://api.github.com/repos/timmo001/home-panel/releases/latest | jq '.id')/assets?name=home-panel-built.zip"
   tags:
     - deploy
   only:
