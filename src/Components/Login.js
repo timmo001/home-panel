@@ -58,6 +58,7 @@ const styles = theme => ({
   switch: {
     width: 256,
     justifyContent: 'center',
+    margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px`,
   }
 });
 
