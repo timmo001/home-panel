@@ -305,10 +305,9 @@ release-file:
     - zip -r home-panel-built.zip build
     - |
       curl \
-        -d home-panel-built.zip \
         -H "Content-Type: application/zip" \
         -H "Authorization: token ${GITHUB_TOKEN}" -H \
-        --data-binary @$FILE "https://uploads.github.com/repos/timmo001/home-panel/releases/${CI_COMMIT_SHA}/assets?name=home-panel-built.zip
+        --data-binary @$FILE "https://uploads.github.com/repos/timmo001/home-panel/releases/${CI_COMMIT_SHA}/assets?name=home-panel-built.zip"
   tags:
     - deploy
   only:
