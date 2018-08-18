@@ -76,12 +76,14 @@ class Login extends React.Component {
   };
 
   componentWillMount = () => {
+    const api_url = localStorage.getItem('api_url');
     const username = localStorage.getItem('username');
     const password = sessionStorage.getItem('password');
 
     this.setState({
       username: username ? username : '',
       password: password ? password : '',
+      api_url: api_url ? api_url : '',
       createAccount: username ? false : true
     }, () => {
       if (username && password && !this.state.createAccount) this.handleLogIn();
@@ -122,8 +124,10 @@ class Login extends React.Component {
         .set('Accept', 'application/json')
         .then(res => {
           if (res.status === 200) {
+            localStorage.setItem('api_url', this.state.api_url);
             localStorage.setItem('username', this.state.username);
             sessionStorage.setItem('password', this.state.password);
+
             this.props.loggedIn(res.body);
           } else {
             console.error(`Error ${res.status}: ${res.body}`);
@@ -143,7 +147,7 @@ class Login extends React.Component {
     if (this.state.username) {
       console.log('Log In');
       request
-        .post(`${process.env.REACT_APP_API_URL}/login`)
+        .post(`${this.state.api_url}/login`)
         .send({
           username: this.state.username,
           password: this.state.password,
@@ -151,6 +155,7 @@ class Login extends React.Component {
         .set('Accept', 'application/json')
         .then(res => {
           if (res.status === 200) {
+            localStorage.setItem('api_url', this.state.api_url);
             localStorage.setItem('username', this.state.username);
             sessionStorage.setItem('password', this.state.password);
             this.props.loggedIn(res.body);
@@ -221,18 +226,18 @@ class Login extends React.Component {
                     </InputAdornment>
                   } />
               </FormControl>
+              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                <InputLabel htmlFor="api_url">API URL</InputLabel>
+                <Input
+                  required
+                  id="api_url"
+                  type="text"
+                  value={api_url}
+                  onChange={this.handleChange('api_url')}
+                  onKeyPress={this.handleKeyPress} />
+              </FormControl>
               {createAccount &&
                 <div>
-                  <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                    <InputLabel htmlFor="api_url">API URL</InputLabel>
-                    <Input
-                      required
-                      id="api_url"
-                      type="text"
-                      value={api_url}
-                      onChange={this.handleChange('api_url')}
-                      onKeyPress={this.handleKeyPress} />
-                  </FormControl>
                   <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
                     <InputLabel htmlFor="hass_host">Home Assistant Host</InputLabel>
                     <Input
