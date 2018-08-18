@@ -298,6 +298,7 @@ class Main extends React.Component {
         }
         <Radio
           show={radioShown}
+          apiUrl={this.props.apiUrl}
           handleRadioHide={handleRadioHide} />
       </div>
     );
@@ -310,6 +311,7 @@ Main.propTypes = {
   setTheme: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
+  apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

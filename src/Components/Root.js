@@ -97,6 +97,8 @@ class Root extends Component {
     });
   };
 
+  handleUpdateApiUrl = api_url => this.setState({ api_url });
+
   setTheme = (themeId = undefined) => {
     if (!themeId && themeId !== 0)
       themeId = Number(localStorage.getItem('theme'));
@@ -135,14 +137,14 @@ class Root extends Component {
   };
 
   render() {
-    const { loggedIn, setTheme } = this;
+    const { loggedIn, setTheme, handleUpdateApiUrl } = this;
     const { classes, theme } = this.props;
     const { config, snackMessage, entities, connected } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ?
-          <Login loggedIn={loggedIn} />
+          <Login loggedIn={loggedIn} handleUpdateApiUrl={handleUpdateApiUrl} />
           :
           entities ?
             <Main
@@ -150,6 +152,7 @@ class Root extends Component {
               setTheme={setTheme}
               config={config}
               entities={entities}
+              apiUrl={this.state.api_url}
               handleChange={this.handleChange} />
             :
             <div className={classes.center}>

@@ -125,6 +125,7 @@ class Login extends React.Component {
         .then(res => {
           if (res.status === 200) {
             localStorage.setItem('api_url', this.state.api_url);
+            this.props.handleUpdateApiUrl(this.state.api_url);
             localStorage.setItem('username', this.state.username);
             sessionStorage.setItem('password', this.state.password);
 
@@ -156,6 +157,7 @@ class Login extends React.Component {
         .then(res => {
           if (res.status === 200) {
             localStorage.setItem('api_url', this.state.api_url);
+            this.props.handleUpdateApiUrl(this.state.api_url);
             localStorage.setItem('username', this.state.username);
             sessionStorage.setItem('password', this.state.password);
             this.props.loggedIn(res.body);
@@ -311,6 +313,7 @@ class Login extends React.Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   loggedIn: PropTypes.func.isRequired,
+  handleUpdateApiUrl: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Login);

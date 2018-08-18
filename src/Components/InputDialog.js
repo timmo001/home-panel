@@ -58,7 +58,7 @@ class InputDialog extends React.Component {
   handleSearch = () => {
     console.log('search:', this.state.search);
     request
-      .post(`${process.env.REACT_APP_API_URL}/radio/search`)
+      .post(`${this.props.apiUrl}/radio/search`)
       .send({ query: this.state.search })
       .set('Accept', 'application/json')
       .then(res => {
@@ -144,6 +144,7 @@ class InputDialog extends React.Component {
 InputDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
+  apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 

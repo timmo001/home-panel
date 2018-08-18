@@ -119,7 +119,7 @@ class Radio extends React.Component {
 
   handleGetSource = (source) => {
     request
-      .post(`${process.env.REACT_APP_API_URL}/radio/get`)
+      .post(`${this.props.apiUrl}/radio/get`)
       .send(source)
       .set('Accept', 'application/json')
       .then(res => {
@@ -165,6 +165,7 @@ class Radio extends React.Component {
           </ButtonBase>
           <InputDialog
             open={dialogOpen}
+            apiUrl={this.props.apiUrl}
             handleChange={handleInputDialogChange} />
           <div className={classes.controls}>
             <div className={classes.controlsMain}>
@@ -242,6 +243,7 @@ class Radio extends React.Component {
 Radio.propTypes = {
   classes: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
+  apiUrl: PropTypes.string.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
 };
 
