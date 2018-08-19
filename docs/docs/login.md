@@ -31,7 +31,7 @@ The password you will use to login.
 The URL of the API. You should include the full address. For example:
 
 - `https://localhost:3234`
-- `http://localhost:3123`
+- `http://localhost:3234`
 - `https://myserver.local:3234`
 
 ### Home Assistant Host
