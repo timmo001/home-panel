@@ -1,5 +1,13 @@
 # Troubleshooting
 
+## Check the docs
+
+Make sure you review the setup docs. These will always be the most up to date
+ source of how to setup the app. It is always worth checking your config
+ against the [setup] docs.
+
+For login and account issues, check against the [login] docs.
+
 ## Use the latest version
 
 If your are facing any issues logging in, connecting etc. you should first
@@ -16,10 +24,7 @@ and run the containers again. You may have to clear the cache/cookies in your
  browser.
 
 If running natively, checkout the latest version from the release page for
- the [app] and the [API] and rerun the app.
-
-If you are still having issues, you can post on the Home Assistant
- [forum thread] where the community will be able to help you if not myself.
+ the [app] and the [api] and rerun the app.
 
 ## Before posting your issue
 
@@ -29,22 +34,28 @@ Before posting your issue, make sure you check the logs for any errors.
 If your issue is inside the webapp, first check the developer console.
  To do this press `F12` on the keyboard if you are running Chrome.
 
-Also check the main app logs. With Docker Compose, just `cd` into the
- `docker-compose.yml` directory and run:
+Also check the main app logs. With Docker Compose, `cd` into the
+directory containing `docker-compose.yml` and run:
 
  ```bash
  docker-compose logs -f
  ```
 
- If using Docker, run:
+If using Docker, run:
 
 ```bash
-docker logs -f CONTAINER_ID
+docker logs -f APP_CONTAINER_ID
+docker logs -f API_CONTAINER_ID
 ```
 
-If you are still stuck, post these logs to the [forum thread] (make sure to
- remove any personal data such as a public address etc.)
+## I'm still having issues
+
+If you are still stuck, post any logs you can gather from the steps above
+ to the [forum thread] where the community will be able to help you.
+ Make sure to remove any personal data such as a public address or password.
 
 [app]: https://github.com/timmo001/home-panel/releases
 [api]: https://github.com/timmo001/home-panel-api/releases
 [forum thread]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
+[setup]: https://git.timmo.xyz/home-panel/setup/
+[login]: https://git.timmo.xyz/home-panel/login/
