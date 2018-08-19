@@ -61,7 +61,7 @@ services:
   home-panel-api:
     image: timmo001/home-panel-api
     ports:
-      - 3123:3123
+      - 3234:3234
     volumes:
       - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
 ```
@@ -113,7 +113,7 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -p 3123:3123 \
+  -p 3234:3234 \
   -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
   timmo001/home-panel-api
 ```
