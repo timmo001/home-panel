@@ -1,5 +1,20 @@
 # Setup
 
+## Hassio Add-on
+
+If you have Hassio, you can install this via it's repository.
+
+- Add this link into respositories `https://github.com/timmo001/repository`
+
+![Add to repositories][hassio-add]
+
+- Now install the app, and configure the [options].
+
+- Click `Start` and after a minute or so, you can click `Open Web UI` and set
+ up the app as normal.
+
+![Install][hassio-install]
+
 ## Docker Compose
 
 ---
@@ -237,3 +252,6 @@ yarn start
 - The app should open in your default browser under [http://localhost:3000](http://localhost:3000)
 
 [template]: https://git.timmo.xyz/home-panel/template/
+[hassio-add]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/hassio-add.png
+[hassio-install]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/hassio-install.png
+[options]: https://github.com/timmo001/addon-home-panel#configuration
