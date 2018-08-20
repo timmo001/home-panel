@@ -48,14 +48,21 @@ docker logs -f APP_CONTAINER_ID
 docker logs -f API_CONTAINER_ID
 ```
 
+If you are using the Hassio add-on, you can check the logs in the add-on page.
+
 ## I'm still having issues
 
 If you are still stuck, post any logs you can gather from the steps above
  to the [forum thread] where the community will be able to help you.
  Make sure to remove any personal data such as a public address or password.
 
+You can also post an issue to the [GitHub repository]. If your issue is
+ related to the Hassio add-on, post your issue [here]
+
 [app]: https://github.com/timmo001/home-panel/releases
 [api]: https://github.com/timmo001/home-panel-api/releases
 [forum thread]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
 [setup]: https://git.timmo.xyz/home-panel/setup/
 [login]: https://git.timmo.xyz/home-panel/login/
+[GitHub repository]: https://github.com/timmo001/home-panel/issues
+[here]: https://github.com/timmo001/addon-home-panel/issues
