@@ -15,7 +15,10 @@
    version="1.1"
    id="svg1137"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="icon.svg">
+   sodipodi:docname="icon.svg"
+   inkscape:export-filename="/home/aidan/projects/js/home-panel/docs/resources/favicon.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs1131" />
   <sodipodi:namedview
@@ -26,7 +29,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.175"
-     inkscape:cx="270.56032"
+     inkscape:cx="-969.43968"
      inkscape:cy="630.74128"
      inkscape:document-units="mm"
      inkscape:current-layer="g1692"
@@ -44,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -61,13 +64,13 @@
          inkscape:connector-curvature="0"
          id="path3743"
          d="M 37.797874,-36.577901 -181.22234,160.5403 h 65.70606 v 175.21617 c 138.509914,-0.42342 144.541874,-0.27657 306.6278,0 V 160.5403 h 65.70607 z M -63.605231,115.00303 H 143.56351 c 12.66245,0 23.01978,4.61384 23.01978,20.56153 v 123.3718 c -1.3e-4,18.15981 -10.30661,20.56191 -23.01978,20.56154 H -63.605231 c -12.71316,0 -23.01963,-4.66958 -23.01979,-20.56154 v -123.3718 c 0,-16.70322 10.2457,-20.56153 23.01979,-20.56153 z"
-         style="font-family:none;mix-blend-mode:normal;fill:#607d8b;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0" />
+         style="font-family:none;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0" />
       <path
          sodipodi:nodetypes="ccccc"
          inkscape:connector-curvature="0"
          id="path3743-6"
          d="M -59.037211,136.45037 V 257.27348 H 141.79601 V 136.45037 Z"
-         style="font-family:none;mix-blend-mode:normal;fill:#f5f5f5;fill-opacity:0.94117647;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0" />
+         style="font-family:none;mix-blend-mode:normal;fill:#f5f5f5;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0" />
     </g>
   </g>
 </svg>
