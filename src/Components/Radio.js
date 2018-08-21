@@ -14,7 +14,7 @@ import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import ShuffleIcon from '@material-ui/icons/Shuffle';
-import sourcePlaceholder from '../resources/source.png';
+import sourcePlaceholder from '../resources/source.svg';
 import InputDialog from './InputDialog';
 
 const styles = theme => ({
