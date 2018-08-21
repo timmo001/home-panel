@@ -137,7 +137,7 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes, config, entities, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
+    const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
 
@@ -255,8 +255,11 @@ class Header extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}>
           <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
-          <MenuItem onClick={() => this.handleClose(1)}>Light</MenuItem>
-          <MenuItem onClick={() => this.handleClose(2)}>Dark</MenuItem>
+          {themes.map(theme => {
+            return (
+              <MenuItem key={theme.id} onClick={() => this.handleClose(theme.id)}>{theme.name}</MenuItem>
+            );
+          })}
         </Menu>
       </div >
     );
@@ -265,6 +268,7 @@ class Header extends React.Component {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
