@@ -39,7 +39,12 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config) => this.setState({ config }, () => this.connectToHASS());
+  loggedIn = (config) => this.setState({ config }, () => {
+    this.connectToHASS();
+    if (config.theme && config.theme.custom) {
+      config.theme.custom.map(theme => this.props.addTheme(theme));
+    }
+  });
 
   stateChanged = (event) => {
     console.log('state changed', event);
@@ -138,7 +143,7 @@ class Root extends Component {
 
   render() {
     const { loggedIn, setTheme, handleUpdateApiUrl } = this;
-    const { classes, theme } = this.props;
+    const { classes, themes, theme } = this.props;
     const { config, snackMessage, entities, connected } = this.state;
 
     return (
@@ -148,6 +153,7 @@ class Root extends Component {
           :
           entities ?
             <Main
+              themes={themes}
               theme={theme}
               setTheme={setTheme}
               config={config}
@@ -189,7 +195,9 @@ class Root extends Component {
 
 Root.propTypes = {
   classes: PropTypes.object.isRequired,
+  themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
+  addTheme: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
 };
 
