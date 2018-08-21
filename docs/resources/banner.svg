@@ -8,23 +8,23 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="640"
+   width="700"
    height="480"
-   id="svg52"
-   sodipodi:docname="icon-banner.svg"
+   id="svg180"
+   sodipodi:docname="banner.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    inkscape:export-filename="/home/aidan/projects/js/home-panel/docs/resources/banner.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96">
   <metadata
-     id="metadata56">
+     id="metadata184">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -38,30 +38,30 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:window-width="1920"
-     inkscape:window-height="1013"
-     id="namedview54"
+     inkscape:window-height="1014"
+     id="namedview182"
      showgrid="false"
-     inkscape:zoom="1.2291667"
-     inkscape:cx="380.44598"
-     inkscape:cy="170.51235"
+     inkscape:zoom="3.4766084"
+     inkscape:cx="328.3283"
+     inkscape:cy="256.2313"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g50" />
+     inkscape:current-layer="g178" />
   <defs
      id="defs25">
     <linearGradient
-       x1="2.6356499"
-       y1="15.67995"
-       x2="34.339062"
-       y2="47.383362"
+       x1="2.63551"
+       y1="9.4489403"
+       x2="48.5966"
+       y2="54.108421"
        gradientUnits="userSpaceOnUse"
        id="color-1"
-       gradientTransform="translate(0,0.7489362)">
+       gradientTransform="translate(0.36666666)">
       <stop
          offset="0"
          stop-color="#000000"
-         stop-opacity="0.3"
+         stop-opacity="0.36"
          id="stop2" />
       <stop
          offset="1"
@@ -119,47 +119,86 @@
      font-size="none"
      text-anchor="none"
      style="font-family:none;mix-blend-mode:normal;fill:none;fill-rule:nonzero;stroke:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0"
-     id="g50"
-     transform="matrix(10.681818,0,0,10.681818,-16.363636,-16.363628)">
+     id="g178"
+     transform="matrix(10.909091,0,0,10.909091,-19.818182,-23.81819)">
     <path
-       d="M 4.6808511,40 C 3.2002573,40 2,39.10457 2,38 V 10 C 2,8.89543 3.2002573,8 4.6808511,8 H 58.297873 c 1.480593,0 2.680851,0.89543 2.680851,2 v 28 c 0,1.10457 -1.200258,2 -2.680851,2 z"
-       id="base 1 5 1"
+       d="m 5.2416666,40.183334 c -1.5878194,0 -2.875,-0.89543 -2.875,-2 v -28 c 0,-1.1045701 1.2871806,-2.0000001 2.875,-2.0000001 H 62.741665 c 1.58782,0 2.875,0.89543 2.875,2.0000001 v 28 c 0,1.10457 -1.28718,2 -2.875,2 z"
+       id="base 1 33"
        inkscape:connector-curvature="0"
-       style="fill:#607d8b;stroke-width:1.15776753" />
+       style="fill:#607d8b;stroke-width:1.1989578" />
     <path
-       d="m 5.3063,31.562566 v -4.45109 l -2.67065,-2.67065 8.90217,-8.01195 8.90214,8.01195 16.3081,15.527429 -22.2554,0.02914 z"
+       d="M 5.7341266,36.49685 V 26.35565 L 3.0021866,23.62371 17.176946,9.44895 47.946718,40.00005 c 0,0 -2.669642,0 -3.580042,0 H 9.2372866 Z m 22.8856294,0 v -3.26758 l -3.26758,3.26758 z"
        id="path28"
        inkscape:connector-curvature="0"
        style="fill:url(#color-1);stroke-width:1"
-       sodipodi:nodetypes="cccccccc" />
+       sodipodi:nodetypes="cccccscccccc" />
     <path
-       d="m 20.43996,23.6919 h -2.67065 v 7.12174 c -6.58805,-0.01124 -6.83322,-0.01721 -12.46302,0 V 23.6919 H 2.63564 l 8.90217,-8.01195 z M 6.48059,22.67675 v 5.0145 c 10e-6,0.64594 0.41892,0.83573 0.93565,0.83573 h 8.42046 c 0.51673,2e-5 0.93564,-0.09762 0.93565,-0.83573 v -5.0145 c 0,-0.6482 -0.42098,-0.83573 -0.93565,-0.83573 H 7.41624 c -0.51921,0 -0.93565,0.15682 -0.93565,0.83573 z m 9.28427,0.036 v 4.91091 H 7.60191 v -4.91091 z"
-       id="path3743 1 1"
+       d="m 17.176936,9.44894 14.17476,14.17476 h -2.73194 V 36.49685 H 5.7341266 V 23.6237 h -2.73195 z"
+       id="rect840 1 1"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:0" />
     <g
-       id="svg1137 2"
-       style="stroke-width:0"
-       transform="translate(0,0.75320463)">
+       id="svg1137 9"
+       transform="translate(0.36666666)">
       <g
          id="layer1 1">
         <g
            id="g1692 1">
           <path
-             d="M 11.53781,15.67995 2.63564,23.6919 h 2.67065 v 7.12174 c 5.62979,-0.01721 5.87497,-0.01124 12.46302,0 V 23.6919 h 2.67065 z m -4.12157,6.16107 h 8.42046 c 0.51467,0 0.93565,0.18753 0.93565,0.83573 v 5.0145 c -10e-6,0.73811 -0.41892,0.83575 -0.93565,0.83573 H 7.41624 c -0.51673,0 -0.93564,-0.1898 -0.93565,-0.83573 v -5.0145 c 0,-0.67891 0.41644,-0.83573 0.93565,-0.83573 z"
-             id="path3743 1"
+             d="m 8.22817,22.9729 h 17.12856 c 0.01932,0 0.03487,0.01804 0.03487,0.04046 v 10.59249 c 0,0.02241 -0.01555,0.04046 -0.03487,0.04046 H 8.22817 c -0.01932,0 -0.03487,-0.01805 -0.03487,-0.04046 V 23.01336 c 0,-0.02241 0.01555,-0.04046 0.03487,-0.04046 z"
+             id="rect840 1"
              inkscape:connector-curvature="0"
-             style="fill:#ffffff" />
+             style="fill:#424242;stroke-width:0.18086" />
           <path
-             d="m 7.60191,22.71275 v 4.91091 h 8.16295 v -4.91091 z"
-             id="path3743-6 1"
+             d="m 25.39237,33.63619 c -10e-6,-2.04107 -5e-5,-10.66329 -5e-5,-10.66329 h -6.61383 v 5.15494 H 17.9912 V 22.9729 h -4.9599 v 0.78729 c 0,0 0.66367,0.32593 0.78729,0.78729 h -1.73203 c 0.11812,-0.44082 0.78729,-0.78729 0.78729,-0.78729 V 22.9729 H 8.22818 v 5.15494 h 17.16414 l 3e-5,0.64437 h -9.763 v 4.86401 h -0.78729 c -0.13121,0 0.13121,-4.86401 0,-4.86401 H 8.2282 l -3e-5,4.86401 M 16.81027,9.44894 30.98503,23.6237 H 28.25309 V 36.49685 H 5.36746 V 23.6237 H 2.63551 Z"
+             id="path842 1"
              inkscape:connector-curvature="0"
-             style="fill:#f5f5f5;fill-opacity:0.94118" />
+             style="fill:#e0e0e0;stroke-width:24.54369926" />
         </g>
+        <g
+           id="layer2 1"
+           font-weight="400"
+           font-size="14"
+           style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1" />
       </g>
     </g>
     <path
-       d="M 2,24 C 2,11.84974 11.84974,2 24,2 36.15026,2 46,11.84974 46,24 46,36.15026 36.15026,46 24,46 11.84974,46 2,36.15026 2,24 Z"
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 29 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 25 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 21 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 17 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 13 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 9 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
+       id="base 1 5 1"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="m 2.3666666,24 c 0,-12.15026 9.8497394,-22 21.9999994,-22 12.15026,0 22,9.84974 22,22 0,12.15026 -9.84974,22 -22,22 C 12.216406,46 2.3666666,36.15026 2.3666666,24 Z"
        id="base 1 1 1"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:1" />
@@ -167,55 +206,345 @@
        id="svg1137 1 1"
        font-weight="400"
        font-size="14"
-       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1">
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
       <g
          id="layer1 1 1">
         <g
            id="g1692 1 1" />
+        <g
+           id="layer2 1 1" />
       </g>
     </g>
     <rect
-       x="2"
+       x="2.3666668"
        y="2"
        width="44"
        height="22"
-       id="rect40"
+       id="rect49"
        style="fill:none;stroke-width:1" />
     <path
-       d="M 2,24 V 2 h 44 v 22 z"
-       id="path42"
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path51"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:1" />
     <path
-       d="M 2,24 V 2 h 44 v 22 z"
-       id="path44"
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path53"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:1" />
     <path
-       d="M 2,24 V 2 h 44 v 22 z"
-       id="path46"
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path55"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:1" />
     <path
-       d="M 2,24 V 2 h 44 v 22 z"
-       id="path48"
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path57"
        inkscape:connector-curvature="0"
        style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 2 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g63">
+        <g
+           id="g59" />
+        <g
+           id="g61" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect66"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path68"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path70"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path72"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path74"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 3 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g80">
+        <g
+           id="g76" />
+        <g
+           id="g78" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect83"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path85"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path87"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path89"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path91"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 4 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g97">
+        <g
+           id="g93" />
+        <g
+           id="g95" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect100"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path102"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path104"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path106"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path108"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 5 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g114">
+        <g
+           id="g110" />
+        <g
+           id="g112" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect117"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path119"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path121"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path123"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path125"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 6 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g131">
+        <g
+           id="g127" />
+        <g
+           id="g129" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect134"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path136"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path138"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path140"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path142"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 7 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g148">
+        <g
+           id="g144" />
+        <g
+           id="g146" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect151"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path153"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path155"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path157"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path159"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <g
+       id="svg1137 8 1"
+       font-weight="400"
+       font-size="14"
+       style="font-weight:400;font-size:14px;font-family:Roboto, sans-serif;text-anchor:start;fill:#000000;stroke-width:1"
+       transform="translate(0.36666666)">
+      <g
+         id="g165">
+        <g
+           id="g161" />
+        <g
+           id="g163" />
+      </g>
+    </g>
+    <rect
+       x="2.3666668"
+       y="2"
+       width="44"
+       height="22"
+       id="rect168"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path170"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path172"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path174"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <path
+       d="M 2.3666666,24 V 2 H 46.366666 v 22 z"
+       id="path176"
+       inkscape:connector-curvature="0"
+       style="fill:none;stroke-width:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:3.66666675px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09166667"
+       x="33.034832"
+       y="22.173115"
+       id="text993"><tspan
+         sodipodi:role="line"
+         id="tspan991"
+         x="33.034832"
+         y="22.173115"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#f5f5f5;fill-opacity:1;stroke-width:0.09166667">Home</tspan><tspan
+         sodipodi:role="line"
+         x="33.034832"
+         y="33.173111"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#f5f5f5;fill-opacity:1;stroke-width:0.09166667"
+         id="tspan995">Panel</tspan></text>
   </g>
-  <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:1;fill:#000000;fill-opacity:1;stroke:none"
-     x="242.18831"
-     y="213.41145"
-     id="text2063"><tspan
-       sodipodi:role="line"
-       id="tspan2061"
-       x="242.18831"
-       y="213.41145"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.33332825px;line-height:1.10000002;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#fafafa;fill-opacity:1">Home</tspan><tspan
-       sodipodi:role="line"
-       x="242.18831"
-       y="360.07812"
-       id="tspan2065"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.33332825px;line-height:1.10000002;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#fafafa;fill-opacity:1">Panel</tspan></text>
 </svg>
