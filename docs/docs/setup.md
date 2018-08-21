@@ -4,7 +4,7 @@
 
 If you have Hassio, you can install this via it's repository.
 
-- Add this link into respositories `https://github.com/timmo001/repository`
+- Add this link into repositories `https://github.com/timmo001/repository`
 
 ![Add to repositories][hassio-add]
 
