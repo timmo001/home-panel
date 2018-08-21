@@ -69,7 +69,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.backgrounds.dark,
   },
   cardUnavailable: {
-    backgroundColor: theme.palette.backgrounds.disabled,
+    backgroundColor: theme.palette.backgrounds.cardDisabled,
   },
   cardContent: {
     height: '100%',
@@ -164,7 +164,7 @@ class Main extends React.Component {
 
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
-    const { classes, entities, config, theme, handleChange } = this.props;
+    const { classes, entities, config, themes, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo, radioShown } = this.state;
 
     return (
@@ -172,6 +172,7 @@ class Main extends React.Component {
         <Header
           config={config}
           entities={entities}
+          themes={themes}
           theme={theme}
           moved={moved}
           over={over}
@@ -307,6 +308,7 @@ class Main extends React.Component {
 
 Main.propTypes = {
   classes: PropTypes.object.isRequired,
+  themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
