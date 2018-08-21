@@ -52,7 +52,7 @@ services:
       - 3234:3234
     volumes:
       - ~/ssl:/ssl
-      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
+      - PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json
 ```
 
 ### Non-SSL
@@ -78,7 +78,7 @@ services:
     ports:
       - 3234:3234
     volumes:
-      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
+      - PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json
 ```
 
 ## Docker
@@ -109,7 +109,7 @@ docker run -d \
   -e CERTIFICATES_DIR='/ssl' \
   -p 3234:3234 \
   -v ~/ssl:/ssl \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
+  -v PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json \
   timmo001/home-panel-api
 ```
 
@@ -129,7 +129,7 @@ docker run -d \
 ```bash
 docker run -d \
   -p 3234:3234 \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/config.json \
+  -v PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json \
   timmo001/home-panel-api
 ```
 
