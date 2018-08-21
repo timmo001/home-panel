@@ -7,13 +7,11 @@ html, body {
   overflow: hidden;
 }
 
-/* Let's get this party started */
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0.4rem;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
