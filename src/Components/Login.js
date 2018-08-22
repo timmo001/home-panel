@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import request from 'superagent';
 import { withStyles } from '@material-ui/core/styles';
+import green from '@material-ui/core/colors/green';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -17,6 +18,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Logo from '../resources/logo.svg';
@@ -59,7 +61,25 @@ const styles = theme => ({
     width: 256,
     justifyContent: 'center',
     margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px`,
-  }
+  },
+  wrapper: {
+    margin: theme.spacing.unit,
+    position: 'relative',
+  },
+  buttonSuccess: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[700],
+    },
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
+  },
 });
 
 class Login extends React.Component {
@@ -73,6 +93,8 @@ class Login extends React.Component {
     showPassword: false,
     showHASSPassword: false,
     createAccount: false,
+    loading: false,
+    success: false,
   };
 
   componentWillMount = () => {
@@ -109,76 +131,112 @@ class Login extends React.Component {
   };
 
   handleCreateAccount = () => {
-    if (this.state.username) {
-      console.log('Create account');
+    this.setState({ success: false, loading: true, }, () => {
+      if (this.state.username) {
+        console.log('Create account');
 
-      request
-        .post(`${this.state.api_url}/login/setup`)
-        .send({
-          username: this.state.username,
-          password: this.state.password,
-          hass_host: this.state.hass_host,
-          hass_password: this.state.hass_password,
-          hass_ssl: this.state.hass_ssl,
-        })
-        .set('Accept', 'application/json')
-        .then(res => {
-          if (res.status === 200) {
-            localStorage.setItem('api_url', this.state.api_url);
-            this.props.handleUpdateApiUrl(this.state.api_url);
-            localStorage.setItem('username', this.state.username);
-            sessionStorage.setItem('password', this.state.password);
-
-            this.props.loggedIn(res.body);
-          } else {
-            console.error(`Error ${res.status}: ${res.body}`);
-            this.setState({ error: `Error ${res.status}: ${res.body}` }, () =>
-              setTimeout(() => this.setState({ error: undefined }), 8000));
-          }
-        })
-        .catch(err => {
-          console.error(String(err));
-          this.setState({ error: String(err) + '. Check your credentials and try again.' }, () =>
-            setTimeout(() => this.setState({ error: undefined }), 8000));
-        });
-    }
+        request
+          .post(`${this.state.api_url}/login/setup`)
+          .send({
+            username: this.state.username,
+            password: this.state.password,
+            hass_host: this.state.hass_host,
+            hass_password: this.state.hass_password,
+            hass_ssl: this.state.hass_ssl,
+          })
+          .timeout({
+            response: 10000,
+            deadline: 60000,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              localStorage.setItem('api_url', this.state.api_url);
+              this.props.handleUpdateApiUrl(this.state.api_url);
+              localStorage.setItem('username', this.state.username);
+              sessionStorage.setItem('password', this.state.password);
+              this.setState({ loading: false, success: true }, () => {
+                this.props.loggedIn(res.body);
+              });
+            } else {
+              this.setState({ loading: false, success: false }, () => {
+                console.error(`Error ${res.status}: ${res.body}`);
+                this.setState({ error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 20000));
+              });
+            }
+          })
+          .catch(err => {
+            this.setState({ loading: false, success: false }, () => {
+              if (err.response) {
+                console.error(`Error: ${err.status} - ${err.response.text}`);
+                this.setState({ error: `Error: ${err.status} - ${err.response.text}` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 8000));
+              } else {
+                console.error(`Error: ${err.message} - Check your credentials and try again`);
+                this.setState({ error: `Error: ${err.message} - Check your credentials and try again` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 8000));
+              }
+            });
+          });
+      }
+    });
   };
 
   handleLogIn = () => {
-    if (this.state.username) {
-      console.log('Log In');
-      request
-        .post(`${this.state.api_url}/login`)
-        .send({
-          username: this.state.username,
-          password: this.state.password,
-        })
-        .set('Accept', 'application/json')
-        .then(res => {
-          if (res.status === 200) {
-            localStorage.setItem('api_url', this.state.api_url);
-            this.props.handleUpdateApiUrl(this.state.api_url);
-            localStorage.setItem('username', this.state.username);
-            sessionStorage.setItem('password', this.state.password);
-            this.props.loggedIn(res.body);
-          } else {
-            console.error(`Error ${res.status}: ${res.body}`);
-            this.setState({ error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
-              setTimeout(() => this.setState({ error: undefined }), 8000));
-          }
-        })
-        .catch(err => {
-          console.error(String(err));
-          this.setState({ error: String(err) + '. Check your credentials and try again.' }, () =>
-            setTimeout(() => this.setState({ error: undefined }), 8000));
-        });
-    }
+    this.setState({ success: false, loading: true, }, () => {
+      if (this.state.username) {
+        console.log('Log In');
+        request
+          .post(`${this.state.api_url}/login`)
+          .send({
+            username: this.state.username,
+            password: this.state.password,
+          })
+          .timeout({
+            response: 10000,
+            deadline: 60000,
+          })
+          .then(res => {
+            if (res.status === 200) {
+              localStorage.setItem('api_url', this.state.api_url);
+              this.props.handleUpdateApiUrl(this.state.api_url);
+              localStorage.setItem('username', this.state.username);
+              sessionStorage.setItem('password', this.state.password);
+              this.setState({ loading: false, success: true }, () => {
+                this.props.loggedIn(res.body);
+              });
+            } else {
+              this.setState({ loading: false, success: false }, () => {
+                console.error(`Error ${res.status}: ${res.body}`);
+                this.setState({ error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 20000));
+              });
+            }
+          })
+          .catch(err => {
+            this.setState({ loading: false, success: false }, () => {
+              if (err.response) {
+                console.error(`Error: ${err.status} - ${err.response.text}`);
+                this.setState({ error: `Error: ${err.status} - ${err.response.text}` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 8000));
+              } else {
+                console.error(`Error: ${err.message} - Check your credentials and try again`);
+                this.setState({ error: `Error: ${err.message} - Check your credentials and try again` }, () =>
+                  setTimeout(() => this.setState({ error: undefined }), 8000));
+              }
+            });
+          });
+      }
+    });
   };
 
   render() {
     const { classes } = this.props;
     const { username, password, api_url, hass_host, hass_password, hass_ssl,
-      showPassword, showHASSPassword, createAccount, error } = this.state;
+      showPassword, showHASSPassword, createAccount, error, loading, success } = this.state;
+    const buttonClassname = classNames({
+      [classes.buttonSuccess]: success,
+    });
 
     return (
       <Grid
@@ -294,13 +352,29 @@ class Login extends React.Component {
               <CardActions>
                 <div className={classes.fill} />
                 <Button onClick={this.toggleCreateAccount}>Already have an account?</Button>
-                <Button onClick={this.handleCreateAccount}>Create Account</Button>
+                <div className={classes.wrapper}>
+                  <Button
+                    className={buttonClassname}
+                    disabled={loading}
+                    onClick={this.handleCreateAccount}>
+                    Create Account
+                  </Button>
+                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                </div>
               </CardActions>
               :
               <CardActions>
                 <div className={classes.fill} />
                 <Button onClick={this.toggleCreateAccount}>Create New Account</Button>
-                <Button onClick={this.handleLogIn}>Log In</Button>
+                <div className={classes.wrapper}>
+                  <Button
+                    className={buttonClassname}
+                    disabled={loading}
+                    onClick={this.handleLogIn}>
+                    Log In
+                  </Button>
+                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                </div>
               </CardActions>
             }
           </Card>
