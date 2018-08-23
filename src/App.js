@@ -9,7 +9,7 @@ import '@mdi/font/css/materialdesignicons.min.css';
 import './App.css';
 import Root from './Components/Root';
 
-const themes = [
+var themes = [
   {
     id: 1,
     name: 'Light',
@@ -80,11 +80,11 @@ class App extends Component {
 
   addTheme = (theme) => {
     const base = themes.find(t => t.name.toLowerCase() === theme.base.toLowerCase());
-    var newTheme = base ? base : themes[0];
+    console.log(base);
+    var newTheme = { ...base ? base : themes[0] }
     console.log(newTheme);
     newTheme.id = themes[themes.length - 1].id + 1;
     newTheme.name = theme.name;
-    console.log(newTheme);
     if (theme.overrides) {
       if (theme.overrides.type) newTheme.palette.type = theme.overrides.type;
       if (theme.overrides.primary) newTheme.palette.primary = theme.overrides.primary;
