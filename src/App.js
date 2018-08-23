@@ -80,9 +80,7 @@ class App extends Component {
 
   addTheme = (theme) => {
     const base = themes.find(t => t.name.toLowerCase() === theme.base.toLowerCase());
-    console.log(base);
     var newTheme = { ...base ? base : themes[0] }
-    console.log(newTheme);
     newTheme.id = themes[themes.length - 1].id + 1;
     newTheme.name = theme.name;
     if (theme.overrides) {
@@ -103,7 +101,7 @@ class App extends Component {
       }
       if (theme.overrides.error) newTheme.palette.error = theme.overrides.error;
     }
-    console.log(newTheme);
+    console.log('newTheme:', newTheme);
     themes.push(newTheme);
     console.log('themes:', themes);
   };
