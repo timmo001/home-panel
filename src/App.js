@@ -28,6 +28,7 @@ import Root from './Components/Root';
 import clone from './Components/Utils/clone';
 
 const mapToColor = (str) => {
+  if (str.startsWith('url')) return str;
   if (str.startsWith('#')) return str;
   var strRef = undefined;
   if (str.includes('[')) {
@@ -37,7 +38,7 @@ const mapToColor = (str) => {
   }
   var color;
   switch (str) {
-    default: color = ''; break;
+    default: color = str; break;
     case 'amber': color = amber; break;
     case 'blue': color = blue; break;
     case 'blueGrey': color = blueGrey; break;
