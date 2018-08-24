@@ -8,6 +8,7 @@ import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 import './App.css';
 import Root from './Components/Root';
+import clone from './Components/Utils/clone';
 
 var themes = [
   {
@@ -70,6 +71,8 @@ class App extends Component {
     theme: defaultPalette
   };
 
+
+
   setTheme = (id) => {
     const theme = themes.find(t => t.id === id);
     const palette = theme ? theme.palette : themes[0].palette;
@@ -80,7 +83,10 @@ class App extends Component {
 
   addTheme = (theme) => {
     const base = themes.find(t => t.name.toLowerCase() === theme.base.toLowerCase());
-    var newTheme = { ...base ? base : themes[0] }
+    // var newTheme = { ...base ? base : themes[0] };
+    var newTheme = clone(themes[0]);
+    if (base) newTheme = clone(base);
+    console.log('newTheme pre:', newTheme);
     newTheme.id = themes[themes.length - 1].id + 1;
     newTheme.name = theme.name;
     if (theme.overrides) {
