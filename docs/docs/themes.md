@@ -18,6 +18,7 @@ Here is a table of all parts of the theme that can be overridden/configured.
  Replace the dots (.) with an object. (`"backgrounds": { ... }`)
 
 <!-- markdownlint-disable -->
+
 | Item                       | What this configures/overrides                                                                                                                                 |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | type                       | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
@@ -30,6 +31,7 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | backgrounds.card.disabled  | The color of the card when the entity is unavailable.                                                                                                          |
 | theme.overrides.text.light | The color of the lighter text and icons                                                                                                                        |
 | theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |  |
+
 <!-- markdownlint-enable -->
 
 ## Example Themes
