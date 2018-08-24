@@ -39,11 +39,14 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ![Radio Screenshot][radio]
 
+![Forest Theme][theme-forest]
+
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
 [radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
+[theme-forest]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-forest.png
 [anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
 [anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
