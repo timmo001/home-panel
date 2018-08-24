@@ -27,7 +27,6 @@ const styles = theme => ({
     zIndex: '1000',
     width: '18rem',
     height: '18rem',
-    backgroundColor: theme.palette.mainBackground,
   },
   rootShown: {
     transform: 'translate(-50%, 0px) !important',

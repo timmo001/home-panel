@@ -38,7 +38,7 @@ const styles = theme => ({
     overflow: 'hidden',
   },
   title: {
-    color: theme.palette.defaultText.light,
+    color: theme.palette.text.light,
   },
   gridInnerContainer: {
     height: `calc(100% - ${theme.spacing.unit * 6}px)`,
@@ -65,11 +65,14 @@ const styles = theme => ({
     height: '100%',
     width: '100%',
   },
+  cardOff: {
+    background: theme.palette.backgrounds.card.off,
+  },
   cardOn: {
-    backgroundColor: theme.palette.backgrounds.dark,
+    background: theme.palette.backgrounds.card.on,
   },
   cardUnavailable: {
-    backgroundColor: theme.palette.backgrounds.cardDisabled,
+    background: theme.palette.backgrounds.card.disabled,
   },
   cardContent: {
     height: '100%',
