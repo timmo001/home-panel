@@ -22,13 +22,13 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | type                       | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
 | primary                    | The primary color that the UI uses.                                                                                                                            |
 | secondary                  | The secondary color that the UI uses.                                                                                                                          |
-| backgrounds.main          | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)            |
-| backgrounds.default       | The background that other sections use that don't already have. This is generally not needed.                                                                  |
-| backgrounds.card.on      | The color of the card when on. i.e. the light or switch is turned on.                                                                                          |
-| backgrounds.card.off     | The color of the card when switched off or not able to switch on                                                                                               |
+| backgrounds.main           | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)            |
+| backgrounds.default        | The background that other sections use that don't already have. This is generally not needed.                                                                  |
+| backgrounds.card.on        | The color of the card when on. i.e. the light or switch is turned on.                                                                                          |
+| backgrounds.card.off       | The color of the card when switched off or not able to switch on                                                                                               |
 | backgrounds.card.disabled  | The color of the card when the entity is unavailable.                                                                                                          |
 | theme.overrides.text.light | The color of the lighter text and icons                                                                                                                        |
-| theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |  |
+| theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
 
 ## Example Themes
 
