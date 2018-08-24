@@ -36,7 +36,7 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 12,
+    top: 14,
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
@@ -70,7 +70,7 @@ const styles = theme => ({
   weatherContainer: {
     position: 'fixed',
     maxWidth: 320,
-    top: 90,
+    top: 98,
     left: 0,
     transform: 'translateY(-50%)',
     textAlign: 'start',
@@ -94,7 +94,7 @@ const styles = theme => ({
   weatherIcon: {
     position: 'fixed',
     transform: `translateX(-162px)`,
-    top: 'calc(50% - 50px)',
+    top: 'calc(50% - 45px)',
     width: '190px !important',
     height: '90px !important',
     [theme.breakpoints.down('sm')]: {
@@ -124,7 +124,7 @@ const styles = theme => ({
   indoorContainer: {
     position: 'fixed',
     maxWidth: 320,
-    top: 94,
+    top: 98,
     right: 0,
     transform: 'translateY(-50%)',
     textAlign: 'end',
