@@ -30,6 +30,10 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
   },
 ```
 
+## custom
+
+You can create custom themes in an array here. See the the docs [here][themes].
+
 ## header
 
 This section can display weather and other sensor information in the top
@@ -359,3 +363,4 @@ The url of a still image for use in the main view. This updates every minute.
 [header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/header.png
 [weather-left]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-left.png
 [weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
+[themes]: https://git.timmo.xyz/home-panel/configuration/themes/
