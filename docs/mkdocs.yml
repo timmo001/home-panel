@@ -63,10 +63,13 @@ markdown_extensions:
 # Pages
 nav:
   - Overview: index.md
-  - Setup: setup.md
-  - Login: login.md
-  - Configuration: configuration.md
-  - Template: template.md
+  - Getting Started:
+    - Setup: setup.md
+    - Login: login.md
+  - Customization:
+    - Configuration: configuration.md
+    - Themes: themes.md
+    - Template: template.md
   - Troubleshooting: troubleshooting.md
   - Contributing: contributing.md
   - License: license.md
