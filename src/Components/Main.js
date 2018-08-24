@@ -21,8 +21,11 @@ const styles = theme => ({
     maxWidth: '100%',
   },
   gridContainer: {
-    height: `calc(100% - 160px)`,
+    height: `calc(100% - 180px)`,
     overflowY: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - 130px)`,
+    }
   },
   grid: {
     height: '100%',
@@ -51,6 +54,9 @@ const styles = theme => ({
     height: `calc(100% - ${theme.spacing.unit * 6}px)`,
     overflowY: 'auto',
     overflowX: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - ${theme.spacing.unit * 4}px)`,
+    }
   },
   gridInner: {
     width: '100%',
