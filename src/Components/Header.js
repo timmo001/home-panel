@@ -25,7 +25,7 @@ const styles = theme => ({
     right: theme.spacing.unit,
   },
   button: {
-    color: theme.palette.defaultText.light,
+    color: theme.palette.text.light,
   },
   timeDateContainer: {
     position: 'fixed',
@@ -35,7 +35,7 @@ const styles = theme => ({
   },
   time: {
     textAlign: 'center',
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     fontSize: '6rem',
   },
   timePeriod: {
@@ -43,7 +43,7 @@ const styles = theme => ({
     fontSize: '3rem',
   },
   date: {
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     marginTop: theme.spacing.unit * -2.5,
     textAlign: 'center',
   },
@@ -57,7 +57,7 @@ const styles = theme => ({
   },
   condition: {
     paddingLeft: theme.spacing.unit * 17.2,
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     fontSize: '3.0rem',
   },
   weatherIcon: {
@@ -69,7 +69,7 @@ const styles = theme => ({
   },
   data: {
     paddingLeft: theme.spacing.unit * 17.2,
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     fontSize: '2.0rem',
     '& span': {
       paddingLeft: theme.spacing.unit * 3,
@@ -95,13 +95,13 @@ const styles = theme => ({
   indoorLabel: {
     minWidth: 200,
     paddingRight: theme.spacing.unit * 8,
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     fontSize: '2.2rem',
   },
   indoor: {
     minWidth: 200,
     paddingRight: theme.spacing.unit * 8,
-    color: theme.palette.defaultText.main,
+    color: theme.palette.text.main,
     fontSize: '2.0rem',
     '& span': {
       paddingLeft: theme.spacing.unit * 3,
@@ -177,7 +177,7 @@ class Header extends React.Component {
                 {header.left_outdoor_weather.condition &&
                   <Skycons
                     className={classes.weatherIcon}
-                    color={theme.palette.defaultText.light}
+                    color={theme.palette.text.light}
                     icon={header.left_outdoor_weather.icon}
                     autoplay={true} />
                 }

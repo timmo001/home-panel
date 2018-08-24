@@ -21,11 +21,11 @@ import purple from '@material-ui/core/colors/purple';
 import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
+import Root from './Components/Root';
+import clone from './Components/Utils/clone';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 import './App.css';
-import Root from './Components/Root';
-import clone from './Components/Utils/clone';
 
 const mapToColor = (str) => {
   if (str.startsWith('url')) return str;
@@ -60,8 +60,6 @@ const mapToColor = (str) => {
     case 'teal': color = teal; break;
     case 'yellow': color = yellow; break;
   }
-  console.log('color', color);
-  console.log('strRef', strRef);
   if (strRef) color = color[strRef];
   return color;
 };
@@ -74,21 +72,22 @@ var themes = [
       type: 'light',
       primary: blueGrey,
       secondary: grey,
-      mainBackground: grey[100],
       backgrounds: {
-        light: blueGrey[600],
-        main: blueGrey[400],
-        dark: blueGrey[200],
-        cardDisabled: grey[200],
+        main: grey[100],
+        default: grey[200],
+        card: {
+          on: blueGrey[300],
+          off: grey[300],
+          disabled: grey[200]
+        }
       },
-      defaultText: {
+      text: {
         light: grey[700],
-        main: grey[800],
-        dark: grey[900],
+        main: grey[800]
       },
       error: red,
       contrastThreshold: 3,
-      tonalOffset: 0.2,
+      tonalOffset: 0.2
     }
   },
   {
@@ -98,21 +97,22 @@ var themes = [
       type: 'dark',
       primary: blueGrey,
       secondary: grey,
-      mainBackground: grey[900],
       backgrounds: {
-        light: blueGrey[900],
-        main: blueGrey[800],
-        dark: blueGrey[600],
-        cardDisabled: grey[700],
+        main: grey[900],
+        default: grey[800],
+        card: {
+          on: blueGrey[700],
+          off: grey[800],
+          disabled: grey[700]
+        }
       },
-      defaultText: {
+      text: {
         light: grey[50],
-        main: grey[100],
-        dark: grey[200],
+        main: grey[100]
       },
       error: red,
       contrastThreshold: 3,
-      tonalOffset: 0.2,
+      tonalOffset: 0.2
     }
   }
 ];
@@ -136,34 +136,31 @@ class App extends Component {
   };
 
   addTheme = (theme) => {
-    console.log('theme', theme);
     const base = themes.find(t => t.name.toLowerCase() === theme.base.toLowerCase());
     var newTheme = clone(themes[0]);
     if (base) newTheme = clone(base);
-    console.log('newTheme pre:', newTheme);
     newTheme.id = themes[themes.length - 1].id + 1;
     newTheme.name = theme.name;
     if (theme.overrides) {
       if (theme.overrides.type) newTheme.palette.type = theme.overrides.type;
       if (theme.overrides.primary) newTheme.palette.primary = mapToColor(theme.overrides.primary);
       if (theme.overrides.secondary) newTheme.palette.secondary = mapToColor(theme.overrides.secondary);
-      if (theme.overrides.mainBackground) newTheme.palette.mainBackground = mapToColor(theme.overrides.mainBackground);
       if (theme.overrides.backgrounds) {
-        if (theme.overrides.backgrounds.light) newTheme.palette.backgrounds.light = mapToColor(theme.overrides.backgrounds.light);
         if (theme.overrides.backgrounds.main) newTheme.palette.backgrounds.main = mapToColor(theme.overrides.backgrounds.main);
-        if (theme.overrides.backgrounds.dark) newTheme.palette.backgrounds.dark = mapToColor(theme.overrides.backgrounds.dark);
-        if (theme.overrides.backgrounds.cardDisabled) newTheme.palette.backgrounds.cardDisabled = mapToColor(theme.overrides.backgrounds.cardDisabled);
+        if (theme.overrides.backgrounds.default) newTheme.palette.backgrounds.dark = mapToColor(theme.overrides.backgrounds.default);
+        if (theme.overrides.backgrounds.card) {
+          if (theme.overrides.backgrounds.card.on) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.on);
+          if (theme.overrides.backgrounds.card.off) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.off);
+          if (theme.overrides.backgrounds.card.disabled) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.disabled);
+        }
       }
-      if (theme.overrides.defaultText) {
-        if (theme.overrides.defaultText.light) newTheme.palette.defaultText.light = mapToColor(theme.overrides.defaultText.light);
-        if (theme.overrides.defaultText.main) newTheme.palette.defaultText.main = mapToColor(theme.overrides.defaultText.main);
-        if (theme.overrides.defaultText.dark) newTheme.palette.defaultText.dark = mapToColor(theme.overrides.defaultText.dark);
+      if (theme.overrides.text) {
+        if (theme.overrides.text.light) newTheme.palette.text.light = mapToColor(theme.overrides.text.light);
+        if (theme.overrides.text.main) newTheme.palette.text.main = mapToColor(theme.overrides.text.main);
       }
       if (theme.overrides.error) newTheme.palette.error = mapToColor(theme.overrides.error);
     }
-    console.log('newTheme:', newTheme);
     themes.push(newTheme);
-    console.log('themes:', themes);
   };
 
   render() {
