@@ -158,7 +158,6 @@ class App extends Component {
         if (theme.overrides.text.light) newTheme.palette.text.light = mapToColor(theme.overrides.text.light);
         if (theme.overrides.text.main) newTheme.palette.text.main = mapToColor(theme.overrides.text.main);
       }
-      if (theme.overrides.error) newTheme.palette.error = mapToColor(theme.overrides.error);
     }
     themes.push(newTheme);
   };
