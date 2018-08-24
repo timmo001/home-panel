@@ -21,8 +21,8 @@ const styles = theme => ({
   buttons: {
     position: 'fixed',
     display: 'grid',
-    top: theme.spacing.unit,
-    right: theme.spacing.unit,
+    top: theme.spacing.unit / 2,
+    right: theme.spacing.unit / 2,
   },
   button: {
     color: theme.palette.text.light,
@@ -32,59 +32,100 @@ const styles = theme => ({
     top: 12,
     left: '50%',
     transform: 'translateX(-50%)',
+    [theme.breakpoints.down('sm')]: {
+      top: 26,
+    }
   },
   time: {
     textAlign: 'center',
     color: theme.palette.text.main,
-    fontSize: '6rem',
+    fontSize: '6.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '5.2rem'
+    }
   },
   timePeriod: {
-    marginLeft: theme.spacing.unit * 2,
-    fontSize: '3rem',
+    paddingLeft: theme.spacing.unit,
+    fontSize: '3.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.2rem'
+    }
   },
   date: {
     color: theme.palette.text.main,
     marginTop: theme.spacing.unit * -2.5,
     textAlign: 'center',
+    fontSize: '2.4rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
+    }
   },
   weatherContainer: {
     position: 'fixed',
-    maxWidth: 360,
+    maxWidth: 320,
     top: 90,
     left: 0,
     transform: 'translateY(-50%)',
     textAlign: 'start',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 200,
+    },
+    [theme.breakpoints.down('xs')]: {
+      visibility: 'hidden'
+    }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 17.2,
+    paddingLeft: theme.spacing.unit * 17.4,
     color: theme.palette.text.main,
-    fontSize: '3.0rem',
+    fontSize: '2.8rem',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing.unit * 10.8,
+      fontSize: '1.8rem'
+    }
   },
   weatherIcon: {
     position: 'fixed',
-    transform: `translateX(-154px)`,
-    top: 'calc(50% - 45px)',
+    transform: `translateX(-162px)`,
+    top: 'calc(50% - 50px)',
     width: '190px !important',
     height: '90px !important',
+    [theme.breakpoints.down('sm')]: {
+      transform: `translateX(-122px)`,
+      top: 'calc(50% - 38px)',
+      width: '160px !important',
+      height: '74px !important',
+    },
   },
   data: {
+    maxWidth: 320,
     paddingLeft: theme.spacing.unit * 17.2,
     color: theme.palette.text.main,
     fontSize: '2.0rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
       paddingLeft: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 240,
+      paddingLeft: theme.spacing.unit * 10.8,
+      fontSize: '1.4rem'
     }
   },
   indoorContainer: {
     position: 'fixed',
-    maxWidth: 360,
+    maxWidth: 320,
     top: 94,
     right: 0,
     transform: 'translateY(-50%)',
     textAlign: 'end',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 240,
+    },
+    [theme.breakpoints.down('xs')]: {
+      visibility: 'hidden'
+    }
   },
   indoorInnerContainer: {
     paddingTop: theme.spacing.unit,
@@ -93,22 +134,26 @@ const styles = theme => ({
     }
   },
   indoorLabel: {
-    minWidth: 200,
-    paddingRight: theme.spacing.unit * 8,
+    paddingRight: theme.spacing.unit * 7,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.8rem'
+    },
   },
   indoor: {
-    minWidth: 200,
-    paddingRight: theme.spacing.unit * 8,
+    paddingRight: theme.spacing.unit * 7,
     color: theme.palette.text.main,
     fontSize: '2.0rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
       paddingLeft: 0,
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.4rem'
+    },
   },
 });
 
@@ -142,7 +187,6 @@ class Header extends React.Component {
   render() {
     const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
-
 
     const icon = config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
@@ -183,7 +227,6 @@ class Header extends React.Component {
                 }
                 {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
               </Typography>
-
               <Typography className={classes.data} variant="display2">
                 {header.left_outdoor_weather.data.map((d, id) => {
                   return <span key={id}>{d}</span>
@@ -264,7 +307,7 @@ class Header extends React.Component {
             );
           })}
         </Menu>
-      </div >
+      </div>
     );
   }
 }
