@@ -65,12 +65,12 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Getting Started:
-    - Setup: setup.md
-    - Login: login.md
+      - Setup: setup.md
+      - Login: login.md
   - Customization:
-    - Configuration: configuration.md
-    - Themes: themes.md
-    - Template: template.md
+      - Configuration: configuration.md
+      - Themes: themes.md
+      - Template: template.md
   - Troubleshooting: troubleshooting.md
   - Contributing: contributing.md
   - License: license.md
