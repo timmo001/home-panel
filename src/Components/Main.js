@@ -36,9 +36,16 @@ const styles = theme => ({
     height: `calc(100% + ${theme.spacing.unit}px)`,
     width: '18rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: '14rem',
+    }
   },
   title: {
     color: theme.palette.text.light,
+    fontSize: '2.2rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem',
+    }
   },
   gridInnerContainer: {
     height: `calc(100% - ${theme.spacing.unit * 6}px)`,
@@ -59,11 +66,17 @@ const styles = theme => ({
     height: '100%',
     width: '100%',
     textAlign: 'start',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '6rem'
+    }
   },
   card: {
     minHeight: '8rem',
     height: '100%',
     width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '6rem'
+    }
   },
   cardOff: {
     background: theme.palette.backgrounds.card.off,
@@ -82,12 +95,19 @@ const styles = theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.2rem',
-    fontColor: theme.palette.text.main
+    fontColor: theme.palette.text.main,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem',
+    }
   },
   state: {
     position: 'absolute',
+    textOverflow: 'ellipsis',
     bottom: theme.spacing.unit * 2,
-    fontSize: '0.9rem',
+    fontSize: '0.8rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.6rem',
+    }
   },
   cameraContainer: {
     position: 'relative',
@@ -124,7 +144,7 @@ class Main extends React.Component {
       this.setState({ moved: true }, () => {
         hoverTimeout = setTimeout(() => {
           this.setState({ moved: false });
-        }, 5000);
+        }, 10000);
       });
     }
   };
