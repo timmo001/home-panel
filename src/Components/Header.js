@@ -17,6 +17,9 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
     height: 180,
+    [theme.breakpoints.down('sm')]: {
+      height: 128,
+    }
   },
   buttons: {
     position: 'fixed',
@@ -26,6 +29,10 @@ const styles = theme => ({
   },
   button: {
     color: theme.palette.text.light,
+    [theme.breakpoints.down('sm')]: {
+      height: 36,
+      width: 36,
+    }
   },
   timeDateContainer: {
     position: 'fixed',
@@ -33,7 +40,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      top: 26,
+      top: 10,
     }
   },
   time: {
@@ -69,6 +76,7 @@ const styles = theme => ({
     textAlign: 'start',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
+      top: 74,
     },
     [theme.breakpoints.down('xs')]: {
       visibility: 'hidden'
@@ -122,6 +130,7 @@ const styles = theme => ({
     textAlign: 'end',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
+      top: 76
     },
     [theme.breakpoints.down('xs')]: {
       visibility: 'hidden'
