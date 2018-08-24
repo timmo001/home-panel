@@ -19,7 +19,7 @@ Here is a table of all parts of the theme that can be overridden/configured.
 
 <!-- markdownlint-disable MD013 -->
 | Item                       | What this configures/overrides                                                                                                                                 |
-|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | type                       | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
 | primary                    | The primary color that the UI uses.                                                                                                                            |
 | secondary                  | The secondary color that the UI uses.                                                                                                                          |
@@ -29,7 +29,7 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | backgrounds .card .off     | The color of the card when switched off or not able to switch on                                                                                               |
 | backgrounds.card.disabled  | The color of the card when the entity is unavailable.                                                                                                          |
 | theme.overrides.text.light | The color of the lighter text and icons                                                                                                                        |
-| theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |                                                      |
+| theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |  |
 <!-- markdownlint-enable MD013 -->
 
 ## Example Themes
@@ -60,6 +60,8 @@ Here are some example themes you can use or expand on. Contributions welcome!
       }
 ```
 
+![Midnight Theme][theme-midnight]
+
 ### Forest
 
 ```json
@@ -78,4 +80,8 @@ Here are some example themes you can use or expand on. Contributions welcome!
       }
 ```
 
+![Forest Theme][theme-forest]
+
 [template]: https://git.timmo.xyz/home-panel/template/
+[theme-midnight]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-midnight.png
+[theme-forest]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-forest.png
