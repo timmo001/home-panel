@@ -30,9 +30,44 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | theme.overrides.text.light | The color of the lighter text and icons                                                                                                                        |
 | theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
 
+## Colors
+
+To set the color you can use any color using the hex value, Material colors or
+ even images for backgrounds.
+
+### Material Color
+
+To use Material colors, you can use the [Material Design Pallette][md-color]
+ to find the color you want, then using them like so:
+
+```json
+            "main": "blueGrey[500]",
+```
+
+See how `Blue Grey` becomes camel-cased as `blueGrey`. The `[500]` is the
+ exact color. This would result in `#607D8B`.
+
+### Hexadecimal color
+
+You can use hexadecimal values to set colors using the usual `#RRGGBB` format.
+
+### Image
+
+For backgrounds, you can set an image for the background if you like.
+ The only caveat to this is that you have to use css formatting.
+
+To add an image set it as a `url` like so:
+
+```json
+            "main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
+```
+
+Make sure to put the url in brackets like the above.
+
 ## Example Themes
 
-Here are some example themes you can use or expand on. Contributions welcome!
+Here are some example themes you can use or expand on.
+ Contributions are welcome!
 
 ### Midnight
 
@@ -81,5 +116,6 @@ Here are some example themes you can use or expand on. Contributions welcome!
 ![Forest Theme][theme-forest]
 
 [template]: https://git.timmo.xyz/home-panel/template/
+[md-color]: https://material.io/design/color/#tools-for-picking-colors
 [theme-midnight]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-midnight.png
 [theme-forest]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-forest.png
