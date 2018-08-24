@@ -363,4 +363,4 @@ The url of a still image for use in the main view. This updates every minute.
 [header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/header.png
 [weather-left]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-left.png
 [weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
-[themes]: https://git.timmo.xyz/home-panel/configuration/themes/
+[themes]: https://git.timmo.xyz/home-panel/themes/
