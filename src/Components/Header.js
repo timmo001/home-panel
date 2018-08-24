@@ -24,6 +24,9 @@ const styles = theme => ({
     top: theme.spacing.unit,
     right: theme.spacing.unit,
   },
+  button: {
+    color: theme.palette.defaultText.light,
+  },
   timeDateContainer: {
     position: 'fixed',
     top: 12,
