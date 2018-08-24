@@ -96,7 +96,7 @@ markdownlint:
     - gem install mdl
     - mdl --version
   script:
-    - mdl --style all --warnings .
+    - mdl -s mdl_style.rb --warnings .
 
 # Pages jobs
 mkdocs:
