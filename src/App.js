@@ -150,8 +150,8 @@ class App extends Component {
         if (theme.overrides.backgrounds.default) newTheme.palette.backgrounds.dark = mapToColor(theme.overrides.backgrounds.default);
         if (theme.overrides.backgrounds.card) {
           if (theme.overrides.backgrounds.card.on) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.on);
-          if (theme.overrides.backgrounds.card.off) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.off);
-          if (theme.overrides.backgrounds.card.disabled) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.disabled);
+          if (theme.overrides.backgrounds.card.off) newTheme.palette.backgrounds.card.off = mapToColor(theme.overrides.backgrounds.card.off);
+          if (theme.overrides.backgrounds.card.disabled) newTheme.palette.backgrounds.card.disabled = mapToColor(theme.overrides.backgrounds.card.disabled);
         }
       }
       if (theme.overrides.text) {

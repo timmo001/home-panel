@@ -82,6 +82,7 @@ const styles = theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.2rem',
+    fontColor: theme.palette.text.main
   },
   state: {
     position: 'absolute',
