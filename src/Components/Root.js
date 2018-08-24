@@ -15,7 +15,6 @@ const styles = theme => ({
     maxHeight: '100%',
     maxWidth: '100%',
     background: theme.palette.backgrounds.main,
-    overflow: 'hidden',
   },
   flex: {
     flex: 1,

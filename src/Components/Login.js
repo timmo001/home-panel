@@ -25,8 +25,12 @@ import Logo from '../resources/logo.svg';
 
 const styles = theme => ({
   grid: {
-    position: 'fixed',
     height: '100%',
+    paddingTop: theme.spacing.unit * 8,
+    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+    overflow: 'auto'
   },
   media: {
     backgroundSize: 'contain',
@@ -49,9 +53,6 @@ const styles = theme => ({
   },
   fakeButton: {
     width: 256,
-  },
-  card: {
-    overflowY: 'auto',
   },
   cardContent: {
     paddingTop: theme.spacing.unit / 2,
@@ -246,13 +247,11 @@ class Login extends React.Component {
         justify="center">
         <Grid item lg={4} md={8} sm={8} xs={12}>
           <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
+            <CardContent className={classes.cardContent} align="center">
               <CardMedia
                 className={classes.media}
                 image={Logo}
                 title="Home Panel" />
-            </CardContent>
-            <CardContent className={classes.cardContent} align="center">
               <Typography variant="headline" component="h2">
                 {createAccount ? 'Welcome!' : 'Login'}
               </Typography>
