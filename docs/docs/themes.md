@@ -20,7 +20,7 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | Item                       | What this configures/overrides                                                                                                                                 |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | type                       | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
-| primary                    | The primary color that the UI uses.                                                                                                                            |
+| primary                    | The primary color that the UI uses. This is used for sliders, dropdowns, etc.                                                                                  |
 | secondary                  | The secondary color that the UI uses.                                                                                                                          |
 | backgrounds.main           | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)            |
 | backgrounds.default        | The background that other sections use that don't already have. This is generally not needed.                                                                  |
@@ -76,6 +76,7 @@ Here are some example themes you can use or expand on.
         "name": "Midnight",
         "base": "dark",
         "overrides": {
+          "primary": "pink",
           "backgrounds": {
             "main": "#383c45",
             "default": "#383c45",
@@ -102,6 +103,7 @@ Here are some example themes you can use or expand on.
         "name": "Forest",
         "base": "light",
         "overrides": {
+          "primary": "lightGreen",
           "backgrounds": {
             "main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
             "card": {

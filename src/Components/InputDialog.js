@@ -2,7 +2,7 @@
 import React from 'react';
 import request from 'superagent';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -17,12 +17,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SearchIcon from '@material-ui/icons/Search';
-
-const styles = theme => ({
-  root: {
-    transform: 'initial',
-  },
-});
 
 var searchTimeout;
 
@@ -62,7 +56,7 @@ class InputDialog extends React.Component {
       .send({ query: this.state.search })
       .set('Accept', 'application/json')
       .then(res => {
-        this.setState({ sources: res.body });
+        this.setState({ sources: res.body.slice(0, 100) });
       })
       .catch(err => {
         console.error(err);
@@ -72,12 +66,12 @@ class InputDialog extends React.Component {
   handleSearchChange = search => this.setState({ search });
 
   render() {
-    const { classes, open } = this.props;
+    const { fullScreen, open } = this.props;
     const { sources } = this.state;
 
     return (
       <Dialog
-        className={classes.root}
+        fullScreen={fullScreen}
         open={open}
         disableBackdropClick
         disableEscapeKeyDown
@@ -86,8 +80,8 @@ class InputDialog extends React.Component {
         aria-labelledby="confirmation-dialog-title">
         <DialogTitle id="confirmation-dialog-title">Select Source</DialogTitle>
         <DialogContent>
-          <form className={classes.container} noValidate autoComplete="off">
-            <FormControl className={classes.search}>
+          <form noValidate autoComplete="off">
+            <FormControl style={{ width: '100%' }} >
               <InputLabel htmlFor="search">Search Radio Stations..</InputLabel>
               <Input
                 id="search"
@@ -142,10 +136,10 @@ class InputDialog extends React.Component {
 }
 
 InputDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(InputDialog);
+export default withMobileDialog()(InputDialog);
