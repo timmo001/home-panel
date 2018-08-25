@@ -293,6 +293,15 @@ The name is automatically pulled from [HASS][hass], but you can set a custom
           "name": "Night/Film Mode",
 ```
 
+#### icon
+
+Icon shown in the middle of the card. Use [Material Design Icons][mdi] to
+ find the icon you want to use. For example, to use `thermometer-lines` add:
+
+```json
+          "icon": "thermometer-lines"
+```
+
 ### link
 
 A simple hyperlink that opens up another webpage in a new tab/window. To
@@ -305,6 +314,23 @@ A simple hyperlink that opens up another webpage in a new tab/window. To
           "name": "Shinobi",
           "url": "http://myserver.local:8080"
         }
+```
+
+#### name
+
+The name of the link.
+
+```json
+          "name": "Shinobi",
+```
+
+#### icon
+
+Icon shown in the middle of the card. Use [Material Design Icons][mdi] to
+ find the icon you want to use. For example, to use `thermometer-lines` add:
+
+```json
+          "icon": "thermometer-lines"
 ```
 
 ### camera
@@ -364,3 +390,4 @@ The url of a still image for use in the main view. This updates every minute.
 [weather-left]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-left.png
 [weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
 [themes]: https://git.timmo.xyz/home-panel/themes/
+[mdi]: https://materialdesignicons.com
