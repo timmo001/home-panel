@@ -87,7 +87,7 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 13,
+      paddingLeft: theme.spacing.unit * 11,
       fontSize: '1.8rem'
     }
   },
@@ -98,10 +98,10 @@ const styles = theme => ({
     width: '190px !important',
     height: '90px !important',
     [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-132px)`,
-      top: 'calc(50% - 38px)',
-      width: '160px !important',
-      height: '74px !important',
+      transform: `translateX(-104px)`,
+      top: 'calc(50% - 28px)',
+      width: '124px !important',
+      height: '58px !important',
     },
   },
   data: {
@@ -117,7 +117,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 13,
+      paddingLeft: theme.spacing.unit * 11,
       fontSize: '1.4rem'
     }
   },
@@ -137,21 +137,22 @@ const styles = theme => ({
     }
   },
   indoorInnerContainer: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing.unit / 2,
     '&:first-child': {
       paddingTop: 0,
     }
   },
   indoorLabel: {
-    paddingRight: theme.spacing.unit * 7,
+    paddingRight: theme.spacing.unit * 6,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing.unit * 5,
       fontSize: '1.8rem'
     },
   },
   indoor: {
-    paddingRight: theme.spacing.unit * 7,
+    paddingRight: theme.spacing.unit * 6,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -161,6 +162,7 @@ const styles = theme => ({
       paddingLeft: 0,
     },
     [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing.unit * 5,
       fontSize: '1.4rem'
     },
   },
