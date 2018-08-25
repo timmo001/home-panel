@@ -12,6 +12,7 @@ import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
 import Radio from './Radio';
+import '@mdi/font/css/materialdesignicons.min.css';
 
 const styles = theme => ({
   root: {
@@ -30,10 +31,10 @@ const styles = theme => ({
   grid: {
     height: '100%',
     width: 'fit-content',
-    paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     flexWrap: 'nowrap',
+    overflowY: 'hidden',
   },
   group: {
     height: `calc(100% + ${theme.spacing.unit}px)`,
@@ -80,12 +81,10 @@ const styles = theme => ({
     minHeight: '8rem',
     height: '100%',
     width: '100%',
+    background: theme.palette.backgrounds.card.off,
     [theme.breakpoints.down('sm')]: {
       minHeight: '6rem'
     }
-  },
-  cardOff: {
-    background: theme.palette.backgrounds.card.off,
   },
   cardOn: {
     background: theme.palette.backgrounds.card.on,
@@ -111,7 +110,7 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     left: '50%',
     transform: 'translateX(-50%)',
-    bottom: theme.spacing.unit * 1.5,
+    bottom: theme.spacing.unit,
     fontSize: '1.0rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.8rem',
@@ -126,7 +125,23 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
     height: '100%',
-  }
+  },
+  icon: {
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    color: theme.palette.text.icon,
+    fontSize: '3.2rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.2rem',
+    }
+  },
+  iconNoState: {
+    bottom: theme.spacing.unit * 2.2,
+  },
+  iconTwoLines: {
+    transform: 'translateX(-50%) translateY(16px)'
+  },
 });
 
 var hoverTimeout;
@@ -233,12 +248,14 @@ class Main extends React.Component {
                       spacing={8}>
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
+                        const icon = card.icon && card.icon;
                         if (type === 'hass') {
                           const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
                           if (entity_outer) {
                             const entity = entity_outer[1];
                             const { entity_id, state, attributes } = entity;
                             const domain = entity_id.substring(0, entity_id.indexOf('.'));
+                            const name = card.name ? card.name : attributes.friendly_name;
                             return (
                               <Grid key={y} className={classes.cardContainer} item>
                                 <ButtonBase
@@ -261,11 +278,17 @@ class Main extends React.Component {
                                   )} elevation={1} square>
                                     <CardContent className={classes.cardContent}>
                                       <Typography className={classes.name} variant="headline">
-                                        {card.name ? card.name : attributes.friendly_name}
+                                        {name}
                                       </Typography>
+                                      {icon && (domain === 'sensor' && name.length < 18) &&
+                                        <i className={classnames('mdi', `mdi-${icon}`,
+                                          classes.icon,
+                                          domain !== 'sensor' && classes.iconNoState,
+                                          name.length >= 14 && classes.iconTwoLines)} />
+                                      }
                                       {domain === 'sensor' &&
                                         <Typography className={classes.state} variant="headline" component="h2">
-                                          {state}
+                                          {state}{attributes.unit_of_measurement}
                                         </Typography>
                                       }
                                     </CardContent>
@@ -288,6 +311,10 @@ class Main extends React.Component {
                                     <Typography className={classes.name} variant="headline">
                                       {name}
                                     </Typography>
+                                    {icon &&
+                                      <i className={classnames('mdi', `mdi-${icon}`, classes.icon,
+                                        classes.iconNoState, name.length >= 14 && classes.iconTwoLines)} />
+                                    }
                                   </CardContent>
                                 </Card>
                               </ButtonBase>

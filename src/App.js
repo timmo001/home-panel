@@ -83,7 +83,8 @@ var themes = [
       },
       text: {
         light: grey[700],
-        main: grey[800]
+        main: grey[800],
+        icon: grey[700],
       },
       error: red,
       contrastThreshold: 3,
@@ -108,7 +109,8 @@ var themes = [
       },
       text: {
         light: grey[50],
-        main: grey[100]
+        main: grey[100],
+        icon: grey[50],
       },
       error: red,
       contrastThreshold: 3,
@@ -157,6 +159,7 @@ class App extends Component {
       if (theme.overrides.text) {
         if (theme.overrides.text.light) newTheme.palette.text.light = mapToColor(theme.overrides.text.light);
         if (theme.overrides.text.main) newTheme.palette.text.main = mapToColor(theme.overrides.text.main);
+        if (theme.overrides.text.icon) newTheme.palette.text.icon = mapToColor(theme.overrides.text.icon);
       }
     }
     themes.push(newTheme);
