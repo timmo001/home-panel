@@ -145,6 +145,7 @@ class Login extends React.Component {
             hass_password: this.state.hass_password,
             hass_ssl: this.state.hass_ssl,
           })
+          .retry(2)
           .timeout({
             response: 10000,
             deadline: 60000,
@@ -193,6 +194,7 @@ class Login extends React.Component {
             username: this.state.username,
             password: this.state.password,
           })
+          .retry(2)
           .timeout({
             response: 10000,
             deadline: 60000,
