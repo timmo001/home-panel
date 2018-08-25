@@ -87,7 +87,7 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 10.8,
+      paddingLeft: theme.spacing.unit * 13,
       fontSize: '1.8rem'
     }
   },
@@ -98,7 +98,7 @@ const styles = theme => ({
     width: '190px !important',
     height: '90px !important',
     [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-122px)`,
+      transform: `translateX(-132px)`,
       top: 'calc(50% - 38px)',
       width: '160px !important',
       height: '74px !important',
@@ -108,7 +108,7 @@ const styles = theme => ({
     maxWidth: 320,
     paddingLeft: theme.spacing.unit * 17.2,
     color: theme.palette.text.main,
-    fontSize: '2.0rem',
+    fontSize: '1.8rem',
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
     },
@@ -117,7 +117,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 10.8,
+      paddingLeft: theme.spacing.unit * 13,
       fontSize: '1.4rem'
     }
   },
@@ -153,7 +153,7 @@ const styles = theme => ({
   indoor: {
     paddingRight: theme.spacing.unit * 7,
     color: theme.palette.text.main,
-    fontSize: '2.0rem',
+    fontSize: '1.8rem',
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
     },
@@ -253,7 +253,7 @@ class Header extends React.Component {
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
-            {header.right_indoor.map((i, id) => {
+            {header.right_indoor && header.right_indoor.map((i, id) => {
               return (
                 <div key={id} className={classes.indoorInnerContainer}>
                   <Typography className={classes.indoorLabel} variant="display2">
@@ -269,8 +269,7 @@ class Header extends React.Component {
             })}
           </div>
         </div>
-        {
-          (moved || over) &&
+        {(moved || over) &&
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
