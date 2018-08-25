@@ -265,7 +265,7 @@ class Main extends React.Component {
                                       </Typography>
                                       {domain === 'sensor' &&
                                         <Typography className={classes.state} variant="headline" component="h2">
-                                          {state}
+                                          {state}{attributes.unit_of_measurement}
                                         </Typography>
                                       }
                                     </CardContent>
