@@ -262,7 +262,7 @@ class Login extends React.Component {
                   id="username"
                   type="text"
                   inputProps={{
-                    autocapitalize: "none"
+                    autoCapitalize: "none"
                   }}
                   value={username}
                   onChange={this.handleChange('username')}
@@ -275,7 +275,7 @@ class Login extends React.Component {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   inputProps={{
-                    autocapitalize: "none"
+                    autoCapitalize: "none"
                   }}
                   value={password}
                   onChange={this.handleChange('password')}
@@ -298,7 +298,7 @@ class Login extends React.Component {
                   id="api_url"
                   type="text"
                   inputProps={{
-                    autocapitalize: "none"
+                    autoCapitalize: "none"
                   }}
                   value={api_url}
                   onChange={this.handleChange('api_url')}
@@ -313,7 +313,7 @@ class Login extends React.Component {
                       id="hass_host"
                       type="text"
                       inputProps={{
-                        autocapitalize: "none"
+                        autoCapitalize: "none"
                       }}
                       value={hass_host}
                       onChange={this.handleChange('hass_host')}
@@ -326,7 +326,7 @@ class Login extends React.Component {
                       id="hass_password"
                       type={showHASSPassword ? 'text' : 'password'}
                       inputProps={{
-                        autocapitalize: "none"
+                        autoCapitalize: "none"
                       }}
                       value={hass_password}
                       onChange={this.handleChange('hass_password')}
