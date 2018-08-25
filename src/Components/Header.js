@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Skycons from 'react-skycons';
+import ReactAnimatedWeather from 'react-animated-weather';
 import Moment from 'react-moment';
 import { withStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -83,30 +84,25 @@ const styles = theme => ({
     }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 17.4,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.text.main,
     fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 11,
+      paddingLeft: theme.spacing.unit * 10.8,
       fontSize: '1.8rem'
     }
   },
   weatherIcon: {
     position: 'fixed',
-    transform: `translateX(-162px)`,
-    top: 'calc(50% - 45px)',
-    width: '190px !important',
-    height: '90px !important',
+    transform: `translateX(-118px)`,
+    top: 14,
     [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-104px)`,
-      top: 'calc(50% - 28px)',
-      width: '124px !important',
-      height: '58px !important',
+      transform: `translateX(-78px)`,
     },
   },
   data: {
     maxWidth: 320,
-    paddingLeft: theme.spacing.unit * 17.2,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -117,7 +113,7 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 11,
+      paddingLeft: theme.spacing.unit * 10.8,
       fontSize: '1.4rem'
     }
   },
@@ -230,11 +226,22 @@ class Header extends React.Component {
             <div className={classes.weatherContainer}>
               <Typography className={classes.condition} variant="display2">
                 {header.left_outdoor_weather.condition &&
-                  <Skycons
-                    className={classes.weatherIcon}
-                    color={theme.palette.text.light}
-                    icon={header.left_outdoor_weather.icon}
-                    autoplay={true} />
+                  <div className={classes.weatherIcon}>
+                    <Hidden smDown>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={110}
+                        animate={true} />
+                    </Hidden>
+                    <Hidden mdUp>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={70}
+                        animate={true} />
+                    </Hidden>
+                  </div>
                 }
                 {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
               </Typography>
