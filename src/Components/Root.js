@@ -15,7 +15,6 @@ const styles = theme => ({
     maxHeight: '100%',
     maxWidth: '100%',
     background: theme.palette.backgrounds.main,
-    overflow: 'hidden',
   },
   flex: {
     flex: 1,
@@ -68,7 +67,6 @@ class Root extends Component {
           subscribeEntities(conn, this.updateEntities);
         }, err => {
           console.error('Connection failed with code', err);
-          // localStorage.removeItem('username');
           sessionStorage.removeItem('password');
           this.setState({
             snackMessage: { open: true, text: 'Connection failed' },
@@ -131,7 +129,6 @@ class Root extends Component {
   };
 
   handleClose = (event, reason) => {
-    // if (reason === 'clickaway') return;
     this.setState({ snackMessage: { open: false, text: '' } });
   };
 

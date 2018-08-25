@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Skycons from 'react-skycons';
+import ReactAnimatedWeather from 'react-animated-weather';
 import Moment from 'react-moment';
 import { withStyles } from '@material-ui/core/styles';
+import Hidden from '@material-ui/core/Hidden';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -17,98 +18,149 @@ const styles = theme => ({
     display: 'block',
     width: '100%',
     height: 180,
+    [theme.breakpoints.down('sm')]: {
+      height: 128,
+    }
   },
   buttons: {
     position: 'fixed',
     display: 'grid',
-    top: theme.spacing.unit,
-    right: theme.spacing.unit,
+    top: theme.spacing.unit / 2,
+    right: theme.spacing.unit / 2,
   },
   button: {
     color: theme.palette.text.light,
+    [theme.breakpoints.down('sm')]: {
+      height: 36,
+      width: 36,
+    }
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 12,
+    top: 17,
     left: '50%',
     transform: 'translateX(-50%)',
+    [theme.breakpoints.down('sm')]: {
+      top: 18,
+    }
   },
   time: {
     textAlign: 'center',
     color: theme.palette.text.main,
-    fontSize: '6rem',
+    fontSize: '6.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '4.8rem'
+    }
   },
   timePeriod: {
-    marginLeft: theme.spacing.unit * 2,
-    fontSize: '3rem',
+    paddingLeft: theme.spacing.unit,
+    fontSize: '3.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.2rem'
+    }
   },
   date: {
     color: theme.palette.text.main,
     marginTop: theme.spacing.unit * -2.5,
     textAlign: 'center',
+    fontSize: '2.4rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
+    }
   },
   weatherContainer: {
     position: 'fixed',
-    maxWidth: 360,
-    top: 90,
+    maxWidth: 320,
+    top: 98,
     left: 0,
     transform: 'translateY(-50%)',
     textAlign: 'start',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 200,
+      top: 78,
+    },
+    [theme.breakpoints.down('xs')]: {
+      visibility: 'hidden'
+    }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 17.2,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.text.main,
-    fontSize: '3.0rem',
+    fontSize: '2.8rem',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing.unit * 10.8,
+      fontSize: '1.8rem'
+    }
   },
   weatherIcon: {
     position: 'fixed',
-    transform: `translateX(-154px)`,
-    top: 'calc(50% - 45px)',
-    width: '190px !important',
-    height: '90px !important',
+    transform: `translateX(-118px)`,
+    top: 14,
+    [theme.breakpoints.down('sm')]: {
+      transform: `translateX(-78px)`,
+    },
   },
   data: {
-    paddingLeft: theme.spacing.unit * 17.2,
+    maxWidth: 320,
+    paddingLeft: theme.spacing.unit * 17,
     color: theme.palette.text.main,
-    fontSize: '2.0rem',
+    fontSize: '1.8rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
       paddingLeft: 0,
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 240,
+      paddingLeft: theme.spacing.unit * 10.8,
+      fontSize: '1.4rem'
     }
   },
   indoorContainer: {
     position: 'fixed',
-    maxWidth: 360,
-    top: 94,
+    maxWidth: 320,
+    top: 98,
     right: 0,
     transform: 'translateY(-50%)',
     textAlign: 'end',
+    [theme.breakpoints.down('sm')]: {
+      maxWidth: 240,
+      top: 76
+    },
+    [theme.breakpoints.down('xs')]: {
+      visibility: 'hidden'
+    }
   },
   indoorInnerContainer: {
-    paddingTop: theme.spacing.unit,
+    paddingTop: theme.spacing.unit / 2,
     '&:first-child': {
       paddingTop: 0,
     }
   },
   indoorLabel: {
-    minWidth: 200,
-    paddingRight: theme.spacing.unit * 8,
+    paddingRight: theme.spacing.unit * 6,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing.unit * 5,
+      fontSize: '1.8rem'
+    },
   },
   indoor: {
-    minWidth: 200,
-    paddingRight: theme.spacing.unit * 8,
+    paddingRight: theme.spacing.unit * 6,
     color: theme.palette.text.main,
-    fontSize: '2.0rem',
+    fontSize: '1.8rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 3,
+      paddingLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
       paddingLeft: 0,
-    }
+    },
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: theme.spacing.unit * 5,
+      fontSize: '1.4rem'
+    },
   },
 });
 
@@ -143,13 +195,12 @@ class Header extends React.Component {
     const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
-
     const icon = config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
 
     const header = {
       left_outdoor_weather: config.header.left_outdoor_weather && {
-        icon: icon && icon.replaceAll('-', '_').toUpperCase(),
+        icon: icon ? icon.replaceAll('-', '_').toUpperCase() : 'CLOUDY',
         condition: config.header.left_outdoor_weather.condition && this.getState(entities, config.header.left_outdoor_weather.condition),
         data: []
       },
@@ -175,15 +226,25 @@ class Header extends React.Component {
             <div className={classes.weatherContainer}>
               <Typography className={classes.condition} variant="display2">
                 {header.left_outdoor_weather.condition &&
-                  <Skycons
-                    className={classes.weatherIcon}
-                    color={theme.palette.text.light}
-                    icon={header.left_outdoor_weather.icon}
-                    autoplay={true} />
+                  <div className={classes.weatherIcon}>
+                    <Hidden smDown>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={110}
+                        animate={true} />
+                    </Hidden>
+                    <Hidden mdUp>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={70}
+                        animate={true} />
+                    </Hidden>
+                  </div>
                 }
                 {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
               </Typography>
-
               <Typography className={classes.data} variant="display2">
                 {header.left_outdoor_weather.data.map((d, id) => {
                   return <span key={id}>{d}</span>
@@ -201,7 +262,7 @@ class Header extends React.Component {
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
-            {header.right_indoor.map((i, id) => {
+            {header.right_indoor && header.right_indoor.map((i, id) => {
               return (
                 <div key={id} className={classes.indoorInnerContainer}>
                   <Typography className={classes.indoorLabel} variant="display2">
@@ -217,8 +278,7 @@ class Header extends React.Component {
             })}
           </div>
         </div>
-        {
-          (moved || over) &&
+        {(moved || over) &&
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
@@ -264,7 +324,7 @@ class Header extends React.Component {
             );
           })}
         </Menu>
-      </div >
+      </div>
     );
   }
 }

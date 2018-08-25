@@ -25,8 +25,12 @@ import Logo from '../resources/logo.svg';
 
 const styles = theme => ({
   grid: {
-    position: 'fixed',
     height: '100%',
+    paddingTop: theme.spacing.unit * 8,
+    paddingBottom: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
+    overflow: 'auto'
   },
   media: {
     backgroundSize: 'contain',
@@ -49,9 +53,6 @@ const styles = theme => ({
   },
   fakeButton: {
     width: 256,
-  },
-  card: {
-    overflowY: 'auto',
   },
   cardContent: {
     paddingTop: theme.spacing.unit / 2,
@@ -144,6 +145,7 @@ class Login extends React.Component {
             hass_password: this.state.hass_password,
             hass_ssl: this.state.hass_ssl,
           })
+          .retry(2)
           .timeout({
             response: 10000,
             deadline: 60000,
@@ -192,6 +194,7 @@ class Login extends React.Component {
             username: this.state.username,
             password: this.state.password,
           })
+          .retry(2)
           .timeout({
             response: 10000,
             deadline: 60000,
@@ -246,13 +249,11 @@ class Login extends React.Component {
         justify="center">
         <Grid item lg={4} md={8} sm={8} xs={12}>
           <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
+            <CardContent className={classes.cardContent} align="center">
               <CardMedia
                 className={classes.media}
                 image={Logo}
                 title="Home Panel" />
-            </CardContent>
-            <CardContent className={classes.cardContent} align="center">
               <Typography variant="headline" component="h2">
                 {createAccount ? 'Welcome!' : 'Login'}
               </Typography>
@@ -262,6 +263,9 @@ class Login extends React.Component {
                   required
                   id="username"
                   type="text"
+                  inputProps={{
+                    autoCapitalize: "none"
+                  }}
                   value={username}
                   onChange={this.handleChange('username')}
                   onKeyPress={this.handleKeyPress} />
@@ -272,6 +276,9 @@ class Login extends React.Component {
                   required
                   id="password"
                   type={showPassword ? 'text' : 'password'}
+                  inputProps={{
+                    autoCapitalize: "none"
+                  }}
                   value={password}
                   onChange={this.handleChange('password')}
                   onKeyPress={this.handleKeyPress}
@@ -292,6 +299,9 @@ class Login extends React.Component {
                   required
                   id="api_url"
                   type="text"
+                  inputProps={{
+                    autoCapitalize: "none"
+                  }}
                   value={api_url}
                   onChange={this.handleChange('api_url')}
                   onKeyPress={this.handleKeyPress} />
@@ -304,6 +314,9 @@ class Login extends React.Component {
                       required
                       id="hass_host"
                       type="text"
+                      inputProps={{
+                        autoCapitalize: "none"
+                      }}
                       value={hass_host}
                       onChange={this.handleChange('hass_host')}
                       onKeyPress={this.handleKeyPress} />
@@ -314,6 +327,9 @@ class Login extends React.Component {
                       required
                       id="hass_password"
                       type={showHASSPassword ? 'text' : 'password'}
+                      inputProps={{
+                        autoCapitalize: "none"
+                      }}
                       value={hass_password}
                       onChange={this.handleChange('hass_password')}
                       onKeyPress={this.handleKeyPress}

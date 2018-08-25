@@ -21,13 +21,16 @@ const styles = theme => ({
     maxWidth: '100%',
   },
   gridContainer: {
-    height: `calc(100% - 160px)`,
+    height: `calc(100% - 180px)`,
     overflowY: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - 130px)`,
+    }
   },
   grid: {
     height: '100%',
     width: 'fit-content',
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     flexWrap: 'nowrap',
@@ -36,14 +39,24 @@ const styles = theme => ({
     height: `calc(100% + ${theme.spacing.unit}px)`,
     width: '18rem',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: '14rem',
+    }
   },
   title: {
     color: theme.palette.text.light,
+    fontSize: '1.8rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.4rem',
+    }
   },
   gridInnerContainer: {
     height: `calc(100% - ${theme.spacing.unit * 6}px)`,
     overflowY: 'auto',
     overflowX: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - ${theme.spacing.unit * 4}px)`,
+    }
   },
   gridInner: {
     width: '100%',
@@ -59,11 +72,17 @@ const styles = theme => ({
     height: '100%',
     width: '100%',
     textAlign: 'start',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '6rem'
+    }
   },
   card: {
     minHeight: '8rem',
     height: '100%',
     width: '100%',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: '6rem'
+    }
   },
   cardOff: {
     background: theme.palette.backgrounds.card.off,
@@ -76,18 +95,27 @@ const styles = theme => ({
   },
   cardContent: {
     height: '100%',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 1.5,
   },
   name: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: '1.2rem',
-    fontColor: theme.palette.text.main
+    fontSize: '1.12rem',
+    fontColor: theme.palette.text.main,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem',
+    }
   },
   state: {
     position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    fontSize: '0.9rem',
+    textOverflow: 'ellipsis',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    bottom: theme.spacing.unit * 1.5,
+    fontSize: '1.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.8rem',
+    }
   },
   cameraContainer: {
     position: 'relative',
@@ -124,7 +152,7 @@ class Main extends React.Component {
       this.setState({ moved: true }, () => {
         hoverTimeout = setTimeout(() => {
           this.setState({ moved: false });
-        }, 5000);
+        }, 10000);
       });
     }
   };
@@ -190,7 +218,7 @@ class Main extends React.Component {
           <Grid
             container
             className={classes.grid}
-            spacing={16}>
+            spacing={8}>
             {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
@@ -201,7 +229,8 @@ class Main extends React.Component {
                     <Grid
                       container
                       className={classes.gridInner}
-                      alignItems="stretch">
+                      alignItems="stretch"
+                      spacing={8}>
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
                         if (type === 'hass') {
@@ -215,7 +244,7 @@ class Main extends React.Component {
                                 <ButtonBase
                                   className={classes.cardOuter}
                                   focusRipple
-                                  disabled={state === 'unavailable'}
+                                  disabled={state === 'unavailable' || domain === 'sensor'}
                                   onClick={() => {
                                     if (domain === 'light' || domain === 'switch')
                                       handleChange(domain, state === 'on' ? false : true, { entity_id });
@@ -235,7 +264,7 @@ class Main extends React.Component {
                                         {card.name ? card.name : attributes.friendly_name}
                                       </Typography>
                                       {domain === 'sensor' &&
-                                        <Typography className={classes.state} variant="body1">
+                                        <Typography className={classes.state} variant="headline" component="h2">
                                           {state}
                                         </Typography>
                                       }
