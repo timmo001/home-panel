@@ -36,11 +36,11 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 14,
+    top: 17,
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      top: 10,
+      top: 18,
     }
   },
   time: {
@@ -48,7 +48,7 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '6.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '5.2rem'
+      fontSize: '4.8rem'
     }
   },
   timePeriod: {
@@ -76,7 +76,7 @@ const styles = theme => ({
     textAlign: 'start',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
-      top: 74,
+      top: 78,
     },
     [theme.breakpoints.down('xs')]: {
       visibility: 'hidden'
