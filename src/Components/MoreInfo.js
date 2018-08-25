@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -14,21 +14,18 @@ import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import { CirclePicker } from 'react-color';
 
-const styles = theme => ({
-  button: {
-    position: 'absolute',
-    right: theme.spacing.unit * 1.5,
-    top: theme.spacing.unit * 1.5,
-  },
-  formControl: {
-    display: 'flex',
-    margin: `${theme.spacing.unit * 2}px ${theme.spacing.unit}px`,
-    minWidth: 120,
-  },
-  picker: {
-    marginTop: theme.spacing.unit * 2,
-  }
-});
+// const styles = theme => ({
+//   button: {
+//   },
+//   formControl: {
+//     display: 'flex',
+//                   margin: `16px 8px`,
+//     minWidth: 120,
+//   },
+//   picker: {
+//     
+//   }
+// });
 
 class MoreInfo extends React.Component {
   state = {
@@ -57,19 +54,24 @@ class MoreInfo extends React.Component {
 
   render() {
     const { open, brightness, color_temp, effect } = this.state;
-    const { classes, data, handleChange } = this.props;
+    const { fullScreen, data, handleChange } = this.props;
     const { entity_id, attributes } = data;
     const domain = entity_id.substring(0, entity_id.indexOf('.'));
 
     return (
       <Dialog
         open={open}
+        fullScreen={fullScreen}
         onClose={() => this.handleClose()}
         aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">
           {attributes.friendly_name}
           <IconButton
-            className={classes.button}
+            style={{
+              position: 'absolute',
+              right: 12,
+              top: 12,
+            }}
             aria-label="Close"
             onClick={() => this.handleClose()}>
             <CloseIcon />
@@ -77,7 +79,11 @@ class MoreInfo extends React.Component {
         </DialogTitle>
         <DialogContent>
           {brightness &&
-            <FormControl className={classes.formControl}>
+            <FormControl style={{
+              display: 'flex',
+              margin: `16px 8px`,
+              minWidth: 120,
+            }}>
               <Typography id="brightness">Brightness</Typography>
               <Slider
                 value={Number(brightness)}
@@ -97,7 +103,11 @@ class MoreInfo extends React.Component {
             </FormControl>
           }
           {color_temp &&
-            <FormControl className={classes.formControl}>
+            <FormControl style={{
+              display: 'flex',
+              margin: `16px 8px`,
+              minWidth: 120,
+            }}>
               <Typography id="color_temp">Color Temperature</Typography>
               <Slider
                 value={Number(color_temp)}
@@ -117,7 +127,11 @@ class MoreInfo extends React.Component {
             </FormControl>
           }
           {attributes.effect_list &&
-            <FormControl className={classes.formControl}>
+            <FormControl style={{
+              display: 'flex',
+              margin: `16px 8px`,
+              minWidth: 120,
+            }}>
               <InputLabel htmlFor="effect">Effect</InputLabel>
               <Select
                 value={effect}
@@ -141,9 +155,13 @@ class MoreInfo extends React.Component {
             </FormControl>
           }
           {attributes.rgb_color &&
-            <FormControl className={classes.formControl}>
+            <FormControl style={{
+              display: 'flex',
+              margin: `16px 8px`,
+              minWidth: 120,
+            }}>
               <CirclePicker
-                className={classes.picker}
+                style={{ marginTop: 16 }}
                 circleSize={36}
                 onChangeComplete={(color) => handleChange(domain, true, {
                   entity_id,
@@ -158,11 +176,10 @@ class MoreInfo extends React.Component {
 }
 
 MoreInfo.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(MoreInfo);
+export default withMobileDialog()(MoreInfo);

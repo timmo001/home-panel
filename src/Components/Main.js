@@ -244,7 +244,7 @@ class Main extends React.Component {
                                 <ButtonBase
                                   className={classes.cardOuter}
                                   focusRipple
-                                  disabled={state === 'unavailable' | domain === 'sensor'}
+                                  disabled={state === 'unavailable' || domain === 'sensor'}
                                   onClick={() => {
                                     if (domain === 'light' || domain === 'switch')
                                       handleChange(domain, state === 'on' ? false : true, { entity_id });

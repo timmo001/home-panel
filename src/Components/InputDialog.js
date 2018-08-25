@@ -2,7 +2,7 @@
 import React from 'react';
 import request from 'superagent';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -13,7 +13,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -67,7 +66,7 @@ class InputDialog extends React.Component {
   handleSearchChange = search => this.setState({ search });
 
   render() {
-    const { classes, open, fullScreen } = this.props;
+    const { fullScreen, open } = this.props;
     const { sources } = this.state;
 
     return (
@@ -137,11 +136,10 @@ class InputDialog extends React.Component {
 }
 
 InputDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  fullScreen: PropTypes.bool.isRequired,
 };
 
 export default withMobileDialog()(InputDialog);
