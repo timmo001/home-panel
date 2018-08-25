@@ -261,6 +261,9 @@ class Login extends React.Component {
                   required
                   id="username"
                   type="text"
+                  inputProps={{
+                    autocapitalize: "none"
+                  }}
                   value={username}
                   onChange={this.handleChange('username')}
                   onKeyPress={this.handleKeyPress} />
@@ -271,6 +274,9 @@ class Login extends React.Component {
                   required
                   id="password"
                   type={showPassword ? 'text' : 'password'}
+                  inputProps={{
+                    autocapitalize: "none"
+                  }}
                   value={password}
                   onChange={this.handleChange('password')}
                   onKeyPress={this.handleKeyPress}
@@ -291,6 +297,9 @@ class Login extends React.Component {
                   required
                   id="api_url"
                   type="text"
+                  inputProps={{
+                    autocapitalize: "none"
+                  }}
                   value={api_url}
                   onChange={this.handleChange('api_url')}
                   onKeyPress={this.handleKeyPress} />
@@ -303,6 +312,9 @@ class Login extends React.Component {
                       required
                       id="hass_host"
                       type="text"
+                      inputProps={{
+                        autocapitalize: "none"
+                      }}
                       value={hass_host}
                       onChange={this.handleChange('hass_host')}
                       onKeyPress={this.handleKeyPress} />
@@ -313,6 +325,9 @@ class Login extends React.Component {
                       required
                       id="hass_password"
                       type={showHASSPassword ? 'text' : 'password'}
+                      inputProps={{
+                        autocapitalize: "none"
+                      }}
                       value={hass_password}
                       onChange={this.handleChange('hass_password')}
                       onKeyPress={this.handleKeyPress}
