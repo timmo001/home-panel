@@ -95,12 +95,12 @@ const styles = theme => ({
   },
   cardContent: {
     height: '100%',
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing.unit * 1.5,
   },
   name: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: '1.1rem',
+    fontSize: '1.12rem',
     fontColor: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
@@ -109,7 +109,9 @@ const styles = theme => ({
   state: {
     position: 'absolute',
     textOverflow: 'ellipsis',
-    bottom: theme.spacing.unit * 2,
+    left: '50%',
+    transform: 'translateX(-50%)',
+    bottom: theme.spacing.unit * 1.5,
     fontSize: '1.0rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.8rem',
@@ -242,7 +244,7 @@ class Main extends React.Component {
                                 <ButtonBase
                                   className={classes.cardOuter}
                                   focusRipple
-                                  disabled={state === 'unavailable'}
+                                  disabled={state === 'unavailable' | domain === 'sensor'}
                                   onClick={() => {
                                     if (domain === 'light' || domain === 'switch')
                                       handleChange(domain, state === 'on' ? false : true, { entity_id });
@@ -262,7 +264,7 @@ class Main extends React.Component {
                                         {card.name ? card.name : attributes.friendly_name}
                                       </Typography>
                                       {domain === 'sensor' &&
-                                        <Typography className={classes.state} variant="body1">
+                                        <Typography className={classes.state} variant="headline" component="h2">
                                           {state}
                                         </Typography>
                                       }
