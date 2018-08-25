@@ -147,8 +147,8 @@ class Login extends React.Component {
           })
           .retry(2)
           .timeout({
-            response: 10000,
-            deadline: 60000,
+            response: 5000,
+            deadline: 30000,
           })
           .then(res => {
             if (res.status === 200) {
@@ -196,8 +196,8 @@ class Login extends React.Component {
           })
           .retry(2)
           .timeout({
-            response: 10000,
-            deadline: 60000,
+            response: 5000,
+            deadline: 30000,
           })
           .then(res => {
             if (res.status === 200) {
