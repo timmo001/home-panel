@@ -19,29 +19,44 @@ const styles = theme => ({
     width: '100%',
     height: 180,
     [theme.breakpoints.down('sm')]: {
-      height: 128,
+      height: 120,
     }
   },
   buttons: {
     position: 'fixed',
-    display: 'grid',
-    top: theme.spacing.unit / 2,
-    right: theme.spacing.unit / 2,
+    top: 0,
+    [theme.breakpoints.down('sm')]: {
+      display: 'grid',
+    },
+    [theme.breakpoints.up('sm')]: {
+      display: 'block',
+    }
   },
   button: {
+    height: 42,
+    width: 42,
+    marginRight: theme.spacing.unit,
     color: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
-      height: 36,
-      width: 36,
+      height: 32,
+      width: 32,
+    }
+  },
+  icon: {
+    height: 24,
+    width: 24,
+    [theme.breakpoints.down('sm')]: {
+      height: 18,
+      width: 18,
     }
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 17,
+    top: 12,
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      top: 18,
+      top: 4,
     }
   },
   time: {
@@ -77,32 +92,31 @@ const styles = theme => ({
     textAlign: 'start',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
-      top: 78,
+      top: 68,
     },
     [theme.breakpoints.down('xs')]: {
       visibility: 'hidden'
     }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 17,
+    paddingLeft: theme.spacing.unit * 14,
     color: theme.palette.text.main,
     fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 10.8,
+      paddingLeft: theme.spacing.unit * 9,
       fontSize: '1.8rem'
     }
   },
   weatherIcon: {
     position: 'fixed',
-    transform: `translateX(-118px)`,
-    top: 14,
+    transform: `translateX(-96px)`,
     [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-78px)`,
+      transform: `translateX(-58px)`,
     },
   },
   data: {
     maxWidth: 320,
-    paddingLeft: theme.spacing.unit * 17,
+    paddingLeft: theme.spacing.unit * 14,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -113,20 +127,20 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 10.8,
+      paddingLeft: theme.spacing.unit * 9,
       fontSize: '1.4rem'
     }
   },
   indoorContainer: {
     position: 'fixed',
     maxWidth: 320,
-    top: 98,
+    top: 86,
     right: 0,
     transform: 'translateY(-50%)',
     textAlign: 'end',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      top: 76
+      top: 62
     },
     [theme.breakpoints.down('xs')]: {
       visibility: 'hidden'
@@ -139,16 +153,15 @@ const styles = theme => ({
     }
   },
   indoorLabel: {
-    paddingRight: theme.spacing.unit * 6,
+    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
-      paddingRight: theme.spacing.unit * 5,
-      fontSize: '1.8rem'
+      fontSize: '1.6rem'
     },
   },
   indoor: {
-    paddingRight: theme.spacing.unit * 6,
+    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -158,7 +171,6 @@ const styles = theme => ({
       paddingLeft: 0,
     },
     [theme.breakpoints.down('sm')]: {
-      paddingRight: theme.spacing.unit * 5,
       fontSize: '1.4rem'
     },
   },
@@ -231,14 +243,14 @@ class Header extends React.Component {
                       <ReactAnimatedWeather
                         icon={header.left_outdoor_weather.icon}
                         color={theme.palette.text.main}
-                        size={110}
+                        size={90}
                         animate={true} />
                     </Hidden>
                     <Hidden mdUp>
                       <ReactAnimatedWeather
                         icon={header.left_outdoor_weather.icon}
                         color={theme.palette.text.main}
-                        size={70}
+                        size={60}
                         animate={true} />
                     </Hidden>
                   </div>
@@ -285,15 +297,16 @@ class Header extends React.Component {
             onMouseLeave={handleMouseLeave}>
             <IconButton
               className={classes.button}
+              size="small"
               aria-label="Refresh"
               onClick={() => window.location.reload(true)}>
-              <RefreshIcon />
+              <RefreshIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
               aria-label="Log Out"
               onClick={this.props.handleLogOut}>
-              <ExitToAppIcon />
+              <ExitToAppIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
@@ -301,13 +314,13 @@ class Header extends React.Component {
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}>
-              <BrushIcon />
+              <BrushIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
               aria-label="Radio"
               onClick={this.props.handleRadioToggle}>
-              <RadioIcon />
+              <RadioIcon className={classes.icon} />
             </IconButton>
           </div>
         }
