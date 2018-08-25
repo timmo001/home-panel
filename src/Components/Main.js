@@ -30,7 +30,7 @@ const styles = theme => ({
   grid: {
     height: '100%',
     width: 'fit-content',
-    paddingTop: theme.spacing.unit * 2,
+    paddingTop: theme.spacing.unit,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     flexWrap: 'nowrap',
@@ -45,9 +45,9 @@ const styles = theme => ({
   },
   title: {
     color: theme.palette.text.light,
-    fontSize: '2.2rem',
+    fontSize: '1.8rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem',
+      fontSize: '1.4rem',
     }
   },
   gridInnerContainer: {
@@ -100,7 +100,7 @@ const styles = theme => ({
   name: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontSize: '1.2rem',
+    fontSize: '1.1rem',
     fontColor: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
@@ -110,9 +110,9 @@ const styles = theme => ({
     position: 'absolute',
     textOverflow: 'ellipsis',
     bottom: theme.spacing.unit * 2,
-    fontSize: '0.8rem',
+    fontSize: '1.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem',
+      fontSize: '0.8rem',
     }
   },
   cameraContainer: {
@@ -216,7 +216,7 @@ class Main extends React.Component {
           <Grid
             container
             className={classes.grid}
-            spacing={16}>
+            spacing={8}>
             {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
@@ -227,7 +227,8 @@ class Main extends React.Component {
                     <Grid
                       container
                       className={classes.gridInner}
-                      alignItems="stretch">
+                      alignItems="stretch"
+                      spacing={8}>
                       {group.cards.map((card, y) => {
                         const type = !card.type ? 'hass' : card.type;
                         if (type === 'hass') {
