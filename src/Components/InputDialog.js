@@ -13,16 +13,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import SearchIcon from '@material-ui/icons/Search';
-
-const styles = theme => ({
-  root: {
-    transform: 'initial',
-  },
-});
 
 var searchTimeout;
 
@@ -62,7 +57,7 @@ class InputDialog extends React.Component {
       .send({ query: this.state.search })
       .set('Accept', 'application/json')
       .then(res => {
-        this.setState({ sources: res.body });
+        this.setState({ sources: res.body.slice(0, 100) });
       })
       .catch(err => {
         console.error(err);
@@ -72,12 +67,12 @@ class InputDialog extends React.Component {
   handleSearchChange = search => this.setState({ search });
 
   render() {
-    const { classes, open } = this.props;
+    const { classes, open, fullScreen } = this.props;
     const { sources } = this.state;
 
     return (
       <Dialog
-        className={classes.root}
+        fullScreen={fullScreen}
         open={open}
         disableBackdropClick
         disableEscapeKeyDown
@@ -86,8 +81,8 @@ class InputDialog extends React.Component {
         aria-labelledby="confirmation-dialog-title">
         <DialogTitle id="confirmation-dialog-title">Select Source</DialogTitle>
         <DialogContent>
-          <form className={classes.container} noValidate autoComplete="off">
-            <FormControl className={classes.search}>
+          <form noValidate autoComplete="off">
+            <FormControl style={{ width: '100%' }} >
               <InputLabel htmlFor="search">Search Radio Stations..</InputLabel>
               <Input
                 id="search"
@@ -146,6 +141,7 @@ InputDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(InputDialog);
+export default withMobileDialog()(InputDialog);
