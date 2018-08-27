@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^1.5.1",
+    "@material-ui/core": "^3.0.0",
     "@material-ui/icons": "^2.0.3",
     "@material-ui/lab": "^1.0.0-alpha.11",
     "@mdi/font": "^2.6.95",
