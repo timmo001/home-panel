@@ -36,8 +36,6 @@ stages:
   stage: build
   image: docker:stable
   before_script:
-    - apk add --no-cache docker
-    - dockerd &
     - docker info
     - |
       if [ "$(apk --print-arch)" = "amd64" ]; then
