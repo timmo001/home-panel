@@ -32,6 +32,8 @@ const styles = theme => ({
   },
 });
 
+var connection;
+
 class Root extends Component {
   state = {
     snackMessage: { open: false, text: '' },
@@ -58,40 +60,39 @@ class Root extends Component {
       const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
         `${this.state.config.hass_host}/api/websocket?latest`;
       console.log(`Connect to ${wsURL}`);
-      createConnection(wsURL, { authToken: this.state.config.hass_password })
-        .then(conn => {
+      (async () => {
+
+        connection = await createConnection(wsURL, { authToken: this.state.config.hass_password })
+          .catch(err => {
+            console.error('Connection failed with code', err);
+            sessionStorage.removeItem('password');
+            this.setState({
+              snackMessage: { open: true, text: 'Connection failed' },
+              entities: undefined,
+              config: undefined
+            });
+          });
+
+        if (connection) {
           this.setState({ connected: true });
           console.log(`Connected`);
-          conn.removeEventListener('ready', this.eventHandler);
-          conn.addEventListener('ready', this.eventHandler);
-          subscribeEntities(conn, this.updateEntities);
-        }, err => {
-          console.error('Connection failed with code', err);
-          sessionStorage.removeItem('password');
-          this.setState({
-            snackMessage: { open: true, text: 'Connection failed' },
-            entities: undefined,
-            config: undefined
-          });
-        });
+          connection.removeEventListener('ready', this.eventHandler);
+          connection.addEventListener('ready', this.eventHandler);
+          subscribeEntities(connection, this.updateEntities);
+        }
+      })();
     }
   }
 
   handleChange = (domain, state, data = undefined) => {
     console.log('Change:', domain, state, data);
-    const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
-      `${this.state.config.hass_host}/api/websocket?latest`;
-    console.log(`Connect to ${wsURL}`);
-    createConnection(wsURL, { authToken: this.state.config.hass_password })
-      .then(conn => {
-        conn.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
-          this.setState({ snackMessage: { open: true, text: 'Changed.' } });
-          setTimeout(() => this.connectToHASS(), 2000);
-        });
-      }, err => {
-        console.error('Connection failed with code', err);
-        this.setState({ snackMessage: { open: true, text: 'Connection failed' }, entities: undefined });
-      });
+
+    connection.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
+      this.setState({ snackMessage: { open: true, text: 'Changed.' } });
+    }, err => {
+      console.error('Error calling service:', err);
+      this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
+    });
   };
 
   updateEntities = entities => {

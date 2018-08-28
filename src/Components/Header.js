@@ -52,7 +52,7 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 12,
+    top: 14,
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
@@ -85,11 +85,14 @@ const styles = theme => ({
   },
   weatherContainer: {
     position: 'fixed',
-    maxWidth: 320,
+    maxWidth: 480,
     top: 98,
-    left: 0,
+    paddingLeft: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'start',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
       top: 68,
@@ -99,45 +102,53 @@ const styles = theme => ({
     }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 14,
     color: theme.palette.text.main,
     fontSize: '2.8rem',
+    paddingLeft: 98,
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 9,
+      paddingLeft: 68,
       fontSize: '1.8rem'
     }
   },
+  weatherIconContainer: {
+    height: '100%'
+  },
   weatherIcon: {
-    position: 'fixed',
-    transform: `translateX(-96px)`,
-    [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-58px)`,
-    },
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
   data: {
-    maxWidth: 320,
-    paddingLeft: theme.spacing.unit * 14,
+    maxWidth: 480,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
+    paddingLeft: 98,
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
       paddingLeft: 0,
     },
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 9,
+      paddingLeft: 68,
       fontSize: '1.4rem'
     }
   },
   indoorContainer: {
     position: 'fixed',
-    maxWidth: 320,
-    top: 86,
+    maxWidth: 480,
+    top: 92,
     right: 0,
+    paddingRight: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'end',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
       top: 62
@@ -153,7 +164,6 @@ const styles = theme => ({
     }
   },
   indoorLabel: {
-    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
@@ -161,7 +171,6 @@ const styles = theme => ({
     },
   },
   indoor: {
-    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -207,6 +216,8 @@ class Header extends React.Component {
     const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
+    if (!config.header) config.header = {};
+
     const icon = config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
 
@@ -218,7 +229,7 @@ class Header extends React.Component {
       },
       right_indoor: []
     };
-    if (header.left_outdoor_weather)
+    if (config.header.left_outdoor_weather && config.header.left_outdoor_weather.data)
       config.header.left_outdoor_weather.data.map(d => {
         return header.left_outdoor_weather.data.push(
           this.getState(entities, d.entity_id, d.unit_of_measurement)
@@ -227,7 +238,8 @@ class Header extends React.Component {
     if (config.header.right_indoor)
       config.header.right_indoor.map(i => {
         var data = [];
-        i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+        if (i.data)
+          i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
         return header.right_indoor.push({ label: i.label, data });
       });
 
@@ -236,8 +248,8 @@ class Header extends React.Component {
         <div className={classes.header} onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <div className={classes.weatherContainer}>
-              <Typography className={classes.condition} variant="display2">
-                {header.left_outdoor_weather.condition &&
+              {header.left_outdoor_weather.icon &&
+                <div className={classes.weatherIconContainer}>
                   <div className={classes.weatherIcon}>
                     <Hidden smDown>
                       <ReactAnimatedWeather
@@ -254,14 +266,20 @@ class Header extends React.Component {
                         animate={true} />
                     </Hidden>
                   </div>
-                }
-                {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
-              </Typography>
-              <Typography className={classes.data} variant="display2">
-                {header.left_outdoor_weather.data.map((d, id) => {
-                  return <span key={id}>{d}</span>
-                })}
-              </Typography>
+                </div>
+              }
+              {header.left_outdoor_weather.condition &&
+                <Typography className={classes.condition} variant="display2">
+                  {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
+                </Typography>
+              }
+              {header.left_outdoor_weather.data &&
+                <Typography className={classes.data} variant="display2">
+                  {header.left_outdoor_weather.data.map((d, id) => {
+                    return <span key={id}>{d}</span>
+                  })}
+                </Typography>
+              }
             </div>
           }
           <div className={classes.timeDateContainer}>

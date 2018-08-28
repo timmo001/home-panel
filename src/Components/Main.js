@@ -12,7 +12,6 @@ import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
 import Radio from './Radio';
-import '@mdi/font/css/materialdesignicons.min.css';
 
 const styles = theme => ({
   root: {
@@ -46,7 +45,7 @@ const styles = theme => ({
   },
   title: {
     color: theme.palette.text.light,
-    fontSize: '1.8rem',
+    fontSize: '1.7rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.4rem',
     }
@@ -69,22 +68,13 @@ const styles = theme => ({
     padding: theme.spacing.unit / 2,
   },
   cardOuter: {
-    minHeight: '8rem',
     height: '100%',
     width: '100%',
     textAlign: 'start',
-    [theme.breakpoints.down('sm')]: {
-      minHeight: '6rem'
-    }
   },
   card: {
-    minHeight: '8rem',
-    height: '100%',
     width: '100%',
     background: theme.palette.backgrounds.card.off,
-    [theme.breakpoints.down('sm')]: {
-      minHeight: '6rem'
-    }
   },
   cardOn: {
     background: theme.palette.backgrounds.card.on,
@@ -93,8 +83,15 @@ const styles = theme => ({
     background: theme.palette.backgrounds.card.disabled,
   },
   cardContent: {
-    height: '100%',
-    padding: theme.spacing.unit * 1.5,
+    display: 'flex',
+    flexWrap: 'wrap',
+    minHeight: 98,
+    height: 98,
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 74,
+      height: 74,
+    },
+    padding: `${theme.spacing.unit * 1.5}px !important`,
   },
   name: {
     overflow: 'hidden',
@@ -106,12 +103,11 @@ const styles = theme => ({
     }
   },
   state: {
-    position: 'absolute',
     textOverflow: 'ellipsis',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    bottom: theme.spacing.unit,
+    margin: '0 auto',
+    marginTop: theme.spacing.unit / 2,
     fontSize: '1.0rem',
+    fontColor: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.8rem',
     }
@@ -127,20 +123,12 @@ const styles = theme => ({
     height: '100%',
   },
   icon: {
-    position: 'absolute',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    margin: '0 auto',
     color: theme.palette.text.icon,
-    fontSize: '3.2rem',
+    fontSize: '2.7rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.2rem',
+      fontSize: '1.7rem',
     }
-  },
-  iconNoState: {
-    bottom: theme.spacing.unit * 2.2,
-  },
-  iconTwoLines: {
-    transform: 'translateX(-50%) translateY(16px)'
   },
 });
 
@@ -209,6 +197,56 @@ class Main extends React.Component {
     window.location.reload(true);
   };
 
+  checkGroupToggle = (group, entities) => {
+    const card = group.cards.find((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          return domain === 'light' || domain === 'switch';
+        } else return false;
+      } else return false;
+    });
+    return card === undefined;
+  };
+
+  handleGroupToggle = (group, entities) => {
+    // Check if one card is 'on'
+    const oneOn = group.cards.find((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id, state } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch')
+            return state === 'on';
+        }
+      }
+      return false;
+    });
+    // Switch all cards on/off
+    group.cards.map((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch'){
+            this.props.handleChange(domain, oneOn ? false : true, { entity_id });
+          }
+        }
+      }
+      return null;
+    });
+  };
+
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, config, themes, theme, handleChange } = this.props;
@@ -237,9 +275,15 @@ class Main extends React.Component {
             {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
-                  <Typography className={classes.title} variant="display1" gutterBottom>
-                    {group.name}
-                  </Typography>
+                  <ButtonBase
+                    className={classes.groupButton}
+                    focusRipple
+                    disabled={this.checkGroupToggle(group, entities)}
+                    onClick={() => this.handleGroupToggle(group, entities)}>
+                    <Typography className={classes.title} variant="display1" gutterBottom>
+                      {group.name}
+                    </Typography>
+                  </ButtonBase>
                   <div className={classes.gridInnerContainer}>
                     <Grid
                       container
@@ -280,16 +324,13 @@ class Main extends React.Component {
                                       <Typography className={classes.name} variant="headline">
                                         {name}
                                       </Typography>
-                                      {icon && (domain === 'sensor' && name.length < 18) &&
-                                        <i className={classnames('mdi', `mdi-${icon}`,
-                                          classes.icon,
-                                          domain !== 'sensor' && classes.iconNoState,
-                                          name.length >= 14 && classes.iconTwoLines)} />
-                                      }
                                       {domain === 'sensor' &&
                                         <Typography className={classes.state} variant="headline" component="h2">
                                           {state}{attributes.unit_of_measurement}
                                         </Typography>
+                                      }
+                                      {icon &&
+                                        <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
                                       }
                                     </CardContent>
                                   </Card>
@@ -312,8 +353,7 @@ class Main extends React.Component {
                                       {name}
                                     </Typography>
                                     {icon &&
-                                      <i className={classnames('mdi', `mdi-${icon}`, classes.icon,
-                                        classes.iconNoState, name.length >= 14 && classes.iconTwoLines)} />
+                                      <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
                                     }
                                   </CardContent>
                                 </Card>
