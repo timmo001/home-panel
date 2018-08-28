@@ -3,7 +3,7 @@ image: alpine:latest
 
 variables:
   IMAGE_SLUG: home-panel
-  IMAGE_TARGET: home-panel
+  IMAGE_TARGET: .
   DOCKER_DRIVER: overlay2
   DOCKER_HUB_USER: timmo001
 
