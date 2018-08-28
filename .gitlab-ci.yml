@@ -36,6 +36,7 @@ stages:
   stage: build
   before_script:
     - apk add --no-cache docker
+    - service docker start
     - docker info
     - |
       if [ "$(apk --print-arch)" = "amd64" ]; then
