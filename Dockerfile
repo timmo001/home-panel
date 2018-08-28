@@ -1,4 +1,6 @@
-FROM alpine:3.8
+ARG BUILD_FROM=alpine:3.8
+# hadolint ignore=DL3006
+FROM ${BUILD_FROM}
 
 WORKDIR /usr/src/app
 
@@ -27,6 +29,25 @@ RUN yarn build --production \
 # Expose outbound ports
 EXPOSE 80
 EXPOSE 443
+
+# Build arguments
+ARG BUILD_ARCH
+ARG BUILD_DATE
+ARG BUILD_REF
+ARG BUILD_VERSION
+
+# Labels
+LABEL \
+    maintainer="Timmo" \
+    org.label-schema.description="A touch-compatible web-app for controlling the home" \
+    org.label-schema.build-date=${BUILD_DATE} \
+    org.label-schema.name="Home Panel" \
+    org.label-schema.schema-version="1.0" \
+    org.label-schema.url="https://git.timmo.xyz/home-panel" \
+    org.label-schema.usage="https://github.com/timmo001/home-panel/tree/master/README.md" \
+    org.label-schema.vcs-ref=${BUILD_REF} \
+    org.label-schema.vcs-url="https://github.com/timmo001/home-panel" \
+    org.label-schema.vendor="Timmo Hass.io Addons"
 
 # Set run CMD
 CMD \
