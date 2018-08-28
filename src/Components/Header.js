@@ -87,7 +87,7 @@ const styles = theme => ({
     position: 'fixed',
     maxWidth: 320,
     top: 98,
-    left: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'start',
     [theme.breakpoints.down('sm')]: {
@@ -137,7 +137,7 @@ const styles = theme => ({
     maxWidth: 320,
     top: 92,
     right: 0,
-    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'end',
     [theme.breakpoints.down('sm')]: {
@@ -155,7 +155,6 @@ const styles = theme => ({
     }
   },
   indoorLabel: {
-    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
@@ -163,7 +162,6 @@ const styles = theme => ({
     },
   },
   indoor: {
-    paddingRight: theme.spacing.unit * 2,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     '& span': {
@@ -241,7 +239,7 @@ class Header extends React.Component {
         <div className={classes.header} onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <div className={classes.weatherContainer}>
-              {header.left_outdoor_weather.dark_sky_icon &&
+              {header.left_outdoor_weather.icon &&
                 <div className={classes.weatherIconContainer}>
                   <div className={classes.weatherIcon}>
                     <Hidden smDown>
