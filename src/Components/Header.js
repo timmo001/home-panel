@@ -52,7 +52,7 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
-    top: 12,
+    top: 14,
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
@@ -87,7 +87,7 @@ const styles = theme => ({
     position: 'fixed',
     maxWidth: 320,
     top: 98,
-    left: 0,
+    left: theme.spacing.unit,
     transform: 'translateY(-50%)',
     textAlign: 'start',
     [theme.breakpoints.down('sm')]: {
@@ -99,26 +99,27 @@ const styles = theme => ({
     }
   },
   condition: {
-    paddingLeft: theme.spacing.unit * 14,
     color: theme.palette.text.main,
     fontSize: '2.8rem',
+    paddingLeft: 98,
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing.unit * 9,
+      paddingLeft: 68,
       fontSize: '1.8rem'
     }
   },
+  weatherIconContainer: {
+    height: '100%'
+  },
   weatherIcon: {
-    position: 'fixed',
-    transform: `translateX(-96px)`,
-    [theme.breakpoints.down('sm')]: {
-      transform: `translateX(-58px)`,
-    },
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
   },
   data: {
     maxWidth: 320,
-    paddingLeft: theme.spacing.unit * 14,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
+    paddingLeft: 98,
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
     },
@@ -127,15 +128,16 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: theme.spacing.unit * 9,
+      paddingLeft: 68,
       fontSize: '1.4rem'
     }
   },
   indoorContainer: {
     position: 'fixed',
     maxWidth: 320,
-    top: 86,
+    top: 92,
     right: 0,
+    paddingLeft: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'end',
     [theme.breakpoints.down('sm')]: {
@@ -236,8 +238,8 @@ class Header extends React.Component {
         <div className={classes.header} onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <div className={classes.weatherContainer}>
-              <Typography className={classes.condition} variant="display2">
-                {header.left_outdoor_weather.condition &&
+              {header.left_outdoor_weather.condition &&
+                <div className={classes.weatherIconContainer}>
                   <div className={classes.weatherIcon}>
                     <Hidden smDown>
                       <ReactAnimatedWeather
@@ -254,7 +256,9 @@ class Header extends React.Component {
                         animate={true} />
                     </Hidden>
                   </div>
-                }
+                </div>
+              }
+              <Typography className={classes.condition} variant="display2">
                 {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
               </Typography>
               <Typography className={classes.data} variant="display2">
