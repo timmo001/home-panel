@@ -197,6 +197,56 @@ class Main extends React.Component {
     window.location.reload(true);
   };
 
+  checkGroupToggle = (group, entities) => {
+    const card = group.cards.find((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          return domain === 'light' || domain === 'switch';
+        } else return false;
+      } else return false;
+    });
+    return card === undefined;
+  };
+
+  handleGroupToggle = (group, entities) => {
+    // Check if one card is 'on'
+    const oneOn = group.cards.find((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id, state } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch')
+            return state === 'on';
+        }
+      }
+      return false;
+    });
+    // Switch all cards on/off
+    group.cards.map((card) => {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
+        const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+        if (entity_outer) {
+          const entity = entity_outer[1];
+          const { entity_id } = entity;
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch'){
+            this.props.handleChange(domain, oneOn ? false : true, { entity_id });
+          }
+        }
+      }
+      return null;
+    });
+  };
+
   render() {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, config, themes, theme, handleChange } = this.props;
@@ -225,9 +275,15 @@ class Main extends React.Component {
             {config.items && config.items.map((group, x) => {
               return (
                 <Grid key={x} className={classes.group} item>
-                  <Typography className={classes.title} variant="display1" gutterBottom>
-                    {group.name}
-                  </Typography>
+                  <ButtonBase
+                    className={classes.groupButton}
+                    focusRipple
+                    disabled={this.checkGroupToggle(group, entities)}
+                    onClick={() => this.handleGroupToggle(group, entities)}>
+                    <Typography className={classes.title} variant="display1" gutterBottom>
+                      {group.name}
+                    </Typography>
+                  </ButtonBase>
                   <div className={classes.gridInnerContainer}>
                     <Grid
                       container
@@ -274,7 +330,7 @@ class Main extends React.Component {
                                         </Typography>
                                       }
                                       {icon &&
-                                          <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
+                                        <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
                                       }
                                     </CardContent>
                                   </Card>
