@@ -85,11 +85,14 @@ const styles = theme => ({
   },
   weatherContainer: {
     position: 'fixed',
-    maxWidth: 320,
+    maxWidth: 480,
     top: 98,
     paddingLeft: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'start',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
       top: 68,
@@ -116,7 +119,7 @@ const styles = theme => ({
     transform: 'translateY(-50%)',
   },
   data: {
-    maxWidth: 320,
+    maxWidth: 480,
     color: theme.palette.text.main,
     fontSize: '1.8rem',
     paddingLeft: 98,
@@ -126,6 +129,9 @@ const styles = theme => ({
     '& span:first-child': {
       paddingLeft: 0,
     },
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
       paddingLeft: 68,
@@ -134,12 +140,15 @@ const styles = theme => ({
   },
   indoorContainer: {
     position: 'fixed',
-    maxWidth: 320,
+    maxWidth: 480,
     top: 92,
     right: 0,
     paddingRight: theme.spacing.unit * 2,
     transform: 'translateY(-50%)',
     textAlign: 'end',
+    [theme.breakpoints.down('md')]: {
+      maxWidth: 320,
+    },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
       top: 62
