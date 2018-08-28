@@ -209,6 +209,8 @@ class Header extends React.Component {
     const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
+    if (!config.header) config.header = {};
+
     const icon = config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
 
@@ -220,7 +222,7 @@ class Header extends React.Component {
       },
       right_indoor: []
     };
-    if (header.left_outdoor_weather)
+    if (config.header.left_outdoor_weather && config.header.left_outdoor_weather.data)
       config.header.left_outdoor_weather.data.map(d => {
         return header.left_outdoor_weather.data.push(
           this.getState(entities, d.entity_id, d.unit_of_measurement)
@@ -229,7 +231,8 @@ class Header extends React.Component {
     if (config.header.right_indoor)
       config.header.right_indoor.map(i => {
         var data = [];
-        i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+        if (i.data)
+          i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
         return header.right_indoor.push({ label: i.label, data });
       });
 
