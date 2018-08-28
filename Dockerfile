@@ -38,7 +38,7 @@ ARG BUILD_VERSION
 
 # Labels
 LABEL \
-    maintainer="Timmo" \
+    maintainer="Timmo <contact@timmo.xyz>" \
     org.label-schema.description="A touch-compatible web-app for controlling the home" \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Home Panel" \
