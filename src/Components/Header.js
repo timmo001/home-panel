@@ -238,7 +238,7 @@ class Header extends React.Component {
         <div className={classes.header} onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <div className={classes.weatherContainer}>
-              {header.left_outdoor_weather.condition &&
+              {header.left_outdoor_weather.dark_sky_icon &&
                 <div className={classes.weatherIconContainer}>
                   <div className={classes.weatherIcon}>
                     <Hidden smDown>
@@ -258,14 +258,18 @@ class Header extends React.Component {
                   </div>
                 </div>
               }
-              <Typography className={classes.condition} variant="display2">
-                {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
-              </Typography>
-              <Typography className={classes.data} variant="display2">
-                {header.left_outdoor_weather.data.map((d, id) => {
-                  return <span key={id}>{d}</span>
-                })}
-              </Typography>
+              {header.left_outdoor_weather.condition &&
+                <Typography className={classes.condition} variant="display2">
+                  {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
+                </Typography>
+              }
+              {header.left_outdoor_weather.data &&
+                <Typography className={classes.data} variant="display2">
+                  {header.left_outdoor_weather.data.map((d, id) => {
+                    return <span key={id}>{d}</span>
+                  })}
+                </Typography>
+              }
             </div>
           }
           <div className={classes.timeDateContainer}>
