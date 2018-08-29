@@ -39,6 +39,8 @@ build_app:
     - yarn run build --production
   tags:
     - build
+  artifacts:
+    untracked: true
 
 # Generic build template
 .build: &build
