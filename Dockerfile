@@ -17,12 +17,8 @@ RUN \
 # Create nginx directories
 RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
 
-# Install dependencies
-RUN yarn install && yarn cache clean
-
-# Build app
-RUN yarn build --production \
-    && rm -Rf /usr/share/nginx/html/* \
+# Move app
+RUN rm -Rf /usr/share/nginx/html/* \
     && mv build/* /usr/share/nginx/html \
     && rm -Rf ./*
 

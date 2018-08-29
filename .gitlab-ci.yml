@@ -10,6 +10,7 @@ variables:
 stages:
   - preflight
   - pages
+  - prebuild
   - build
   - test
   - deploy
@@ -29,12 +30,21 @@ stages:
   tags:
     - preflight
 
+# Prebuild jobs
+build_app:
+  stage: prebuild
+  image: node:alpine
+  script:
+    - yarn install && yarn cache clean
+    - yarn run build --production
 
 # Generic build template
 .build: &build
   <<: *dind
   stage: build
   image: docker:stable
+  dependencies:
+    - build_app
   before_script:
     - docker info
     - |
