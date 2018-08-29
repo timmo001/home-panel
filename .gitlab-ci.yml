@@ -41,7 +41,7 @@ build_app:
     - build
   artifacts:
     paths:
-    - build/
+      - build/
     expire_in: 1 week
 
 # Generic build template
