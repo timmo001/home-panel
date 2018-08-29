@@ -37,6 +37,8 @@ build_app:
   script:
     - yarn install && yarn cache clean
     - yarn run build --production
+  tags:
+    - build
 
 # Generic build template
 .build: &build
