@@ -40,7 +40,9 @@ build_app:
   tags:
     - build
   artifacts:
-    untracked: true
+    paths:
+    - build/
+    expire_in: 1 week
 
 # Generic build template
 .build: &build
