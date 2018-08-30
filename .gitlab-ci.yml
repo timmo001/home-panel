@@ -84,6 +84,7 @@ build_app:
   <<: *dind
   stage: test
   allow_failure: true
+  image: docker:stable
   before_script:
     - docker info
     - docker run -d --name db arminc/clair-db:latest
