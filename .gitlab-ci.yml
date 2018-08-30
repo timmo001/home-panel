@@ -3,15 +3,18 @@ image: alpine:latest
 
 variables:
   IMAGE_SLUG: home-panel
+  IMAGE_TARGET: .
   DOCKER_DRIVER: overlay2
   DOCKER_HUB_USER: timmo001
 
 stages:
   - preflight
   - pages
+  - prebuild
   - build
   - test
   - deploy
+  - manifest
 
 # Generic DIND template
 .dind: &dind
@@ -26,6 +29,201 @@ stages:
   stage: preflight
   tags:
     - preflight
+
+# Prebuild jobs
+build_app:
+  stage: prebuild
+  image: node:alpine
+  script:
+    - yarn install && yarn cache clean
+    - yarn run build --production
+  tags:
+    - build
+    - amd64
+  artifacts:
+    paths:
+      - build/
+    expire_in: 1 week
+
+# Generic build template
+.build: &build
+  <<: *dind
+  stage: build
+  image: docker:stable
+  dependencies:
+    - build_app
+  before_script:
+    - docker info
+    - |
+      if [ "$(apk --print-arch)" = "amd64" ]; then
+        docker run --rm --privileged hassioaddons/qemu-user-static:latest
+      fi
+    - |
+      echo "${CI_JOB_TOKEN}" | docker login \
+        --username gitlab-ci-token \
+        --password-stdin \
+        registry.gitlab.com
+    - docker pull "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:cache" || true
+  script:
+    - |
+      docker build \
+        --build-arg "BUILD_FROM=${FROM}" \
+        --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+        --build-arg "BUILD_ARCH=${IMAGE_ARCH}" \
+        --build-arg "BUILD_REF=${CI_COMMIT_SHA}" \
+        --build-arg "BUILD_VERSION=${CI_COMMIT_TAG:-${CI_COMMIT_SHA:0:7}}" \
+        --cache-from "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:cache" \
+        --tag \
+          "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}" \
+        "${IMAGE_TARGET}"
+    - |
+      docker push \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}"
+
+# Generic scan template
+.scan: &scan
+  <<: *dind
+  stage: test
+  allow_failure: true
+  image: docker:stable
+  before_script:
+    - docker info
+    - docker run -d --name db arminc/clair-db:latest
+    - docker run -p 6060:6060 --link db:postgres -d --name clair arminc/clair-local-scan:v2.0.1
+    - apk add -U curl ca-certificates
+    - |
+      curl \
+        --silent \
+        --show-error \
+        --location \
+        --fail \
+        --retry 3 \
+        --output /usr/bin/clair-scanner \
+        https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
+    - chmod +x /usr/bin/clair-scanner
+    - touch clair-whitelist.yml
+    - echo "Waiting for Clair to start"
+    - |
+      while ! nc -z docker 6060; do
+        sleep 1
+        WAIT=$((${WAIT} + 1))
+        if [ "${WAIT}" -gt 30 ]; then
+          echo "Error > Timeout waiting for Clair to start"
+          exit 1
+        fi
+      done
+    - docker pull "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}"
+  script:
+    - |
+      clair-scanner \
+        -c http://docker:6060 \
+        --ip $(hostname -i) \
+        -w clair-whitelist.yml \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}"
+  tags:
+    - scan
+
+# Generic deploy template
+.deploy: &deploy
+  <<: *dind
+  stage: deploy
+  before_script:
+    - |
+      echo "${CI_JOB_TOKEN}" | docker login \
+        --username gitlab-ci-token \
+        --password-stdin \
+        registry.gitlab.com
+    - |
+      echo "${DOCKER_PASSWORD}" | docker login \
+        --username "${DOCKER_LOGIN}" \
+        --password-stdin
+  script:
+    - |
+      docker tag \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}" \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:cache"
+    - docker push "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:cache"
+    - TAG="${CI_COMMIT_TAG#v}"
+    - TAG="${TAG:-${CI_COMMIT_SHA:0:7}}"
+    - |
+      docker tag \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${IMAGE_ARCH}-${TAG}"
+    - |
+      docker push \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${IMAGE_ARCH}-${TAG}"
+    - |
+      docker tag \
+        "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}-${IMAGE_ARCH}:${TAG}"
+    - |
+      docker push \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}-${IMAGE_ARCH}:${TAG}"
+  tags:
+    - deploy
+  only:
+    - master
+    - /^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/
+  except:
+    - /^(?!master).+@/
+
+# Generic manifest template
+.manifest: &manifest
+  <<: *dind
+  stage: manifest
+  before_script:
+    - mkdir -p ~/.docker
+    - echo '{"experimental":"enabled"}' > ~/.docker/config.json
+    - docker info
+    - |
+      echo "${DOCKER_PASSWORD}" | docker login \
+        --username "${DOCKER_LOGIN}" \
+        --password-stdin
+  script:
+    - TAG="${TAG#v}"
+    - TAG="${TAG:-${CI_COMMIT_SHA:0:7}}"
+    - REF="${CI_COMMIT_TAG#v}"
+    - REF="${REF:-${CI_COMMIT_SHA:0:7}}"
+    - |
+      docker manifest create \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:aarch64-${REF}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:amd64-${REF}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:armhf-${REF}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:i386-${REF}"
+    - |
+      docker manifest annotate \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:aarch64-${REF}" \
+        --os=linux \
+        --arch=arm64 \
+        --variant=v8
+    - |
+      docker manifest annotate \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:amd64-${REF}" \
+        --os=linux \
+        --arch=amd64
+    - |
+      docker manifest annotate \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:armhf-${REF}" \
+        --os=linux \
+        --arch=arm \
+        --variant=v6
+    - |
+      docker manifest annotate \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}" \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:i386-${REF}" \
+        --os=linux \
+        --arch=386
+    - |
+      docker manifest push \
+        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}"
+  tags:
+    - manifest
+  except:
+    - /^(?!master).+@/
 
 # Preflight jobs
 hadolint:
@@ -124,30 +322,63 @@ mkdocs:
   tags:
     - pages
 
-# Build jobs
-build:
-  stage: build
-  image: docker:stable-git
-  services:
-    - docker:stable-dind
+# Build Jobs
+build:armhf:
+  <<: *build
   variables:
-    DOCKER_DRIVER: overlay2
-  script:
-    - |
-      if [[ -n "$CI_REGISTRY_USER" ]]; then
-        echo "Logging to GitLab Container Registry with CI credentials..."
-        docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-        echo ""
-      fi
+    IMAGE_ARCH: armhf
+    FROM: arm32v6/alpine:3.8
+  tags:
+    - build
+    - armhf
 
-      echo "Building Dockerfile-based application..."
-      docker build -t "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA" .
+build:aarch64:
+  <<: *build
+  variables:
+    IMAGE_ARCH: aarch64
+    FROM: arm64v8/alpine:3.8
+  tags:
+    - build
+    - aarch64
 
-      echo "Pushing to GitLab Container Registry..."
-      docker push "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
-      echo ""
-  only:
-    - branches
+build:i386:
+  <<: *build
+  variables:
+    IMAGE_ARCH: i386
+    FROM: i386/alpine:3.8
+  tags:
+    - build
+    - i386
+
+build:amd64:
+  <<: *build
+  variables:
+    IMAGE_ARCH: amd64
+    FROM: amd64/alpine:3.8
+  tags:
+    - build
+    - amd64
+
+# Scan jobs
+clair:armhf:
+  <<: *scan
+  variables:
+    IMAGE_ARCH: armhf
+
+clair:aarch64:
+  <<: *scan
+  variables:
+    IMAGE_ARCH: aarch64
+
+clair:i386:
+  <<: *scan
+  variables:
+    IMAGE_ARCH: i386
+
+clair:amd64:
+  <<: *scan
+  variables:
+    IMAGE_ARCH: amd64
 
 # Test jobs
 test:
@@ -182,7 +413,7 @@ code_quality:
   except:
     - tags
 
-dependency_scanning:
+dep_scan:
   stage: test
   image: docker:stable
   variables:
@@ -209,93 +440,8 @@ dependency_scanning:
   except:
     - tags
 
-container_scanning:
-  stage: test
-  image: docker:stable
-  variables:
-    DOCKER_DRIVER: overlay2
-  allow_failure: true
-  services:
-    - docker:stable-dind
-  script:
-    - |
-      if [[ -n "$CI_REGISTRY_USER" ]]; then
-        echo "Logging to GitLab Container Registry with CI credentials..."
-        docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
-        echo ""
-      fi
-
-      docker run -d --name db arminc/clair-db:latest
-      docker run -p 6060:6060 --link db:postgres -d --name clair --restart on-failure arminc/clair-local-scan:v2.0.1
-      apk add -U wget ca-certificates
-      docker pull $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA
-      wget https://github.com/arminc/clair-scanner/releases/download/v8/clair-scanner_linux_amd64
-      mv clair-scanner_linux_amd64 clair-scanner
-      chmod +x clair-scanner
-      touch clair-whitelist.yml
-      retries=0
-      echo "Waiting for clair daemon to start"
-      while( ! wget -T 10 -q -O /dev/null http://docker:6060/v1/namespaces ) ; \
-        do sleep 1 ; echo -n "." ; if [ $retries -eq 10 ] ; then echo " Timeout, aborting." ; exit 1 ; fi ; \
-          retries=$(($retries+1)) ; done
-      ./clair-scanner -c http://docker:6060 --ip $(hostname -i) -r gl-container-scanning-report.json \
-        -l clair.log -w clair-whitelist.yml $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA || true
-  artifacts:
-    paths: [gl-container-scanning-report.json]
-  except:
-    - tags
-
 # Deploy jobs
-deploy: &deploy
-  <<: *dind
-  stage: deploy
-  image: docker:latest
-  before_script:
-    - docker info
-    - |
-      docker pull \
-        "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}"
-    - |
-      echo "${CI_JOB_TOKEN}" | docker login \
-        --username gitlab-ci-token \
-        --password-stdin \
-        registry.gitlab.com
-    - |
-      echo "${DOCKER_PASSWORD}" | docker login \
-        --username "${DOCKER_LOGIN}" \
-        --password-stdin
-  script:
-    - |
-      docker tag \
-        "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}" \
-        "registry.gitlab.com/${CI_PROJECT_PATH}/master:cache"
-    - docker push "registry.gitlab.com/${CI_PROJECT_PATH}/master:cache"
-    - TAG="${CI_COMMIT_TAG#v}"
-    - TAG="${TAG:-${CI_COMMIT_SHA:0:7}}"
-    - |
-      docker tag \
-        "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}" \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}"
-    - |
-      docker push \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:${TAG}"
-    - |
-      docker tag \
-        "registry.gitlab.com/${CI_PROJECT_PATH}/master:${CI_COMMIT_SHA}" \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:latest"
-    - |
-      docker push \
-        "${DOCKER_HUB_USER}/${IMAGE_SLUG}:latest"
-  tags:
-    - deploy
-  only:
-    - tags
-    - triggers
-    - schedules
-  except:
-    - /^(?!master).+@/
-
-release-file:
+release_file:
   stage: deploy
   image: node:alpine
   script:
@@ -317,3 +463,57 @@ release-file:
     - schedules
   except:
     - /^(?!master).+@/
+
+deploy:armhf:
+  <<: *deploy
+  variables:
+    IMAGE_ARCH: armhf
+
+deploy:aarch64:
+  <<: *deploy
+  variables:
+    IMAGE_ARCH: aarch64
+
+deploy:i386:
+  <<: *deploy
+  variables:
+    IMAGE_ARCH: i386
+
+deploy:amd64:
+  <<: *deploy
+  variables:
+    IMAGE_ARCH: amd64
+
+# Manifest jobs
+manifest:sha:
+  <<: *manifest
+  only:
+    - master
+
+manifest:version:
+  <<: *manifest
+  variables:
+    TAG: "${CI_COMMIT_TAG}"
+  only:
+    - /^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/
+
+manifest:stable:
+  <<: *manifest
+  variables:
+    TAG: latest
+  only:
+    - /^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/
+
+manifest:beta:
+  <<: *manifest
+  variables:
+    TAG: beta
+  only:
+    - /^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/
+
+manifest:edge:
+  <<: *manifest
+  variables:
+    TAG: edge
+  only:
+    - master
