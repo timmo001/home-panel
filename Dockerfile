@@ -43,7 +43,7 @@ LABEL \
     org.label-schema.usage="https://github.com/timmo001/home-panel/tree/master/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-url="https://github.com/timmo001/home-panel" \
-    org.label-schema.vendor="Timmo Hass.io Addons"
+    org.label-schema.vendor="Timmo"
 
 # Set run CMD
 CMD \

@@ -39,6 +39,7 @@ build_app:
     - yarn run build --production
   tags:
     - build
+    - amd64
   artifacts:
     paths:
       - build/
