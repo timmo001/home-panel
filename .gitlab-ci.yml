@@ -129,6 +129,8 @@ build_app:
   stage: deploy
   image: docker:stable
   before_script:
+    - docker info
+    - docker pull "registry.gitlab.com/${CI_PROJECT_PATH}/${IMAGE_ARCH}:${CI_COMMIT_SHA}"
     - |
       echo "${CI_JOB_TOKEN}" | docker login \
         --username gitlab-ci-token \
