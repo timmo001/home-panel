@@ -17,19 +17,22 @@ Start by adding an array called `custom` under the `theme` object in the
 Here is a table of all parts of the theme that can be overridden/configured.
  Replace the dots (.) with an object. (`"backgrounds": { ... }`)
 
-| Item                       | What this configures/overrides                                                                                                                                 |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type                       | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
-| primary                    | The primary color that the UI uses. This is used for sliders, dropdowns, etc.                                                                                  |
-| secondary                  | The secondary color that the UI uses.                                                                                                                          |
-| backgrounds.main           | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)`           |
-| backgrounds.default        | The background that other sections use that don't already have. This is generally not needed.                                                                  |
-| backgrounds.card.on        | The color of the card when on. i.e. the light or switch is turned on.                                                                                          |
-| backgrounds.card.off       | The color of the card when switched off or not able to switch on                                                                                               |
-| backgrounds.card.disabled  | The color of the card when the entity is unavailable.                                                                                                          |
-| theme.overrides.text.light | The color of the lighter text and icons                                                                                                                        |
-| theme.overrides.text.main  | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
-| theme.overrides.text.icon  | The color of the icons. This is for the icons on the cards, if added.                                                                                          |
+| Item                             | What this configures/overrides                                                                                                                                 |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type                             | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
+| primary                          | The primary color that the UI uses. This is used for sliders, dropdowns, etc.                                                                                  |
+| secondary                        | The secondary color that the UI uses.                                                                                                                          |
+| backgrounds.main                 | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)`           |
+| backgrounds.default              | The background that other sections use that don't already have. This is generally not needed.                                                                  |
+| backgrounds.card.on              | The color of the card when on. i.e. the light or switch is turned on.                                                                                          |
+| backgrounds.card.off             | The color of the card when switched off or not able to switch on                                                                                               |
+| backgrounds.card.disabled        | The color of the card when the entity is unavailable.                                                                                                          |
+| backgrounds.card.alarm.home      | The color of an alarm card and it is armed home.                                                                                                               |
+| backgrounds.card.alarm.away      | The color of an alarm card and it is armed away.                                                                                                               |
+| backgrounds.card.alarm.triggered | The color of an alarm card and the alarm has been triggered.                                                                                                   |
+| theme.overrides.text.light       | The color of the lighter text and icons                                                                                                                        |
+| theme.overrides.text.main        | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
+| theme.overrides.text.icon        | The color of the icons. This is for the icons on the cards, if added.                                                                                          |
 
 ## Colors
 
@@ -60,7 +63,7 @@ For backgrounds, you can set an image for the background if you like.
 To add an image set it as a `url` like so:
 
 ```json
-            "main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
+"main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
 ```
 
 Make sure to put the url in brackets like the above.
@@ -84,7 +87,11 @@ Here are some example themes you can use or expand on.
             "card": {
               "on": "pink[600]",
               "off": "#434954",
-              "disabled": "#7f848e"
+              "disabled": "#7f848e",
+              "alarm": {
+                "home": "pink[600]",
+                "away": "pink[600]"
+              }
             }
           },
           "text": {
@@ -104,12 +111,15 @@ Here are some example themes you can use or expand on.
         "name": "Forest",
         "base": "light",
         "overrides": {
-          "primary": "lightGreen",
           "backgrounds": {
             "main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
             "card": {
               "on": "lightGreen[700]",
-              "off": "green[50]"
+              "off": "green[50]",
+              "alarm": {
+                "home": "lightGreen[700]",
+                "away": "lightGreen[700]"
+              }
             }
           }
         }
