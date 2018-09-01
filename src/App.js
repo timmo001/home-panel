@@ -78,7 +78,12 @@ var themes = [
         card: {
           on: blueGrey[300],
           off: grey[300],
-          disabled: grey[200]
+          disabled: grey[200],
+          alarm: {
+            home: blueGrey[300],
+            away: blueGrey[300],
+            triggered: red[400],
+          }
         }
       },
       text: {
@@ -104,7 +109,12 @@ var themes = [
         card: {
           on: blueGrey[700],
           off: grey[800],
-          disabled: grey[700]
+          disabled: grey[700],
+          alarm: {
+            home: blueGrey[700],
+            away: blueGrey[700],
+            triggered: red[700],
+          }
         }
       },
       text: {
@@ -154,6 +164,11 @@ class App extends Component {
           if (theme.overrides.backgrounds.card.on) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.on);
           if (theme.overrides.backgrounds.card.off) newTheme.palette.backgrounds.card.off = mapToColor(theme.overrides.backgrounds.card.off);
           if (theme.overrides.backgrounds.card.disabled) newTheme.palette.backgrounds.card.disabled = mapToColor(theme.overrides.backgrounds.card.disabled);
+          if (theme.overrides.backgrounds.card.alarm) {
+            if (theme.overrides.backgrounds.card.alarm.home) newTheme.palette.backgrounds.card.alarm.home = mapToColor(theme.overrides.backgrounds.card.alarm.home);
+            if (theme.overrides.backgrounds.card.alarm.away) newTheme.palette.backgrounds.card.alarm.away = mapToColor(theme.overrides.backgrounds.card.alarm.away);
+            if (theme.overrides.backgrounds.card.alarm.triggered) newTheme.palette.backgrounds.card.alarm.triggered = mapToColor(theme.overrides.backgrounds.card.alarm.triggered);
+          }
         }
       }
       if (theme.overrides.text) {
