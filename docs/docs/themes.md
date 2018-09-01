@@ -8,18 +8,31 @@ Start by adding an array called `custom` under the `theme` object in the
 ```json
   "theme": {
     "custom": [
+        "name": "My Theme",
+        "base": "dark",
+        "overrides": {
+
+        }
     ]
   }
 ```
 
-## Configurable items
+## name
 
-Here is a table of all parts of the theme that can be overridden/configured.
+The name of your theme
+
+## base
+
+The theme to use as this theme's base. Start with either `light` or `dark` and expand from there
+
+## overrides
+
+This is where you edit the theme. Here is a table of all parts of the theme that can be overridden/configured.
  Replace the dots (.) with an object. (`"backgrounds": { ... }`)
 
 | Item                             | What this configures/overrides                                                                                                                                 |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type                             | The top level base. This is the high level theme which can only be light or dark. Generally this isn't needed when using the light or dark theme as the `base` |
+| type                             | The top level base. This is the high level theme which can only be `light` or `dark`. Generally this isn't required when using the light or dark theme as the `base` |
 | primary                          | The primary color that the UI uses. This is used for sliders, dropdowns, etc.                                                                                  |
 | secondary                        | The secondary color that the UI uses.                                                                                                                          |
 | backgrounds.main                 | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)`           |
