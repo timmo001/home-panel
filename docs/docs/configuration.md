@@ -158,7 +158,8 @@ Should the time be in military format? (24 hour) Default is `false`.
 
 #### date
 
-Set a custom date format. Refer to the [momentjs docs][moment-docs] for more info. Default is `Do MMMM YYYY`.
+Set a custom date format. Refer to the
+ [momentjs docs][moment-docs] for more info. Default is `Do MMMM YYYY`.
 
 ```json
   "header": {
