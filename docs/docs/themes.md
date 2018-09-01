@@ -23,7 +23,8 @@ The name of your theme
 
 ## base
 
-The theme to use as this theme's base. Start with either `light` or `dark` and expand from there
+The theme to use as this theme's base. Start with either `light` or `dark` and
+ expand from there
 
 ## overrides
 
