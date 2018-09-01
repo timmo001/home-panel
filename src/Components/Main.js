@@ -12,6 +12,7 @@ import Camera from './Camera';
 import Header from './Header';
 import MoreInfo from './MoreInfo';
 import Radio from './Radio';
+import AlarmPanel from './AlarmPanel';
 
 const styles = theme => ({
   root: {
@@ -81,6 +82,15 @@ const styles = theme => ({
   },
   cardUnavailable: {
     background: theme.palette.backgrounds.card.disabled,
+  },
+  alarmArmedHome: {
+    background: theme.palette.backgrounds.card.alarm.home,
+  },
+  alarmArmedAway: {
+    background: theme.palette.backgrounds.card.alarm.away,
+  },
+  alarmTriggered: {
+    background: theme.palette.backgrounds.card.alarm.triggered,
   },
   cardContent: {
     display: 'flex',
@@ -186,6 +196,10 @@ class Main extends React.Component {
 
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
+  handleAlarmPanelShow = (entity) => this.setState({ alarmEntity: entity });
+
+  handleAlarmPanelClose = () => this.setState({ alarmEntity: undefined });
+
   handleRadioShow = () => this.setState({ radioShown: true });
 
   handleRadioHide = () => this.setState({ radioShown: false });
@@ -248,9 +262,9 @@ class Main extends React.Component {
   };
 
   render() {
-    const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
+    const { handleCameraClose, handleMoreInfoClose, handleRadioHide, handleAlarmPanelShow, handleAlarmPanelClose } = this;
     const { classes, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, camera, moreInfo, radioShown } = this.state;
+    const { moved, over, camera, moreInfo, radioShown, alarmEntity } = this.state;
 
     var squareCards = true;
     if (config.theme && config.theme.ui && config.theme.ui.cards) squareCards = !config.theme.ui.cards.round;
@@ -310,12 +324,14 @@ class Main extends React.Component {
                                 <ButtonBase
                                   className={classes.cardOuter}
                                   focusRipple
-                                  disabled={state === 'unavailable' || domain === 'sensor'}
+                                  disabled={state === 'unavailable' || domain === 'sensor' || state === 'pending'}
                                   onClick={() => {
                                     if (domain === 'light' || domain === 'switch')
                                       handleChange(domain, state === 'on' ? false : true, { entity_id });
                                     else if (domain === 'scene' || domain === 'script')
                                       handleChange(domain, true, { entity_id });
+                                    else if (domain === 'alarm_control_panel')
+                                      handleAlarmPanelShow(entity);
                                   }}
                                   onTouchStart={() => this.handleButtonPress(domain, entity)}
                                   onMouseDown={() => this.handleButtonPress(domain, entity)}
@@ -323,7 +339,10 @@ class Main extends React.Component {
                                   onMouseUp={this.handleButtonRelease}>
                                   <Card className={classnames(
                                     classes.card,
-                                    state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff
+                                    state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
+                                    domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
+                                    domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
+                                    domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
                                   )} elevation={cardElevation} square={squareCards}>
                                     <CardContent className={classes.cardContent}>
                                       <Typography className={classes.name} variant="headline">
@@ -332,6 +351,11 @@ class Main extends React.Component {
                                       {domain === 'sensor' &&
                                         <Typography className={classes.state} variant="headline" component="h2">
                                           {state}{attributes.unit_of_measurement}
+                                        </Typography>
+                                      }
+                                      {domain === 'alarm_control_panel' &&
+                                        <Typography className={classes.state} variant="headline" component="h2">
+                                          {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
                                         </Typography>
                                       }
                                       {icon &&
@@ -406,6 +430,12 @@ class Main extends React.Component {
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={handleRadioHide} />
+        {alarmEntity &&
+          <AlarmPanel
+            entity={alarmEntity}
+            handleChange={handleChange}
+            handleClose={handleAlarmPanelClose} />
+        }
       </div>
     );
   }
