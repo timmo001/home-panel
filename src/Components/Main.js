@@ -238,7 +238,7 @@ class Main extends React.Component {
           const entity = entity_outer[1];
           const { entity_id } = entity;
           const domain = entity_id.substring(0, entity_id.indexOf('.'));
-          if (domain === 'light' || domain === 'switch'){
+          if (domain === 'light' || domain === 'switch') {
             this.props.handleChange(domain, oneOn ? false : true, { entity_id });
           }
         }
@@ -251,6 +251,11 @@ class Main extends React.Component {
     const { handleCameraClose, handleMoreInfoClose, handleRadioHide } = this;
     const { classes, entities, config, themes, theme, handleChange } = this.props;
     const { moved, over, camera, moreInfo, radioShown } = this.state;
+
+    var squareCards = true;
+    if (config.theme && config.theme.ui && config.theme.ui.cards) squareCards = !config.theme.ui.cards.round;
+    var cardElevation = 1;
+    if (config.theme && config.theme.ui && config.theme.ui.cards) cardElevation = config.theme.ui.cards.elevation;
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -319,7 +324,7 @@ class Main extends React.Component {
                                   <Card className={classnames(
                                     classes.card,
                                     state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff
-                                  )} elevation={1} square>
+                                  )} elevation={cardElevation} square={squareCards}>
                                     <CardContent className={classes.cardContent}>
                                       <Typography className={classes.name} variant="headline">
                                         {name}
@@ -347,7 +352,7 @@ class Main extends React.Component {
                                 focusRipple
                                 href={url}
                                 target="_blank">
-                                <Card className={classes.card} elevation={1} square>
+                                <Card className={classes.card} elevation={cardElevation} square={squareCards}>
                                   <CardContent className={classes.cardContent}>
                                     <Typography className={classes.name} variant="headline">
                                       {name}
@@ -367,7 +372,7 @@ class Main extends React.Component {
                             <Grid key={y} className={classes.cameraContainer} item>
                               <ButtonBase className={classes.cardOuter} focusRipple
                                 onClick={() => this.handleShowCamera(name, still_url, url)}>
-                                <Card className={classes.card} elevation={1} square>
+                                <Card className={classes.card} elevation={cardElevation} square={squareCards}>
                                   <img
                                     className={classes.camera}
                                     src={still_url}
