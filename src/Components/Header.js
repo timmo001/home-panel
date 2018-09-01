@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import ReactAnimatedWeather from 'react-animated-weather';
 import Moment from 'react-moment';
@@ -76,12 +77,15 @@ const styles = theme => ({
   },
   date: {
     color: theme.palette.text.main,
-    marginTop: theme.spacing.unit * -2.5,
+    marginTop: theme.spacing.unit * -2.2,
     textAlign: 'center',
     fontSize: '2.4rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.6rem'
     }
+  },
+  dateMilitary: {
+    marginTop: theme.spacing.unit * -0.8,
   },
   weatherContainer: {
     position: 'fixed',
@@ -213,18 +217,21 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes, config, entities, themes, theme, moved, over, handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
+    const { classes, config, entities, themes, theme, moved, over,
+      handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
     if (!config.header) config.header = {};
 
     const icon = config.header.left_outdoor_weather &&
-      config.header.left_outdoor_weather.dark_sky_icon && this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
+      config.header.left_outdoor_weather.dark_sky_icon &&
+      this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
 
     const header = {
       left_outdoor_weather: config.header.left_outdoor_weather && {
         icon: icon ? icon.replaceAll('-', '_').toUpperCase() : 'CLOUDY',
-        condition: config.header.left_outdoor_weather.condition && this.getState(entities, config.header.left_outdoor_weather.condition),
+        condition: config.header.left_outdoor_weather.condition &&
+          this.getState(entities, config.header.left_outdoor_weather.condition),
         data: []
       },
       right_indoor: []
@@ -242,6 +249,12 @@ class Header extends React.Component {
           i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
         return header.right_indoor.push({ label: i.label, data });
       });
+
+    var timeMilitary = false;
+    if (config.header.format && config.header.format.time && config.header.format.time.military)
+      timeMilitary = config.header.format.time.military
+    var dateFormat = 'Do MMMM YYYY';
+    if (config.header.format && config.header.format.date) dateFormat = config.header.format.date;
 
     return (
       <div className={classes.root}>
@@ -283,12 +296,18 @@ class Header extends React.Component {
             </div>
           }
           <div className={classes.timeDateContainer}>
-            <Typography className={classes.time} variant="display4">
-              <Moment format="hh:mm" />
-              <Moment className={classes.timePeriod} format="a" />
-            </Typography>
+            {timeMilitary ?
+              <Typography className={classes.time} variant="display4">
+                <Moment format="HH:mm" />
+              </Typography>
+              :
+              <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="display4">
+                <Moment format="hh:mm" />
+                <Moment className={classes.timePeriod} format="a" />
+              </Typography>
+            }
             <Typography className={classes.date} variant="display2">
-              <Moment format="Do MMMM YYYY" />
+              <Moment format={dateFormat} />
             </Typography>
           </div>
           <div className={classes.indoorContainer}>
@@ -308,7 +327,8 @@ class Header extends React.Component {
             })}
           </div>
         </div>
-        {(moved || over) &&
+        {
+          (moved || over) &&
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
