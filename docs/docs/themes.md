@@ -27,8 +27,9 @@ The theme to use as this theme's base. Start with either `light` or `dark` and e
 
 ## overrides
 
-This is where you edit the theme. Here is a table of all parts of the theme that can be overridden/configured.
- Replace the dots (.) with an object. (`"backgrounds": { ... }`)
+This is where you edit the theme. Here is a table of all parts of the theme
+ that can be overridden/configured. Replace the dots (.) with an object.
+ (`"backgrounds": { ... }`)
 
 | Item                             | What this configures/overrides                                                                                                                                 |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
