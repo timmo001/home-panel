@@ -30,6 +30,45 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
   },
 ```
 
+## ui
+
+This section is for general theme and layout customizations.
+
+### cards
+
+```json
+    "ui": {
+      "cards": {
+        "round": true,
+        "elevation": 2
+      }
+    },
+```
+
+### round
+
+Should the card be round? Default is `false`.
+
+```json
+    "ui": {
+      "cards": {
+        "round": true
+      }
+    },
+```
+
+### elevation
+
+The elevation of the card. Default is `1`.
+
+```json
+    "ui": {
+      "cards": {
+        "elevation": 2
+      }
+    },
+```
+
 ## custom
 
 You can create custom themes in an array here. See the the docs [here][themes].
@@ -86,6 +125,47 @@ This section can display weather and other sensor information in the top
       }
     ]
   },
+```
+
+### format
+
+```json
+  "header": {
+    "format": {
+      "time": {
+        "military": false
+      },
+      "date": "Do MMMM YYYY"
+    }
+  }
+```
+
+#### time
+
+##### military
+
+Should the time be in military format? (24 hour) Default is `false`.
+
+```json
+  "header": {
+    "format": {
+      "time": {
+        "military": true
+      }
+    }
+  }
+```
+
+#### date
+
+Set a custom date format. Refer to the [momentjs docs][moment-docs] for more info. Default is `Do MMMM YYYY`.
+
+```json
+  "header": {
+    "format": {
+      "date": "dddd, MMMM Do YYYY"
+    }
+  }
 ```
 
 ### left_outdoor_weather
@@ -391,3 +471,4 @@ The url of a still image for use in the main view. This updates every minute.
 [weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
 [themes]: https://git.timmo.xyz/home-panel/themes/
 [mdi]: https://materialdesignicons.com
+[moment-docs]: https://momentjs.com/docs/#/displaying/format/

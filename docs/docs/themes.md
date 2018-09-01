@@ -30,9 +30,9 @@ Here is a table of all parts of the theme that can be overridden/configured.
 | backgrounds.card.alarm.home      | The color of an alarm card and it is armed home.                                                                                                               |
 | backgrounds.card.alarm.away      | The color of an alarm card and it is armed away.                                                                                                               |
 | backgrounds.card.alarm.triggered | The color of an alarm card and the alarm has been triggered.                                                                                                   |
-| theme.overrides.text.light       | The color of the lighter text and icons                                                                                                                        |
-| theme.overrides.text.main        | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
-| theme.overrides.text.icon        | The color of the icons. This is for the icons on the cards, if added.                                                                                          |
+| text.light                       | The color of the lighter text and icons                                                                                                                        |
+| text.main                        | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                            |
+| text.icon                        | The color of the icons. This is for the icons on the cards, if added.                                                                                          |
 
 ## Colors
 
