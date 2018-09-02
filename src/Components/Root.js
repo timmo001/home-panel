@@ -173,11 +173,11 @@ class Root extends Component {
               {connected ?
                 <Typography variant="subheading">
                   Loading HASS data...
-              </Typography>
+                </Typography>
                 :
                 <Typography variant="subheading">
                   Attempting to connect to HASS...
-              </Typography>
+                </Typography>
               }
             </div>
         }
