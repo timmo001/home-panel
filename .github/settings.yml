@@ -154,10 +154,10 @@ labels:
     description: "API related issue"
     color: 54d894
   - name: "Architecture"
-    description: "Related to how the app works and/or built"
+    description: "Related to how the app works and/or is built"
     color: d1924f
   - name: "User Interface"
-    description: "UI based issues"
+    description: "User interface based issues"
     color: 1d76db
     oldname: "user-interface"
   - name: "Enhancement"
