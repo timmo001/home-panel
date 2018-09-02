@@ -1,11 +1,10 @@
 ---
-name: Bug
-about: A bug found the application. This is not a support question. Please ask these
-  via the support channels
-
+name: 'Bug'
+about: A bug found the application. This is not a support question. Please
+ ask these via the support channels.
 ---
 
-## Description
+# Description
 
 
 
@@ -18,3 +17,5 @@ about: A bug found the application. This is not a support question. Please ask t
 
 
 ## Additional information
+
+
