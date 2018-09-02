@@ -157,9 +157,13 @@ labels:
     description: "Related to how the app works and/or built"
     color: d1924f
   - name: "User Interface"
-    description: "Related to how the app works and/or built"
+    description: "UI based issues"
     color: 1d76db
     oldname: "user-interface"
+  - name: "Enhancement"
+    description: "Enhances or extends upon the application"
+    color: a2eeef
+    oldname: "enhancement"
 
 branches:
   - name: master
