@@ -7,7 +7,7 @@ repository:
   has_issues: true
   has_projects: false
   has_wiki: false
-  has_downloads: treu
+  has_downloads: true
   default_branch: master
   allow_squash_merge: true
   allow_merge_commit: true
