@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Group from './Cards/Group';
 import Header from './Header';
-import Radio from './Dialogs/Radio';
+import Radio from './Radio/Radio';
 
 const styles = theme => ({
   root: {
