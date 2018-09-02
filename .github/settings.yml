@@ -158,12 +158,8 @@ labels:
     color: d1924f
   - name: "User Interface"
     description: "User interface based issues"
-    color: 1d76db
+    color: 607d8b
     oldname: "user-interface"
-  - name: "Enhancement"
-    description: "Enhances or extends upon the application"
-    color: a2eeef
-    oldname: "enhancement"
 
 branches:
   - name: master
