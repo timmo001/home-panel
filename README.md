@@ -11,6 +11,8 @@
 [![Docker Pulls][pulls-shield]][dockerhub]
 [![Anchore Image Overview][anchore-shield]][anchore]
 
+[![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
+
 A touch-compatible web-app for controlling the home. Integrates with
  [Home Assistant][hass] as an alternative / additional frontend.
 
@@ -59,5 +61,7 @@ Setup and configuration is available [here][docs]
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
+[buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
+[buymeacoffee]: https://www.buymeacoffee.com/timmo
 [hass]: https://www.home-assistant.io/
 [docs]: https://git.timmo.xyz/home-panel/
