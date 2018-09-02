@@ -30,46 +30,52 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
   },
 ```
 
-## ui
+### ui
 
 This section is for general theme and layout customizations.
 
-### cards
+#### cards
 
 ```json
+  "theme": {
     "ui": {
       "cards": {
         "round": true,
         "elevation": 2
       }
-    },
+    }
+  }
 ```
 
-### round
+##### round
 
 Should the card be round? Default is `false`.
 
 ```json
+  "theme": {
     "ui": {
       "cards": {
         "round": true
       }
-    },
+    }
+  }
 ```
 
-### elevation
+##### elevation
 
 The elevation of the card. Default is `1`.
 
 ```json
+  "theme": {
     "ui": {
       "cards": {
         "elevation": 2
       }
-    },
+    }
+  }
 ```
 
-## custom
+### custom
 
 You can create custom themes in an array here. See the the docs [here][themes].
 
