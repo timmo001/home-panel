@@ -1,1 +1,2 @@
 ---
+"Type: Documentation": ["*.md", "*.j2"]
