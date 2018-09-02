@@ -69,7 +69,7 @@ nav:
       - Login: login.md
   - Customization:
       - Configuration: configuration.md
-      - Themes: themes.md
+      - Custom Themes: themes.md
       - Template: template.md
   - Troubleshooting: troubleshooting.md
   - Contributing: contributing.md
