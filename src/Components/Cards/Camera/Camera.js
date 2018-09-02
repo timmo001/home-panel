@@ -5,8 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
-import { getCardElevation, getSquareCards } from '../Utils/config';
-import CameraDialog from './Camera/Dialog';
+import { getCardElevation, getSquareCards } from '../../Utils/config';
+import Dialog from './Dialog';
 
 const styles = theme => ({
   cameraContainer: {
@@ -51,7 +51,7 @@ class Camera extends React.Component {
           </Card>
         </ButtonBase>
         {camera &&
-          <CameraDialog
+          <Dialog
             data={camera}
             handleClose={this.handleCameraClose} />
         }

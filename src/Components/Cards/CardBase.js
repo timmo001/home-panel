@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Camera from './Camera';
-import Hass from './Hass';
-import Link from './Link';
+import Camera from './Camera/Camera';
+import Hass from './Hass/Hass';
+import Link from './Link/Link';
 
-class Base extends React.Component {
+class CardBase extends React.Component {
 
   render() {
     const { config, theme, entities, card, handleChange, } = this.props;
@@ -19,7 +19,7 @@ class Base extends React.Component {
   }
 }
 
-Base.propTypes = {
+CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -27,4 +27,4 @@ Base.propTypes = {
   card: PropTypes.object.isRequired,
 };
 
-export default Base;
+export default CardBase;

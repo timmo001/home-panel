@@ -7,9 +7,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { getCardElevation, getSquareCards } from '../Utils/config';
-import AlarmPanel from './Hass/Dialogs/AlarmPanel';
-import MoreInfo from './Hass/Dialogs/MoreInfo';
+import { getCardElevation, getSquareCards } from '../../Utils/config';
+import AlarmPanel from './Dialogs/AlarmPanel';
+import MoreInfo from './Dialogs/MoreInfo';
 
 const styles = theme => ({
   grid: {
