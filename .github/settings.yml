@@ -160,6 +160,9 @@ labels:
     description: "User interface based issues"
     color: 607d8b
     oldname: "user-interface"
+  - name: "Code Climate"
+    description: "Issues created by Code Climate"
+    color: 42f477
 
 branches:
   - name: master
