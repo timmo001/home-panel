@@ -65,7 +65,7 @@ labels:
     color: ee0701
     description: "Marks an security issues that needs to be resolved asap."
   - name: "Idea"
-    color: fef2c0
+    color: ffff28
     description: "Marks an idea, which might be excepted and implemented."
   - name: "Incomplete"
     color: fef2c0
