@@ -9,7 +9,6 @@
     "@mdi/font": "^2.6.95",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^2.1.0",
-    "is-plain-obj": "^1.1.0",
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
