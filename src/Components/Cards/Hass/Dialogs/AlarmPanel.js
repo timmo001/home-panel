@@ -16,7 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 class AlarmPanel extends React.Component {
   state = {
     open: true,
-    state: '',
+    code: '',
     showCode: false,
   };
 
@@ -72,9 +72,6 @@ class AlarmPanel extends React.Component {
                   id="code"
                   type={showCode ? 'text' : 'password'}
                   autoComplete="off"
-                  inputProps={{
-                    autoCapitalize: "none"
-                  }}
                   value={code}
                   onChange={this.handleChange('code')}
                   onKeyPress={this.handleKeyPress} />
@@ -103,7 +100,7 @@ class AlarmPanel extends React.Component {
           </Grid>
           {state.startsWith('armed') ?
             <Grid container justify="center">
-              <Grid item xs>
+              <Grid item>
                 <Button onClick={() => {
                   handleChange('alarm_control_panel', 'alarm_disarm', { entity_id, code });
                   this.handleClose();

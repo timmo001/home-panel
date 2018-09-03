@@ -85,8 +85,6 @@ class Root extends Component {
   }
 
   handleChange = (domain, state, data = undefined) => {
-    console.log('Change:', domain, state, data);
-
     if (typeof state === 'string') {
       connection.callService(domain, state, data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
@@ -173,11 +171,11 @@ class Root extends Component {
               {connected ?
                 <Typography variant="subheading">
                   Loading HASS data...
-              </Typography>
+                </Typography>
                 :
                 <Typography variant="subheading">
                   Attempting to connect to HASS...
-              </Typography>
+                </Typography>
               }
             </div>
         }
