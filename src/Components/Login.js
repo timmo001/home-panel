@@ -102,8 +102,8 @@ class Login extends React.Component {
     this.setState({
       username: username ? username : '',
       password: password ? password : '',
-      api_url: api_url ? api_url : '',
-      hass_url: hass_url ? hass_url : '',
+      api_url: api_url ? api_url : `${window.location.protocol}//${window.location.hostname}:3234`,
+      hass_url: hass_url ? hass_url : `${window.location.protocol}//hassio:8123`,
       createAccount: username ? false : true
     }, () => {
       if (username && password && api_url && hass_url && !this.state.createAccount)
@@ -324,14 +324,25 @@ class Login extends React.Component {
             </CardContent>
             <CardActions>
               <div className={classes.fill} />
-              <Button onClick={this.toggleCreateAccount}>Create New Account</Button>
+              <Button onClick={this.toggleCreateAccount}>
+                {createAccount ? 'Already have an account?' : 'Create New Account'}
+              </Button>
               <div className={classes.wrapper}>
-                <Button
-                  className={buttonClassname}
-                  disabled={loading}
-                  onClick={this.handleLogIn}>
-                  Log In
+                {createAccount ?
+                  <Button
+                    className={buttonClassname}
+                    disabled={loading}
+                    onClick={this.handleCreateAccount}>
+                    Sign Up
                   </Button>
+                  :
+                  <Button
+                    className={buttonClassname}
+                    disabled={loading}
+                    onClick={this.handleLogIn}>
+                    Log In
+                  </Button>
+                }
                 {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
               </div>
             </CardActions>

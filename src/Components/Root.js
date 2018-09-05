@@ -60,9 +60,8 @@ class Root extends Component {
           auth = await getAuth();
         } catch (err) {
           if (err === ERR_HASS_HOST_REQUIRED) {
-            const hassUrl = this.state.hass_url;
-            console.log(`Connect to HASS URL: ${hassUrl}`);
-            auth = await getAuth({ hassUrl });
+            console.log(`Connect to HASS URL: ${this.state.hass_url}`);
+            auth = await getAuth({ hassUrl:this.state.hass_url });
           } else {
             console.error('Connection failed:', err);
             sessionStorage.removeItem('password');
@@ -77,11 +76,10 @@ class Root extends Component {
         connection = await createConnection({ auth });
         if (connection) {
           this.setState({ connected: true });
-          console.log(`Connected`);
           connection.removeEventListener('ready', this.eventHandler);
           connection.addEventListener('ready', this.eventHandler);
           subscribeEntities(connection, this.updateEntities);
-          getUser(connection).then(user => console.log('Logged in as', user.name));
+          getUser(connection).then(user => console.log('Logged into HASS as', user.name));
         }
       })();
     } else {
