@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createConnection, subscribeEntities } from 'home-assistant-js-websocket';
+import {
+  getAuth, getUser, callService, createConnection,
+  subscribeEntities, ERR_HASS_HOST_REQUIRED
+} from 'home-assistant-js-websocket';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
@@ -40,60 +43,66 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config) => this.setState({ config }, () => {
+  loggedIn = (config, hass_url) => this.setState({ config, hass_url }, () => {
     this.connectToHASS();
     if (config.theme && config.theme.custom) {
       config.theme.custom.map(theme => this.props.addTheme(theme));
     }
   });
 
-  stateChanged = (event) => {
-    console.log('state changed', event);
-  };
-
-  eventHandler = (connection, data) => {
-    console.log('Connection has been established again');
-  };
+  eventHandler = (connection, data) => console.log('Connection has been established again');
 
   connectToHASS = () => {
-    if (this.state.config && this.state.config.hass_host) {
-      const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
-        `${this.state.config.hass_host}/api/websocket?latest`;
-      console.log(`Connect to ${wsURL}`);
+    if (this.state.hass_url) {
       (async () => {
-
-        connection = await createConnection(wsURL, { authToken: this.state.config.hass_password })
-          .catch(err => {
-            console.error('Connection failed with code', err);
+        let auth;
+        try {
+          auth = await getAuth();
+        } catch (err) {
+          if (err === ERR_HASS_HOST_REQUIRED) {
+            const hassUrl = this.state.hass_url;
+            console.log(`Connect to HASS URL: ${hassUrl}`);
+            auth = await getAuth({ hassUrl });
+          } else {
+            console.error('Connection failed:', err);
             sessionStorage.removeItem('password');
             this.setState({
-              snackMessage: { open: true, text: 'Connection failed' },
+              snackMessage: { open: true, text: 'Connection failed. See console for details (F12)' },
               entities: undefined,
               config: undefined
             });
-          });
-
+            return;
+          }
+        }
+        connection = await createConnection({ auth });
         if (connection) {
           this.setState({ connected: true });
           console.log(`Connected`);
           connection.removeEventListener('ready', this.eventHandler);
           connection.addEventListener('ready', this.eventHandler);
           subscribeEntities(connection, this.updateEntities);
+          getUser(connection).then(user => console.log('Logged in as', user.name));
         }
       })();
+    } else {
+      this.setState({
+        snackMessage: { open: true, text: 'Connection failed. Please connect to hass' },
+        entities: undefined,
+        config: undefined
+      });
     }
   }
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
-      connection.callService(domain, state, data).then(v => {
+      callService(domain, state, data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
         this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
       });
     } else {
-      connection.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
+      callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
