@@ -52,16 +52,38 @@ class Root extends Component {
 
   eventHandler = (connection, data) => console.log('Connection has been established again');
 
+  loadTokens = () => {
+    let hassTokens;
+    try {
+      hassTokens = JSON.parse(localStorage.getItem('hass_tokens'));
+    } catch (err) { }  // eslint-disable-line
+    return hassTokens;
+  };
+
+  saveTokens = (tokens) => {
+    console.log('saveTokens:', tokens);
+    try {
+      localStorage.setItem('hass_tokens', JSON.stringify(tokens));
+    } catch (err) { }  // eslint-disable-line
+  };
+
   connectToHASS = () => {
     if (this.state.hass_url) {
       (async () => {
         let auth;
         try {
-          auth = await getAuth();
+          auth = await getAuth({
+            saveTokens: this.saveTokens,
+            loadTokens: () => Promise.resolve(this.loadTokens()),
+          });
         } catch (err) {
           if (err === ERR_HASS_HOST_REQUIRED) {
             console.log(`Connect to HASS URL: ${this.state.hass_url}`);
-            auth = await getAuth({ hassUrl:this.state.hass_url });
+            auth = await getAuth({
+              hassUrl: this.state.hass_url,
+              saveTokens: this.saveTokens,
+              loadTokens: () => Promise.resolve(this.loadTokens()),
+            });
           } else {
             console.error('Connection failed:', err);
             sessionStorage.removeItem('password');
@@ -79,7 +101,10 @@ class Root extends Component {
           connection.removeEventListener('ready', this.eventHandler);
           connection.addEventListener('ready', this.eventHandler);
           subscribeEntities(connection, this.updateEntities);
-          getUser(connection).then(user => console.log('Logged into HASS as', user.name));
+          getUser(connection).then(user => {
+            console.log('Logged into HASS as', user.name);
+            sessionStorage.setItem('hass_id', user.id);
+          });
         }
       })();
     } else {
