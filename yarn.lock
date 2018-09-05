@@ -3561,9 +3561,9 @@ hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
-home-assistant-js-websocket@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-2.1.0.tgz#192f4e8cef248882bc62b70d56a12e8113d41c3b"
+home-assistant-js-websocket@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-3.0.0.tgz#498828a29827bdd1f3e99cf3b5e152694cededbf"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
