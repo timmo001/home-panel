@@ -58,6 +58,7 @@ Setup and configuration is available [here][docs]
 [Support / Discussion][forum]
 
 [CONTRIBUTING][CONTRIBUTING]
+
 [CODE_OF_CONDUCT][CODE_OF_CONDUCT]
 
 ## License
