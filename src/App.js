@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import moment from 'moment';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import amber from '@material-ui/core/colors/amber';
@@ -184,11 +185,17 @@ class App extends Component {
     const { theme } = this.state;
     return (
       <MuiThemeProvider theme={theme}>
-        <Root
-          themes={themes}
-          theme={theme}
-          setTheme={this.setTheme}
-          addTheme={this.addTheme} />
+        <Router>
+          <Route render={props => (
+
+            <Root
+              themes={themes}
+              theme={theme}
+              setTheme={this.setTheme}
+              addTheme={this.addTheme}
+              {...props} />
+          )} />
+        </Router>
       </MuiThemeProvider>
     );
   }
