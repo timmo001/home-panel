@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   getAuth, getUser, callService, createConnection,
-  subscribeEntities, ERR_HASS_HOST_REQUIRED
+  subscribeEntities, ERR_INVALID_AUTH
 } from 'home-assistant-js-websocket';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -61,51 +61,52 @@ class Root extends Component {
   };
 
   saveTokens = (tokens) => {
-    console.log('saveTokens:', tokens);
     try {
       localStorage.setItem('hass_tokens', JSON.stringify(tokens));
     } catch (err) { }  // eslint-disable-line
   };
 
+  authProm = () => getAuth({
+    hassUrl: this.state.hass_url,
+    saveTokens: this.saveTokens,
+    loadTokens: () => Promise.resolve(this.loadTokens()),
+  });
+
+  connProm = async (auth) => {
+    try {
+      const conn = await createConnection({ auth });
+      // Clear url if we have been able to establish a connection
+      if (this.props.location.search.includes('auth_callback=1')) {
+        this.props.history.push({ search: '' })
+      }
+      return { auth, conn };
+    } catch (err) {
+      if (err !== ERR_INVALID_AUTH) {
+        throw err;
+      }
+      // We can get invalid auth if auth tokens were stored that are no longer valid
+      // Clear stored tokens.
+      this.saveTokens(null);
+      auth = await this.authProm();
+      const conn = await createConnection({ auth });
+      return { auth, conn };
+    }
+  };
+
   connectToHASS = () => {
     if (this.state.hass_url) {
       (async () => {
-        let auth;
-        try {
-          auth = await getAuth({
-            saveTokens: this.saveTokens,
-            loadTokens: () => Promise.resolve(this.loadTokens()),
-          });
-        } catch (err) {
-          if (err === ERR_HASS_HOST_REQUIRED) {
-            console.log(`Connect to HASS URL: ${this.state.hass_url}`);
-            auth = await getAuth({
-              hassUrl: this.state.hass_url,
-              saveTokens: this.saveTokens,
-              loadTokens: () => Promise.resolve(this.loadTokens()),
-            });
-          } else {
-            console.error('Connection failed:', err);
-            sessionStorage.removeItem('password');
-            this.setState({
-              snackMessage: { open: true, text: 'Connection failed. See console for details (F12)' },
-              entities: undefined,
-              config: undefined
-            });
-            return;
-          }
-        }
-        connection = await createConnection({ auth });
-        if (connection) {
+        connection = this.authProm().then(this.connProm);
+        connection.then(({ conn }) => {
           this.setState({ connected: true });
-          connection.removeEventListener('ready', this.eventHandler);
-          connection.addEventListener('ready', this.eventHandler);
-          subscribeEntities(connection, this.updateEntities);
-          getUser(connection).then(user => {
+          conn.removeEventListener('ready', this.eventHandler);
+          conn.addEventListener('ready', this.eventHandler);
+          subscribeEntities(conn, this.updateEntities);
+          getUser(conn).then(user => {
             console.log('Logged into HASS as', user.name);
             sessionStorage.setItem('hass_id', user.id);
           });
-        }
+        });
       })();
     } else {
       this.setState({
