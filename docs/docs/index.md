@@ -43,6 +43,13 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ![Forest Theme][theme-forest]
 
+## Links
+
+[Support / Discussion][forum]
+
+[CONTRIBUTING][CONTRIBUTING]
+[CODE_OF_CONDUCT][CODE_OF_CONDUCT]
+
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
@@ -59,3 +66,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
 [hass]: https://www.home-assistant.io/
+[forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
+[CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
