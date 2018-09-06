@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { createConnection, subscribeEntities } from 'home-assistant-js-websocket';
+import {
+  getAuth, getUser, callService, createConnection,
+  subscribeEntities, ERR_INVALID_AUTH
+} from 'home-assistant-js-websocket';
 import { withStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
@@ -40,60 +43,90 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config) => this.setState({ config }, () => {
+  loggedIn = (config, hass_url) => this.setState({ config, hass_url }, () => {
     this.connectToHASS();
     if (config.theme && config.theme.custom) {
       config.theme.custom.map(theme => this.props.addTheme(theme));
     }
   });
 
-  stateChanged = (event) => {
-    console.log('state changed', event);
+  eventHandler = (connection, data) => console.log('Connection has been established again');
+
+  loadTokens = () => {
+    let hassTokens;
+    try {
+      hassTokens = JSON.parse(localStorage.getItem('hass_tokens'));
+    } catch (err) { }  // eslint-disable-line
+    return hassTokens;
   };
 
-  eventHandler = (connection, data) => {
-    console.log('Connection has been established again');
+  saveTokens = (tokens) => {
+    try {
+      localStorage.setItem('hass_tokens', JSON.stringify(tokens));
+    } catch (err) { }  // eslint-disable-line
+  };
+
+  authProm = () => getAuth({
+    hassUrl: this.state.hass_url,
+    saveTokens: this.saveTokens,
+    loadTokens: () => Promise.resolve(this.loadTokens()),
+  });
+
+  connProm = async (auth) => {
+    try {
+      const conn = await createConnection({ auth });
+      // Clear url if we have been able to establish a connection
+      if (this.props.location.search.includes('auth_callback=1')) {
+        this.props.history.push({ search: '' })
+      }
+      return { auth, conn };
+    } catch (err) {
+      if (err !== ERR_INVALID_AUTH) {
+        throw err;
+      }
+      // We can get invalid auth if auth tokens were stored that are no longer valid
+      // Clear stored tokens.
+      this.saveTokens(null);
+      auth = await this.authProm();
+      const conn = await createConnection({ auth });
+      return { auth, conn };
+    }
   };
 
   connectToHASS = () => {
-    if (this.state.config && this.state.config.hass_host) {
-      const wsURL = `${this.state.config.hass_ssl ? 'wss' : 'ws'}://` +
-        `${this.state.config.hass_host}/api/websocket?latest`;
-      console.log(`Connect to ${wsURL}`);
+    if (this.state.hass_url) {
       (async () => {
-
-        connection = await createConnection(wsURL, { authToken: this.state.config.hass_password })
-          .catch(err => {
-            console.error('Connection failed with code', err);
-            sessionStorage.removeItem('password');
-            this.setState({
-              snackMessage: { open: true, text: 'Connection failed' },
-              entities: undefined,
-              config: undefined
-            });
-          });
-
-        if (connection) {
+        connection = this.authProm().then(this.connProm);
+        connection.then(({ conn }) => {
           this.setState({ connected: true });
-          console.log(`Connected`);
-          connection.removeEventListener('ready', this.eventHandler);
-          connection.addEventListener('ready', this.eventHandler);
-          subscribeEntities(connection, this.updateEntities);
-        }
+          conn.removeEventListener('ready', this.eventHandler);
+          conn.addEventListener('ready', this.eventHandler);
+          subscribeEntities(conn, this.updateEntities);
+          getUser(conn).then(user => {
+            console.log('Logged into HASS as', user.name);
+            sessionStorage.setItem('hass_id', user.id);
+          });
+        });
       })();
+    } else {
+      this.setState({
+        snackMessage: { open: true, text: 'Connection failed. Please connect to hass' },
+        entities: undefined,
+        config: undefined
+      });
     }
   }
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
-      connection.callService(domain, state, data).then(v => {
+      callService(domain, state, data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
         this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
       });
     } else {
-      connection.callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
+      callService(domain, state ? 'turn_on' : 'turn_off', data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
@@ -164,7 +197,8 @@ class Root extends Component {
               config={config}
               entities={entities}
               apiUrl={this.state.api_url}
-              handleChange={this.handleChange} />
+              handleChange={this.handleChange}
+              saveTokens={this.saveTokens} />
             :
             <div className={classes.center}>
               <CircularProgress className={classes.progress} />
