@@ -37,6 +37,10 @@ A touch-compatible web-app for controlling the home. Integrates with
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with desktops as well)
 
+## Docs
+
+Setup and configuration is available [here][docs]
+
 ## Screenshots
 
 ![Light Theme Screenshot][light-theme]
@@ -48,10 +52,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 ![Radio Screenshot][radio]
 
 ![Forest Theme][theme-forest]
-
-## Docs
-
-Setup and configuration is available [here][docs]
 
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
