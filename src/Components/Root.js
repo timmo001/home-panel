@@ -197,7 +197,8 @@ class Root extends Component {
               config={config}
               entities={entities}
               apiUrl={this.state.api_url}
-              handleChange={this.handleChange} />
+              handleChange={this.handleChange}
+              saveTokens={this.saveTokens} />
             :
             <div className={classes.center}>
               <CircularProgress className={classes.progress} />
