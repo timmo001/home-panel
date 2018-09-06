@@ -16,8 +16,6 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -88,28 +86,28 @@ class Login extends React.Component {
     username: '',
     password: '',
     api_url: '',
-    hass_host: '',
-    hass_password: '',
-    hass_ssl: true,
+    hass_url: '',
     showPassword: false,
-    showHASSPassword: false,
     createAccount: false,
     loading: false,
     success: false,
   };
 
-  componentWillMount = () => {
-    const api_url = localStorage.getItem('api_url');
+  componentDidMount = () => {
     const username = localStorage.getItem('username');
     const password = sessionStorage.getItem('password');
+    const api_url = localStorage.getItem('api_url');
+    const hass_url = localStorage.getItem('hass_url');
 
     this.setState({
       username: username ? username : '',
       password: password ? password : '',
-      api_url: api_url ? api_url : '',
+      api_url: api_url ? api_url : `${window.location.protocol}//${window.location.hostname}:3234`,
+      hass_url: hass_url ? hass_url : `${window.location.protocol}//hassio:8123`,
       createAccount: username ? false : true
     }, () => {
-      if (username && password && !this.state.createAccount) this.handleLogIn();
+      if (username && password && api_url && hass_url && !this.state.createAccount)
+        this.handleLogIn();
     });
   };
 
@@ -123,8 +121,6 @@ class Login extends React.Component {
 
   handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
 
-  handleClickShowHASSPassword = () => this.setState({ showHASSPassword: !this.state.showHASSPassword });
-
   handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       this.handleLogIn();
@@ -132,18 +128,16 @@ class Login extends React.Component {
   };
 
   handleCreateAccount = () => {
-    this.setState({ success: false, loading: true, }, () => {
+    var api_url = this.state.api_url;
+    api_url = api_url.endsWith('/') ? api_url.substring(0, api_url.length - 1) : this.state.api_url;
+    this.setState({ api_url, success: false, loading: true, }, () => {
       if (this.state.username) {
         console.log('Create account');
-
         request
           .post(`${this.state.api_url}/login/setup`)
           .send({
             username: this.state.username,
             password: this.state.password,
-            hass_host: this.state.hass_host,
-            hass_password: this.state.hass_password,
-            hass_ssl: this.state.hass_ssl,
           })
           .retry(2)
           .timeout({
@@ -152,17 +146,18 @@ class Login extends React.Component {
           })
           .then(res => {
             if (res.status === 200) {
-              localStorage.setItem('api_url', this.state.api_url);
-              this.props.handleUpdateApiUrl(this.state.api_url);
               localStorage.setItem('username', this.state.username);
               sessionStorage.setItem('password', this.state.password);
+              localStorage.setItem('api_url', this.state.api_url);
+              this.props.handleUpdateApiUrl(this.state.api_url);
+              localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(res.body);
+                this.props.loggedIn(res.body, this.state.hass_url);
               });
             } else {
               this.setState({ loading: false, success: false }, () => {
                 console.error(`Error ${res.status}: ${res.body}`);
-                this.setState({ error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
+                this.setState({ failed: true, error: `Error ${res.status}: ${res.body}\nCheck your credentials and try again` }, () =>
                   setTimeout(() => this.setState({ error: undefined }), 20000));
               });
             }
@@ -185,7 +180,9 @@ class Login extends React.Component {
   };
 
   handleLogIn = () => {
-    this.setState({ success: false, loading: true, }, () => {
+    var api_url = this.state.api_url;
+    api_url = api_url.endsWith('/') ? api_url.substring(0, api_url.length - 1) : this.state.api_url;
+    this.setState({ api_url, success: false, loading: true, }, () => {
       if (this.state.username) {
         console.log('Log In');
         request
@@ -201,12 +198,13 @@ class Login extends React.Component {
           })
           .then(res => {
             if (res.status === 200) {
-              localStorage.setItem('api_url', this.state.api_url);
-              this.props.handleUpdateApiUrl(this.state.api_url);
               localStorage.setItem('username', this.state.username);
               sessionStorage.setItem('password', this.state.password);
+              localStorage.setItem('api_url', this.state.api_url);
+              this.props.handleUpdateApiUrl(this.state.api_url);
+              localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(res.body);
+                this.props.loggedIn(res.body, this.state.hass_url);
               });
             } else {
               this.setState({ loading: false, success: false }, () => {
@@ -235,8 +233,7 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { username, password, api_url, hass_host, hass_password, hass_ssl,
-      showPassword, showHASSPassword, createAccount, error, loading, success } = this.state;
+    const { username, password, api_url, hass_url, showPassword, createAccount, error, loading, success } = this.state;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success,
     });
@@ -306,96 +303,52 @@ class Login extends React.Component {
                   onChange={this.handleChange('api_url')}
                   onKeyPress={this.handleKeyPress} />
               </FormControl>
-              {createAccount &&
-                <div>
-                  <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                    <InputLabel htmlFor="hass_host">Home Assistant Host</InputLabel>
-                    <Input
-                      required
-                      id="hass_host"
-                      type="text"
-                      inputProps={{
-                        autoCapitalize: "none"
-                      }}
-                      value={hass_host}
-                      onChange={this.handleChange('hass_host')}
-                      onKeyPress={this.handleKeyPress} />
-                  </FormControl>
-                  <FormControl className={classNames(classes.margin, classes.textField)}>
-                    <InputLabel htmlFor="hass_password">Home Assistant Password</InputLabel>
-                    <Input
-                      required
-                      id="hass_password"
-                      type={showHASSPassword ? 'text' : 'password'}
-                      inputProps={{
-                        autoCapitalize: "none"
-                      }}
-                      value={hass_password}
-                      onChange={this.handleChange('hass_password')}
-                      onKeyPress={this.handleKeyPress}
-                      endAdornment={
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="Toggle hass password visibility"
-                            onClick={this.handleClickShowHASSPassword}
-                            onMouseDown={this.handleMouseDownPassword}>
-                            {showHASSPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      } />
-                  </FormControl>
-                  <FormControlLabel
-                    className={classes.switch}
-                    control={
-                      <Switch
-                        checked={hass_ssl}
-                        onChange={this.handleCheckedChange('hass_ssl')}
-                        value="hass_ssl"
-                        color="primary"
-                      />
-                    }
-                    label="Home Assistant SSL"
-                  />
-                </div>
-              }
+              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                <InputLabel htmlFor="hass_url">Home Assistant URL</InputLabel>
+                <Input
+                  required
+                  id="hass_url"
+                  type="text"
+                  inputProps={{
+                    autoCapitalize: "none"
+                  }}
+                  value={hass_url}
+                  onChange={this.handleChange('hass_url')}
+                  onKeyPress={this.handleKeyPress} />
+              </FormControl>
               {error &&
                 <Typography color="error">
                   {error}
                 </Typography>
               }
             </CardContent>
-            {createAccount ?
-              <CardActions>
-                <div className={classes.fill} />
-                <Button onClick={this.toggleCreateAccount}>Already have an account?</Button>
-                <div className={classes.wrapper}>
+            <CardActions>
+              <div className={classes.fill} />
+              <Button onClick={this.toggleCreateAccount}>
+                {createAccount ? 'Already have an account?' : 'Create New Account'}
+              </Button>
+              <div className={classes.wrapper}>
+                {createAccount ?
                   <Button
                     className={buttonClassname}
                     disabled={loading}
                     onClick={this.handleCreateAccount}>
-                    Create Account
+                    Sign Up
                   </Button>
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                </div>
-              </CardActions>
-              :
-              <CardActions>
-                <div className={classes.fill} />
-                <Button onClick={this.toggleCreateAccount}>Create New Account</Button>
-                <div className={classes.wrapper}>
+                  :
                   <Button
                     className={buttonClassname}
                     disabled={loading}
                     onClick={this.handleLogIn}>
                     Log In
                   </Button>
-                  {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                </div>
-              </CardActions>
-            }
+                }
+                {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
+              </div>
+            </CardActions>
           </Card>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }

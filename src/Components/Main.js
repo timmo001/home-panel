@@ -78,6 +78,7 @@ class Main extends React.Component {
 
   handleLogOut = () => {
     sessionStorage.removeItem('password');
+    this.props.saveTokens(null);
     window.location.reload(true);
   };
 
@@ -128,6 +129,7 @@ Main.propTypes = {
   entities: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  saveTokens: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Main);
