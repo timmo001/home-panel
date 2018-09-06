@@ -48,6 +48,7 @@ A touch-compatible web-app for controlling the home. Integrates with
 [Support / Discussion][forum]
 
 [CONTRIBUTING][CONTRIBUTING]
+
 [CODE_OF_CONDUCT][CODE_OF_CONDUCT]
 
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
