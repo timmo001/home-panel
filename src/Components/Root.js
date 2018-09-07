@@ -119,14 +119,14 @@ class Root extends Component {
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
-      callService(connection,domain, state, data).then(v => {
+      callService(connection, domain, state, data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
         this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
       });
     } else {
-      callService(connection,domain, state ? 'turn_on' : 'turn_off', data).then(v => {
+      callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(v => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
