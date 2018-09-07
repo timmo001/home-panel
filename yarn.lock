@@ -3599,9 +3599,9 @@ hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
-home-assistant-js-websocket@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-3.0.0.tgz#498828a29827bdd1f3e99cf3b5e152694cededbf"
+home-assistant-js-websocket@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-3.1.1.tgz#264f9efdafdff1053294b07bcaa5629e51a22b73"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -7092,6 +7092,8 @@ sockjs@0.3.19:
 sort-keys@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
+  dependencies:
+    is-plain-obj "^1.0.0"
 
 soundmanager2@^2.97.20170602:
   version "2.97.20170602"
