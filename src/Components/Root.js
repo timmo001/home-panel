@@ -106,6 +106,7 @@ class Root extends Component {
             console.log('Logged into HASS as', user.name);
             sessionStorage.setItem('hass_id', user.id);
           });
+          connection = conn;
         });
       })();
     } else {
@@ -210,7 +211,7 @@ class Root extends Component {
                 <Typography variant="subheading">
                   Attempting to connect to HASS...
                 </Typography>
-              }
+                }
             </div>
         }
         <Snackbar
