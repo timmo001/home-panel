@@ -53,6 +53,7 @@ const styles = theme => ({
   },
   timeDateContainer: {
     position: 'fixed',
+    minWidth: '19.0rem',
     top: 14,
     left: '50%',
     transform: 'translateX(-50%)',
