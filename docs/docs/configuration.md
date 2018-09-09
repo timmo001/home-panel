@@ -467,6 +467,26 @@ The url of a still image for use in the main view. This updates every minute.
           "still_url": "http://myserver.local:8080/accesscode/jpeg/groupid/name/s.jpg"
 ```
 
+### iframe
+
+You can add any webpage that can be embedded.
+
+```json
+        {
+          "type": "iframe",
+          "name": "Wind",
+          "url": "https://embed.windy.com/embed2.html?zoom=5"
+        }
+```
+
+#### url
+
+The url of the page.
+
+```json
+          "url": "https://embed.windy.com/embed2.html?zoom=5"
+```
+
 [template]: https://git.timmo.xyz/home-panel/template/
 [hass]: https://www.home-assistant.io/
 [dark-sky]: https://www.home-assistant.io/components/sensor.darksky/
