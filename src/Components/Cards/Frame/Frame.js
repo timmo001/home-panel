@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -9,61 +8,63 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import Dialog from './Dialog';
 
 const styles = theme => ({
-  cameraContainer: {
+  frameContainer: {
     position: 'relative',
     width: '100%',
     padding: theme.spacing.unit / 2,
   },
-  camera: {
+  frame: {
     display: 'block',
     width: '100%',
-    height: '100%',
+    height: 'calc(100% - 64px)',
+    border: 0,
   },
 });
 
-class Camera extends React.Component {
+class Frame extends React.Component {
   state = {
-    camera: undefined
+    frame: undefined
   };
 
-  handleShowCamera = (name, still_url, url) => this.setState({
-    camera: { name, still_url, url }
+  handleShowFullScreen = (name, url) => this.setState({
+    frame: { name, url }
   });
 
-  handleCameraClose = () => this.setState({ camera: undefined });
+  handleFrameClose = () => this.setState({ frame: undefined });
 
   render() {
     const { classes, config, card } = this.props;
-    const { camera } = this.state;
+    const { frame } = this.state;
     const { name, url } = card;
-    const still_url = `${card.still_url}?${moment().format('HHmm')}`;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     return (
-      <Grid className={classes.cameraContainer} item>
+      <Grid className={classes.frameContainer} item>
         <ButtonBase className={classes.cardOuter} focusRipple
-          onClick={() => this.handleShowCamera(name, still_url, url)}>
+          onClick={() => this.handleShowFullScreen(name, url)}>
           <Card className={classes.card} elevation={cardElevation} square={squareCards}>
-            <img
-              className={classes.camera}
-              src={still_url}
-              alt={name} />
+            <iframe
+              className={classes.frame}
+              title={name}
+              src={card.url}
+              sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts allow-presentation"
+              allowFullScreen={true} />
           </Card>
         </ButtonBase>
-        {camera &&
+        {frame &&
           <Dialog
-            data={camera}
-            handleClose={this.handleCameraClose} />
+            data={frame}
+            handleClose={this.handleFrameClose} />
         }
       </Grid>
     );
   }
 }
 
-Camera.propTypes = {
+Frame.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   card: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Camera);
+export default withStyles(styles)(Frame);
