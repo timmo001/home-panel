@@ -5,6 +5,9 @@ This screen communicates with the API to log in the the user and get the
  (If you clear your cookies/cache or recreate the app,
  you will need to login or create a new account again)
 
+You will need to authenticate the app on login to Home Assistant using one of
+ the users you have setup on Home Assistant.
+
 ## Create Account
 
 On your first run of the app, you will be preseted with an account creation screen:
@@ -34,27 +37,16 @@ The URL of the API. You should include the full address. For example:
 - `http://localhost:3234`
 - `https://myserver.local:3234`
 
-### Home Assistant Host
+### Home Assistant URL
 
-Enter your Home Assistant instance's hostname including the port if required.
- (Ports `80` and `443` are not required) You do not need the `https://` or
- `http://` part of the url. This will not work.
+Enter your Home Assistant instance's url including the port if required.
 
-Example hostnames:
+Example URLs:
 
-- `localhost:8123`
-- `my.ddns.address`
-- `192.168.1.100:8123`
-- `mylocalserverhostname.local:8123`
-
-### Home Assistant Password
-
-The password you use to login to Home Assistant.
-
-### Home Assistant SSL
-
-Keep this box checked if your home assistant instance is secured.
- Those using Home Assistant locally will likely need to switch this off.
+- `https://my.ddns.address`
+- `http://localhost:8123`
+- `http://192.168.1.100:8123`
+- `https://mylocalserverhostname.local:8123`
 
 ## Login
 
