@@ -41,6 +41,7 @@ const styles = (theme) => ({
     color: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
+      lineHeight: '1.14rem',
     }
   },
   icon: {
