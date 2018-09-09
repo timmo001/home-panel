@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Camera from './Camera/Camera';
 import Hass from './Hass/Hass';
 import Link from './Link/Link';
+import Frame from './Frame/Frame';
 
 class CardBase extends React.Component {
 
   render() {
-    const { config, theme, entities, card, handleChange, } = this.props;
+    const { config, theme, entities, card, handleChange } = this.props;
     const type = !card.type ? 'hass' : card.type;
     if (type === 'hass') {
       return <Hass config={config} theme={theme} card={card} handleChange={handleChange} entities={entities} />
@@ -15,6 +16,8 @@ class CardBase extends React.Component {
       return <Link config={config} card={card} />
     } else if (type === 'camera') {
       return <Camera config={config} card={card} />
+    } else if (type === 'iframe') {
+      return <Frame config={config} card={card} />
     } else return null;
   }
 }

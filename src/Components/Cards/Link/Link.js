@@ -7,7 +7,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import { getCardElevation, getSquareCards } from '../../Utils/config';
+import { getCardElevation, getSquareCards } from '../../Common/config';
 
 const styles = theme => ({
   grid: {

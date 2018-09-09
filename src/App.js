@@ -23,7 +23,7 @@ import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 import Root from './Components/Root';
-import clone from './Components/Utils/clone';
+import clone from './Components/Common/clone';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 import './App.css';
