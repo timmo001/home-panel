@@ -19,9 +19,6 @@ const styles = theme => ({
     maxWidth: '100%',
     background: theme.palette.backgrounds.main,
   },
-  flex: {
-    flex: 1,
-  },
   center: {
     justifyContent: 'center',
     textAlign: 'center',
@@ -211,7 +208,7 @@ class Root extends Component {
                 <Typography variant="subheading">
                   Attempting to connect to HASS...
                 </Typography>
-                }
+              }
             </div>
         }
         <Snackbar
