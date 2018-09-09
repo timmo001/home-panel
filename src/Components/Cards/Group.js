@@ -9,10 +9,10 @@ import CardBase from './CardBase';
 const styles = theme => ({
   group: {
     height: `calc(100% + ${theme.spacing.unit}px)`,
-    width: '18rem',
+    width: 274,
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      width: '14rem',
+      width: 226,
     }
   },
   title: {
@@ -32,7 +32,7 @@ const styles = theme => ({
   },
   gridInner: {
     width: '100%',
-    paddingBottom: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 2,
   },
 });
 
@@ -89,7 +89,7 @@ class Group extends React.Component {
   };
 
   render() {
-    const { classes, config,theme, handleChange, entities, group } = this.props;
+    const { classes, config, theme, handleChange, entities, group } = this.props;
     return (
       <Grid className={classes.group} item>
         <ButtonBase

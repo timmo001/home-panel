@@ -1,8 +1,10 @@
 const styles = (theme) => ({
   cardContainer: {
     position: 'relative',
-    width: '50%',
-    padding: theme.spacing.unit / 2,
+    width: 130,
+    [theme.breakpoints.down('sm')]: {
+      width: 106,
+    }
   },
   cardOuter: {
     height: '100%',
@@ -31,6 +33,7 @@ const styles = (theme) => ({
     padding: `${theme.spacing.unit * 1.5}px !important`,
   },
   name: {
+    width: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.12rem',
