@@ -187,7 +187,6 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
         <Router>
           <Route render={props => (
-
             <Root
               themes={themes}
               theme={theme}
