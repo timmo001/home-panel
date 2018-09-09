@@ -37,7 +37,8 @@ const styles = (theme) => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.12rem',
-    fontColor: theme.palette.text.main,
+    lineHeight: '1.34rem',
+    color: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
     }
