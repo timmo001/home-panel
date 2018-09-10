@@ -124,7 +124,7 @@ Main.propTypes = {
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
-  entities: PropTypes.array.isRequired,
+  entities: PropTypes.array,
   apiUrl: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   saveTokens: PropTypes.func.isRequired,

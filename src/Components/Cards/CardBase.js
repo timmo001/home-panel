@@ -26,7 +26,7 @@ CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  entities: PropTypes.array.isRequired,
+  entities: PropTypes.array,
   card: PropTypes.object.isRequired,
 };
 

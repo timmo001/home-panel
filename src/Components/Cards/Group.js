@@ -43,6 +43,7 @@ class Group extends React.Component {
     const card = group.cards.find((card) => {
       const type = !card.type ? 'hass' : card.type;
       if (type === 'hass') {
+        if (!entities) return false;
         const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
         if (entity_outer) {
           const entity = entity_outer[1];
@@ -135,7 +136,7 @@ Group.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  entities: PropTypes.array.isRequired,
+  entities: PropTypes.array,
   group: PropTypes.object.isRequired,
 };
 

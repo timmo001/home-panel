@@ -37,7 +37,7 @@ var connection;
 class Root extends Component {
   state = {
     snackMessage: { open: false, text: '' },
-    connected: false,
+    finished: false,
   };
 
   loggedIn = (config, hass_url) => this.setState({ config, hass_url }, () => {
@@ -71,7 +71,7 @@ class Root extends Component {
 
   connProm = async (auth) => {
     try {
-      const conn = await createConnection({ auth });
+      const conn = await createConnection({ setupRetry: 4, auth });
       // Clear url if we have been able to establish a connection
       if (this.props.location.search.includes('auth_callback=1')) {
         this.props.history.push({ search: '' })
@@ -79,6 +79,12 @@ class Root extends Component {
       return { auth, conn };
     } catch (err) {
       if (err !== ERR_INVALID_AUTH) {
+        this.setState({
+          snackMessage: { open: true, text: 'Connection to HASS failed. Please try again later' },
+          entities: undefined,
+          finished: true
+        });
+        localStorage.setItem('hass_failed', true);
         throw err;
       }
       // We can get invalid auth if auth tokens were stored that are no longer valid
@@ -91,11 +97,12 @@ class Root extends Component {
   };
 
   connectToHASS = () => {
-    if (this.state.hass_url) {
+    var hassFailed = localStorage.getItem('hass_failed');
+    if (this.state.hass_url | hassFailed === true) {
       (async () => {
         connection = this.authProm().then(this.connProm);
         connection.then(({ conn }) => {
-          this.setState({ connected: true });
+          this.setState({ finished: true });
           conn.removeEventListener('ready', this.eventHandler);
           conn.addEventListener('ready', this.eventHandler);
           subscribeEntities(conn, this.updateEntities);
@@ -108,10 +115,18 @@ class Root extends Component {
       })();
     } else {
       this.setState({
-        snackMessage: { open: true, text: 'Connection failed. Please connect to hass' },
+        snackMessage: { open: true, text: 'Connection to HASS failed. Please try to connect later' },
         entities: undefined,
-        config: undefined
+        finished: true
       });
+      localStorage.setItem('hass_failed', true);
+      localStorage.setItem('hass_url', '');
+      this.setTheme();
+    }
+    if (hassFailed === true) {
+      localStorage.removeItem('hass_failed');
+      localStorage.setItem('hass_url', '');
+      this.setTheme();
     }
   }
 
@@ -180,14 +195,14 @@ class Root extends Component {
   render() {
     const { loggedIn, setTheme, handleUpdateApiUrl } = this;
     const { classes, themes, theme } = this.props;
-    const { config, snackMessage, entities, connected } = this.state;
+    const { config, snackMessage, entities, finished } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ?
           <Login loggedIn={loggedIn} handleUpdateApiUrl={handleUpdateApiUrl} />
           :
-          entities ?
+          finished ?
             <Main
               themes={themes}
               theme={theme}
@@ -200,13 +215,13 @@ class Root extends Component {
             :
             <div className={classes.center}>
               <CircularProgress className={classes.progress} />
-              {connected ?
+              {finished ?
                 <Typography variant="subheading">
-                  Loading HASS data...
+                  Loading Home Assistant data...
                 </Typography>
                 :
                 <Typography variant="subheading">
-                  Attempting to connect to HASS...
+                  Attempting to connect to Home Assistant...
                 </Typography>
               }
             </div>
