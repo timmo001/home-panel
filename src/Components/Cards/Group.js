@@ -12,7 +12,7 @@ const styles = theme => ({
     width: 'var(--width)',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      width: 'calc(274px - 48px) * var(--width)',
+      width: 'calc(var(--width) - 48px)',
     }
   },
   title: {
@@ -96,7 +96,7 @@ class Group extends React.Component {
         style={{
           '--width': group.width ?
             typeof group.width === 'number'
-              ? `calc(137px * ${group.width})`
+              ? `calc(138px * ${group.width})`
               : group.width
             : '274px'
         }}
