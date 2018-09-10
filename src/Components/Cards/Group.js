@@ -9,10 +9,10 @@ import CardBase from './CardBase';
 const styles = theme => ({
   group: {
     height: `calc(100% + ${theme.spacing.unit}px)`,
-    width: 274,
+    width: 'var(--width)',
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      width: 226,
+      width: 'calc(274px - 48px) * var(--width)',
     }
   },
   title: {
@@ -91,7 +91,16 @@ class Group extends React.Component {
   render() {
     const { classes, config, theme, handleChange, entities, group } = this.props;
     return (
-      <Grid className={classes.group} item>
+      <Grid
+        className={classes.group}
+        style={{
+          '--width': group.width ?
+            typeof group.width === 'number'
+              ? `calc(137px * ${group.width})`
+              : group.width
+            : '274px'
+        }}
+        item>
         <ButtonBase
           className={classes.groupButton}
           focusRipple
