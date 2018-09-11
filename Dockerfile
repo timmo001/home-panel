@@ -12,7 +12,7 @@ RUN \
     apk add --no-cache \
      nodejs-current=9.11.1-r2 \
      yarn=1.7.0-r0 \
-     nginx=1.14.0-r0
+     nginx=1.14.0-r1
 
 # Create nginx directories
 RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
