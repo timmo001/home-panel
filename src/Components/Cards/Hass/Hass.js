@@ -21,7 +21,7 @@ const styles = theme => ({
     margin: '0 auto',
     marginTop: theme.spacing.unit / 2,
     fontSize: '1.0rem',
-    fontColor: theme.palette.text.light,
+    color: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.8rem',
     }
