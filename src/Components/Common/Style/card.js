@@ -3,7 +3,7 @@ const styles = (theme) => ({
     position: 'relative',
     width: 'var(--width)',
     [theme.breakpoints.down('sm')]: {
-      width: 'calc(var(--width) - ((var(--width) / 130) * 48))px',
+      width: 'calc(var(--width) - 24px)',
     }
   },
   cardOuter: {

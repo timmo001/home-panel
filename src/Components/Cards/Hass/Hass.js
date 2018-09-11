@@ -74,7 +74,7 @@ class Hass extends React.Component {
           style={{
             '--width': card.width ?
               typeof card.width === 'number'
-                ? `${130 * card.width}px`
+                ? `${(130 * card.width)/* - (card.width < 3 ? card.width * 12 : card.width * 16)*/}px`
                 : card.width
               : '130px'
           }}
