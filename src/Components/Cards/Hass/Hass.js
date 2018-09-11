@@ -18,8 +18,7 @@ const styles = theme => ({
   ...card(theme),
   state: {
     textOverflow: 'ellipsis',
-    margin: '0 auto',
-    marginTop: theme.spacing.unit / 2,
+    margin: 'auto',
     fontSize: '1.0rem',
     color: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
