@@ -74,7 +74,7 @@ class Hass extends React.Component {
           style={{
             '--width': card.width ?
               typeof card.width === 'number'
-                ? `calc(130px * ${card.width})`
+                ? `${130 * card.width}px`
                 : card.width
               : '130px'
           }}
@@ -107,7 +107,7 @@ class Hass extends React.Component {
                 style={{
                   '--height': card.height ?
                     typeof card.height === 'number'
-                      ? `calc(98px * ${card.height})`
+                      ? `${98 * card.height}px`
                       : card.height
                     : '98px'
                 }}>

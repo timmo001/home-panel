@@ -12,6 +12,10 @@ const styles = theme => ({
   frameContainer: {
     minHeight: 'var(--height)',
     height: 'var(--height)',
+    [theme.breakpoints.down('sm')]: {
+      minHeight: 'calc(var(--height) - 48px)',
+      height: 'calc(var(--height) - 48px)',
+    },
   },
   frameInnerContainer: {
     height: '100%'
@@ -36,12 +40,12 @@ class Frame extends React.Component {
         style={{
           '--width': card.width ?
             typeof card.width === 'number'
-              ? `calc(130px * ${card.width})`
+              ? `${130 * card.width}px`
               : card.width
             : '260px',
           '--height': card.height ?
             typeof card.height === 'number'
-              ? `calc(130px * ${card.height})`
+              ? `${130 * card.height}px`
               : card.height
             : '260px'
         }}

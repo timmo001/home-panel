@@ -42,7 +42,7 @@ class Camera extends React.Component {
         style={{
           '--width': card.width ?
             typeof card.width === 'number'
-              ? `calc(130px * ${card.width})`
+              ? `${130 * card.width}px`
               : card.width
             : '260px'
         }}
