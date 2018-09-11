@@ -26,7 +26,16 @@ class Link extends React.Component {
     const icon = card.icon && card.icon;
 
     return (
-      <Grid className={classes.cardContainer} item>
+      <Grid
+        className={classes.cardContainer}
+        style={{
+          '--width': card.width ?
+            typeof card.width === 'number'
+              ? `calc(130px * ${card.width})`
+              : card.width
+            : '130px'
+        }}
+        item>
         <ButtonBase
           className={classes.cardOuter}
           focusRipple

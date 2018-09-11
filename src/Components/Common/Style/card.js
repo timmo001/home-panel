@@ -1,9 +1,9 @@
 const styles = (theme) => ({
   cardContainer: {
     position: 'relative',
-    width: 130,
+    width: 'var(--width)',
     [theme.breakpoints.down('sm')]: {
-      width: 106,
+      width: 'calc(var(--width) - 24px)',
     }
   },
   cardOuter: {

@@ -5,13 +5,10 @@ import Grid from '@material-ui/core/Grid';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import { getCardElevation, getSquareCards } from '../../Common/config';
+import card from '../../Common/Style/card';
 
 const styles = theme => ({
-  frameContainer: {
-    position: 'relative',
-    width: '100%',
-    padding: theme.spacing.unit / 2,
-  },
+  ...card(theme),
   frame: {
     display: 'block',
     width: '100%',
@@ -27,7 +24,16 @@ class Frame extends React.Component {
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     return (
-      <Grid className={classes.frameContainer} item>
+      <Grid
+        className={classes.cardContainer}
+        style={{
+          '--width': card.width ?
+            typeof card.width === 'number'
+              ? `calc(130px * ${card.width})`
+              : card.width
+            : '260px'
+        }}
+        item>
         <ButtonBase className={classes.cardOuter} focusRipple>
           <Card className={classes.card} elevation={cardElevation} square={squareCards}>
             <iframe
