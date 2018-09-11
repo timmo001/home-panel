@@ -42,7 +42,15 @@ class Link extends React.Component {
           href={url}
           target="_blank">
           <Card className={classes.card} elevation={cardElevation} square={squareCards}>
-            <CardContent className={classes.cardContent}>
+            <CardContent
+              className={classes.cardContent}
+              style={{
+                '--height': card.height ?
+                  typeof card.height === 'number'
+                    ? `calc(98px * ${card.height})`
+                    : card.height
+                  : '98px'
+              }}>
               <Typography className={classes.name} variant="headline">
                 {name}
               </Typography>

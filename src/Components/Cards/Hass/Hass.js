@@ -103,7 +103,15 @@ class Hass extends React.Component {
               domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
               domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
             )} elevation={cardElevation} square={squareCards}>
-              <CardContent className={classes.cardContent}>
+              <CardContent
+                className={classes.cardContent}
+                style={{
+                  '--height': card.height ?
+                    typeof card.height === 'number'
+                      ? `calc(98px * ${card.height})`
+                      : card.height
+                    : '98px'
+                }}>
                 <Typography className={classes.name} variant="headline">
                   {name}
                 </Typography>

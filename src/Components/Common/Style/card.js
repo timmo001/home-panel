@@ -24,11 +24,11 @@ const styles = (theme) => ({
   cardContent: {
     display: 'flex',
     flexWrap: 'wrap',
-    minHeight: 98,
-    height: 98,
+    minHeight: 'var(--height)',
+    height: 'var(--height)',
     [theme.breakpoints.down('sm')]: {
-      minHeight: 74,
-      height: 74,
+      minHeight: 'calc(var(--height) - 24px)',
+      height: 'calc(var(--height) - 24px)',
     },
     padding: `${theme.spacing.unit * 1.5}px !important`,
   },
