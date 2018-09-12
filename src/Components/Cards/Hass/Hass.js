@@ -72,11 +72,8 @@ class Hass extends React.Component {
         <Grid
           className={classes.cardContainer}
           style={{
-            '--width': card.width ?
-              typeof card.width === 'number'
-                ? `${(130 * card.width)/* - (card.width < 3 ? card.width * 12 : card.width * 16)*/}px`
-                : card.width
-              : '130px'
+            '--width': card.width ? card.width : 1,
+            '--height': card.height ? card.height : 1,
           }}
           item>
           <ButtonBase
@@ -102,15 +99,7 @@ class Hass extends React.Component {
               domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
               domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
             )} elevation={cardElevation} square={squareCards}>
-              <CardContent
-                className={classes.cardContent}
-                style={{
-                  '--height': card.height ?
-                    typeof card.height === 'number'
-                      ? `${98 * card.height}px`
-                      : card.height
-                    : '98px'
-                }}>
+              <CardContent className={classes.cardContent}>
                 <Typography className={classes.name} variant="headline">
                   {name}
                 </Typography>

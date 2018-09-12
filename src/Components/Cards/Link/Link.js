@@ -29,11 +29,8 @@ class Link extends React.Component {
       <Grid
         className={classes.cardContainer}
         style={{
-          '--width': card.width ?
-            typeof card.width === 'number'
-              ? `${130 * card.width}px`
-              : card.width
-            : '130px'
+          '--width': card.width ? card.width : 1,
+          '--height': card.height ? card.height : 1,
         }}
         item>
         <ButtonBase

@@ -1,9 +1,11 @@
 const styles = (theme) => ({
   cardContainer: {
     position: 'relative',
-    width: 'var(--width)',
+    height: 'calc(var(--height) * 130px)',
+    width: 'calc(var(--width) * 130px)',
     [theme.breakpoints.down('sm')]: {
-      width: 'calc(var(--width) - 24px)',
+      height: 'calc(var(--height) * 106px)',
+      width: 'calc(var(--width) * 106px)',
     }
   },
   cardOuter: {
@@ -12,6 +14,7 @@ const styles = (theme) => ({
     textAlign: 'start',
   },
   card: {
+    height: '-webkit-fill-available',
     width: '100%',
     background: theme.palette.backgrounds.card.off,
   },
@@ -22,14 +25,9 @@ const styles = (theme) => ({
     background: theme.palette.backgrounds.card.disabled,
   },
   cardContent: {
+    height: '-webkit-fill-available',
     display: 'flex',
     flexWrap: 'wrap',
-    minHeight: 'var(--height)',
-    height: 'var(--height)',
-    [theme.breakpoints.down('sm')]: {
-      minHeight: 'calc(var(--height) - 24px)',
-      height: 'calc(var(--height) - 24px)',
-    },
     padding: `${theme.spacing.unit * 1.5}px !important`,
   },
   name: {

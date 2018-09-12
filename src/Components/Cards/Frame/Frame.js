@@ -9,14 +9,6 @@ import card from '../../Common/Style/card';
 
 const styles = theme => ({
   ...card(theme),
-  frameContainer: {
-    minHeight: 'var(--height)',
-    height: 'var(--height)',
-    [theme.breakpoints.down('sm')]: {
-      minHeight: 'calc(var(--height) - 48px)',
-      height: 'calc(var(--height) - 48px)',
-    },
-  },
   frameInnerContainer: {
     height: '100%'
   },
@@ -36,18 +28,10 @@ class Frame extends React.Component {
     const squareCards = getSquareCards(config);
     return (
       <Grid
-        className={classnames(classes.cardContainer, classes.frameContainer)}
+        className={classnames(classes.cardContainer)}
         style={{
-          '--width': card.width ?
-            typeof card.width === 'number'
-              ? `${130 * card.width}px`
-              : card.width
-            : '260px',
-          '--height': card.height ?
-            typeof card.height === 'number'
-              ? `${130 * card.height}px`
-              : card.height
-            : '260px'
+          '--width': card.width ? card.width : 1,
+          '--height': card.height ? card.height : 1,
         }}
         item>
         <Card className={classes.frameInnerContainer} elevation={cardElevation} square={squareCards}>
