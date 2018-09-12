@@ -18,10 +18,9 @@ const styles = theme => ({
   ...card(theme),
   state: {
     textOverflow: 'ellipsis',
-    margin: '0 auto',
-    marginTop: theme.spacing.unit / 2,
+    margin: 'auto',
     fontSize: '1.0rem',
-    fontColor: theme.palette.text.light,
+    color: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.8rem',
     }
@@ -70,7 +69,13 @@ class Hass extends React.Component {
       const icon = card.icon && card.icon;
 
       return (
-        <Grid className={classes.cardContainer} item>
+        <Grid
+          className={classes.cardContainer}
+          style={{
+            '--width': card.width ? card.width : 1,
+            '--height': card.height ? card.height : 1,
+          }}
+          item>
           <ButtonBase
             className={classes.cardOuter}
             focusRipple

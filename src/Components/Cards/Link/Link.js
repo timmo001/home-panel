@@ -26,14 +26,28 @@ class Link extends React.Component {
     const icon = card.icon && card.icon;
 
     return (
-      <Grid className={classes.cardContainer} item>
+      <Grid
+        className={classes.cardContainer}
+        style={{
+          '--width': card.width ? card.width : 1,
+          '--height': card.height ? card.height : 1,
+        }}
+        item>
         <ButtonBase
           className={classes.cardOuter}
           focusRipple
           href={url}
           target="_blank">
           <Card className={classes.card} elevation={cardElevation} square={squareCards}>
-            <CardContent className={classes.cardContent}>
+            <CardContent
+              className={classes.cardContent}
+              style={{
+                '--height': card.height ?
+                  typeof card.height === 'number'
+                    ? `${98 * card.height}px`
+                    : card.height
+                  : '98px'
+              }}>
               <Typography className={classes.name} variant="headline">
                 {name}
               </Typography>
