@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,12 +8,12 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import { getCardElevation, getSquareCards } from '../../Common/config';
 import Dialog from './Dialog';
+import card from '../../Common/Style/card';
 
 const styles = theme => ({
-  cameraContainer: {
-    position: 'relative',
-    width: '100%',
-    padding: theme.spacing.unit / 2,
+  ...card(theme),
+  cameraCard: {
+    height: '100%',
   },
   camera: {
     display: 'block',
@@ -40,10 +41,15 @@ class Camera extends React.Component {
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     return (
-      <Grid className={classes.cameraContainer} item>
+      <Grid
+        className={classes.cardContainer}
+        style={{
+          '--width': card.width ? card.width : 2,
+        }}
+        item>
         <ButtonBase className={classes.cardOuter} focusRipple
           onClick={() => this.handleShowCamera(name, still_url, url)}>
-          <Card className={classes.card} elevation={cardElevation} square={squareCards}>
+          <Card className={classnames(classes.card, classes.cameraCard)} elevation={cardElevation} square={squareCards}>
             <img
               className={classes.camera}
               src={still_url}

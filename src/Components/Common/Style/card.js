@@ -1,8 +1,12 @@
 const styles = (theme) => ({
   cardContainer: {
     position: 'relative',
-    width: '50%',
-    padding: theme.spacing.unit / 2,
+    height: 'calc(var(--height) * 130px)',
+    width: 'calc(var(--width) * 130px)',
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(var(--height) * 106px)',
+      width: 'calc(var(--width) * 106px)',
+    }
   },
   cardOuter: {
     height: '100%',
@@ -10,6 +14,7 @@ const styles = (theme) => ({
     textAlign: 'start',
   },
   card: {
+    height: '-webkit-fill-available',
     width: '100%',
     background: theme.palette.backgrounds.card.off,
   },
@@ -20,27 +25,25 @@ const styles = (theme) => ({
     background: theme.palette.backgrounds.card.disabled,
   },
   cardContent: {
+    height: '-webkit-fill-available',
     display: 'flex',
     flexWrap: 'wrap',
-    minHeight: 98,
-    height: 98,
-    [theme.breakpoints.down('sm')]: {
-      minHeight: 74,
-      height: 74,
-    },
     padding: `${theme.spacing.unit * 1.5}px !important`,
   },
   name: {
+    width: '100%',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.12rem',
-    fontColor: theme.palette.text.main,
+    lineHeight: '1.34rem',
+    color: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
+      lineHeight: '1.14rem',
     }
   },
   icon: {
-    margin: '0 auto',
+    margin: 'auto',
     color: theme.palette.text.icon,
     fontSize: '2.7rem',
     [theme.breakpoints.down('sm')]: {
