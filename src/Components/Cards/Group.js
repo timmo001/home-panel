@@ -108,7 +108,13 @@ class Group extends React.Component {
             alignItems="stretch"
             spacing={8}>
             {group.cards.map((card, x) => {
-              return <CardBase key={x} theme={theme} entities={entities} card={card} handleChange={handleChange} config={config} />
+              if (card.entity_id && card.entity_id.startsWith('group')) {
+                const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+                return entity_outer[1].attributes.entity_id.map((entity, y) => {
+                  return <CardBase key={x} theme={theme} entities={entities} card={{ ...card, entity_id: entity }} handleChange={handleChange} config={config} />
+                });
+              } else
+                return <CardBase key={x} theme={theme} entities={entities} card={card} handleChange={handleChange} config={config} />
             })}
           </Grid>
         </div>
