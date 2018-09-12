@@ -389,6 +389,22 @@ Icon shown in the middle of the card. Use [Material Design Icons][mdi] to
           "icon": "thermometer-lines"
 ```
 
+#### width
+
+The amount of cards wide.
+
+```json
+          "width": 2
+```
+
+#### height
+
+The amount of cards high.
+
+```json
+          "height": 2
+```
+
 ### link
 
 A simple hyperlink that opens up another webpage in a new tab/window. To
@@ -418,6 +434,22 @@ Icon shown in the middle of the card. Use [Material Design Icons][mdi] to
 
 ```json
           "icon": "thermometer-lines"
+```
+
+#### width
+
+The amount of cards wide.
+
+```json
+          "width": 2
+```
+
+#### height
+
+The amount of cards high.
+
+```json
+          "height": 2
 ```
 
 ### camera
@@ -467,6 +499,14 @@ The url of a still image for use in the main view. This updates every minute.
           "still_url": "http://myserver.local:8080/accesscode/jpeg/groupid/name/s.jpg"
 ```
 
+#### width
+
+The amount of cards wide.
+
+```json
+          "width": 2
+```
+
 ### iframe
 
 You can add any webpage that can be embedded.
@@ -486,6 +526,23 @@ The url of the page.
 ```json
           "url": "https://embed.windy.com/embed2.html?zoom=5"
 ```
+
+#### width
+
+The amount of cards wide.
+
+```json
+          "width": 2
+```
+
+#### height
+
+The amount of cards high.
+
+```json
+          "height": 2
+```
+
 
 [template]: https://git.timmo.xyz/home-panel/template/
 [hass]: https://www.home-assistant.io/
