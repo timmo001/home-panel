@@ -543,7 +543,6 @@ The amount of cards high.
           "height": 2
 ```
 
-
 [template]: https://git.timmo.xyz/home-panel/template/
 [hass]: https://www.home-assistant.io/
 [dark-sky]: https://www.home-assistant.io/components/sensor.darksky/
