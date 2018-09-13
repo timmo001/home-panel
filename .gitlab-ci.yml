@@ -391,11 +391,8 @@ test:
   script:
     - yarn install && yarn cache clean
     - yarn run test
-  only:
-    - branches
   except:
-    variables:
-      - $TEST_DISABLED
+    - tags
 
 # code_quality:
 #   stage: test
