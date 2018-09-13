@@ -37,9 +37,21 @@ A touch-compatible web-app for controlling the home. Integrates with
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with desktops as well)
 
+## Demo
+
+You can use a demo of this app [here][demo-app]
+
 ## Docs
 
 Setup and configuration is available [here][docs]
+
+## Links
+
+[Support / Discussion][forum]
+
+[Contribution Guidelines][CONTRIBUTING]
+
+[Code of Conduct][CODE_OF_CONDUCT]
 
 ## Screenshots
 
@@ -52,14 +64,6 @@ Setup and configuration is available [here][docs]
 ![Radio Screenshot][radio]
 
 ![Forest Theme][theme-forest]
-
-## Links
-
-[Support / Discussion][forum]
-
-[CONTRIBUTING][CONTRIBUTING]
-
-[CODE_OF_CONDUCT][CODE_OF_CONDUCT]
 
 ## License
 
@@ -109,3 +113,4 @@ SOFTWARE.
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
+[demo-app]: https://home-panel-demo.timmo.xyz/
