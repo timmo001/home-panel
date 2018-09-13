@@ -111,9 +111,10 @@ class Login extends React.Component {
       username: username ? username : '',
       password: password ? password : '',
       api_url: api_url ? api_url : `${window.location.protocol}//${window.location.hostname}:3234`,
-      hass_url: hass_url ? hass_url : '',//`${window.location.protocol}//hassio:8123`,
+      hass_url: hass_url ? hass_url : '',
       createAccount: username ? false : true
     }, () => {
+      this.handleValidation();
       if (username && password && api_url && hass_url && !this.state.createAccount)
         this.handleLogIn();
     });
@@ -121,7 +122,25 @@ class Login extends React.Component {
 
   toggleCreateAccount = () => this.setState({ createAccount: !this.state.createAccount });
 
-  handleChange = prop => event => this.setState({ [prop]: event.target.value });
+  handleValidation = () => {
+    if (!this.state.username) { this.setState({ invalid: 'No username!' }); return; }
+    if (!this.state.password) { this.setState({ invalid: 'No password!' }); return; }
+    if (!this.state.api_url || !this.state.api_url.startsWith('http') || !this.state.api_url.includes('://')) {
+      this.setState({ invalid: 'API URL invalid!' }); return;
+    }
+    if (!this.state.hass_url || !this.state.hass_url.startsWith('http') || !this.state.hass_url.includes('://')) {
+      this.setState({ invalid: 'Home Assistant URL invalid!' }); return;
+    }
+    if (window.location.protocol === 'https:') {
+      if (this.state.api_url.startsWith('http:')) { this.setState({ invalid: 'The API must use SSL/https.' }); return; }
+      if (this.state.hass_url.startsWith('http:')) { this.setState({ invalid: 'Your HASS instance must use SSL/https.' }); return; }
+    }
+    this.setState({ invalid: undefined });
+  };
+
+  handleChange = prop => event => this.setState({ [prop]: event.target.value }, () => {
+    this.handleValidation();
+  });
 
   handleCheckedChange = name => event => this.setState({ [name]: event.target.checked });
 
@@ -130,7 +149,7 @@ class Login extends React.Component {
   handleClickShowPassword = () => this.setState({ showPassword: !this.state.showPassword });
 
   handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !this.state.invalid) {
       this.handleLogIn();
     }
   };
@@ -241,7 +260,7 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { username, password, api_url, hass_url, showPassword, createAccount, error, loading, success } = this.state;
+    const { username, password, api_url, hass_url, showPassword, createAccount, error, loading, success, invalid } = this.state;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success,
     });
@@ -340,6 +359,11 @@ class Login extends React.Component {
             </CardContent>
             <CardActions>
               <div className={classes.fill} />
+              {invalid &&
+                <Typography color="error" variant="subheading">
+                  {invalid}
+                </Typography>
+              }
               {!process.env.REACT_APP_OVERRIDE_API_URL &&
                 <Button onClick={this.toggleCreateAccount}>
                   {createAccount ? 'Already have an account?' : 'Create New Account'}
@@ -356,7 +380,7 @@ class Login extends React.Component {
                   :
                   <Button
                     className={buttonClassname}
-                    disabled={loading}
+                    disabled={loading || invalid ? true : false}
                     onClick={this.handleLogIn}>
                     Log In
                   </Button>
