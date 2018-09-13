@@ -41,8 +41,7 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 You can use a demo of this app [here][demo-app].
 
-> To run this, you must have a secure instance of Home Assistant. Meaning Home
-> Assistant has SSL / HTTPS enabled.
+> This will only work with Home Assistant instances served over HTTPS
 
 ## Docs
 
