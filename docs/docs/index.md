@@ -10,10 +10,17 @@
 [![Docker Pulls][pulls-shield]][dockerhub]
 [![Anchore Image Overview][anchore-shield]][anchore]
 
+![Supports armhf Architecture][armhf-shield]
+![Supports aarch64 Architecture][aarch64-shield]
+![Supports amd64 Architecture][amd64-shield]
+![Supports i386 Architecture][i386-shield]
+
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
 A touch-compatible web-app for controlling the home. Integrates with
  [Home Assistant][hass] as an alternative / additional frontend.
+
+![banner][banner]
 
 ## Features
 
@@ -65,6 +72,10 @@ You can use a demo of this app [here][demo-app].
 [anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
 [anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
+[aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
+[amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
+[armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
@@ -76,3 +87,4 @@ You can use a demo of this app [here][demo-app].
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [demo-app]: https://home-panel-demo.timmo.xyz/
+[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.svg

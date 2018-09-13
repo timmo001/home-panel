@@ -21,6 +21,8 @@
 A touch-compatible web-app for controlling the home. Integrates with
  [Home Assistant][hass] as an alternative / additional frontend.
 
+![banner][banner]
+
 ## Features
 
 - Card based user interface with support for [Home Assistant][hass]
@@ -115,3 +117,4 @@ SOFTWARE.
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [demo-app]: https://home-panel-demo.timmo.xyz/
+[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.svg
