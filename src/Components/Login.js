@@ -94,10 +94,18 @@ class Login extends React.Component {
   };
 
   componentDidMount = () => {
-    const username = localStorage.getItem('username');
-    const password = sessionStorage.getItem('password');
-    const api_url = localStorage.getItem('api_url');
-    const hass_url = localStorage.getItem('hass_url');
+    const username = process.env.REACT_APP_OVERRIDE_USERNAME
+      ? process.env.REACT_APP_OVERRIDE_USERNAME
+      : localStorage.getItem('username');
+    const password = process.env.REACT_APP_OVERRIDE_PASSWORD
+      ? process.env.REACT_APP_OVERRIDE_PASSWORD
+      : sessionStorage.getItem('password');
+    const api_url = process.env.REACT_APP_OVERRIDE_API_URL
+      ? process.env.REACT_APP_OVERRIDE_API_URL
+      : localStorage.getItem('api_url');
+    const hass_url = process.env.REACT_APP_OVERRIDE_HASS_URL
+      ? process.env.REACT_APP_OVERRIDE_HASS_URL
+      : localStorage.getItem('hass_url');
 
     this.setState({
       username: username ? username : '',
@@ -254,68 +262,76 @@ class Login extends React.Component {
               <Typography variant="headline" component="h2">
                 {createAccount ? 'Welcome!' : 'Login'}
               </Typography>
-              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                <InputLabel htmlFor="username">Username</InputLabel>
-                <Input
-                  required
-                  id="username"
-                  type="text"
-                  inputProps={{
-                    autoCapitalize: "none"
-                  }}
-                  value={username}
-                  onChange={this.handleChange('username')}
-                  onKeyPress={this.handleKeyPress} />
-              </FormControl>
-              <FormControl className={classNames(classes.margin, classes.textField)}>
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  required
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  inputProps={{
-                    autoCapitalize: "none"
-                  }}
-                  value={password}
-                  onChange={this.handleChange('password')}
-                  onKeyPress={this.handleKeyPress}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="Toggle password visibility"
-                        onClick={this.handleClickShowPassword}
-                        onMouseDown={this.handleMouseDownPassword}>
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  } />
-              </FormControl>
-              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                <InputLabel htmlFor="api_url">API URL</InputLabel>
-                <Input
-                  required
-                  id="api_url"
-                  type="text"
-                  inputProps={{
-                    autoCapitalize: "none"
-                  }}
-                  value={api_url}
-                  onChange={this.handleChange('api_url')}
-                  onKeyPress={this.handleKeyPress} />
-              </FormControl>
-              <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
-                <InputLabel htmlFor="hass_url">Home Assistant URL</InputLabel>
-                <Input
-                  required
-                  id="hass_url"
-                  type="text"
-                  inputProps={{
-                    autoCapitalize: "none"
-                  }}
-                  value={hass_url}
-                  onChange={this.handleChange('hass_url')}
-                  onKeyPress={this.handleKeyPress} />
-              </FormControl>
+              {!process.env.REACT_APP_OVERRIDE_USERNAME &&
+                <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                  <InputLabel htmlFor="username">Username</InputLabel>
+                  <Input
+                    required
+                    id="username"
+                    type="text"
+                    inputProps={{
+                      autoCapitalize: "none"
+                    }}
+                    value={username}
+                    onChange={this.handleChange('username')}
+                    onKeyPress={this.handleKeyPress} />
+                </FormControl>
+              }
+              {!process.env.REACT_APP_OVERRIDE_PASSWORD &&
+                <FormControl className={classNames(classes.margin, classes.textField)}>
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    required
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    inputProps={{
+                      autoCapitalize: "none"
+                    }}
+                    value={password}
+                    onChange={this.handleChange('password')}
+                    onKeyPress={this.handleKeyPress}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="Toggle password visibility"
+                          onClick={this.handleClickShowPassword}
+                          onMouseDown={this.handleMouseDownPassword}>
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    } />
+                </FormControl>
+              }
+              {!process.env.REACT_APP_OVERRIDE_API_URL &&
+                <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                  <InputLabel htmlFor="api_url">API URL</InputLabel>
+                  <Input
+                    required
+                    id="api_url"
+                    type="text"
+                    inputProps={{
+                      autoCapitalize: "none"
+                    }}
+                    value={api_url}
+                    onChange={this.handleChange('api_url')}
+                    onKeyPress={this.handleKeyPress} />
+                </FormControl>
+              }
+              {!process.env.REACT_APP_OVERRIDE_HASS_URL &&
+                <FormControl className={classNames(classes.margin, classes.textField, classes.fakeButton)}>
+                  <InputLabel htmlFor="hass_url">Home Assistant URL</InputLabel>
+                  <Input
+                    required
+                    id="hass_url"
+                    type="text"
+                    inputProps={{
+                      autoCapitalize: "none"
+                    }}
+                    value={hass_url}
+                    onChange={this.handleChange('hass_url')}
+                    onKeyPress={this.handleKeyPress} />
+                </FormControl>
+              }
               {error &&
                 <Typography color="error">
                   {error}
@@ -324,11 +340,13 @@ class Login extends React.Component {
             </CardContent>
             <CardActions>
               <div className={classes.fill} />
-              <Button onClick={this.toggleCreateAccount}>
-                {createAccount ? 'Already have an account?' : 'Create New Account'}
-              </Button>
+              {!process.env.REACT_APP_OVERRIDE_API_URL &&
+                <Button onClick={this.toggleCreateAccount}>
+                  {createAccount ? 'Already have an account?' : 'Create New Account'}
+                </Button>
+              }
               <div className={classes.wrapper}>
-                {createAccount ?
+                {createAccount && !process.env.REACT_APP_OVERRIDE_API_URL ?
                   <Button
                     className={buttonClassname}
                     disabled={loading}
