@@ -8,14 +8,14 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="700"
-   height="480"
+   width="690"
+   height="349.09091"
    id="svg180"
    sodipodi:docname="banner.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
    inkscape:export-filename="/home/aidan/projects/js/home-panel/docs/resources/banner.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
+   inkscape:export-xdpi="110"
+   inkscape:export-ydpi="110">
   <metadata
      id="metadata184">
     <rdf:RDF>
@@ -41,13 +41,17 @@
      inkscape:window-height="1014"
      id="namedview182"
      showgrid="false"
-     inkscape:zoom="3.4766084"
-     inkscape:cx="328.3283"
-     inkscape:cy="256.2313"
+     inkscape:zoom="0.8691521"
+     inkscape:cx="270.93411"
+     inkscape:cy="120.10863"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g178" />
+     inkscape:current-layer="g178"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
   <defs
      id="defs25">
     <linearGradient
@@ -120,14 +124,14 @@
      text-anchor="none"
      style="font-family:none;mix-blend-mode:normal;fill:none;fill-rule:nonzero;stroke:none;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0"
      id="g178"
-     transform="matrix(10.909091,0,0,10.909091,-19.818182,-23.81819)">
+     transform="matrix(10.909091,0,0,10.909091,-25.818181,-89.272734)">
     <path
        d="m 5.2416666,40.183334 c -1.5878194,0 -2.875,-0.89543 -2.875,-2 v -28 c 0,-1.1045701 1.2871806,-2.0000001 2.875,-2.0000001 H 62.741665 c 1.58782,0 2.875,0.89543 2.875,2.0000001 v 28 c 0,1.10457 -1.28718,2 -2.875,2 z"
        id="base 1 33"
        inkscape:connector-curvature="0"
        style="fill:#607d8b;stroke-width:1.1989578" />
     <path
-       d="M 5.7341266,36.49685 V 26.35565 L 3.0021866,23.62371 17.176946,9.44895 47.946718,40.00005 c 0,0 -2.669642,0 -3.580042,0 H 9.2372866 Z m 22.8856294,0 v -3.26758 l -3.26758,3.26758 z"
+       d="M 5.7341266,36.49685 V 26.35565 L 3.0021866,23.62371 17.176946,9.44895 47.946718,40.183383 44.366676,40.00005 9.2372866,40.183383 Z m 22.8856294,0 v -3.26758 l -3.26758,3.26758 z"
        id="path28"
        inkscape:connector-curvature="0"
        style="fill:url(#color-1);stroke-width:1"
@@ -534,16 +538,16 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:3.66666675px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09166667"
        x="33.034832"
-       y="22.173115"
+       y="22.906445"
        id="text993"><tspan
          sodipodi:role="line"
          id="tspan991"
          x="33.034832"
-         y="22.173115"
+         y="22.906445"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#f5f5f5;fill-opacity:1;stroke-width:0.09166667">Home</tspan><tspan
          sodipodi:role="line"
          x="33.034832"
-         y="33.173111"
+         y="33.906441"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11px;line-height:1;font-family:Roboto;-inkscape-font-specification:Roboto;fill:#f5f5f5;fill-opacity:1;stroke-width:0.09166667"
          id="tspan995">Panel</tspan></text>
   </g>
