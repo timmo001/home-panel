@@ -111,7 +111,7 @@ class Login extends React.Component {
       username: username ? username : '',
       password: password ? password : '',
       api_url: api_url ? api_url : `${window.location.protocol}//${window.location.hostname}:3234`,
-      hass_url: hass_url ? hass_url : `${window.location.protocol}//hassio:8123`,
+      hass_url: hass_url ? hass_url : '',//`${window.location.protocol}//hassio:8123`,
       createAccount: username ? false : true
     }, () => {
       if (username && password && api_url && hass_url && !this.state.createAccount)
