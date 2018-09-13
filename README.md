@@ -117,4 +117,4 @@ SOFTWARE.
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [demo-app]: https://home-panel-demo.timmo.xyz/
-[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.svg
+[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
