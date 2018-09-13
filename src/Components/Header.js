@@ -230,7 +230,7 @@ class Header extends React.Component {
 
     const header = {
       left_outdoor_weather: config.header.left_outdoor_weather && {
-        icon: icon ? icon.replaceAll('-', '_').toUpperCase() : 'CLOUDY',
+        icon: icon && icon.replaceAll('-', '_').toUpperCase(),
         condition: config.header.left_outdoor_weather.condition &&
           this.getState(entities, config.header.left_outdoor_weather.condition),
         data: []
