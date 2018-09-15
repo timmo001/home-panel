@@ -58,7 +58,8 @@ class Hass extends React.Component {
   render() {
     const { classes, config, theme, handleChange, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
-    const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+    let entity_outer;
+    if (entities) entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     if (entity_outer) {
@@ -143,7 +144,7 @@ Hass.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  entities: PropTypes.array.isRequired,
+  entities: PropTypes.array,
   card: PropTypes.object.isRequired,
 };
 

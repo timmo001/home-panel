@@ -203,6 +203,7 @@ class Header extends React.Component {
   };
 
   getState = (entities, entity, endAdornment = '') => {
+    if (!entities) return undefined;
     var state = entities.find(i => {
       return i[1].entity_id === entity;
     });
@@ -386,7 +387,7 @@ Header.propTypes = {
   themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  entities: PropTypes.array.isRequired,
+  entities: PropTypes.array,
   moved: PropTypes.bool.isRequired,
   over: PropTypes.bool.isRequired,
   handleMouseOver: PropTypes.func.isRequired,
