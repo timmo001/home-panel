@@ -23,6 +23,7 @@ var themes = [
       backgrounds: {
         main: grey[100],
         default: grey[200],
+        navigation: grey[300],
         card: {
           on: blueGrey[300],
           off: grey[300],
@@ -54,6 +55,7 @@ var themes = [
       backgrounds: {
         main: grey[900],
         default: grey[800],
+        navigation: grey[800],
         card: {
           on: blueGrey[700],
           off: grey[800],
@@ -107,7 +109,8 @@ class App extends Component {
       if (theme.overrides.secondary) newTheme.palette.secondary = mapToColor(theme.overrides.secondary);
       if (theme.overrides.backgrounds) {
         if (theme.overrides.backgrounds.main) newTheme.palette.backgrounds.main = mapToColor(theme.overrides.backgrounds.main);
-        if (theme.overrides.backgrounds.default) newTheme.palette.backgrounds.dark = mapToColor(theme.overrides.backgrounds.default);
+        if (theme.overrides.backgrounds.default) newTheme.palette.backgrounds.default = mapToColor(theme.overrides.backgrounds.default);
+        if (theme.overrides.backgrounds.navigation) newTheme.palette.backgrounds.navigation = mapToColor(theme.overrides.backgrounds.navigation);
         if (theme.overrides.backgrounds.card) {
           if (theme.overrides.backgrounds.card.on) newTheme.palette.backgrounds.card.on = mapToColor(theme.overrides.backgrounds.card.on);
           if (theme.overrides.backgrounds.card.off) newTheme.palette.backgrounds.card.off = mapToColor(theme.overrides.backgrounds.card.off);

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Group from './Cards/Group';
 import Header from './Header';
+import Page from './Cards/Page';
+import Pages from './Pages';
 import Radio from './Radio/Radio';
 
 const styles = theme => ({
@@ -13,20 +13,12 @@ const styles = theme => ({
     maxHeight: '100%',
     maxWidth: '100%',
   },
-  gridContainer: {
+  pageContainer: {
     height: `calc(100% - 180px)`,
     overflowY: 'auto',
     [theme.breakpoints.down('sm')]: {
       height: `calc(100% - 130px)`,
     }
-  },
-  grid: {
-    height: '100%',
-    width: 'fit-content',
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2,
-    flexWrap: 'nowrap',
-    overflowY: 'hidden',
   },
 });
 
@@ -38,6 +30,7 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     radioShown: false,
+    currentPage: 0,
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -53,7 +46,7 @@ class Main extends React.Component {
       this.setState({ moved: true }, () => {
         hoverTimeout = setTimeout(() => {
           this.setState({ moved: false });
-        }, 10000);
+        }, 5000);
       });
     }
   };
@@ -83,10 +76,12 @@ class Main extends React.Component {
     window.location.reload(true);
   };
 
+  handlePageChange = (pageNo) => this.setState({ currentPage: pageNo });
+
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown } = this.state;
-
+    const { moved, over, radioShown, currentPage } = this.state;
+    const page = config.pages ? { id: currentPage === 0 ? 1 : currentPage, ...config.pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
@@ -102,15 +97,17 @@ class Main extends React.Component {
           handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
           handleRadioHide={this.handleRadioHide} />
-        <div className={classes.gridContainer} onClick={this.handleRadioHide}>
-          <Grid
-            container
-            className={classes.grid}
-            spacing={8}>
-            {config.items && config.items.map((group, x) => {
-              return <Group key={x} theme={theme} entities={entities} group={group} config={config} handleChange={handleChange} />
-            })}
-          </Grid>
+        <div className={classes.pageContainer} onClick={this.handleRadioHide}>
+          <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
+          {config.pages &&
+            <Pages
+              pages={config.pages}
+              moved={moved}
+              over={over}
+              handleMouseOver={this.onMouseMoveHandler}
+              handleMouseLeave={this.onMouseLeaveHandler}
+              handlePageChange={this.handlePageChange} />
+          }
         </div>
         <Radio
           show={radioShown}
