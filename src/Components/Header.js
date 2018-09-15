@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Fade from '@material-ui/core/Fade';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import BrushIcon from '@material-ui/icons/Brush';
 import RadioIcon from '@material-ui/icons/Radio';
@@ -328,8 +329,7 @@ class Header extends React.Component {
             })}
           </div>
         </div>
-        {
-          (moved || over) &&
+        <Fade in={moved || over}>
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
@@ -362,7 +362,7 @@ class Header extends React.Component {
               <RadioIcon className={classes.icon} />
             </IconButton>
           </div>
-        }
+        </Fade>
         <Menu
           id="theme"
           value={theme}
