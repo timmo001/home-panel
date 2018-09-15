@@ -11,7 +11,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Fade from '@material-ui/core/Fade';
 import RefreshIcon from '@material-ui/icons/Refresh';
-import BrushIcon from '@material-ui/icons/Brush';
+import FormatPaintIcon from '@material-ui/icons/FormatPaint';
+import EditIcon from '@material-ui/icons/Edit';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -336,6 +337,12 @@ class Header extends React.Component {
             onMouseLeave={handleMouseLeave}>
             <IconButton
               className={classes.button}
+              aria-label="Log Out"
+              onClick={this.props.handleLogOut}>
+              <ExitToAppIcon className={classes.icon} />
+            </IconButton>
+            <IconButton
+              className={classes.button}
               size="small"
               aria-label="Refresh"
               onClick={() => window.location.reload(true)}>
@@ -343,9 +350,9 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
-              aria-label="Log Out"
-              onClick={this.props.handleLogOut}>
-              <ExitToAppIcon className={classes.icon} />
+              aria-label="Edit Config"
+              onClick={this.props.handleEditConfig}>
+              <EditIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
@@ -353,7 +360,7 @@ class Header extends React.Component {
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
               onClick={this.handleClick}>
-              <BrushIcon className={classes.icon} />
+              <FormatPaintIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
@@ -395,6 +402,7 @@ Header.propTypes = {
   handleRadioToggle: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
+  handleEditConfig: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Header);

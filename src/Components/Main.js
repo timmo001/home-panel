@@ -5,6 +5,7 @@ import Header from './Header';
 import Page from './Cards/Page';
 import Pages from './Pages';
 import Radio from './Radio/Radio';
+import EditConfig from './EditConfig';
 
 const styles = theme => ({
   root: {
@@ -30,6 +31,7 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     radioShown: false,
+    editConfig: false,
     currentPage: 0,
   };
 
@@ -78,9 +80,13 @@ class Main extends React.Component {
 
   handlePageChange = (pageNo) => this.setState({ currentPage: pageNo });
 
+  handleEditConfig = () => this.setState({ editConfig: true });
+
+  handleEditConfigClose = () => this.setState({ editConfig: false });
+
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage } = this.state;
+    const { moved, over, radioShown, currentPage, editConfig } = this.state;
     const page = config.pages ? { id: currentPage === 0 ? 1 : currentPage, ...config.pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -96,7 +102,8 @@ class Main extends React.Component {
           setTheme={this.props.setTheme}
           handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
-          handleRadioHide={this.handleRadioHide} />
+          handleRadioHide={this.handleRadioHide}
+          handleEditConfig={this.handleEditConfig} />
         <div className={classes.pageContainer} onClick={this.handleRadioHide}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
           {config.pages &&
@@ -113,6 +120,7 @@ class Main extends React.Component {
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={this.handleRadioHide} />
+        <EditConfig open={editConfig} config={config} handleClose={this.handleEditConfigClose} />
       </div>
     );
   }

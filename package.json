@@ -17,6 +17,7 @@
     "react-animated-weather": "^1.0.3",
     "react-color": "^2.14.1",
     "react-dom": "^16.5.0",
+    "react-json-editor-ajrm": "^2.5.4",
     "react-moment": "^0.7.9",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^1.1.5",
