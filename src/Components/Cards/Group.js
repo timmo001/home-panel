@@ -93,36 +93,38 @@ class Group extends React.Component {
     const { classes, config, theme, handleChange, entities, group } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
-        <Grid className={classes.group} style={{ '--width': group.width ? group.width : 2 }} item>
-          <ButtonBase
-            className={classes.groupButton}
-            focusRipple
-            disabled={this.checkGroupToggle(group, entities)}
-            onClick={() => this.handleGroupToggle(group, entities)}>
-            <Typography className={classes.title} variant="display1" gutterBottom>
-              {group.name}
-            </Typography>
-          </ButtonBase>
-          <div className={classes.gridInnerContainer}>
-            <Grid
-              container
-              className={classes.gridInner}
-              alignItems="stretch"
-              spacing={8}>
-              {group.cards.map((card, x) => {
-                if (card.entity_id && card.entity_id.startsWith('group')) {
-                  const entity_outer = entities.find(i => { return i && i[1].entity_id === card.entity_id });
-                  if (entity_outer)
-                    return entity_outer[1].attributes.entity_id.map((entity, y) => {
-                      return <CardBase key={y} theme={theme} entities={entities} card={{ ...card, entity_id: entity }} handleChange={handleChange} config={config} />
-                    });
-                  else return null;
-                } else
-                  return <CardBase key={x} theme={theme} entities={entities} card={card} handleChange={handleChange} config={config} />
-              })}
-            </Grid>
-          </div>
-        </Grid>
+        <div>
+          <Grid className={classes.group} style={{ '--width': group.width ? group.width : 2 }} item>
+            <ButtonBase
+              className={classes.groupButton}
+              focusRipple
+              disabled={this.checkGroupToggle(group, entities)}
+              onClick={() => this.handleGroupToggle(group, entities)}>
+              <Typography className={classes.title} variant="display1" gutterBottom>
+                {group.name}
+              </Typography>
+            </ButtonBase>
+            <div className={classes.gridInnerContainer}>
+              <Grid
+                container
+                className={classes.gridInner}
+                alignItems="stretch"
+                spacing={8}>
+                {group.cards.map((card, x) => {
+                  if (card.entity_id && card.entity_id.startsWith('group')) {
+                    const entity_outer = entities.find(i => { return i && i[1].entity_id === card.entity_id });
+                    if (entity_outer)
+                      return entity_outer[1].attributes.entity_id.map((entity, y) => {
+                        return <CardBase key={y} theme={theme} entities={entities} card={{ ...card, entity_id: entity }} handleChange={handleChange} config={config} />
+                      });
+                    else return null;
+                  } else
+                    return <CardBase key={x} theme={theme} entities={entities} card={card} handleChange={handleChange} config={config} />
+                })}
+              </Grid>
+            </div>
+          </Grid>
+        </div>
       </Slide>
     );
   }
