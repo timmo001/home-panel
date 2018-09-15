@@ -5,7 +5,7 @@ import Header from './Header';
 import Page from './Cards/Page';
 import Pages from './Pages';
 import Radio from './Radio/Radio';
-import EditConfig from './EditConfig';
+import EditConfig from './EditConfig/EditConfig';
 
 const styles = theme => ({
   root: {
@@ -123,6 +123,8 @@ class Main extends React.Component {
         <EditConfig
           open={editConfig}
           config={config}
+          username={this.props.username}
+          password={this.props.password}
           apiUrl={this.props.apiUrl}
           handleClose={this.handleEditConfigClose} />
       </div>
@@ -138,6 +140,8 @@ Main.propTypes = {
   config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   saveTokens: PropTypes.func.isRequired,
 };

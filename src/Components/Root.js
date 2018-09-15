@@ -40,7 +40,7 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config, hass_url) => this.setState({ config, hass_url }, () => {
+  loggedIn = (config, username, password, api_url, hass_url) => this.setState({ config, username, password, api_url, hass_url }, () => {
     this.connectToHASS();
     if (config.theme && config.theme.custom) {
       config.theme.custom.map(theme => this.props.addTheme(theme));
@@ -139,8 +139,6 @@ class Root extends Component {
     });
   };
 
-  handleUpdateApiUrl = api_url => this.setState({ api_url });
-
   setTheme = (themeId = undefined) => {
     if (!themeId && themeId !== 0)
       themeId = Number(localStorage.getItem('theme'));
@@ -178,14 +176,14 @@ class Root extends Component {
   };
 
   render() {
-    const { loggedIn, setTheme, handleUpdateApiUrl } = this;
+    const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
     const { config, snackMessage, entities, connected } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ?
-          <Login loggedIn={loggedIn} handleUpdateApiUrl={handleUpdateApiUrl} />
+          <Login loggedIn={loggedIn} />
           :
           entities ?
             <Main
@@ -194,6 +192,8 @@ class Root extends Component {
               setTheme={setTheme}
               config={config}
               entities={entities}
+              username={this.state.username}
+              password={this.state.password}
               apiUrl={this.state.api_url}
               handleChange={this.handleChange}
               saveTokens={this.saveTokens} />
