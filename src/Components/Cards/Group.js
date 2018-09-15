@@ -32,7 +32,7 @@ const styles = theme => ({
   },
   gridInner: {
     width: '100%',
-    paddingBottom: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 6,
   },
 });
 

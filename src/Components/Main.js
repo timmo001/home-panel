@@ -46,7 +46,7 @@ class Main extends React.Component {
       this.setState({ moved: true }, () => {
         hoverTimeout = setTimeout(() => {
           this.setState({ moved: false });
-        }, 10000);
+        }, 5000);
       });
     }
   };
@@ -100,7 +100,13 @@ class Main extends React.Component {
         <div className={classes.pageContainer} onClick={this.handleRadioHide}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
           {config.pages &&
-            <Pages pages={config.pages} handlePageChange={this.handlePageChange} />
+            <Pages
+              pages={config.pages}
+              moved={moved}
+              over={over}
+              handleMouseOver={this.onMouseMoveHandler}
+              handleMouseLeave={this.onMouseLeaveHandler}
+              handlePageChange={this.handlePageChange} />
           }
         </div>
         <Radio

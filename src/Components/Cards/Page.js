@@ -19,7 +19,7 @@ class Page extends React.Component {
 
   render() {
     const { classes, config, theme, page, handleChange, entities } = this.props;
-    console.log(page);
+
     return (
       <Grid
         container
