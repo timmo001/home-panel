@@ -259,6 +259,8 @@ class Header extends React.Component {
     var dateFormat = 'Do MMMM YYYY';
     if (config.header.format && config.header.format.date) dateFormat = config.header.format.date;
 
+    const canEdit = !process.env.REACT_APP_OVERRIDE_API_URL ? true : false;
+
     return (
       <div className={classes.root}>
         <div className={classes.header} onClick={handleRadioHide}>
@@ -348,12 +350,14 @@ class Header extends React.Component {
               onClick={() => window.location.reload(true)}>
               <RefreshIcon className={classes.icon} />
             </IconButton>
-            <IconButton
-              className={classes.button}
-              aria-label="Edit Config"
-              onClick={this.props.handleEditConfig}>
-              <EditIcon className={classes.icon} />
-            </IconButton>
+            {canEdit &&
+              <IconButton
+                className={classes.button}
+                aria-label="Edit Config"
+                onClick={this.props.handleEditConfig}>
+                <EditIcon className={classes.icon} />
+              </IconButton>
+            }
             <IconButton
               className={classes.button}
               aria-label="Theme"

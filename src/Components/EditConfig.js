@@ -19,7 +19,7 @@ class EditConfig extends React.Component {
 
   handleSave = () => {
     request
-      .post(`${this.state.api_url}/config/set`)
+      .post(`${this.props.apiUrl}/config/set`)
       .send({
         username: this.props.username,
         password: this.props.password,
@@ -79,6 +79,7 @@ EditConfig.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   config: PropTypes.object.isRequired,
+  apiUrl: PropTypes.string.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
 

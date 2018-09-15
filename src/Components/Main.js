@@ -120,7 +120,11 @@ class Main extends React.Component {
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={this.handleRadioHide} />
-        <EditConfig open={editConfig} config={config} handleClose={this.handleEditConfigClose} />
+        <EditConfig
+          open={editConfig}
+          config={config}
+          apiUrl={this.props.apiUrl}
+          handleClose={this.handleEditConfigClose} />
       </div>
     );
   }
