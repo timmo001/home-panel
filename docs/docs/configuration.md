@@ -279,6 +279,38 @@ This is an array of the `entity_id`'s that describes the current weather
         ]
 ```
 
+## pages
+
+These can be optionally added to add pages which can be navigated between
+ using the bottom navigation bar. If no pages are defined, there will be
+ no bottom navigation bar shown.
+
+```json
+  "pages": [
+    {
+      "name": "Home",
+      "icon": "home"
+    },
+    {
+      "name": "Cameras",
+      "icon": "camera"
+    },
+    {
+      "name": "Containers",
+      "icon": "docker"
+    }
+  ],
+```
+
+### name
+
+The name of the page show in the bottom navigation bar.
+
+### icon
+
+The icon shown in the bottom navigation bar. Use [Material Design Icons][mdi]
+ to find the icon you want to use.
+
 ## items
 
 The main view. Where all the cards, cameras, links etc. go. First give the
@@ -339,6 +371,38 @@ The main view. Where all the cards, cameras, links etc. go. First give the
       ]
     }
   ]
+```
+
+### width
+
+The amount of cards wide you want the group to be. This defaults to `2`.
+
+```json
+  "items": [
+    {
+      "name": "Scenes",
+      "width": 3,
+      "cards": [
+        ...
+      ]
+    }
+```
+
+### page
+
+The page number the group is on. This defaults to `1` and will not show if
+ the page does not exist.
+
+```json
+  "items": [
+    {
+      "name": "Cameras",
+      "width": 3,
+      "page": 2,
+      "cards": [
+        ...
+      ]
+    }
 ```
 
 ### hass
