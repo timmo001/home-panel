@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
-// import defaultConfig from './defaultConfig.json';
 import Input from './Input';
 import NextItem from './Item';
 
@@ -16,11 +15,9 @@ const styles = theme => ({
 });
 
 class SubItem extends React.Component {
-  state = {
-  };
 
   render() {
-    const { classes, objKey, item, handleChange } = this.props;
+    const { classes, objKey, defaultItem, item, handleChange } = this.props;
 
     return (
       <div className={classes.root}>
@@ -31,7 +28,11 @@ class SubItem extends React.Component {
               return (
                 <div key={ax}>
                   {Object.keys(item).map((i, x) => {
-                    return <NextItem key={x} item={item[i]} handleChange={handleChange} />
+                    return <NextItem
+                      key={x}
+                      defaultItem={defaultItem[i]}
+                      item={item[i]}
+                      handleChange={handleChange} />
                   })}
                   <Divider />
                 </div>
@@ -43,11 +44,21 @@ class SubItem extends React.Component {
             <div>
               <Typography>{properCase(objKey)}</Typography>
               {Object.keys(item).map((i, x) => {
-                return <NextItem key={x} objKey={i} item={item[i]} handleChange={handleChange} />
+                return <NextItem
+                  key={x}
+                  objKey={i}
+                  defaultItem={defaultItem[i] ? defaultItem[i] : item[i]}
+                  item={item[i]}
+                  handleChange={handleChange} />
               })}
             </div>
             :
-            <Input name={properCase(objKey)} value={item} handleChange={handleChange} />
+            <div />
+          // <Input
+          //   name={properCase(objKey)}
+          //   defaultValue={defaultItem ? defaultItem : ''}
+          //   value={item ? item : defaultItem ? defaultItem : ''}
+          //   handleChange={handleChange} />
         }
       </div>
     );
@@ -57,10 +68,20 @@ class SubItem extends React.Component {
 SubItem.propTypes = {
   classes: PropTypes.object.isRequired,
   objKey: PropTypes.string,
-  item: PropTypes.oneOfType(
-    PropTypes.array,
-    PropTypes.object,
-  ),
+  // defaultItem: PropTypes.oneOfType(
+  //   PropTypes.array,
+  //   PropTypes.object,
+  //   PropTypes.string,
+  //   PropTypes.number,
+  //   PropTypes.bool
+  // ).isRequired,
+  // item: PropTypes.oneOfType(
+  //   PropTypes.array,
+  //   PropTypes.object,
+  //   PropTypes.string,
+  //   PropTypes.number,
+  //   PropTypes.bool
+  // ).isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 
