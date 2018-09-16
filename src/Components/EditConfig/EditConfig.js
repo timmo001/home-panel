@@ -10,12 +10,10 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
 import defaultConfig from './defaultConfig.json';
+import Input from './Input';
 
 class EditConfig extends React.Component {
   state = {
@@ -65,26 +63,108 @@ class EditConfig extends React.Component {
           <Divider />
           {Object.keys(defaultConfig.theme).map((i1, x) => {
             return (
-              <div key={x}>
-                <Typography style={{ padding: '8px 0 2px 16px' }}>{properCase(i1)}</Typography>
+              <div>
+                <Typography style={{ padding: '8px 0 2px 16px' }}>{i1 === 'ui' ? 'UI' : properCase(i1)}</Typography>
                 <Divider style={{ marginLeft: 16 }} />
-                {Object.keys(defaultConfig.theme[i1]).map((i2, y) => {
-                  return (
-                    <div key={y}>
-                      <div style={{ padding: '8px 0 2px 48px' }}>
-                        <FormControl>
-                          <InputLabel htmlFor={defaultConfig.theme[i1][i2]}>{properCase(i2)}</InputLabel>
-                          <Input
-                            id={config.theme[i1][i2]}
-                            type={typeof config.theme[i1][i2]}
-                            inputProps={{ autoCapitalize: "none" }}
-                            value={config.theme[i1][i2]}
-                            onChange={this.handleChange([config.theme[i1][i2]])} />
-                        </FormControl>
+                {Array.isArray(defaultConfig.theme[i1]) ?
+                  config.theme[i1].map((a1, ax) => {
+                    return (
+                      <div key={ax} style={{ padding: '8px 0 2px 16px' }}>
+                        {isObject(a1) ?
+                          Object.keys(a1).map((ai1, aix) => {
+                            return (
+                              <div key={aix} style={{ padding: '8px 0 2px 16px' }}>
+                                {isObject(a1[ai1]) ?
+                                  <div key={aix}>
+                                    <Typography>{properCase(ai1)}</Typography>
+                                    {Object.keys(a1[ai1]).map((ai2, aiy) => {
+                                      return (
+                                        <div key={aiy} style={{ padding: '8px 0 2px 16px' }}>
+                                          {isObject(a1[ai1][ai2]) ?
+                                            <div>
+                                              <Typography>{properCase(ai2)}</Typography>
+                                              {Object.keys(a1[ai1][ai2]).map((ai3, aiz) => {
+                                                return (
+                                                  <div key={aiz} style={{ padding: '8px 0 2px 16px' }}>
+                                                    {isObject(a1[ai1][ai2][ai3]) ?
+                                                      <div>
+                                                        <Typography>{properCase(ai3)}</Typography>
+                                                        {Object.keys(a1[ai1][ai2][ai3]).map((ai4, aizz) => {
+                                                          return (
+                                                            <div key={aizz} style={{ padding: '8px 0 2px 16px' }}>
+                                                              {isObject(a1[ai1][ai2][ai3][ai4]) ?
+                                                                <div>
+                                                                  <Typography>{properCase(ai4)}</Typography>
+                                                                  {Object.keys(a1[ai1][ai2][ai3][ai4]).map((ai5, aizzz) => {
+                                                                    return (
+                                                                      <div key={aizzz} style={{ padding: '8px 0 2px 16px' }}>
+                                                                        <Input name={properCase(ai5)} value={a1[ai1][ai2][ai3][ai5]} handleChange={this.handleChange} />
+                                                                      </div>
+                                                                    );
+                                                                  })}
+                                                                </div>
+                                                                :
+                                                                <Input name={properCase(ai4)} value={a1[ai1][ai2][ai3][ai4]} handleChange={this.handleChange} />
+                                                              }
+                                                            </div>
+                                                          );
+                                                        })}
+                                                      </div>
+                                                      :
+                                                      <Input name={properCase(ai3)} value={a1[ai1][ai2][ai3]} handleChange={this.handleChange} />
+                                                    }
+                                                  </div>
+                                                );
+                                              })}
+                                            </div>
+                                            :
+                                            <Input name={properCase(ai2)} value={a1[ai1][ai2]} handleChange={this.handleChange} />
+                                          }
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                  :
+                                  <Input name={properCase(ai1)} value={a1[ai1]} handleChange={this.handleChange} />
+                                }
+                              </div>
+                            );
+                          })
+                          :
+                          <div>{a1}</div>
+                        }
+                        <Divider style={{ marginTop: 16, marginLeft: 16 }} />
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })
+                  :
+                  <div key={x}>
+                    {Object.keys(defaultConfig.theme[i1]).map((i2, y) => {
+                      return (
+                        <div key={y} style={{ padding: '8px 0 2px 24px' }}>
+                          {isObject(defaultConfig.theme[i1][i2]) ?
+                            <div>
+                              <Typography>{properCase(i2)}</Typography>
+                              {Object.keys(defaultConfig.theme[i1][i2]).map((i3, z) => {
+                                return (
+                                  <div key={z} style={{ padding: '8px 0 2px 16px' }}>
+                                    {isObject(defaultConfig.theme[i1][i2][i3]) ?
+                                      <div></div>
+                                      :
+                                      <Input key={z} name={i3} value={config.theme[i1][i2][i3]} handleChange={this.handleChange} />
+                                    }
+                                  </div>
+                                );
+                              })}
+                            </div>
+                            :
+                            <Input name={i2} value={config.theme[i1][i2]} handleChange={this.handleChange} />
+                          }
+                        </div>
+                      );
+                    })}
+                  </div>
+                }
               </div>
             );
           })}
