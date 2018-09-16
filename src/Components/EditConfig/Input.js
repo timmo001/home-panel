@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MUIInput from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const styles = theme => ({
 });
@@ -11,27 +13,60 @@ const styles = theme => ({
 class Input extends React.Component {
 
   render() {
-    const { name, value, handleChange } = this.props;
+    const { name, value, defaultValue, handleChange } = this.props;
+    const type = typeof defaultValue;
 
-    return (
-      <FormControl>
-        <InputLabel htmlFor={name}>{name}</InputLabel>
-        <MUIInput
-          id={name}
-          type={typeof value}
-          inputProps={{ autoCapitalize: "none" }}
-          value={value}
-        // onChange={handleChange(name)}
-        />
-      </FormControl>
-    );
+    switch (type) {
+      default: return null;
+      case 'string': return (
+        <FormControl>
+          <InputLabel htmlFor={name}>{name}</InputLabel>
+          <MUIInput
+            id={name}
+            type="string"
+            inputProps={{ autoCapitalize: "none" }}
+            value={value}
+            onChange={handleChange(name)} />
+        </FormControl>
+      );
+      case 'number': return (
+        <FormControl>
+          <InputLabel htmlFor={name}>{name}</InputLabel>
+          <MUIInput
+            id={name}
+            type="number"
+            inputProps={{ autoCapitalize: "none" }}
+            value={value}
+            onChange={handleChange(name)} />
+        </FormControl>
+      );
+      case 'boolean': return (
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={value}
+              onChange={handleChange(name)}
+              value={name} />
+          }
+          label={name} />
+      );
+    }
   }
 }
 
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
-  // value: PropTypes.string,
+  defaultValue: PropTypes.oneOfType(
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool
+  ).isRequired,
+  value: PropTypes.oneOfType(
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.bool
+  ).isRequired,
   handleChange: PropTypes.func.isRequired,
 };
 
