@@ -30,7 +30,7 @@ class SubItem extends React.Component {
                   {Object.keys(item).map((i, x) => {
                     return <NextItem
                       key={x}
-                      defaultItem={defaultItem[i]}
+                      defaultItem={defaultItem[i] ? defaultItem[i] : item[i]}
                       item={item[i]}
                       handleChange={handleChange} />
                   })}
@@ -53,12 +53,11 @@ class SubItem extends React.Component {
               })}
             </div>
             :
-            <div />
-          // <Input
-          //   name={properCase(objKey)}
-          //   defaultValue={defaultItem ? defaultItem : ''}
-          //   value={item ? item : defaultItem ? defaultItem : ''}
-          //   handleChange={handleChange} />
+            <Input
+              name={properCase(objKey)}
+              defaultValue={defaultItem ? defaultItem : ''}
+              value={item ? item : defaultItem ? defaultItem : ''}
+              handleChange={handleChange} />
         }
       </div>
     );
@@ -74,14 +73,14 @@ SubItem.propTypes = {
   //   PropTypes.string,
   //   PropTypes.number,
   //   PropTypes.bool
-  // ).isRequired,
+  // ),
   // item: PropTypes.oneOfType(
   //   PropTypes.array,
   //   PropTypes.object,
   //   PropTypes.string,
   //   PropTypes.number,
   //   PropTypes.bool
-  // ).isRequired,
+  // ),
   handleChange: PropTypes.func.isRequired,
 };
 

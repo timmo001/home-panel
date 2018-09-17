@@ -56,17 +56,17 @@ class Input extends React.Component {
 
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
-  defaultValue: PropTypes.oneOfType(
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ).isRequired,
-  value: PropTypes.oneOfType(
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool
-  ).isRequired,
+  name: PropTypes.string,
+  // defaultValue: PropTypes.oneOfType(
+  //   PropTypes.string,
+  //   PropTypes.number,
+  //   PropTypes.bool
+  // ),
+  // value: PropTypes.oneOfType(
+  //   PropTypes.string,
+  //   PropTypes.number,
+  //   PropTypes.bool
+  // ),
   handleChange: PropTypes.func.isRequired,
 };
 

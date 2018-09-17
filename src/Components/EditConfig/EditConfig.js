@@ -1,7 +1,7 @@
 import React from 'react';
 import request from 'superagent';
 import PropTypes from 'prop-types';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { withStyles } from '@material-ui/core/styles';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,6 +11,15 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
+
+const styles = theme => ({
+  dialog: {
+    background: theme.palette.backgrounds.default
+  },
+  dialogContent: {
+    overflowY: 'auto'
+  }
+});
 
 class EditConfig extends React.Component {
   state = {
@@ -43,31 +52,33 @@ class EditConfig extends React.Component {
   };
 
   render() {
-    const { fullScreen, open, handleClose } = this.props;
+    const { classes, open, handleClose } = this.props;
     const { config } = this.state;
 
     return (
       <Dialog
-        fullScreen={fullScreen}
+        fullScreen
         open={open}
+        className={classes.dialog}
         disableBackdropClick
         disableEscapeKeyDown
-        maxWidth="lg"
         aria-labelledby="confirmation-dialog-title">
         <DialogTitle id="confirmation-dialog-title">Edit Config</DialogTitle>
-        <DialogContent>
-          <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Theme</Typography>
-          <Divider />
-          <Item defaultItem={defaultConfig.theme} item={config.theme} handleChange={this.handleChange} />
-          <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Header</Typography>
-          <Divider />
-          <Item defaultItem={defaultConfig.header} item={config.header} handleChange={this.handleChange} />
-          <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Pages</Typography>
-          <Divider />
-          <Item defaultItem={defaultConfig.pages} item={config.pages} handleChange={this.handleChange} />
-          <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Items (Groups)</Typography>
-          <Divider />
-          <Item defaultItem={defaultConfig.items} item={config.items} handleChange={this.handleChange} />
+        <DialogContent className={classes.dialogContent}>
+          <div>
+            <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Theme</Typography>
+            <Divider />
+            <Item defaultItem={defaultConfig.theme} item={config.theme} handleChange={this.handleChange} />
+            <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Header</Typography>
+            <Divider />
+            <Item defaultItem={defaultConfig.header} item={config.header} handleChange={this.handleChange} />
+            <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Pages</Typography>
+            <Divider />
+            <Item defaultItem={defaultConfig.pages} item={config.pages} handleChange={this.handleChange} />
+            <Typography variant="subheading" style={{ padding: '8px 0 2px 0' }}>Items (Groups)</Typography>
+            <Divider />
+            <Item defaultItem={defaultConfig.items} item={config.items} handleChange={this.handleChange} />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -83,7 +94,6 @@ class EditConfig extends React.Component {
 }
 
 EditConfig.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   config: PropTypes.object.isRequired,
   apiUrl: PropTypes.string.isRequired,
@@ -92,4 +102,4 @@ EditConfig.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-export default withMobileDialog()(EditConfig);
+export default withStyles(styles)(EditConfig);
