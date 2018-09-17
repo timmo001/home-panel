@@ -23,7 +23,8 @@ class SubItem extends React.Component {
       <div className={classes.root}>
         {Array.isArray(item) ?
           <div>
-            <Typography>{properCase(objKey)}</Typography>
+            <Typography variant="title">{properCase(objKey)}</Typography>
+            <Divider />
             {item.map((ai, ax) => {
               return (
                 <div key={ax}>
@@ -42,7 +43,8 @@ class SubItem extends React.Component {
           :
           isObject(item) ?
             <div>
-              <Typography>{properCase(objKey)}</Typography>
+              <Typography variant="subheading">{properCase(objKey)}</Typography>
+              <Divider />
               {Object.keys(item).map((i, x) => {
                 return <NextItem
                   key={x}
