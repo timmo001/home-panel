@@ -22,7 +22,7 @@ const styles = theme => ({
     width: '100%',
     height: 180,
     [theme.breakpoints.down('sm')]: {
-      height: 120,
+      height: 112,
     }
   },
   buttons: {
@@ -38,11 +38,14 @@ const styles = theme => ({
   button: {
     height: 42,
     width: 42,
-    marginRight: theme.spacing.unit,
     color: theme.palette.text.light,
+    [theme.breakpoints.up('sm')]: {
+      marginRight: theme.spacing.unit,
+    },
     [theme.breakpoints.down('sm')]: {
       height: 32,
       width: 32,
+      gridColumn: 1
     }
   },
   icon: {
@@ -60,7 +63,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      top: 4,
+      top: 0,
     }
   },
   time: {
@@ -68,14 +71,14 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '6.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '4.8rem'
+      fontSize: '4.6rem'
     }
   },
   timePeriod: {
     paddingLeft: theme.spacing.unit,
     fontSize: '3.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.2rem'
+      fontSize: '2.0rem'
     }
   },
   date: {
@@ -84,11 +87,11 @@ const styles = theme => ({
     textAlign: 'center',
     fontSize: '2.4rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem'
+      fontSize: '1.4rem'
     }
   },
   dateMilitary: {
-    marginTop: theme.spacing.unit * -0.8,
+    marginTop: theme.spacing.unit * -0.88,
   },
   weatherContainer: {
     position: 'fixed',
@@ -110,7 +113,7 @@ const styles = theme => ({
   },
   condition: {
     color: theme.palette.text.main,
-    fontSize: '2.8rem',
+    fontSize: '2.6rem',
     paddingLeft: 98,
     [theme.breakpoints.down('sm')]: {
       paddingLeft: 68,
@@ -128,7 +131,7 @@ const styles = theme => ({
   data: {
     maxWidth: 480,
     color: theme.palette.text.main,
-    fontSize: '1.8rem',
+    fontSize: '1.6rem',
     paddingLeft: 98,
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
@@ -360,6 +363,7 @@ class Header extends React.Component {
             }
             <IconButton
               className={classes.button}
+              style={{ gridRow: 1, gridColumn: 2 }}
               aria-label="Theme"
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
@@ -368,6 +372,7 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
+              style={{ gridRow: 2, gridColumn: 2 }}
               aria-label="Radio"
               onClick={this.props.handleRadioToggle}>
               <RadioIcon className={classes.icon} />
