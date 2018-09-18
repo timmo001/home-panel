@@ -23,8 +23,12 @@ class SubItem extends React.Component {
       <div className={classes.root}>
         {Array.isArray(item) ?
           <div>
-            <Typography variant="title">{properCase(objKey)}</Typography>
-            <Divider />
+            {objKey &&
+              <div>
+                <Typography variant="title">{properCase(objKey)}</Typography>
+                <Divider />
+              </div>
+            }
             {item.map((ai, ax) => {
               return (
                 <div key={ax}>
@@ -35,7 +39,6 @@ class SubItem extends React.Component {
                       item={item[i]}
                       handleChange={handleChange} />
                   })}
-                  <Divider />
                 </div>
               );
             })}
@@ -43,8 +46,12 @@ class SubItem extends React.Component {
           :
           isObject(item) ?
             <div>
-              <Typography variant="subheading">{properCase(objKey)}</Typography>
-              <Divider />
+              {objKey &&
+                <div>
+                  <Typography variant="title">{properCase(objKey)}</Typography>
+                  <Divider />
+                </div>
+              }
               {Object.keys(item).map((i, x) => {
                 return <NextItem
                   key={x}
