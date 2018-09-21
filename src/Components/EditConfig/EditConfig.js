@@ -20,14 +20,21 @@ const styles = theme => ({
     background: theme.palette.backgrounds.default
   },
   dialogContent: {
-    overflowY: 'auto'
+    overflowY: 'auto',
+    paddingLeft: 0
   },
   navigation: {
     position: 'fixed',
     width: 240,
   },
+  navigationDivider: {
+    position: 'absolute',
+    width: 1,
+    height: '100%',
+    marginLeft: -12
+  },
   main: {
-    marginLeft: 240,
+    marginLeft: 256,
   },
   heading: {
     padding: '8px 0 2px 0'
@@ -91,12 +98,17 @@ class EditConfig extends React.Component {
             <DialogContent className={classes.dialogContent}>
               <List component="nav" className={classes.navigation}>
                 {topLevel.map((i, x) => {
-                  return <ListItem key={x} button onClick={event => this.handleListItemClick(event, i)}>
+                  return <ListItem
+                    key={x}
+                    button
+                    onClick={event => this.handleListItemClick(event, i)}
+                    selected={selected.id === i.id}>
                     <ListItemText primary={i.name} />
                   </ListItem>
                 })}
               </List>
               <div className={classes.main}>
+                <Divider className={classes.navigationDivider} />
                 <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
                 <Divider />
                 {selected.id === 0 ?

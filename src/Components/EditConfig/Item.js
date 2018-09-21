@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
 import Input from './Input';
@@ -33,11 +35,13 @@ class SubItem extends React.Component {
               return (
                 <NextItem
                   key={ax}
-                  defaultItem={ai}
                   item={ai}
                   handleChange={handleChange} />
               );
             })}
+            <Button variant="fab" mini color="primary" aria-label="Add">
+              <AddIcon />
+            </Button>
           </div>
           :
           isObject(item) ?
@@ -48,11 +52,11 @@ class SubItem extends React.Component {
                   <Divider />
                 </div>
               }
-              {Object.keys(item).map((i, x) => {
+              {Object.keys(defaultItem ? defaultItem : item).map((i, x) => {
                 return <NextItem
                   key={x}
                   objKey={i}
-                  defaultItem={defaultItem[i] ? defaultItem[i] : item[i]}
+                  defaultItem={defaultItem && defaultItem[i] ? defaultItem[i] : item[i]}
                   item={item[i]}
                   handleChange={handleChange} />
               })}
