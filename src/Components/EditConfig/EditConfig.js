@@ -20,21 +20,21 @@ const styles = theme => ({
     background: theme.palette.backgrounds.default
   },
   dialogContent: {
-    overflowY: 'auto',
     paddingLeft: 0
   },
   navigation: {
     position: 'fixed',
-    width: 240,
+    width: 240
   },
   navigationDivider: {
     position: 'absolute',
     width: 1,
-    height: '100%',
+    height: 'calc(100% - 68px)',
     marginLeft: -12
   },
   main: {
     marginLeft: 256,
+    overflowY: 'auto'
   },
   heading: {
     padding: '8px 0 2px 0'
