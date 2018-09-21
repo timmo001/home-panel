@@ -133,11 +133,8 @@ class Root extends Component {
     }
   };
 
-  updateEntities = entities => {
-    this.setState({ entities: Object.entries(entities) }, () => {
-      this.setTheme();
-    });
-  };
+  updateEntities = entities => this.setState({ entities: Object.entries(entities) });
+
 
   setTheme = (themeId = undefined) => {
     if (!themeId && themeId !== 0)

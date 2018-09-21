@@ -35,6 +35,8 @@ class Main extends React.Component {
     currentPage: 0,
   };
 
+  componentDidMount = () => this.props.setTheme();
+
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
   handleClose = (themeId) => {
