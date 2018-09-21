@@ -100,7 +100,7 @@ class Root extends Component {
           conn.addEventListener('ready', this.eventHandler);
           subscribeEntities(conn, this.updateEntities);
           getUser(conn).then(user => {
-            console.log('Logged into HASS as', user.name);
+            console.log('Logged into Home Assistant as', user.name);
             sessionStorage.setItem('hass_id', user.id);
           });
           connection = conn;
@@ -199,11 +199,11 @@ class Root extends Component {
               <CircularProgress className={classes.progress} />
               {connected ?
                 <Typography variant="subheading">
-                  Loading HASS data...
+                  Loading Home Assistant data..
                 </Typography>
                 :
                 <Typography variant="subheading">
-                  Attempting to connect to HASS...
+                  Attempting to connect to Home Assistant..
                 </Typography>
               }
             </div>
