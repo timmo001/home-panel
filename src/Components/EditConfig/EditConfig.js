@@ -36,9 +36,6 @@ const styles = theme => ({
 
 class EditConfig extends React.Component {
   state = {
-  };
-
-  componentDidMount = () => this.setState({
     config: this.props.config,
     topLevel: [
       { id: 0, name: 'Theme' },
@@ -47,7 +44,7 @@ class EditConfig extends React.Component {
       { id: 3, name: 'Items (Groups)' }
     ],
     selected: { id: 0, name: 'Theme' }
-  });
+  };
 
   handleChange = prop => event => { }//this.setState({ [prop]: event.target.value });
 
@@ -80,49 +77,51 @@ class EditConfig extends React.Component {
     const { classes, open, handleClose } = this.props;
     const { config, topLevel, selected } = this.state;
 
-    if (config)
-      return (
-        <Dialog
-          fullScreen
-          open={open}
-          className={classes.dialog}
-          disableBackdropClick
-          disableEscapeKeyDown
-          aria-labelledby="confirmation-dialog-title">
-          <DialogTitle id="confirmation-dialog-title">Edit Config</DialogTitle>
-          <DialogContent className={classes.dialogContent}>
-            <List component="nav" className={classes.navigation}>
-              {topLevel.map((i, x) => {
-                return <ListItem key={x} button onClick={event => this.handleListItemClick(event, i)}>
-                  <ListItemText primary={i.name} />
-                </ListItem>
-              })}
-            </List>
-            <div className={classes.main}>
-              <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
-              <Divider />
-              {selected.id === 0 ?
-                <Item defaultItem={defaultConfig.theme} item={config.theme} handleChange={this.handleChange} />
-                : selected.id === 1 ?
-                  <Item defaultItem={defaultConfig.header} item={config.header} handleChange={this.handleChange} />
-                  : selected.id === 2 ?
-                    <Item defaultItem={defaultConfig.pages} item={config.pages} handleChange={this.handleChange} />
-                    : selected.id === 3 &&
-                    <Item defaultItem={defaultConfig.items} item={config.items} handleChange={this.handleChange} />
-              }
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-          </Button>
-            <Button onClick={this.handleSave} color="primary">
-              Save
-          </Button>
-          </DialogActions>
-        </Dialog>
-      );
-    else return null;
+    return (
+      <div>
+        {config &&
+          <Dialog
+            fullScreen
+            open={open}
+            className={classes.dialog}
+            disableBackdropClick
+            disableEscapeKeyDown
+            aria-labelledby="confirmation-dialog-title">
+            <DialogTitle id="confirmation-dialog-title">Edit Config</DialogTitle>
+            <DialogContent className={classes.dialogContent}>
+              <List component="nav" className={classes.navigation}>
+                {topLevel.map((i, x) => {
+                  return <ListItem key={x} button onClick={event => this.handleListItemClick(event, i)}>
+                    <ListItemText primary={i.name} />
+                  </ListItem>
+                })}
+              </List>
+              <div className={classes.main}>
+                <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
+                <Divider />
+                {selected.id === 0 ?
+                  <Item defaultItem={defaultConfig.theme} item={config.theme} handleChange={this.handleChange} />
+                  : selected.id === 1 ?
+                    <Item defaultItem={defaultConfig.header} item={config.header} handleChange={this.handleChange} />
+                    : selected.id === 2 ?
+                      <Item defaultItem={defaultConfig.pages} item={config.pages} handleChange={this.handleChange} />
+                      : selected.id === 3 &&
+                      <Item defaultItem={defaultConfig.items} item={config.items} handleChange={this.handleChange} />
+                }
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button onClick={this.handleSave} color="primary">
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+        }
+      </div>
+    );
   }
 }
 
