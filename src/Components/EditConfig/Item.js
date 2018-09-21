@@ -31,15 +31,11 @@ class SubItem extends React.Component {
             }
             {item.map((ai, ax) => {
               return (
-                <div key={ax}>
-                  {Object.keys(item).map((i, x) => {
-                    return <NextItem
-                      key={x}
-                      defaultItem={defaultItem[i] ? defaultItem[i] : item[i]}
-                      item={item[i]}
-                      handleChange={handleChange} />
-                  })}
-                </div>
+                <NextItem
+                  key={ax}
+                  defaultItem={ai}
+                  item={ai}
+                  handleChange={handleChange} />
               );
             })}
           </div>
