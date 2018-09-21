@@ -1,7 +1,7 @@
 {
   "theme": {
     "auto": {
-      "sensor": "sensor.sn1_ldr",
+      "sensor": "",
       "below": 600
     },
     "ui": {
@@ -12,43 +12,26 @@
     },
     "custom": [
       {
-        "name": "Midnight",
-        "base": "dark",
+        "name": "",
+        "base": "",
         "overrides": {
-          "primary": "pink",
+          "primary": "",
           "backgrounds": {
-            "main": "#383c45",
-            "default": "#383c45",
+            "main": "",
+            "default": "",
             "card": {
-              "on": "pink[600]",
-              "off": "#434954",
-              "disabled": "#7f848e",
+              "on": "",
+              "off": "",
+              "disabled": "",
               "alarm": {
-                "home": "pink[600]",
-                "away": "pink[600]"
+                "home": "",
+                "away": ""
               }
             }
           },
           "text": {
-            "light": "grey[50]",
-            "main": "grey[100]"
-          }
-        }
-      },
-      {
-        "name": "Forest",
-        "base": "light",
-        "overrides": {
-          "backgrounds": {
-            "main": "url(https://images.pexels.com/photos/4827/nature-forest-trees-fog.jpeg)",
-            "card": {
-              "on": "lightGreen[700]",
-              "off": "green[50]",
-              "alarm": {
-                "home": "lightGreen[700]",
-                "away": "lightGreen[700]"
-              }
-            }
+            "light": "",
+            "main": ""
           }
         }
       }
@@ -63,15 +46,11 @@
     },
     "left_outdoor_weather": {
       "dark_sky_icon": "sensor.dark_sky_icon",
-      "condition": "sensor.pws_weather",
+      "condition": "",
       "data": [
         {
-          "entity_id": "sensor.pws_temp_c",
-          "unit_of_measurement": "°C"
-        },
-        {
-          "entity_id": "sensor.pws_relative_humidity",
-          "unit_of_measurement": "%"
+          "entity_id": "",
+          "unit_of_measurement": ""
         }
       ]
     },
@@ -82,6 +61,47 @@
       }
     ]
   },
-  "pages": [],
-  "items": []
+  "pages": [
+    {
+      "name": "",
+      "icon": ""
+    }
+  ],
+  "items": [
+    {
+      "name": "",
+      "page": 1,
+      "width": 2,
+      "cards": [
+        {
+          "type": "hass",
+          "name": "",
+          "entity_id": "",
+          "icon": "",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "type": "link",
+          "name": "",
+          "icon": "",
+          "width": 1,
+          "height": 1
+        },
+        {
+          "type": "camera",
+          "name": "",
+          "url": "",
+          "still_url": "",
+          "width": 3
+        },
+        {
+          "type": "iframe",
+          "url": "",
+          "width": 1,
+          "height": 1
+        }
+      ]
+    }
+  ]
 }
