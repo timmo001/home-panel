@@ -91,7 +91,7 @@ class SubItem extends React.Component {
                   :
                   <Typography color="error" variant="subheading">
                     No default config set for {JSON.stringify(item)}.<br />
-                    Please report this error to Git repository's issues including a screenshot of this item's location.
+                    Please report this error to Git repository's issue tracker including a screenshot of this item's location.
                   </Typography>
                 }
               </Collapse>
