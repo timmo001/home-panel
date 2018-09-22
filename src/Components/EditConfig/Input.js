@@ -71,6 +71,7 @@ Input.propTypes = {
   //   PropTypes.number,
   //   PropTypes.bool
   // ),
+  itemPath: PropTypes.array.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
 };
 
