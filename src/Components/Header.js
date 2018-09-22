@@ -28,11 +28,16 @@ const styles = theme => ({
   buttons: {
     position: 'fixed',
     top: 0,
+    margin: theme.spacing.unit,
+    [theme.breakpoints.down('md')]: {
+      margin: theme.spacing.unit / 2,
+    },
     [theme.breakpoints.down('sm')]: {
       display: 'grid',
+      margin: 0
     },
     [theme.breakpoints.up('sm')]: {
-      display: 'block',
+      display: 'block'
     }
   },
   button: {
@@ -63,7 +68,7 @@ const styles = theme => ({
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      top: 0,
+      top: theme.spacing.unit / 2,
     }
   },
   time: {
@@ -71,7 +76,7 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '6.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '4.6rem'
+      fontSize: '4.2rem'
     }
   },
   timePeriod: {
@@ -85,9 +90,9 @@ const styles = theme => ({
     color: theme.palette.text.main,
     marginTop: theme.spacing.unit * -2.2,
     textAlign: 'center',
-    fontSize: '2.4rem',
+    fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.4rem'
+      fontSize: '1.5rem'
     }
   },
   dateMilitary: {
