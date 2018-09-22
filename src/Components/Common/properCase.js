@@ -1,5 +1,5 @@
 const properCase = (text) => {
-  if (!typeof text === 'string' || text === undefined) return text;
+  if (!typeof text === 'string' || typeof text === 'number' || !text) return text;
   const words = text.split('_');
   let newString = '';
   words.map((w) => {

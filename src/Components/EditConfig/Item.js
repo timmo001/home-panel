@@ -19,17 +19,25 @@ const styles = theme => ({
     padding: '8px 0 2px 16px',
     color: theme.palette.text.main
   },
+  dropdown: {
+    paddingLeft: theme.spacing.unit / 2
+  },
   dropdownText: {
+    flex: '1 0 auto'
+  },
+  dropdownSubText: {
+    margin: '0 16px',
     flex: '1 1 auto',
+    fontSize: '1.0rem'
   },
 });
 
 class SubItem extends React.Component {
   state = {
-    open: this.props.objKey ?
-      Array.isArray(this.props.item) && this.props.item.length > 1 ?
-        false : true :
-      true
+    open: this.props.open !== undefined ? this.props.open :
+      this.props.itemPath.length < 2 ||
+      this.props.itemPath.length > 2 ||
+      Array.isArray(this.props.item)
   };
 
   handleClick = () => this.setState(state => ({ open: !state.open }));
@@ -38,19 +46,37 @@ class SubItem extends React.Component {
     const { classes, objKey, defaultItem, item, itemPath, handleConfigChange } = this.props;
     const { open } = this.state;
 
+    const dropdown = itemPath.length === 1 ?
+      <ListItem className={classes.dropdown}>
+        <Typography className={classes.dropdownText} variant="title">
+          {objKey && properCase(objKey)}
+        </Typography>
+      </ListItem>
+      :
+      <ListItem className={classes.dropdown} button onClick={this.handleClick}>
+        <Typography className={classes.dropdownText} variant="title">
+          {objKey && properCase(objKey)}
+        </Typography>
+        {!open &&
+          <Typography className={classes.dropdownSubText} noWrap>
+            {JSON.stringify(item)}
+          </Typography>
+        }
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+
     return (
       <div className={classes.root}>
         {Array.isArray(item) ?
           <div>
-            <ListItem button onClick={this.handleClick}>
-              <Typography className={classes.dropdownText} variant="title">{properCase(objKey)}</Typography>
-              {open ? <ExpandLess /> : <ExpandMore />}
-            </ListItem>
+            {dropdown}
             <Divider />
             <Collapse in={open}>
               {item.map((ai, ax) => {
                 return <NextItem
                   key={ax}
+                  open={false}
+                  objKey={ax}
                   defaultItem={defaultItem[objKey === 'cards' ?
                     ai.type === 'link' ? 1 :
                       ai.type === 'camera' ? 2 :
@@ -68,15 +94,8 @@ class SubItem extends React.Component {
           :
           isObject(item) ?
             <div>
-              {objKey &&
-                <div>
-                  <ListItem button onClick={this.handleClick}>
-                    <Typography className={classes.dropdownText} variant="title">{properCase(objKey)}</Typography>
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Divider />
-                </div>
-              }
+              {dropdown}
+              <Divider />
               <Collapse in={open}>
                 {defaultItem ?
                   Object.keys(defaultItem).map((i, x) => {
@@ -92,7 +111,7 @@ class SubItem extends React.Component {
                   <Typography color="error" variant="subheading">
                     No default config set for {JSON.stringify(item)}.<br />
                     Please report this error to Git repository's issue tracker including a screenshot of this item's location.
-                  </Typography>
+                </Typography>
                 }
               </Collapse>
             </div>
@@ -111,21 +130,6 @@ class SubItem extends React.Component {
 
 SubItem.propTypes = {
   classes: PropTypes.object.isRequired,
-  objKey: PropTypes.string,
-  // defaultItem: PropTypes.oneOfType(
-  //   PropTypes.array,
-  //   PropTypes.object,
-  //   PropTypes.string,
-  //   PropTypes.number,
-  //   PropTypes.bool
-  // ),
-  // item: PropTypes.oneOfType(
-  //   PropTypes.array,
-  //   PropTypes.object,
-  //   PropTypes.string,
-  //   PropTypes.number,
-  //   PropTypes.bool
-  // ),
   itemPath: PropTypes.array.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
 };

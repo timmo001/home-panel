@@ -2,8 +2,6 @@ import React from 'react';
 import request from 'superagent';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
@@ -71,14 +69,15 @@ const styles = theme => ({
     position: 'absolute',
     width: 1,
     height: 'calc(100% - 68px)',
-    marginLeft: -12
+    marginLeft: 248
   },
   main: {
     [theme.breakpoints.up('md')]: {
       marginLeft: drawerWidth
     },
     padding: theme.spacing.unit * 2,
-    overflowY: 'auto'
+    overflowY: 'auto',
+    flex: '1 1 auto'
   },
   heading: {
     padding: '8px 0 2px 0'
@@ -135,7 +134,7 @@ class EditConfig extends React.Component {
 
   handleListItemClick = (event, item) => this.setState({ selected: item, mobileOpen: false });
 
-  handleClose = () => this.setState({ config: this.props.config }, () => this.props.handleClose());
+  handleClose = () => this.setState({ config: this.props.config }, () => window.location.reload(true));
 
   render() {
     const { classes, theme, open } = this.props;
@@ -212,16 +211,36 @@ class EditConfig extends React.Component {
               <div className={classes.toolbar} />
             </Hidden>
             <div className={classes.main}>
-              <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
-              <Divider />
+              {/* <Typography variant="headline" className={classes.heading}>{selected.name}</Typography> */}
+              {/* <Divider /> */}
               {selected.id === 0 ?
-                <Item defaultItem={defaultConfig.theme} item={config.theme} itemPath={['theme']} handleConfigChange={this.handleConfigChange} />
+                <Item
+                  objKey={selected.name}
+                  defaultItem={defaultConfig.theme}
+                  item={config.theme}
+                  itemPath={['theme']}
+                  handleConfigChange={this.handleConfigChange} />
                 : selected.id === 1 ?
-                  <Item defaultItem={defaultConfig.header} item={config.header} itemPath={['header']} handleConfigChange={this.handleConfigChange} />
+                  <Item
+                    objKey={selected.name}
+                    defaultItem={defaultConfig.header}
+                    item={config.header}
+                    itemPath={['header']}
+                    handleConfigChange={this.handleConfigChange} />
                   : selected.id === 2 ?
-                    <Item defaultItem={defaultConfig.pages} item={config.pages} itemPath={['pages']} handleConfigChange={this.handleConfigChange} />
+                    <Item
+                      objKey={selected.name}
+                      defaultItem={defaultConfig.pages}
+                      item={config.pages}
+                      itemPath={['pages']}
+                      handleConfigChange={this.handleConfigChange} />
                     : selected.id === 3 &&
-                    <Item defaultItem={defaultConfig.items} item={config.items} itemPath={['items']} handleConfigChange={this.handleConfigChange} />
+                    <Item
+                      objKey={selected.name}
+                      defaultItem={defaultConfig.items}
+                      item={config.items}
+                      itemPath={['items']}
+                      handleConfigChange={this.handleConfigChange} />
               }
             </div>
             <DialogActions>
