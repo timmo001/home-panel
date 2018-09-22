@@ -42,7 +42,7 @@ class Input extends React.Component {
             type="number"
             inputProps={{ autoCapitalize: "none" }}
             value={value}
-            onChange={event => handleConfigChange(itemPath, event.target.value)} />
+            onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
         </FormControl>
       );
       case 'boolean': return (
@@ -52,7 +52,7 @@ class Input extends React.Component {
               checked={value}
               onChange={event => handleConfigChange(itemPath, event.target.checked)} />
           }
-          label={name} />
+          label={properCase(name)} />
       );
     }
   }

@@ -25,15 +25,16 @@ class SubItem extends React.Component {
       <div className={classes.root}>
         {Array.isArray(item) ?
           <div>
-            {objKey &&
-              <div>
-                <Typography variant="title">{properCase(objKey)}</Typography>
-                <Divider />
-              </div>
-            }
+            <Typography variant="title">{properCase(objKey)}</Typography>
+            <Divider />
             {item.map((ai, ax) => {
               return <NextItem
                 key={ax}
+                defaultItem={defaultItem[objKey === 'cards' ?
+                  ai.type === 'link' ? 1 :
+                    ai.type === 'camera' ? 2 :
+                      ai.type === 'iframe' ? 3 :
+                        0 : 0]}
                 item={ai}
                 itemPath={itemPath.concat([ax])}
                 handleConfigChange={handleConfigChange} />
@@ -51,11 +52,11 @@ class SubItem extends React.Component {
                   <Divider />
                 </div>
               }
-              {Object.keys(defaultItem ? defaultItem : item).map((i, x) => {
+              {Object.keys(defaultItem).map((i, x) => {
                 return <NextItem
                   key={x}
                   objKey={i}
-                  defaultItem={defaultItem && defaultItem[i] ? defaultItem[i] : item[i]}
+                  defaultItem={defaultItem[i]}
                   item={item[i]}
                   itemPath={itemPath.concat([i])}
                   handleConfigChange={handleConfigChange} />

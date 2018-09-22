@@ -15,23 +15,27 @@
         "name": "",
         "base": "",
         "overrides": {
+          "type": "",
           "primary": "",
           "backgrounds": {
             "main": "",
             "default": "",
+            "navigation": "",
             "card": {
               "on": "",
               "off": "",
               "disabled": "",
               "alarm": {
                 "home": "",
-                "away": ""
+                "away": "",
+                "triggered": ""
               }
             }
           },
           "text": {
             "light": "",
-            "main": ""
+            "main": "",
+            "icon": ""
           }
         }
       }

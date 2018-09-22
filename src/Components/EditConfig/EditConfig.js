@@ -93,16 +93,20 @@ class EditConfig extends React.Component {
         if (res.status === 200) {
           window.location.reload(true);
         } else {
+          console.log('An error occurred: ', res.status);
         }
       })
       .catch(err => {
+        console.log('An error occurred: ', err);
       });
   };
 
   handleListItemClick = (event, item) => this.setState({ selected: item });
 
+  handleClose = () => this.setState({ config: this.props.config }, () => this.props.handleClose());
+
   render() {
-    const { classes, open, handleClose } = this.props;
+    const { classes, open } = this.props;
     const { config, topLevel, selected } = this.state;
 
     return (
@@ -144,7 +148,7 @@ class EditConfig extends React.Component {
               </div>
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleClose} color="primary">
+              <Button onClick={this.handleClose} color="primary">
                 Cancel
               </Button>
               <Button onClick={this.handleSave} color="primary">
