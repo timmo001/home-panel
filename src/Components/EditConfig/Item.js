@@ -16,7 +16,7 @@ import NextItem from './Item';
 
 const styles = theme => ({
   root: {
-    padding: '8px 0 2px 16px',
+    padding: '8px 8px 2px 16px',
     color: theme.palette.text.main
   },
   dropdown: {
@@ -30,6 +30,9 @@ const styles = theme => ({
     flex: '1 1 auto',
     fontSize: '1.0rem'
   },
+  addIcon: {
+    flex: '1 1 auto'
+  }
 });
 
 class SubItem extends React.Component {
@@ -86,9 +89,15 @@ class SubItem extends React.Component {
                   itemPath={itemPath.concat([ax])}
                   handleConfigChange={handleConfigChange} />
               })}
-              <Button variant="fab" mini color="primary" aria-label="Add">
-                <AddIcon />
-              </Button>
+              <ListItem className={classes.root}>
+                <Button
+                  className={classes.addIcon}
+                  mini
+                  aria-label="Add"
+                  onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
+                  <AddIcon />
+                </Button>
+              </ListItem>
             </Collapse>
           </div>
           :
@@ -111,7 +120,7 @@ class SubItem extends React.Component {
                   <Typography color="error" variant="subheading">
                     No default config set for {JSON.stringify(item)}.<br />
                     Please report this error to Git repository's issue tracker including a screenshot of this item's location.
-                </Typography>
+                  </Typography>
                 }
               </Collapse>
             </div>

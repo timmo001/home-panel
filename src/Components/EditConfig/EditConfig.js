@@ -16,6 +16,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
+import isObject from '../Common/isObject';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
 
@@ -25,7 +26,6 @@ const styles = theme => ({
   dialog: {
     background: theme.palette.backgrounds.default
   },
-
   root: {
     flexGrow: 1,
     height: 440,
@@ -63,13 +63,13 @@ const styles = theme => ({
   },
   navigation: {
     position: 'fixed',
-    width: 240
+    width: drawerWidth
   },
   navigationDivider: {
     position: 'absolute',
     width: 1,
     height: 'calc(100% - 68px)',
-    marginLeft: 248
+    marginLeft: drawerWidth + 8
   },
   main: {
     [theme.breakpoints.up('md')]: {
@@ -103,7 +103,10 @@ class EditConfig extends React.Component {
     let config = this.state.config;
     // Set the new value
     let last = path.pop();
-    path.reduce((o, k) => o[k] = o[k] || {}, config)[last] = value;
+    if (isObject(value)) {
+      if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
+      path.reduce((o, k) => o[k] = o[k] || {}, config)[last].push(value);
+    } else path.reduce((o, k) => o[k] = o[k] || {}, config)[last] = value;
     this.setState({ config });
   };
 
@@ -211,8 +214,6 @@ class EditConfig extends React.Component {
               <div className={classes.toolbar} />
             </Hidden>
             <div className={classes.main}>
-              {/* <Typography variant="headline" className={classes.heading}>{selected.name}</Typography> */}
-              {/* <Divider /> */}
               {selected.id === 0 ?
                 <Item
                   objKey={selected.name}
