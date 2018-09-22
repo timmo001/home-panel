@@ -19,7 +19,7 @@ const styles = theme => ({
 class SubItem extends React.Component {
 
   render() {
-    const { classes, objKey, defaultItem, item, handleChange } = this.props;
+    const { classes, objKey, defaultItem, item, itemPath, handleConfigChange } = this.props;
 
     return (
       <div className={classes.root}>
@@ -35,7 +35,8 @@ class SubItem extends React.Component {
               return <NextItem
                 key={ax}
                 item={ai}
-                handleChange={handleChange} />
+                itemPath={itemPath.concat([ax])}
+                handleConfigChange={handleConfigChange} />
             })}
             <Button variant="fab" mini color="primary" aria-label="Add">
               <AddIcon />
@@ -56,15 +57,17 @@ class SubItem extends React.Component {
                   objKey={i}
                   defaultItem={defaultItem && defaultItem[i] ? defaultItem[i] : item[i]}
                   item={item[i]}
-                  handleChange={handleChange} />
+                  itemPath={itemPath.concat([i])}
+                  handleConfigChange={handleConfigChange} />
               })}
             </div>
             :
             <Input
-              name={properCase(objKey)}
+              name={objKey}
               defaultValue={defaultItem}
               value={item}
-              handleChange={handleChange} />
+              itemPath={itemPath}
+              handleConfigChange={handleConfigChange} />
         }
       </div>
     );
@@ -88,7 +91,8 @@ SubItem.propTypes = {
   //   PropTypes.number,
   //   PropTypes.bool
   // ),
-  handleChange: PropTypes.func.isRequired,
+  // itemPath: PropTypes.array.isRequired,
+  handleConfigChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(SubItem);

@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import properCase from '../Common/properCase';
 
 const styles = theme => ({
   input: {}
@@ -14,7 +15,7 @@ const styles = theme => ({
 class Input extends React.Component {
 
   render() {
-    const { classes, name, value, defaultValue, handleChange } = this.props;
+    const { classes, name, defaultValue, value, itemPath, handleConfigChange } = this.props;
     const type = defaultValue === 'true' ? 'boolean'
       : defaultValue === 'false' ? 'boolean'
         : typeof defaultValue;
@@ -24,24 +25,24 @@ class Input extends React.Component {
       case 'string':
         return (
           <FormControl className={classes.input}>
-            <InputLabel htmlFor={name}>{name}</InputLabel>
+            <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
             <MUIInput
               id={name}
               type="string"
               inputProps={{ autoCapitalize: "none" }}
               value={value}
-              onChange={handleChange(name)} />
+              onChange={event => handleConfigChange(itemPath, event.target.value)} />
           </FormControl>
         );
       case 'number': return (
         <FormControl className={classes.input}>
-          <InputLabel htmlFor={name}>{name}</InputLabel>
+          <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
           <MUIInput
             id={name}
             type="number"
             inputProps={{ autoCapitalize: "none" }}
             value={value}
-            onChange={handleChange(name)} />
+            onChange={event => handleConfigChange(itemPath, event.target.value)} />
         </FormControl>
       );
       case 'boolean': return (
@@ -49,8 +50,7 @@ class Input extends React.Component {
           control={
             <Checkbox
               checked={value}
-              onChange={handleChange(name)}
-              value={name} />
+              onChange={event => handleConfigChange(itemPath, event.target.checked)} />
           }
           label={name} />
       );
@@ -71,7 +71,7 @@ Input.propTypes = {
   //   PropTypes.number,
   //   PropTypes.bool
   // ),
-  handleChange: PropTypes.func.isRequired,
+  handleConfigChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Input);

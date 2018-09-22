@@ -41,6 +41,21 @@ const styles = theme => ({
   }
 });
 
+Object.byString = function (o, s) {
+  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+  s = s.replace(/^\./, '');           // strip a leading dot
+  var a = s.split('.');
+  for (var i = 0, n = a.length; i < n; ++i) {
+    var k = a[i];
+    if (k in o) {
+      o = o[k];
+    } else {
+      return;
+    }
+  }
+  return o;
+}
+
 class EditConfig extends React.Component {
   state = {
     config: this.props.config,
@@ -53,8 +68,12 @@ class EditConfig extends React.Component {
     selected: { id: 0, name: 'Theme' }
   };
 
-  handleChange = prop => event => {
-    //this.setState({ [prop]: event.target.value });
+  handleConfigChange = (path, value) => {
+    let config = this.state.config;
+    // Set the new value
+    let last = path.pop();
+    path.reduce((o, k) => o[k] = o[k] || {}, config)[last] = value;
+    this.setState({ config });
   };
 
   handleSave = () => {
@@ -114,13 +133,13 @@ class EditConfig extends React.Component {
                 <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
                 <Divider />
                 {selected.id === 0 ?
-                  <Item defaultItem={defaultConfig.theme} item={config.theme} handleChange={this.handleChange} />
+                  <Item defaultItem={defaultConfig.theme} item={config.theme} itemPath={['theme']} handleConfigChange={this.handleConfigChange} />
                   : selected.id === 1 ?
-                    <Item defaultItem={defaultConfig.header} item={config.header} handleChange={this.handleChange} />
+                    <Item defaultItem={defaultConfig.header} item={config.header} itemPath={['header']} handleConfigChange={this.handleConfigChange} />
                     : selected.id === 2 ?
-                      <Item defaultItem={defaultConfig.pages} item={config.pages} handleChange={this.handleChange} />
+                      <Item defaultItem={defaultConfig.pages} item={config.pages} itemPath={['pages']} handleConfigChange={this.handleConfigChange} />
                       : selected.id === 3 &&
-                      <Item defaultItem={defaultConfig.items} item={config.items} handleChange={this.handleChange} />
+                      <Item defaultItem={defaultConfig.items} item={config.items} itemPath={['items']} handleConfigChange={this.handleConfigChange} />
                 }
               </div>
             </DialogContent>
