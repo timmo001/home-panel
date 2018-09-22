@@ -12,15 +12,56 @@ import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
+
+const drawerWidth = 240;
 
 const styles = theme => ({
   dialog: {
     background: theme.palette.backgrounds.default
   },
+
+  root: {
+    flexGrow: 1,
+    height: 440,
+    zIndex: 1,
+    overflow: 'hidden',
+    position: 'relative',
+    display: 'flex',
+    width: '100%',
+  },
+  appBar: {
+    position: 'absolute',
+    marginLeft: drawerWidth,
+    [theme.breakpoints.up('md')]: {
+      zIndex: 2000
+    }
+  },
+  navIconHide: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    }
+  },
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+    [theme.breakpoints.up('md')]: {
+      position: 'relative'
+    }
+  },
   dialogContent: {
-    paddingLeft: 0
+    flex: '1 1 auto',
+    padding: 0,
+    '&:first-child': {
+      paddingTop: 0
+    }
   },
   navigation: {
     position: 'fixed',
@@ -33,7 +74,10 @@ const styles = theme => ({
     marginLeft: -12
   },
   main: {
-    marginLeft: 256,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: drawerWidth
+    },
+    padding: theme.spacing.unit * 2,
     overflowY: 'auto'
   },
   heading: {
@@ -41,23 +85,9 @@ const styles = theme => ({
   }
 });
 
-Object.byString = function (o, s) {
-  s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-  s = s.replace(/^\./, '');           // strip a leading dot
-  var a = s.split('.');
-  for (var i = 0, n = a.length; i < n; ++i) {
-    var k = a[i];
-    if (k in o) {
-      o = o[k];
-    } else {
-      return;
-    }
-  }
-  return o;
-}
-
 class EditConfig extends React.Component {
   state = {
+    mobileOpen: false,
     config: this.props.config,
     topLevel: [
       { id: 0, name: 'Theme' },
@@ -67,6 +97,8 @@ class EditConfig extends React.Component {
     ],
     selected: { id: 0, name: 'Theme' }
   };
+
+  handleDrawerToggle = () => this.setState(state => ({ mobileOpen: !state.mobileOpen }));
 
   handleConfigChange = (path, value) => {
     let config = this.state.config;
@@ -101,13 +133,30 @@ class EditConfig extends React.Component {
       });
   };
 
-  handleListItemClick = (event, item) => this.setState({ selected: item });
+  handleListItemClick = (event, item) => this.setState({ selected: item, mobileOpen: false });
 
   handleClose = () => this.setState({ config: this.props.config }, () => this.props.handleClose());
 
   render() {
-    const { classes, open } = this.props;
+    const { classes, theme, open } = this.props;
     const { config, topLevel, selected } = this.state;
+
+    const drawer = (
+      <div>
+        <div className={classes.toolbar} />
+        <List component="nav" className={classes.navigation}>
+          {topLevel.map((i, x) => {
+            return <ListItem
+              key={x}
+              button
+              onClick={event => this.handleListItemClick(event, i)}
+              selected={selected.id === i.id}>
+              <ListItemText primary={i.name} />
+            </ListItem>
+          })}
+        </List>
+      </div>
+    );
 
     return (
       <div>
@@ -119,34 +168,62 @@ class EditConfig extends React.Component {
             disableBackdropClick
             disableEscapeKeyDown
             aria-labelledby="confirmation-dialog-title">
-            <DialogTitle id="confirmation-dialog-title">Edit Config</DialogTitle>
-            <DialogContent className={classes.dialogContent}>
-              <List component="nav" className={classes.navigation}>
-                {topLevel.map((i, x) => {
-                  return <ListItem
-                    key={x}
-                    button
-                    onClick={event => this.handleListItemClick(event, i)}
-                    selected={selected.id === i.id}>
-                    <ListItemText primary={i.name} />
-                  </ListItem>
-                })}
-              </List>
-              <div className={classes.main}>
-                <Divider className={classes.navigationDivider} />
-                <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
-                <Divider />
-                {selected.id === 0 ?
-                  <Item defaultItem={defaultConfig.theme} item={config.theme} itemPath={['theme']} handleConfigChange={this.handleConfigChange} />
-                  : selected.id === 1 ?
-                    <Item defaultItem={defaultConfig.header} item={config.header} itemPath={['header']} handleConfigChange={this.handleConfigChange} />
-                    : selected.id === 2 ?
-                      <Item defaultItem={defaultConfig.pages} item={config.pages} itemPath={['pages']} handleConfigChange={this.handleConfigChange} />
-                      : selected.id === 3 &&
-                      <Item defaultItem={defaultConfig.items} item={config.items} itemPath={['items']} handleConfigChange={this.handleConfigChange} />
-                }
-              </div>
-            </DialogContent>
+            <AppBar className={classes.appBar}>
+              <Toolbar>
+                <IconButton
+                  color="inherit"
+                  aria-label="Open drawer"
+                  onClick={this.handleDrawerToggle}
+                  className={classes.navIconHide}>
+                  <MenuIcon />
+                </IconButton>
+                <Typography variant="title" color="inherit" noWrap>
+                  Edit Config
+                </Typography>
+              </Toolbar>
+            </AppBar>
+            <Hidden mdUp>
+              <Drawer
+                variant="temporary"
+                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                open={this.state.mobileOpen}
+                onClose={this.handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}>
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <Hidden smDown implementation="css">
+              <Drawer
+                variant="permanent"
+                open
+                classes={{
+                  paper: classes.drawerPaper,
+                }}>
+                {drawer}
+              </Drawer>
+              <Divider className={classes.navigationDivider} />
+            </Hidden>
+            <Hidden mdUp>
+              <div className={classes.toolbar} />
+            </Hidden>
+            <div className={classes.main}>
+              <Typography variant="headline" className={classes.heading}>{selected.name}</Typography>
+              <Divider />
+              {selected.id === 0 ?
+                <Item defaultItem={defaultConfig.theme} item={config.theme} itemPath={['theme']} handleConfigChange={this.handleConfigChange} />
+                : selected.id === 1 ?
+                  <Item defaultItem={defaultConfig.header} item={config.header} itemPath={['header']} handleConfigChange={this.handleConfigChange} />
+                  : selected.id === 2 ?
+                    <Item defaultItem={defaultConfig.pages} item={config.pages} itemPath={['pages']} handleConfigChange={this.handleConfigChange} />
+                    : selected.id === 3 &&
+                    <Item defaultItem={defaultConfig.items} item={config.items} itemPath={['items']} handleConfigChange={this.handleConfigChange} />
+              }
+            </div>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
                 Cancel
@@ -163,6 +240,8 @@ class EditConfig extends React.Component {
 }
 
 EditConfig.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   config: PropTypes.object.isRequired,
   apiUrl: PropTypes.string.isRequired,
@@ -171,4 +250,4 @@ EditConfig.propTypes = {
   handleClose: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(EditConfig);
+export default withStyles(styles, { withTheme: true })(EditConfig);
