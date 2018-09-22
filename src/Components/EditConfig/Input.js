@@ -8,52 +8,53 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const styles = theme => ({
+  input: {}
 });
 
 class Input extends React.Component {
 
   render() {
-    const { name, value, defaultValue, handleChange } = this.props;
-    // const type = defaultValue === 'true' ? 'boolean'
-    //   : defaultValue === 'false' ? 'boolean'
-    //     : typeof defaultValue;
+    const { classes, name, value, defaultValue, handleChange } = this.props;
+    const type = defaultValue === 'true' ? 'boolean'
+      : defaultValue === 'false' ? 'boolean'
+        : typeof defaultValue;
 
-    // switch (type) {
-    //   default: return null;
-    // case 'string': 
-    return (
-      <FormControl>
-        <InputLabel htmlFor={name}>{name}</InputLabel>
-        <MUIInput
-          id={name}
-          type="string"
-          inputProps={{ autoCapitalize: "none" }}
-          value={value}
-          onChange={handleChange(name)} />
-      </FormControl>
-    );
-    //   case 'number': return (
-    //     <FormControl>
-    //       <InputLabel htmlFor={name}>{name}</InputLabel>
-    //       <MUIInput
-    //         id={name}
-    //         type="number"
-    //         inputProps={{ autoCapitalize: "none" }}
-    //         value={value}
-    //         onChange={handleChange(name)} />
-    //     </FormControl>
-    //   );
-    //   case 'boolean': return (
-    //     <FormControlLabel
-    //       control={
-    //         <Checkbox
-    //           checked={value}
-    //           onChange={handleChange(name)}
-    //           value={name} />
-    //       }
-    //       label={name} />
-    //   );
-    // }
+    switch (type) {
+      default: return null;
+      case 'string':
+        return (
+          <FormControl className={classes.input}>
+            <InputLabel htmlFor={name}>{name}</InputLabel>
+            <MUIInput
+              id={name}
+              type="string"
+              inputProps={{ autoCapitalize: "none" }}
+              value={value}
+              onChange={handleChange(name)} />
+          </FormControl>
+        );
+      case 'number': return (
+        <FormControl className={classes.input}>
+          <InputLabel htmlFor={name}>{name}</InputLabel>
+          <MUIInput
+            id={name}
+            type="number"
+            inputProps={{ autoCapitalize: "none" }}
+            value={value}
+            onChange={handleChange(name)} />
+        </FormControl>
+      );
+      case 'boolean': return (
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={value}
+              onChange={handleChange(name)}
+              value={name} />
+          }
+          label={name} />
+      );
+    }
   }
 }
 

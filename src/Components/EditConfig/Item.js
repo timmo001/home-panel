@@ -32,12 +32,10 @@ class SubItem extends React.Component {
               </div>
             }
             {item.map((ai, ax) => {
-              return (
-                <NextItem
-                  key={ax}
-                  item={ai}
-                  handleChange={handleChange} />
-              );
+              return <NextItem
+                key={ax}
+                item={ai}
+                handleChange={handleChange} />
             })}
             <Button variant="fab" mini color="primary" aria-label="Add">
               <AddIcon />
@@ -64,8 +62,8 @@ class SubItem extends React.Component {
             :
             <Input
               name={properCase(objKey)}
-              defaultValue={defaultItem ? defaultItem : ''}
-              value={item ? item : defaultItem ? defaultItem : ''}
+              defaultValue={defaultItem}
+              value={item}
               handleChange={handleChange} />
         }
       </div>

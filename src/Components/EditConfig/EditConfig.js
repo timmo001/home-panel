@@ -53,7 +53,9 @@ class EditConfig extends React.Component {
     selected: { id: 0, name: 'Theme' }
   };
 
-  handleChange = prop => event => { }//this.setState({ [prop]: event.target.value });
+  handleChange = prop => event => {
+    //this.setState({ [prop]: event.target.value });
+  };
 
   handleSave = () => {
     request
