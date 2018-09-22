@@ -61,7 +61,12 @@
     "right_indoor": [
       {
         "label": "",
-        "data": []
+        "data": [
+          {
+            "entity_id": "",
+            "unit_of_measurement": ""
+          }  
+        ]
       }
     ]
   },
