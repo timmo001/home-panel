@@ -30,7 +30,7 @@ class Input extends React.Component {
               id={name}
               type="string"
               inputProps={{ autoCapitalize: "none" }}
-              value={value}
+              value={value ? value : defaultValue}
               onChange={event => handleConfigChange(itemPath, event.target.value)} />
           </FormControl>
         );
@@ -41,7 +41,7 @@ class Input extends React.Component {
             id={name}
             type="number"
             inputProps={{ autoCapitalize: "none" }}
-            value={value}
+            value={value ? value : defaultValue}
             onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
         </FormControl>
       );
@@ -49,7 +49,7 @@ class Input extends React.Component {
         <FormControlLabel
           control={
             <Checkbox
-              checked={value}
+              checked={value ? value : defaultValue}
               onChange={event => handleConfigChange(itemPath, event.target.checked)} />
           }
           label={properCase(name)} />
