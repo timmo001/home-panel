@@ -59,11 +59,11 @@ class SubItem extends React.Component {
         </Typography>
         {!open &&
           <Typography className={classes.dropdownSubText} noWrap>
-            {JSON.stringify(item)}
+            {JSON.stringify(item, null, 2)}
           </Typography>
         }
         {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>
+      </ListItem>;
 
     return (
       <div className={classes.root}>
