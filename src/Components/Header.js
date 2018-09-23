@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
+import Slide from '@material-ui/core/Slide';
 import Grid from '@material-ui/core/Grid';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
@@ -75,7 +75,8 @@ const styles = theme => ({
       visibility: 'hidden'
     },
     marginLeft: theme.spacing.unit * 2,
-    textAlign: 'start'
+    textAlign: 'start',
+    transition: 'margin 200ms'
   },
   condition: {
     color: theme.palette.text.main,
@@ -262,7 +263,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Fade in={moved || over}>
+        <Slide in={moved || over}>
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
@@ -307,7 +308,7 @@ class Header extends React.Component {
               <RadioIcon className={classes.icon} />
             </IconButton>
           </div>
-        </Fade>
+        </Slide>
         <Menu
           id="theme"
           value={theme}
