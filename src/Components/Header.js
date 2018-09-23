@@ -20,6 +20,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const styles = theme => ({
   header: {
     width: '100%',
+    padding: 4,
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+    }
   },
   timeDateContainer: {
     width: 420,
@@ -40,7 +44,7 @@ const styles = theme => ({
     overflow: 'visible'
   },
   timePeriod: {
-    paddingLeft: theme.spacing.unit,
+    marginLeft: theme.spacing.unit,
     fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '2.2rem'
@@ -72,7 +76,7 @@ const styles = theme => ({
       width: 0,
       visibility: 'hidden'
     },
-    paddingLeft: theme.spacing.unit * 2,
+    marginLeft: theme.spacing.unit * 2,
     textAlign: 'start'
   },
   condition: {
@@ -88,10 +92,10 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '1.6rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
-      paddingLeft: 0,
+      marginLeft: 0,
     },
     [theme.breakpoints.down('md')]: {
       maxWidth: 340,
@@ -113,13 +117,13 @@ const styles = theme => ({
       width: 0,
       visibility: 'hidden'
     },
-    paddingRight: theme.spacing.unit * 2,
+    marginRight: theme.spacing.unit * 2,
     textAlign: 'end'
   },
   indoorInnerContainer: {
-    paddingTop: theme.spacing.unit / 2,
+    marginTop: theme.spacing.unit / 2,
     '&:first-child': {
-      paddingTop: 0,
+      marginTop: 0,
     }
   },
   indoorLabel: {
@@ -135,10 +139,10 @@ const styles = theme => ({
     overflow: 'visible',
     fontSize: '1.6rem',
     '& span': {
-      paddingLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 2,
     },
     '& span:first-child': {
-      paddingLeft: 0,
+      marginLeft: 0,
     },
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.2rem'
