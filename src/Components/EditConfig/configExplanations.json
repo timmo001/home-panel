@@ -1,42 +1,42 @@
 {
   "theme": {
     "auto": {
-      "sensor": "https://git.timmo.xyz/home-panel/configuration/#auto",
-      "below": "https://git.timmo.xyz/home-panel/configuration/#auto"
+      "sensor": "The sensor used to trigger dark mode",
+      "below": "The threshold for which to trigger dark mode"
     },
     "ui": {
       "cards": {
-        "round": "https://git.timmo.xyz/home-panel/configuration/#round",
-        "elevation": "https://git.timmo.xyz/home-panel/configuration/#elevation"
+        "round": "Should the card be round?",
+        "elevation": "The elevation of the card"
       }
     },
     "custom": [
       {
-        "name": "https://git.timmo.xyz/home-panel/themes/#name",
-        "base": "https://git.timmo.xyz/home-panel/themes/#base",
+        "name": "The name of your theme",
+        "base": "The theme to use as this theme's base. Start with light or dark and expand from there",
         "overrides": {
-          "type": "https://git.timmo.xyz/home-panel/themes/#overrides",
-          "primary": "https://git.timmo.xyz/home-panel/themes/#overrides",
-          "secondary": "https://git.timmo.xyz/home-panel/themes/#overrides",
+          "type": "The top level base. This is the high level theme which can only be light or dark. Generally this isn't required when using the light or dark theme as the base",
+          "primary": "The primary color that the UI uses. This is used for sliders, dropdowns, etc.",
+          "secondary": "The secondary color that the UI uses",
           "backgrounds": {
-            "main": "https://git.timmo.xyz/home-panel/themes/#overrides",
-            "default": "https://git.timmo.xyz/home-panel/themes/#overrides",
-            "navigation": "https://git.timmo.xyz/home-panel/themes/#overrides",
+            "main": "The main background. This can be a color or a picture. You must use css formatting however, so for an image, use url(https://myimageaddress)",
+            "default": "The background that the bottom navigation uses",
+            "navigation": "The background that the bottom navigation uses",
             "card": {
-              "on": "https://git.timmo.xyz/home-panel/themes/#overrides",
-              "off": "https://git.timmo.xyz/home-panel/themes/#overrides",
-              "disabled": "https://git.timmo.xyz/home-panel/themes/#overrides",
+              "on": "The color of the card when on. i.e. the light or switch is turned on",
+              "off": "The color of the card when switched off or not able to switch on",
+              "disabled": "The color of the card when the entity is unavailable",
               "alarm": {
-                "home": "https://git.timmo.xyz/home-panel/themes/#overrides",
-                "away": "https://git.timmo.xyz/home-panel/themes/#overrides",
-                "triggered": "https://git.timmo.xyz/home-panel/themes/#overrides"
+                "home": "The color of an alarm card and it is armed home",
+                "away": "The color of an alarm card and it is armed away",
+                "triggered": "The color of an alarm card and the alarm has been triggered"
               }
             }
           },
           "text": {
-            "light": "https://git.timmo.xyz/home-panel/themes/#overrides",
-            "main": "https://git.timmo.xyz/home-panel/themes/#overrides",
-            "icon": "https://git.timmo.xyz/home-panel/themes/#overrides"
+            "light": "The color of the lighter text areas",
+            "main": "The color of the main text areas",
+            "icon": "The color of the icons"
           }
         }
       }
@@ -44,74 +44,74 @@
   },
   "header": {
     "time": {
-      "disable": "https://git.timmo.xyz/home-panel/configuration/#disable",
-      "military": "https://git.timmo.xyz/home-panel/configuration/#military"
+      "disable": "Should time be disabled?",
+      "military": "Should time be in military format? (24 hour)"
     },
     "date": {
-      "disable": "https://git.timmo.xyz/home-panel/configuration/#disable_1",
-      "format": "https://git.timmo.xyz/home-panel/configuration/#format"
+      "disable": "Should date be disabled?",
+      "format": "Set a custom date format. Refer to the momentjs docs for more info: https://momentjs.com/docs/#/displaying/format/"
     },
     "left_outdoor_weather": {
-      "dark_sky_icon": "https://git.timmo.xyz/home-panel/configuration/#dark_sky_icon",
-      "condition": "https://git.timmo.xyz/home-panel/configuration/#condition",
+      "dark_sky_icon": "This is the entity_id of your Dark Sky icon sensor: https://www.home-assistant.io/components/sensor.darksky/",
+      "condition": "This is the entity_id that describes the current weather conditions",
       "data": [
         {
-          "entity_id": "https://git.timmo.xyz/home-panel/configuration/#data",
-          "unit_of_measurement": "https://git.timmo.xyz/home-panel/configuration/#data"
+          "entity_id": "The Home Assistant entity_id which has a state. For example a sensor",
+          "unit_of_measurement": "This is the text added onto the end of the entity_id's state"
         }
       ]
     },
     "right_indoor": [
       {
-        "label": "https://git.timmo.xyz/home-panel/configuration/#label",
+        "label": "The text shown above sensor data. Usually the name of a room or type of the sensor",
         "data": [
           {
-            "entity_id": "https://git.timmo.xyz/home-panel/configuration/#data_",
-            "unit_of_measurement": "https://git.timmo.xyz/home-panel/configuration/#data_"
-          }  
+            "entity_id": "The Home Assistant entity_id which has a state. For example a sensor",
+            "unit_of_measurement": "This is the text added onto the end of the entity_id's state"
+          }
         ]
       }
     ]
   },
   "pages": [
     {
-      "name": "https://git.timmo.xyz/home-panel/configuration/#name",
-      "icon": "https://git.timmo.xyz/home-panel/configuration/#icon"
+      "name": "The name of the page show in the bottom navigation bar",
+      "icon": "The icon shown in the bottom navigation bar. Use https://materialdesignicons.com to find the icon you want to use"
     }
   ],
   "items": [
     {
-      "name": "https://git.timmo.xyz/home-panel/configuration/#items",
-      "page": "https://git.timmo.xyz/home-panel/configuration/#page",
-      "width": "https://git.timmo.xyz/home-panel/configuration/#width",
+      "name": "The name of the group of cards",
+      "page": "The page the group is on. Refer to the pages docs for more info: https://git.timmo.xyz/home-panel/configuration/#pages",
+      "width": "The amount of cards wide you want the group to be",
       "cards": [
         {
-          "type": "hass, link, camera, iframe",
-          "name": "https://git.timmo.xyz/home-panel/configuration/#name_1",
-          "entity_id": "https://git.timmo.xyz/home-panel/configuration/#entity_id",
-          "icon": "https://git.timmo.xyz/home-panel/configuration/#icon_1",
-          "width": "https://git.timmo.xyz/home-panel/configuration/#width_1",
-          "height": "https://git.timmo.xyz/home-panel/configuration/#height"
+          "type": "What is the card's type?",
+          "name": "The name is automatically pulled from Home Assistant, but you can set your own you like",
+          "entity_id": "The Home Assistant entity_id",
+          "icon": "Icon shown in the middle of the card. Use https://materialdesignicons.com to find the icon you want to use",
+          "width": "The amount of cards wide",
+          "height": "The amount of cards high"
         },
         {
-          "type": "hass, link, camera, iframe",
-          "name": "https://git.timmo.xyz/home-panel/configuration/#name_2",
-          "icon": "https://git.timmo.xyz/home-panel/configuration/#icon_2",
-          "width": "https://git.timmo.xyz/home-panel/configuration/#width_2",
-          "height": "https://git.timmo.xyz/home-panel/configuration/#height_1"
+          "type": "What is the card's type?",
+          "name": "The name of the link",
+          "icon": "Icon shown in the middle of the card. Use https://materialdesignicons.com to find the icon you want to use",
+          "width": "The amount of cards wide",
+          "height": "The amount of cards high"
         },
         {
-          "type": "hass, link, camera, iframe",
-          "name": "https://git.timmo.xyz/home-panel/configuration/#camera",
-          "url": "https://git.timmo.xyz/home-panel/configuration/#url",
-          "still_url": "https://git.timmo.xyz/home-panel/configuration/#still_url",
-          "width": "https://git.timmo.xyz/home-panel/configuration/#width_3"
+          "type": "What is the card's type?",
+          "name": "Purely for reference. This isn't used in the UI",
+          "url": "The url of the camera feed for use in full screen when the smaller camera card is clicked",
+          "still_url": "The url of a still image for use in the main view. This updates every minute",
+          "width": "The amount of cards wide"
         },
         {
-          "type": "hass, link, camera, iframe",
-          "url": "https://git.timmo.xyz/home-panel/configuration/#url_1",
-          "width": "https://git.timmo.xyz/home-panel/configuration/#width_4",
-          "height": "https://git.timmo.xyz/home-panel/configuration/#height_2"
+          "type": "What is the card's type?",
+          "url": "URL of the webpage",
+          "width": "The amount of cards wide",
+          "height": "The amount of cards high"
         }
       ]
     }

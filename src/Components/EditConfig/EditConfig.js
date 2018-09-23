@@ -100,7 +100,6 @@ class EditConfig extends React.Component {
   handleDrawerToggle = () => this.setState(state => ({ mobileOpen: !state.mobileOpen }));
 
   handleConfigChange = (path, value) => {
-    console.log(path, value);
     let config = this.state.config;
     // Set the new value
     const lastItem = path.pop();

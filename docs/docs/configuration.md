@@ -418,7 +418,7 @@ The page number the group is on. This defaults to `1` and will not show if
 
 ### hass
 
-This is the default type of card. You do not need to set the `type` here as
+A Home Assistant card. This is the default type of card. You do not need to set the `type` here as
  the app defaults to this.
 
 ```json
@@ -433,7 +433,7 @@ This is the default type of card. You do not need to set the `type` here as
 
 #### entity_id
 
-The `entity_id` of the [HASS][hass] entity. Switches and lights act as buttons
+The `entity_id` of the [Home Assistant][hass] entity. Switches and lights act as buttons
  which can be toggled on and off and scenes, scripts etc. act as
  non-toggleable buttons.
 
@@ -448,7 +448,7 @@ Lights can also be clicked and held / long pressed to
 
 #### name
 
-The name is automatically pulled from [HASS][hass], but you can set a custom
+The name is automatically pulled from [Home Assistant][hass], but you can set a custom
  name if you like.
 
 ```json

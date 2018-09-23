@@ -38,7 +38,7 @@ This is where you edit the theme. Here is a table of all parts of the theme
 | primary                          | The primary color that the UI uses. This is used for sliders, dropdowns, etc.                                                                                        |
 | secondary                        | The secondary color that the UI uses.                                                                                                                                |
 | backgrounds.main                 | The main background. This can be a color or a picture. You must use css formatting however, so to use an image, use `url(https://myimageaddress...)`                 |
-| backgrounds.default              | The background that other sections use that don't already have. This is generally not needed.                                                                        |
+| backgrounds.default              | The default background that is not defined in this section                                                                                                           |
 | backgrounds.navigation           | The background that the bottom navigation uses                                                                                                                       |
 | backgrounds.card.on              | The color of the card when on. i.e. the light or switch is turned on.                                                                                                |
 | backgrounds.card.off             | The color of the card when switched off or not able to switch on                                                                                                     |
@@ -46,8 +46,8 @@ This is where you edit the theme. Here is a table of all parts of the theme
 | backgrounds.card.alarm.home      | The color of an alarm card and it is armed home.                                                                                                                     |
 | backgrounds.card.alarm.away      | The color of an alarm card and it is armed away.                                                                                                                     |
 | backgrounds.card.alarm.triggered | The color of an alarm card and the alarm has been triggered.                                                                                                         |
-| text.light                       | The color of the lighter text and icons                                                                                                                              |
-| text.main                        | The color of the main text and icons. This is mostly the header section with the time, weather etc.                                                                  |
+| text.light                       | The color of the lighter text areas                                                                                                                                  |
+| text.main                        | The color of the main text areas                                                                                                                                     |
 | text.icon                        | The color of the icons. This is for the icons on the cards, if added.                                                                                                |
 
 ## Colors
