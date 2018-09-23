@@ -269,13 +269,14 @@ class Header extends React.Component {
             onMouseLeave={handleMouseLeave}>
             <IconButton
               className={classes.button}
+              style={{ gridRow: 1, gridColumn: 1 }}
               aria-label="Log Out"
               onClick={this.props.handleLogOut}>
               <ExitToAppIcon className={classes.icon} />
             </IconButton>
             <IconButton
               className={classes.button}
-              size="small"
+              style={{ gridRow: 1, gridColumn: 2 }}
               aria-label="Refresh"
               onClick={() => window.location.reload(true)}>
               <RefreshIcon className={classes.icon} />
@@ -283,6 +284,7 @@ class Header extends React.Component {
             {canEdit &&
               <IconButton
                 className={classes.button}
+                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 3 : 1 }}
                 aria-label="Edit Config"
                 onClick={this.props.handleEditConfig}>
                 <EditIcon className={classes.icon} />
@@ -290,7 +292,7 @@ class Header extends React.Component {
             }
             <IconButton
               className={classes.button}
-              style={{ gridRow: 1, gridColumn: 2 }}
+              style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 4 : 2 }}
               aria-label="Theme"
               aria-owns={anchorEl ? 'simple-menu' : null}
               aria-haspopup="true"
@@ -299,7 +301,7 @@ class Header extends React.Component {
             </IconButton>
             <IconButton
               className={classes.button}
-              style={{ gridRow: 2, gridColumn: 2 }}
+              style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
               aria-label="Radio"
               onClick={this.props.handleRadioToggle}>
               <RadioIcon className={classes.icon} />
@@ -330,7 +332,7 @@ class Header extends React.Component {
           spacing={8}
           onClick={handleRadioHide}>
 
-          <Grid item className={classes.weatherContainer}>
+          <Grid item className={classes.weatherContainer} style={{ marginTop: moved || over ? 32 : 0 }}>
             {header.left_outdoor_weather &&
               <Grid
                 container
@@ -391,7 +393,9 @@ class Header extends React.Component {
               </div>
             }
             {!dateDisabled &&
-              <Typography className={classes.date} variant="display2" noWrap>
+              <Typography className={classes.date} variant="display2" noWrap style={{
+                marginTop: (moved || over) && timeDisabled ? 58 : timeDisabled && 8
+              }}>
                 <Moment format={dateFormat} />
               </Typography>
             }
@@ -413,7 +417,7 @@ class Header extends React.Component {
             })}
           </Grid>
         </Grid>
-      </div>
+      </div >
     );
   }
 }

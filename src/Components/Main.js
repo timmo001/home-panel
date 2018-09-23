@@ -15,11 +15,8 @@ const styles = theme => ({
     maxWidth: '100%',
   },
   pageContainer: {
-    height: `calc(100% - 180px)`,
+    height: 'calc(100% - 24px)',
     overflowY: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      height: `calc(100% - 130px)`,
-    }
   },
 });
 
