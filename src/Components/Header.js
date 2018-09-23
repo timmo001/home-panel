@@ -20,9 +20,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 const styles = theme => ({
   header: {
     width: '100%',
-    padding: 4,
+    margin: 4,
     [theme.breakpoints.down('sm')]: {
-      padding: 0,
+      margin: 0,
     }
   },
   timeDateContainer: {
@@ -37,7 +37,7 @@ const styles = theme => ({
   time: {
     textAlign: 'center',
     color: theme.palette.text.main,
-    fontSize: '5.2rem',
+    fontSize: '5.4rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '4.2rem'
     },
@@ -45,7 +45,7 @@ const styles = theme => ({
   },
   timePeriod: {
     marginLeft: theme.spacing.unit,
-    fontSize: '2.8rem',
+    fontSize: '3.0rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '2.2rem'
     },
@@ -56,9 +56,9 @@ const styles = theme => ({
     marginTop: -18,
     textAlign: 'center',
     overflow: 'visible',
-    fontSize: '1.8rem',
+    fontSize: '2.0rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.4rem'
+      fontSize: '1.6rem'
     }
   },
   dateMilitary: {
@@ -151,10 +151,12 @@ const styles = theme => ({
   buttons: {
     position: 'fixed',
     top: 0,
-    margin: 2,
+    [theme.breakpoints.down('xs')]: {
+      margin: 1
+    },
     [theme.breakpoints.down('sm')]: {
       display: 'grid',
-      margin: 0
+      margin: 4
     },
     [theme.breakpoints.up('sm')]: {
       display: 'block'
@@ -164,13 +166,15 @@ const styles = theme => ({
     height: 32,
     width: 32,
     color: theme.palette.text.light,
-    [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing.unit * 1.5,
-    },
+    margin: 6,
     [theme.breakpoints.down('sm')]: {
       height: 26,
       width: 26,
+      margin: 2,
       gridColumn: 1
+    },
+    [theme.breakpoints.down('xs')]: {
+      margin: 1,
     }
   },
   icon: {
@@ -178,7 +182,7 @@ const styles = theme => ({
     width: 22,
     [theme.breakpoints.down('sm')]: {
       height: 18,
-      width: 18,
+      width: 18
     }
   },
 });
