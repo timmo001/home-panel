@@ -4,11 +4,13 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
-import AddIcon from '@material-ui/icons/Add';
+import Add from '@material-ui/icons/Add';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import Delete from '@material-ui/icons/Delete';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
 import Input from './Input';
@@ -32,6 +34,15 @@ const styles = theme => ({
   },
   addIcon: {
     flex: '1 1 auto'
+  },
+  iconButton: {
+    height: 28,
+    width: 28,
+    marginRight: 16,
+  },
+  icon: {
+    height: 22,
+    width: 22
   }
 });
 
@@ -46,7 +57,7 @@ class SubItem extends React.Component {
   handleClick = () => this.setState(state => ({ open: !state.open }));
 
   render() {
-    const { classes, objKey, defaultItem, item, itemPath, handleConfigChange } = this.props;
+    const { classes, objKey, defaultItem, item, itemPath, canDelete, handleConfigChange } = this.props;
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
@@ -65,6 +76,14 @@ class SubItem extends React.Component {
             {JSON.stringify(item, null, 2)}
           </Typography>
         }
+        {canDelete &&
+          <IconButton
+            className={classes.iconButton}
+            aria-label="Delete"
+            onClick={() => handleConfigChange(itemPath, undefined)}>
+            <Delete className={classes.icon} />
+          </IconButton>
+        }
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>;
 
@@ -79,6 +98,7 @@ class SubItem extends React.Component {
                 return <NextItem
                   key={ax}
                   open={false}
+                  canDelete={true}
                   objKey={ax}
                   defaultItem={defaultItem[objKey === 'cards' ?
                     ai.type === 'link' ? 1 :
@@ -95,7 +115,7 @@ class SubItem extends React.Component {
                   mini
                   aria-label="Add"
                   onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
-                  <AddIcon />
+                  <Add />
                 </Button>
               </ListItem>
             </Collapse>
@@ -140,6 +160,8 @@ class SubItem extends React.Component {
 SubItem.propTypes = {
   classes: PropTypes.object.isRequired,
   itemPath: PropTypes.array.isRequired,
+  open: PropTypes.bool,
+  canDelete: PropTypes.bool,
   handleConfigChange: PropTypes.func.isRequired,
 };
 

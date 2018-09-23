@@ -92,7 +92,7 @@ class EditConfig extends React.Component {
       { id: 0, name: 'Theme' },
       { id: 1, name: 'Header' },
       { id: 2, name: 'Pages' },
-      { id: 3, name: 'Items (Groups)' }
+      { id: 3, name: 'Items' }
     ],
     selected: { id: 0, name: 'Theme' }
   };
@@ -102,11 +102,15 @@ class EditConfig extends React.Component {
   handleConfigChange = (path, value) => {
     let config = this.state.config;
     // Set the new value
-    let last = path.pop();
-    if (isObject(value)) {
-      if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
-      path.reduce((o, k) => o[k] = o[k] || {}, config)[last].push(value);
-    } else path.reduce((o, k) => o[k] = o[k] || {}, config)[last] = value;
+    const lastItem = path.pop();
+    const secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
+    if (value === undefined)
+      secondLastItem.splice(secondLastItem.indexOf(lastItem));
+    else
+      if (isObject(value)) {
+        if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
+        secondLastItem[lastItem].push(value);
+      } else secondLastItem[lastItem] = value;
     this.setState({ config });
   };
 
