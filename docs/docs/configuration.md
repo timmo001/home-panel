@@ -133,44 +133,55 @@ This section can display weather and other sensor information in the top
   },
 ```
 
-### format
+### time
+
+#### disable
+
+Should time be disabled? Default is `false`.
 
 ```json
   "header": {
-    "format": {
-      "time": {
-        "military": false
-      },
-      "date": "Do MMMM YYYY"
+    "time": {
+      "disable": true
     }
   }
 ```
 
-#### time
+#### military
 
-##### military
-
-Should the time be in military format? (24 hour) Default is `false`.
+Should time be in military format? (24 hour) Default is `false`.
 
 ```json
   "header": {
-    "format": {
-      "time": {
-        "military": true
-      }
+    "time": {
+      "military": true
     }
   }
 ```
 
-#### date
+### date
+
+#### disable
+
+Should date be disabled? Default is `false`.
+
+```json
+  "header": {
+    "date": {
+      "disable": true
+    }
+  }
+```
+
+#### format
 
 Set a custom date format. Refer to the
  [momentjs docs][moment-docs] for more info. Default is `Do MMMM YYYY`.
 
 ```json
   "header": {
-    "format": {
-      "date": "dddd, MMMM Do YYYY"
+    "date": {
+      "format": "dddd, MMMM Do YYYY"
     }
   }
 ```

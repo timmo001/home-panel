@@ -43,11 +43,13 @@
     ]
   },
   "header": {
-    "format": {
-      "time": {
-        "military": "https://git.timmo.xyz/home-panel/configuration/#military"
-      },
-      "date": "https://git.timmo.xyz/home-panel/configuration/#date"
+    "time": {
+      "disable": "https://git.timmo.xyz/home-panel/configuration/#disable",
+      "military": "https://git.timmo.xyz/home-panel/configuration/#military"
+    },
+    "date": {
+      "disable": "https://git.timmo.xyz/home-panel/configuration/#disable_1",
+      "format": "https://git.timmo.xyz/home-panel/configuration/#format"
     },
     "left_outdoor_weather": {
       "dark_sky_icon": "https://git.timmo.xyz/home-panel/configuration/#dark_sky_icon",

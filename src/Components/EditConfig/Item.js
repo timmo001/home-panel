@@ -46,7 +46,7 @@ const styles = theme => ({
   }
 });
 
-class SubItem extends React.Component {
+class Item extends React.Component {
   state = {
     open: this.props.open !== undefined ? this.props.open :
       this.props.itemPath.length < 2 ||
@@ -89,7 +89,7 @@ class SubItem extends React.Component {
 
     return (
       <div className={classes.root}>
-        {Array.isArray(item) ?
+        {Array.isArray(defaultItem) ?
           <div>
             {dropdown}
             <Divider />
@@ -121,7 +121,7 @@ class SubItem extends React.Component {
             </Collapse>
           </div>
           :
-          isObject(item) ?
+          isObject(defaultItem) ?
             <div>
               {dropdown}
               <Divider />
@@ -132,7 +132,7 @@ class SubItem extends React.Component {
                       key={x}
                       objKey={i}
                       defaultItem={defaultItem[i]}
-                      item={item[i]}
+                      item={item[i] !== undefined ? item[i] : defaultItem[i]}
                       itemPath={itemPath.concat([i])}
                       handleConfigChange={handleConfigChange} />
                   })
@@ -157,7 +157,7 @@ class SubItem extends React.Component {
   }
 }
 
-SubItem.propTypes = {
+Item.propTypes = {
   classes: PropTypes.object.isRequired,
   itemPath: PropTypes.array.isRequired,
   open: PropTypes.bool,
@@ -165,4 +165,4 @@ SubItem.propTypes = {
   handleConfigChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(SubItem);
+export default withStyles(styles)(Item);

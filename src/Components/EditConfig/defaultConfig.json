@@ -43,11 +43,13 @@
     ]
   },
   "header": {
-    "format": {
-      "time": {
-        "military": false
-      },
-      "date": "Do MMMM YYYY"
+    "time": {
+      "disable": false,
+      "military": false
+    },
+    "date": {
+      "disable": false,
+      "format": "Do MMMM YYYY"
     },
     "left_outdoor_weather": {
       "dark_sky_icon": "sensor.dark_sky_icon",
