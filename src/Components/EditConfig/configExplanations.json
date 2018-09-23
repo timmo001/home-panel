@@ -12,30 +12,31 @@
     },
     "custom": [
       {
-        "name": "",
-        "base": "",
+        "name": "https://git.timmo.xyz/home-panel/themes/#name",
+        "base": "https://git.timmo.xyz/home-panel/themes/#base",
         "overrides": {
-          "type": "",
-          "primary": "",
+          "type": "https://git.timmo.xyz/home-panel/themes/#overrides",
+          "primary": "https://git.timmo.xyz/home-panel/themes/#overrides",
+          "secondary": "https://git.timmo.xyz/home-panel/themes/#overrides",
           "backgrounds": {
-            "main": "",
-            "default": "",
-            "navigation": "",
+            "main": "https://git.timmo.xyz/home-panel/themes/#overrides",
+            "default": "https://git.timmo.xyz/home-panel/themes/#overrides",
+            "navigation": "https://git.timmo.xyz/home-panel/themes/#overrides",
             "card": {
-              "on": "",
-              "off": "",
-              "disabled": "",
+              "on": "https://git.timmo.xyz/home-panel/themes/#overrides",
+              "off": "https://git.timmo.xyz/home-panel/themes/#overrides",
+              "disabled": "https://git.timmo.xyz/home-panel/themes/#overrides",
               "alarm": {
-                "home": "",
-                "away": "",
-                "triggered": ""
+                "home": "https://git.timmo.xyz/home-panel/themes/#overrides",
+                "away": "https://git.timmo.xyz/home-panel/themes/#overrides",
+                "triggered": "https://git.timmo.xyz/home-panel/themes/#overrides"
               }
             }
           },
           "text": {
-            "light": "",
-            "main": "",
-            "icon": ""
+            "light": "https://git.timmo.xyz/home-panel/themes/#overrides",
+            "main": "https://git.timmo.xyz/home-panel/themes/#overrides",
+            "icon": "https://git.timmo.xyz/home-panel/themes/#overrides"
           }
         }
       }
