@@ -147,10 +147,7 @@ const styles = theme => ({
   buttons: {
     position: 'fixed',
     top: 0,
-    margin: theme.spacing.unit,
-    [theme.breakpoints.down('md')]: {
-      margin: 2,
-    },
+    margin: 2,
     [theme.breakpoints.down('sm')]: {
       display: 'grid',
       margin: 0
