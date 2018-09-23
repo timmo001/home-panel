@@ -28,13 +28,12 @@ const styles = theme => ({
     },
     [theme.breakpoints.down('sm')]: {
       width: 240,
-    },
-    // overflow: 'visible'
+    }
   },
   time: {
     textAlign: 'center',
     color: theme.palette.text.main,
-    fontSize: '6.0rem',
+    fontSize: '5.2rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '4.2rem'
     },
@@ -42,27 +41,26 @@ const styles = theme => ({
   },
   timePeriod: {
     paddingLeft: theme.spacing.unit,
-    fontSize: '3.0rem',
+    fontSize: '2.8rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '2.0rem'
+      fontSize: '2.2rem'
     },
     overflow: 'visible'
   },
   date: {
     color: theme.palette.text.main,
-    marginTop: theme.spacing.unit * -2.2,
+    marginTop: -18,
     textAlign: 'center',
     overflow: 'visible',
-    fontSize: '2.2rem',
+    fontSize: '1.8rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.5rem'
+      fontSize: '1.4rem'
     }
   },
   dateMilitary: {
     marginTop: theme.spacing.unit * -0.88,
   },
   weatherContainer: {
-    height: '100%',
     width: 420,
     [theme.breakpoints.down('md')]: {
       width: 340,
@@ -151,7 +149,7 @@ const styles = theme => ({
     top: 0,
     margin: theme.spacing.unit,
     [theme.breakpoints.down('md')]: {
-      margin: theme.spacing.unit / 2,
+      margin: 2,
     },
     [theme.breakpoints.down('sm')]: {
       display: 'grid',
@@ -166,7 +164,7 @@ const styles = theme => ({
     width: 32,
     color: theme.palette.text.light,
     [theme.breakpoints.up('sm')]: {
-      marginRight: theme.spacing.unit,
+      marginRight: theme.spacing.unit * 1.5,
     },
     [theme.breakpoints.down('sm')]: {
       height: 26,
@@ -257,13 +255,12 @@ class Header extends React.Component {
       <div className={classes.root}>
         <Grid
           container
-          className={classes.gridInner}
+          className={classes.header}
           direction="row"
           justify="space-between"
           alignItems="center"
           wrap="nowrap"
           spacing={8}
-          className={classes.header}
           onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <Grid item className={classes.weatherContainer}>
@@ -273,8 +270,7 @@ class Header extends React.Component {
                 justify="flex-start"
                 alignItems="center"
                 wrap="nowrap"
-                spacing={8}
-                onClick={handleRadioHide}>
+                spacing={8}>
 
                 {header.left_outdoor_weather.icon &&
                   <Grid item>
