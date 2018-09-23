@@ -78,15 +78,23 @@ class Root extends Component {
       }
       return { auth, conn };
     } catch (err) {
-      if (err !== ERR_INVALID_AUTH) {
+      try {
+        if (err !== ERR_INVALID_AUTH) {
+          throw err;
+        }
+        // We can get invalid auth if auth tokens were stored that are no longer valid
+        // Clear stored tokens.
+        this.saveTokens(null);
+        auth = await this.authProm();
+        const conn = await createConnection({ auth });
+        return { auth, conn };
+      } catch (err) {
+        this.setState({
+          snackMessage: { open: true, text: 'Connection to Home Assistant failed. Please try again later.' },
+          entities: []
+        });
         throw err;
       }
-      // We can get invalid auth if auth tokens were stored that are no longer valid
-      // Clear stored tokens.
-      this.saveTokens(null);
-      auth = await this.authProm();
-      const conn = await createConnection({ auth });
-      return { auth, conn };
     }
   };
 
@@ -108,9 +116,8 @@ class Root extends Component {
       })();
     } else {
       this.setState({
-        snackMessage: { open: true, text: 'Connection failed. Please connect to hass' },
-        entities: undefined,
-        config: undefined
+        snackMessage: { open: true, text: 'Connection failed. Please connect to Home Assistant' },
+        entities: [],
       });
     }
   }
