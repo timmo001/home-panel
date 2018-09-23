@@ -110,7 +110,8 @@ class EditConfig extends React.Component {
     else
       if (isObject(value)) {
         if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
-        secondLastItem[lastItem].push(value);
+        const newValue = JSON.parse(JSON.stringify(value));
+        secondLastItem[lastItem].push(newValue);
       } else secondLastItem[lastItem] = value;
     this.setState({ config });
   };
