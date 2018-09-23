@@ -1,0 +1,116 @@
+{
+  "theme": {
+    "auto": {
+      "sensor": "https://git.timmo.xyz/home-panel/configuration/#auto",
+      "below": "https://git.timmo.xyz/home-panel/configuration/#auto"
+    },
+    "ui": {
+      "cards": {
+        "round": "https://git.timmo.xyz/home-panel/configuration/#round",
+        "elevation": "https://git.timmo.xyz/home-panel/configuration/#elevation"
+      }
+    },
+    "custom": [
+      {
+        "name": "",
+        "base": "",
+        "overrides": {
+          "type": "",
+          "primary": "",
+          "backgrounds": {
+            "main": "",
+            "default": "",
+            "navigation": "",
+            "card": {
+              "on": "",
+              "off": "",
+              "disabled": "",
+              "alarm": {
+                "home": "",
+                "away": "",
+                "triggered": ""
+              }
+            }
+          },
+          "text": {
+            "light": "",
+            "main": "",
+            "icon": ""
+          }
+        }
+      }
+    ]
+  },
+  "header": {
+    "format": {
+      "time": {
+        "military": "https://git.timmo.xyz/home-panel/configuration/#military"
+      },
+      "date": "https://git.timmo.xyz/home-panel/configuration/#date"
+    },
+    "left_outdoor_weather": {
+      "dark_sky_icon": "https://git.timmo.xyz/home-panel/configuration/#dark_sky_icon",
+      "condition": "https://git.timmo.xyz/home-panel/configuration/#condition",
+      "data": [
+        {
+          "entity_id": "https://git.timmo.xyz/home-panel/configuration/#data",
+          "unit_of_measurement": "https://git.timmo.xyz/home-panel/configuration/#data"
+        }
+      ]
+    },
+    "right_indoor": [
+      {
+        "label": "https://git.timmo.xyz/home-panel/configuration/#label",
+        "data": [
+          {
+            "entity_id": "https://git.timmo.xyz/home-panel/configuration/#data_",
+            "unit_of_measurement": "https://git.timmo.xyz/home-panel/configuration/#data_"
+          }  
+        ]
+      }
+    ]
+  },
+  "pages": [
+    {
+      "name": "https://git.timmo.xyz/home-panel/configuration/#name",
+      "icon": "https://git.timmo.xyz/home-panel/configuration/#icon"
+    }
+  ],
+  "items": [
+    {
+      "name": "https://git.timmo.xyz/home-panel/configuration/#items",
+      "page": "https://git.timmo.xyz/home-panel/configuration/#page",
+      "width": "https://git.timmo.xyz/home-panel/configuration/#width",
+      "cards": [
+        {
+          "type": "hass, link, camera, iframe",
+          "name": "https://git.timmo.xyz/home-panel/configuration/#name_1",
+          "entity_id": "https://git.timmo.xyz/home-panel/configuration/#entity_id",
+          "icon": "https://git.timmo.xyz/home-panel/configuration/#icon_1",
+          "width": "https://git.timmo.xyz/home-panel/configuration/#width_1",
+          "height": "https://git.timmo.xyz/home-panel/configuration/#height"
+        },
+        {
+          "type": "hass, link, camera, iframe",
+          "name": "https://git.timmo.xyz/home-panel/configuration/#name_2",
+          "icon": "https://git.timmo.xyz/home-panel/configuration/#icon_2",
+          "width": "https://git.timmo.xyz/home-panel/configuration/#width_2",
+          "height": "https://git.timmo.xyz/home-panel/configuration/#height_1"
+        },
+        {
+          "type": "hass, link, camera, iframe",
+          "name": "https://git.timmo.xyz/home-panel/configuration/#camera",
+          "url": "https://git.timmo.xyz/home-panel/configuration/#url",
+          "still_url": "https://git.timmo.xyz/home-panel/configuration/#still_url",
+          "width": "https://git.timmo.xyz/home-panel/configuration/#width_3"
+        },
+        {
+          "type": "hass, link, camera, iframe",
+          "url": "https://git.timmo.xyz/home-panel/configuration/#url_1",
+          "width": "https://git.timmo.xyz/home-panel/configuration/#width_4",
+          "height": "https://git.timmo.xyz/home-panel/configuration/#height_2"
+        }
+      ]
+    }
+  ]
+}
