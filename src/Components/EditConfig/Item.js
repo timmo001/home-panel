@@ -146,7 +146,7 @@ class Item extends React.Component {
             </div>
             :
             <Input
-              name={objKey}
+              name={String(objKey)}
               defaultValue={defaultItem}
               value={item}
               itemPath={itemPath}
