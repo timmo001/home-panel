@@ -21,16 +21,15 @@ const styles = theme => ({
   header: {
     width: '100%',
   },
-  icon: {
-    height: 24,
-    width: 24,
-    [theme.breakpoints.down('sm')]: {
-      height: 18,
-      width: 18,
-    }
-  },
   timeDateContainer: {
-    maxWidth: '26.0rem',
+    width: 420,
+    [theme.breakpoints.down('md')]: {
+      width: 340,
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: 240,
+    },
+    // overflow: 'visible'
   },
   time: {
     textAlign: 'center',
@@ -38,19 +37,22 @@ const styles = theme => ({
     fontSize: '6.0rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '4.2rem'
-    }
+    },
+    overflow: 'visible'
   },
   timePeriod: {
     paddingLeft: theme.spacing.unit,
     fontSize: '3.0rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '2.0rem'
-    }
+    },
+    overflow: 'visible'
   },
   date: {
     color: theme.palette.text.main,
     marginTop: theme.spacing.unit * -2.2,
     textAlign: 'center',
+    overflow: 'visible',
     fontSize: '2.2rem',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.5rem'
@@ -60,40 +62,33 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * -0.88,
   },
   weatherContainer: {
-    maxWidth: 480,
-    paddingLeft: theme.spacing.unit * 2,
-    textAlign: 'start',
+    height: '100%',
+    width: 420,
     [theme.breakpoints.down('md')]: {
-      maxWidth: 350,
+      width: 340,
     },
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 200,
+      width: 240,
     },
     [theme.breakpoints.down('xs')]: {
+      width: 0,
       visibility: 'hidden'
-    }
+    },
+    paddingLeft: theme.spacing.unit * 2,
+    textAlign: 'start'
   },
   condition: {
     color: theme.palette.text.main,
-    fontSize: '2.6rem',
-    paddingLeft: 98,
+    fontSize: '2.2rem',
+    overflow: 'visible',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: 68,
       fontSize: '1.6rem'
     }
   },
-  weatherIconContainer: {
-    position: 'fixed',
-    height: '100%',
-    top: '50%',
-    left: 8,
-    transform: 'translateY(-46%)',
-  },
   data: {
-    maxWidth: 480,
+    maxWidth: 420,
     color: theme.palette.text.main,
     fontSize: '1.6rem',
-    paddingLeft: 98,
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
     },
@@ -101,27 +96,27 @@ const styles = theme => ({
       paddingLeft: 0,
     },
     [theme.breakpoints.down('md')]: {
-      maxWidth: 320,
+      maxWidth: 340,
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      paddingLeft: 68,
       fontSize: '1.2rem'
     }
   },
   indoorContainer: {
-    maxWidth: 480,
-    paddingRight: theme.spacing.unit * 2,
-    textAlign: 'end',
+    width: 420,
     [theme.breakpoints.down('md')]: {
-      maxWidth: 320,
+      width: 340,
     },
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 240,
+      width: 240,
     },
     [theme.breakpoints.down('xs')]: {
+      width: 0,
       visibility: 'hidden'
-    }
+    },
+    paddingRight: theme.spacing.unit * 2,
+    textAlign: 'end'
   },
   indoorInnerContainer: {
     paddingTop: theme.spacing.unit / 2,
@@ -132,12 +127,14 @@ const styles = theme => ({
   indoorLabel: {
     color: theme.palette.text.main,
     fontSize: '2.0rem',
+    overflow: 'visible',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.6rem'
     },
   },
   indoor: {
     color: theme.palette.text.main,
+    overflow: 'visible',
     fontSize: '1.6rem',
     '& span': {
       paddingLeft: theme.spacing.unit * 2,
@@ -165,16 +162,24 @@ const styles = theme => ({
     }
   },
   button: {
-    height: 42,
-    width: 42,
+    height: 32,
+    width: 32,
     color: theme.palette.text.light,
     [theme.breakpoints.up('sm')]: {
       marginRight: theme.spacing.unit,
     },
     [theme.breakpoints.down('sm')]: {
-      height: 32,
-      width: 32,
+      height: 26,
+      width: 26,
       gridColumn: 1
+    }
+  },
+  icon: {
+    height: 22,
+    width: 22,
+    [theme.breakpoints.down('sm')]: {
+      height: 18,
+      width: 18,
     }
   },
 });
@@ -256,55 +261,68 @@ class Header extends React.Component {
           direction="row"
           justify="space-between"
           alignItems="center"
+          wrap="nowrap"
           spacing={8}
           className={classes.header}
           onClick={handleRadioHide}>
           {header.left_outdoor_weather &&
             <Grid item className={classes.weatherContainer}>
-              {header.left_outdoor_weather.icon &&
-                <div className={classes.weatherIconContainer}>
-                  <Hidden smDown>
-                    <ReactAnimatedWeather
-                      icon={header.left_outdoor_weather.icon}
-                      color={theme.palette.text.main}
-                      size={90}
-                      animate={true} />
-                  </Hidden>
-                  <Hidden mdUp>
-                    <ReactAnimatedWeather
-                      icon={header.left_outdoor_weather.icon}
-                      color={theme.palette.text.main}
-                      size={60}
-                      animate={true} />
-                  </Hidden>
-                </div>
-              }
-              {header.left_outdoor_weather.condition &&
-                <Typography className={classes.condition} variant="display2">
-                  {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
-                </Typography>
-              }
-              {header.left_outdoor_weather.data &&
-                <Typography className={classes.data} variant="display2">
-                  {header.left_outdoor_weather.data.map((d, id) => {
-                    return <span key={id}>{d}</span>
-                  })}
-                </Typography>
-              }
+              <Grid
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="center"
+                wrap="nowrap"
+                spacing={8}
+                onClick={handleRadioHide}>
+
+                {header.left_outdoor_weather.icon &&
+                  <Grid item>
+                    <Hidden smDown>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={80}
+                        animate={true} />
+                    </Hidden>
+                    <Hidden mdUp>
+                      <ReactAnimatedWeather
+                        icon={header.left_outdoor_weather.icon}
+                        color={theme.palette.text.main}
+                        size={60}
+                        animate={true} />
+                    </Hidden>
+                  </Grid>
+                }
+                <Grid item>
+                  {header.left_outdoor_weather.condition &&
+                    <Typography className={classes.condition} variant="display2" noWrap>
+                      {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
+                    </Typography>
+                  }
+                  {header.left_outdoor_weather.data &&
+                    <Typography className={classes.data} variant="display2" noWrap>
+                      {header.left_outdoor_weather.data.map((d, id) => {
+                        return <span key={id}>{d}</span>
+                      })}
+                    </Typography>
+                  }
+                </Grid>
+              </Grid>
             </Grid>
           }
           <Grid item className={classes.timeDateContainer}>
             {timeMilitary ?
-              <Typography className={classes.time} variant="display4">
+              <Typography className={classes.time} variant="display4" noWrap>
                 <Moment format="HH:mm" />
               </Typography>
               :
-              <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="display4">
+              <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="display4" noWrap>
                 <Moment format="hh:mm" />
                 <Moment className={classes.timePeriod} format="a" />
               </Typography>
             }
-            <Typography className={classes.date} variant="display2">
+            <Typography className={classes.date} variant="display2" noWrap>
               <Moment format={dateFormat} />
             </Typography>
           </Grid>
@@ -312,10 +330,10 @@ class Header extends React.Component {
             {header.right_indoor && header.right_indoor.map((i, id) => {
               return (
                 <div key={id} className={classes.indoorInnerContainer}>
-                  <Typography className={classes.indoorLabel} variant="display2">
+                  <Typography className={classes.indoorLabel} variant="display2" noWrap>
                     {i.label}
                   </Typography>
-                  <Typography className={classes.indoor} variant="display2">
+                  <Typography className={classes.indoor} variant="display2" noWrap>
                     {i.data.map((d, id) => {
                       return <span key={id}>{d}</span>
                     })}
