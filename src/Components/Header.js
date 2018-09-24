@@ -140,9 +140,6 @@ const styles = theme => ({
       fontSize: '1.6rem'
     }
   },
-  dateMilitary: {
-    marginTop: theme.spacing.unit * -0.88,
-  },
   indoorContainer: {
     width: 420,
     [theme.breakpoints.down('md')]: {
