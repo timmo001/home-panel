@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import MUIInput from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,6 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
 import AutoLinkText from 'react-autolink-text2';
 import properCase from '../Common/properCase';
 import configExplanations from './configExplanations.json';
@@ -19,6 +21,15 @@ const styles = theme => ({
   },
   checkboxHelper: {
     transform: 'translateY(-50%)'
+  },
+  resetIconButton: {
+    display: 'block',
+    height: 20,
+    width: 20
+  },
+  resetIcon: {
+    height: 18,
+    width: 18
   }
 });
 
@@ -39,7 +50,7 @@ class Input extends React.Component {
   };
 
   render() {
-    const { classes, name, itemPath, handleConfigChange } = this.props;
+    const { classes, name, defaultValue, itemPath, handleConfigChange } = this.props;
     const { type, helpText } = this.state;
 
     let value = this.props.value;
@@ -58,6 +69,9 @@ class Input extends React.Component {
               inputProps={{ autoCapitalize: "none" }}
               value={value}
               onChange={event => handleConfigChange(itemPath, event.target.value)} />
+            <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
+              <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+            </IconButton>
             <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
           </FormControl>
         );
@@ -70,6 +84,9 @@ class Input extends React.Component {
             inputProps={{ autoCapitalize: "none" }}
             value={value}
             onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
+          <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
+            <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+          </IconButton>
           <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
       );
@@ -82,6 +99,9 @@ class Input extends React.Component {
                 onChange={event => handleConfigChange(itemPath, event.target.checked)} />
             }
             label={properCase(name)} />
+          <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
+            <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+          </IconButton>
           <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
       );
