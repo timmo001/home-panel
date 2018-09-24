@@ -94,7 +94,7 @@ class Item extends React.Component {
             {dropdown}
             <Divider />
             <Collapse in={open}>
-              {item.map((ai, ax) => {
+              {item && item.map((ai, ax) => {
                 return <NextItem
                   key={ax}
                   open={false}
