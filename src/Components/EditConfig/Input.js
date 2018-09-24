@@ -39,8 +39,12 @@ class Input extends React.Component {
   };
 
   render() {
-    const { classes, name, value, itemPath, handleConfigChange } = this.props;
+    const { classes, name, itemPath, handleConfigChange } = this.props;
     const { type, helpText } = this.state;
+
+    let value = this.props.value;
+    if (value === 'true') value = true;
+    if (value === 'false') value = false;
 
     switch (type) {
       default: return null;
