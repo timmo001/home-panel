@@ -95,6 +95,7 @@ class Input extends React.Component {
           <FormControlLabel
             control={
               <Checkbox
+                value="checked"
                 checked={value}
                 onChange={event => handleConfigChange(itemPath, event.target.checked)} />
             }
