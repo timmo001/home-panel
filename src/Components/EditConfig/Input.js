@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+import AutoLinkText from 'react-autolink-text2';
 import properCase from '../Common/properCase';
 import configExplanations from './configExplanations.json';
 
@@ -53,7 +54,7 @@ class Input extends React.Component {
               inputProps={{ autoCapitalize: "none" }}
               value={value}
               onChange={event => handleConfigChange(itemPath, event.target.value)} />
-            <FormHelperText id={name}>{helpText}</FormHelperText>
+            <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
           </FormControl>
         );
       case 'number': return (
@@ -65,7 +66,7 @@ class Input extends React.Component {
             inputProps={{ autoCapitalize: "none" }}
             value={value}
             onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
-          <FormHelperText id={name}>{helpText}</FormHelperText>
+          <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
       );
       case 'boolean': return (
@@ -77,7 +78,7 @@ class Input extends React.Component {
                 onChange={event => handleConfigChange(itemPath, event.target.checked)} />
             }
             label={properCase(name)} />
-          <FormHelperText id={name} className={classes.checkboxHelper}>{helpText}</FormHelperText>
+          <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
       );
     }
