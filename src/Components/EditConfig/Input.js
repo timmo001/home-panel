@@ -8,9 +8,12 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AutoLinkText from 'react-autolink-text2';
 import properCase from '../Common/properCase';
+import defaultConfig from './defaultConfig.json';
 import configExplanations from './configExplanations.json';
 
 const styles = theme => ({
@@ -28,8 +31,8 @@ const styles = theme => ({
     width: 20
   },
   resetIcon: {
-    height: 18,
-    width: 18
+    height: 16,
+    width: 16
   }
 });
 
@@ -40,9 +43,10 @@ class Input extends React.Component {
   };
 
   componentDidMount = () => {
-    const type = this.props.defaultValue === 'true' ? 'boolean'
-      : this.props.defaultValue === 'false' ? 'boolean'
-        : typeof this.props.defaultValue;
+    const type = this.props.itemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
+      : this.props.defaultValue === 'true' ? 'boolean'
+        : this.props.defaultValue === 'false' ? 'boolean'
+          : typeof this.props.defaultValue;
 
     const lastItem = this.props.itemPath.pop();
     const helpText = this.props.itemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
@@ -104,6 +108,20 @@ class Input extends React.Component {
             <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
           </IconButton>
           <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
+        </FormControl>
+      );
+      case 'card_type': return (
+        <FormControl className={classes.input}>
+          <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
+          <Select
+            value={value}
+            onChange={event => handleConfigChange(itemPath, event.target.value)}
+            input={<MUIInput id={name} type="string" value={value} />}>
+            {defaultConfig.items[0].cards.map((card, x) => {
+              return <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
+            })}
+          </Select>
+          <FormHelperText>{helpText}</FormHelperText>
         </FormControl>
       );
     }
