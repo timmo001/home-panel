@@ -26,13 +26,20 @@ const styles = theme => ({
     transform: 'translateY(-50%)'
   },
   resetIconButton: {
-    display: 'block',
-    height: 20,
-    width: 20
+    height: 32,
+    width: 32,
+    marginRight: 8,
+    transform: 'translateY(4px)'
+  },
+  resetInputIconButton: {
+    transform: 'translateY(12px)'
   },
   resetIcon: {
-    height: 16,
-    width: 16
+    fontSize: 22,
+    transform: 'translateY(-8px)'
+  },
+  select: {
+    marginRight: 8
   }
 });
 
@@ -73,7 +80,9 @@ class Input extends React.Component {
               inputProps={{ autoCapitalize: "none" }}
               value={value}
               onChange={event => handleConfigChange(itemPath, event.target.value)} />
-            <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
+            <IconButton
+              className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
+              onClick={() => handleConfigChange(itemPath, defaultValue)}>
               <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
             </IconButton>
             <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
@@ -88,7 +97,9 @@ class Input extends React.Component {
             inputProps={{ autoCapitalize: "none" }}
             value={value}
             onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
-          <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
+          <IconButton
+            className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
+            onClick={() => handleConfigChange(itemPath, defaultValue)}>
             <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
           </IconButton>
           <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
@@ -114,6 +125,7 @@ class Input extends React.Component {
         <FormControl className={classes.input}>
           <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
           <Select
+            className={classes.select}
             value={value}
             onChange={event => handleConfigChange(itemPath, event.target.value)}
             input={<MUIInput id={name} type="string" value={value} />}>

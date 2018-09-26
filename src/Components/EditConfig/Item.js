@@ -36,13 +36,14 @@ const styles = theme => ({
     flex: '1 1 auto'
   },
   iconButton: {
-    height: 28,
-    width: 28,
+    height: 32,
+    width: 32,
     marginRight: 16,
   },
   icon: {
     height: 22,
-    width: 22
+    width: 22,
+    transform: 'translateY(-8px)'
   }
 });
 

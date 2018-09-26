@@ -61,7 +61,8 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       height: 18,
       width: 18
-    }
+    },
+    transform: 'translateY(-8px)'
   },
   weatherContainer: {
     width: 420,
