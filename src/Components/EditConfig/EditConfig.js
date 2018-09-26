@@ -103,13 +103,14 @@ class EditConfig extends React.Component {
     let config = this.state.config;
     // Set the new value
     const lastItem = path.pop();
-    const secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
+    let secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
     if (value === undefined)
       secondLastItem.splice(secondLastItem.indexOf(lastItem));
     else
       if (isObject(value)) {
         if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
         const newValue = JSON.parse(JSON.stringify(value));
+        if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
         secondLastItem[lastItem].push(newValue);
       } else secondLastItem[lastItem] = value;
     this.setState({ config });
