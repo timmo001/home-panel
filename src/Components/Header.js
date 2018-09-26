@@ -11,6 +11,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Slide from '@material-ui/core/Slide';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import EditIcon from '@material-ui/icons/Edit';
@@ -265,45 +266,55 @@ class Header extends React.Component {
             className={classes.buttons}
             onMouseOver={handleMouseOver}
             onMouseLeave={handleMouseLeave}>
-            <IconButton
-              className={classes.button}
-              style={{ gridRow: 1, gridColumn: 1 }}
-              aria-label="Log Out"
-              onClick={this.props.handleLogOut}>
-              <ExitToAppIcon className={classes.icon} />
-            </IconButton>
-            <IconButton
-              className={classes.button}
-              style={{ gridRow: 1, gridColumn: 2 }}
-              aria-label="Refresh"
-              onClick={() => window.location.reload(true)}>
-              <RefreshIcon className={classes.icon} />
-            </IconButton>
-            {canEdit &&
+            <Tooltip title="Log Out">
               <IconButton
                 className={classes.button}
-                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 3 : 1 }}
-                aria-label="Edit Config"
-                onClick={this.props.handleEditConfig}>
-                <EditIcon className={classes.icon} />
+                style={{ gridRow: 1, gridColumn: 1 }}
+                aria-label="Log Out"
+                onClick={this.props.handleLogOut}>
+                <ExitToAppIcon className={classes.icon} />
               </IconButton>
+            </Tooltip>
+            <Tooltip title="Refresh">
+              <IconButton
+                className={classes.button}
+                style={{ gridRow: 1, gridColumn: 2 }}
+                aria-label="Refresh"
+                onClick={() => window.location.reload(true)}>
+                <RefreshIcon className={classes.icon} />
+              </IconButton>
+            </Tooltip>
+            {canEdit &&
+              <Tooltip title="Edit Config">
+                <IconButton
+                  className={classes.button}
+                  style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 3 : 1 }}
+                  aria-label="Edit Config"
+                  onClick={this.props.handleEditConfig}>
+                  <EditIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
             }
-            <IconButton
-              className={classes.button}
-              style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 4 : 2 }}
-              aria-label="Theme"
-              aria-owns={anchorEl ? 'simple-menu' : null}
-              aria-haspopup="true"
-              onClick={this.handleClick}>
-              <FormatPaintIcon className={classes.icon} />
-            </IconButton>
-            <IconButton
-              className={classes.button}
-              style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
-              aria-label="Radio"
-              onClick={this.props.handleRadioToggle}>
-              <RadioIcon className={classes.icon} />
-            </IconButton>
+            <Tooltip title="Theme">
+              <IconButton
+                className={classes.button}
+                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 4 : 2 }}
+                aria-label="Theme"
+                aria-owns={anchorEl ? 'simple-menu' : null}
+                aria-haspopup="true"
+                onClick={this.handleClick}>
+                <FormatPaintIcon className={classes.icon} />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Radio">
+              <IconButton
+                className={classes.button}
+                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
+                aria-label="Radio"
+                onClick={this.props.handleRadioToggle}>
+                <RadioIcon className={classes.icon} />
+              </IconButton>
+            </Tooltip>
           </div>
         </Slide>
         <Menu
