@@ -87,7 +87,8 @@ class Main extends React.Component {
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
     const { moved, over, radioShown, currentPage, editConfig } = this.state;
-    const page = config.pages ? { id: currentPage === 0 ? 1 : currentPage, ...config.pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
+    const pages = config.pages ? config.pages : [{ id: 1, name: "Home", icon: "home" }];
+    const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
@@ -109,15 +110,13 @@ class Main extends React.Component {
         }}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
         </div>
-        {config.pages &&
-          <PageNavigation
-            pages={config.pages}
-            moved={moved}
-            over={over}
-            handleMouseOver={this.onMouseMoveHandler}
-            handleMouseLeave={this.onMouseLeaveHandler}
-            handlePageChange={this.handlePageChange} />
-        }
+        <PageNavigation
+          pages={pages}
+          moved={moved}
+          over={over}
+          handleMouseOver={this.onMouseMoveHandler}
+          handleMouseLeave={this.onMouseLeaveHandler}
+          handlePageChange={this.handlePageChange} />
         <Radio
           show={radioShown}
           apiUrl={this.props.apiUrl}
