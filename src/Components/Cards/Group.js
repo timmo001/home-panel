@@ -31,6 +31,9 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       height: 'calc(100% - 150px)',
     }
+  },
+  gridInner: {
+    width: '100%'
   }
 });
 
