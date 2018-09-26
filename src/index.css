@@ -34,8 +34,8 @@ a:active {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: rgba(66, 66, 66, 0.8); 
+  background: #757575; 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: rgba(66, 66, 66, 0.4); 
+  background: #616161; 
 }
