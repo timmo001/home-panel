@@ -224,6 +224,7 @@ class EditConfig extends React.Component {
                   objKey={selected.name}
                   defaultItem={defaultConfig.theme}
                   item={config.theme}
+                  defaultItemPath={['theme']}
                   itemPath={['theme']}
                   handleConfigChange={this.handleConfigChange} />
                 : selected.id === 1 ?
@@ -231,6 +232,7 @@ class EditConfig extends React.Component {
                     objKey={selected.name}
                     defaultItem={defaultConfig.header}
                     item={config.header}
+                    defaultItemPath={['header']}
                     itemPath={['header']}
                     handleConfigChange={this.handleConfigChange} />
                   : selected.id === 2 ?
@@ -238,6 +240,7 @@ class EditConfig extends React.Component {
                       objKey={selected.name}
                       defaultItem={defaultConfig.pages}
                       item={config.pages}
+                      defaultItemPath={['pages']}
                       itemPath={['pages']}
                       handleConfigChange={this.handleConfigChange} />
                     : selected.id === 3 &&
@@ -245,6 +248,7 @@ class EditConfig extends React.Component {
                       objKey={selected.name}
                       defaultItem={defaultConfig.items}
                       item={config.items}
+                      defaultItemPath={['items']}
                       itemPath={['items']}
                       handleConfigChange={this.handleConfigChange} />
               }

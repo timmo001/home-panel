@@ -43,13 +43,13 @@ class Input extends React.Component {
   };
 
   componentDidMount = () => {
-    const type = this.props.itemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
+    const type = this.props.defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
       : this.props.defaultValue === 'true' ? 'boolean'
         : this.props.defaultValue === 'false' ? 'boolean'
           : typeof this.props.defaultValue;
 
-    const lastItem = this.props.itemPath.pop();
-    const helpText = this.props.itemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
+    const lastItem = this.props.defaultItemPath.pop();
+    const helpText = this.props.defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
     this.setState({ type, helpText });
   };
 
@@ -131,6 +131,7 @@ class Input extends React.Component {
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
+  defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
 };

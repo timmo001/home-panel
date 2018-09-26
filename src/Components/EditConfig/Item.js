@@ -57,7 +57,7 @@ class Item extends React.Component {
   handleClick = () => this.setState(state => ({ open: !state.open }));
 
   render() {
-    const { classes, objKey, defaultItem, item, itemPath, canDelete, handleConfigChange } = this.props;
+    const { classes, objKey, defaultItem, item, defaultItemPath, itemPath, canDelete, handleConfigChange } = this.props;
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
@@ -106,6 +106,11 @@ class Item extends React.Component {
                         ai.type === 'iframe' ? 3 :
                           0 : 0]}
                   item={ai}
+                  defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
+                    ai.type === 'link' ? 1 :
+                      ai.type === 'camera' ? 2 :
+                        ai.type === 'iframe' ? 3 :
+                          0 : 0])}
                   itemPath={itemPath.concat([ax])}
                   handleConfigChange={handleConfigChange} />
               })}
@@ -133,6 +138,7 @@ class Item extends React.Component {
                       objKey={i}
                       defaultItem={defaultItem[i]}
                       item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                      defaultItemPath={defaultItemPath.concat([i])}
                       itemPath={itemPath.concat([i])}
                       handleConfigChange={handleConfigChange} />
                   })
@@ -149,6 +155,7 @@ class Item extends React.Component {
               name={String(objKey)}
               defaultValue={defaultItem}
               value={item}
+              defaultItemPath={defaultItemPath}
               itemPath={itemPath}
               handleConfigChange={handleConfigChange} />
         }
@@ -159,6 +166,7 @@ class Item extends React.Component {
 
 Item.propTypes = {
   classes: PropTypes.object.isRequired,
+  defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
   open: PropTypes.bool,
   canDelete: PropTypes.bool,
