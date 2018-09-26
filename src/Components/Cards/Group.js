@@ -25,7 +25,7 @@ const styles = theme => ({
     }
   },
   gridInnerContainer: {
-    height: 'calc(100% - 158px)',
+    height: 'calc(100% - 178px)',
     overflowY: 'auto',
     overflowX: 'hidden',
     [theme.breakpoints.down('sm')]: {
