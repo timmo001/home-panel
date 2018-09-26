@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Page from './Cards/Page';
-import Pages from './Pages';
+import PageNavigation from './PageNavigation';
 import Radio from './Radio/Radio';
 import EditConfig from './EditConfig/EditConfig';
 
@@ -106,7 +106,7 @@ class Main extends React.Component {
         <div className={classes.pageContainer} onClick={this.handleRadioHide}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
           {config.pages &&
-            <Pages
+            <PageNavigation
               pages={config.pages}
               moved={moved}
               over={over}

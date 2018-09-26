@@ -17,7 +17,7 @@ const styles = theme => ({
   }
 });
 
-class Page extends React.Component {
+class PageNavigation extends React.Component {
   state = {
     value: 0,
     over: false,
@@ -51,7 +51,7 @@ class Page extends React.Component {
   }
 }
 
-Page.propTypes = {
+PageNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
   pages: PropTypes.array.isRequired,
   moved: PropTypes.bool.isRequired,
@@ -61,4 +61,4 @@ Page.propTypes = {
   handlePageChange: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Page);
+export default withStyles(styles)(PageNavigation);
