@@ -49,7 +49,16 @@ class Input extends React.Component {
     helpText: ''
   };
 
-  componentDidMount = () => {
+  componentDidMount = () => this.updateProps();
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.defaultItemPath !== prevProps.defaultItemPath
+      || this.props.defaultValue !== prevProps.defaultValue) {
+      this.updateProps();
+    }
+  };
+
+  updateProps = () => {
     const type = this.props.defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
       : this.props.defaultValue === 'true' ? 'boolean'
         : this.props.defaultValue === 'false' ? 'boolean'
