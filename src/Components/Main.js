@@ -12,11 +12,12 @@ const styles = theme => ({
     height: '100%',
     width: '100%',
     maxHeight: '100%',
-    maxWidth: '100%',
+    maxWidth: '100%'
   },
   pageContainer: {
     height: 'calc(100% - 24px)',
     overflowY: 'auto',
+    transition: 'height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
   },
 });
 
@@ -103,18 +104,20 @@ class Main extends React.Component {
           handleLogOut={this.handleLogOut}
           handleRadioHide={this.handleRadioHide}
           handleEditConfig={this.handleEditConfig} />
-        <div className={classes.pageContainer} onClick={this.handleRadioHide}>
+        <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
+          height: moved || over ? 'calc(100% - 58px)' : 'inherit'
+        }}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
-          {config.pages &&
-            <PageNavigation
-              pages={config.pages}
-              moved={moved}
-              over={over}
-              handleMouseOver={this.onMouseMoveHandler}
-              handleMouseLeave={this.onMouseLeaveHandler}
-              handlePageChange={this.handlePageChange} />
-          }
         </div>
+        {config.pages &&
+          <PageNavigation
+            pages={config.pages}
+            moved={moved}
+            over={over}
+            handleMouseOver={this.onMouseMoveHandler}
+            handleMouseLeave={this.onMouseLeaveHandler}
+            handlePageChange={this.handlePageChange} />
+        }
         <Radio
           show={radioShown}
           apiUrl={this.props.apiUrl}

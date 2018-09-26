@@ -14,7 +14,8 @@ const styles = theme => ({
     overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
       width: 'calc(var(--width) * 114px)',
-    }
+    },
+    marginRight: theme.spacing.unit
   },
   title: {
     color: theme.palette.text.light,
@@ -24,17 +25,13 @@ const styles = theme => ({
     }
   },
   gridInnerContainer: {
-    height: `calc(100% - ${theme.spacing.unit * 6}px)`,
+    height: 'calc(100% - 200px)',
     overflowY: 'auto',
     overflowX: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      height: `calc(100% - ${theme.spacing.unit * 4}px)`,
+      height: 'calc(100% - 150px)',
     }
-  },
-  gridInner: {
-    width: '100%',
-    paddingBottom: theme.spacing.unit * 6,
-  },
+  }
 });
 
 class Group extends React.Component {
