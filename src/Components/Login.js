@@ -176,10 +176,9 @@ class Login extends React.Component {
               localStorage.setItem('username', this.state.username);
               sessionStorage.setItem('password', this.state.password);
               localStorage.setItem('api_url', this.state.api_url);
-              this.props.handleUpdateApiUrl(this.state.api_url);
               localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(res.body, this.state.hass_url);
+                this.props.loggedIn(res.body, this.state.username, this.state.password, this.state.api_url, this.state.hass_url);
               });
             } else {
               this.setState({ loading: false, success: false }, () => {
@@ -228,10 +227,9 @@ class Login extends React.Component {
               localStorage.setItem('username', this.state.username);
               sessionStorage.setItem('password', this.state.password);
               localStorage.setItem('api_url', this.state.api_url);
-              this.props.handleUpdateApiUrl(this.state.api_url);
               localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(res.body, this.state.hass_url);
+                this.props.loggedIn(res.body, this.state.username, this.state.password, this.state.api_url, this.state.hass_url);
               });
             } else {
               this.setState({ loading: false, success: false }, () => {
@@ -398,7 +396,6 @@ class Login extends React.Component {
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
   loggedIn: PropTypes.func.isRequired,
-  handleUpdateApiUrl: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Login);

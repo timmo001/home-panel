@@ -133,44 +133,55 @@ This section can display weather and other sensor information in the top
   },
 ```
 
-### format
+### time
+
+#### disable
+
+Should time be disabled? Default is `false`.
 
 ```json
   "header": {
-    "format": {
-      "time": {
-        "military": false
-      },
-      "date": "Do MMMM YYYY"
+    "time": {
+      "disable": true
     }
   }
 ```
 
-#### time
+#### military
 
-##### military
-
-Should the time be in military format? (24 hour) Default is `false`.
+Should time be in military format? (24 hour) Default is `false`.
 
 ```json
   "header": {
-    "format": {
-      "time": {
-        "military": true
-      }
+    "time": {
+      "military": true
     }
   }
 ```
 
-#### date
+### date
+
+#### disable
+
+Should date be disabled? Default is `false`.
+
+```json
+  "header": {
+    "date": {
+      "disable": true
+    }
+  }
+```
+
+#### format
 
 Set a custom date format. Refer to the
  [momentjs docs][moment-docs] for more info. Default is `Do MMMM YYYY`.
 
 ```json
   "header": {
-    "format": {
-      "date": "dddd, MMMM Do YYYY"
+    "date": {
+      "format": "dddd, MMMM Do YYYY"
     }
   }
 ```
@@ -407,8 +418,8 @@ The page number the group is on. This defaults to `1` and will not show if
 
 ### hass
 
-This is the default type of card. You do not need to set the `type` here as
- the app defaults to this.
+A Home Assistant card. This is the default type of card. You do not need to
+ set the `type` here as the app defaults to this.
 
 ```json
         {
@@ -422,8 +433,8 @@ This is the default type of card. You do not need to set the `type` here as
 
 #### entity_id
 
-The `entity_id` of the [HASS][hass] entity. Switches and lights act as buttons
- which can be toggled on and off and scenes, scripts etc. act as
+The `entity_id` of the [Home Assistant][hass] entity. Switches and lights act
+ as buttons which can be toggled on and off and scenes, scripts etc. act as
  non-toggleable buttons.
 
 ```json
@@ -437,8 +448,8 @@ Lights can also be clicked and held / long pressed to
 
 #### name
 
-The name is automatically pulled from [HASS][hass], but you can set a custom
- name if you like.
+The name is automatically pulled from [Home Assistant][hass], but you can set a
+ custom name if you like.
 
 ```json
           "name": "Night/Film Mode",
@@ -531,8 +542,8 @@ You can add any camera image supported by your browser. Set the `type` to
         }
 ```
 
-Another use for the `camera` type is to show an image, instead of a camera, so your
- screen acts as a photo frame.
+Another use for the `camera` type is to show an image, instead of a camera, so
+ your screen acts as a photo frame.
 
 ```json
         {

@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Header';
 import Page from './Cards/Page';
-import Pages from './Pages';
+import PageNavigation from './PageNavigation';
 import Radio from './Radio/Radio';
+import EditConfig from './EditConfig/EditConfig';
 
 const styles = theme => ({
   root: {
     height: '100%',
     width: '100%',
     maxHeight: '100%',
-    maxWidth: '100%',
+    maxWidth: '100%'
   },
   pageContainer: {
-    height: `calc(100% - 180px)`,
+    height: '100%',
     overflowY: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      height: `calc(100% - 130px)`,
-    }
+    transition: 'height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
   },
 });
 
@@ -30,8 +29,11 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     radioShown: false,
+    editConfig: false,
     currentPage: 0,
   };
+
+  componentDidMount = () => this.props.setTheme();
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
@@ -78,10 +80,15 @@ class Main extends React.Component {
 
   handlePageChange = (pageNo) => this.setState({ currentPage: pageNo });
 
+  handleEditConfig = () => this.setState({ editConfig: true });
+
+  handleEditConfigClose = () => this.setState({ editConfig: false });
+
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage } = this.state;
-    const page = config.pages ? { id: currentPage === 0 ? 1 : currentPage, ...config.pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
+    const { moved, over, radioShown, currentPage, editConfig } = this.state;
+    const pages = config.pages ? config.pages : [{ id: 1, name: "Home", icon: "home" }];
+    const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
@@ -96,23 +103,31 @@ class Main extends React.Component {
           setTheme={this.props.setTheme}
           handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
-          handleRadioHide={this.handleRadioHide} />
-        <div className={classes.pageContainer} onClick={this.handleRadioHide}>
+          handleRadioHide={this.handleRadioHide}
+          handleEditConfig={this.handleEditConfig} />
+        <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
+          height: moved || over ? 'calc(100% - 72px)' : 'inherit'
+        }}>
           <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
-          {config.pages &&
-            <Pages
-              pages={config.pages}
-              moved={moved}
-              over={over}
-              handleMouseOver={this.onMouseMoveHandler}
-              handleMouseLeave={this.onMouseLeaveHandler}
-              handlePageChange={this.handlePageChange} />
-          }
         </div>
+        <PageNavigation
+          pages={pages}
+          moved={moved}
+          over={over}
+          handleMouseOver={this.onMouseMoveHandler}
+          handleMouseLeave={this.onMouseLeaveHandler}
+          handlePageChange={this.handlePageChange} />
         <Radio
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={this.handleRadioHide} />
+        <EditConfig
+          open={editConfig}
+          config={config}
+          username={this.props.username}
+          password={this.props.password}
+          apiUrl={this.props.apiUrl}
+          handleClose={this.handleEditConfigClose} />
       </div>
     );
   }
@@ -126,6 +141,8 @@ Main.propTypes = {
   config: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   saveTokens: PropTypes.func.isRequired,
 };
