@@ -25,11 +25,11 @@ const styles = theme => ({
     }
   },
   gridInnerContainer: {
-    height: 'calc(100% - 200px)',
+    height: 'calc(100% - 158px)',
     overflowY: 'auto',
     overflowX: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      height: 'calc(100% - 150px)',
+      height: 'calc(100% - 132px)',
     }
   },
   gridInner: {
