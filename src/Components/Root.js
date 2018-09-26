@@ -40,7 +40,7 @@ class Root extends Component {
     connected: false,
   };
 
-  loggedIn = (config, hass_url) => this.setState({ config, hass_url }, () => {
+  loggedIn = (config, username, password, api_url, hass_url) => this.setState({ config, username, password, api_url, hass_url }, () => {
     this.connectToHASS();
     if (config.theme && config.theme.custom) {
       config.theme.custom.map(theme => this.props.addTheme(theme));
@@ -78,15 +78,23 @@ class Root extends Component {
       }
       return { auth, conn };
     } catch (err) {
-      if (err !== ERR_INVALID_AUTH) {
+      try {
+        if (err !== ERR_INVALID_AUTH) {
+          throw err;
+        }
+        // We can get invalid auth if auth tokens were stored that are no longer valid
+        // Clear stored tokens.
+        this.saveTokens(null);
+        auth = await this.authProm();
+        const conn = await createConnection({ auth });
+        return { auth, conn };
+      } catch (err) {
+        this.setState({
+          snackMessage: { open: true, text: 'Connection to Home Assistant failed. Please try again later.' },
+          entities: []
+        });
         throw err;
       }
-      // We can get invalid auth if auth tokens were stored that are no longer valid
-      // Clear stored tokens.
-      this.saveTokens(null);
-      auth = await this.authProm();
-      const conn = await createConnection({ auth });
-      return { auth, conn };
     }
   };
 
@@ -100,7 +108,7 @@ class Root extends Component {
           conn.addEventListener('ready', this.eventHandler);
           subscribeEntities(conn, this.updateEntities);
           getUser(conn).then(user => {
-            console.log('Logged into HASS as', user.name);
+            console.log('Logged into Home Assistant as', user.name);
             sessionStorage.setItem('hass_id', user.id);
           });
           connection = conn;
@@ -108,9 +116,8 @@ class Root extends Component {
       })();
     } else {
       this.setState({
-        snackMessage: { open: true, text: 'Connection failed. Please connect to hass' },
-        entities: undefined,
-        config: undefined
+        snackMessage: { open: true, text: 'Connection failed. Please connect to Home Assistant' },
+        entities: [],
       });
     }
   }
@@ -133,13 +140,8 @@ class Root extends Component {
     }
   };
 
-  updateEntities = entities => {
-    this.setState({ entities: Object.entries(entities) }, () => {
-      this.setTheme();
-    });
-  };
+  updateEntities = entities => this.setState({ entities: Object.entries(entities) });
 
-  handleUpdateApiUrl = api_url => this.setState({ api_url });
 
   setTheme = (themeId = undefined) => {
     if (!themeId && themeId !== 0)
@@ -178,14 +180,14 @@ class Root extends Component {
   };
 
   render() {
-    const { loggedIn, setTheme, handleUpdateApiUrl } = this;
+    const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
     const { config, snackMessage, entities, connected } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ?
-          <Login loggedIn={loggedIn} handleUpdateApiUrl={handleUpdateApiUrl} />
+          <Login loggedIn={loggedIn} />
           :
           entities ?
             <Main
@@ -194,6 +196,8 @@ class Root extends Component {
               setTheme={setTheme}
               config={config}
               entities={entities}
+              username={this.state.username}
+              password={this.state.password}
               apiUrl={this.state.api_url}
               handleChange={this.handleChange}
               saveTokens={this.saveTokens} />
@@ -202,11 +206,11 @@ class Root extends Component {
               <CircularProgress className={classes.progress} />
               {connected ?
                 <Typography variant="subheading">
-                  Loading HASS data...
+                  Loading Home Assistant data..
                 </Typography>
                 :
                 <Typography variant="subheading">
-                  Attempting to connect to HASS...
+                  Attempting to connect to Home Assistant..
                 </Typography>
               }
             </div>
