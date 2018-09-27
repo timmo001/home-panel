@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
 import Collapse from '@material-ui/core/Collapse';
 import Add from '@material-ui/icons/Add';
 import ExpandLess from '@material-ui/icons/ExpandLess';
@@ -22,6 +21,8 @@ const styles = theme => ({
     color: theme.palette.text.main
   },
   dropdown: {
+    display: 'flex',
+    width: '100%',
     paddingLeft: theme.spacing.unit / 2
   },
   dropdownText: {
@@ -62,13 +63,13 @@ class Item extends React.Component {
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
-      <ListItem className={classes.dropdown}>
+      <ButtonBase className={classes.dropdown}>
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
-      </ListItem>
+      </ButtonBase>
       :
-      <ListItem className={classes.dropdown} button onClick={this.handleClick}>
+      <ButtonBase className={classes.dropdown} ButtonBase onClick={this.handleClick}>
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
@@ -86,81 +87,76 @@ class Item extends React.Component {
           </IconButton>
         }
         {open ? <ExpandLess /> : <ExpandMore />}
-      </ListItem>;
+      </ButtonBase>;
 
-    return (
+    if (Array.isArray(defaultItem)) return (
       <div className={classes.root}>
-        {Array.isArray(defaultItem) ?
-          <div>
-            {dropdown}
-            <Divider />
-            <Collapse in={open}>
-              {item && item.map((ai, ax) => {
-                return <NextItem
-                  key={ax}
-                  open={false}
-                  canDelete={true}
-                  objKey={ax}
-                  defaultItem={defaultItem[objKey === 'cards' ?
-                    ai.type === 'link' ? 1 :
-                      ai.type === 'camera' ? 2 :
-                        ai.type === 'iframe' ? 3 :
-                          0 : 0]}
-                  item={ai}
-                  defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
-                    ai.type === 'link' ? 1 :
-                      ai.type === 'camera' ? 2 :
-                        ai.type === 'iframe' ? 3 :
-                          0 : 0])}
-                  itemPath={itemPath.concat([ax])}
-                  handleConfigChange={handleConfigChange} />
-              })}
-              <ListItem className={classes.root}>
-                <Button
-                  className={classes.addIcon}
-                  mini
-                  aria-label="Add"
-                  onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
-                  <Add />
-                </Button>
-              </ListItem>
-            </Collapse>
-          </div>
-          :
-          isObject(defaultItem) ?
-            <div>
-              {dropdown}
-              <Divider />
-              <Collapse in={open}>
-                {defaultItem ?
-                  Object.keys(defaultItem).map((i, x) => {
-                    return <NextItem
-                      key={x}
-                      objKey={i}
-                      defaultItem={defaultItem[i]}
-                      item={item[i] !== undefined ? item[i] : defaultItem[i]}
-                      defaultItemPath={defaultItemPath.concat([i])}
-                      itemPath={itemPath.concat([i])}
-                      handleConfigChange={handleConfigChange} />
-                  })
-                  :
-                  <Typography color="error" variant="subheading">
-                    No default config set for {JSON.stringify(item)}.<br />
-                    Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
-                  </Typography>
-                }
-              </Collapse>
-            </div>
-            :
-            <Input
-              name={String(objKey)}
-              defaultValue={defaultItem}
-              value={item}
-              defaultItemPath={defaultItemPath}
-              itemPath={itemPath}
+        {dropdown}
+        <Divider />
+        <Collapse in={open}>
+          {item && item.map((ai, ax) => {
+            return <NextItem
+              key={ax}
+              open={false}
+              canDelete={true}
+              objKey={ax}
+              defaultItem={defaultItem[objKey === 'cards' ?
+                ai.type === 'link' ? 1 :
+                  ai.type === 'camera' ? 2 :
+                    ai.type === 'iframe' ? 3 :
+                      0 : 0]}
+              item={ai}
+              defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
+                ai.type === 'link' ? 1 :
+                  ai.type === 'camera' ? 2 :
+                    ai.type === 'iframe' ? 3 :
+                      0 : 0])}
+              itemPath={itemPath.concat([ax])}
               handleConfigChange={handleConfigChange} />
-        }
+          })}
+          <div className={classes.root}>
+            <ButtonBase
+              className={classes.addIcon}
+              mini
+              aria-label="Add"
+              onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
+              <Add />
+            </ButtonBase>
+          </div>
+        </Collapse>
       </div>
+    ); else if (isObject(defaultItem)) return (
+      <div className={classes.root}>
+        {dropdown}
+        <Divider />
+        <Collapse in={open}>
+          {defaultItem ?
+            Object.keys(defaultItem).map((i, x) => {
+              return <NextItem
+                key={x}
+                objKey={i}
+                defaultItem={defaultItem[i]}
+                item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                defaultItemPath={defaultItemPath.concat([i])}
+                itemPath={itemPath.concat([i])}
+                handleConfigChange={handleConfigChange} />
+            })
+            :
+            <Typography color="error" variant="subheading">
+              No default config set for {JSON.stringify(item)}.<br />
+              Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
+                  </Typography>
+          }
+        </Collapse>
+      </div>
+    ); else return (
+      <Input
+        name={String(objKey)}
+        defaultValue={defaultItem}
+        value={item}
+        defaultItemPath={defaultItemPath}
+        itemPath={itemPath}
+        handleConfigChange={handleConfigChange} />
     );
   }
 }
