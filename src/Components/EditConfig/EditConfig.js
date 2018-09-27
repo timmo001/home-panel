@@ -166,105 +166,102 @@ class EditConfig extends React.Component {
       </div>
     );
 
-    return (
-      <div>
-        {config &&
-          <Dialog
-            fullScreen
-            open={open}
-            className={classes.dialog}
-            disableBackdropClick
-            disableEscapeKeyDown
-            aria-labelledby="confirmation-dialog-title">
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  onClick={this.handleDrawerToggle}
-                  className={classes.navIconHide}>
-                  <MenuIcon />
-                </IconButton>
-                <Typography variant="title" color="inherit" noWrap>
-                  Edit Config
+
+    if (config) return (
+      <Dialog
+        fullScreen
+        open={open}
+        className={classes.dialog}
+        disableBackdropClick
+        disableEscapeKeyDown
+        aria-labelledby="confirmation-dialog-title">
+        <AppBar className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.handleDrawerToggle}
+              className={classes.navIconHide}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="title" color="inherit" noWrap>
+              Edit Config
                 </Typography>
-              </Toolbar>
-            </AppBar>
-            <Hidden mdUp>
-              <Drawer
-                variant="temporary"
-                anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                open={this.state.mobileOpen}
-                onClose={this.handleDrawerToggle}
-                classes={{
-                  paper: classes.drawerPaper,
-                }}
-                ModalProps={{
-                  keepMounted: true, // Better open performance on mobile.
-                }}>
-                {drawer}
-              </Drawer>
-            </Hidden>
-            <Hidden smDown implementation="css">
-              <Drawer
-                variant="permanent"
-                open
-                classes={{
-                  paper: classes.drawerPaper,
-                }}>
-                {drawer}
-              </Drawer>
-              <Divider className={classes.navigationDivider} />
-            </Hidden>
-            <Hidden mdUp>
-              <div className={classes.toolbar} />
-            </Hidden>
-            <div className={classes.main}>
-              {selected.id === 0 ?
+          </Toolbar>
+        </AppBar>
+        <Hidden mdUp>
+          <Drawer
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={this.state.mobileOpen}
+            onClose={this.handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}>
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden smDown implementation="css">
+          <Drawer
+            variant="permanent"
+            open
+            classes={{
+              paper: classes.drawerPaper,
+            }}>
+            {drawer}
+          </Drawer>
+          <Divider className={classes.navigationDivider} />
+        </Hidden>
+        <Hidden mdUp>
+          <div className={classes.toolbar} />
+        </Hidden>
+        <div className={classes.main}>
+          {selected.id === 0 ?
+            <Item
+              objKey={selected.name}
+              defaultItem={defaultConfig.theme}
+              item={config.theme}
+              defaultItemPath={['theme']}
+              itemPath={['theme']}
+              handleConfigChange={this.handleConfigChange} />
+            : selected.id === 1 ?
+              <Item
+                objKey={selected.name}
+                defaultItem={defaultConfig.header}
+                item={config.header}
+                defaultItemPath={['header']}
+                itemPath={['header']}
+                handleConfigChange={this.handleConfigChange} />
+              : selected.id === 2 ?
                 <Item
                   objKey={selected.name}
-                  defaultItem={defaultConfig.theme}
-                  item={config.theme}
-                  defaultItemPath={['theme']}
-                  itemPath={['theme']}
+                  defaultItem={defaultConfig.pages}
+                  item={config.pages}
+                  defaultItemPath={['pages']}
+                  itemPath={['pages']}
                   handleConfigChange={this.handleConfigChange} />
-                : selected.id === 1 ?
-                  <Item
-                    objKey={selected.name}
-                    defaultItem={defaultConfig.header}
-                    item={config.header}
-                    defaultItemPath={['header']}
-                    itemPath={['header']}
-                    handleConfigChange={this.handleConfigChange} />
-                  : selected.id === 2 ?
-                    <Item
-                      objKey={selected.name}
-                      defaultItem={defaultConfig.pages}
-                      item={config.pages}
-                      defaultItemPath={['pages']}
-                      itemPath={['pages']}
-                      handleConfigChange={this.handleConfigChange} />
-                    : selected.id === 3 &&
-                    <Item
-                      objKey={selected.name}
-                      defaultItem={defaultConfig.items}
-                      item={config.items}
-                      defaultItemPath={['items']}
-                      itemPath={['items']}
-                      handleConfigChange={this.handleConfigChange} />
-              }
-            </div>
-            <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
-              </Button>
-              <Button onClick={this.handleSave} color="primary">
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
-        }
-      </div>
+                : selected.id === 3 &&
+                <Item
+                  objKey={selected.name}
+                  defaultItem={defaultConfig.items}
+                  item={config.items}
+                  defaultItemPath={['items']}
+                  itemPath={['items']}
+                  handleConfigChange={this.handleConfigChange} />
+          }
+        </div>
+        <DialogActions>
+          <Button onClick={this.handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     );
   }
 }
