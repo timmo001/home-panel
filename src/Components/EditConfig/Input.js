@@ -49,8 +49,6 @@ class Input extends React.Component {
     helpText: ''
   };
 
-  componentDidMount = () => this.updateProps();
-
   componentDidUpdate = (prevProps) => {
     if (this.props.defaultItemPath !== prevProps.defaultItemPath
       || this.props.defaultValue !== prevProps.defaultValue) {
