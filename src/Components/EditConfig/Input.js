@@ -50,30 +50,25 @@ class Input extends React.Component {
   };
 
   componentDidUpdate = (prevProps) => {
-    if (this.props.defaultItemPath !== prevProps.defaultItemPath
-      || this.props.defaultValue !== prevProps.defaultValue) {
-      this.updateProps();
+    if (this.props.defaultValue !== prevProps.defaultValue ||
+      this.props.defaultItemPath !== prevProps.defaultItemPath) {
+      const type = this.props.defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
+        : this.props.defaultValue === 'true' ? 'boolean'
+          : this.props.defaultValue === 'false' ? 'boolean'
+            : typeof this.props.defaultValue;
+
+      const lastItem = this.props.defaultItemPath.pop();
+      const helpText = this.props.defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
+      this.setState({ type, helpText });
     }
-  };
-
-  updateProps = () => {
-    const type = this.props.defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
-      : this.props.defaultValue === 'true' ? 'boolean'
-        : this.props.defaultValue === 'false' ? 'boolean'
-          : typeof this.props.defaultValue;
-
-    const lastItem = this.props.defaultItemPath.pop();
-    const helpText = this.props.defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
-    this.setState({ type, helpText });
   };
 
   render() {
     const { classes, name, defaultValue, itemPath, handleConfigChange } = this.props;
     const { type, helpText } = this.state;
-
-    let value = this.props.value;
-    if (value === 'true') value = true;
-    if (value === 'false') value = false;
+    const value = this.props.value === 'true' ? true :
+      this.props.value === 'false' ? false :
+        this.props.value;
 
     switch (type) {
       default: return null;
