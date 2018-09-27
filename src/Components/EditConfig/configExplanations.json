@@ -1,6 +1,8 @@
 {
   "theme": {
     "auto": {
+      "light_theme": "Which theme should be used when above the threshold?",
+      "dark_theme": "Which theme should be used when below the threshold?",
       "sensor": "The sensor used to trigger dark mode",
       "below": "The threshold for which to trigger dark mode"
     },

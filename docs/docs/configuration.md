@@ -24,11 +24,29 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
 ```json
   "theme": {
     "auto": {
+      "light_theme": "light",
+      "dark_theme": "dark",
       "sensor": "sensor.sn1_ldr",
       "below": 600
     }
   },
 ```
+
+#### light_theme
+
+Which theme should be used when above the threshold?
+
+#### dark_theme
+
+Which theme should be used when below the threshold?
+
+#### sensor
+
+The sensor used to trigger dark mode (entity_id)
+
+#### below
+
+The threshold for which to trigger dark mode
 
 ### ui
 
