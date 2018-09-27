@@ -146,7 +146,7 @@ class Item extends React.Component {
                   :
                   <Typography color="error" variant="subheading">
                     No default config set for {JSON.stringify(item)}.<br />
-                    Please report this error to Git repository's issue tracker including a screenshot of this item's location.
+                    Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
                   </Typography>
                 }
               </Collapse>
@@ -167,6 +167,24 @@ class Item extends React.Component {
 
 Item.propTypes = {
   classes: PropTypes.object.isRequired,
+  defaultItem: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  item: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object,
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]).isRequired,
+  objKey: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
   open: PropTypes.bool,

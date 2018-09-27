@@ -16,7 +16,7 @@ import properCase from '../Common/properCase';
 import defaultConfig from './defaultConfig.json';
 import configExplanations from './configExplanations.json';
 
-const styles = theme => ({
+const styles = () => ({
   input: {
     flex: '1 1 auto',
     flexDirection: 'row',
@@ -152,6 +152,16 @@ class Input extends React.Component {
 Input.propTypes = {
   classes: PropTypes.object.isRequired,
   name: PropTypes.string,
+  defaultValue: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]),
+  value: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
