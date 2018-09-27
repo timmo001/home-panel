@@ -23,7 +23,7 @@ class PageNavigation extends React.Component {
     over: false,
   };
 
-  handleChange = (event, value) => this.setState({ value }, () =>
+  handleChange = (_event, value) => this.setState({ value }, () =>
     this.props.handlePageChange(this.state.value + 1));
 
   render() {

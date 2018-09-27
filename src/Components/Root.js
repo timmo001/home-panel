@@ -47,7 +47,7 @@ class Root extends Component {
     }
   });
 
-  eventHandler = (connection, data) => console.log('Connection has been established again');
+  eventHandler = () => console.log('Connection has been established again');
 
   loadTokens = () => {
     let hassTokens;
@@ -124,14 +124,14 @@ class Root extends Component {
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
-      callService(connection, domain, state, data).then(v => {
+      callService(connection, domain, state, data).then(() => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
         this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
       });
     } else {
-      callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(v => {
+      callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(() => {
         this.setState({ snackMessage: { open: true, text: 'Changed.' } });
       }, err => {
         console.error('Error calling service:', err);
@@ -141,7 +141,6 @@ class Root extends Component {
   };
 
   updateEntities = entities => this.setState({ entities: Object.entries(entities) });
-
 
   setTheme = (themeId = undefined) => {
     if (!themeId && themeId !== 0)
@@ -169,9 +168,7 @@ class Root extends Component {
     localStorage.setItem('theme', themeId);
   };
 
-  handleClose = (event, reason) => {
-    this.setState({ snackMessage: { open: false, text: '' } });
-  };
+  handleClose = () => this.setState({ snackMessage: { open: false, text: '' } });
 
   handlePageChange = (page) => {
     this.setState({ page }, () => {
@@ -236,6 +233,8 @@ class Root extends Component {
 
 Root.propTypes = {
   classes: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   addTheme: PropTypes.func.isRequired,

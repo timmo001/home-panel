@@ -7,7 +7,7 @@ import PageNavigation from './PageNavigation';
 import Radio from './Radio/Radio';
 import EditConfig from './EditConfig/EditConfig';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     height: '100%',
     width: '100%',
@@ -122,7 +122,6 @@ class Main extends React.Component {
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={this.handleRadioHide} />
-        }
       </div>
     );
     else return (
