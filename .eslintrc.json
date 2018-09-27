@@ -12,15 +12,19 @@
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true,
-      "modules": true,
-      "experimentalObjectRestSpread": true
+      "modules": true
     }
   },
   "rules": {
-    "no-console": 0
+    "no-console": "off"
+  },
+  "globals": {
+    "Promise": true
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
   }
-
 }
