@@ -4,7 +4,7 @@ import {
   getAuth, getUser, callService, createConnection,
   subscribeEntities, ERR_INVALID_AUTH
 } from 'home-assistant-js-websocket';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';

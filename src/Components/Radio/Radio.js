@@ -3,7 +3,7 @@ import request from 'superagent';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Sound from 'react-sound';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
