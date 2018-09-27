@@ -93,14 +93,23 @@
           "entity_id": "The Home Assistant entity_id",
           "icon": "Icon shown in the middle of the card. Use https://materialdesignicons.com to find the icon you want to use",
           "width": "The amount of cards wide",
-          "height": "The amount of cards high"
+          "height": "The amount of cards high",
+          "size": {
+            "name": "Custom size for name",
+            "state": "Custom size for entity's state (if entity is a sensor)",
+            "icon": "Custom size for icon"
+          }
         },
         {
           "type": "What is the card's type?",
           "name": "The name of the link",
           "icon": "Icon shown in the middle of the card. Use https://materialdesignicons.com to find the icon you want to use",
           "width": "The amount of cards wide",
-          "height": "The amount of cards high"
+          "height": "The amount of cards high",
+          "size": {
+            "name": "Custom size for name",
+            "icon": "Custom size for icon"
+          }
         },
         {
           "type": "What is the card's type?",

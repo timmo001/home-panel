@@ -93,14 +93,23 @@
           "entity_id": "",
           "icon": "",
           "width": 1,
-          "height": 1
+          "height": 1,
+          "size": {
+            "name": "",
+            "state": "",
+            "icon": ""
+          }
         },
         {
           "type": "link",
           "name": "",
           "icon": "",
           "width": 1,
-          "height": 1
+          "height": 1,
+          "size": {
+            "name": "",
+            "icon": ""
+          }
         },
         {
           "type": "camera",

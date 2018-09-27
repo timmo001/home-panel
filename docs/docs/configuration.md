@@ -498,6 +498,31 @@ The amount of cards high.
           "height": 2
 ```
 
+#### size
+
+Custom sizes for the card. Be aware that this will override the size for all
+ screen sizes.
+
+```json
+          "size": {
+            "name": "1.0rem",
+            "state": "6px",
+            "icon": "2px"
+          }
+```
+
+##### name
+
+Custom size for name
+
+##### state
+
+Custom size for entity's state (if entity is a sensor)
+
+##### icon
+
+Custom size for icon
+
 ### link
 
 A simple hyperlink that opens up another webpage in a new tab/window. To
@@ -544,6 +569,26 @@ The amount of cards high.
 ```json
           "height": 2
 ```
+
+#### size
+
+Custom sizes for the card. Be aware that this will override the size for all
+ screen sizes.
+
+```json
+          "size": {
+            "name": "1.0rem",
+            "icon": "4px"
+          }
+```
+
+##### name
+
+Custom size for name
+
+##### icon
+
+Custom size for icon
 
 ### camera
 
