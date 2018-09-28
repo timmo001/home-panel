@@ -39,7 +39,9 @@ const styles = theme => ({
     padding: '8px 8px 2px 16px'
   },
   addIcon: {
-    flex: '1 1 auto'
+    width: '100%',
+    margin: '2px 0',
+    padding: 8
   },
   iconButton: {
     height: 10,
