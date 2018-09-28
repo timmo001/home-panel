@@ -42,14 +42,13 @@ const styles = theme => ({
     flex: '1 1 auto'
   },
   iconButton: {
-    height: 32,
-    width: 32,
-    marginRight: 16,
+    height: 10,
+    width: 10,
+    marginRight: 16
   },
   icon: {
-    height: 22,
-    width: 22,
-    transform: 'translateY(-8px)'
+    height: 20,
+    width: 20
   }
 });
 
@@ -68,13 +67,13 @@ class Item extends React.Component {
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
-      <ButtonBase className={classes.dropdown} noWrap>
+      <ButtonBase className={classes.dropdown}>
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
       </ButtonBase>
       :
-      <ButtonBase className={classes.dropdown} ButtonBase onClick={this.handleClick}>
+      <ButtonBase className={classes.dropdown} onClick={this.handleClick}>
         <Typography className={classes.dropdownText} variant="title" noWrap>
           {objKey && properCase(objKey)}
         </Typography>
@@ -84,6 +83,7 @@ class Item extends React.Component {
         {canDelete &&
           <IconButton
             className={classes.iconButton}
+            component={'span'}
             aria-label="Delete"
             onClick={() => handleConfigChange(itemPath, undefined)}>
             <Delete className={classes.icon} />
@@ -121,7 +121,6 @@ class Item extends React.Component {
             <div className={classes.root}>
               <ButtonBase
                 className={classes.addIcon}
-                mini
                 aria-label="Add"
                 onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
                 <Add />
