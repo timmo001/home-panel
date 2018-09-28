@@ -22,22 +22,16 @@ var searchTimeout;
 
 class InputDialog extends React.Component {
   radioGroup = null;
-
-  constructor(props) {
-    super(props);
-    this.state.value = this.props.value;
-  }
-
   state = {
     search: '',
     sources: [],
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.value !== this.props.value) {
-      this.setState({ value: nextProps.value });
-    }
-  }
+  componentDidMount = () => this.updateProps();
+
+  componentDidUpdate = (prevProps) => prevProps.value !== this.props.value && this.updateProps();
+
+  updateProps = () => this.setState({ value: this.props.value });
 
   handleEntering = () => this.radioGroup.focus();
 
@@ -47,7 +41,7 @@ class InputDialog extends React.Component {
     source.guide_id === this.state.value
   ));
 
-  handleChange = (event, value) => this.setState({ value });
+  handleChange = (_event, value) => this.setState({ value });
 
   handleSearch = () => {
     console.log('search:', this.state.search);
@@ -139,6 +133,7 @@ InputDialog.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
+  value: PropTypes.string,
   handleChange: PropTypes.func.isRequired,
 };
 

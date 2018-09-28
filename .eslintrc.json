@@ -3,5 +3,28 @@
     "eslint:recommended",
     "plugin:react/recommended"
   ],
-  "plugins": ["react"]
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "rules": {
+    "no-console": "off"
+  },
+  "globals": {
+    "Promise": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "jest": true,
+    "es6": true
+  }
 }

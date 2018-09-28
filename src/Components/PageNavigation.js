@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Slide from '@material-ui/core/Slide';
@@ -23,7 +23,7 @@ class PageNavigation extends React.Component {
     over: false,
   };
 
-  handleChange = (event, value) => this.setState({ value }, () =>
+  handleChange = (_event, value) => this.setState({ value }, () =>
     this.props.handlePageChange(this.state.value + 1));
 
   render() {

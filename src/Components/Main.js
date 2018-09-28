@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Header from './Header';
 import Page from './Cards/Page';
 import PageNavigation from './PageNavigation';
 import Radio from './Radio/Radio';
 import EditConfig from './EditConfig/EditConfig';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     height: '100%',
     width: '100%',
@@ -89,7 +89,8 @@ class Main extends React.Component {
     const { moved, over, radioShown, currentPage, editConfig } = this.state;
     const pages = config.pages ? config.pages : [{ id: 1, name: "Home", icon: "home" }];
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
-    return (
+
+    if (!editConfig) return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
         <Header
           config={config}
@@ -121,14 +122,16 @@ class Main extends React.Component {
           show={radioShown}
           apiUrl={this.props.apiUrl}
           handleRadioHide={this.handleRadioHide} />
-        <EditConfig
-          open={editConfig}
-          config={config}
-          username={this.props.username}
-          password={this.props.password}
-          apiUrl={this.props.apiUrl}
-          handleClose={this.handleEditConfigClose} />
       </div>
+    );
+    else return (
+      <EditConfig
+        open={editConfig}
+        config={config}
+        username={this.props.username}
+        password={this.props.password}
+        apiUrl={this.props.apiUrl}
+        handleClose={this.handleEditConfigClose} />
     );
   }
 }
