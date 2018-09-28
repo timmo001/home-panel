@@ -18,16 +18,15 @@ import NextItem from './Item';
 const styles = theme => ({
   root: {
     display: 'block',
-    padding: '8px 8px 2px 16px',
     color: theme.palette.text.main
   },
   dropdown: {
     display: 'flex',
     width: '100%',
-    paddingLeft: theme.spacing.unit / 2
+    padding: '6px 4px'
   },
   dropdownText: {
-    // flex: '1 1 auto'
+    overflow: 'visible'
   },
   dropdownSubText: {
     margin: '0 16px',
@@ -36,7 +35,8 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: '8px 8px 2px 16px'
   },
   addIcon: {
     flex: '1 1 auto'
@@ -68,14 +68,14 @@ class Item extends React.Component {
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
-      <ButtonBase className={classes.dropdown}>
+      <ButtonBase className={classes.dropdown} noWrap>
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
       </ButtonBase>
       :
       <ButtonBase className={classes.dropdown} ButtonBase onClick={this.handleClick}>
-        <Typography className={classes.dropdownText} variant="title">
+        <Typography className={classes.dropdownText} variant="title" noWrap>
           {objKey && properCase(objKey)}
         </Typography>
         <Typography className={classes.dropdownSubText} noWrap>
