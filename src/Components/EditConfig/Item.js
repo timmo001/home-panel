@@ -17,6 +17,7 @@ import NextItem from './Item';
 
 const styles = theme => ({
   root: {
+    display: 'block',
     padding: '8px 8px 2px 16px',
     color: theme.palette.text.main
   },
@@ -26,12 +27,16 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit / 2
   },
   dropdownText: {
-    flex: '1 0 auto'
+    flex: '1 1 auto'
   },
   dropdownSubText: {
     margin: '0 16px',
     flex: '1 1 auto',
     fontSize: '1.0rem'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column'
   },
   addIcon: {
     flex: '1 1 auto'
@@ -94,34 +99,36 @@ class Item extends React.Component {
         {dropdown}
         <Divider />
         <Collapse in={open}>
-          {item && item.map((ai, ax) => {
-            return <NextItem
-              key={ax}
-              open={false}
-              canDelete={true}
-              objKey={ax}
-              defaultItem={defaultItem[objKey === 'cards' ?
-                ai.type === 'link' ? 1 :
-                  ai.type === 'camera' ? 2 :
-                    ai.type === 'iframe' ? 3 :
-                      0 : 0]}
-              item={ai}
-              defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
-                ai.type === 'link' ? 1 :
-                  ai.type === 'camera' ? 2 :
-                    ai.type === 'iframe' ? 3 :
-                      0 : 0])}
-              itemPath={itemPath.concat([ax])}
-              handleConfigChange={handleConfigChange} />
-          })}
-          <div className={classes.root}>
-            <ButtonBase
-              className={classes.addIcon}
-              mini
-              aria-label="Add"
-              onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
-              <Add />
-            </ButtonBase>
+          <div className={classes.container}>
+            {item && item.map((ai, ax) => {
+              return <NextItem
+                key={ax}
+                open={false}
+                canDelete={true}
+                objKey={ax}
+                defaultItem={defaultItem[objKey === 'cards' ?
+                  ai.type === 'link' ? 1 :
+                    ai.type === 'camera' ? 2 :
+                      ai.type === 'iframe' ? 3 :
+                        0 : 0]}
+                item={ai}
+                defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
+                  ai.type === 'link' ? 1 :
+                    ai.type === 'camera' ? 2 :
+                      ai.type === 'iframe' ? 3 :
+                        0 : 0])}
+                itemPath={itemPath.concat([ax])}
+                handleConfigChange={handleConfigChange} />
+            })}
+            <div className={classes.root}>
+              <ButtonBase
+                className={classes.addIcon}
+                mini
+                aria-label="Add"
+                onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
+                <Add />
+              </ButtonBase>
+            </div>
           </div>
         </Collapse>
       </div>
@@ -130,23 +137,25 @@ class Item extends React.Component {
         {dropdown}
         <Divider />
         <Collapse in={open}>
-          {defaultItem ?
-            Object.keys(defaultItem).map((i, x) => {
-              return <NextItem
-                key={x}
-                objKey={i}
-                defaultItem={defaultItem[i]}
-                item={item[i] !== undefined ? item[i] : defaultItem[i]}
-                defaultItemPath={defaultItemPath.concat([i])}
-                itemPath={itemPath.concat([i])}
-                handleConfigChange={handleConfigChange} />
-            })
-            :
-            <Typography color="error" variant="subheading">
-              No default config set for {JSON.stringify(item)}.<br />
-              Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
+          <div className={classes.container}>
+            {defaultItem ?
+              Object.keys(defaultItem).map((i, x) => {
+                return <NextItem
+                  key={x}
+                  objKey={i}
+                  defaultItem={defaultItem[i]}
+                  item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                  defaultItemPath={defaultItemPath.concat([i])}
+                  itemPath={itemPath.concat([i])}
+                  handleConfigChange={handleConfigChange} />
+              })
+              :
+              <Typography color="error" variant="subheading">
+                No default config set for {JSON.stringify(item)}.<br />
+                Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
                   </Typography>
-          }
+            }
+          </div>
         </Collapse>
       </div>
     ); else return (
