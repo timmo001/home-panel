@@ -27,7 +27,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit / 2
   },
   dropdownText: {
-    flex: '1 1 auto'
+    // flex: '1 1 auto'
   },
   dropdownSubText: {
     margin: '0 16px',
@@ -78,11 +78,9 @@ class Item extends React.Component {
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
-        {!open &&
-          <Typography className={classes.dropdownSubText} noWrap>
-            {JSON.stringify(item, null, 2)}
-          </Typography>
-        }
+        <Typography className={classes.dropdownSubText} noWrap>
+          {!open && JSON.stringify(item, null, 2)}
+        </Typography>
         {canDelete &&
           <IconButton
             className={classes.iconButton}
@@ -153,7 +151,7 @@ class Item extends React.Component {
               <Typography color="error" variant="subheading">
                 No default config set for {JSON.stringify(item)}.<br />
                 Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
-                  </Typography>
+              </Typography>
             }
           </div>
         </Collapse>
