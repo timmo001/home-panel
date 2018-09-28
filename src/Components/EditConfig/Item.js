@@ -69,13 +69,13 @@ class Item extends React.Component {
     const { open } = this.state;
 
     const dropdown = itemPath.length === 1 ?
-      <ButtonBase className={classes.dropdown}>
+      <ButtonBase className={classes.dropdown} focusRipple>
         <Typography className={classes.dropdownText} variant="title">
           {objKey && properCase(objKey)}
         </Typography>
       </ButtonBase>
       :
-      <ButtonBase className={classes.dropdown} onClick={this.handleClick}>
+      <ButtonBase className={classes.dropdown} onClick={this.handleClick} focusRipple>
         <Typography className={classes.dropdownText} variant="title" noWrap>
           {objKey && properCase(objKey)}
         </Typography>
