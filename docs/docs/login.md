@@ -10,7 +10,7 @@ You will need to authenticate the app on login to Home Assistant using one of
 
 ## Create Account
 
-On your first run of the app, you will be preseted with an account creation screen:
+On your first run of the app, you will be presented with an account creation screen:
 
 ![Create Account][account-creation]
 

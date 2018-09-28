@@ -33,9 +33,14 @@ class MoreInfo extends React.Component {
     effect: '',
   };
 
-  componentWillReceiveProps = (props) => {
+  componentDidMount = () => this.updateProps();
+
+  componentDidUpdate = (prevProps) =>
+    this.props.data.attributes !== prevProps.data.attributes && this.updateProps();
+
+  updateProps = () => {
     if (!this.state.defined) {
-      const attributes = props.data.attributes;
+      const attributes = this.props.data.attributes;
       if (attributes)
         this.setState({
           brightness: attributes.brightness ? attributes.brightness : undefined,
