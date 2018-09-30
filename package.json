@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.1.1",
+    "@material-ui/core": "^3.1.2",
     "@material-ui/icons": "^3.0.1",
-    "@material-ui/lab": "^3.0.0-alpha.17",
+    "@material-ui/lab": "^3.0.0-alpha.18",
     "@mdi/font": "^2.8.94",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^3.1.4",
