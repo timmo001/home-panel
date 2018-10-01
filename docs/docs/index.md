@@ -22,8 +22,6 @@ A touch-compatible web-app for controlling the home. Integrates with
 
 ![banner][banner]
 
-## Features
-
 - Card based user interface with support for [Home Assistant][hass]
 - Supports MJPEG and related image-based camera/image feeds. Images can also
  be used
@@ -34,7 +32,7 @@ A touch-compatible web-app for controlling the home. Integrates with
  component
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with desktops as well)
-- All interface elements are customizable
+- Customizable interface
 - Custom theme support
 
 ## Demo

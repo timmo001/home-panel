@@ -35,7 +35,7 @@ A touch-compatible web-app for controlling the home. Integrates with
  component
 - Made for touch screens with a sideways scrolling Material
  Design interface. (Compatible with desktops as well)
-- All interface elements are customizable
+- Customizable interface
 - Custom theme support
 
 ## Demo
