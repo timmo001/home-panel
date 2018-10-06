@@ -271,7 +271,7 @@ class Login extends React.Component {
         justify="center">
         <Grid item lg={4} md={8} sm={8} xs={12}>
           <Card className={classes.card}>
-            <CardContent className={classes.cardContent} align="center">
+            <CardContent className={classes.cardContent} align="center" component="form">
               <CardMedia
                 className={classes.media}
                 image={Logo}
@@ -287,7 +287,8 @@ class Login extends React.Component {
                     id="username"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none"
+                      autoCapitalize: 'none',
+                      autoComplete: 'username'
                     }}
                     value={username}
                     onChange={this.handleChange('username')}
@@ -302,7 +303,8 @@ class Login extends React.Component {
                     id="password"
                     type={showPassword ? 'text' : 'password'}
                     inputProps={{
-                      autoCapitalize: "none"
+                      autoCapitalize: 'none',
+                      autoComplete: createAccount ? 'new-password' : 'current-password'
                     }}
                     value={password}
                     onChange={this.handleChange('password')}
@@ -327,7 +329,8 @@ class Login extends React.Component {
                     id="api_url"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none"
+                      autoCapitalize: 'none',
+                      autoComplete: 'url'
                     }}
                     value={api_url}
                     onChange={this.handleChange('api_url')}
@@ -342,7 +345,8 @@ class Login extends React.Component {
                     id="hass_url"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none"
+                      autoCapitalize: 'none',
+                      autoComplete: 'url'
                     }}
                     value={hass_url}
                     onChange={this.handleChange('hass_url')}
