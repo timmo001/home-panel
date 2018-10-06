@@ -177,6 +177,8 @@ class Root extends Component {
     });
   };
 
+  handleConfigChange = config => this.setState(config);
+
   render() {
     const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
@@ -197,6 +199,7 @@ class Root extends Component {
               username={this.state.username}
               password={this.state.password}
               apiUrl={this.state.api_url}
+              handleConfigChange={this.handleConfigChange}
               handleChange={this.handleChange}
               saveTokens={this.saveTokens} />
             :

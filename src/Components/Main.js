@@ -37,7 +37,7 @@ class Main extends React.Component {
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
-  handleClose = (themeId) => {
+  handleClose = themeId => {
     this.setState({ anchorEl: null });
     this.props.setTheme(themeId);
   };
@@ -59,7 +59,7 @@ class Main extends React.Component {
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
-  handleClose = (value) => this.setState({ anchorEl: null }, () => {
+  handleClose = value => this.setState({ anchorEl: null }, () => {
     this.props.setTheme(value);
   });
 
@@ -78,11 +78,14 @@ class Main extends React.Component {
     window.location.reload(true);
   };
 
-  handlePageChange = (pageNo) => this.setState({ currentPage: pageNo });
+  handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
   handleEditConfig = () => this.setState({ editConfig: true });
 
-  handleEditConfigClose = () => this.setState({ editConfig: false });
+  handleEditConfigClose = config => {
+    this.props.handleConfigChange(config);
+    this.setState({ editConfig: false });
+  };
 
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
@@ -147,6 +150,7 @@ Main.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleConfigChange: PropTypes.func.isRequired,
   saveTokens: PropTypes.func.isRequired,
 };
 
