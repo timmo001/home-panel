@@ -14,7 +14,7 @@
     "moment": "^2.22.2",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
-    "react-animated-weather": "^1.0.3",
+    "react-animated-weather-updated": "^1.1.0",
     "react-autolink-text2": "^3.2.0",
     "react-color": "^2.14.1",
     "react-dom": "^16.5.2",
@@ -29,10 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "eslint": "5.6.0"
+    "eject": "react-scripts eject",
+    "lint": "eslint --cache --color --ext .jsx,.js src"
   },
   "browserslist": [
     ">0.2%",
