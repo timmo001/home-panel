@@ -9,6 +9,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
 import Main from './Main';
+import defaultConfig from './EditConfig/defaultConfig.json';
 
 const styles = theme => ({
   root: {
@@ -40,11 +41,13 @@ class Root extends Component {
     connected: false
   };
 
-  loggedIn = (config, username, password, api_url, hass_url) =>
+  loggedIn = (config, username, password, api_url, hass_url) => {
+    config = { ...defaultConfig, ...config };
     this.setState({ config, username, password, api_url, hass_url }, () => {
       this.connectToHASS();
       if (config.theme && config.theme.custom) config.theme.custom.map(theme => this.props.addTheme(theme));
     });
+  };
 
   eventHandler = () => console.log('Connection has been established again');
 
@@ -155,11 +158,12 @@ class Root extends Component {
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      if (this.state.config.theme.auto) {
+      if (this.state.config.theme.auto && this.state.entities && this.state.config.theme.auto.sensor) {
         const state = this.state.entities.find(entity => entity[0] === this.state.config.theme.auto.sensor)[1].state;
         this.props.setTheme(state <= this.state.config.theme.auto.below ? darkTheme : lightTheme);
       } else {
         // theme from sunlight
+        console.log('Revert to sunlight sensor');
         const sun = this.state.entities.find(entity => entity[0] === 'sun.sun');
         if (sun) this.props.setTheme(sun[1].state === 'below_horizon' ? darkTheme : lightTheme);
         else this.props.setTheme(lightTheme);
