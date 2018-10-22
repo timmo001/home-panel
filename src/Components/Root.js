@@ -181,7 +181,7 @@ class Root extends Component {
     });
   };
 
-  handleConfigChange = config => this.setState(config);
+  handleConfigChange = config => this.setState(config, () => this.setTheme());
 
   render() {
     const { loggedIn, setTheme } = this;
