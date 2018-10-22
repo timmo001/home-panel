@@ -187,7 +187,7 @@ class EditConfig extends React.Component {
               className={classes.navIconHide}>
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography variant="h6" color="inherit" noWrap>
               Edit Config
                 </Typography>
           </Toolbar>

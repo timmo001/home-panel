@@ -61,7 +61,7 @@ class AlarmPanel extends React.Component {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          <Typography variant="subheading" align="center">
+          <Typography variant="subtitle1" align="center">
             {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
           </Typography>
           <Grid container justify="center">

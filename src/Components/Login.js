@@ -276,7 +276,7 @@ class Login extends React.Component {
                 className={classes.media}
                 image={Logo}
                 title="Home Panel" />
-              <Typography variant="headline" component="h2">
+              <Typography variant="h5" component="h2">
                 {createAccount ? 'Welcome!' : 'Login'}
               </Typography>
               {!process.env.REACT_APP_OVERRIDE_USERNAME &&
@@ -362,7 +362,7 @@ class Login extends React.Component {
             <CardActions>
               <div className={classes.fill} />
               {invalid &&
-                <Typography color="error" variant="subheading">
+                <Typography color="error" variant="subtitle1">
                   {invalid}
                 </Typography>
               }
