@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   getAuth, getUser, callService, createConnection,
@@ -35,7 +35,7 @@ const styles = theme => ({
 
 var connection;
 
-class Root extends Component {
+class Root extends React.Component {
   state = {
     snackMessage: { open: false, text: '' },
     connected: false
