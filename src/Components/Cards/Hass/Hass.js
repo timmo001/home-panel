@@ -100,11 +100,15 @@ class Hass extends React.Component {
               domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
             )} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
-                <Typography className={classes.name} variant="headline">
+                <Typography className={classes.name} variant="headline" style={{
+                  fontSize: card.size && card.size.name && card.size.name
+                }}>
                   {name}
                 </Typography>
                 {domain === 'sensor' &&
-                  <Typography className={classes.state} variant="headline" component="h2">
+                  <Typography className={classes.state} variant="headline" component="h2" style={{
+                    fontSize: card.size && card.size.state && card.size.state
+                  }}>
                     {state}{attributes.unit_of_measurement}
                   </Typography>
                 }
@@ -114,7 +118,9 @@ class Hass extends React.Component {
                   </Typography>
                 }
                 {icon &&
-                  <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
+                  <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
+                    fontSize: card.size && card.size.state && card.size.state
+                  }} />
                 }
               </CardContent>
             </Card>

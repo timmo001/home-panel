@@ -9,6 +9,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
 import Main from './Main';
+import defaultConfig from './EditConfig/defaultConfig.json';
 
 const styles = theme => ({
   root: {
@@ -17,7 +18,7 @@ const styles = theme => ({
     width: '100%',
     maxHeight: '100%',
     maxWidth: '100%',
-    background: theme.palette.backgrounds.main,
+    background: theme.palette.backgrounds.main
   },
   center: {
     justifyContent: 'center',
@@ -25,11 +26,11 @@ const styles = theme => ({
     position: 'fixed',
     top: '50%',
     left: '50%',
-    transform: 'translateX(-50%) translateY(-50%)',
+    transform: 'translateX(-50%) translateY(-50%)'
   },
   progress: {
-    marginBottom: theme.spacing.unit,
-  },
+    marginBottom: theme.spacing.unit
+  }
 });
 
 var connection;
@@ -37,15 +38,16 @@ var connection;
 class Root extends Component {
   state = {
     snackMessage: { open: false, text: '' },
-    connected: false,
+    connected: false
   };
 
-  loggedIn = (config, username, password, api_url, hass_url) => this.setState({ config, username, password, api_url, hass_url }, () => {
-    this.connectToHASS();
-    if (config.theme && config.theme.custom) {
-      config.theme.custom.map(theme => this.props.addTheme(theme));
-    }
-  });
+  loggedIn = (config, username, password, api_url, hass_url) => {
+    config = { ...defaultConfig, ...config };
+    this.setState({ config, username, password, api_url, hass_url }, () => {
+      this.connectToHASS();
+      if (config.theme && config.theme.custom) config.theme.custom.map(theme => this.props.addTheme(theme));
+    });
+  };
 
   eventHandler = () => console.log('Connection has been established again');
 
@@ -117,7 +119,7 @@ class Root extends Component {
     } else {
       this.setState({
         snackMessage: { open: true, text: 'Connection failed. Please connect to Home Assistant' },
-        entities: [],
+        entities: []
       });
     }
   }
@@ -143,28 +145,31 @@ class Root extends Component {
   updateEntities = entities => this.setState({ entities: Object.entries(entities) });
 
   setTheme = (themeId = undefined) => {
+    const lightThemeName = this.state.config.theme.auto && this.state.config.theme.auto.light_theme ?
+      this.state.config.theme.auto.light_theme : 'light';
+    const darkThemeName = this.state.config.theme.auto && this.state.config.theme.auto.dark_theme ?
+      this.state.config.theme.auto.dark_theme : 'dark';
+
+    const lightTheme = this.props.themes.find(t => t.name.toLowerCase() === lightThemeName.toLowerCase());
+    const darkTheme = this.props.themes.find(t => t.name.toLowerCase() === darkThemeName.toLowerCase());
+
     if (!themeId && themeId !== 0)
       themeId = Number(localStorage.getItem('theme'));
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      if (this.state.config.theme.auto) {
-        const state = this.state.entities.find(entity => {
-          return entity[0] === this.state.config.theme.auto.sensor
-        })[1].state;
-        this.props.setTheme(state <= this.state.config.theme.auto.below ? 2 : 1);
+      if (this.state.config.theme.auto && this.state.entities && this.state.config.theme.auto.sensor) {
+        const state = this.state.entities.find(entity => entity[0] === this.state.config.theme.auto.sensor)[1].state;
+        this.props.setTheme(state <= this.state.config.theme.auto.below ? darkTheme : lightTheme);
       } else {
         // theme from sunlight
-        const sun = this.state.entities.find(entity => {
-          return entity[0] === 'sun.sun'
-        });
-        if (sun)
-          this.props.setTheme(sun[1].state === 'below_horizon' ? 2 : 1);
-        else
-          this.props.setTheme(1);
+        console.log('Revert to sunlight sensor');
+        const sun = this.state.entities.find(entity => entity[0] === 'sun.sun');
+        if (sun) this.props.setTheme(sun[1].state === 'below_horizon' ? darkTheme : lightTheme);
+        else this.props.setTheme(lightTheme);
       }
     } else
-      this.props.setTheme(themeId);
+      this.props.setTheme(this.props.themes.find(t => t.id === themeId));
     localStorage.setItem('theme', themeId);
   };
 
@@ -175,6 +180,8 @@ class Root extends Component {
       this.getEntities(this.state.entities, page);
     });
   };
+
+  handleConfigChange = config => this.setState(config, () => this.setTheme());
 
   render() {
     const { loggedIn, setTheme } = this;
@@ -196,6 +203,7 @@ class Root extends Component {
               username={this.state.username}
               password={this.state.password}
               apiUrl={this.state.api_url}
+              handleConfigChange={this.handleConfigChange}
               handleChange={this.handleChange}
               saveTokens={this.saveTokens} />
             :

@@ -131,7 +131,7 @@ class EditConfig extends React.Component {
       })
       .then(res => {
         if (res.status === 200) {
-          window.location.reload(true);
+          this.props.handleClose(this.state.config);
         } else {
           console.log('An error occurred: ', res.status);
         }
@@ -141,9 +141,12 @@ class EditConfig extends React.Component {
       });
   };
 
-  handleListItemClick = (event, item) => this.setState({ selected: item, mobileOpen: false });
+  handleListItemClick = (_event, item) => this.setState({ selected: item, mobileOpen: false });
 
-  handleClose = () => this.setState({ config: this.props.config }, () => window.location.reload(true));
+  handleClose = () => this.setState({
+    open: false,
+    config: this.props.config
+  }, () => this.props.handleClose(this.props.config));
 
   render() {
     const { classes, theme, open } = this.props;

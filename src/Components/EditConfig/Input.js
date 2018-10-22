@@ -18,6 +18,7 @@ import configExplanations from './configExplanations.json';
 
 const styles = () => ({
   input: {
+    margin: '4px 0',
     flex: '1 1 auto',
     flexDirection: 'row',
     alignItems: 'baseline'
