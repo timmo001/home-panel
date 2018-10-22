@@ -48,7 +48,7 @@ class Link extends React.Component {
                     : card.height
                   : '98px'
               }}>
-              <Typography className={classes.name} variant="headline">
+              <Typography className={classes.name} variant="h5">
                 {name}
               </Typography>
               {icon &&

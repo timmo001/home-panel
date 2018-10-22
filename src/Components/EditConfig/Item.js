@@ -70,13 +70,13 @@ class Item extends React.Component {
 
     const dropdown = itemPath.length === 1 ?
       <ButtonBase className={classes.dropdown} focusRipple>
-        <Typography className={classes.dropdownText} variant="title">
+        <Typography className={classes.dropdownText} variant="h6">
           {objKey && properCase(objKey)}
         </Typography>
       </ButtonBase>
       :
       <ButtonBase className={classes.dropdown} onClick={this.handleClick} focusRipple>
-        <Typography className={classes.dropdownText} variant="title" noWrap>
+        <Typography className={classes.dropdownText} variant="h6" noWrap>
           {objKey && properCase(objKey)}
         </Typography>
         <Typography className={classes.dropdownSubText} noWrap>
@@ -149,7 +149,7 @@ class Item extends React.Component {
                   handleConfigChange={handleConfigChange} />
               })
               :
-              <Typography color="error" variant="subheading">
+              <Typography color="error" variant="subtitle1">
                 No default config set for {JSON.stringify(item)}.<br />
                 Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
               </Typography>

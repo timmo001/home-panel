@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import ReactAnimatedWeather from 'react-animated-weather';
+import ReactAnimatedWeather from 'react-animated-weather-updated';
 import Moment from 'react-moment';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Hidden from '@material-ui/core/Hidden';
@@ -134,7 +134,6 @@ const styles = theme => ({
   },
   date: {
     color: theme.palette.text.main,
-    marginTop: -18,
     textAlign: 'center',
     overflow: 'visible',
     fontSize: '2.0rem',
@@ -372,12 +371,12 @@ class Header extends React.Component {
                 }
                 <Grid item>
                   {header.left_outdoor_weather.condition &&
-                    <Typography className={classes.condition} variant="display2" noWrap>
+                    <Typography className={classes.condition} variant="h3" noWrap>
                       {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
                     </Typography>
                   }
                   {header.left_outdoor_weather.data &&
-                    <Typography className={classes.data} variant="display2" noWrap>
+                    <Typography className={classes.data} variant="h3" noWrap>
                       {header.left_outdoor_weather.data.map((d, id) => {
                         return <span key={id}>{d}</span>
                       })}
@@ -391,11 +390,11 @@ class Header extends React.Component {
             {!timeDisabled &&
               <div>
                 {timeMilitary ?
-                  <Typography className={classes.time} variant="display4" noWrap>
+                  <Typography className={classes.time} variant="h1" noWrap>
                     <Moment format="HH:mm" />
                   </Typography>
                   :
-                  <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="display4" noWrap>
+                  <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="h1" noWrap>
                     <Moment format="hh:mm" />
                     <Moment className={classes.timePeriod} format="a" />
                   </Typography>
@@ -403,7 +402,7 @@ class Header extends React.Component {
               </div>
             }
             {!dateDisabled &&
-              <Typography className={classes.date} variant="display2" noWrap style={{
+              <Typography className={classes.date} variant="h3" noWrap style={{
                 marginTop: (moved || over) && timeDisabled ? 58 : timeDisabled && 8
               }}>
                 <Moment format={dateFormat} />
@@ -414,10 +413,10 @@ class Header extends React.Component {
             {header.right_indoor && header.right_indoor.map((i, id) => {
               return (
                 <div key={id} className={classes.indoorInnerContainer}>
-                  <Typography className={classes.indoorLabel} variant="display2" noWrap>
+                  <Typography className={classes.indoorLabel} variant="h3" noWrap>
                     {i.label}
                   </Typography>
-                  <Typography className={classes.indoor} variant="display2" noWrap>
+                  <Typography className={classes.indoor} variant="h3" noWrap>
                     {i.data.map((d, id) => {
                       return <span key={id}>{d}</span>
                     })}

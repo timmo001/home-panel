@@ -100,7 +100,7 @@ class Group extends React.Component {
               focusRipple
               disabled={this.checkGroupToggle(group, entities)}
               onClick={() => this.handleGroupToggle(group, entities)}>
-              <Typography className={classes.title} variant="display1" gutterBottom>
+              <Typography className={classes.title} variant="h4" gutterBottom>
                 {group.name}
               </Typography>
             </ButtonBase>
