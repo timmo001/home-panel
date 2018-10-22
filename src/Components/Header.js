@@ -134,7 +134,6 @@ const styles = theme => ({
   },
   date: {
     color: theme.palette.text.main,
-    marginTop: -18,
     textAlign: 'center',
     overflow: 'visible',
     fontSize: '2.0rem',
