@@ -8,6 +8,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import { getCardElevation, getSquareCards } from '../../Common/config';
+import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
 import grid from '../../Common/Style/grid';
@@ -79,7 +80,7 @@ class Hass extends React.Component {
           <ButtonBase
             className={classes.cardOuter}
             focusRipple
-            disabled={state === 'unavailable' || domain === 'sensor' || state === 'pending'}
+            disabled={state === 'unavailable' || domain === 'sensor' || domain === 'device_tracker' || state === 'pending'}
             onClick={() => {
               if (domain === 'light' || domain === 'switch')
                 handleChange(domain, state === 'on' ? false : true, { entity_id });
@@ -110,6 +111,13 @@ class Hass extends React.Component {
                     fontSize: card.size && card.size.state && card.size.state
                   }}>
                     {state}{attributes.unit_of_measurement}
+                  </Typography>
+                }
+                {domain === 'device_tracker' &&
+                  <Typography className={classes.state} variant="h5" component="h2" style={{
+                    fontSize: card.size && card.size.state && card.size.state
+                  }}>
+                    {properCase(state)}
                   </Typography>
                 }
                 {domain === 'alarm_control_panel' &&
