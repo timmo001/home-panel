@@ -24,11 +24,29 @@ The sensor below is an LDR sensor which sets the *dark* theme when below
 ```json
   "theme": {
     "auto": {
+      "light_theme": "light",
+      "dark_theme": "dark",
       "sensor": "sensor.sn1_ldr",
       "below": 600
     }
   },
 ```
+
+#### light_theme
+
+Which theme should be used when above the threshold?
+
+#### dark_theme
+
+Which theme should be used when below the threshold?
+
+#### sensor
+
+The sensor used to trigger dark mode (entity_id)
+
+#### below
+
+The threshold for which to trigger dark mode
 
 ### ui
 
@@ -480,6 +498,31 @@ The amount of cards high.
           "height": 2
 ```
 
+#### size
+
+Custom sizes for the card. Be aware that this will override the size for all
+ screen sizes.
+
+```json
+          "size": {
+            "name": "1.0rem",
+            "state": "6px",
+            "icon": "2px"
+          }
+```
+
+##### name
+
+Custom size for name
+
+##### state
+
+Custom size for entity's state (if entity is a sensor)
+
+##### icon
+
+Custom size for icon
+
 ### link
 
 A simple hyperlink that opens up another webpage in a new tab/window. To
@@ -526,6 +569,26 @@ The amount of cards high.
 ```json
           "height": 2
 ```
+
+#### size
+
+Custom sizes for the card. Be aware that this will override the size for all
+ screen sizes.
+
+```json
+          "size": {
+            "name": "1.0rem",
+            "icon": "4px"
+          }
+```
+
+##### name
+
+Custom size for name
+
+##### icon
+
+Custom size for icon
 
 ### camera
 

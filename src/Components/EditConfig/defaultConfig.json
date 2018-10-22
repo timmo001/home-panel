@@ -1,6 +1,8 @@
 {
   "theme": {
     "auto": {
+      "light_theme": "light",
+      "dark_theme": "dark",
       "sensor": "",
       "below": 600
     },
@@ -91,14 +93,23 @@
           "entity_id": "",
           "icon": "",
           "width": 1,
-          "height": 1
+          "height": 1,
+          "size": {
+            "name": "",
+            "state": "",
+            "icon": ""
+          }
         },
         {
           "type": "link",
           "name": "",
           "icon": "",
           "width": 1,
-          "height": 1
+          "height": 1,
+          "size": {
+            "name": "",
+            "icon": ""
+          }
         },
         {
           "type": "camera",

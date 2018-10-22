@@ -89,12 +89,9 @@ class App extends Component {
     theme: defaultPalette
   };
 
-  setTheme = (id) => {
-    const theme = themes.find(t => t.id === id);
+  setTheme = (theme) => {
     const palette = theme ? theme.palette : themes[0].palette;
-    this.setState({
-      theme: createMuiTheme({ palette })
-    });
+    this.setState({ theme: createMuiTheme({ palette }) });
   };
 
   addTheme = (theme) => {
