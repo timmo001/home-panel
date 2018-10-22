@@ -100,20 +100,20 @@ class Hass extends React.Component {
               domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
             )} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
-                <Typography className={classes.name} variant="headline" style={{
+                <Typography className={classes.name} variant="h5" style={{
                   fontSize: card.size && card.size.name && card.size.name
                 }}>
                   {name}
                 </Typography>
                 {domain === 'sensor' &&
-                  <Typography className={classes.state} variant="headline" component="h2" style={{
+                  <Typography className={classes.state} variant="h5" component="h2" style={{
                     fontSize: card.size && card.size.state && card.size.state
                   }}>
                     {state}{attributes.unit_of_measurement}
                   </Typography>
                 }
                 {domain === 'alarm_control_panel' &&
-                  <Typography className={classes.state} variant="headline" component="h2">
+                  <Typography className={classes.state} variant="h5" component="h2">
                     {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
                   </Typography>
                 }

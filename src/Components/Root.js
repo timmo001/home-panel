@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   getAuth, getUser, callService, createConnection,
@@ -35,7 +35,7 @@ const styles = theme => ({
 
 var connection;
 
-class Root extends Component {
+class Root extends React.Component {
   state = {
     snackMessage: { open: false, text: '' },
     connected: false
@@ -210,11 +210,11 @@ class Root extends Component {
             <div className={classes.center}>
               <CircularProgress className={classes.progress} />
               {connected ?
-                <Typography variant="subheading">
+                <Typography variant="subtitle1">
                   Loading Home Assistant data..
                 </Typography>
                 :
-                <Typography variant="subheading">
+                <Typography variant="subtitle1">
                   Attempting to connect to Home Assistant..
                 </Typography>
               }

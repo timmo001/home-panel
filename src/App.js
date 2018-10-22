@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import moment from 'moment';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -84,7 +84,7 @@ const defaultPalette = moment().hour >= 22 || moment().hour <= 4 ?
   :
   createMuiTheme({ palette: themes[0].palette });
 
-class App extends Component {
+class App extends React.Component {
   state = {
     theme: defaultPalette
   };
