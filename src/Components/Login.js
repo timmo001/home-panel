@@ -107,40 +107,45 @@ class Login extends React.Component {
       ? process.env.REACT_APP_OVERRIDE_HASS_URL
       : localStorage.getItem('hass_url');
 
+    localStorage.setItem('should_auth', true);
+
     this.setState({
       username: username ? username : '',
       password: password ? password : '',
       api_url: api_url ? api_url : `${window.location.protocol}//${window.location.hostname}:3234`,
       hass_url: hass_url ? hass_url : '',
-      createAccount: username ? false : true
+      createAccount: localStorage.getItem('been_here') ? false : true
     }, () => {
-      this.handleValidation();
-      if (username && password && api_url && hass_url && !this.state.createAccount)
-        this.handleLogIn();
+      localStorage.setItem('been_here', true);
+      this.handleValidation(invalid => !invalid && !this.state.createAccount && this.handleLogIn());
     });
   };
 
   toggleCreateAccount = () => this.setState({ createAccount: !this.state.createAccount });
 
-  handleValidation = () => {
-    if (!this.state.username) { this.setState({ invalid: 'No username!' }); return; }
-    if (!this.state.password) { this.setState({ invalid: 'No password!' }); return; }
+  handleValidation = cb => {
+    if (!this.state.username) { this.setState({ invalid: 'No username!' }); cb(this.state.invalid); return; }
+    if (!this.state.password) { this.setState({ invalid: 'No password!' }); cb(this.state.invalid); return; }
     if (!this.state.api_url || !this.state.api_url.startsWith('http') || !this.state.api_url.includes('://')) {
-      this.setState({ invalid: 'API URL invalid!' }); return;
+      this.setState({ invalid: 'API URL invalid!' }); cb(this.state.invalid); return;
     }
-    if (!this.state.hass_url || !this.state.hass_url.startsWith('http') || !this.state.hass_url.includes('://')) {
-      this.setState({ invalid: 'Home Assistant URL invalid!' }); return;
+    if (this.state.hass_url) {
+      if (!this.state.hass_url.startsWith('http') || !this.state.hass_url.includes('://')) {
+        this.setState({ invalid: 'Home Assistant URL invalid!' }); cb(this.state.invalid); return;
+      }
+      if (window.location.protocol === 'https:') {
+        if (this.state.api_url.startsWith('http:')) {
+          this.setState({ invalid: 'The API must use SSL/https.' }); cb(this.state.invalid); return;
+        }
+        if (this.state.hass_url.startsWith('http:')) {
+          this.setState({ invalid: 'Your HASS instance must use SSL/https.' }); cb(this.state.invalid); return;
+        }
+      }
     }
-    if (window.location.protocol === 'https:') {
-      if (this.state.api_url.startsWith('http:')) { this.setState({ invalid: 'The API must use SSL/https.' }); return; }
-      if (this.state.hass_url.startsWith('http:')) { this.setState({ invalid: 'Your HASS instance must use SSL/https.' }); return; }
-    }
-    this.setState({ invalid: undefined });
+    this.setState({ invalid: undefined }, () => cb(undefined));
   };
 
-  handleChange = prop => event => this.setState({ [prop]: event.target.value }, () => {
-    this.handleValidation();
-  });
+  handleChange = prop => event => this.setState({ [prop]: event.target.value }, () => this.handleValidation(() => { }));
 
   handleCheckedChange = name => event => this.setState({ [name]: event.target.checked });
 
@@ -150,7 +155,7 @@ class Login extends React.Component {
 
   handleKeyPress = (e) => {
     if (e.key === 'Enter' && !this.state.invalid) {
-      this.handleLogIn();
+      this.state.createAccount ? this.createAccount() : this.handleLogIn();
     }
   };
 

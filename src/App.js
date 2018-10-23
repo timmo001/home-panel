@@ -40,9 +40,7 @@ var themes = [
         main: grey[800],
         icon: grey[700],
       },
-      error: red,
-      contrastThreshold: 3,
-      tonalOffset: 0.2
+      error: red
     }
   },
   {
@@ -72,9 +70,7 @@ var themes = [
         main: grey[100],
         icon: grey[50],
       },
-      error: red,
-      contrastThreshold: 3,
-      tonalOffset: 0.2
+      error: red
     }
   }
 ];

@@ -72,9 +72,9 @@ class Main extends React.Component {
   handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
-    if (process.env.REACT_APP_OVERRIDE_API_URL) localStorage.removeItem('hass_url');
-    sessionStorage.removeItem('password');
-    this.props.saveTokens(null);
+    localStorage.clear();
+    sessionStorage.clear();
+    localStorage.setItem('been_here', true);
     window.location.reload(true);
   };
 
