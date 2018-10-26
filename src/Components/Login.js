@@ -117,7 +117,10 @@ class Login extends React.Component {
       createAccount: localStorage.getItem('been_here') ? false : true
     }, () => {
       localStorage.setItem('been_here', true);
-      this.handleValidation(invalid => !invalid && !this.state.createAccount && this.handleLogIn());
+      this.handleValidation(invalid => {
+        !invalid && localStorage.getItem('should_login') && !this.state.createAccount && this.handleLogIn();
+        localStorage.setItem('should_login', true);
+      });
     });
   };
 
@@ -263,7 +266,8 @@ class Login extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { username, password, api_url, hass_url, showPassword, createAccount, error, loading, success, invalid } = this.state;
+    const { username, password, api_url, hass_url, showPassword,
+      createAccount, error, loading, success, invalid } = this.state;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success,
     });
