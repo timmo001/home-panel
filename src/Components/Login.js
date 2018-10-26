@@ -119,7 +119,6 @@ class Login extends React.Component {
       localStorage.setItem('been_here', true);
       this.handleValidation(invalid => {
         !invalid && localStorage.getItem('should_login') && !this.state.createAccount && this.handleLogIn();
-        localStorage.setItem('should_login', true);
       });
     });
   };
@@ -158,7 +157,7 @@ class Login extends React.Component {
 
   handleKeyPress = (e) => {
     if (e.key === 'Enter' && !this.state.invalid) {
-      this.state.createAccount ? this.createAccount() : this.handleLogIn();
+      this.state.createAccount ? this.handleCreateAccount() : this.handleLogIn();
     }
   };
 

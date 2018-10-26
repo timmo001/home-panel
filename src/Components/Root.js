@@ -43,6 +43,7 @@ class Root extends React.Component {
   };
 
   loggedIn = (config, username, password, api_url, hass_url) => {
+    localStorage.setItem('should_login', true);
     config = { ...defaultConfig, ...config };
     this.setState({ config, username, password, api_url, hass_url }, () => {
       if (this.state.hass_url) {
