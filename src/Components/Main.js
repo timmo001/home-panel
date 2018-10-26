@@ -73,6 +73,7 @@ class Main extends React.Component {
 
   handleLogOut = () => {
     localStorage.removeItem('should_login');
+    localStorage.removeItem('hass_tokens');
     localStorage.removeItem('username');
     sessionStorage.removeItem('password');
     localStorage.setItem('been_here', true);
