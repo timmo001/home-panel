@@ -48,7 +48,11 @@ class Root extends React.Component {
     this.setState({ config, username, password, api_url, hass_url }, () => {
       if (this.state.hass_url) {
         if (this.loadTokens()) this.connectToHASS();
-        else if (localStorage.getItem('should_auth')) this.askAuth();
+        else if (localStorage.getItem('should_auth')) {
+          if (localStorage.getItem('auth_triggered'))
+            this.connectToHASS();
+          else this.askAuth();
+        }
       } else this.setState({
         entities: [], snackMessage: {
           open: true, text: 'No Home Assistant URL provided. Please re-login to enable HASS features.'
@@ -84,9 +88,8 @@ class Root extends React.Component {
     try {
       const conn = await createConnection({ auth });
       // Clear url if we have been able to establish a connection
-      if (this.props.location.search.includes('auth_callback=1')) {
-        this.props.history.push({ search: '' })
-      }
+      if (this.props.location.search.includes('auth_callback=1'))
+        this.props.history.push({ search: '' });
       return { auth, conn };
     } catch (err) {
       try {
@@ -111,8 +114,10 @@ class Root extends React.Component {
 
   connectToHASS = () => {
     (async () => {
+      localStorage.setItem('auth_triggered', true);
       connection = this.authProm().then(this.connProm);
       connection.then(({ conn }) => {
+        localStorage.removeItem('auth_triggered');
         this.setState({ connected: true });
         conn.removeEventListener('ready', this.eventHandler);
         conn.addEventListener('ready', this.eventHandler);
