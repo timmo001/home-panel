@@ -72,8 +72,9 @@ class Main extends React.Component {
   handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
-    localStorage.clear();
-    sessionStorage.clear();
+    localStorage.removeItem('username');
+    sessionStorage.removeItem('password');
+    localStorage.setItem('should_login', false);
     localStorage.setItem('been_here', true);
     window.location.reload(true);
   };
