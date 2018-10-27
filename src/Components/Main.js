@@ -94,7 +94,7 @@ class Main extends React.Component {
   render() {
     const { classes, entities, config, themes, theme, handleChange } = this.props;
     const { moved, over, radioShown, currentPage, editConfig } = this.state;
-    const pages = config.pages ? config.pages : [{ id: 1, name: "Home", icon: "home" }];
+    const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
     if (!editConfig) return (
@@ -121,13 +121,15 @@ class Main extends React.Component {
           }}>
             <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
           </div>
-          <PageNavigation
-            pages={pages}
-            moved={moved}
-            over={over}
-            handleMouseOver={this.onMouseMoveHandler}
-            handleMouseLeave={this.onMouseLeaveHandler}
-            handlePageChange={this.handlePageChange} />
+          {pages &&
+            <PageNavigation
+              pages={pages}
+              moved={moved}
+              over={over}
+              handleMouseOver={this.onMouseMoveHandler}
+              handleMouseLeave={this.onMouseLeaveHandler}
+              handlePageChange={this.handlePageChange} />
+          }
           <Radio
             show={radioShown}
             apiUrl={this.props.apiUrl}
