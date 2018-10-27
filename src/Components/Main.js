@@ -117,7 +117,7 @@ class Main extends React.Component {
               handleEditConfig={this.handleEditConfig} />
           </Suspense>
           <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
-            height: moved || over ? 'calc(100% - 72px)' : 'inherit'
+            height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
           }}>
             <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
           </div>
