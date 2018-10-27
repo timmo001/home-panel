@@ -21,6 +21,11 @@ const styles = () => ({
     overflowY: 'auto',
     transition: 'height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
   },
+  progress: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%'
+  }
 });
 
 var hoverTimeout;
@@ -98,9 +103,9 @@ class Main extends React.Component {
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
     if (!editConfig) return (
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress className={classes.progress} />}>
         <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
-          <Suspense fallback={<CircularProgress />}>
+          <Suspense fallback={<CircularProgress className={classes.progress} />}>
             <Header
               config={config}
               entities={entities}
@@ -138,7 +143,7 @@ class Main extends React.Component {
       </Suspense>
     );
     else return (
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense fallback={<CircularProgress className={classes.progress} />}>
         <EditConfig
           open={editConfig}
           config={config}
