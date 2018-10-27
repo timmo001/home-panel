@@ -5,6 +5,7 @@ import {
   subscribeEntities, ERR_INVALID_AUTH
 } from 'home-assistant-js-websocket';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
 import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
@@ -42,9 +43,21 @@ class Root extends React.Component {
   };
 
   loggedIn = (config, username, password, api_url, hass_url) => {
+    localStorage.setItem('should_login', true);
     config = { ...defaultConfig, ...config };
     this.setState({ config, username, password, api_url, hass_url }, () => {
-      this.connectToHASS();
+      if (this.state.hass_url) {
+        if (this.loadTokens()) this.connectToHASS();
+        else if (localStorage.getItem('should_auth')) {
+          if (localStorage.getItem('auth_triggered'))
+            this.connectToHASS();
+          else this.askAuth();
+        }
+      } else this.setState({
+        entities: [], snackMessage: {
+          open: true, text: 'No Home Assistant URL provided. Please re-login to enable HASS features.'
+        }
+      })
       if (config.theme && config.theme.custom) config.theme.custom.map(theme => this.props.addTheme(theme));
     });
   };
@@ -75,9 +88,8 @@ class Root extends React.Component {
     try {
       const conn = await createConnection({ auth });
       // Clear url if we have been able to establish a connection
-      if (this.props.location.search.includes('auth_callback=1')) {
-        this.props.history.push({ search: '' })
-      }
+      if (this.props.location.search.includes('auth_callback=1'))
+        this.props.history.push({ search: '' });
       return { auth, conn };
     } catch (err) {
       try {
@@ -101,28 +113,51 @@ class Root extends React.Component {
   };
 
   connectToHASS = () => {
-    if (this.state.hass_url) {
-      (async () => {
-        connection = this.authProm().then(this.connProm);
-        connection.then(({ conn }) => {
-          this.setState({ connected: true });
-          conn.removeEventListener('ready', this.eventHandler);
-          conn.addEventListener('ready', this.eventHandler);
-          subscribeEntities(conn, this.updateEntities);
-          getUser(conn).then(user => {
-            console.log('Logged into Home Assistant as', user.name);
-            sessionStorage.setItem('hass_id', user.id);
-          });
-          connection = conn;
+    (async () => {
+      localStorage.setItem('auth_triggered', true);
+      connection = this.authProm().then(this.connProm);
+      connection.then(({ conn }) => {
+        localStorage.removeItem('auth_triggered');
+        this.setState({ connected: true });
+        conn.removeEventListener('ready', this.eventHandler);
+        conn.addEventListener('ready', this.eventHandler);
+        subscribeEntities(conn, this.updateEntities);
+        getUser(conn).then(user => {
+          console.log('Logged into Home Assistant as', user.name);
+          sessionStorage.setItem('hass_id', user.id);
         });
-      })();
-    } else {
-      this.setState({
-        snackMessage: { open: true, text: 'Connection failed. Please connect to Home Assistant' },
-        entities: []
+        connection = conn;
       });
-    }
+    })();
   }
+
+  askAuth = () => this.setState({
+    entities: [],
+    snackMessage: {
+      open: true,
+      text: 'Please login to Home Assistant',
+      persistent: true,
+      actions:
+        <div>
+          <Button color="primary" size="small" onClick={() => this.handleAuthAction(0)}>
+            No Thanks
+          </Button>
+          <Button color="primary" size="small" onClick={() => this.handleAuthAction(1)}>
+            Login
+          </Button>
+        </div>
+    }
+  });
+
+  handleAuthAction = action => {
+    switch (action) {
+      default: break;
+      case 1:
+        this.connectToHASS();
+        break;
+    }
+    this.handleSnackbarClose();
+  };
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
@@ -173,7 +208,7 @@ class Root extends React.Component {
     localStorage.setItem('theme', themeId);
   };
 
-  handleClose = () => this.setState({ snackMessage: { open: false, text: '' } });
+  handleSnackbarClose = () => this.setState({ snackMessage: { open: false, text: '' } });
 
   handlePageChange = (page) => {
     this.setState({ page }, () => {
@@ -222,17 +257,18 @@ class Root extends React.Component {
         }
         <Snackbar
           open={snackMessage.open}
-          autoHideDuration={2000}
-          onClose={this.handleClose}
+          autoHideDuration={!snackMessage.persistent ? 4000 : null}
+          onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
           onExited={this.handleExited}
           anchorOrigin={{
             vertical: 'bottom',
-            horizontal: 'left',
+            horizontal: 'right',
           }}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">{snackMessage.text}</span>} />
+          message={<span id="message-id">{snackMessage.text}</span>}
+          action={snackMessage.actions} />
 
       </div>
     );
@@ -246,7 +282,7 @@ Root.propTypes = {
   themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   addTheme: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Root);
