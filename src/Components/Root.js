@@ -139,11 +139,8 @@ class Root extends React.Component {
       persistent: true,
       actions:
         <div>
-          <Button color="primary" size="small" onClick={() => this.handleAuthAction(-1)}>
-            Don't ask again
-          </Button>
           <Button color="primary" size="small" onClick={() => this.handleAuthAction(0)}>
-            Ask again later
+            No Thanks
           </Button>
           <Button color="primary" size="small" onClick={() => this.handleAuthAction(1)}>
             Login
@@ -155,9 +152,6 @@ class Root extends React.Component {
   handleAuthAction = action => {
     switch (action) {
       default: break;
-      case -1:
-        localStorage.setItem('should_auth', false);
-        break;
       case 1:
         this.connectToHASS();
         break;
