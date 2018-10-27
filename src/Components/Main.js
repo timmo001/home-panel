@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Header from './Header';
-import Page from './Cards/Page';
-import PageNavigation from './PageNavigation';
-import Radio from './Radio/Radio';
-import EditConfig from './EditConfig/EditConfig';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const Header = lazy(() => import('./Header'));
+const Page = lazy(() => import('./Cards/Page'));
+const PageNavigation = lazy(() => import('./PageNavigation'));
+const Radio = lazy(() => import('./Radio/Radio'));
+const EditConfig = lazy(() => import('./EditConfig/EditConfig'));
 
 const styles = () => ({
   root: {
@@ -96,47 +98,53 @@ class Main extends React.Component {
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
     if (!editConfig) return (
-      <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
-        <Header
-          config={config}
-          entities={entities}
-          themes={themes}
-          theme={theme}
-          moved={moved}
-          over={over}
-          handleMouseOver={this.onMouseMoveHandler}
-          handleMouseLeave={this.onMouseLeaveHandler}
-          setTheme={this.props.setTheme}
-          handleRadioToggle={this.handleRadioToggle}
-          handleLogOut={this.handleLogOut}
-          handleRadioHide={this.handleRadioHide}
-          handleEditConfig={this.handleEditConfig} />
-        <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
-          height: moved || over ? 'calc(100% - 72px)' : 'inherit'
-        }}>
-          <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
+      <Suspense fallback={<CircularProgress />}>
+        <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
+          <Suspense fallback={<CircularProgress />}>
+            <Header
+              config={config}
+              entities={entities}
+              themes={themes}
+              theme={theme}
+              moved={moved}
+              over={over}
+              handleMouseOver={this.onMouseMoveHandler}
+              handleMouseLeave={this.onMouseLeaveHandler}
+              setTheme={this.props.setTheme}
+              handleRadioToggle={this.handleRadioToggle}
+              handleLogOut={this.handleLogOut}
+              handleRadioHide={this.handleRadioHide}
+              handleEditConfig={this.handleEditConfig} />
+          </Suspense>
+          <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
+            height: moved || over ? 'calc(100% - 72px)' : 'inherit'
+          }}>
+            <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
+          </div>
+          <PageNavigation
+            pages={pages}
+            moved={moved}
+            over={over}
+            handleMouseOver={this.onMouseMoveHandler}
+            handleMouseLeave={this.onMouseLeaveHandler}
+            handlePageChange={this.handlePageChange} />
+          <Radio
+            show={radioShown}
+            apiUrl={this.props.apiUrl}
+            handleRadioHide={this.handleRadioHide} />
         </div>
-        <PageNavigation
-          pages={pages}
-          moved={moved}
-          over={over}
-          handleMouseOver={this.onMouseMoveHandler}
-          handleMouseLeave={this.onMouseLeaveHandler}
-          handlePageChange={this.handlePageChange} />
-        <Radio
-          show={radioShown}
-          apiUrl={this.props.apiUrl}
-          handleRadioHide={this.handleRadioHide} />
-      </div>
+      </Suspense>
     );
     else return (
-      <EditConfig
-        open={editConfig}
-        config={config}
-        username={this.props.username}
-        password={this.props.password}
-        apiUrl={this.props.apiUrl}
-        handleClose={this.handleEditConfigClose} />
+      <Suspense fallback={<CircularProgress />}>
+        <EditConfig
+          open={editConfig}
+          config={config}
+          username={this.props.username}
+          password={this.props.password}
+          apiUrl={this.props.apiUrl}
+          handleClose={this.handleEditConfigClose} />
+      </Suspense>
     );
   }
 }
