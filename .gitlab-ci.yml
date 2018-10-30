@@ -306,7 +306,7 @@ mkdocs:
   image: python:3.7.0-alpine3.8
   script:
     - rm -f ~/.gitconfig && rm -Rf  ~/.ssh
-    - apk add --no-cache git=2.18.0-r0 git-fast-import=2.18.0-r0 openssh-client=7.7_p1-r3 bash=4.4.19-r1
+    - apk add --no-cache git=2.18.1-r0 git-fast-import=2.18.1-r0 openssh-client=7.7_p1-r3 bash=4.4.19-r1
     - eval $(ssh-agent -s)
     - mkdir -p ~/.ssh
     - echo "$GIT_SSH_PUB_KEY" > ~/.ssh/id_rsa.pub
