@@ -163,6 +163,10 @@ labels:
   - name: "Code Climate"
     description: "Issues created by Code Climate"
     color: 42f477
+  - name: "Dependencies"
+    description: "Updates dependencies"
+    color: 2196F3
+    oldname: "dependencies"
 
 branches:
   - name: master
