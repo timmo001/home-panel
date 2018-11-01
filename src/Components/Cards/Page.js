@@ -18,7 +18,7 @@ const styles = theme => ({
 class Page extends React.Component {
 
   render() {
-    const { classes, config, theme, page, handleChange, entities } = this.props;
+    const { classes, config, theme, page, handleChange, haConfig, entities } = this.props;
 
     return (
       <Grid
@@ -27,7 +27,15 @@ class Page extends React.Component {
         spacing={8}>
         {config.items && config.items.map((group, x) => {
           if (!group.page) group.page = 1;
-          return group.page === page.id ? <Group key={x} theme={theme} entities={entities} group={group} config={config} handleChange={handleChange} /> : null
+          return group.page === page.id ? <Group
+            key={x}
+            theme={theme}
+            haConfig={haConfig}
+            entities={entities}
+            group={group}
+            config={config}
+            handleChange={handleChange} />
+            : null
         })}
       </Grid>
     );
@@ -39,8 +47,9 @@ Page.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   page: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  haConfig: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Page);

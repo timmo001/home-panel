@@ -11,6 +11,7 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
+import Weather from './Weather';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -57,7 +58,7 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, theme, handleChange, entities, card } = this.props;
+    const { classes, config, theme, handleChange, haConfig, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
     const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
     const cardElevation = getCardElevation(config);
@@ -68,6 +69,11 @@ class Hass extends React.Component {
       const domain = entity_id.substring(0, entity_id.indexOf('.'));
       const name = card.name ? card.name : attributes.friendly_name;
       const icon = card.icon && card.icon;
+
+      if (domain === 'weather') {
+        card.height = 2;
+        card.width = 3;
+      }
 
       return (
         <Grid
@@ -80,7 +86,9 @@ class Hass extends React.Component {
           <ButtonBase
             className={classes.cardOuter}
             focusRipple
-            disabled={state === 'unavailable' || domain === 'sensor' || domain === 'device_tracker' || state === 'pending'}
+            disabled={state === 'unavailable' || domain === 'sensor'
+              || domain === 'device_tracker' || domain === 'weather'
+              || state === 'pending'}
             onClick={() => {
               if (domain === 'light' || domain === 'switch')
                 handleChange(domain, state === 'on' ? false : true, { entity_id });
@@ -106,6 +114,13 @@ class Hass extends React.Component {
                 }}>
                   {name}
                 </Typography>
+                {domain === 'weather' &&
+                  <Weather
+                    theme={theme}
+                    haConfig={haConfig}
+                    state={state}
+                    attributes={attributes} />
+                }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{
                     fontSize: card.size && card.size.state && card.size.state
@@ -156,9 +171,10 @@ Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  haConfig: PropTypes.object.isRequired,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Hass);
