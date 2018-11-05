@@ -4426,10 +4426,10 @@ hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
 
-home-assistant-js-websocket@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-3.1.6.tgz#0bc4eb8dddff241066f72f2ddf929b1ef47137d9"
-  integrity sha512-fmp44tlhdFYmENeC+g1f1wp2qhdHjZ8Qjd5vOmPALYDzmuWCpfK2q6p3JrQ41LokJXhvA2NwLvaxLQNqiXZv7Q==
+home-assistant-js-websocket@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-3.2.4.tgz#0c4212e6ac57b60ed939aa420253994e4f9f0bef"
+  integrity sha512-DaHpWIjJFLwTWNbHeGSCEUsbeyLUWAyWUgsYkiVWxzbfm+vqC5YaLNRu+Ma64SQYh5yGSYr7h25p2hip1GvyhQ==
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
