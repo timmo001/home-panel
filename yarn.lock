@@ -786,10 +786,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
-"@material-ui/core@^3.3.2":
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.3.2.tgz#ca9ce331ac5a31ef8acc732305967f3e5cfe4934"
-  integrity sha512-3yYGrWBzML7OhzmgwBvWpQnFq9ROWj+so+ULADB+lXjpOuxbUf8IUWbR4/S4chh+8/DTNMjTGIUdpj//XeubLQ==
+"@material-ui/core@^3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.4.0.tgz#b33c00a3c20e856ed7a4700dd398f128647beb4a"
+  integrity sha512-iBBcCJzrQ+/UmjVKeX9ZqipOwWWcDvO/X5+pzReEnimtMj38mbS3j+ET4Hroi9l+HeTvJmxb2h+sfY54EvPRNQ==
   dependencies:
     "@babel/runtime" "7.1.2"
     "@types/jss" "^9.5.6"
@@ -800,7 +800,7 @@
     debounce "^1.1.0"
     deepmerge "^2.0.1"
     dom-helpers "^3.2.1"
-    hoist-non-react-statics "^2.5.0"
+    hoist-non-react-statics "^3.0.0"
     is-plain-object "^2.0.4"
     jss "^9.3.3"
     jss-camel-case "^6.0.0"
@@ -4425,6 +4425,13 @@ hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
   integrity sha512-rqcy4pJo55FTTLWt+bU8ukscqHeE/e9KWvsOW2b/a3afxQZhwkQdT1rPPCJ0rYXdj4vNcasY8zHTH+jF/qStxw==
+
+hoist-non-react-statics@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.1.0.tgz#42414ccdfff019cd2168168be998c7b3bd5245c0"
+  integrity sha512-MYcYuROh7SBM69xHGqXEwQqDux34s9tz+sCnxJmN18kgWh6JFdTw/5YdZtqsOdZJXddE/wUpCzfEdDrJj8p0Iw==
+  dependencies:
+    react-is "^16.3.2"
 
 home-assistant-js-websocket@^3.2.4:
   version "3.2.4"
@@ -8080,6 +8087,11 @@ react-event-listener@^0.6.2:
     "@babel/runtime" "7.0.0"
     prop-types "^15.6.0"
     warning "^4.0.1"
+
+react-is@^16.3.2:
+  version "16.6.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.6.0.tgz#456645144581a6e99f6816ae2bd24ee94bdd0c01"
+  integrity sha512-q8U7k0Fi7oxF1HvQgyBjPwDXeMplEsArnKt2iYhuIF86+GBbgLHdAmokL3XUFjTd7Q363OSNG55FOGUdONVn1g==
 
 react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
