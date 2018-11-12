@@ -70,10 +70,10 @@ class Hass extends React.Component {
       const name = card.name ? card.name : attributes.friendly_name;
       const icon = card.icon && card.icon;
 
-      if (domain === 'weather') {
-        card.height = 2;
-        card.width = 3;
-      }
+      // if (domain === 'weather') {
+      //   card.height = 2;
+      //   card.width = 3;
+      // }
 
       return (
         <Grid
@@ -83,31 +83,10 @@ class Hass extends React.Component {
             '--height': card.height ? card.height : 1,
           }}
           item>
-          <ButtonBase
-            className={classes.cardOuter}
-            focusRipple
-            disabled={state === 'unavailable' || domain === 'sensor'
-              || domain === 'device_tracker' || domain === 'weather'
-              || state === 'pending'}
-            onClick={() => {
-              if (domain === 'light' || domain === 'switch')
-                handleChange(domain, state === 'on' ? false : true, { entity_id });
-              else if (domain === 'scene' || domain === 'script')
-                handleChange(domain, true, { entity_id });
-              else if (domain === 'alarm_control_panel')
-                this.handleAlarmPanelShow(entity);
-            }}
-            onTouchStart={() => this.handleButtonPress(domain, entity)}
-            onMouseDown={() => this.handleButtonPress(domain, entity)}
-            onTouchEnd={this.handleButtonRelease}
-            onMouseUp={this.handleButtonRelease}>
-            <Card className={classnames(
-              classes.card,
-              state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
-              domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
-              domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
-              domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
-            )} elevation={cardElevation} square={squareCards}>
+          {domain === 'sensor'
+            || domain === 'weather'
+            || domain === 'device_tracker' ?
+            <Card className={classes.card} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
                 <Typography className={classes.name} variant="h5" style={{
                   fontSize: card.size && card.size.name && card.size.name
@@ -135,11 +114,6 @@ class Hass extends React.Component {
                     {properCase(state)}
                   </Typography>
                 }
-                {domain === 'alarm_control_panel' &&
-                  <Typography className={classes.state} variant="h5" component="h2">
-                    {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
-                  </Typography>
-                }
                 {icon &&
                   <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
                     fontSize: card.size && card.size.state && card.size.state
@@ -147,7 +121,50 @@ class Hass extends React.Component {
                 }
               </CardContent>
             </Card>
-          </ButtonBase>
+            :
+            <ButtonBase
+              className={classes.cardOuter}
+              focusRipple
+              disabled={state === 'unavailable' || state === 'pending'}
+              onClick={() => {
+                if (domain === 'light' || domain === 'switch')
+                  handleChange(domain, state === 'on' ? false : true, { entity_id });
+                else if (domain === 'scene' || domain === 'script')
+                  handleChange(domain, true, { entity_id });
+                else if (domain === 'alarm_control_panel')
+                  this.handleAlarmPanelShow(entity);
+              }}
+              onTouchStart={() => this.handleButtonPress(domain, entity)}
+              onMouseDown={() => this.handleButtonPress(domain, entity)}
+              onTouchEnd={this.handleButtonRelease}
+              onMouseUp={this.handleButtonRelease}>
+              <Card className={classnames(
+                classes.card,
+                state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
+                domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
+                domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
+                domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
+              )} elevation={cardElevation} square={squareCards}>
+                <CardContent className={classes.cardContent}>
+                  <Typography className={classes.name} variant="h5" style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                    {name}
+                  </Typography>
+                  {domain === 'alarm_control_panel' &&
+                    <Typography className={classes.state} variant="h5" component="h2">
+                      {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
+                    </Typography>
+                  }
+                  {icon &&
+                    <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }} />
+                  }
+                </CardContent>
+              </Card>
+            </ButtonBase>
+          }
           {alarmEntity &&
             <AlarmPanel
               entity={alarmEntity}
