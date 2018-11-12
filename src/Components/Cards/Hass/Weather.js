@@ -77,7 +77,7 @@ class Weather extends React.Component {
 Weather.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  haConfig: PropTypes.object.isRequired,
+  haConfig: PropTypes.object,
   state: PropTypes.string.isRequired,
   attributes: PropTypes.object.isRequired,
 };

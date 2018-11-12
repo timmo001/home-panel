@@ -170,7 +170,7 @@ Main.propTypes = {
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
-  haConfig: PropTypes.object.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,

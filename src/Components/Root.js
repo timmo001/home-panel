@@ -238,7 +238,7 @@ class Root extends React.Component {
           {!config ?
             <Login loggedIn={loggedIn} />
             :
-            haConfig && entities ?
+            entities ?
               <Main
                 themes={themes}
                 theme={theme}

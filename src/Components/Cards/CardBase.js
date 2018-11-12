@@ -31,7 +31,7 @@ class CardBase extends React.Component {
 CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  haConfig: PropTypes.object.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,

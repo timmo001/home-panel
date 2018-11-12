@@ -171,7 +171,7 @@ Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  haConfig: PropTypes.object.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
