@@ -10,7 +10,7 @@ COPY . .
 # Install packages
 RUN \
     apk add --no-cache \
-     nginx=1.14.0-r1
+     nginx=1.14.1-r0
 
 # Create nginx directories
 RUN mkdir -p /run/nginx && mkdir -p /usr/share/nginx/html
