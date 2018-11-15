@@ -2,7 +2,6 @@ import React from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import ReactAnimatedWeather from 'react-animated-weather-updated';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -98,20 +97,20 @@ class Weather extends React.Component {
               </Typography>
               <div className={classes.temperature}>
                 <Typography variant="h5">
-            {attributes.temperature}
-          </Typography>
+                  {attributes.temperature}
+                </Typography>
                 <Typography className={classes.unit} variant="subtitle1">
-            {this.getUnit('temperature')}
-          </Typography>
+                  {this.getUnit('temperature')}
+                </Typography>
               </div>
             </Grid>
-        </Grid>
+          </Grid>
           <Grid item xs>
             <div className={classes.attributes}>
               {delete attributes.temperature && Object.keys(attributes).filter(i =>
                 typeof attributes[i] == 'number'
               ).map((attribute, i) => {
-              return (
+                return (
                   <Typography key={i} className={classes.attribute} variant="body1">
                     {properCase(attribute)}: {attributes[attribute]} {this.getUnit(attribute)}
                   </Typography>
@@ -119,10 +118,28 @@ class Weather extends React.Component {
               })}
             </div>
           </Grid>
-                </Grid>
-              );
-            })}
         </Grid>
+          {attributes.forecast.map((w, i) => {
+            const datetime = moment(w.datetime);
+            return (
+              <div key={i} className={classes.forecastItem}>
+                <Typography variant="body1" noWrap>
+                  {datetime.format('ddd')}<br />
+                  {datetime.format('h a')}
+                </Typography>
+
+                <Typography variant="body1" noWrap>
+                  {w.temperature}
+                </Typography>
+                <Typography className={classes.unit} variant="body2" noWrap>
+                  {this.getUnit('temperature')}
+                </Typography>
+                <Typography variant="body1" noWrap>
+                  {w.precipitation}
+                </Typography>
+              </div>
+            );
+          })}
       </Grid>
     );
   }
