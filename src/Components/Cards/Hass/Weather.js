@@ -26,6 +26,14 @@ const styles = theme => ({
   },
   forecastItem: {
     width: 60
+  },
+  forecastIcon: {
+    color: theme.palette.text.icon,
+    fontSize: 32
+  },
+  forecastText: {
+    lineHeight: 'initial',
+    textAlign: 'center'
   }
 });
 
@@ -43,17 +51,24 @@ const weatherMap = {
   "snowy-rainy": "weather-snowy-rainy",
   sunny: "weather-sunny",
   windy: "weather-windy",
-  "windy-variant": "weather-windy-variant",
+  "windy-variant": "weather-windy-variant"
 };
 
-const params = {
-  slidesPerView: '5',
-  centeredSlides: true,
-  spaceBetween: 30,
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  }
+const weatherNameMap = {
+  "clear-night": "Clear",
+  cloudy: "Cloudy",
+  fog: "Fog",
+  hail: "Hail",
+  lightning: "Lightning",
+  "lightning-rainy": "Lightning & Rain",
+  partlycloudy: "Partly Cloudy",
+  pouring: "Rain",
+  rainy: "Rain",
+  snowy: "Snow",
+  "snowy-rainy": "Snow & Rain",
+  sunny: "Sunny",
+  windy: "Windy",
+  "windy-variant": "Windy"
 };
 
 class Weather extends React.Component {
@@ -62,12 +77,18 @@ class Weather extends React.Component {
     if (this.props.haConfig) {
       const lengthUnit = this.props.haConfig.unit_system.length || '';
       switch (measure) {
-        case 'air_pressure':
+        case 'pressure':
           return lengthUnit === 'km' ? 'hPa' : 'inHg';
         case 'length':
           return lengthUnit;
         case 'precipitation':
           return lengthUnit === 'km' ? 'mm' : 'in';
+        case 'wind_speed':
+          return lengthUnit === 'km' ? 'km/h' : 'mph';
+        case 'wind_bearing':
+          return '°';
+        case 'humidity':
+          return '%';
         default:
           return this.props.haConfig.unit_system[measure] || '';
       }
@@ -93,7 +114,7 @@ class Weather extends React.Component {
             <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
             <Grid item xs>
               <Typography variant="subtitle1">
-                {state}
+                {weatherNameMap[state]}
               </Typography>
               <div className={classes.temperature}>
                 <Typography variant="h5">
@@ -119,27 +140,32 @@ class Weather extends React.Component {
             </div>
           </Grid>
         </Grid>
+        <Grid item container direction="row" spacing={8}>
           {attributes.forecast.map((w, i) => {
             const datetime = moment(w.datetime);
+            const icon = weatherMap[w.condition];
             return (
               <div key={i} className={classes.forecastItem}>
-                <Typography variant="body1" noWrap>
+                <Typography noWrap className={classes.forecastText}>
                   {datetime.format('ddd')}<br />
                   {datetime.format('h a')}
                 </Typography>
 
-                <Typography variant="body1" noWrap>
-                  {w.temperature}
+                <Typography noWrap className={classes.forecastText}>
+                  <i className={classnames('mdi', `mdi-${icon}`, classes.forecastIcon)} />
                 </Typography>
-                <Typography className={classes.unit} variant="body2" noWrap>
+
+                <Typography noWrap className={classes.forecastText}>
+                  {w.temperature}
                   {this.getUnit('temperature')}
                 </Typography>
-                <Typography variant="body1" noWrap>
+                <Typography noWrap className={classes.forecastText}>
                   {w.precipitation}
                 </Typography>
               </div>
             );
           })}
+        </Grid>
       </Grid>
     );
   }
