@@ -88,17 +88,19 @@ class Hass extends React.Component {
             || domain === 'device_tracker' ?
             <Card className={classes.card} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
-                <Typography className={classes.name} variant="h5" style={{
-                  fontSize: card.size && card.size.name && card.size.name
-                }}>
-                  {name}
-                </Typography>
-                {domain === 'weather' &&
+                {domain === 'weather' ?
                   <Weather
                     theme={theme}
                     haConfig={haConfig}
+                    name={name}
                     state={state}
                     attributes={attributes} />
+                  :
+                  <Typography className={classes.name} variant="h5" style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                    {name}
+                  </Typography>
                 }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{

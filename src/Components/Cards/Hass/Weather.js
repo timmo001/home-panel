@@ -12,6 +12,20 @@ const styles = theme => ({
     display: 'inline-flex',
     alignItems: 'center'
   },
+  name: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    fontSize: '1.12rem',
+    lineHeight: '1.34rem',
+    color: theme.palette.text.main,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.9rem',
+      lineHeight: '1.14rem',
+    }
+  },
+  nameSub:{
+    margin: 'auto 8px'
+  },
   temperature: {
     display: 'flex'
   },
@@ -20,20 +34,30 @@ const styles = theme => ({
   },
   icon: {
     color: theme.palette.text.icon,
-    fontSize: 64
+    fontSize: 58
+  },
+  attribute: {
+    lineHeight: '1.3em'
   },
   forecast: {
+    display: 'inline-flex',
+    marginTop: theme.spacing.unit,
+    overflow: 'auto'
   },
   forecastItem: {
-    width: 60
+    width: 60,
+    marginRight: theme.spacing.unit
+  },
+  forecastText: {
+    lineHeight: '1.24em',
+    textAlign: 'center'
+  },
+  forecastTextIcon: {
+    textAlign: 'center'
   },
   forecastIcon: {
     color: theme.palette.text.icon,
-    fontSize: 32
-  },
-  forecastText: {
-    lineHeight: 'initial',
-    textAlign: 'center'
+    fontSize: 28
   }
 });
 
@@ -78,44 +102,46 @@ class Weather extends React.Component {
       const lengthUnit = this.props.haConfig.unit_system.length || '';
       switch (measure) {
         case 'pressure':
-          return lengthUnit === 'km' ? 'hPa' : 'inHg';
+          return lengthUnit === 'km' ? ' hPa' : ' inHg';
         case 'length':
-          return lengthUnit;
+          return ` ${lengthUnit}`;
         case 'precipitation':
-          return lengthUnit === 'km' ? 'mm' : 'in';
+          return lengthUnit === 'km' ? ' mm' : ' in';
         case 'wind_speed':
-          return lengthUnit === 'km' ? 'km/h' : 'mph';
+          return lengthUnit === 'km' ? ' km/h' : ' mph';
         case 'wind_bearing':
           return '°';
         case 'humidity':
           return '%';
         default:
-          return this.props.haConfig.unit_system[measure] || '';
+          return this.props.haConfig.unit_system[measure] ?
+            ` ${this.props.haConfig.unit_system[measure]}` :
+            '';
       }
     } else return null;
   }
 
   render() {
-    const { classes, state, attributes } = this.props;
+    const { classes, name, state, attributes } = this.props;
     const icon = weatherMap[state];
 
     return (
-      <Grid
-        container
-        direction="column"
-        justify="space-between">
+      <Grid container>
+        <Typography className={classes.name} variant="h5">
+          {weatherNameMap[state]}
+        </Typography>
+        <Typography className={classes.nameSub} variant="caption">
+          {name}
+        </Typography>
         <Grid
           item
           container
           spacing={8}
           direction="row"
           justify="space-between">
-          <Grid item xs className={classes.main}>
-            <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
-            <Grid item xs>
-              <Typography variant="subtitle1">
-                {weatherNameMap[state]}
-              </Typography>
+          <Grid item className={classes.main}>
+            <div>
+              <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
               <div className={classes.temperature}>
                 <Typography variant="h5">
                   {attributes.temperature}
@@ -124,23 +150,22 @@ class Weather extends React.Component {
                   {this.getUnit('temperature')}
                 </Typography>
               </div>
-            </Grid>
+            </div>
           </Grid>
           <Grid item xs>
             <div className={classes.attributes}>
-              {delete attributes.temperature && Object.keys(attributes).filter(i =>
+              {Object.keys(attributes).filter(i =>
                 typeof attributes[i] == 'number'
-              ).map((attribute, i) => {
-                return (
-                  <Typography key={i} className={classes.attribute} variant="body1">
-                    {properCase(attribute)}: {attributes[attribute]} {this.getUnit(attribute)}
-                  </Typography>
-                );
-              })}
+              ).map((attribute, i) =>
+                attribute !== 'temperature' &&
+                <Typography key={i} className={classes.attribute} variant="body1">
+                  {properCase(attribute)}: {attributes[attribute]}{this.getUnit(attribute)}
+                </Typography>
+              )}
             </div>
           </Grid>
         </Grid>
-        <Grid item container direction="row" spacing={8}>
+        <div className={classes.forecast}>
           {attributes.forecast.map((w, i) => {
             const datetime = moment(w.datetime);
             const icon = weatherMap[w.condition];
@@ -151,7 +176,7 @@ class Weather extends React.Component {
                   {datetime.format('h a')}
                 </Typography>
 
-                <Typography noWrap className={classes.forecastText}>
+                <Typography className={classes.forecastTextIcon}>
                   <i className={classnames('mdi', `mdi-${icon}`, classes.forecastIcon)} />
                 </Typography>
 
@@ -165,7 +190,7 @@ class Weather extends React.Component {
               </div>
             );
           })}
-        </Grid>
+        </div>
       </Grid>
     );
   }
@@ -175,6 +200,7 @@ Weather.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   haConfig: PropTypes.object,
+  name: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
   attributes: PropTypes.object.isRequired,
 };
