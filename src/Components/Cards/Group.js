@@ -90,7 +90,7 @@ class Group extends React.Component {
   };
 
   render() {
-    const { classes, config, theme, handleChange, entities, group } = this.props;
+    const { classes, haConfig, config, theme, handleChange, entities, group } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
         <div>
@@ -115,11 +115,25 @@ class Group extends React.Component {
                     const entity_outer = entities.find(i => { return i && i[1].entity_id === card.entity_id });
                     if (entity_outer)
                       return entity_outer[1].attributes.entity_id.map((entity, y) => {
-                        return <CardBase key={y} theme={theme} entities={entities} card={{ ...card, entity_id: entity }} handleChange={handleChange} config={config} />
+                        return <CardBase
+                          key={y}
+                          config={config}
+                          theme={theme}
+                          haConfig={haConfig}
+                          entities={entities}
+                          card={{ ...card, entity_id: entity }}
+                          handleChange={handleChange} />
                       });
                     else return null;
                   } else
-                    return <CardBase key={x} theme={theme} entities={entities} card={card} handleChange={handleChange} config={config} />
+                    return <CardBase
+                      key={x}
+                      config={config}
+                      theme={theme}
+                      haConfig={haConfig}
+                      entities={entities}
+                      card={card}
+                      handleChange={handleChange} />
                 })}
               </Grid>
             </div>
@@ -134,9 +148,10 @@ Group.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   group: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Group);

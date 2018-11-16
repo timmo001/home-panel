@@ -8,10 +8,16 @@ import Frame from './Frame/Frame';
 class CardBase extends React.Component {
 
   render() {
-    const { config, theme, entities, card, handleChange } = this.props;
+    const { config, theme, haConfig, entities, card, handleChange } = this.props;    
     const type = !card.type ? 'hass' : card.type;
     if (type === 'hass') {
-      return <Hass config={config} theme={theme} card={card} handleChange={handleChange} entities={entities} />
+      return <Hass
+        config={config}
+        theme={theme}
+        card={card}
+        haConfig={haConfig}
+        entities={entities}
+        handleChange={handleChange} />
     } else if (type === 'link') {
       return <Link config={config} card={card} />
     } else if (type === 'camera') {
@@ -25,9 +31,10 @@ class CardBase extends React.Component {
 CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default CardBase;
