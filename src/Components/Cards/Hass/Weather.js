@@ -13,6 +13,7 @@ const styles = theme => ({
     alignItems: 'center'
   },
   name: {
+    margin: 'auto 0',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     fontSize: '1.12rem',
@@ -35,7 +36,7 @@ const styles = theme => ({
   },
   icon: {
     color: theme.palette.text.icon,
-    fontSize: 58
+    fontSize: 52
   },
   attribute: {
     lineHeight: '1.3em'
@@ -123,17 +124,19 @@ class Weather extends React.Component {
   }
 
   render() {
-    const { classes, name, state, attributes } = this.props;
+    const { classes, card, name, state, attributes } = this.props;
     const icon = weatherMap[state];
 
     return (
       <Grid container>
-        <Typography className={classes.name} variant="h5">
+        <Typography className={classes.name} variant="h5" noWrap>
           {weatherNameMap[state]}
         </Typography>
-        <Typography className={classes.nameSub} variant="caption">
-          {name}
-        </Typography>
+        {card.width > 1 &&
+          <Typography className={classes.nameSub} variant="caption" noWrap>
+            {name}
+          </Typography>
+        }
         <Grid
           item
           container
@@ -153,7 +156,7 @@ class Weather extends React.Component {
               </div>
             </div>
           </Grid>
-          <Grid item xs>
+          <Grid item>
             <div className={classes.attributes}>
               {Object.keys(attributes).filter(i =>
                 typeof attributes[i] == 'number'
@@ -202,6 +205,7 @@ Weather.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   haConfig: PropTypes.object,
+  card: PropTypes.object.isRequired,
   name: PropTypes.string.isRequired,
   state: PropTypes.string.isRequired,
   attributes: PropTypes.object.isRequired,

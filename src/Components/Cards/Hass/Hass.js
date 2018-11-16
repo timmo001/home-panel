@@ -70,11 +70,6 @@ class Hass extends React.Component {
       const name = card.name ? card.name : attributes.friendly_name;
       const icon = card.icon && card.icon;
 
-      // if (domain === 'weather') {
-      //   card.height = 2;
-      //   card.width = 3;
-      // }
-
       return (
         <Grid
           className={classes.cardContainer}
@@ -92,6 +87,7 @@ class Hass extends React.Component {
                   <Weather
                     theme={theme}
                     haConfig={haConfig}
+                    card={card}
                     name={name}
                     state={state}
                     attributes={attributes} />
