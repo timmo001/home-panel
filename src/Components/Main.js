@@ -97,7 +97,7 @@ class Main extends React.Component {
   };
 
   render() {
-    const { classes, entities, config, themes, theme, handleChange } = this.props;
+    const { classes, haConfig, entities, config, themes, theme, handleChange } = this.props;
     const { moved, over, radioShown, currentPage, editConfig } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
@@ -124,7 +124,15 @@ class Main extends React.Component {
           <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
             height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
           }}>
-            <Page config={config} entities={entities} theme={theme} page={{ ...page }} handleChange={handleChange} />
+            <Suspense fallback={<CircularProgress className={classes.progress} />}>
+              <Page
+                config={config}
+                haConfig={haConfig}
+                entities={entities}
+                theme={theme}
+                page={{ ...page }}
+                handleChange={handleChange} />
+            </Suspense>
           </div>
           {pages &&
             <PageNavigation
@@ -162,6 +170,7 @@ Main.propTypes = {
   theme: PropTypes.object.isRequired,
   setTheme: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   apiUrl: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,

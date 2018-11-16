@@ -11,6 +11,7 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
+import Weather from './Weather';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -57,7 +58,7 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, theme, handleChange, entities, card } = this.props;
+    const { classes, config, theme, handleChange, haConfig, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
     const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
     const cardElevation = getCardElevation(config);
@@ -77,35 +78,26 @@ class Hass extends React.Component {
             '--height': card.height ? card.height : 1,
           }}
           item>
-          <ButtonBase
-            className={classes.cardOuter}
-            focusRipple
-            disabled={state === 'unavailable' || domain === 'sensor' || domain === 'device_tracker' || state === 'pending'}
-            onClick={() => {
-              if (domain === 'light' || domain === 'switch')
-                handleChange(domain, state === 'on' ? false : true, { entity_id });
-              else if (domain === 'scene' || domain === 'script')
-                handleChange(domain, true, { entity_id });
-              else if (domain === 'alarm_control_panel')
-                this.handleAlarmPanelShow(entity);
-            }}
-            onTouchStart={() => this.handleButtonPress(domain, entity)}
-            onMouseDown={() => this.handleButtonPress(domain, entity)}
-            onTouchEnd={this.handleButtonRelease}
-            onMouseUp={this.handleButtonRelease}>
-            <Card className={classnames(
-              classes.card,
-              state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
-              domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
-              domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
-              domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
-            )} elevation={cardElevation} square={squareCards}>
+          {domain === 'sensor'
+            || domain === 'weather'
+            || domain === 'device_tracker' ?
+            <Card className={classes.card} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
-                <Typography className={classes.name} variant="h5" style={{
-                  fontSize: card.size && card.size.name && card.size.name
-                }}>
-                  {name}
-                </Typography>
+                {domain === 'weather' ?
+                  <Weather
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    name={name}
+                    state={state}
+                    attributes={attributes} />
+                  :
+                  <Typography className={classes.name} variant="h5" style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                    {name}
+                  </Typography>
+                }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{
                     fontSize: card.size && card.size.state && card.size.state
@@ -120,11 +112,6 @@ class Hass extends React.Component {
                     {properCase(state)}
                   </Typography>
                 }
-                {domain === 'alarm_control_panel' &&
-                  <Typography className={classes.state} variant="h5" component="h2">
-                    {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
-                  </Typography>
-                }
                 {icon &&
                   <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
                     fontSize: card.size && card.size.state && card.size.state
@@ -132,7 +119,50 @@ class Hass extends React.Component {
                 }
               </CardContent>
             </Card>
-          </ButtonBase>
+            :
+            <ButtonBase
+              className={classes.cardOuter}
+              focusRipple
+              disabled={state === 'unavailable' || state === 'pending'}
+              onClick={() => {
+                if (domain === 'light' || domain === 'switch')
+                  handleChange(domain, state === 'on' ? false : true, { entity_id });
+                else if (domain === 'scene' || domain === 'script')
+                  handleChange(domain, true, { entity_id });
+                else if (domain === 'alarm_control_panel')
+                  this.handleAlarmPanelShow(entity);
+              }}
+              onTouchStart={() => this.handleButtonPress(domain, entity)}
+              onMouseDown={() => this.handleButtonPress(domain, entity)}
+              onTouchEnd={this.handleButtonRelease}
+              onMouseUp={this.handleButtonRelease}>
+              <Card className={classnames(
+                classes.card,
+                state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
+                domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
+                domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
+                domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
+              )} elevation={cardElevation} square={squareCards}>
+                <CardContent className={classes.cardContent}>
+                  <Typography className={classes.name} variant="h5" style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                    {name}
+                  </Typography>
+                  {domain === 'alarm_control_panel' &&
+                    <Typography className={classes.state} variant="h5" component="h2">
+                      {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
+                    </Typography>
+                  }
+                  {icon &&
+                    <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }} />
+                  }
+                </CardContent>
+              </Card>
+            </ButtonBase>
+          }
           {alarmEntity &&
             <AlarmPanel
               entity={alarmEntity}
@@ -156,9 +186,10 @@ Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Hass);

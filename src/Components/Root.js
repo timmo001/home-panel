@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import PropTypes from 'prop-types';
 import {
   getAuth, getUser, callService, createConnection,
-  subscribeEntities, ERR_INVALID_AUTH
+  subscribeConfig, subscribeEntities, ERR_INVALID_AUTH
 } from 'home-assistant-js-websocket';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
@@ -127,6 +127,7 @@ class Root extends React.Component {
         this.setState({ connected: true });
         conn.removeEventListener('ready', this.eventHandler);
         conn.addEventListener('ready', this.eventHandler);
+        subscribeConfig(conn, this.updateConfig);
         subscribeEntities(conn, this.updateEntities);
         getUser(conn).then(user => {
           console.log('Logged into Home Assistant as', user.name);
@@ -183,6 +184,8 @@ class Root extends React.Component {
     }
   };
 
+  updateConfig = config => this.setState({ haConfig: config });
+
   updateEntities = entities => this.setState({ entities: Object.entries(entities) });
 
   setTheme = (themeId = undefined) => {
@@ -227,7 +230,7 @@ class Root extends React.Component {
   render() {
     const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
-    const { config, snackMessage, entities, connected } = this.state;
+    const { config, snackMessage, haConfig, entities, connected } = this.state;
 
     return (
       <Suspense fallback={<CircularProgress className={classes.progressRoot} />}>
@@ -241,6 +244,7 @@ class Root extends React.Component {
                 theme={theme}
                 setTheme={setTheme}
                 config={config}
+                haConfig={haConfig}
                 entities={entities}
                 username={this.state.username}
                 password={this.state.password}
