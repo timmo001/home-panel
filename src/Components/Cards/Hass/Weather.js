@@ -23,11 +23,12 @@ const styles = theme => ({
       lineHeight: '1.14rem',
     }
   },
-  nameSub:{
+  nameSub: {
     margin: 'auto 8px'
   },
   temperature: {
-    display: 'flex'
+    display: 'flex',
+    marginLeft: theme.spacing.unit / 2
   },
   unit: {
     marginLeft: theme.spacing.unit / 2
@@ -143,7 +144,7 @@ class Weather extends React.Component {
             <div>
               <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
               <div className={classes.temperature}>
-                <Typography variant="h5">
+                <Typography variant="subtitle1">
                   {attributes.temperature}
                 </Typography>
                 <Typography className={classes.unit} variant="subtitle1">
@@ -158,6 +159,7 @@ class Weather extends React.Component {
                 typeof attributes[i] == 'number'
               ).map((attribute, i) =>
                 attribute !== 'temperature' &&
+                attribute !== 'ozone' &&
                 <Typography key={i} className={classes.attribute} variant="body1">
                   {properCase(attribute)}: {attributes[attribute]}{this.getUnit(attribute)}
                 </Typography>
