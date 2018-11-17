@@ -5,6 +5,8 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import grey from '@material-ui/core/colors/grey';
 import red from '@material-ui/core/colors/red';
+import orange from '@material-ui/core/colors/orange';
+import blue from '@material-ui/core/colors/blue';
 import Root from './Components/Root';
 import clone from './Components/Common/clone';
 import mapToColor from './Components/Common/mapToColor';
@@ -32,6 +34,10 @@ var themes = [
             home: blueGrey[300],
             away: blueGrey[300],
             triggered: red[400],
+          },
+          climate: {
+            heat: orange[300],
+            cool: blue[300]
           }
         }
       },
@@ -62,6 +68,10 @@ var themes = [
             home: blueGrey[700],
             away: blueGrey[700],
             triggered: red[700],
+          },
+          climate: {
+            heat: orange[700],
+            cool: blue[700]
           }
         }
       },

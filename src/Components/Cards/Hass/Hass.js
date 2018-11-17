@@ -29,13 +29,19 @@ const styles = theme => ({
     }
   },
   alarmArmedHome: {
-    background: theme.palette.backgrounds.card.alarm.home,
+    background: theme.palette.backgrounds.card.alarm.home
   },
   alarmArmedAway: {
-    background: theme.palette.backgrounds.card.alarm.away,
+    background: theme.palette.backgrounds.card.alarm.away
   },
   alarmTriggered: {
-    background: theme.palette.backgrounds.card.alarm.triggered,
+    background: theme.palette.backgrounds.card.alarm.triggered
+  },
+  climateHeat: {
+    background: theme.palette.backgrounds.card.climate.heat
+  },
+  climateCool: {
+    background: theme.palette.backgrounds.card.climate.cool
   }
 });
 
@@ -83,7 +89,11 @@ class Hass extends React.Component {
             || domain === 'weather'
             || domain === 'climate'
             || domain === 'device_tracker' ?
-            <Card className={classes.card} elevation={cardElevation} square={squareCards}>
+            <Card className={classnames(
+              classes.card,
+              domain === 'climate' && state === 'heat' && classes.climateHeat,
+              domain === 'climate' && state === 'cool' && classes.climateCool
+            )} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
                 {domain === 'weather' ?
                   <Weather
