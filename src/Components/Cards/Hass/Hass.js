@@ -12,6 +12,7 @@ import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
 import Weather from './Weather';
+import Climate from './Climate';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -80,6 +81,7 @@ class Hass extends React.Component {
           item>
           {domain === 'sensor'
             || domain === 'weather'
+            || domain === 'climate'
             || domain === 'device_tracker' ?
             <Card className={classes.card} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
@@ -88,7 +90,6 @@ class Hass extends React.Component {
                     theme={theme}
                     haConfig={haConfig}
                     card={card}
-                    name={name}
                     state={state}
                     attributes={attributes} />
                   :
@@ -97,6 +98,15 @@ class Hass extends React.Component {
                   }}>
                     {name}
                   </Typography>
+                }
+                {domain === 'climate' &&
+                  <Climate
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    name={name}
+                    state={state}
+                    attributes={attributes} />
                 }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{
