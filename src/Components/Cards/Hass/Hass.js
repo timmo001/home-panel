@@ -115,8 +115,10 @@ class Hass extends React.Component {
                     haConfig={haConfig}
                     card={card}
                     name={name}
+                    entity_id={entity_id}
                     state={state}
-                    attributes={attributes} />
+                    attributes={attributes}
+                    handleChange={handleChange} />
                 }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{
@@ -209,7 +211,7 @@ Hass.propTypes = {
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Hass);
