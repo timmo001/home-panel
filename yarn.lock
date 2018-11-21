@@ -8092,10 +8092,10 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-moment@^0.8.3:
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.8.3.tgz#68b5add7145c736b8a737d55c4ed31fbcbcfe1eb"
-  integrity sha512-9wFd3tS44D5NPjuDUGv7qinXKIE50wy2TsOJEUn3pNVO2z7edc1hsjKF5Ol2w7I7qmWd3X1h52/y5H/Ufi7xIA==
+react-moment@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.8.4.tgz#18eb59e1541c8b216353e23c21e9db50e42e2edb"
+  integrity sha512-QhI19OcfhiAn60/O6bMR0w8ApXrPFCjv6+eV0I/P9/AswzjgEAx4L7VxMBCpS/jrythLa12Q9v88req+ys4YpA==
 
 react-router-dom@^4.3.1:
   version "4.3.1"
