@@ -32,6 +32,10 @@
                 "home": "",
                 "away": "",
                 "triggered": ""
+              },
+              "climate": {
+                "heat": "",
+                "cool": ""
               }
             }
           },
