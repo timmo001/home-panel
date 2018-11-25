@@ -67,7 +67,7 @@ class Weather extends React.Component {
   };
 
   render() {
-    const { classes, haConfig, attributes } = this.props;
+    const { classes, haConfig, attributes, card } = this.props;
     return (
       <Grid
         container
@@ -90,166 +90,168 @@ class Weather extends React.Component {
               </Typography>
             </div>
           </Grid>
-          {attributes.temperature ?
+          {card.width > 1 &&
             <Grid item>
-              <Grid
-                container
-                alignItems="center"
-                direction="column">
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('temperature',
-                    attributes.temperature + 0.5)}>
-                  <KeyboardArrowUp fontSize="small" />
-                </IconButton>
-                <div className={classes.temperature}>
-                  <Typography variant="h5">
-                    {attributes.temperature}
-                  </Typography>
-                  <Typography variant="body1" className={classes.unit}>
-                    {haConfig.unit_system.temperature}
-                  </Typography>
-                </div>
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('temperature',
-                    attributes.temperature - 0.5)}>
-                  <KeyboardArrowDown fontSize="small" />
-                </IconButton>
-              </Grid>
-            </Grid>
-            :
-            <Grid item>
-              <Grid
-                item
-                container
-                spacing={8}
-                alignItems="center"
-                direction="row">
+              {attributes.temperature ?
                 <Grid
-                  item
-                  xs
                   container
                   alignItems="center"
                   direction="column">
                   <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('target_temp_low',
-                      attributes.target_temp_low + 0.5)}>
+                    onClick={() => this.handleTempChange('temperature',
+                      attributes.temperature + 0.5)}>
                     <KeyboardArrowUp fontSize="small" />
                   </IconButton>
                   <div className={classes.temperature}>
                     <Typography variant="h5">
-                      {attributes.target_temp_low}
+                      {attributes.temperature}
                     </Typography>
                     <Typography variant="body1" className={classes.unit}>
                       {haConfig.unit_system.temperature}
                     </Typography>
                   </div>
                   <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('target_temp_low',
-                      attributes.target_temp_low - 0.5)}>
+                    onClick={() => this.handleTempChange('temperature',
+                      attributes.temperature - 0.5)}>
                     <KeyboardArrowDown fontSize="small" />
                   </IconButton>
                 </Grid>
-                <Grid item xs className={classes.hyphen}>
-                  <Typography variant="h5">-</Typography>
-                </Grid>
+                :
                 <Grid
                   item
-                  xs
                   container
+                  spacing={8}
                   alignItems="center"
-                  direction="column">
-                  <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('target_temp_high',
-                      attributes.target_temp_high + 0.5)}>
-                    <KeyboardArrowUp fontSize="small" />
-                  </IconButton>
-                  <div className={classes.temperature}>
-                    <Typography variant="h5">
-                      {attributes.target_temp_high}
-                    </Typography>
-                    <Typography variant="body1" className={classes.unit}>
-                      {haConfig.unit_system.temperature}
-                    </Typography>
-                  </div>
-                  <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('target_temp_high',
-                      attributes.target_temp_high - 0.5)}>
-                    <KeyboardArrowDown fontSize="small" />
-                  </IconButton>
+                  direction="row">
+                  <Grid
+                    item
+                    xs
+                    container
+                    alignItems="center"
+                    direction="column">
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleTempChange('target_temp_low',
+                        attributes.target_temp_low + 0.5)}>
+                      <KeyboardArrowUp fontSize="small" />
+                    </IconButton>
+                    <div className={classes.temperature}>
+                      <Typography variant="h5">
+                        {attributes.target_temp_low}
+                      </Typography>
+                      <Typography variant="body1" className={classes.unit}>
+                        {haConfig.unit_system.temperature}
+                      </Typography>
+                    </div>
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleTempChange('target_temp_low',
+                        attributes.target_temp_low - 0.5)}>
+                      <KeyboardArrowDown fontSize="small" />
+                    </IconButton>
+                  </Grid>
+                  <Grid item xs className={classes.hyphen}>
+                    <Typography variant="h5">-</Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs
+                    container
+                    alignItems="center"
+                    direction="column">
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleTempChange('target_temp_high',
+                        attributes.target_temp_high + 0.5)}>
+                      <KeyboardArrowUp fontSize="small" />
+                    </IconButton>
+                    <div className={classes.temperature}>
+                      <Typography variant="h5">
+                        {attributes.target_temp_high}
+                      </Typography>
+                      <Typography variant="body1" className={classes.unit}>
+                        {haConfig.unit_system.temperature}
+                      </Typography>
+                    </div>
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleTempChange('target_temp_high',
+                        attributes.target_temp_high - 0.5)}>
+                      <KeyboardArrowDown fontSize="small" />
+                    </IconButton>
+                  </Grid>
                 </Grid>
-              </Grid>
+              }
             </Grid>
           }
         </Grid>
-        <Grid
-          container
-          spacing={8}
-          alignItems="center"
-          justify="space-around"
-          direction="row">
+        {card.width > 1 && card.height > 1 &&
           <Grid
-            item
-            xs={8}
             container
             spacing={8}
             alignItems="center"
-            justify="center"
+            justify="space-around"
             direction="row">
-            {attributes.operation_list.map((op, i) =>
-              <Grid key={i} item>
-                {op === 'off' ?
-                  <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleOperationChange(op)}>
-                    <i className={classnames('mdi', 'mdi-power-off', classes.icon,
-                      attributes.operation_mode === op && classes.iconActive)} />
-                  </IconButton>
-                  : op === 'heat' ?
-                    <IconButton className={classes.iconContainer}
-                      onClick={() => this.handleOperationChange(op)}>
-                      <i className={classnames('mdi', 'mdi-radiator', classes.icon,
-                        attributes.operation_mode === op && classes.iconActive)} />
-                    </IconButton>
-                    : op === 'cool' ?
-                      <IconButton className={classes.iconContainer}
-                        onClick={() => this.handleOperationChange(op)}>
-                        <i className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
-                          attributes.operation_mode === op && classes.iconActive)} />
-                      </IconButton>
-                      : op === 'auto' ?
-                        <IconButton className={classes.iconContainer}
-                          onClick={() => this.handleOperationChange(op)}>
-                          <i className={classnames('mdi', 'mdi-autorenew', classes.icon,
-                            attributes.operation_mode === op && classes.iconActive)} />
-                        </IconButton>
-                        :
-                        <Button className={classnames(classes.button,
-                          attributes.operation_mode === op && classes.iconActive)}
-                          onClick={() => this.handleOperationChange(op)}>
-                          {op}
-                        </Button>
-                }
-              </Grid>
-            )}
-          </Grid>
-          {attributes.away_mode &&
             <Grid
               item
-              xs={4}
+              xs={8}
               container
               spacing={8}
               alignItems="center"
-              justify="space-around"
+              justify="center"
               direction="row">
-              <Grid item>
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleAwayToggle()}>
-                  <i className={classnames('mdi', 'mdi-walk', classes.icon,
-                    attributes.away_mode === 'on' && classes.iconActive)} />
-                </IconButton>
-              </Grid>
+              {attributes.operation_list.map((op, i) =>
+                <Grid key={i} item>
+                  {op === 'off' ?
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleOperationChange(op)}>
+                      <i className={classnames('mdi', 'mdi-power-off', classes.icon,
+                        attributes.operation_mode === op && classes.iconActive)} />
+                    </IconButton>
+                    : op === 'heat' ?
+                      <IconButton className={classes.iconContainer}
+                        onClick={() => this.handleOperationChange(op)}>
+                        <i className={classnames('mdi', 'mdi-radiator', classes.icon,
+                          attributes.operation_mode === op && classes.iconActive)} />
+                      </IconButton>
+                      : op === 'cool' ?
+                        <IconButton className={classes.iconContainer}
+                          onClick={() => this.handleOperationChange(op)}>
+                          <i className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
+                            attributes.operation_mode === op && classes.iconActive)} />
+                        </IconButton>
+                        : op === 'auto' ?
+                          <IconButton className={classes.iconContainer}
+                            onClick={() => this.handleOperationChange(op)}>
+                            <i className={classnames('mdi', 'mdi-autorenew', classes.icon,
+                              attributes.operation_mode === op && classes.iconActive)} />
+                          </IconButton>
+                          :
+                          <Button className={classnames(classes.button,
+                            attributes.operation_mode === op && classes.iconActive)}
+                            onClick={() => this.handleOperationChange(op)}>
+                            {op}
+                          </Button>
+                  }
+                </Grid>
+              )}
             </Grid>
-          }
-        </Grid>
+            {attributes.away_mode &&
+              <Grid
+                item
+                xs={4}
+                container
+                spacing={8}
+                alignItems="center"
+                justify="space-around"
+                direction="row">
+                <Grid item>
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleAwayToggle()}>
+                    <i className={classnames('mdi', 'mdi-walk', classes.icon,
+                      attributes.away_mode === 'on' && classes.iconActive)} />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            }
+          </Grid>
+        }
       </Grid>
     );
   }
