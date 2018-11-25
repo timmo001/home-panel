@@ -62,7 +62,7 @@ class Weather extends React.Component {
   handleAwayToggle = () => {
     this.props.handleChange('climate', 'set_away_mode', {
       entity_id: this.props.entity_id,
-      away_mode: !this.props.attributes.away_mode
+      away_mode: this.props.attributes.away_mode === 'on' ? 'off' : 'on'
     });
   };
 
@@ -231,22 +231,24 @@ class Weather extends React.Component {
               </Grid>
             )}
           </Grid>
-          <Grid
-            item
-            xs={4}
-            container
-            spacing={8}
-            alignItems="center"
-            justify="space-around"
-            direction="row">
-            <Grid item>
-              <IconButton className={classes.iconContainer}
-                onClick={() => this.handleAwayToggle()}>
-                <i className={classnames('mdi', 'mdi-walk', classes.icon,
-                  attributes.away_mode === 'on' && classes.iconActive)} />
-              </IconButton>
+          {attributes.away_mode &&
+            <Grid
+              item
+              xs={4}
+              container
+              spacing={8}
+              alignItems="center"
+              justify="space-around"
+              direction="row">
+              <Grid item>
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleAwayToggle()}>
+                  <i className={classnames('mdi', 'mdi-walk', classes.icon,
+                    attributes.away_mode === 'on' && classes.iconActive)} />
+                </IconButton>
+              </Grid>
             </Grid>
-          </Grid>
+          }
         </Grid>
       </Grid>
     );
