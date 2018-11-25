@@ -68,7 +68,6 @@ class Weather extends React.Component {
 
   render() {
     const { classes, haConfig, attributes } = this.props;
-    console.log(attributes);
     return (
       <Grid
         container
