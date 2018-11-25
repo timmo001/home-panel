@@ -29,25 +29,30 @@ const styles = theme => ({
 
 class Weather extends React.Component {
 
-  handleTempChange = diff => {
-    const newTemp = this.props.attributes.temperature + diff;
+  handleTempChange = (type, newTemp) => {
     if (newTemp <= this.props.attributes.max_temp
-      && newTemp >= this.props.attributes.min_temp)
-      this.props.handleChange('climate', 'set_temperature', {
+      && newTemp >= this.props.attributes.min_temp) {
+      const data = {
         entity_id: this.props.entity_id,
-        temperature: newTemp
-      });
+        [type]: newTemp
+      };
+      if (type === 'target_temp_low')
+        data.target_temp_high = this.props.attributes.target_temp_high;
+      else if (type === 'target_temp_high')
+        data.target_temp_low = this.props.attributes.target_temp_low;
+      this.props.handleChange('climate', 'set_temperature', data);
+    }
   };
 
   render() {
     const { classes, haConfig, attributes } = this.props;
-    // console.log(state);
-    console.log(attributes);
+    // console.log(attributes);
     return (
       <Grid
         container
         alignItems="center"
-        justify="space-around">
+        justify="space-around"
+        direction="row">
         <Grid item>
           <div className={classes.temperature}>
             <Typography variant="h4">
@@ -58,14 +63,15 @@ class Weather extends React.Component {
             </Typography>
           </div>
         </Grid>
-        {attributes.temperature &&
+        {attributes.temperature ?
           <Grid item>
             <Grid
               container
               alignItems="center"
               direction="column">
               <IconButton className={classes.iconContainer}
-                onClick={() => this.handleTempChange(0.5)}>
+                onClick={() => this.handleTempChange('temperature',
+                  attributes.temperature + 0.5)}>
                 <KeyboardArrowUp fontSize="small" />
               </IconButton>
               <div className={classes.temperature}>
@@ -77,9 +83,70 @@ class Weather extends React.Component {
                 </Typography>
               </div>
               <IconButton className={classes.iconContainer}
-                onClick={() => this.handleTempChange(-0.5)}>
+                onClick={() => this.handleTempChange('temperature',
+                  attributes.temperature - 0.5)}>
                 <KeyboardArrowDown fontSize="small" />
               </IconButton>
+            </Grid>
+          </Grid>
+          :
+          <Grid item>
+            <Grid
+              item
+              container
+              alignItems="center"
+              direction="row">
+              <Grid
+                item
+                container
+                alignItems="center"
+                direction="column">
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('target_temp_low',
+                    attributes.target_temp_low + 0.5)}>
+                  <KeyboardArrowUp fontSize="small" />
+                </IconButton>
+                <div className={classes.temperature}>
+                  <Typography variant="h5">
+                    {attributes.target_temp_low}
+                  </Typography>
+                  <Typography variant="body1" className={classes.unit}>
+                    {haConfig.unit_system.temperature}
+                  </Typography>
+                </div>
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('target_temp_low',
+                    attributes.target_temp_low - 0.5)}>
+                  <KeyboardArrowDown fontSize="small" />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Typography variant="h5">-</Typography>
+              </Grid>
+              <Grid
+                item
+                container
+                alignItems="center"
+                direction="column">
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('target_temp_high',
+                    attributes.target_temp_high + 0.5)}>
+                  <KeyboardArrowUp fontSize="small" />
+                </IconButton>
+                <div className={classes.temperature}>
+                  <Typography variant="h5">
+                    {attributes.target_temp_high}
+                  </Typography>
+                  <Typography variant="body1" className={classes.unit}>
+                    {haConfig.unit_system.temperature}
+                  </Typography>
+                </div>
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('target_temp_high',
+                    attributes.target_temp_high - 0.5)}>
+                  <KeyboardArrowDown fontSize="small" />
+                </IconButton>
+              </Grid>
             </Grid>
           </Grid>
         }
