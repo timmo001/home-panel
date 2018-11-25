@@ -12,6 +12,7 @@ import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
 import Weather from './Weather';
+import Climate from './Climate';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -28,13 +29,19 @@ const styles = theme => ({
     }
   },
   alarmArmedHome: {
-    background: theme.palette.backgrounds.card.alarm.home,
+    background: theme.palette.backgrounds.card.alarm.home
   },
   alarmArmedAway: {
-    background: theme.palette.backgrounds.card.alarm.away,
+    background: theme.palette.backgrounds.card.alarm.away
   },
   alarmTriggered: {
-    background: theme.palette.backgrounds.card.alarm.triggered,
+    background: theme.palette.backgrounds.card.alarm.triggered
+  },
+  climateHeat: {
+    background: theme.palette.backgrounds.card.climate.heat
+  },
+  climateCool: {
+    background: theme.palette.backgrounds.card.climate.cool
   }
 });
 
@@ -80,15 +87,19 @@ class Hass extends React.Component {
           item>
           {domain === 'sensor'
             || domain === 'weather'
+            || domain === 'climate'
             || domain === 'device_tracker' ?
-            <Card className={classes.card} elevation={cardElevation} square={squareCards}>
+            <Card className={classnames(
+              classes.card,
+              domain === 'climate' && state === 'heat' && classes.climateHeat,
+              domain === 'climate' && state === 'cool' && classes.climateCool
+            )} elevation={cardElevation} square={squareCards}>
               <CardContent className={classes.cardContent}>
                 {domain === 'weather' ?
                   <Weather
                     theme={theme}
                     haConfig={haConfig}
                     card={card}
-                    name={name}
                     state={state}
                     attributes={attributes} />
                   :
@@ -97,6 +108,17 @@ class Hass extends React.Component {
                   }}>
                     {name}
                   </Typography>
+                }
+                {domain === 'climate' &&
+                  <Climate
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    name={name}
+                    entity_id={entity_id}
+                    state={state}
+                    attributes={attributes}
+                    handleChange={handleChange} />
                 }
                 {domain === 'sensor' &&
                   <Typography className={classes.state} variant="h5" component="h2" style={{
@@ -189,7 +211,7 @@ Hass.propTypes = {
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Hass);

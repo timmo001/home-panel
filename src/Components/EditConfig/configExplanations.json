@@ -32,6 +32,10 @@
                 "home": "The color of an alarm card and it is armed home",
                 "away": "The color of an alarm card and it is armed away",
                 "triggered": "The color of an alarm card and the alarm has been triggered"
+              },
+              "climate": {
+                "heat": "The color of a climate card when heat is set",
+                "cool": "The color of a climate card when cool is set"
               }
             }
           },
