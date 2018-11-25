@@ -61,9 +61,9 @@ Setup and configuration is available [here][docs]
 
 ![Midnight Theme Screenshot][midnight-theme]
 
-![Radio Screenshot][radio]
-
 ![Forest Theme][forest-theme]
+
+![Radio Screenshot][radio]
 
 ![More Info Dark Screenshot][more-info-dark]
 
