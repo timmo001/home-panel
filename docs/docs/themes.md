@@ -118,7 +118,7 @@ Here are some example themes you can use or expand on.
       }
 ```
 
-![Midnight Theme][theme-midnight]
+![Midnight Theme][midnight-theme]
 
 ### Forest
 
@@ -142,9 +142,9 @@ Here are some example themes you can use or expand on.
       }
 ```
 
-![Forest Theme][theme-forest]
+![Forest Theme][forest-theme]
 
 [template]: https://git.timmo.xyz/home-panel/template/
 [md-color]: https://material.io/design/color/#tools-for-picking-colors
-[theme-midnight]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-midnight.png
-[theme-forest]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/theme-forest.png
+[midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
+[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
