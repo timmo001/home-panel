@@ -206,7 +206,7 @@ Weather.propTypes = {
   theme: PropTypes.object.isRequired,
   haConfig: PropTypes.object,
   card: PropTypes.object.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   state: PropTypes.string.isRequired,
   attributes: PropTypes.object.isRequired,
 };
