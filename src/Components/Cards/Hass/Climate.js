@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 
 const styles = theme => ({
-  temperatureContainer: {
-
-  },
   temperature: {
     display: 'inline-flex',
     marginLeft: theme.spacing.unit * 2
@@ -23,7 +22,16 @@ const styles = theme => ({
     padding: 4
   },
   icon: {
-    opacity: 0.4
+    opacity: 0.6,
+    color: theme.palette.text.icon
+  },
+  iconActive: {
+    opacity: 1.0,
+    color: theme.palette.backgrounds.card.on
+  },
+  hyphen: {
+    marginLeft: theme.spacing.unit,
+    marginRight: `-${theme.spacing.unit}`
   }
 });
 
@@ -44,112 +52,203 @@ class Weather extends React.Component {
     }
   };
 
+  handleOperationChange = operation_mode => {
+    this.props.handleChange('climate', 'set_operation_mode', {
+      entity_id: this.props.entity_id,
+      operation_mode
+    });
+  };
+
+  handleAwayToggle = () => {
+    this.props.handleChange('climate', 'set_away_mode', {
+      entity_id: this.props.entity_id,
+      away_mode: !this.props.attributes.away_mode
+    });
+  };
+
   render() {
     const { classes, haConfig, attributes } = this.props;
-    // console.log(attributes);
+    console.log(attributes);
     return (
       <Grid
         container
+        spacing={8}
         alignItems="center"
-        justify="space-around"
-        direction="row">
-        <Grid item>
-          <div className={classes.temperature}>
-            <Typography variant="h4">
-              {attributes.current_temperature}
-            </Typography>
-            <Typography variant="subtitle1" className={classes.unit}>
-              {haConfig.unit_system.temperature}
-            </Typography>
-          </div>
+        justify="space-between"
+        direction="column">
+        <Grid
+          container
+          alignItems="center"
+          justify="space-around"
+          direction="row">
+          <Grid item>
+            <div className={classes.temperature}>
+              <Typography variant="h4">
+                {attributes.current_temperature}
+              </Typography>
+              <Typography variant="subtitle1" className={classes.unit}>
+                {haConfig.unit_system.temperature}
+              </Typography>
+            </div>
+          </Grid>
+          {attributes.temperature ?
+            <Grid item>
+              <Grid
+                container
+                alignItems="center"
+                direction="column">
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('temperature',
+                    attributes.temperature + 0.5)}>
+                  <KeyboardArrowUp fontSize="small" />
+                </IconButton>
+                <div className={classes.temperature}>
+                  <Typography variant="h5">
+                    {attributes.temperature}
+                  </Typography>
+                  <Typography variant="body1" className={classes.unit}>
+                    {haConfig.unit_system.temperature}
+                  </Typography>
+                </div>
+                <IconButton className={classes.iconContainer}
+                  onClick={() => this.handleTempChange('temperature',
+                    attributes.temperature - 0.5)}>
+                  <KeyboardArrowDown fontSize="small" />
+                </IconButton>
+              </Grid>
+            </Grid>
+            :
+            <Grid item>
+              <Grid
+                item
+                container
+                spacing={8}
+                alignItems="center"
+                direction="row">
+                <Grid
+                  item
+                  xs
+                  container
+                  alignItems="center"
+                  direction="column">
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleTempChange('target_temp_low',
+                      attributes.target_temp_low + 0.5)}>
+                    <KeyboardArrowUp fontSize="small" />
+                  </IconButton>
+                  <div className={classes.temperature}>
+                    <Typography variant="h5">
+                      {attributes.target_temp_low}
+                    </Typography>
+                    <Typography variant="body1" className={classes.unit}>
+                      {haConfig.unit_system.temperature}
+                    </Typography>
+                  </div>
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleTempChange('target_temp_low',
+                      attributes.target_temp_low - 0.5)}>
+                    <KeyboardArrowDown fontSize="small" />
+                  </IconButton>
+                </Grid>
+                <Grid item xs className={classes.hyphen}>
+                  <Typography variant="h5">-</Typography>
+                </Grid>
+                <Grid
+                  item
+                  xs
+                  container
+                  alignItems="center"
+                  direction="column">
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleTempChange('target_temp_high',
+                      attributes.target_temp_high + 0.5)}>
+                    <KeyboardArrowUp fontSize="small" />
+                  </IconButton>
+                  <div className={classes.temperature}>
+                    <Typography variant="h5">
+                      {attributes.target_temp_high}
+                    </Typography>
+                    <Typography variant="body1" className={classes.unit}>
+                      {haConfig.unit_system.temperature}
+                    </Typography>
+                  </div>
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleTempChange('target_temp_high',
+                      attributes.target_temp_high - 0.5)}>
+                    <KeyboardArrowDown fontSize="small" />
+                  </IconButton>
+                </Grid>
+              </Grid>
+            </Grid>
+          }
         </Grid>
-        {attributes.temperature ?
-          <Grid item>
-            <Grid
-              container
-              alignItems="center"
-              direction="column">
+        <Grid
+          container
+          spacing={8}
+          alignItems="center"
+          justify="space-around"
+          direction="row">
+          <Grid
+            item
+            xs={8}
+            container
+            spacing={8}
+            alignItems="center"
+            justify="center"
+            direction="row">
+            {attributes.operation_list.map((op, i) =>
+              <Grid key={i} item>
+                {op === 'off' ?
+                  <IconButton className={classes.iconContainer}
+                    onClick={() => this.handleOperationChange(op)}>
+                    <i className={classnames('mdi', 'mdi-power-off', classes.icon,
+                      attributes.operation_mode === op && classes.iconActive)} />
+                  </IconButton>
+                  : op === 'heat' ?
+                    <IconButton className={classes.iconContainer}
+                      onClick={() => this.handleOperationChange(op)}>
+                      <i className={classnames('mdi', 'mdi-radiator', classes.icon,
+                        attributes.operation_mode === op && classes.iconActive)} />
+                    </IconButton>
+                    : op === 'cool' ?
+                      <IconButton className={classes.iconContainer}
+                        onClick={() => this.handleOperationChange(op)}>
+                        <i className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
+                          attributes.operation_mode === op && classes.iconActive)} />
+                      </IconButton>
+                      : op === 'auto' ?
+                        <IconButton className={classes.iconContainer}
+                          onClick={() => this.handleOperationChange(op)}>
+                          <i className={classnames('mdi', 'mdi-autorenew', classes.icon,
+                            attributes.operation_mode === op && classes.iconActive)} />
+                        </IconButton>
+                        :
+                        <Button className={classnames(classes.button,
+                          attributes.operation_mode === op && classes.iconActive)}
+                          onClick={() => this.handleOperationChange(op)}>
+                          {op}
+                        </Button>
+                }
+              </Grid>
+            )}
+          </Grid>
+          <Grid
+            item
+            xs={4}
+            container
+            spacing={8}
+            alignItems="center"
+            justify="space-around"
+            direction="row">
+            <Grid item>
               <IconButton className={classes.iconContainer}
-                onClick={() => this.handleTempChange('temperature',
-                  attributes.temperature + 0.5)}>
-                <KeyboardArrowUp fontSize="small" />
-              </IconButton>
-              <div className={classes.temperature}>
-                <Typography variant="h5">
-                  {attributes.temperature}
-                </Typography>
-                <Typography variant="body1" className={classes.unit}>
-                  {haConfig.unit_system.temperature}
-                </Typography>
-              </div>
-              <IconButton className={classes.iconContainer}
-                onClick={() => this.handleTempChange('temperature',
-                  attributes.temperature - 0.5)}>
-                <KeyboardArrowDown fontSize="small" />
+                onClick={() => this.handleAwayToggle()}>
+                <i className={classnames('mdi', 'mdi-walk', classes.icon,
+                  attributes.away_mode === 'on' && classes.iconActive)} />
               </IconButton>
             </Grid>
           </Grid>
-          :
-          <Grid item>
-            <Grid
-              item
-              container
-              alignItems="center"
-              direction="row">
-              <Grid
-                item
-                container
-                alignItems="center"
-                direction="column">
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('target_temp_low',
-                    attributes.target_temp_low + 0.5)}>
-                  <KeyboardArrowUp fontSize="small" />
-                </IconButton>
-                <div className={classes.temperature}>
-                  <Typography variant="h5">
-                    {attributes.target_temp_low}
-                  </Typography>
-                  <Typography variant="body1" className={classes.unit}>
-                    {haConfig.unit_system.temperature}
-                  </Typography>
-                </div>
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('target_temp_low',
-                    attributes.target_temp_low - 0.5)}>
-                  <KeyboardArrowDown fontSize="small" />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography variant="h5">-</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                alignItems="center"
-                direction="column">
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('target_temp_high',
-                    attributes.target_temp_high + 0.5)}>
-                  <KeyboardArrowUp fontSize="small" />
-                </IconButton>
-                <div className={classes.temperature}>
-                  <Typography variant="h5">
-                    {attributes.target_temp_high}
-                  </Typography>
-                  <Typography variant="body1" className={classes.unit}>
-                    {haConfig.unit_system.temperature}
-                  </Typography>
-                </div>
-                <IconButton className={classes.iconContainer}
-                  onClick={() => this.handleTempChange('target_temp_high',
-                    attributes.target_temp_high - 0.5)}>
-                  <KeyboardArrowDown fontSize="small" />
-                </IconButton>
-              </Grid>
-            </Grid>
-          </Grid>
-        }
+        </Grid>
       </Grid>
     );
   }
