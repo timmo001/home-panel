@@ -58,14 +58,14 @@ Setup and configuration is available [here][docs]
 ## Screenshots
 
 ![Light Theme Screenshot][light-theme]
-![More Info Light Screenshot][more-info-light]
 
-![Dark Theme Screenshot][dark-theme]
-![More Info Dark Screenshot][more-info-dark]
+![Midnight Theme Screenshot][midnight-theme]
 
 ![Radio Screenshot][radio]
 
 ![Forest Theme][theme-forest]
+
+![More Info Dark Screenshot][more-info-dark]
 
 ## License
 
@@ -92,7 +92,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
-[dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
+[midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
 [more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
 [radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
