@@ -7,7 +7,7 @@
     "@material-ui/core": "^3.6.1",
     "@material-ui/icons": "^3.0.1",
     "@material-ui/lab": "^3.0.0-alpha.24",
-    "@mdi/font": "^3.0.39",
+    "@mdi/font": "^3.2.89",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^3.2.4",
     "is-plain-obj": "^1.1.0",
