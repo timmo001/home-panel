@@ -827,10 +827,10 @@
     "@babel/runtime" "7.0.0"
     recompose "^0.29.0"
 
-"@material-ui/lab@^3.0.0-alpha.24":
-  version "3.0.0-alpha.24"
-  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-3.0.0-alpha.24.tgz#727a8c4d5063fbab8d651190bc9ec90743079ee2"
-  integrity sha512-tFZ31XkJvxRULTSpEZwNuOA/cHB2vb5xbqTcLbUXbFHO0qULQrAo6ap9WgEPXSy+zt0Oi3TgngT117Ra4OkPmQ==
+"@material-ui/lab@^3.0.0-alpha.25":
+  version "3.0.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-3.0.0-alpha.25.tgz#36593e2610a4eeb8fcdea6ab453d1b895e44b42e"
+  integrity sha512-3GEGdoU6FnicAM+tbOLyn95YG1Yk8bF71DGaYyqjL8YU7JAsyAlfbYhMxD7m1BBJw3CH6t4Yc2tAPqldv08xoA==
   dependencies:
     "@babel/runtime" "7.1.2"
     classnames "^2.2.5"
