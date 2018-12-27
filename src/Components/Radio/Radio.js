@@ -6,6 +6,7 @@ import Sound from 'react-sound';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -200,14 +201,13 @@ class Radio extends React.Component {
                   <PauseIcon />
                 </Button>
                 :
-                <Button
+                <Fab
                   className={classes.buttonPlay}
-                  variant="fab"
                   color="primary"
                   aria-label="Play"
                   onClick={() => handleRadioChange('play')}>
                   <PlayArrowIcon />
-                </Button>
+                </Fab>
               }
               {canSkip &&
                 <Button
