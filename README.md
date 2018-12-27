@@ -45,7 +45,7 @@ You can use a demo of this app [here][demo-app].
 
 ## Docs
 
-Setup and configuration is available [here][docs]
+Setup and configuration is available [here][setup-docs]
 
 ## Links
 
@@ -111,7 +111,7 @@ SOFTWARE.
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
 [hass]: https://www.home-assistant.io/
-[docs]: https://git.timmo.xyz/home-panel/
+[setup-docs]: https://git.timmo.xyz/home-panel/setup/
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
