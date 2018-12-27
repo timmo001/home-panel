@@ -6,7 +6,7 @@ import Sound from 'react-sound';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Slide from '@material-ui/core/Slide';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -169,67 +169,61 @@ class Radio extends React.Component {
           <div className={classes.controls}>
             <div className={classes.controlsMain}>
               {canRepeat &&
-                <Button
+                <Fab
                   className={classes.button}
                   mini
-                  variant="fab"
                   color="primary"
                   aria-label="Repeat"
                   onClick={() => handleRadioChange('repeat')}>
                   <RepeatIcon />
-                </Button>
+                </Fab>
               }
               {canSkip &&
-                <Button
+                <Fab
                   className={classes.button}
                   mini
-                  variant="fab"
                   color="primary"
                   aria-label="Previous"
                   onClick={() => handleRadioChange('previous')}>
                   <SkipPreviousIcon />
-                </Button>
+                </Fab>
               }
               {playing === Sound.status.PLAYING ?
-                <Button
+                <Fab
                   className={classes.buttonPlay}
-                  variant="fab"
                   color="primary"
                   aria-label="Pause"
                   onClick={() => handleRadioChange('pause')}>
                   <PauseIcon />
-                </Button>
+                </Fab>
                 :
-                <Button
+                <Fab
                   className={classes.buttonPlay}
-                  variant="fab"
                   color="primary"
                   aria-label="Play"
                   onClick={() => handleRadioChange('play')}>
                   <PlayArrowIcon />
-                </Button>
+                </Fab>
               }
               {canSkip &&
-                <Button
+                <Fab
                   className={classes.button}
                   mini
-                  variant="fab"
                   color="primary"
                   aria-label="Next"
                   onClick={() => handleRadioChange('next')}>
                   <SkipNextIcon />
-                </Button>
+                </Fab>
               }
               {canShuffle &&
-                <Button
+                <Fab
                   className={classes.button}
                   mini
-                  variant="fab"
                   color="primary"
                   aria-label="Shuffle"
                   onClick={() => handleRadioChange('shuffle')}>
                   <ShuffleIcon />
-                </Button>
+                </Fab>
               }
             </div>
           </div>
