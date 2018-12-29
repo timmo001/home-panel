@@ -230,7 +230,7 @@ class Root extends React.Component {
   render() {
     const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
-    const { config, snackMessage, haConfig, entities, connected } = this.state;
+    const { config, snackMessage, hass_url, haConfig, entities, connected } = this.state;
 
     return (
       <Suspense fallback={<CircularProgress className={classes.progressRoot} />}>
@@ -244,6 +244,7 @@ class Root extends React.Component {
                 theme={theme}
                 setTheme={setTheme}
                 config={config}
+                haUrl={hass_url}
                 haConfig={haConfig}
                 entities={entities}
                 username={this.state.username}

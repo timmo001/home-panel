@@ -13,6 +13,7 @@ import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
 import Weather from './Weather';
 import Climate from './Climate';
+import Media from './Media';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -65,7 +66,7 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, theme, handleChange, haConfig, entities, card } = this.props;
+    const { classes, config, theme, handleChange, haUrl, haConfig, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
     const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
     const cardElevation = getCardElevation(config);
@@ -88,6 +89,7 @@ class Hass extends React.Component {
           {domain === 'sensor'
             || domain === 'weather'
             || domain === 'climate'
+            || domain === 'media_player'
             || domain === 'device_tracker' ?
             <Card className={classnames(
               classes.card,
@@ -115,6 +117,17 @@ class Hass extends React.Component {
                     haConfig={haConfig}
                     card={card}
                     name={name}
+                    entity_id={entity_id}
+                    state={state}
+                    attributes={attributes}
+                    handleChange={handleChange} />
+                }
+                {domain === 'media_player' &&
+                  <Media
+                    theme={theme}
+                    haUrl={haUrl}
+                    haConfig={haConfig}
+                    card={card}
                     entity_id={entity_id}
                     state={state}
                     attributes={attributes}
@@ -208,6 +221,7 @@ Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   card: PropTypes.object.isRequired,
