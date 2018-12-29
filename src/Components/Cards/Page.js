@@ -18,7 +18,7 @@ const styles = theme => ({
 class Page extends React.Component {
 
   render() {
-    const { classes, config, theme, page, handleChange, haConfig, entities } = this.props;
+    const { classes, config, theme, page, handleChange, haUrl, haConfig, entities } = this.props;
 
     return (
       <Grid
@@ -30,6 +30,7 @@ class Page extends React.Component {
           return group.page === page.id ? <Group
             key={x}
             theme={theme}
+            haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
             group={group}
@@ -47,6 +48,7 @@ Page.propTypes = {
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   page: PropTypes.object.isRequired,
+  haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired,

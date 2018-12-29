@@ -90,7 +90,7 @@ class Group extends React.Component {
   };
 
   render() {
-    const { classes, haConfig, config, theme, handleChange, entities, group } = this.props;
+    const { classes, haUrl, haConfig, config, theme, handleChange, entities, group } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
         <div>
@@ -119,6 +119,7 @@ class Group extends React.Component {
                           key={y}
                           config={config}
                           theme={theme}
+                          haUrl={haUrl}
                           haConfig={haConfig}
                           entities={entities}
                           card={{ ...card, entity_id: entity }}
@@ -130,6 +131,7 @@ class Group extends React.Component {
                       key={x}
                       config={config}
                       theme={theme}
+                      haUrl={haUrl}
                       haConfig={haConfig}
                       entities={entities}
                       card={card}
@@ -148,6 +150,7 @@ Group.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
+  haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   group: PropTypes.object.isRequired,
