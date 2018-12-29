@@ -46,7 +46,6 @@ const styles = theme => ({
 class Media extends React.Component {
 
   handleChange = (action) => {
-    console.log('action:', action);
     const { entity_id } = this.props;
     switch (action) {
       default: break;
@@ -73,7 +72,6 @@ class Media extends React.Component {
 
   render() {
     const { classes, haUrl, card, state, attributes } = this.props;
-
     return (
       <div className={classes.root}>
         {card.height > 1 &&
@@ -96,17 +94,13 @@ class Media extends React.Component {
         }
         <div className={classes.controls}>
           <div className={classes.controlsMain}>
-            {card.width > 1 &&
-              <div>
-                {state === 'playing' || state === 'paused' &&
-                  <IconButton
-                    className={classes.button}
-                    aria-label="Volume Down"
-                    onClick={() => this.handleChange('vol_down')}>
-                    <VolumeDownIcon fontSize="small" />
-                  </IconButton>
-                }
-              </div>
+            {card.width > 1 && state !== 'off' &&
+              <IconButton
+                className={classes.button}
+                aria-label="Volume Down"
+                onClick={() => this.handleChange('vol_down')}>
+                <VolumeDownIcon fontSize="small" />
+              </IconButton>
             }
             <IconButton
               className={classes.button}
@@ -150,21 +144,17 @@ class Media extends React.Component {
               onClick={() => this.handleChange('next')}>
               <SkipNextIcon fontSize="small" />
             </IconButton>
-            {card.width > 1 &&
-              <div>
-                {state === 'playing' || state === 'paused' &&
-                  <IconButton
-                    className={classes.button}
-                    aria-label="Volume Up"
-                    onClick={() => this.handleChange('vol_up')}>
-                    <VolumeUpIcon fontSize="small" />
-                  </IconButton>
-                }
-              </div>
+            {card.width > 1 && state !== 'off' &&
+              <IconButton
+                className={classes.button}
+                aria-label="Volume Up"
+                onClick={() => this.handleChange('vol_up')}>
+                <VolumeUpIcon fontSize="small" />
+              </IconButton>
             }
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }
