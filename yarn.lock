@@ -948,10 +948,10 @@
     "@babel/runtime" "7.2.0"
     react-is "^16.6.3"
 
-"@mdi/font@^3.2.89":
-  version "3.2.89"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-3.2.89.tgz#91790717881c8839729286e516436e7b9f3d96ea"
-  integrity sha512-K+E44jDkv7jwJbRYctw5+k+jE0j43dCN9KH3ZsIcqYjmhQ3ZN3/eBM2oXtFhxSOKYpEn/xFStS+SGRZjlJY/dg==
+"@mdi/font@^3.3.92":
+  version "3.3.92"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-3.3.92.tgz#9434b92f9810e41d34dd7936e8e1578cd46bebfd"
+  integrity sha512-Ux6iPfRjT9gHtejfss7aHBjgedLx8OrnX7Q+DuqgGYVkr9Amhi7cWFd745znrj7Y74pnjrs+uAbpohPK3ue5Ew==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
