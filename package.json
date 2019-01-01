@@ -6,7 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.8.1",
     "@material-ui/icons": "^3.0.1",
-    "@material-ui/lab": "^3.0.0-alpha.26",
+    "@material-ui/lab": "^3.0.0-alpha.27",
     "@mdi/font": "^3.3.92",
     "classnames": "^2.2.6",
     "home-assistant-js-websocket": "^3.2.4",
