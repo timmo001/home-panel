@@ -44,6 +44,7 @@ LABEL \
     org.label-schema.vendor="Timmo"
 
 # Set run CMD
+# hadolint ignore=DL3025
 CMD \
     echo "" \
     && if [ -f /ssl/fullchain.pem ]; then \
