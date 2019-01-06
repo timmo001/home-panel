@@ -1,5 +1,5 @@
 ---
-include: https://raw.githubusercontent.com/timmo001/organization/master/gitlab-ci/js.yml
+include: https://raw.githubusercontent.com/timmo001/organization/master/gitlab-ci/js-prebuild.yml
 
 variables:
   GITHUB_REPO: "timmo001/home-panel"
@@ -19,3 +19,5 @@ variables:
   PREFLIGHT_MARKDOWNLINT: "true"
   PREFLIGHT_SHELLCHECK: "true"
   PREFLIGHT_YAMLLINT: "true"
+  PUBLISH_RELEASE_FILE: "true"
+  PAGES_MKDOCS: "true"
