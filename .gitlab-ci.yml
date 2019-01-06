@@ -27,6 +27,12 @@ variables:
 eslint:
   image: node:alpine
   before_script:
-    - yarn add eslint eslint-loader babel-loader babel-eslint eslint-plugin-react
+    - yarn add \
+        babel-eslint \
+        babel-loader \
+        eslint \
+        eslint-config-react-app \
+        eslint-loader \
+        eslint-plugin-react
   script:
     - yarn eslint
