@@ -11,11 +11,6 @@ variables:
   ARMHF: "true"
   I386: "true"
 
-  AARCH64_BASE: "hassioaddons/base-aarch64:2.3.0"
-  AMD64_BASE: "hassioaddons/base-amd64:2.3.0"
-  ARMHF_BASE: "hassioaddons/base-armhf:2.3.0"
-  I386_BASE: "hassioaddons/base-i386:2.3.0"
-
   LEGACY_TAGS: "false"
 
   PREFLIGHT_HADOLINT: "true"
