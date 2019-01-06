@@ -26,5 +26,7 @@ variables:
 
 eslint:
   image: node:alpine
+  before_script:
+    - yarn add eslint
   script:
     - yarn eslint
