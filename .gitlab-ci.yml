@@ -25,5 +25,6 @@ variables:
   PAGES_MKDOCS: "true"
 
 eslint:
+  image: node:alpine
   script:
     - yarn eslint
