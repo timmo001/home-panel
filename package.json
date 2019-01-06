@@ -30,7 +30,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "lint": "eslint --cache --color --ext .jsx,.js src"
+    "eslint": "eslint -c .eslintrc.json --color src"
   },
   "browserslist": [
     ">0.2%",

@@ -23,3 +23,7 @@ variables:
   PREFLIGHT_STYLELINT: "true"
   PUBLISH_RELEASE_FILE: "true"
   PAGES_MKDOCS: "true"
+
+eslint:
+  script:
+    - yarn eslint
