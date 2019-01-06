@@ -44,11 +44,10 @@ LABEL \
     org.label-schema.vendor="Timmo"
 
 # Set run CMD
-CMD \
-    echo "" \
-    && if [ -f /ssl/fullchain.pem ]; then \
-      echo "Copy enabled SSL nginx config" \
-      && echo "server {\
+CMD [ \
+    "if [ -f /ssl/fullchain.pem ]; then \
+      echo 'Copy enabled SSL nginx config' \
+      && echo 'server {\
         listen 443 ssl http2 default_server;\
         listen [::]:443 ssl http2 default_server;\
         root /usr/share/nginx/html;\
@@ -59,10 +58,10 @@ CMD \
         location / {\
           try_files \$uri /index.html;\
         }\
-      }" > /etc/nginx/conf.d/default.conf; \
+      }' > /etc/nginx/conf.d/default.conf; \
     else \
-      echo "Copy disabled SSL nginx config" \
-      && echo "server {\
+      echo 'Copy disabled SSL nginx config' \
+      && echo 'server {\
         listen 80 default_server;\
         listen [::]:80 default_server;\
         root /usr/share/nginx/html;\
@@ -71,8 +70,8 @@ CMD \
         location / {\
           try_files \$uri /index.html;\
         }\
-      }" > /etc/nginx/conf.d/default.conf; \
-    fi \
-    && echo "" \
-    && echo "Run nginx server.." \
-    && nginx -g "daemon off;"
+      }' > /etc/nginx/conf.d/default.conf; \
+    fi" \
+    "echo 'Run nginx server..'", \
+    "nginx -g 'daemon off;'" \
+]
