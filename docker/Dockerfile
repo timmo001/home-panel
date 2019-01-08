@@ -17,6 +17,9 @@ ENV \
 # Copy root filesystem
 COPY rootfs /
 
+# Build arch argument
+ARG BUILD_ARCH=amd64
+
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
@@ -73,7 +76,6 @@ RUN \
 ENTRYPOINT ["/init"]
 
 # Build arguments
-ARG BUILD_ARCH
 ARG BUILD_DATE
 ARG BUILD_REF
 ARG BUILD_VERSION
