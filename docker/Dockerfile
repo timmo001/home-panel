@@ -40,7 +40,6 @@ RUN \
         busybox=1.28.4-r2 \
         ca-certificates=20171114-r3 \
         curl=7.61.1-r1 \
-        jq=1.6_rc1-r1 \
         musl-utils=1.1.19-r10 \
         musl=1.1.19-r10 \
         nginx=1.14.2-r0 \
