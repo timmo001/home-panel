@@ -9,7 +9,6 @@ variables:
   AARCH64: "true"
   AMD64: "true"
   ARMHF: "true"
-  ARMV7: "false"
   I386: "true"
 
   LEGACY_TAGS: "false"
