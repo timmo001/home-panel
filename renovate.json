@@ -1,5 +1,10 @@
 {
   "extends": [
     "config:base"
-  ]
+  ],
+  "commitMessagePrefix": ":arrow_up:",
+  "pin": {
+    "commitMessagePrefix": ":pushpin:"
+  },
+  "rangeStrategy": "pin"
 }
