@@ -6,5 +6,8 @@
   "pin": {
     "commitMessagePrefix": ":pushpin:"
   },
-  "rangeStrategy": "pin"
+  "rangeStrategy": "pin",
+  "labels": [
+    "Type: Maintenance"
+  ]
 }
