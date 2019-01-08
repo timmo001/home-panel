@@ -9,7 +9,10 @@ ENV \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm"
+    TERM="xterm" \
+    SSL="false" \
+    SSL_CERTFILE="/data/ssl/fullchain.pem" \
+    SSL_KEYFILE="/data/ssl/privkey.pem"
 
 # Copy root filesystem
 COPY rootfs /
@@ -17,7 +20,8 @@ COPY rootfs /
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-# Install base system
+# Install system
+# hadolint ignore=DL3003
 RUN \
     set -o pipefail \
     \

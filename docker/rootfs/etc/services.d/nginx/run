@@ -3,7 +3,7 @@
 # Runs the NGINX daemon
 # ==============================================================================
 echo 'Starting NGINX...'
-if $SSL = true; then
+if [[ "${SSL}" = "true" ]]; then
     options='/etc/nginx/nginx-ssl.conf'
 else
     options='/etc/nginx/nginx.conf'

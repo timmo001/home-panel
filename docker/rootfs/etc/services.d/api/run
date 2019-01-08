@@ -7,13 +7,8 @@ echo 'Run API..'
 # shellcheck disable=SC2164
 cd /opt/api
 
-DB_PATH=/config/home-panel.db
-CONFIG_PATH=/config/$(hass.config.get 'config_file')
-
-if [ -f "$SSL_CERTFILE" ]; then
-    SSL_PATH_CERT="/ssl/$(hass.config.get 'certfile')"
-    SSL_PATH_KEY="/ssl/$(hass.config.get 'keyfile')"
-fi
+DB_PATH=/data/home-panel.db
+CONFIG_PATH=/data/config.json
 
 export DB_PATH
 export CONFIG_PATH
