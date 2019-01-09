@@ -41,18 +41,12 @@ services:
   home-panel:
     image: timmo001/home-panel
     ports:
-      - 8234:443
-    volumes:
-      - ~/ssl:/ssl
-  home-panel-api:
-    image: timmo001/home-panel-api
-    environment:
-      CERTIFICATES_DIR: /ssl
-    ports:
       - 3234:3234
+      - 8234:8234
     volumes:
-      - ~/ssl:/ssl
-      - PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json
+      - PATH_TO_CONFIG/home-panel-config.json:/data/config.json
+      - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
+      - ~/ssl/privkey.pem:/data/ssl/privkey.pem
 ```
 
 ### Non-SSL
@@ -70,15 +64,12 @@ services:
   home-panel:
     image: timmo001/home-panel
     ports:
-      - 8234:80
-    volumes:
-      - PATH_TO_CONFIG/config.json:/usr/src/app/config.json
-  home-panel-api:
-    image: timmo001/home-panel-api
-    ports:
       - 3234:3234
+      - 8234:8234
     volumes:
-      - PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json
+      - PATH_TO_CONFIG/home-panel-config.json:/data/config.json
+      - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
+      - ~/ssl/privkey.pem:/data/ssl/privkey.pem
 ```
 
 ## Docker
@@ -99,18 +90,12 @@ services:
 
 ```bash
 docker run -d \
-  -p 8234:443 \
-  -v ~/ssl:/ssl \
-  timmo001/home-panel
-```
-
-```bash
-docker run -d \
-  -e CERTIFICATES_DIR='/ssl' \
   -p 3234:3234 \
-  -v ~/ssl:/ssl \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json \
-  timmo001/home-panel-api
+  -p 8234:8234 \
+  -v PATH_TO_CONFIG/home-panel-config.json:/data/config.json
+  -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
+  -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
+  timmo001/home-panel
 ```
 
 ### Non-SSL
@@ -122,15 +107,10 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -p 8234:80 \
-  timmo001/home-panel
-```
-
-```bash
-docker run -d \
   -p 3234:3234 \
-  -v PATH_TO_CONFIG/config.json:/usr/src/app/files/config.json \
-  timmo001/home-panel-api
+  -p 8234:8234 \
+  -v PATH_TO_CONFIG/home-panel-config.json:/data/config.json
+  timmo001/home-panel
 ```
 
 ## Node JS
