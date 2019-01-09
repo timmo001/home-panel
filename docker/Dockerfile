@@ -15,7 +15,7 @@ ENV \
     SSL_KEYFILE="/data/ssl/privkey.pem"
 
 # Copy app
-COPY ../build /opt/panel
+COPY build /opt/panel
 
 # Copy root filesystem
 COPY rootfs /
