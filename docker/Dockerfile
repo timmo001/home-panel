@@ -57,7 +57,7 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && git clone --depth=1 \
+    && git clone --branch "v0.5.0" --depth=1 \
         "https://github.com/timmo001/home-panel-api.git" /opt/api \
     \
     && cd /opt/api \
