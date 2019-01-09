@@ -56,7 +56,6 @@ RUN \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
-    && mkdir -p /etc/services.d \
     \
     && git clone --depth=1 \
         "https://github.com/timmo001/home-panel-api.git" /opt/api \
