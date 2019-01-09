@@ -1,0 +1,13 @@
+---
+version: '3'
+
+services:
+  home-panel:
+    image: timmo001/home-panel
+    ports:
+      - 3234:3234
+      - 8234:8234
+    volumes:
+      - ~/home-panel-config.json:/data/config.json
+      - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
+      - ~/ssl/privkey.pem:/data/ssl/privkey.pem

@@ -4,7 +4,7 @@ include: https://raw.githubusercontent.com/timmo001/organization/master/gitlab-c
 variables:
   GITHUB_REPO: "timmo001/home-panel"
   SLUG: "home-panel"
-  TARGET: "."
+  TARGET: "docker"
 
   AARCH64: "true"
   AMD64: "true"
@@ -21,6 +21,5 @@ variables:
   PREFLIGHT_YAMLLINT: "true"
   PREFLIGHT_ESLINT: "true"
   PREFLIGHT_STYLELINT: "false"
-  TEST: "true"
   PUBLISH_RELEASE_FILE: "true"
   PAGES_MKDOCS: "true"
