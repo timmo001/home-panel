@@ -14,6 +14,9 @@ ENV \
     SSL_CERTFILE="/data/ssl/fullchain.pem" \
     SSL_KEYFILE="/data/ssl/privkey.pem"
 
+# Copy app
+COPY ../build /opt/panel
+
 # Copy root filesystem
 COPY rootfs /
 
@@ -55,20 +58,15 @@ RUN \
     && mkdir -p /etc/fix-attrs.d \
     && mkdir -p /etc/services.d \
     \
-     && git clone --branch "v0.4.3" --depth=1 \
-          "https://github.com/timmo001/home-panel-api.git" /opt/api \
-     \
-     && curl -J -L -o /tmp/panel.zip \
-          "https://github.com/timmo001/home-panel/releases/download/v0.6.9/home-panel-built.zip" \
-     && unzip -d /tmp /tmp/panel.zip \
-     && mv /tmp/build /opt/panel \
-     \
-     && cd /opt/api \
-     && yarn install \
-     \
-     && yarn cache clean \
-     && apk del --purge .build-dependencies \
-     && rm -fr /tmp/*
+    && git clone --depth=1 \
+        "https://github.com/timmo001/home-panel-api.git" /opt/api \
+    \
+    && cd /opt/api \
+    && yarn install \
+    \
+    && yarn cache clean \
+    && apk del --purge .build-dependencies \
+    && rm -fr /tmp/*
 
 # Entrypoint & CMD
 ENTRYPOINT ["/init"]
