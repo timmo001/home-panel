@@ -3,19 +3,10 @@ version: '3'
 
 services:
   home-panel:
-    image: home-panel
-    build: .
-    environment:
-      NODE_ENV: production
-    ports:
-      - 8234:443
-    volumes:
-      - ~/ssl:/ssl
-  home-panel-api:
-    image: timmo001/home-panel-api
-    environment:
-      CERTIFICATES_DIR: /ssl
+    image: timmo001/home-panel
     ports:
       - 3234:3234
+      - 8234:8234
     volumes:
-      - ~/ssl:/ssl
+      - ~/ssl/fullchain.pem:/ssl/fullchain.pem
+      - ~/ssl/privkey.pem:/ssl/privkey.pem

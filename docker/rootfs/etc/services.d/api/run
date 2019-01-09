@@ -9,6 +9,8 @@ cd /opt/api
 
 DB_PATH=/data/home-panel.db
 CONFIG_PATH=/data/config.json
+SSL_PATH_CERT=%SSL_CERTFILE%
+SSL_PATH_KEY=%SSL_KEYFILE%
 
 export DB_PATH
 export CONFIG_PATH
