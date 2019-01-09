@@ -4,7 +4,7 @@
   "private": true,
   "author": "Timmo <contact@timmo.xyz> (https://git.timmo.xyz)",
   "dependencies": {
-    "@material-ui/core": "3.8.2",
+    "@material-ui/core": "3.8.3",
     "@material-ui/icons": "3.0.2",
     "@material-ui/lab": "3.0.0-alpha.28",
     "@mdi/font": "3.3.92",
