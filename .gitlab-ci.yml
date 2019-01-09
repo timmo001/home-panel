@@ -21,5 +21,6 @@ variables:
   PREFLIGHT_YAMLLINT: "true"
   PREFLIGHT_ESLINT: "true"
   PREFLIGHT_STYLELINT: "false"
+  TEST: "true"
   PUBLISH_RELEASE_FILE: "true"
   PAGES_MKDOCS: "true"
