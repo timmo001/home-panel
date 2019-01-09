@@ -8,5 +8,6 @@ services:
       - 3234:3234
       - 8234:8234
     volumes:
-      - ~/ssl/fullchain.pem:/ssl/fullchain.pem
-      - ~/ssl/privkey.pem:/ssl/privkey.pem
+      - ~/home-panel-config.json:/data/config.json
+      - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
+      - ~/ssl/privkey.pem:/data/ssl/privkey.pem
