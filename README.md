@@ -5,7 +5,7 @@
 [![License][license-shield]](LICENSE.md)
 
 [![GitLab CI][gitlabci-shield]][gitlabci]
-[![Project Maintenance][maintenance-shield]
+![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
 
 [![Docker Version][version-shield]][microbadger]
@@ -101,8 +101,8 @@ SOFTWARE.
 [forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
-[gitlabci-shield]: https://gitlab.com/timmo001/home-panel/badges/master/pipeline.svg
-[gitlabci]: https://gitlab.com/timmo001/home-panel/pipelines
+[gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
+[gitlabci]: https://gitlab.com/timmo/home-panel/pipelines
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
