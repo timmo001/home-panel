@@ -77,7 +77,6 @@ You can use a demo of this app [here][demo-app].
 [demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
-[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
 [gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
@@ -86,7 +85,6 @@ You can use a demo of this app [here][demo-app].
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
-[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
