@@ -1,14 +1,16 @@
 # Home Panel
 
-[![GitHub Release](https://img.shields.io/github/release/timmo001/home-panel.svg)](https://github.com/timmo001/home-panel/releases)
-[![License](https://img.shields.io/github/license/timmo001/home-panel.svg)](https://github.com/timmo001/home-panel/blob/master/LICENSE.md)
-[![pipeline status](https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg)](https://gitlab.com/timmo/home-panel/commits/master)
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/timmo001/home-panel.svg?columns=To%20Do,On%20Hold,In%20Progress,Done)](https://waffle.io/timmo001/home-panel)
+[![GitHub Release][releases-shield]][releases]
+![Project Stage][project-stage-shield]
+[![License][license-shield]](LICENSE.md)
+
+[![GitLab CI][gitlabci-shield]][gitlabci]
+![Project Maintenance][maintenance-shield]
+[![GitHub Activity][commits-shield]][commits]
 
 [![Docker Version][version-shield]][microbadger]
 [![Docker Layers][layers-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
-[![Anchore Image Overview][anchore-shield]][anchore]
 
 ![Supports armhf Architecture][armhf-shield]
 ![Supports aarch64 Architecture][aarch64-shield]
@@ -61,28 +63,40 @@ You can use a demo of this app [here][demo-app].
 
 ![Forest Theme][forest-theme]
 
-[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
-[dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
-[more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
-[more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
-[radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
-[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
-[anchore-shield]: https://anchore.io/service/badges/image/9577aceb95056f417958e6bb7536cc0394b5add554df0c63780875f3669f5c2e
-[anchore]: https://anchore.io/image/dockerhub/timmo001%2Fhome-panel%3Alatest
-[dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
-[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
-[microbadger]: https://microbadger.com/images/timmo001/home-panel
-[pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
-[version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
+[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
-[hass]: https://www.home-assistant.io/
-[forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
-[CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
+[commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
+[commits]: https://github.com/timmo001/home-panel/commits/master
+[CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [demo-app]: https://home-panel-demo.timmo.xyz/
-[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
+[dockerhub]: https://hub.docker.com/r/timmo001/home-panel
+[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
+[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
+[forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
+[forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
+[gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
+[gitlabci]: https://gitlab.com/timmo/home-panel/pipelines
+[hass]: https://www.home-assistant.io/
+[i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
+[layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
+[license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
+[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
+[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
+[microbadger]: https://microbadger.com/images/timmo001/home-panel
+[midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
+[more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
+[more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
+[pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
+[radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
+[releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
+[releases]: https://github.com/timmo001/home-panel/releases
+[setup-docs]: https://git.timmo.xyz/home-panel/setup/
+[version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
