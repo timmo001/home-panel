@@ -8,11 +8,13 @@ import Frame from './Frame/Frame';
 class CardBase extends React.Component {
 
   render() {
-    const { config, theme, haUrl, haConfig, entities, card, handleChange } = this.props;
+    const { config, editing, handleEditCard, theme, haUrl, haConfig, entities, card, handleChange } = this.props;
     const type = !card.type ? 'hass' : card.type;
     if (type === 'hass') {
       return <Hass
         config={config}
+        editing={editing}
+        handleEditCard={handleEditCard}
         theme={theme}
         card={card}
         haUrl={haUrl}
@@ -20,17 +22,31 @@ class CardBase extends React.Component {
         entities={entities}
         handleChange={handleChange} />
     } else if (type === 'link') {
-      return <Link config={config} card={card} />
+      return <Link
+        config={config}
+        editing={editing}
+        handleEditCard={handleEditCard}
+        card={card} />
     } else if (type === 'camera') {
-      return <Camera config={config} card={card} />
+      return <Camera
+        config={config}
+        editing={editing}
+        handleEditCard={handleEditCard}
+        card={card} />
     } else if (type === 'iframe') {
-      return <Frame config={config} card={card} />
+      return <Frame
+        config={config}
+        editing={editing}
+        handleEditCard={handleEditCard}
+        card={card} />
     } else return null;
   }
 }
 
 CardBase.propTypes = {
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleEditCard: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,

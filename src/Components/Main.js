@@ -7,7 +7,6 @@ const Header = lazy(() => import('./Header'));
 const Page = lazy(() => import('./Cards/Page'));
 const PageNavigation = lazy(() => import('./PageNavigation'));
 const Radio = lazy(() => import('./Radio/Radio'));
-const EditConfig = lazy(() => import('./EditConfig/EditConfig'));
 
 const styles = () => ({
   root: {
@@ -36,7 +35,7 @@ class Main extends React.Component {
     over: false,
     hovered: false,
     radioShown: false,
-    editConfig: false,
+    editing: false,
     currentPage: 0,
   };
 
@@ -89,25 +88,30 @@ class Main extends React.Component {
 
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
-  handleEditConfig = () => this.setState({ editConfig: true });
+  handleEditConfig = () => this.setState({ editing: true });
 
-  handleEditConfigClose = config => {
+  handleEditingComplete = config => {
     this.props.handleConfigChange(config);
-    this.setState({ editConfig: false });
+    this.setState({ editing: false });
+  };
+
+  handleEditCard = card => {
+    
   };
 
   render() {
     const { classes, haUrl, haConfig, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage, editConfig } = this.state;
+    const { moved, over, radioShown, currentPage, editing } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
-    if (!editConfig) return (
+    return (
       <Suspense fallback={<CircularProgress className={classes.progress} />}>
         <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
           <Suspense fallback={<CircularProgress className={classes.progress} />}>
             <Header
               config={config}
+              editing={editing}
               entities={entities}
               themes={themes}
               theme={theme}
@@ -127,6 +131,8 @@ class Main extends React.Component {
             <Suspense fallback={<CircularProgress className={classes.progress} />}>
               <Page
                 config={config}
+                editing={editing}
+                handleEditCard={this.handleEditCard}
                 haUrl={haUrl}
                 haConfig={haConfig}
                 entities={entities}
@@ -137,6 +143,7 @@ class Main extends React.Component {
           </div>
           {pages &&
             <PageNavigation
+              editing={editing}
               pages={pages}
               moved={moved}
               over={over}
@@ -149,17 +156,6 @@ class Main extends React.Component {
             apiUrl={this.props.apiUrl}
             handleRadioHide={this.handleRadioHide} />
         </div>
-      </Suspense>
-    );
-    else return (
-      <Suspense fallback={<CircularProgress className={classes.progress} />}>
-        <EditConfig
-          open={editConfig}
-          config={config}
-          username={this.props.username}
-          password={this.props.password}
-          apiUrl={this.props.apiUrl}
-          handleClose={this.handleEditConfigClose} />
       </Suspense>
     );
   }

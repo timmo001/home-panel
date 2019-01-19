@@ -53,6 +53,7 @@ class PageNavigation extends React.Component {
 
 PageNavigation.propTypes = {
   classes: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
   pages: PropTypes.array.isRequired,
   moved: PropTypes.bool.isRequired,
   over: PropTypes.bool.isRequired,

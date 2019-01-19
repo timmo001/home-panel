@@ -436,6 +436,7 @@ Header.propTypes = {
   themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
   entities: PropTypes.array.isRequired,
   moved: PropTypes.bool.isRequired,
   over: PropTypes.bool.isRequired,

@@ -220,6 +220,8 @@ class Hass extends React.Component {
 Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleEditCard: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
