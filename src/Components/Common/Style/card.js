@@ -49,6 +49,11 @@ const styles = (theme) => ({
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.7rem',
     }
+  },
+  editButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0
   }
 });
 

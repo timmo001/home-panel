@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Typography from '@material-ui/core/Typography';
 
 const Header = lazy(() => import('./Header'));
 const Page = lazy(() => import('./Cards/Page'));
@@ -23,6 +24,11 @@ const styles = () => ({
   progress: {
     position: 'absolute',
     top: '50%',
+    left: '50%'
+  },
+  editText: {
+    position: 'fixed',
+    top: 20,
     left: '50%'
   }
 });
@@ -96,7 +102,7 @@ class Main extends React.Component {
   };
 
   handleEditCard = card => {
-    
+
   };
 
   render() {
@@ -108,6 +114,9 @@ class Main extends React.Component {
     return (
       <Suspense fallback={<CircularProgress className={classes.progress} />}>
         <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
+          <Typography classname={classes.editText} variant="h3">
+            Edit mode
+          </Typography>
           <Suspense fallback={<CircularProgress className={classes.progress} />}>
             <Header
               config={config}

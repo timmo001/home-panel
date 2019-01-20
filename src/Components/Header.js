@@ -15,6 +15,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import EditIcon from '@material-ui/icons/Edit';
+import CloseIcon from '@material-ui/icons/Close';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -214,7 +215,7 @@ class Header extends React.Component {
   });
 
   render() {
-    const { classes, config, entities, themes, theme, moved, over,
+    const { classes, config, editing, entities, themes, theme, moved, over,
       handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
     const { anchorEl } = this.state;
 
@@ -291,7 +292,11 @@ class Header extends React.Component {
                   style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 3 : 1 }}
                   aria-label="Edit Config"
                   onClick={this.props.handleEditConfig}>
-                  <EditIcon className={classes.icon} />
+                  {editing ?
+                    <CloseIcon className={classes.icon} />
+                    :
+                    <EditIcon className={classes.icon} />
+                  }
                 </IconButton>
               </Tooltip>
             }

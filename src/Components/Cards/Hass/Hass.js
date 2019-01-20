@@ -66,7 +66,8 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, theme, handleChange, haUrl, haConfig, entities, card } = this.props;
+    const { classes, config, editing, handleEditCard,
+      theme, handleChange, haUrl, haConfig, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
     const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
     const cardElevation = getCardElevation(config);
@@ -158,9 +159,12 @@ class Hass extends React.Component {
             <ButtonBase
               className={classes.cardOuter}
               focusRipple
-              disabled={state === 'unavailable' || state === 'pending'}
+              disabled={editing ? false :
+                state === 'unavailable'
+                || state === 'pending'}
               onClick={() => {
-                if (domain === 'light' || domain === 'switch')
+                if (editing) handleEditCard(card);
+                else if (domain === 'light' || domain === 'switch')
                   handleChange(domain, state === 'on' ? false : true, { entity_id });
                 else if (domain === 'scene' || domain === 'script')
                   handleChange(domain, true, { entity_id });
