@@ -37,6 +37,7 @@ class Page extends React.Component {
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
+            groupId={x}
             group={group}
             handleChange={handleChange} />
             : null

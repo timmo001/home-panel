@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CardBase from '../Cards/CardBase';
+import defaultConfig from './defaultConfig.json';
+import Item from './Item';
 
-const styles = () => ({
-});
+const styles = () => ({});
 
 class EditCard extends React.Component {
   state = {
@@ -27,12 +27,19 @@ class EditCard extends React.Component {
   });
 
   handleSave = () => this.handleClose(() => {
-    this.props.add ? this.props.handleCardAddDone(this.state.card)
-      : this.props.handleCardEditDone(this.state.card);
+    const path = ['items', this.props.groupId, 'cards', this.props.cardId];
+    this.props.add ? this.props.handleCardAddDone(path, this.state.card)
+      : this.props.handleCardEditDone(path, this.state.card);
   });
 
+  handleConfigChange = (path, value) => {
+    const { card } = this.props;
+    card[path.pop()] = value;
+    this.setState({ card });
+  };
+
   render() {
-    const { classes, add, config, theme, haUrl, haConfig, entities } = this.props;
+    const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
     const { open, card } = this.state;
 
     return (
@@ -42,6 +49,7 @@ class EditCard extends React.Component {
         <DialogTitle id="form-dialog-title">{add ? 'Add' : 'Edit'} Card</DialogTitle>
         <Grid container justify="center" spacing={8}>
           <CardBase
+            className={classes.card}
             config={config}
             editing
             handleCardEdit={() => null}
@@ -49,17 +57,22 @@ class EditCard extends React.Component {
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
+            groupId={groupId}
+            cardId={cardId}
             card={card}
             handleChange={() => null} />
         </Grid>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth />
+          {Object.keys(defaultConfig.items[0].cards[0]).map((i, x) =>
+            <Item
+              key={x}
+              objKey={i}
+              defaultItem={defaultConfig.items[0].cards[0][i]}
+              item={card[i] !== undefined ? card[i] : defaultConfig.items[0].cards[0][i]}
+              defaultItemPath={['items', 0, 'cards', 0, i]}
+              itemPath={['items', groupId, 'cards', cardId, i]}
+              handleConfigChange={this.handleConfigChange} />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="primary">
@@ -81,6 +94,8 @@ EditCard.propTypes = {
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
+  groupId: PropTypes.number.isRequired,
+  cardId: PropTypes.number.isRequired,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,
   handleCardEditDone: PropTypes.func

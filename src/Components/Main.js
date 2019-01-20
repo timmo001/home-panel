@@ -118,14 +118,15 @@ class Main extends React.Component {
   handleCardAdd = position => this.setState({ addingCard: position });
 
   handleCardAddDone = (path, card) => {
-    // card && this.handleConfigChange([path, path.length + 1]);
+    card && this.handleConfigChange(path, card);
     this.setState({ addingPage: undefined });
   };
 
-  handleCardEdit = card => this.setState({ editingCard: card });
+  handleCardEdit = (groupId, cardId, card) =>
+    this.setState({ editingCard: { groupId, cardId, card } });
 
   handleCardEditDone = (path, card) => {
-    // card && this.handleConfigChange([path, path.length + 1]);
+    card && this.handleConfigChange(path, card);
     this.setState({ editingCard: undefined });
   };
 
@@ -205,16 +206,20 @@ class Main extends React.Component {
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
+            groupId={editingCard.groupId}
+            cardId={editingCard.cardId}
             handleCardAddDone={this.handleCardAddDone} />
         }
         {editingCard &&
           <EditCard
             config={config}
-            card={editingCard}
+            card={editingCard.card}
             theme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
+            groupId={editingCard.groupId}
+            cardId={editingCard.cardId}
             handleCardEditDone={this.handleCardEditDone} />
         }
         {addingPage &&

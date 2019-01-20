@@ -90,7 +90,8 @@ class Group extends React.Component {
   };
 
   render() {
-    const { classes, haUrl, haConfig, config, editing, handleCardEdit, theme, handleChange, entities, group } = this.props;
+    const { classes, haUrl, haConfig, config, editing, handleCardEdit, theme,
+      handleChange, entities, groupId, group } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
         <div>
@@ -123,6 +124,8 @@ class Group extends React.Component {
                           haUrl={haUrl}
                           haConfig={haConfig}
                           entities={entities}
+                          groupId={groupId}
+                          cardId={x}
                           card={{ ...card, entity_id: entity }}
                           handleChange={handleChange} />
                       });
@@ -137,6 +140,8 @@ class Group extends React.Component {
                       haUrl={haUrl}
                       haConfig={haConfig}
                       entities={entities}
+                      groupId={groupId}
+                      cardId={x}
                       card={card}
                       handleChange={handleChange} />
                 })}
@@ -158,6 +163,7 @@ Group.propTypes = {
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
+  groupId: PropTypes.number.isRequired,
   group: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
 };

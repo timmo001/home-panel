@@ -71,6 +71,8 @@ Camera.propTypes = {
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
   handleCardEdit: PropTypes.func.isRequired,
+  groupId: PropTypes.number.isRequired,
+  cardId: PropTypes.number.isRequired,
   card: PropTypes.object.isRequired,
 };
 
