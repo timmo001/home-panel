@@ -201,12 +201,20 @@ class Main extends React.Component {
             config={config}
             add
             card={addingCard}
+            theme={theme}
+            haUrl={haUrl}
+            haConfig={haConfig}
+            entities={entities}
             handleCardAddDone={this.handleCardAddDone} />
         }
         {editingCard &&
           <EditCard
             config={config}
             card={editingCard}
+            theme={theme}
+            haUrl={haUrl}
+            haConfig={haConfig}
+            entities={entities}
             handleCardEditDone={this.handleCardEditDone} />
         }
         {addingPage &&

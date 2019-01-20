@@ -54,8 +54,9 @@ class PageNavigation extends React.Component {
           onMouseOver={handleMouseOver}
           onMouseLeave={handleMouseLeave}
           onChange={this.handleChange}>
-          {pages.map((page, x) => {
-            if (page && page.name && page.icon) return <BottomNavigationAction
+          {pages.map((page, x) =>
+            page && page.name && page.icon &&
+            <BottomNavigationAction
               key={x}
               label={page.name}
               onTouchStart={() => this.handleButtonPress(x, { name: page.name, icon: page.icon })}
@@ -64,7 +65,7 @@ class PageNavigation extends React.Component {
               onMouseUp={this.handleButtonRelease}
               onMouseLeave={this.handleButtonRelease}
               icon={page.icon && <i className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
-          })}
+          )}
           {editing &&
             <BottomNavigationAction
               onClick={handlePageAdd}

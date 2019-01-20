@@ -3,13 +3,14 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import defaultConfig from './defaultConfig.json';
+import Item from './Item';
 
 const styles = theme => ({
   navigation: {
@@ -36,18 +37,19 @@ class EditPage extends React.Component {
       : this.props.handlePageEditDone(this.props.id, this.state.page);
   });
 
-  handleChange = name => event => {
+  handleConfigChange = (path, value) => {
     const { page } = this.props;
-    page[name] = event.target.value
+    page[path.pop()] = value;
     this.setState({ page });
   };
 
   render() {
-    const { classes, add } = this.props;
+    const { classes, add, id } = this.props;
     const { open, page } = this.state;
 
     return (
       <Dialog
+        fullWidth
         open={open}
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{add ? 'Add' : 'Edit'} Page</DialogTitle>
@@ -60,23 +62,16 @@ class EditPage extends React.Component {
             icon={page.icon && <i className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
         </BottomNavigation>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Name"
-            type="text"
-            value={page.name}
-            onChange={this.handleChange('name')}
-            fullWidth />
-          <TextField
-            margin="dense"
-            id="icon"
-            label="Icon"
-            type="text"
-            value={page.icon}
-            onChange={this.handleChange('icon')}
-            fullWidth />
+          {Object.keys(defaultConfig.pages[0]).map((i, x) =>
+            <Item
+              key={x}
+              objKey={i}
+              defaultItem={defaultConfig.pages[0][i]}
+              item={page[i] !== undefined ? page[i] : defaultConfig.pages[0][i]}
+              defaultItemPath={['pages', 0, i]}
+              itemPath={['pages', id, i]}
+              handleConfigChange={this.handleConfigChange} />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="primary">

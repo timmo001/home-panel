@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import CardBase from '../Cards/CardBase';
 
 const styles = () => ({
 });
@@ -30,7 +32,7 @@ class EditCard extends React.Component {
   });
 
   render() {
-    const { add } = this.props;
+    const { classes, add, config, theme, haUrl, haConfig, entities } = this.props;
     const { open, card } = this.state;
 
     return (
@@ -38,6 +40,18 @@ class EditCard extends React.Component {
         open={open}
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{add ? 'Add' : 'Edit'} Card</DialogTitle>
+        <Grid container justify="center" spacing={8}>
+          <CardBase
+            config={config}
+            editing
+            handleCardEdit={() => null}
+            theme={theme}
+            haUrl={haUrl}
+            haConfig={haConfig}
+            entities={entities}
+            card={card}
+            handleChange={() => null} />
+        </Grid>
         <DialogContent>
           <TextField
             autoFocus
@@ -63,6 +77,10 @@ class EditCard extends React.Component {
 EditCard.propTypes = {
   classes: PropTypes.object.isRequired,
   card: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+  haUrl: PropTypes.string.isRequired,
+  haConfig: PropTypes.object,
+  entities: PropTypes.array.isRequired,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,
   handleCardEditDone: PropTypes.func
