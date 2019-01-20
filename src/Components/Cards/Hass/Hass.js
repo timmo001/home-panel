@@ -66,7 +66,7 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, editing, handleEditCard,
+    const { classes, config, editing, handleCardEdit,
       theme, handleChange, haUrl, haConfig, entities, card } = this.props;
     const { alarmEntity, moreInfo } = this.state;
     const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
@@ -163,7 +163,7 @@ class Hass extends React.Component {
                 state === 'unavailable'
                 || state === 'pending'}
               onClick={() => {
-                if (editing) handleEditCard(card);
+                if (editing) handleCardEdit(card);
                 else if (domain === 'light' || domain === 'switch')
                   handleChange(domain, state === 'on' ? false : true, { entity_id });
                 else if (domain === 'scene' || domain === 'script')
@@ -225,7 +225,7 @@ Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
-  handleEditCard: PropTypes.func.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,

@@ -262,7 +262,7 @@ class Header extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Slide in={moved || over}>
+        <Slide in={editing || moved || over}>
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}

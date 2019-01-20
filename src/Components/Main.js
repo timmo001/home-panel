@@ -1,13 +1,14 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
-
-const Header = lazy(() => import('./Header'));
-const Page = lazy(() => import('./Cards/Page'));
-const PageNavigation = lazy(() => import('./PageNavigation'));
-const Radio = lazy(() => import('./Radio/Radio'));
+import Header from './Header';
+import Page from './Cards/Page';
+import PageNavigation from './PageNavigation';
+import Radio from './Radio/Radio';
+import EditCard from './EditConfig/EditCard';
+import EditPage from './EditConfig/EditPage';
+import defaultConfig from './EditConfig/defaultConfig.json';
+import isObject from './Common/isObject';
 
 const styles = () => ({
   root: {
@@ -25,11 +26,6 @@ const styles = () => ({
     position: 'absolute',
     top: '50%',
     left: '50%'
-  },
-  editText: {
-    position: 'fixed',
-    top: 20,
-    left: '50%'
   }
 });
 
@@ -37,11 +33,12 @@ var hoverTimeout;
 
 class Main extends React.Component {
   state = {
-    moved: false,
+    moved: true,
     over: false,
     hovered: false,
     radioShown: false,
     editing: false,
+    addingPage: false,
     currentPage: 0,
   };
 
@@ -55,13 +52,15 @@ class Main extends React.Component {
   };
 
   onMouseMoveHandler = () => {
-    clearTimeout(hoverTimeout);
-    if (!this.state.over) {
-      this.setState({ moved: true }, () => {
-        hoverTimeout = setTimeout(() => {
-          this.setState({ moved: false });
-        }, 5000);
-      });
+    if (!this.state.editing) {
+      clearTimeout(hoverTimeout);
+      if (!this.state.over) {
+        this.setState({ moved: true }, () => {
+          hoverTimeout = setTimeout(() => {
+            this.setState({ moved: false });
+          }, 5000);
+        });
+      }
     }
   };
 
@@ -94,78 +93,139 @@ class Main extends React.Component {
 
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
-  handleEditConfig = () => this.setState({ editing: true });
+  handleEditConfig = () =>
+    this.setState({ editing: true, moved: true }, () => clearTimeout(hoverTimeout));
 
-  handleEditingComplete = config => {
+  handleEditingComplete = () => this.setState({ editing: false });
+
+  handleConfigChange = (path, value) => {
+    let { config } = this.props;
+    // Set the new value
+    const lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
+    if (value === undefined)
+      secondLastItem.splice(secondLastItem.indexOf(lastItem));
+    else
+      if (isObject(value)) {
+        if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
+        const newValue = JSON.parse(JSON.stringify(value));
+        if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
+        // secondLastItem[lastItem].push(newValue);
+        secondLastItem[lastItem] = newValue;
+      } else secondLastItem[lastItem] = value;
     this.props.handleConfigChange(config);
-    this.setState({ editing: false });
   };
 
-  handleEditCard = card => {
+  handleCardAdd = position => this.setState({ addingCard: position });
 
+  handleCardAddDone = (path, card) => {
+    // card && this.handleConfigChange([path, path.length + 1]);
+    this.setState({ addingPage: undefined });
+  };
+
+  handleCardEdit = card => this.setState({ editingCard: card });
+
+  handleCardEditDone = (path, card) => {
+    // card && this.handleConfigChange([path, path.length + 1]);
+    this.setState({ editingCard: undefined });
+  };
+
+  handlePageAdd = () => this.setState({ addingPage: true });
+
+  handlePageAddDone = page => {
+    page && this.handleConfigChange(['pages', this.props.config.pages.length + 1], page);
+    this.setState({ addingPage: false });
+  };
+
+  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page } });
+
+  handlePageEditDone = (id, page) => {
+    page && this.handleConfigChange(['pages', id], page);
+    this.setState({ editingPage: undefined });
   };
 
   render() {
     const { classes, haUrl, haConfig, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage, editing } = this.state;
+    const { moved, over, radioShown, currentPage, editing, addingCard, editingCard, addingPage, editingPage } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
     return (
-      <Suspense fallback={<CircularProgress className={classes.progress} />}>
-        <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
-          <Typography classname={classes.editText} variant="h3">
-            Edit mode
-          </Typography>
-          <Suspense fallback={<CircularProgress className={classes.progress} />}>
-            <Header
-              config={config}
-              editing={editing}
-              entities={entities}
-              themes={themes}
-              theme={theme}
-              moved={moved}
-              over={over}
-              handleMouseOver={this.onMouseMoveHandler}
-              handleMouseLeave={this.onMouseLeaveHandler}
-              setTheme={this.props.setTheme}
-              handleRadioToggle={this.handleRadioToggle}
-              handleLogOut={this.handleLogOut}
-              handleRadioHide={this.handleRadioHide}
-              handleEditConfig={this.handleEditConfig} />
-          </Suspense>
-          <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
-            height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
-          }}>
-            <Suspense fallback={<CircularProgress className={classes.progress} />}>
-              <Page
-                config={config}
-                editing={editing}
-                handleEditCard={this.handleEditCard}
-                haUrl={haUrl}
-                haConfig={haConfig}
-                entities={entities}
-                theme={theme}
-                page={{ ...page }}
-                handleChange={handleChange} />
-            </Suspense>
-          </div>
-          {pages &&
-            <PageNavigation
-              editing={editing}
-              pages={pages}
-              moved={moved}
-              over={over}
-              handleMouseOver={this.onMouseMoveHandler}
-              handleMouseLeave={this.onMouseLeaveHandler}
-              handlePageChange={this.handlePageChange} />
-          }
-          <Radio
-            show={radioShown}
-            apiUrl={this.props.apiUrl}
-            handleRadioHide={this.handleRadioHide} />
+      <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
+        <Header
+          config={config}
+          editing={editing}
+          entities={entities}
+          themes={themes}
+          theme={theme}
+          moved={moved}
+          over={over}
+          handleMouseOver={this.onMouseMoveHandler}
+          handleMouseLeave={this.onMouseLeaveHandler}
+          setTheme={this.props.setTheme}
+          handleRadioToggle={this.handleRadioToggle}
+          handleLogOut={this.handleLogOut}
+          handleRadioHide={this.handleRadioHide}
+          handleEditConfig={this.handleEditConfig} />
+        <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
+          height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
+        }}>
+          <Page
+            config={config}
+            editing={editing}
+            handleCardEdit={this.handleCardEdit}
+            haUrl={haUrl}
+            haConfig={haConfig}
+            entities={entities}
+            theme={theme}
+            page={{ ...page }}
+            handleChange={handleChange} />
         </div>
-      </Suspense>
+        {pages &&
+          <PageNavigation
+            editing={editing}
+            handlePageAdd={this.handlePageAdd}
+            handlePageEdit={this.handlePageEdit}
+            pages={pages}
+            moved={moved}
+            over={over}
+            handleMouseOver={this.onMouseMoveHandler}
+            handleMouseLeave={this.onMouseLeaveHandler}
+            handlePageChange={this.handlePageChange} />
+        }
+        <Radio
+          show={radioShown}
+          apiUrl={this.props.apiUrl}
+          handleRadioHide={this.handleRadioHide} />
+        {addingCard &&
+          <EditCard
+            config={config}
+            add
+            card={addingCard}
+            handleCardAddDone={this.handleCardAddDone} />
+        }
+        {editingCard &&
+          <EditCard
+            config={config}
+            card={editingCard}
+            handleCardEditDone={this.handleCardEditDone} />
+        }
+        {addingPage &&
+          <EditPage
+            config={config}
+            add
+            id={pages.length + 1}
+            page={defaultConfig.pages[0]}
+            handlePageAddDone={this.handlePageAddDone} />
+        }
+        {editingPage &&
+          <EditPage
+            config={config}
+            id={editingPage.id}
+            page={editingPage.page}
+            handlePageEditDone={this.handlePageEditDone} />
+        }
+      </div>
     );
   }
 }

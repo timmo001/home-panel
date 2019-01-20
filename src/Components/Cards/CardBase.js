@@ -8,13 +8,13 @@ import Frame from './Frame/Frame';
 class CardBase extends React.Component {
 
   render() {
-    const { config, editing, handleEditCard, theme, haUrl, haConfig, entities, card, handleChange } = this.props;
+    const { config, editing, handleCardEdit, theme, haUrl, haConfig, entities, card, handleChange } = this.props;
     const type = !card.type ? 'hass' : card.type;
     if (type === 'hass') {
       return <Hass
         config={config}
         editing={editing}
-        handleEditCard={handleEditCard}
+        handleCardEdit={handleCardEdit}
         theme={theme}
         card={card}
         haUrl={haUrl}
@@ -25,19 +25,19 @@ class CardBase extends React.Component {
       return <Link
         config={config}
         editing={editing}
-        handleEditCard={handleEditCard}
+        handleCardEdit={handleCardEdit}
         card={card} />
     } else if (type === 'camera') {
       return <Camera
         config={config}
         editing={editing}
-        handleEditCard={handleEditCard}
+        handleCardEdit={handleCardEdit}
         card={card} />
     } else if (type === 'iframe') {
       return <Frame
         config={config}
         editing={editing}
-        handleEditCard={handleEditCard}
+        handleCardEdit={handleCardEdit}
         card={card} />
     } else return null;
   }
@@ -46,7 +46,7 @@ class CardBase extends React.Component {
 CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
-  handleEditCard: PropTypes.func.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,

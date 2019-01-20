@@ -1,5 +1,6 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import request from 'superagent';
 import {
   getAuth, getUser, callService, createConnection,
   subscribeConfig, subscribeEntities, ERR_INVALID_AUTH
@@ -225,7 +226,30 @@ class Root extends React.Component {
     });
   };
 
-  handleConfigChange = config => this.setState(config, () => this.setTheme());
+  handleConfigChange = config => {
+    request
+      .post(`${this.state.api_url}/config/set`)
+      .send({
+        username: this.state.username,
+        password: this.state.password,
+        config
+      })
+      .retry(2)
+      .timeout({
+        response: 5000,
+        deadline: 30000,
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState(config, () => this.setTheme());
+        } else {
+          console.log('An error occurred: ', res.status);
+        }
+      })
+      .catch(err => {
+        console.log('An error occurred: ', err);
+      });
+  };
 
   render() {
     const { loggedIn, setTheme } = this;
@@ -233,57 +257,55 @@ class Root extends React.Component {
     const { config, snackMessage, hass_url, haConfig, entities, connected } = this.state;
 
     return (
-      <Suspense fallback={<CircularProgress className={classes.progressRoot} />}>
-        <div className={classes.root}>
-          {!config ?
-            <Login loggedIn={loggedIn} />
+      <div className={classes.root}>
+        {!config ?
+          <Login loggedIn={loggedIn} />
+          :
+          entities ?
+            <Main
+              themes={themes}
+              theme={theme}
+              setTheme={setTheme}
+              config={config}
+              haUrl={hass_url}
+              haConfig={haConfig}
+              entities={entities}
+              username={this.state.username}
+              password={this.state.password}
+              apiUrl={this.state.api_url}
+              handleConfigChange={this.handleConfigChange}
+              handleChange={this.handleChange}
+              saveTokens={this.saveTokens} />
             :
-            entities ?
-              <Main
-                themes={themes}
-                theme={theme}
-                setTheme={setTheme}
-                config={config}
-                haUrl={hass_url}
-                haConfig={haConfig}
-                entities={entities}
-                username={this.state.username}
-                password={this.state.password}
-                apiUrl={this.state.api_url}
-                handleConfigChange={this.handleConfigChange}
-                handleChange={this.handleChange}
-                saveTokens={this.saveTokens} />
-              :
-              <div className={classes.center}>
-                <CircularProgress className={classes.progress} />
-                {connected ?
-                  <Typography variant="subtitle1">
-                    Loading Home Assistant data..
+            <div className={classes.center}>
+              <CircularProgress className={classes.progress} />
+              {connected ?
+                <Typography variant="subtitle1">
+                  Loading Home Assistant data..
                   </Typography>
-                  :
-                  <Typography variant="subtitle1">
-                    Attempting to connect to Home Assistant..
+                :
+                <Typography variant="subtitle1">
+                  Attempting to connect to Home Assistant..
                   </Typography>
-                }
-              </div>
-          }
-          <Snackbar
-            open={snackMessage.open}
-            autoHideDuration={!snackMessage.persistent ? 4000 : null}
-            onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
-            onExited={this.handleExited}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            ContentProps={{
-              'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{snackMessage.text}</span>}
-            action={snackMessage.actions} />
+              }
+            </div>
+        }
+        <Snackbar
+          open={snackMessage.open}
+          autoHideDuration={!snackMessage.persistent ? 4000 : null}
+          onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
+          onExited={this.handleExited}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">{snackMessage.text}</span>}
+          action={snackMessage.actions} />
 
-        </div>
-      </Suspense>
+      </div>
     );
   }
 }

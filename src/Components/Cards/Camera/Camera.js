@@ -70,7 +70,7 @@ Camera.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
-  handleEditCard: PropTypes.func.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
   card: PropTypes.object.isRequired,
 };
 
