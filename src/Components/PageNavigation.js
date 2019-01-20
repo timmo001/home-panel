@@ -29,8 +29,9 @@ class PageNavigation extends React.Component {
     over: false,
   };
 
-  handleChange = (_event, value) => this.setState({ value }, () =>
-    this.props.handlePageChange(this.state.value + 1));
+  handleChange = (_event, value) => value < this.props.pages.length &&
+    this.setState({ value }, () =>
+      this.props.handlePageChange(this.state.value + 1));
 
   handleButtonPress = (id, page) => {
     if (this.props.editing)
@@ -54,7 +55,7 @@ class PageNavigation extends React.Component {
           onMouseLeave={handleMouseLeave}
           onChange={this.handleChange}>
           {pages.map((page, x) => {
-            return <BottomNavigationAction
+            if (page && page.name && page.icon) return <BottomNavigationAction
               key={x}
               label={page.name}
               onTouchStart={() => this.handleButtonPress(x, { name: page.name, icon: page.icon })}
