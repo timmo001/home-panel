@@ -110,7 +110,6 @@ class Main extends React.Component {
         if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
         const newValue = JSON.parse(JSON.stringify(value));
         if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
-        // secondLastItem[lastItem].push(newValue);
         secondLastItem[lastItem] = newValue;
       } else secondLastItem[lastItem] = value;
     this.props.handleConfigChange(config);
@@ -132,8 +131,8 @@ class Main extends React.Component {
 
   handlePageAdd = () => this.setState({ addingPage: true });
 
-  handlePageAddDone = page => {
-    page && this.handleConfigChange(['pages', this.props.config.pages.length + 1], page);
+  handlePageAddDone = (id, page) => {
+    page && this.handleConfigChange(['pages', id], page);
     this.setState({ addingPage: false });
   };
 
