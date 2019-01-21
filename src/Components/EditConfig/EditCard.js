@@ -11,7 +11,17 @@ import CardBase from '../Cards/CardBase';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
 
-const styles = () => ({});
+const styles = theme => ({
+  dialog: {
+    overflow: 'none'
+  },
+  dialogContent: {
+    overflowX: 'auto'
+  },
+  cardContainer: {
+    margin: theme.spacing.unit
+  }
+});
 
 class EditCard extends React.Component {
   state = {
@@ -44,35 +54,41 @@ class EditCard extends React.Component {
 
     return (
       <Dialog
+        className={classes.dialog}
         open={open}
+        maxWidth="md"
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{add ? 'Add' : 'Edit'} Card</DialogTitle>
-        <Grid container justify="center" spacing={8}>
-          <CardBase
-            className={classes.card}
-            config={config}
-            editing
-            handleCardEdit={() => null}
-            theme={theme}
-            haUrl={haUrl}
-            haConfig={haConfig}
-            entities={entities}
-            groupId={groupId}
-            cardId={cardId}
-            card={card}
-            handleChange={() => null} />
-        </Grid>
-        <DialogContent>
-          {Object.keys(defaultConfig.items[0].cards[0]).map((i, x) =>
-            <Item
-              key={x}
-              objKey={i}
-              defaultItem={defaultConfig.items[0].cards[0][i]}
-              item={card[i] !== undefined ? card[i] : defaultConfig.items[0].cards[0][i]}
-              defaultItemPath={['items', 0, 'cards', 0, i]}
-              itemPath={['items', groupId, 'cards', cardId, i]}
-              handleConfigChange={this.handleConfigChange} />
-          )}
+        <div className={classes.cardContainer}>
+          <Grid container justify="center">
+            <CardBase
+              className={classes.card}
+              config={config}
+              editing
+              handleCardEdit={() => null}
+              theme={theme}
+              haUrl={haUrl}
+              haConfig={haConfig}
+              entities={entities}
+              groupId={groupId}
+              cardId={cardId}
+              card={card}
+              handleChange={() => null} />
+          </Grid>
+        </div>
+        <DialogContent className={classes.dialogContent}>
+          <Grid container direction="column">
+            {Object.keys(defaultConfig.items[0].cards[0]).map((i, x) =>
+              <Item
+                key={x}
+                objKey={i}
+                defaultItem={defaultConfig.items[0].cards[0][i]}
+                item={card[i] !== undefined ? card[i] : defaultConfig.items[0].cards[0][i]}
+                defaultItemPath={['items', 0, 'cards', 0, i]}
+                itemPath={['items', groupId, 'cards', cardId, i]}
+                handleConfigChange={this.handleConfigChange} />
+            )}
+          </Grid>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleCancel} color="primary">
