@@ -11,7 +11,7 @@
     "classnames": "2.2.6",
     "home-assistant-js-websocket": "3.2.4",
     "is-plain-obj": "1.1.0",
-    "moment": "2.23.0",
+    "moment": "2.24.0",
     "prop-types": "15.6.2",
     "react": "16.7.0",
     "react-animated-weather": "2.0.0",
