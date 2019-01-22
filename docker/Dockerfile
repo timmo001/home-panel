@@ -44,7 +44,7 @@ RUN \
     && apk add --no-cache \
         apk-tools=2.10.1-r0 \
         bash=4.4.19-r1 \
-        busybox=1.28.4-r2 \
+        busybox=1.28.4-r3 \
         ca-certificates=20171114-r3 \
         nginx=1.14.2-r0 \
         nodejs-current=9.11.1-r2 \
