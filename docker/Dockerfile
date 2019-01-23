@@ -38,7 +38,7 @@ RUN \
     && apk add --no-cache --virtual .build-dependencies \
         curl=7.61.1-r1 \
         git=2.18.1-r0 \
-        tar=1.30-r0 \
+        tar=1.31-r0 \
         yarn=1.7.0-r0 \
     \
     && apk add --no-cache \
