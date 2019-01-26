@@ -32,7 +32,7 @@ class EditCard extends React.Component {
   handleClose = cb => this.setState({ open: false }, cb);
 
   handleCancel = () => this.handleClose(() => {
-    this.props.add ? this.props.handleCardEditDone()
+    this.props.add ? this.props.handleCardAddDone()
       : this.props.handleCardEditDone();
   });
 
