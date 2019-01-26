@@ -66,6 +66,7 @@ class EditCard extends React.Component {
               config={config}
               editing
               handleCardEdit={() => null}
+              handleCardAdd={() => null}
               theme={theme}
               haUrl={haUrl}
               haConfig={haConfig}
@@ -105,13 +106,13 @@ class EditCard extends React.Component {
 
 EditCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  card: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   groupId: PropTypes.number.isRequired,
   cardId: PropTypes.number.isRequired,
+  card: PropTypes.object,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,
   handleCardEditDone: PropTypes.func

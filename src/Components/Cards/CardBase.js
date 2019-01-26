@@ -4,12 +4,13 @@ import Camera from './Camera/Camera';
 import Hass from './Hass/Hass';
 import Link from './Link/Link';
 import Frame from './Frame/Frame';
+import Add from './Add';
 
 class CardBase extends React.Component {
 
   render() {
-    const { config, editing, handleCardEdit, theme, haUrl, haConfig, entities,
-      groupId, cardId, card, handleChange } = this.props;
+    const { config, editing, handleCardEdit, handleCardAdd, theme, haUrl,
+      haConfig, entities, groupId, cardId, card, handleChange } = this.props;
     const type = !card.type ? 'hass' : card.type;
     if (type === 'hass') {
       return <Hass
@@ -48,6 +49,13 @@ class CardBase extends React.Component {
         groupId={groupId}
         cardId={cardId}
         card={card} />
+    } else if (type === 'add') {
+      return <Add
+        config={config}
+        groupId={groupId}
+        cardId={cardId}
+        card={card}
+        handleCardAdd={handleCardAdd} />
     } else return null;
   }
 }
@@ -56,6 +64,7 @@ CardBase.propTypes = {
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
   handleCardEdit: PropTypes.func.isRequired,
+  handleCardAdd: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,

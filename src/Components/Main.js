@@ -115,7 +115,24 @@ class Main extends React.Component {
     this.props.handleConfigChange(config);
   };
 
-  handleCardAdd = position => this.setState({ addingCard: position });
+  handleCardAdd = (groupId, cardId) =>
+    this.setState({
+      addingCard: {
+        groupId, cardId, card: {
+          "type": "hass",
+          "name": "",
+          "entity_id": "",
+          "icon": "",
+          "width": 1,
+          "height": 1,
+          "size": {
+            "name": "",
+            "state": "",
+            "icon": ""
+          }
+        }
+      }
+    });
 
   handleCardAddDone = (path, card) => {
     card && this.handleConfigChange(path, card);
@@ -174,6 +191,7 @@ class Main extends React.Component {
             config={config}
             editing={editing}
             handleCardEdit={this.handleCardEdit}
+            handleCardAdd={this.handleCardAdd}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
@@ -201,13 +219,13 @@ class Main extends React.Component {
           <EditCard
             config={config}
             add
-            card={addingCard}
+            card={addingCard.card}
             theme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
-            groupId={editingCard.groupId}
-            cardId={editingCard.cardId}
+            groupId={addingCard.groupId}
+            cardId={addingCard.cardId}
             handleCardAddDone={this.handleCardAddDone} />
         }
         {editingCard &&

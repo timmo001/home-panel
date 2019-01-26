@@ -18,8 +18,8 @@ const styles = theme => ({
 class Page extends React.Component {
 
   render() {
-    const { classes, config, editing, handleCardEdit, theme, page,
-      handleChange, haUrl, haConfig, entities } = this.props;
+    const { classes, config, editing, handleCardEdit, handleCardAdd, theme,
+      page, handleChange, haUrl, haConfig, entities } = this.props;
 
     return (
       <Grid
@@ -33,6 +33,7 @@ class Page extends React.Component {
             config={config}
             editing={editing}
             handleCardEdit={handleCardEdit}
+            handleCardAdd={handleCardAdd}
             theme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
@@ -52,6 +53,7 @@ Page.propTypes = {
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
   handleCardEdit: PropTypes.func.isRequired,
+  handleCardAdd: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   page: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,

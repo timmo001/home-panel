@@ -90,8 +90,8 @@ class Group extends React.Component {
   };
 
   render() {
-    const { classes, haUrl, haConfig, config, editing, handleCardEdit, theme,
-      handleChange, entities, groupId, group } = this.props;
+    const { classes, haUrl, haConfig, config, editing, handleCardEdit,
+      handleCardAdd, theme, handleChange, entities, groupId, group } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
         <div>
@@ -120,6 +120,8 @@ class Group extends React.Component {
                           key={y}
                           config={config}
                           editing={editing}
+                          handleCardAdd={handleCardAdd}
+                          handleCardEdit={handleCardEdit}
                           theme={theme}
                           haUrl={haUrl}
                           haConfig={haConfig}
@@ -135,6 +137,7 @@ class Group extends React.Component {
                       key={x}
                       config={config}
                       editing={editing}
+                      handleCardAdd={handleCardAdd}
                       handleCardEdit={handleCardEdit}
                       theme={theme}
                       haUrl={haUrl}
@@ -145,6 +148,21 @@ class Group extends React.Component {
                       card={card}
                       handleChange={handleChange} />
                 })}
+                {editing &&
+                  <CardBase
+                    config={config}
+                    editing={editing}
+                    handleCardAdd={handleCardAdd}
+                    handleCardEdit={handleCardEdit}
+                    theme={theme}
+                    haUrl={haUrl}
+                    haConfig={haConfig}
+                    entities={entities}
+                    groupId={groupId}
+                    cardId={9999}
+                    card={{ type: 'add' }}
+                    handleChange={handleChange} />
+                }
               </Grid>
             </div>
           </Grid>
@@ -159,6 +177,7 @@ Group.propTypes = {
   config: PropTypes.object.isRequired,
   editing: PropTypes.bool.isRequired,
   handleCardEdit: PropTypes.func.isRequired,
+  handleCardAdd: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
