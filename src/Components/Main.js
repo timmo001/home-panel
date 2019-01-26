@@ -9,6 +9,7 @@ import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import defaultConfig from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
+import clone from './Common/clone';
 
 const styles = () => ({
   root: {
@@ -99,7 +100,7 @@ class Main extends React.Component {
   handleEditingComplete = () => this.setState({ editing: false });
 
   handleConfigChange = (path, value) => {
-    let { config } = this.props;
+    let config = clone(this.props.config);
     // Set the new value
     const lastItem = path.pop();
     let secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
@@ -135,29 +136,29 @@ class Main extends React.Component {
     });
 
   handleCardAddDone = (path, card) => {
-    card && this.handleConfigChange(path, card);
+    card && this.handleConfigChange(path, clone(card));
     this.setState({ addingPage: undefined });
   };
 
   handleCardEdit = (groupId, cardId, card) =>
-    this.setState({ editingCard: { groupId, cardId, card } });
+    this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
 
   handleCardEditDone = (path, card) => {
-    card && this.handleConfigChange(path, card);
+    card && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAdd = () => this.setState({ addingPage: true });
 
   handlePageAddDone = (id, page) => {
-    page && this.handleConfigChange(['pages', id], page);
+    page && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ addingPage: false });
   };
 
-  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page } });
+  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
   handlePageEditDone = (id, page) => {
-    page && this.handleConfigChange(['pages', id], page);
+    page && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ editingPage: undefined });
   };
 

@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import CardBase from '../Cards/CardBase';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
+import clone from '../Common/clone';
 
 const styles = theme => ({
   dialog: {
@@ -26,7 +27,9 @@ const styles = theme => ({
 class EditCard extends React.Component {
   state = {
     open: true,
-    card: this.props.card
+    defaultCard: clone(defaultConfig.items[0].cards.find(c => c.type === this.props.card.type))
+      || defaultConfig.items[0].cards[0],
+    card: clone(this.props.card)
   };
 
   handleClose = cb => this.setState({ open: false }, cb);
@@ -44,13 +47,32 @@ class EditCard extends React.Component {
 
   handleConfigChange = (path, value) => {
     const { card } = this.props;
-    card[path.pop()] = value;
-    this.setState({ card });
+    console.log('card:', clone(card));
+    const key = path.pop();
+    card[key] = value;
+    console.log('card after:', clone(card));
+    console.log(key, key === 'type');
+    const defaultCard = defaultConfig.items[0].cards.find(c => c.type === value)
+      || defaultConfig.items[0].cards[0];
+    console.log('defaultCard:', defaultCard);
+    if (key === 'type') {
+      // Delete any unused props and set the new props
+      Object.keys(card).map(c =>
+        !defaultCard[c] ? delete card[c] :
+          card[c] = defaultCard[c]
+      );
+      Object.keys(defaultCard).map(c =>
+        !card[c] ? card[c] = defaultCard[c] :
+          null
+      );
+      console.log('new card type:', clone(card));
+    }
+    this.setState({ defaultCard, card });
   };
 
   render() {
     const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
-    const { open, card } = this.state;
+    const { open, defaultCard, card } = this.state;
 
     return (
       <Dialog
@@ -79,12 +101,12 @@ class EditCard extends React.Component {
         </div>
         <DialogContent className={classes.dialogContent}>
           <Grid container direction="column">
-            {Object.keys(defaultConfig.items[0].cards[0]).map((i, x) =>
+            {Object.keys(defaultCard).map((i, x) =>
               <Item
                 key={x}
                 objKey={i}
-                defaultItem={defaultConfig.items[0].cards[0][i]}
-                item={card[i] !== undefined ? card[i] : defaultConfig.items[0].cards[0][i]}
+                defaultItem={defaultCard[i]}
+                item={card[i] !== undefined ? card[i] : defaultCard[i]}
                 defaultItemPath={['items', 0, 'cards', 0, i]}
                 itemPath={['items', groupId, 'cards', cardId, i]}
                 handleConfigChange={this.handleConfigChange} />
