@@ -190,10 +190,11 @@ class Root extends React.PureComponent {
   updateEntities = entities => this.setState({ entities: Object.entries(entities) });
 
   setTheme = (themeId = undefined) => {
-    const lightThemeName = this.state.config.theme.auto && this.state.config.theme.auto.light_theme ?
-      this.state.config.theme.auto.light_theme : 'light';
-    const darkThemeName = this.state.config.theme.auto && this.state.config.theme.auto.dark_theme ?
-      this.state.config.theme.auto.dark_theme : 'dark';
+    const { config } = this.state;
+    const lightThemeName = config.theme.auto && config.theme.auto.light_theme ?
+      config.theme.auto.light_theme : 'light';
+    const darkThemeName = config.theme.auto && config.theme.auto.dark_theme ?
+      config.theme.auto.dark_theme : 'dark';
 
     const lightTheme = this.props.themes.find(t => t.name.toLowerCase() === lightThemeName.toLowerCase());
     const darkTheme = this.props.themes.find(t => t.name.toLowerCase() === darkThemeName.toLowerCase());
@@ -203,9 +204,9 @@ class Root extends React.PureComponent {
     if (!themeId && themeId !== 0)
       themeId = -1;
     if (themeId === -1) {
-      if (this.state.config.theme.auto && this.state.entities && this.state.config.theme.auto.sensor) {
-        const state = this.state.entities.find(entity => entity[0] === this.state.config.theme.auto.sensor)[1].state;
-        this.props.setTheme(state <= this.state.config.theme.auto.below ? darkTheme : lightTheme);
+      if (config.theme.auto && this.state.entities && config.theme.auto.sensor) {
+        const state = this.state.entities.find(entity => entity[0] === config.theme.auto.sensor)[1].state;
+        this.props.setTheme(state <= config.theme.auto.below ? darkTheme : lightTheme);
       } else {
         // theme from sunlight
         console.log('Revert to sunlight sensor');
