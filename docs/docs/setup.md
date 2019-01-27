@@ -31,6 +31,9 @@ version: '3'
 services:
   home-panel:
     image: timmo001/home-panel
+    environment:
+      SSL_CERTFILE: fullchain.pem
+      SSL_KEYFILE: privkey.pem
     ports:
       - 3234:3234
       - 8234:8234
@@ -86,6 +89,8 @@ docker run -d \
   -v PATH_TO_CONFIG/home-panel-config.json:/data/config.json
   -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
   -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
+  -e SSL_CERTFILE=fullchain.pem \
+  -e SSL_KEYFILE=privkey.pem \
   timmo001/home-panel
 ```
 
