@@ -32,7 +32,7 @@ class Add extends React.PureComponent {
         <ButtonBase
           className={classes.cardOuter}
           focusRipple
-          onClick={() => handleCardAdd(groupId, cardId)}>
+          onClick={() => handleCardAdd(groupId, cardId + 1)}>
           <Card className={classes.card}
             elevation={cardElevation}
             square={squareCards}>
