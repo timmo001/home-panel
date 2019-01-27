@@ -135,27 +135,27 @@ class Main extends React.Component {
       }
     });
 
-  handleCardAddDone = (path, card) => {
-    card && this.handleConfigChange(path, clone(card));
-    this.setState({ addingPage: undefined });
-  };
-
   handleCardEdit = (groupId, cardId, card) =>
     this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
+
+  handlePageAdd = () => this.setState({ addingPage: true });
+
+  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
+
+  handleCardAddDone = (path, card) => {
+    card && this.handleConfigChange(path, clone(card));
+    this.setState({ addingCard: undefined });
+  };
 
   handleCardEditDone = (path, card) => {
     card && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
-  handlePageAdd = () => this.setState({ addingPage: true });
-
   handlePageAddDone = (id, page) => {
     page && this.handleConfigChange(['pages', id], clone(page));
-    this.setState({ addingPage: false });
+    this.setState({ addingPage: undefined });
   };
-
-  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
   handlePageEditDone = (id, page) => {
     page && this.handleConfigChange(['pages', id], clone(page));
