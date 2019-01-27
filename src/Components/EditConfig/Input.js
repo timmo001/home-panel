@@ -13,7 +13,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AutoLinkText from 'react-autolink-text2';
 import properCase from '../Common/properCase';
-import clone from '../Common/clone';
 import defaultConfig from './defaultConfig.json';
 import configExplanations from './configExplanations.json';
 
@@ -67,7 +66,7 @@ class Input extends React.PureComponent {
       : defaultValue === 'true' ? 'boolean'
         : defaultValue === 'false' ? 'boolean'
           : typeof defaultValue;
-    const helpText = clone(defaultItemPath).reduce((o, k) => o[k] = o[k] || {}, configExplanations);
+    const helpText = defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations);
     const value = this.props.value === 'true' ? true :
       this.props.value === 'false' ? false :
         this.props.value;
