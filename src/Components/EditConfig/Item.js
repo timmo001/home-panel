@@ -90,14 +90,12 @@ class Item extends React.PureComponent {
 Item.propTypes = {
   classes: PropTypes.object.isRequired,
   defaultItem: PropTypes.oneOfType([
-    PropTypes.array,
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
     PropTypes.number,
   ]).isRequired,
   item: PropTypes.oneOfType([
-    PropTypes.array,
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
@@ -109,9 +107,8 @@ Item.propTypes = {
   ]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
-  open: PropTypes.bool,
-  canDelete: PropTypes.bool,
   handleConfigChange: PropTypes.func.isRequired,
+  canDelete: PropTypes.bool
 };
 
 export default withStyles(styles)(Item);
