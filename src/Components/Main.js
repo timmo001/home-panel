@@ -43,7 +43,10 @@ class Main extends React.PureComponent {
     currentPage: 0,
   };
 
-  componentDidMount = () => this.props.setTheme();
+  componentDidMount = () => {
+    this.props.setTheme();
+    this.onMouseMoveHandler();
+  };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 

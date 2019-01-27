@@ -15,7 +15,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import EditIcon from '@material-ui/icons/Edit';
-import CloseIcon from '@material-ui/icons/Close';
+import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
@@ -293,7 +293,7 @@ class Header extends React.PureComponent {
                   aria-label="Edit Config"
                   onClick={this.props.handleEditConfig}>
                   {editing ?
-                    <CloseIcon className={classes.icon} />
+                    <CheckIcon className={classes.icon} />
                     :
                     <EditIcon className={classes.icon} />
                   }
@@ -311,15 +311,17 @@ class Header extends React.PureComponent {
                 <FormatPaintIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Radio">
-              <IconButton
-                className={classes.button}
-                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
-                aria-label="Radio"
-                onClick={this.props.handleRadioToggle}>
-                <RadioIcon className={classes.icon} />
-              </IconButton>
-            </Tooltip>
+            {!editing &&
+              <Tooltip title="Radio">
+                <IconButton
+                  className={classes.button}
+                  style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
+                  aria-label="Radio"
+                  onClick={this.props.handleRadioToggle}>
+                  <RadioIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
+            }
           </div>
         </Slide>
         <Menu
