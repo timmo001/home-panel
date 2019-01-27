@@ -53,6 +53,7 @@ class Input extends React.PureComponent {
         : defaultValue === 'false' ? 'boolean'
           : typeof defaultValue;
     const helpText = defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations);
+    console.log(defaultItemPath, configExplanations, helpText);
     const value = this.props.value === 'true' ? true :
       this.props.value === 'false' ? false :
         this.props.value;
@@ -116,21 +117,23 @@ class Input extends React.PureComponent {
           <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
       );
-      case 'card_type': return (
-        <FormControl className={classes.input}>
-          <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
-          <Select
-            className={classes.select}
-            value={value}
-            onChange={event => handleConfigChange(itemPath, event.target.value)}
-            input={<MUIInput id={name} type="string" value={value} />}>
-            {defaultConfig.items[0].cards.map((card, x) => {
-              return <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
-            })}
-          </Select>
-          <FormHelperText>{helpText}</FormHelperText>
-        </FormControl>
-      );
+      case 'card_type':
+        return (
+          <FormControl className={classes.input}>
+            <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
+            <Select
+              className={classes.select}
+              value={value}
+              onChange={event => handleConfigChange(itemPath, event.target.value)}
+              input={<MUIInput id={name} type="string" value={value} />}>
+              {defaultConfig.items[0].cards.map((card, x) => {
+                if (!card.type) card.type = 'hass';
+                return <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
+              })}
+            </Select>
+            {helpText && <FormHelperText>{helpText}</FormHelperText>}
+          </FormControl>
+        );
     }
   }
 }

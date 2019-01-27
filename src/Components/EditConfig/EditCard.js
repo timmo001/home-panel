@@ -47,32 +47,24 @@ class EditCard extends React.Component {
 
   handleConfigChange = (path, value) => {
     const { card } = this.props;
-    console.log('card:', clone(card));
     const key = path.pop();
     card[key] = value;
-    console.log('card after:', clone(card));
-    console.log(key, key === 'type');
     const defaultCard = defaultConfig.items[0].cards.find(c => c.type === value)
       || defaultConfig.items[0].cards[0];
-    console.log('defaultCard:', defaultCard);
     if (key === 'type') {
       // Delete any unused props and set the new props
-      Object.keys(card).map(c =>
-        !defaultCard[c] ? delete card[c] :
-          card[c] = defaultCard[c]
-      );
-      Object.keys(defaultCard).map(c =>
-        !card[c] ? card[c] = defaultCard[c] :
-          null
-      );
-      console.log('new card type:', clone(card));
+      Object.keys(card).map(c => !defaultCard[c] ? delete card[c] : card[c] = defaultCard[c]);
+      Object.keys(defaultCard).map(c => !card[c] ? card[c] = defaultCard[c] : null);
     }
+    // Fix type if not set
+    if (!card.type) card.type = defaultConfig.items[0].cards[0].type;
     this.setState({ defaultCard, card });
   };
 
   render() {
     const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
     const { open, defaultCard, card } = this.state;
+    const typePath = defaultConfig.items[0].cards.findIndex(c => c.type === card.type);
 
     return (
       <Dialog
@@ -107,7 +99,7 @@ class EditCard extends React.Component {
                 objKey={i}
                 defaultItem={defaultCard[i]}
                 item={card[i] !== undefined ? card[i] : defaultCard[i]}
-                defaultItemPath={['items', 0, 'cards', defaultConfig.items[0].cards.findIndex(c => c.type === card.type), i]}
+                defaultItemPath={['items', 0, 'cards', typePath > -1 ? typePath : 0, i]}
                 itemPath={['items', groupId, 'cards', cardId, i]}
                 handleConfigChange={this.handleConfigChange} />
             )}
