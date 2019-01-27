@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Add from '@material-ui/icons/Add';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
 import Input from './Input';
@@ -48,62 +46,15 @@ const styles = theme => ({
   }
 });
 
-class Item extends React.Component {
-  state = {
-    open: this.props.open !== undefined ? this.props.open :
-      this.props.itemPath.length < 2 ||
-      this.props.itemPath.length > 2 ||
-      Array.isArray(this.props.item)
-  };
-
-  handleClick = () => this.setState(state => ({ open: !state.open }));
-
+class Item extends React.PureComponent {
   render() {
     const { classes, objKey, defaultItem, item, defaultItemPath, itemPath, handleConfigChange } = this.props;
 
-    const dropdown =
-      <Typography className={classes.dropdownText} variant="h6">
-        {objKey && properCase(objKey)}
-      </Typography>;
-
-    if (Array.isArray(defaultItem)) return (
+    return isObject(defaultItem) ?
       <div className={classes.root}>
-        {dropdown}
-        <Divider />
-        <div className={classes.container}>
-          {item && item.map((ai, ax) => {
-            return <NextItem
-              key={ax}
-              open={false}
-              canDelete={true}
-              objKey={ax}
-              defaultItem={defaultItem[objKey === 'cards' ?
-                ai.type === 'link' ? 1 :
-                  ai.type === 'camera' ? 2 :
-                    ai.type === 'iframe' ? 3 :
-                      0 : 0]}
-              item={ai}
-              defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
-                ai.type === 'link' ? 1 :
-                  ai.type === 'camera' ? 2 :
-                    ai.type === 'iframe' ? 3 :
-                      0 : 0])}
-              itemPath={itemPath.concat([ax])}
-              handleConfigChange={handleConfigChange} />
-          })}
-          <div className={classes.root}>
-            <ButtonBase
-              className={classes.addIcon}
-              aria-label="Add"
-              onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
-              <Add />
-            </ButtonBase>
-          </div>
-        </div>
-      </div>
-    ); else if (isObject(defaultItem)) return (
-      <div className={classes.root}>
-        {dropdown}
+        <Typography className={classes.dropdownText} variant="h6">
+          {objKey && properCase(objKey)}
+        </Typography>
         <Divider />
         <div className={classes.container}>
           {defaultItem ?
@@ -125,7 +76,7 @@ class Item extends React.Component {
           }
         </div>
       </div>
-    ); else return (
+      :
       <Input
         name={String(objKey)}
         defaultValue={defaultItem}
@@ -133,7 +84,6 @@ class Item extends React.Component {
         defaultItemPath={defaultItemPath}
         itemPath={itemPath}
         handleConfigChange={handleConfigChange} />
-    );
   }
 }
 
