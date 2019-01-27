@@ -53,7 +53,6 @@ class Input extends React.PureComponent {
         : defaultValue === 'false' ? 'boolean'
           : typeof defaultValue;
     const helpText = defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations);
-    console.log(defaultItemPath, configExplanations, helpText);
     const value = this.props.value === 'true' ? true :
       this.props.value === 'false' ? false :
         this.props.value;
