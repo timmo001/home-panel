@@ -37,7 +37,7 @@ const styles = theme => ({
   }
 });
 
-class Group extends React.Component {
+class Group extends React.PureComponent {
 
   checkGroupToggle = (group, entities) => {
     const card = group.cards.find((card) => {
@@ -112,7 +112,8 @@ class Group extends React.Component {
                 alignItems="stretch"
                 spacing={8}>
                 {group.cards.map((card, x) => {
-                  if (card.entity_id && card.entity_id.startsWith('group')) {
+                  if (!card) return null;
+                  else if (card.entity_id && card.entity_id.startsWith('group')) {
                     const entity_outer = entities.find(i => { return i && i[1].entity_id === card.entity_id });
                     if (entity_outer)
                       return entity_outer[1].attributes.entity_id.map((entity, y) => {

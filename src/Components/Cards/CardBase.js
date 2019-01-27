@@ -6,7 +6,7 @@ import Link from './Link/Link';
 import Frame from './Frame/Frame';
 import Add from './Add';
 
-class CardBase extends React.Component {
+class CardBase extends React.PureComponent {
 
   render() {
     const { config, editing, handleCardEdit, handleCardAdd, theme, haUrl,

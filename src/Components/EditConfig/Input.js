@@ -44,7 +44,7 @@ const styles = () => ({
   }
 });
 
-class Input extends React.Component {
+class Input extends React.PureComponent {
   state = {
     type: '',
     helpText: ''

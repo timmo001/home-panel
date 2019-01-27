@@ -20,7 +20,7 @@ const styles = theme => ({
   },
 });
 
-class Frame extends React.Component {
+class Frame extends React.PureComponent {
   render() {
     const { classes, config, card } = this.props;
     const { name, url } = card;

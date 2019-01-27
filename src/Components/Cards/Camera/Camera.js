@@ -22,7 +22,7 @@ const styles = theme => ({
   },
 });
 
-class Camera extends React.Component {
+class Camera extends React.PureComponent {
   state = {
     camera: undefined
   };

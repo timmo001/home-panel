@@ -15,7 +15,7 @@ const styles = theme => ({
   },
 });
 
-class Page extends React.Component {
+class Page extends React.PureComponent {
 
   render() {
     const { classes, config, editing, handleCardEdit, handleCardAdd, theme,

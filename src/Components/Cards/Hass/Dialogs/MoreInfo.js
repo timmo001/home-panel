@@ -27,7 +27,7 @@ import { CirclePicker } from 'react-color';
 //   }
 // });
 
-class MoreInfo extends React.Component {
+class MoreInfo extends React.PureComponent {
   state = {
     open: true,
     effect: '',

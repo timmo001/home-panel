@@ -15,7 +15,7 @@ const styles = theme => ({
   ...card(theme),
 });
 
-class Add extends React.Component {
+class Add extends React.PureComponent {
   render() {
     const { classes, config, handleCardAdd, groupId, cardId, card } = this.props;
     const squareCards = getSquareCards(config);

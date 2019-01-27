@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-class EditCard extends React.Component {
+class EditCard extends React.PureComponent {
   state = {
     open: true,
     defaultCard: clone(defaultConfig.items[0].cards.find(c => c.type === this.props.card.type))

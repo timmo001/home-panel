@@ -46,7 +46,7 @@ const styles = theme => ({
   }
 });
 
-class Hass extends React.Component {
+class Hass extends React.PureComponent {
   state = {
     alarmEntity: undefined
   };

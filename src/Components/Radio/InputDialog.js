@@ -20,7 +20,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 var searchTimeout;
 
-class InputDialog extends React.Component {
+class InputDialog extends React.PureComponent {
   radioGroup = null;
   state = {
     search: '',

@@ -16,7 +16,7 @@ const styles = theme => ({
   ...card(theme),
 });
 
-class Link extends React.Component {
+class Link extends React.PureComponent {
 
   render() {
     const { classes, config, card } = this.props;

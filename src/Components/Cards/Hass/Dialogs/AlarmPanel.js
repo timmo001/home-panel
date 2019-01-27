@@ -13,7 +13,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
-class AlarmPanel extends React.Component {
+class AlarmPanel extends React.PureComponent {
   state = {
     open: true,
     code: '',

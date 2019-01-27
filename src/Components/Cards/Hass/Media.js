@@ -43,7 +43,7 @@ const styles = theme => ({
   },
 });
 
-class Media extends React.Component {
+class Media extends React.PureComponent {
 
   handleChange = (action) => {
     const { entity_id } = this.props;

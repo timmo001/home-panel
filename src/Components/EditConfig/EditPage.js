@@ -19,7 +19,7 @@ const styles = theme => ({
   }
 });
 
-class EditPage extends React.Component {
+class EditPage extends React.PureComponent {
   state = {
     open: true,
     page: this.props.page

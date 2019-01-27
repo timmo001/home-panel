@@ -69,7 +69,7 @@ const defaultSource = {
   repeat: false,
 };
 
-class Radio extends React.Component {
+class Radio extends React.PureComponent {
   state = {
     source: defaultSource,
     dialogOpen: false,

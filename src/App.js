@@ -90,7 +90,7 @@ const defaultPalette = moment().hour >= 22 || moment().hour <= 4 ?
   :
   createMuiTheme({ palette: themes[0].palette });
 
-class App extends React.Component {
+class App extends React.PureComponent {
   state = {
     theme: defaultPalette
   };

@@ -81,7 +81,7 @@ const styles = theme => ({
   },
 });
 
-class Login extends React.Component {
+class Login extends React.PureComponent {
   state = {
     username: '',
     password: '',

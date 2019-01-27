@@ -23,7 +23,7 @@ const styles = theme => ({
   }
 });
 
-class PageNavigation extends React.Component {
+class PageNavigation extends React.PureComponent {
   state = {
     value: 0,
     over: false,

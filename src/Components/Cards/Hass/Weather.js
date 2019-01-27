@@ -97,7 +97,7 @@ const weatherNameMap = {
   "windy-variant": "Windy"
 };
 
-class Weather extends React.Component {
+class Weather extends React.PureComponent {
 
   getUnit = measure => {
     if (this.props.haConfig) {

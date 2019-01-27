@@ -29,7 +29,7 @@ const styles = () => ({
   },
 });
 
-class Camera extends React.Component {
+class Camera extends React.PureComponent {
 
   render() {
     const { classes, data, handleClose } = this.props;

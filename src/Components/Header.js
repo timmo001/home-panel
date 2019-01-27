@@ -193,7 +193,7 @@ String.prototype.replaceAll = function (search, replacement) {
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   state = {
     anchorEl: null,
   };

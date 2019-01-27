@@ -43,7 +43,7 @@ const styles = theme => ({
 
 var connection;
 
-class Root extends React.Component {
+class Root extends React.PureComponent {
   state = {
     snackMessage: { open: false, text: '' },
     connected: false

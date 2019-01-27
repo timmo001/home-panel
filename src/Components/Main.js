@@ -32,7 +32,7 @@ const styles = () => ({
 
 var hoverTimeout;
 
-class Main extends React.Component {
+class Main extends React.PureComponent {
   state = {
     moved: true,
     over: false,

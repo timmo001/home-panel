@@ -35,7 +35,7 @@ const styles = theme => ({
   }
 });
 
-class Weather extends React.Component {
+class Weather extends React.PureComponent {
 
   handleTempChange = (type, newTemp) => {
     if (newTemp <= this.props.attributes.max_temp
