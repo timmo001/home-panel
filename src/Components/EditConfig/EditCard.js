@@ -32,7 +32,7 @@ class EditCard extends React.Component {
     card: clone(this.props.card)
   };
 
-  handleClose = cb => this.setState({ open: false }, cb);
+  handleClose = cb => this.setState({ open: false, defaultCard: undefined, card: undefined }, cb);
 
   handleCancel = () => this.handleClose(() => {
     this.props.add ? this.props.handleCardAddDone()
@@ -64,6 +64,7 @@ class EditCard extends React.Component {
   render() {
     const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
     const { open, defaultCard, card } = this.state;
+    if (!open) return null;
     const typePath = defaultConfig.items[0].cards.findIndex(c => c.type === card.type);
 
     return (

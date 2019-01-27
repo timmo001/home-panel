@@ -100,8 +100,7 @@ class Main extends React.PureComponent {
   handleEditConfig = () =>
     this.state.editing ?
       this.setState({ editing: false })
-      :
-      this.setState({ editing: true, moved: true }, () => clearTimeout(hoverTimeout));
+      : this.setState({ editing: true });
 
   handleEditingComplete = () => this.setState({ editing: false });
 
@@ -124,21 +123,7 @@ class Main extends React.PureComponent {
 
   handleCardAdd = (groupId, cardId) =>
     this.setState({
-      addingCard: {
-        groupId, cardId, card: {
-          "type": "hass",
-          "name": "",
-          "entity_id": "",
-          "icon": "",
-          "width": 1,
-          "height": 1,
-          "size": {
-            "name": "",
-            "state": "",
-            "icon": ""
-          }
-        }
-      }
+      addingCard: { groupId, cardId, card: defaultConfig.items[0].cards[0] }
     });
 
   handleCardEdit = (groupId, cardId, card) =>
