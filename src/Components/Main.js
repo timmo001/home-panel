@@ -98,7 +98,10 @@ class Main extends React.PureComponent {
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
   handleEditConfig = () =>
-    this.setState({ editing: true, moved: true }, () => clearTimeout(hoverTimeout));
+    this.state.editing ?
+      this.setState({ editing: false })
+      :
+      this.setState({ editing: true, moved: true }, () => clearTimeout(hoverTimeout));
 
   handleEditingComplete = () => this.setState({ editing: false });
 
