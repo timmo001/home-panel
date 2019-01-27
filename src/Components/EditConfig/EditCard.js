@@ -24,7 +24,7 @@ const styles = theme => ({
   }
 });
 
-class EditCard extends React.PureComponent {
+class EditCard extends React.Component {
   state = {
     open: true,
     defaultCard: clone(defaultConfig.items[0].cards.find(c => c.type === this.props.card.type))
@@ -107,7 +107,7 @@ class EditCard extends React.PureComponent {
                 objKey={i}
                 defaultItem={defaultCard[i]}
                 item={card[i] !== undefined ? card[i] : defaultCard[i]}
-                defaultItemPath={['items', 0, 'cards', 0, i]}
+                defaultItemPath={['items', 0, 'cards', defaultConfig.items[0].cards.findIndex(c => c.type === card.type), i]}
                 itemPath={['items', groupId, 'cards', cardId, i]}
                 handleConfigChange={this.handleConfigChange} />
             )}

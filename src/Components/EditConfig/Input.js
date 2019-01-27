@@ -46,20 +46,6 @@ const styles = () => ({
 
 class Input extends React.PureComponent {
 
-  // componentDidUpdate = (prevProps) => {
-  //   if (this.props.defaultValue !== prevProps.defaultValue ||
-  //     this.props.defaultItemPath !== prevProps.defaultItemPath) {
-  //     const type = this.props.defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
-  //       : this.props.defaultValue === 'true' ? 'boolean'
-  //         : this.props.defaultValue === 'false' ? 'boolean'
-  //           : typeof this.props.defaultValue;
-
-  //     const lastItem = this.props.defaultItemPath.pop();
-  //     const helpText = this.props.defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations)[lastItem];
-  //     this.setState({ type, helpText });
-  //   }
-  // };
-
   render() {
     const { classes, name, defaultValue, defaultItemPath, itemPath, handleConfigChange } = this.props;
     const type = defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
@@ -88,11 +74,13 @@ class Input extends React.PureComponent {
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
               <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
             </IconButton>
-            <FormHelperText id={name}>
-              <AutoLinkText
-                text={helpText}
-                linkProps={{ target: '_blank', rel: 'nofollow' }} />
-            </FormHelperText>
+            {helpText &&
+              <FormHelperText id={name}>
+                <AutoLinkText
+                  text={helpText}
+                  linkProps={{ target: '_blank', rel: 'nofollow' }} />
+              </FormHelperText>
+            }
           </FormControl>
         );
       case 'number': return (
