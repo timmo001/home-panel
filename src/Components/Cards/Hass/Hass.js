@@ -149,7 +149,7 @@ class Hass extends React.PureComponent {
                   </Typography>
                 }
                 {icon &&
-                  <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
+                  <span className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
                     fontSize: card.size && card.size.state && card.size.state
                   }} />
                 }
@@ -194,7 +194,7 @@ class Hass extends React.PureComponent {
                     </Typography>
                   }
                   {icon &&
-                    <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
+                    <span className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
                       fontSize: card.size && card.size.state && card.size.state
                     }} />
                   }

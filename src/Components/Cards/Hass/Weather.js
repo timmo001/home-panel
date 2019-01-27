@@ -145,7 +145,7 @@ class Weather extends React.PureComponent {
           justify="space-between">
           <Grid item className={classes.main}>
             <div>
-              <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
+              <span className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
               <div className={classes.temperature}>
                 <Typography variant="subtitle1">
                   {attributes.temperature}
@@ -182,7 +182,7 @@ class Weather extends React.PureComponent {
                 </Typography>
 
                 <Typography className={classes.forecastTextIcon}>
-                  <i className={classnames('mdi', `mdi-${icon}`, classes.forecastIcon)} />
+                  <span className={classnames('mdi', `mdi-${icon}`, classes.forecastIcon)} />
                 </Typography>
 
                 <Typography noWrap className={classes.forecastText}>

@@ -201,25 +201,25 @@ class Weather extends React.PureComponent {
                   {op === 'off' ?
                     <IconButton className={classes.iconContainer}
                       onClick={() => this.handleOperationChange(op)}>
-                      <i className={classnames('mdi', 'mdi-power-off', classes.icon,
+                      <span className={classnames('mdi', 'mdi-power-off', classes.icon,
                         attributes.operation_mode === op && classes.iconActive)} />
                     </IconButton>
                     : op === 'heat' ?
                       <IconButton className={classes.iconContainer}
                         onClick={() => this.handleOperationChange(op)}>
-                        <i className={classnames('mdi', 'mdi-radiator', classes.icon,
+                        <span className={classnames('mdi', 'mdi-radiator', classes.icon,
                           attributes.operation_mode === op && classes.iconActive)} />
                       </IconButton>
                       : op === 'cool' ?
                         <IconButton className={classes.iconContainer}
                           onClick={() => this.handleOperationChange(op)}>
-                          <i className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
+                          <span className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
                             attributes.operation_mode === op && classes.iconActive)} />
                         </IconButton>
                         : op === 'auto' ?
                           <IconButton className={classes.iconContainer}
                             onClick={() => this.handleOperationChange(op)}>
-                            <i className={classnames('mdi', 'mdi-autorenew', classes.icon,
+                            <span className={classnames('mdi', 'mdi-autorenew', classes.icon,
                               attributes.operation_mode === op && classes.iconActive)} />
                           </IconButton>
                           :
@@ -244,7 +244,7 @@ class Weather extends React.PureComponent {
                 <Grid item>
                   <IconButton className={classes.iconContainer}
                     onClick={() => this.handleAwayToggle()}>
-                    <i className={classnames('mdi', 'mdi-walk', classes.icon,
+                    <span className={classnames('mdi', 'mdi-walk', classes.icon,
                       attributes.away_mode === 'on' && classes.iconActive)} />
                   </IconButton>
                 </Grid>

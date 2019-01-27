@@ -59,7 +59,7 @@ class EditPage extends React.PureComponent {
           value={0}>
           <BottomNavigationAction
             label={page.name}
-            icon={page.icon && <i className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
+            icon={page.icon && <span className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
         </BottomNavigation>
         <DialogContent>
           {Object.keys(defaultConfig.pages[0]).map((i, x) =>

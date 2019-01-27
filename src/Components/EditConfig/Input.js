@@ -72,7 +72,7 @@ class Input extends React.PureComponent {
             <IconButton
               className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
-              <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+              <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
             </IconButton>
             {helpText &&
               <FormHelperText id={name}>
@@ -95,7 +95,7 @@ class Input extends React.PureComponent {
           <IconButton
             className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
             onClick={() => handleConfigChange(itemPath, defaultValue)}>
-            <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+            <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
           </IconButton>
           <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>
@@ -111,7 +111,7 @@ class Input extends React.PureComponent {
             }
             label={properCase(name)} />
           <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
-            <i className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+            <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
           </IconButton>
           <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
         </FormControl>

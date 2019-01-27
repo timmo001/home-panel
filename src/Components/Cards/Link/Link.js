@@ -52,7 +52,7 @@ class Link extends React.PureComponent {
                 {name}
               </Typography>
               {icon &&
-                <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
+                <span className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
               }
             </CardContent>
           </Card>

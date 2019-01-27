@@ -64,7 +64,7 @@ class PageNavigation extends React.PureComponent {
               onMouseDown={() => this.handleButtonPress(x, { name: page.name, icon: page.icon })}
               onMouseUp={this.handleButtonRelease}
               onMouseLeave={this.handleButtonRelease}
-              icon={page.icon && <i className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
+              icon={page.icon && <span className={classnames('mdi', `mdi-${page.icon}`, classes.icon)} />} />
           )}
           {editing &&
             <BottomNavigationAction

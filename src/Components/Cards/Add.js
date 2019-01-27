@@ -37,7 +37,7 @@ class Add extends React.PureComponent {
             elevation={cardElevation}
             square={squareCards}>
             <CardContent className={classes.cardContent}>
-              <i className={classnames('mdi', 'mdi-plus', classes.icon)} style={{
+              <span className={classnames('mdi', 'mdi-plus', classes.icon)} style={{
                 fontSize: card.size && card.size.state && card.size.state
               }} />
             </CardContent>
