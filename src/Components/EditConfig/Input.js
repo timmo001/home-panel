@@ -13,6 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import AutoLinkText from 'react-autolink-text2';
 import properCase from '../Common/properCase';
+import clone from '../Common/clone';
 import defaultConfig from './defaultConfig.json';
 import configExplanations from './configExplanations.json';
 
@@ -43,6 +44,8 @@ const styles = () => ({
     marginRight: 8
   }
 });
+
+const cardItems = clone(defaultConfig.items[0].cards);
 
 class Input extends React.PureComponent {
 
@@ -125,10 +128,9 @@ class Input extends React.PureComponent {
               value={value}
               onChange={event => handleConfigChange(itemPath, event.target.value)}
               input={<MUIInput id={name} type="string" value={value} />}>
-              {defaultConfig.items[0].cards.map((card, x) => {
-                if (!card.type) card.type = 'hass';
-                return <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
-              })}
+              {cardItems.map((card, x) =>
+                <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
+              )}
             </Select>
             {helpText && <FormHelperText>{helpText}</FormHelperText>}
           </FormControl>

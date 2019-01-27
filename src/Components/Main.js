@@ -123,7 +123,7 @@ class Main extends React.PureComponent {
 
   handleCardAdd = (groupId, cardId) =>
     this.setState({
-      addingCard: { groupId, cardId, card: defaultConfig.items[0].cards[0] }
+      addingCard: { groupId, cardId, card: clone(defaultConfig.items[0].cards[0]) }
     });
 
   handleCardEdit = (groupId, cardId, card) =>
