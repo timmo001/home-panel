@@ -9,10 +9,7 @@ ENV \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm" \
-    SSL="false" \
-    SSL_CERTFILE="/data/ssl/fullchain.pem" \
-    SSL_KEYFILE="/data/ssl/privkey.pem"
+    TERM="xterm"
 
 # Copy app
 COPY build /opt/panel
