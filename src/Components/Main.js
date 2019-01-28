@@ -134,22 +134,22 @@ class Main extends React.PureComponent {
   handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
   handleCardAddDone = (path, card) => {
-    this.handleConfigChange(path, clone(card));
+    path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
   };
 
   handleCardEditDone = (path, card) => {
-    this.handleConfigChange(path, clone(card));
+    path && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAddDone = (id, page) => {
-    this.handleConfigChange(['pages', id], clone(page));
+    id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ addingPage: undefined });
   };
 
   handlePageEditDone = (id, page) => {
-    this.handleConfigChange(['pages', id], clone(page));
+    id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ editingPage: undefined });
   };
 

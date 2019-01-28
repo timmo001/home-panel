@@ -8,6 +8,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CardBase from '../Cards/CardBase';
+import ConfirmDialog from '../Common/ConfirmDialog';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
 import clone from '../Common/clone';
@@ -27,7 +28,7 @@ const styles = theme => ({
   }
 });
 
-class EditCard extends React.Component {
+class EditCard extends React.PureComponent {
   state = {
     open: true,
     defaultCard: clone(defaultConfig.items[0].cards.find(c => c.type === this.props.card.type))
@@ -48,10 +49,16 @@ class EditCard extends React.Component {
       : this.props.handleCardEditDone(path, this.state.card);
   });
 
+  handleDeleteConfirm = () => this.setState({ confirm: true });
+
+  handleDeleteConfirmClose = () => this.setState({ confirm: false });
+
   handleDelete = () => this.handleClose(() => {
-    const path = ['items', this.props.groupId, 'cards', this.props.cardId];
-    this.props.add ? this.props.handleCardAddDone(path)
-      : this.props.handleCardEditDone(path);
+    this.setState({ confirm: false }, () => {
+      const path = ['items', this.props.groupId, 'cards', this.props.cardId];
+      this.props.add ? this.props.handleCardAddDone(path)
+        : this.props.handleCardEditDone(path);
+    });
   });
 
   handleConfigChange = (path, value) => {
@@ -72,7 +79,7 @@ class EditCard extends React.Component {
 
   render() {
     const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
-    const { open, defaultCard, card } = this.state;
+    const { open, defaultCard, card, confirm } = this.state;
     if (!open) return null;
     const typePath = defaultConfig.items[0].cards.findIndex(c => c.type === card.type);
 
@@ -116,7 +123,7 @@ class EditCard extends React.Component {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDelete} color="primary">
+          <Button onClick={this.handleDeleteConfirm} color="primary">
             Delete
           </Button>
           <div className={classes.fill} />
@@ -127,6 +134,12 @@ class EditCard extends React.Component {
             {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
+        {confirm &&
+          <ConfirmDialog
+            text="Do you want to delete this card?"
+            handleClose={this.handleDeleteConfirmClose}
+            handleConfirm={this.handleDelete} />
+        }
       </Dialog>
     );
   }
