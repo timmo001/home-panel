@@ -16,6 +16,9 @@ const styles = theme => ({
   navigation: {
     opacity: '0.94',
     background: theme.palette.backgrounds.navigation
+  },
+  fill: {
+    flex: '1 1 auto'
   }
 });
 
@@ -35,6 +38,11 @@ class EditPage extends React.PureComponent {
   handleSave = () => this.handleClose(() => {
     this.props.add ? this.props.handlePageAddDone(this.props.id, this.state.page)
       : this.props.handlePageEditDone(this.props.id, this.state.page);
+  });
+
+  handleDelete = () => this.handleClose(() => {
+    this.props.add ? this.props.handlePageAddDone(this.props.id)
+      : this.props.handlePageEditDone(this.props.id);
   });
 
   handleConfigChange = (path, value) => {
@@ -74,6 +82,10 @@ class EditPage extends React.PureComponent {
           )}
         </DialogContent>
         <DialogActions>
+          <Button onClick={this.handleDelete} color="primary">
+            Delete
+          </Button>
+          <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>

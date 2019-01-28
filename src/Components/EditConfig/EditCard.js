@@ -21,6 +21,9 @@ const styles = theme => ({
   },
   cardContainer: {
     margin: theme.spacing.unit
+  },
+  fill: {
+    flex: '1 1 auto'
   }
 });
 
@@ -43,6 +46,12 @@ class EditCard extends React.Component {
     const path = ['items', this.props.groupId, 'cards', this.props.cardId];
     this.props.add ? this.props.handleCardAddDone(path, this.state.card)
       : this.props.handleCardEditDone(path, this.state.card);
+  });
+
+  handleDelete = () => this.handleClose(() => {
+    const path = ['items', this.props.groupId, 'cards', this.props.cardId];
+    this.props.add ? this.props.handleCardAddDone(path)
+      : this.props.handleCardEditDone(path);
   });
 
   handleConfigChange = (path, value) => {
@@ -107,6 +116,10 @@ class EditCard extends React.Component {
           </Grid>
         </DialogContent>
         <DialogActions>
+          <Button onClick={this.handleDelete} color="primary">
+            Delete
+          </Button>
+          <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
