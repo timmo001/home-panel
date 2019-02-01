@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import JSONInput from 'react-json-editor-ajrm';
+import locale from 'react-json-editor-ajrm/locale/en';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -33,8 +35,11 @@ class EditCard extends React.PureComponent {
     open: true,
     defaultCard: clone(defaultConfig.items[0].cards.find(c => c.type === this.props.card.type))
       || defaultConfig.items[0].cards[0],
-    card: clone(this.props.card)
+    card: clone(this.props.card),
+    jsonEdit: false
   };
+
+  handleJSONEditor = () => this.setState({ jsonEdit: clone(this.state.card) });
 
   handleClose = cb => this.setState({ open: false }, cb);
 
@@ -79,7 +84,7 @@ class EditCard extends React.PureComponent {
 
   render() {
     const { classes, add, config, theme, haUrl, haConfig, entities, groupId, cardId } = this.props;
-    const { open, defaultCard, card, confirm } = this.state;
+    const { open, defaultCard, card, confirm, jsonEdit } = this.state;
     if (!open) return null;
     const typePath = defaultConfig.items[0].cards.findIndex(c => c.type === card.type);
 
@@ -109,22 +114,34 @@ class EditCard extends React.PureComponent {
           </Grid>
         </div>
         <DialogContent className={classes.dialogContent}>
-          <Grid container direction="column">
-            {Object.keys(defaultCard).map((i, x) =>
-              <Item
-                key={x}
-                objKey={i}
-                defaultItem={defaultCard[i]}
-                item={card[i] !== undefined ? card[i] : defaultCard[i]}
-                defaultItemPath={['items', 0, 'cards', typePath > -1 ? typePath : 0, i]}
-                itemPath={['items', groupId, 'cards', cardId, i]}
-                handleConfigChange={this.handleConfigChange} />
-            )}
-          </Grid>
+          {jsonEdit ?
+            <JSONInput
+              id="card"
+              theme="dark_vscode_tribute"
+              placeholder={clone(jsonEdit)}
+              locale={locale}
+              onChange={data => this.handleConfigChange(['items', groupId, 'cards', cardId], clone(data.jsObject))} />
+            :
+            <Grid container direction="column">
+              {Object.keys(defaultCard).map((i, x) =>
+                <Item
+                  key={x}
+                  objKey={i}
+                  defaultItem={defaultCard[i]}
+                  item={card[i] !== undefined ? card[i] : defaultCard[i]}
+                  defaultItemPath={['items', 0, 'cards', typePath > -1 ? typePath : 0, i]}
+                  itemPath={['items', groupId, 'cards', cardId, i]}
+                  handleConfigChange={this.handleConfigChange} />
+              )}
+            </Grid>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleDeleteConfirm} color="primary">
             Delete
+          </Button>
+          <Button onClick={this.handleJSONEditor} color="primary">
+            {jsonEdit ? 'Standard Editor' : 'JSON Editor'}
           </Button>
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
