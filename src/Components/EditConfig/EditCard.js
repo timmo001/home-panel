@@ -67,19 +67,27 @@ class EditCard extends React.PureComponent {
   });
 
   handleConfigChange = (path, value) => {
-    const { card } = this.props;
+    const cardLcl = clone(this.props.card),
+      defaultConfigLcl = clone(defaultConfig);
+
+    console.log('card pre:', cardLcl);
+
     const key = path.pop();
-    card[key] = value;
-    const defaultCard = defaultConfig.items[0].cards.find(c => c.type === value)
-      || defaultConfig.items[0].cards[0];
+    cardLcl[key] = value;
+    console.log('card[key]:', cardLcl[key]);
+    const defaultCard = defaultConfigLcl.items[0].cards.find(c => c.type === value)
+      || defaultConfigLcl.items[0].cards[0];
+    console.log('defaultCard:', defaultCard);
     if (key === 'type') {
       // Delete any unused props and set the new props
-      Object.keys(card).map(c => !defaultCard[c] ? delete card[c] : card[c] = defaultCard[c]);
-      Object.keys(defaultCard).map(c => !card[c] ? card[c] = defaultCard[c] : null);
+      Object.keys(cardLcl).map(c => !defaultCard[c] ? delete cardLcl[c] : cardLcl[c] = defaultCard[c]);
+      Object.keys(defaultCard).map(c => !cardLcl[c] ? cardLcl[c] = defaultCard[c] : null);
     }
     // Fix type if not set
-    if (!card.type) card.type = defaultConfig.items[0].cards[0].type;
-    this.setState({ defaultCard, card });
+    if (!cardLcl.type) cardLcl.type = defaultConfigLcl.items[0].cards[0].type;
+    console.log('defaultCard:', defaultCard);
+    console.log('card:', cardLcl);
+    this.setState({ defaultCard, card: cardLcl });
   };
 
   render() {
