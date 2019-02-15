@@ -19,7 +19,8 @@ const styles = theme => ({
 class Link extends React.PureComponent {
 
   render() {
-    const { classes, config, card } = this.props;
+    const { classes, config, card, editing,
+      handleCardEdit, groupId, cardId } = this.props;
     const { name, url } = card;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
@@ -36,7 +37,8 @@ class Link extends React.PureComponent {
         <ButtonBase
           className={classes.cardOuter}
           focusRipple
-          href={url}
+          onClick={() => editing && handleCardEdit(groupId, cardId, card)}
+          href={!editing ? url : null}
           target="_blank">
           <Card className={classes.card} elevation={cardElevation} square={squareCards}>
             <CardContent
