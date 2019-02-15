@@ -34,7 +34,8 @@ class Camera extends React.PureComponent {
   handleCameraClose = () => this.setState({ camera: undefined });
 
   render() {
-    const { classes, config, card } = this.props;
+    const { classes, config, card, editing,
+      handleCardEdit, groupId, cardId } = this.props;
     const { camera } = this.state;
     const { name, url } = card;
     const still_url = `${card.still_url}?${moment().format('HHmm')}`;
@@ -60,6 +61,11 @@ class Camera extends React.PureComponent {
           <Dialog
             data={camera}
             handleClose={this.handleCameraClose} />
+        }
+        {editing &&
+          <ButtonBase
+            className={classes.editOverlay}
+            onClick={() => editing && handleCardEdit(groupId, cardId, card)} />
         }
       </Grid>
     );
