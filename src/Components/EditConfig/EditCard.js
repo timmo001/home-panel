@@ -67,17 +67,15 @@ class EditCard extends React.PureComponent {
   });
 
   handleConfigChange = (path, value) => {
-    const cardLcl = clone(this.props.card),
+    const cardLcl = clone(this.state.card),
       defaultConfigLcl = clone(defaultConfig);
 
     console.log('card pre:', cardLcl);
 
     const key = path.pop();
     cardLcl[key] = value;
-    console.log('card[key]:', cardLcl[key]);
-    const defaultCard = defaultConfigLcl.items[0].cards.find(c => c.type === value)
+    const defaultCard = defaultConfigLcl.items[0].cards.find(c => c.type === cardLcl.type)
       || defaultConfigLcl.items[0].cards[0];
-    console.log('defaultCard:', defaultCard);
     if (key === 'type') {
       // Delete any unused props and set the new props
       Object.keys(cardLcl).map(c => !defaultCard[c] ? delete cardLcl[c] : cardLcl[c] = defaultCard[c]);
@@ -85,8 +83,6 @@ class EditCard extends React.PureComponent {
     }
     // Fix type if not set
     if (!cardLcl.type) cardLcl.type = defaultConfigLcl.items[0].cards[0].type;
-    console.log('defaultCard:', defaultCard);
-    console.log('card:', cardLcl);
     this.setState({ defaultCard, card: cardLcl });
   };
 
