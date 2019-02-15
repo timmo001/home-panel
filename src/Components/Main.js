@@ -7,6 +7,7 @@ import PageNavigation from './PageNavigation';
 import Radio from './Radio/Radio';
 import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
+import EditGroup from './EditConfig/EditGroup';
 import defaultConfig from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
 import clone from './Common/clone';
@@ -133,6 +134,12 @@ class Main extends React.PureComponent {
 
   handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
+  handleGroupAdd = (groupId) =>
+    this.setState({ addingGroup: { groupId, group: clone(defaultConfig.items[0]) } });
+
+  handleGroupEdit = (groupId, group) =>
+    this.setState({ editingGroup: { groupId, group: clone(group) } });
+
   handleCardAddDone = (path, card) => {
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
@@ -153,9 +160,22 @@ class Main extends React.PureComponent {
     this.setState({ editingPage: undefined });
   };
 
+  handleGroupAddDone = (id, group) => {
+    id && this.handleConfigChange(['items', id], clone(group));
+    this.setState({ addingGroup: undefined });
+  };
+
+  handleGroupEditDone = (id, group) => {
+    id && this.handleConfigChange(['items', id], clone(group));
+    this.setState({ editingPage: undefined });
+  };
+
   render() {
-    const { classes, haUrl, haConfig, entities, config, themes, theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage, editing, addingCard, editingCard, addingPage, editingPage } = this.state;
+    const { classes, haUrl, haConfig, entities, config, themes,
+      theme, handleChange } = this.props;
+    const { moved, over, radioShown, currentPage, editing,
+      addingCard, editingCard, addingPage, editingPage,
+      addingGroup, editingGroup } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
 
@@ -184,6 +204,8 @@ class Main extends React.PureComponent {
             editing={editing}
             handleCardEdit={this.handleCardEdit}
             handleCardAdd={this.handleCardAdd}
+            handleGroupAdd={this.handleGroupAdd}
+            handleGroupEdit={this.handleGroupEdit}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
@@ -246,6 +268,21 @@ class Main extends React.PureComponent {
             id={editingPage.id}
             page={editingPage.page}
             handlePageEditDone={this.handlePageEditDone} />
+        }
+        {addingGroup &&
+          <EditGroup
+            add
+            config={config}
+            id={addingGroup.groupId}
+            group={addingGroup.group}
+            handleGroupAddDone={this.handleGroupAddDone} />
+        }
+        {editingGroup &&
+          <EditGroup
+            config={config}
+            id={editingGroup.groupId}
+            group={editingGroup.group}
+            handleGroupEditDone={this.handleGroupEditDone} />
         }
       </div>
     );

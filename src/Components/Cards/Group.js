@@ -91,7 +91,8 @@ class Group extends React.PureComponent {
 
   render() {
     const { classes, haUrl, haConfig, config, editing, handleCardEdit,
-      handleCardAdd, theme, handleChange, entities, groupId, group } = this.props;
+      handleCardAdd, theme, handleChange, entities, groupId, group,
+      handleGroupEdit } = this.props;
     return (
       <Slide direction="up" in mountOnEnter unmountOnExit>
         <div>
@@ -99,8 +100,8 @@ class Group extends React.PureComponent {
             <ButtonBase
               className={classes.groupButton}
               focusRipple
-              disabled={this.checkGroupToggle(group, entities)}
-              onClick={() => this.handleGroupToggle(group, entities)}>
+              disabled={editing ? false : true || this.checkGroupToggle(group, entities)}
+              onClick={() => editing ? handleGroupEdit(groupId, group) : this.handleGroupToggle(group, entities)}>
               <Typography className={classes.title} variant="h4" gutterBottom>
                 {group.name}
               </Typography>

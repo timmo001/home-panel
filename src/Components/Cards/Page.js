@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Group from './Group';
+import AddGroup from './AddGroup';
 
 const styles = theme => ({
   grid: {
@@ -19,7 +20,8 @@ class Page extends React.PureComponent {
 
   render() {
     const { classes, config, editing, handleCardEdit, handleCardAdd, theme,
-      page, handleChange, haUrl, haConfig, entities } = this.props;
+      page, handleChange, haUrl, haConfig, entities,
+      handleGroupEdit, handleGroupAdd } = this.props;
 
     return (
       <Grid
@@ -34,6 +36,8 @@ class Page extends React.PureComponent {
             editing={editing}
             handleCardEdit={handleCardEdit}
             handleCardAdd={handleCardAdd}
+            handleGroupEdit={handleGroupEdit}
+            handleGroupAdd={handleGroupAdd}
             theme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
@@ -43,6 +47,11 @@ class Page extends React.PureComponent {
             handleChange={handleChange} />
             : null
         })}
+        {editing &&
+          <AddGroup
+            handleGroupAdd={handleGroupAdd}
+            groupId={config.items.length + 1} />
+        }
       </Grid>
     );
   }
@@ -54,6 +63,8 @@ Page.propTypes = {
   editing: PropTypes.bool.isRequired,
   handleCardEdit: PropTypes.func.isRequired,
   handleCardAdd: PropTypes.func.isRequired,
+  handleGroupEdit: PropTypes.func.isRequired,
+  handleGroupAdd: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   page: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
