@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import { getCardElevation, getSquareCards } from '../../Common/config';
 import card from '../../Common/Style/card';
 
@@ -22,7 +23,8 @@ const styles = theme => ({
 
 class Frame extends React.PureComponent {
   render() {
-    const { classes, config, card } = this.props;
+    const { classes, config, card, editing,
+      handleCardEdit, groupId, cardId } = this.props;
     const { name, url } = card;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
@@ -34,13 +36,21 @@ class Frame extends React.PureComponent {
           '--height': card.height ? card.height : 1,
         }}
         item>
-        <Card className={classes.frameInnerContainer} elevation={cardElevation} square={squareCards}>
+        <Card
+          className={classes.frameInnerContainer}
+          elevation={cardElevation}
+          square={squareCards}>
           <iframe
             className={classes.frame}
             title={name}
             src={url}
             sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts allow-presentation"
             allowFullScreen={true} />
+          {editing &&
+            <ButtonBase
+              className={classes.editOverlay}
+              onClick={() => editing && handleCardEdit(groupId, cardId, card)} />
+          }
         </Card>
       </Grid>
     );
