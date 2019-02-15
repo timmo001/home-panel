@@ -160,7 +160,7 @@ class Group extends React.PureComponent {
                     haConfig={haConfig}
                     entities={entities}
                     groupId={groupId}
-                    cardId={9999}
+                    cardId={group.cards.length + 1}
                     card={{ type: 'add' }}
                     handleChange={handleChange} />
                 }
