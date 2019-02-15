@@ -238,11 +238,12 @@ class Root extends React.PureComponent {
       .retry(2)
       .timeout({
         response: 5000,
-        deadline: 30000,
+        deadline: 30000
       })
       .then(res => {
         if (res.status === 200) {
-          this.setState(config, () => this.setTheme());
+          console.log('config changed:', config);
+          this.setState({ config }, () => this.setTheme());
         } else {
           console.log('An error occurred: ', res.status);
         }
