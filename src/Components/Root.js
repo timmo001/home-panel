@@ -242,7 +242,6 @@ class Root extends React.PureComponent {
       })
       .then(res => {
         if (res.status === 200) {
-          console.log('config changed:', config);
           this.setState({ config }, () => this.setTheme());
         } else {
           console.log('An error occurred: ', res.status);
