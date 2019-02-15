@@ -153,6 +153,11 @@ class Hass extends React.PureComponent {
                     fontSize: card.size && card.size.state && card.size.state
                   }} />
                 }
+                {editing &&
+                  <ButtonBase
+                    className={classes.editOverlay}
+                    onClick={() => editing && handleCardEdit(groupId, cardId, card)} />
+                }
               </CardContent>
             </Card>
             :
