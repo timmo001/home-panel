@@ -91,9 +91,11 @@ class EditPage extends React.PureComponent {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDeleteConfirm} color="primary">
-            Delete
-          </Button>
+          {!add &&
+            <Button onClick={this.handleDeleteConfirm} color="primary">
+              Delete
+            </Button>
+          }
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel

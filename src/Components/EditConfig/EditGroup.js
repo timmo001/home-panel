@@ -30,8 +30,10 @@ class EditGroup extends React.PureComponent {
   });
 
   handleSave = () => this.handleClose(() => {
-    this.props.add ? this.props.handleGroupAddDone(this.props.id, this.state.group)
-      : this.props.handleGroupEditDone(this.props.id, this.state.group);
+    let group = this.state.group;
+    if (this.props.add) group.cards = [];
+    this.props.add ? this.props.handleGroupAddDone(this.props.id, group)
+      : this.props.handleGroupEditDone(this.props.id, group);
   });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -77,9 +79,11 @@ class EditGroup extends React.PureComponent {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDeleteConfirm} color="primary">
-            Delete
-          </Button>
+          {!add &&
+            <Button onClick={this.handleDeleteConfirm} color="primary">
+              Delete
+            </Button>
+          }
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel

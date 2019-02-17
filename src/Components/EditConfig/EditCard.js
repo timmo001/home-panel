@@ -141,9 +141,11 @@ class EditCard extends React.PureComponent {
           {/* } */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDeleteConfirm} color="primary">
-            Delete
-          </Button>
+          {!add &&
+            <Button onClick={this.handleDeleteConfirm} color="primary">
+              Delete
+            </Button>
+          }
           {/* <Button onClick={this.handleJSONEditor} color="primary">
             {jsonEdit ? 'Standard Editor' : 'JSON Editor'}
           </Button> */}
