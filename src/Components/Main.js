@@ -167,7 +167,7 @@ class Main extends React.PureComponent {
 
   handleGroupEditDone = (id, group) => {
     id && this.handleConfigChange(['items', id], clone(group));
-    this.setState({ editingPage: undefined });
+    this.setState({ editingGroup: undefined });
   };
 
   render() {
