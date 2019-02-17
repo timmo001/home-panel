@@ -106,6 +106,7 @@ class Main extends React.PureComponent {
   handleEditingComplete = () => this.setState({ editing: false });
 
   handleConfigChange = (path, value) => {
+    console.log(clone(path), clone(value));
     let config = clone(this.props.config);
     // Set the new value
     const lastItem = path.pop();
@@ -114,7 +115,6 @@ class Main extends React.PureComponent {
       secondLastItem.splice(secondLastItem.indexOf(lastItem));
     else
       if (isObject(value)) {
-        if (value.cards) value.cards = [{ ...defaultConfig.items[0].cards[0] }];
         const newValue = JSON.parse(JSON.stringify(value));
         if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
         secondLastItem[lastItem] = newValue;

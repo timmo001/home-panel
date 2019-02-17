@@ -205,8 +205,9 @@ class Root extends React.PureComponent {
       themeId = -1;
     if (themeId === -1) {
       if (config.theme.auto && this.state.entities && config.theme.auto.sensor) {
-        const state = this.state.entities.find(entity => entity[0] === config.theme.auto.sensor)[1].state;
-        this.props.setTheme(state <= config.theme.auto.below ? darkTheme : lightTheme);
+        const sensor = this.state.entities.find(entity => entity[0] === config.theme.auto.sensor);
+        if (sensor)
+          this.props.setTheme(sensor[1].state <= config.theme.auto.below ? darkTheme : lightTheme);
       } else {
         // theme from sunlight
         console.log('Revert to sunlight sensor');

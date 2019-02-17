@@ -10,7 +10,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import defaultConfig from './defaultConfig.json';
+import ConfirmDialog from '../Common/ConfirmDialog';
 import Item from './Item';
+import clone from '../Common/clone';
 
 const styles = theme => ({
   navigation: {
@@ -40,20 +42,27 @@ class EditPage extends React.PureComponent {
       : this.props.handlePageEditDone(this.props.id, this.state.page);
   });
 
+  handleDeleteConfirm = () => this.setState({ confirm: true });
+
+  handleDeleteConfirmClose = () => this.setState({ confirm: false });
+
   handleDelete = () => this.handleClose(() => {
-    this.props.add ? this.props.handlePageAddDone(this.props.id)
-      : this.props.handlePageEditDone(this.props.id);
+    this.setState({ confirm: false }, () => {
+      const path = ['pages', this.props.id];
+      this.props.add ? this.props.handleCardAddDone(path)
+        : this.props.handleCardEditDone(path);
+    });
   });
 
   handleConfigChange = (path, value) => {
-    const { page } = this.props;
+    let page = clone(this.state.page);
     page[path.pop()] = value;
     this.setState({ page });
   };
 
   render() {
     const { classes, add, id } = this.props;
-    const { open, page } = this.state;
+    const { open, page, confirm } = this.state;
 
     return (
       <Dialog
@@ -82,7 +91,7 @@ class EditPage extends React.PureComponent {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDelete} color="primary">
+          <Button onClick={this.handleDeleteConfirm} color="primary">
             Delete
           </Button>
           <div className={classes.fill} />
@@ -93,6 +102,12 @@ class EditPage extends React.PureComponent {
             {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
+        {confirm &&
+          <ConfirmDialog
+            text="Do you want to delete this card?"
+            handleClose={this.handleDeleteConfirmClose}
+            handleConfirm={this.handleDelete} />
+        }
       </Dialog>
     );
   }

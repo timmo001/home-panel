@@ -8,12 +8,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
+import clone from '../Common/clone';
 
-const styles = theme => ({
-  navigation: {
-    opacity: '0.94',
-    background: theme.palette.backgrounds.navigation
-  },
+const styles = () => ({
   fill: {
     flex: '1 1 auto'
   }
@@ -37,13 +34,20 @@ class EditGroup extends React.PureComponent {
       : this.props.handleGroupEditDone(this.props.id, this.state.group);
   });
 
+  handleDeleteConfirm = () => this.setState({ confirm: true });
+
+  handleDeleteConfirmClose = () => this.setState({ confirm: false });
+
   handleDelete = () => this.handleClose(() => {
-    this.props.add ? this.props.handleGroupAddDone(this.props.id)
-      : this.props.handleGroupEditDone(this.props.id);
+    this.setState({ confirm: false }, () => {
+      const path = ['items', this.props.id];
+      this.props.add ? this.props.handleCardAddDone(path)
+        : this.props.handleCardEditDone(path);
+    });
   });
 
   handleConfigChange = (path, value) => {
-    const { group } = this.props;
+    let group = clone(this.state.group);
     group[path.pop()] = value;
     this.setState({ group });
   };
@@ -51,10 +55,8 @@ class EditGroup extends React.PureComponent {
   render() {
     const { classes, add, id } = this.props;
     const { open, group } = this.state;
-    const defaultGroup = defaultConfig.items[0];
-    defaultGroup.cards = [];
-
-    console.log(id, group, defaultGroup);
+    let defaultGroup = defaultConfig.items[0];
+    delete defaultGroup.cards;
 
     return (
       <Dialog
@@ -75,7 +77,7 @@ class EditGroup extends React.PureComponent {
           )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleDelete} color="primary">
+          <Button onClick={this.handleDeleteConfirm} color="primary">
             Delete
           </Button>
           <div className={classes.fill} />
