@@ -124,7 +124,7 @@ class Main extends React.PureComponent {
 
   handleCardAdd = (groupId, cardId) =>
     this.setState({
-      addingCard: { groupId, cardId, card: clone(defaultConfig.items[0].cards[0]) }
+      addingCard: { groupId, cardId, card: clone(defaultConfig).items[0].cards[0] }
     });
 
   handleCardEdit = (groupId, cardId, card) =>
@@ -135,7 +135,7 @@ class Main extends React.PureComponent {
   handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
   handleGroupAdd = (pageId, groupId) => {
-    let group = clone(defaultConfig.items[0]);
+    let group = clone(defaultConfig).items[0];
     group.page = pageId;
     this.setState({ addingGroup: { groupId, group } });
   };
@@ -262,7 +262,7 @@ class Main extends React.PureComponent {
             config={config}
             add
             id={pages.length + 1}
-            page={defaultConfig.pages[0]}
+            page={clone(defaultConfig).pages[0]}
             handlePageAddDone={this.handlePageAddDone} />
         }
         {editingPage &&
