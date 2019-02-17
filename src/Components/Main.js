@@ -134,8 +134,11 @@ class Main extends React.PureComponent {
 
   handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
 
-  handleGroupAdd = (groupId) =>
-    this.setState({ addingGroup: { groupId, group: clone(defaultConfig.items[0]) } });
+  handleGroupAdd = (pageId, groupId) => {
+    let group = clone(defaultConfig.items[0]);
+    group.page = pageId;
+    this.setState({ addingGroup: { groupId, group } });
+  };
 
   handleGroupEdit = (groupId, group) =>
     this.setState({ editingGroup: { groupId, group: clone(group) } });

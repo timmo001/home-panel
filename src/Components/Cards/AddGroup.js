@@ -14,7 +14,7 @@ const styles = theme => ({
 
 class AddGroup extends React.PureComponent {
   render() {
-    const { classes, handleGroupAdd, groupId } = this.props;
+    const { classes, handleGroupAdd, pageId, groupId } = this.props;
 
     return (
       <Grid className={classes.group} style={{ '--width': 2 }} item>
@@ -22,7 +22,7 @@ class AddGroup extends React.PureComponent {
           className={classes.groupButton}
           style={{ width: 300 }}
           focusRipple
-          onClick={() => handleGroupAdd(groupId)}>
+          onClick={() => handleGroupAdd(pageId, groupId)}>
           <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
         </ButtonBase>
       </Grid>
@@ -33,6 +33,7 @@ class AddGroup extends React.PureComponent {
 AddGroup.propTypes = {
   classes: PropTypes.object.isRequired,
   handleGroupAdd: PropTypes.func.isRequired,
+  pageId: PropTypes.number.isRequired,
   groupId: PropTypes.number.isRequired
 };
 
