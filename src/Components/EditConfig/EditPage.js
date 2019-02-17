@@ -106,7 +106,7 @@ class EditPage extends React.PureComponent {
         </DialogActions>
         {confirm &&
           <ConfirmDialog
-            text="Do you want to delete this card?"
+            text="Do you want to delete this page?"
             handleClose={this.handleDeleteConfirmClose}
             handleConfirm={this.handleDelete} />
         }

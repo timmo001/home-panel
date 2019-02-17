@@ -95,7 +95,7 @@ class EditGroup extends React.PureComponent {
         </DialogActions>
         {confirm &&
           <ConfirmDialog
-            text="Do you want to delete this card?"
+            text="Do you want to delete this group?"
             handleClose={this.handleDeleteConfirmClose}
             handleConfirm={this.handleDelete} />
         }

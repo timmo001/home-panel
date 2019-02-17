@@ -106,7 +106,7 @@ class Main extends React.PureComponent {
   handleEditingComplete = () => this.setState({ editing: false });
 
   handleConfigChange = (path, value) => {
-    console.log(clone(path), clone(value));
+    console.log('handleConfigChange', clone(path), clone(value));
     let config = clone(this.props.config);
     // Set the new value
     const lastItem = path.pop();
@@ -122,10 +122,12 @@ class Main extends React.PureComponent {
     this.props.handleConfigChange(config);
   };
 
-  handleCardAdd = (groupId, cardId) =>
+  handleCardAdd = (groupId, cardId) => {
+    console.log('defaultConfig', clone(defaultConfig));
     this.setState({
       addingCard: { groupId, cardId, card: clone(defaultConfig).items[0].cards[0] }
     });
+  };
 
   handleCardEdit = (groupId, cardId, card) =>
     this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
@@ -144,31 +146,37 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
 
   handleCardAddDone = (path, card) => {
+    console.log('handleCardAddDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
   };
 
   handleCardEditDone = (path, card) => {
+    console.log('handleCardEditDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAddDone = (id, page) => {
+    console.log('handlePageAddDone', id, page);
     id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ addingPage: undefined });
   };
 
   handlePageEditDone = (id, page) => {
+    console.log('handlePageEditDone', id, page);
     id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ editingPage: undefined });
   };
 
   handleGroupAddDone = (id, group) => {
+    console.log('handleGroupAddDone', id, group);
     id && this.handleConfigChange(['items', id], clone(group));
     this.setState({ addingGroup: undefined });
   };
 
   handleGroupEditDone = (id, group) => {
+    console.log('handleGroupEditDone', id, group);
     id && this.handleConfigChange(['items', id], clone(group));
     this.setState({ editingGroup: undefined });
   };
