@@ -51,7 +51,7 @@ class Page extends React.PureComponent {
           <AddGroup
             handleGroupAdd={handleGroupAdd}
             pageId={page.id}
-            groupId={config.items.length + 1} />
+            groupId={config.items.length} />
         }
       </Grid>
     );
