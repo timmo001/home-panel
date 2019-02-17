@@ -99,9 +99,9 @@ class EditGroup extends React.PureComponent {
 
 EditGroup.propTypes = {
   classes: PropTypes.object.isRequired,
-  pageId: PropTypes.number.isRequired,
   id: PropTypes.number.isRequired,
   group: PropTypes.object.isRequired,
+  pageId: PropTypes.number,
   add: PropTypes.bool,
   handleGroupAddDone: PropTypes.func,
   handleGroupEditDone: PropTypes.func
