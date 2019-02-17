@@ -6,6 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ConfirmDialog from '../Common/ConfirmDialog';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
 import clone from '../Common/clone';
@@ -43,8 +44,8 @@ class EditGroup extends React.PureComponent {
   handleDelete = () => this.handleClose(() => {
     this.setState({ confirm: false }, () => {
       const path = ['items', this.props.id];
-      this.props.add ? this.props.handleCardAddDone(path)
-        : this.props.handleCardEditDone(path);
+      this.props.add ? this.props.handleGroupAddDone(path)
+        : this.props.handleGroupEditDone(path);
     });
   });
 
@@ -56,7 +57,7 @@ class EditGroup extends React.PureComponent {
 
   render() {
     const { classes, add, id } = this.props;
-    const { open, group } = this.state;
+    const { open, group, confirm } = this.state;
     let defaultGroup = defaultConfig.items[0];
     delete defaultGroup.cards;
 
@@ -92,6 +93,12 @@ class EditGroup extends React.PureComponent {
             {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
+        {confirm &&
+          <ConfirmDialog
+            text="Do you want to delete this card?"
+            handleClose={this.handleDeleteConfirmClose}
+            handleConfirm={this.handleDelete} />
+        }
       </Dialog>
     );
   }
