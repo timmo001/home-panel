@@ -12,7 +12,7 @@
     "home-assistant-js-websocket": "3.2.5",
     "is-plain-obj": "1.1.0",
     "moment": "2.24.0",
-    "prop-types": "15.6.2",
+    "prop-types": "15.7.1",
     "react": "16.8.1",
     "react-animated-weather": "2.0.0",
     "react-autolink-text2": "3.2.0",
