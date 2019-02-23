@@ -107,8 +107,7 @@ Item.propTypes = {
   ]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
-  handleConfigChange: PropTypes.func.isRequired,
-  canDelete: PropTypes.bool
+  handleConfigChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Item);

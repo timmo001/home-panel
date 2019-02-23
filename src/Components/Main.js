@@ -103,8 +103,6 @@ class Main extends React.PureComponent {
       this.setState({ editing: false })
       : this.setState({ editing: true });
 
-  handleEditingComplete = () => this.setState({ editing: false });
-
   handleConfigChange = (path, value) => {
     console.log('handleConfigChange', clone(path), clone(value));
     let config = clone(this.props.config);
