@@ -33,9 +33,9 @@ RUN \
     && echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.63.0-r0 \
+        curl=7.64.0-r1 \
         git=2.20.1-r0 \
-        tar=1.31-r0 \
+        tar=1.32-r0 \
         yarn=1.12.3-r0 \
     \
     && apk add --no-cache \
