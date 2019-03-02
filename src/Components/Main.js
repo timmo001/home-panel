@@ -8,9 +8,11 @@ import Radio from './Radio/Radio';
 import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import EditGroup from './EditConfig/EditGroup';
-import defaultConfig from './EditConfig/defaultConfig.json';
+import dc from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
 import clone from './Common/clone';
+
+const defaultConfig = clone(dc);
 
 const styles = () => ({
   root: {
@@ -124,7 +126,7 @@ class Main extends React.PureComponent {
   };
 
   handleCardAdd = (groupId, cardId) => {
-    console.log('defaultConfig', clone(defaultConfig));
+    console.log('handleCardAdd', groupId, cardId);
     this.setState({
       addingCard: {
         groupId,
@@ -134,22 +136,32 @@ class Main extends React.PureComponent {
     });
   };
 
-  handleCardEdit = (groupId, cardId, card) =>
+  handleCardEdit = (groupId, cardId, card) => {
+    console.log('handleCardEdit', groupId, cardId, card);
     this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
+  };
 
-  handlePageAdd = () => this.setState({ addingPage: true });
+  handlePageAdd = () => {
+    console.log('handlePageAdd');
+    this.setState({ addingPage: true });
+  };
 
-  handlePageEdit = (id, page) =>
+  handlePageEdit = (id, page) => {
+    console.log('handlePageEdit', id, page);
     this.setState({ editingPage: { id, page: clone(page) } });
+  };
 
   handleGroupAdd = (pageId, groupId) => {
+    console.log('handleGroupAdd', pageId, groupId);
     let group = clone(defaultConfig).items[0];
     group.page = pageId;
     this.setState({ addingGroup: { groupId, group } });
   };
 
-  handleGroupEdit = (groupId, group) =>
+  handleGroupEdit = (groupId, group) => {
+    console.log('handleGroupEdit', groupId, group);
     this.setState({ editingGroup: { groupId, group: clone(group) } });
+  };
 
   handleCardAddDone = (path, card) => {
     console.log('handleCardAddDone', path, card);
@@ -163,27 +175,27 @@ class Main extends React.PureComponent {
     this.setState({ editingCard: undefined });
   };
 
-  handlePageAddDone = (id, page) => {
-    console.log('handlePageAddDone', id, page);
-    id && this.handleConfigChange(['pages', id], clone(page));
+  handlePageAddDone = (path, page) => {
+    console.log('handlePageAddDone', path, page);
+    path && this.handleConfigChange(path, clone(page));
     this.setState({ addingPage: undefined });
   };
 
-  handlePageEditDone = (id, page) => {
-    console.log('handlePageEditDone', id, page);
-    id && this.handleConfigChange(['pages', id], clone(page));
+  handlePageEditDone = (path, page) => {
+    console.log('handlePageEditDone', path, page);
+    path && this.handleConfigChange(path, clone(page));
     this.setState({ editingPage: undefined });
   };
 
-  handleGroupAddDone = (id, group) => {
-    console.log('handleGroupAddDone', id, group);
-    id && this.handleConfigChange(['items', id], clone(group));
+  handleGroupAddDone = (path, group) => {
+    console.log('handleGroupAddDone', path, group);
+    path && this.handleConfigChange(path, clone(group));
     this.setState({ addingGroup: undefined });
   };
 
-  handleGroupEditDone = (id, group) => {
-    console.log('handleGroupEditDone', id, group);
-    id && this.handleConfigChange(['items', id], clone(group));
+  handleGroupEditDone = (path, group) => {
+    console.log('handleGroupEditDone', path, group);
+    path && this.handleConfigChange(path, clone(group));
     this.setState({ editingGroup: undefined });
   };
 
