@@ -22,6 +22,9 @@ var themes = [
       type: 'light',
       primary: blueGrey,
       secondary: grey,
+      typography: {
+        useNextVariants: true
+      },
       backgrounds: {
         main: grey[100],
         default: grey[200],
@@ -56,6 +59,9 @@ var themes = [
       type: 'dark',
       primary: blueGrey,
       secondary: grey,
+      typography: {
+        useNextVariants: true
+      },
       backgrounds: {
         main: grey[900],
         default: grey[800],
