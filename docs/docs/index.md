@@ -20,20 +20,20 @@
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
 A touch-compatible web frontend for controlling the home. Integrates with
- [Home Assistant][hass] as an alternative / additional frontend.
+[Home Assistant][hass] as an alternative / additional frontend.
 
 ![banner][banner]
 
 - Card based user interface with support for [Home Assistant][hass]
 - Supports MJPEG and related image-based camera/image feeds. Images can also
- be used
+  be used
 - Light control with brightness, temperature, color and effects support
 - Supports Radio playback from TuneIn
 - Add weather and weather icons using Home Assistant's
- [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
- component
+  [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
+  component
 - Made for touch screens with a sideways scrolling Material
- Design interface. (Compatible with desktops as well)
+  Design interface. (Compatible with desktops as well)
 - Customizable interface
 - Custom theme support
 
@@ -47,9 +47,9 @@ You can use a demo of this app [here][demo-app].
 
 [Support / Discussion][forum]
 
-[Contribution Guidelines][CONTRIBUTING]
+[Contribution Guidelines][contributing]
 
-[Code of Conduct][CODE_OF_CONDUCT]
+[Code of Conduct][code_of_conduct]
 
 ## Screenshots
 
@@ -69,10 +69,10 @@ You can use a demo of this app [here][demo-app].
 [banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
-[CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
+[code_of_conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
 [commits]: https://github.com/timmo001/home-panel/commits/master
-[CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel

@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import ConfirmDialog from '../Common/ConfirmDialog';
-import defaultConfig from './defaultConfig.json';
-import Item from './Item';
-import clone from '../Common/clone';
+import React from "react";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import ConfirmDialog from "../Common/ConfirmDialog";
+import defaultConfig from "./defaultConfig.json";
+import Item from "./Item";
+import clone from "../Common/clone";
 
 const styles = () => ({
   fill: {
-    flex: '1 1 auto'
+    flex: "1 1 auto"
   }
 });
 
@@ -25,29 +25,35 @@ class EditGroup extends React.PureComponent {
 
   handleClose = cb => this.setState({ open: false }, cb);
 
-  handleCancel = () => this.handleClose(() => {
-    this.props.add ? this.props.handleGroupAddDone()
-      : this.props.handleGroupEditDone();
-  });
+  handleCancel = () =>
+    this.handleClose(() => {
+      this.props.add
+        ? this.props.handleGroupAddDone()
+        : this.props.handleGroupEditDone();
+    });
 
-  handleSave = () => this.handleClose(() => {
-    let group = this.state.group;
-    if (this.props.add) group.cards = [];
-    this.props.add ? this.props.handleGroupAddDone(this.props.id, group)
-      : this.props.handleGroupEditDone(this.props.id, group);
-  });
+  handleSave = () =>
+    this.handleClose(() => {
+      let group = this.state.group;
+      if (this.props.add) group.cards = [];
+      this.props.add
+        ? this.props.handleGroupAddDone(this.props.id, group)
+        : this.props.handleGroupEditDone(this.props.id, group);
+    });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
 
   handleDeleteConfirmClose = () => this.setState({ confirm: false });
 
-  handleDelete = () => this.handleClose(() => {
-    this.setState({ confirm: false }, () => {
-      const path = ['items', this.props.id];
-      this.props.add ? this.props.handleGroupAddDone(path)
-        : this.props.handleGroupEditDone(path);
+  handleDelete = () =>
+    this.handleClose(() => {
+      this.setState({ confirm: false }, () => {
+        const path = ["items", this.props.id];
+        this.props.add
+          ? this.props.handleGroupAddDone(path)
+          : this.props.handleGroupEditDone(path);
+      });
     });
-  });
 
   handleConfigChange = (path, value) => {
     let group = clone(this.state.group);
@@ -62,43 +68,44 @@ class EditGroup extends React.PureComponent {
     delete defaultGroup.cards;
 
     return (
-      <Dialog
-        fullWidth
-        open={open}
-        aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">{add ? 'Add' : 'Edit'} Group</DialogTitle>
+      <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">
+          {add ? "Add" : "Edit"} Group
+        </DialogTitle>
         <DialogContent>
-          {Object.keys(defaultGroup).map((i, x) =>
+          {Object.keys(defaultGroup).map((i, x) => (
             <Item
               key={x}
               objKey={i}
               defaultItem={defaultGroup[i]}
               item={group[i] !== undefined ? group[i] : defaultGroup[i]}
-              defaultItemPath={['items', 0, i]}
-              itemPath={['items', id, i]}
-              handleConfigChange={this.handleConfigChange} />
-          )}
+              defaultItemPath={["items", 0, i]}
+              itemPath={["items", id, i]}
+              handleConfigChange={this.handleConfigChange}
+            />
+          ))}
         </DialogContent>
         <DialogActions>
-          {!add &&
+          {!add && (
             <Button onClick={this.handleDeleteConfirm} color="primary">
               Delete
             </Button>
-          }
+          )}
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
           <Button onClick={this.handleSave} color="primary">
-            {add ? 'Add' : 'Save'}
+            {add ? "Add" : "Save"}
           </Button>
         </DialogActions>
-        {confirm &&
+        {confirm && (
           <ConfirmDialog
             text="Do you want to delete this group?"
             handleClose={this.handleDeleteConfirmClose}
-            handleConfirm={this.handleDelete} />
-        }
+            handleConfirm={this.handleDelete}
+          />
+        )}
       </Dialog>
     );
   }

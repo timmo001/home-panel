@@ -1,44 +1,44 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import withStyles from '@material-ui/core/styles/withStyles';
-import MUIInput from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Checkbox from '@material-ui/core/Checkbox';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import IconButton from '@material-ui/core/IconButton';
-import AutoLinkText from 'react-autolink-text2';
-import properCase from '../Common/properCase';
-import clone from '../Common/clone';
-import defaultConfig from './defaultConfig.json';
-import configExplanations from './configExplanations.json';
+import React from "react";
+import PropTypes from "prop-types";
+import classnames from "classnames";
+import withStyles from "@material-ui/core/styles/withStyles";
+import MUIInput from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Checkbox from "@material-ui/core/Checkbox";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import AutoLinkText from "react-autolink-text2";
+import properCase from "../Common/properCase";
+import clone from "../Common/clone";
+import defaultConfig from "./defaultConfig.json";
+import configExplanations from "./configExplanations.json";
 
 const styles = () => ({
   input: {
-    margin: '4px 0',
-    flex: '1 1 auto',
-    flexDirection: 'row',
-    alignItems: 'baseline'
+    margin: "4px 0",
+    flex: "1 1 auto",
+    flexDirection: "row",
+    alignItems: "baseline"
   },
   checkboxHelper: {
-    transform: 'translateY(-50%)'
+    transform: "translateY(-50%)"
   },
   resetIconButton: {
     height: 32,
     width: 32,
     marginRight: 8,
-    transform: 'translateY(4px)'
+    transform: "translateY(4px)"
   },
   resetInputIconButton: {
-    transform: 'translateY(12px)'
+    transform: "translateY(12px)"
   },
   resetIcon: {
     fontSize: 22,
-    transform: 'translateY(-8px)'
+    transform: "translateY(-8px)"
   },
   select: {
     marginRight: 8
@@ -48,21 +48,39 @@ const styles = () => ({
 const cardItems = clone(defaultConfig.items[0].cards);
 
 class Input extends React.PureComponent {
-
   render() {
-    const { classes, name, defaultValue, defaultItemPath, itemPath, handleConfigChange } = this.props;
-    const type = defaultItemPath.findIndex(i => i === 'cards') > -1 && this.props.name === 'type' ? 'card_type'
-      : defaultValue === 'true' ? 'boolean'
-        : defaultValue === 'false' ? 'boolean'
-          : typeof defaultValue;
-    const helpText = defaultItemPath.reduce((o, k) => o[k] = o[k] || {}, configExplanations);
-    const value = this.props.value === 'true' ? true :
-      this.props.value === 'false' ? false :
-        this.props.value;
+    const {
+      classes,
+      name,
+      defaultValue,
+      defaultItemPath,
+      itemPath,
+      handleConfigChange
+    } = this.props;
+    const type =
+      defaultItemPath.findIndex(i => i === "cards") > -1 &&
+      this.props.name === "type"
+        ? "card_type"
+        : defaultValue === "true"
+        ? "boolean"
+        : defaultValue === "false"
+        ? "boolean"
+        : typeof defaultValue;
+    const helpText = defaultItemPath.reduce(
+      (o, k) => (o[k] = o[k] || {}),
+      configExplanations
+    );
+    const value =
+      this.props.value === "true"
+        ? true
+        : this.props.value === "false"
+        ? false
+        : this.props.value;
 
     switch (type) {
-      default: return null;
-      case 'string':
+      default:
+        return null;
+      case "string":
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
@@ -71,66 +89,101 @@ class Input extends React.PureComponent {
               type="string"
               inputProps={{ autoCapitalize: "none" }}
               value={value}
-              onChange={event => handleConfigChange(itemPath, event.target.value)} />
+              onChange={event =>
+                handleConfigChange(itemPath, event.target.value)
+              }
+            />
             <IconButton
-              className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
+              className={classnames(
+                classes.resetIconButton,
+                classes.resetInputIconButton
+              )}
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
-              <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
+              <span
+                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+              />
             </IconButton>
-            {helpText &&
+            {helpText && (
               <FormHelperText id={name}>
                 <AutoLinkText
                   text={helpText}
-                  linkProps={{ target: '_blank', rel: 'nofollow' }} />
+                  linkProps={{ target: "_blank", rel: "nofollow" }}
+                />
               </FormHelperText>
-            }
+            )}
           </FormControl>
         );
-      case 'number': return (
-        <FormControl className={classes.input}>
-          <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
-          <MUIInput
-            id={name}
-            type="number"
-            inputProps={{ autoCapitalize: "none" }}
-            value={value}
-            onChange={event => handleConfigChange(itemPath, Number(event.target.value))} />
-          <IconButton
-            className={classnames(classes.resetIconButton, classes.resetInputIconButton)}
-            onClick={() => handleConfigChange(itemPath, defaultValue)}>
-            <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
-          </IconButton>
-          <FormHelperText id={name}><AutoLinkText text={helpText} /></FormHelperText>
-        </FormControl>
-      );
-      case 'boolean': return (
-        <FormControl className={classes.input}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                value="checked"
-                checked={value}
-                onChange={event => handleConfigChange(itemPath, event.target.checked)} />
-            }
-            label={properCase(name)} />
-          <IconButton className={classes.resetIconButton} onClick={() => handleConfigChange(itemPath, defaultValue)}>
-            <span className={classnames('mdi', 'mdi-restore', classes.resetIcon)} />
-          </IconButton>
-          <FormHelperText id={name} className={classes.checkboxHelper}><AutoLinkText text={helpText} /></FormHelperText>
-        </FormControl>
-      );
-      case 'card_type':
+      case "number":
+        return (
+          <FormControl className={classes.input}>
+            <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
+            <MUIInput
+              id={name}
+              type="number"
+              inputProps={{ autoCapitalize: "none" }}
+              value={value}
+              onChange={event =>
+                handleConfigChange(itemPath, Number(event.target.value))
+              }
+            />
+            <IconButton
+              className={classnames(
+                classes.resetIconButton,
+                classes.resetInputIconButton
+              )}
+              onClick={() => handleConfigChange(itemPath, defaultValue)}>
+              <span
+                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+              />
+            </IconButton>
+            <FormHelperText id={name}>
+              <AutoLinkText text={helpText} />
+            </FormHelperText>
+          </FormControl>
+        );
+      case "boolean":
+        return (
+          <FormControl className={classes.input}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  value="checked"
+                  checked={value}
+                  onChange={event =>
+                    handleConfigChange(itemPath, event.target.checked)
+                  }
+                />
+              }
+              label={properCase(name)}
+            />
+            <IconButton
+              className={classes.resetIconButton}
+              onClick={() => handleConfigChange(itemPath, defaultValue)}>
+              <span
+                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+              />
+            </IconButton>
+            <FormHelperText id={name} className={classes.checkboxHelper}>
+              <AutoLinkText text={helpText} />
+            </FormHelperText>
+          </FormControl>
+        );
+      case "card_type":
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
             <Select
               className={classes.select}
               value={value}
-              onChange={event => handleConfigChange(itemPath, event.target.value)}
+              onChange={event =>
+                handleConfigChange(itemPath, event.target.value)
+              }
               input={<MUIInput id={name} type="string" value={value} />}>
-              {cardItems.map((card, x) =>
-                <MenuItem key={x} value={card.type}>{card.type}</MenuItem>
-              )}
+              {cardItems.map((card, x) => (
+                <MenuItem key={x} value={card.type}>
+                  {card.type}
+                </MenuItem>
+              ))}
             </Select>
             {helpText && <FormHelperText>{helpText}</FormHelperText>}
           </FormControl>
@@ -145,16 +198,16 @@ Input.propTypes = {
   defaultValue: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]),
   value: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
-  handleConfigChange: PropTypes.func.isRequired,
+  handleConfigChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Input);

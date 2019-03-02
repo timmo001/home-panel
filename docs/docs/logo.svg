@@ -1,75 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="500mm"
-   height="500mm"
-   viewBox="0 0 500 500"
-   version="1.1"
-   id="svg1137"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="logo.svg"
-   inkscape:export-filename="/home/aidan/projects/js/home-panel/docs/resources/favicon.png"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96">
-  <defs
-     id="defs1131" />
-  <sodipodi:namedview
-     id="base"
-     pagecolor="#607d8b"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="1"
-     inkscape:pageshadow="2"
-     inkscape:zoom="0.35355339"
-     inkscape:cx="409.60471"
-     inkscape:cy="859.5454"
-     inkscape:document-units="mm"
-     inkscape:current-layer="g1692"
-     showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1014"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:pagecheckerboard="true" />
-  <metadata
-     id="metadata1134">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:cc="http://creativecommons.org/ns#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" width="500mm" height="500mm" viewBox="0 0 500 500" version="1.1" id="svg1137" inkscape:version="0.92.3 (2405546, 2018-03-11)" sodipodi:docname="logo.svg" inkscape:export-filename="/home/aidan/projects/js/home-panel/docs/resources/favicon.png" inkscape:export-xdpi="96" inkscape:export-ydpi="96">
+  <defs id="defs1131" />
+  <sodipodi:namedview id="base" pagecolor="#607d8b" bordercolor="#666666" borderopacity="1.0" inkscape:pageopacity="1" inkscape:pageshadow="2" inkscape:zoom="0.35355339" inkscape:cx="409.60471" inkscape:cy="859.5454" inkscape:document-units="mm" inkscape:current-layer="g1692" showgrid="false" inkscape:window-width="1920" inkscape:window-height="1014" inkscape:window-x="0" inkscape:window-y="0" inkscape:window-maximized="1" inkscape:pagecheckerboard="true" />
+  <metadata id="metadata1134">
     <rdf:RDF>
-      <cc:Work
-         rdf:about="">
+      <cc:Work rdf:about="">
         <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
         <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,203)">
-    <g
-       id="g1692"
-       transform="translate(225.80952,20.630958)">
-      <path
-         id="path842"
-         d="m 171.45297,209.34328 c -1.5e-4,-35.02329 -8.9e-4,-182.974241 -8.9e-4,-182.974241 H 57.963601 V 114.82404 H 44.454353 V 26.369039 H -40.6539 v 13.509248 c 0,0 11.388036,5.592777 13.509247,13.509247 H -56.864997 C -54.838192,45.823395 -43.35575,39.878287 -43.35575,39.878287 V 26.369039 H -123.072 v 88.455001 h 294.52408 l 4.5e-4,11.05688 H 3.9266139 v 83.46276 H -9.5826326 c -2.2515404,0 2.2515408,-83.46276 0,-83.46276 H -123.07156 l -4.4e-4,83.46276 M 24.190484,-205.69207 267.41895,37.536403 H 220.54078 V 258.43015 H -172.1598 V 37.536403 h -46.87819 z"
-         inkscape:connector-curvature="0"
-         style="fill:#e0e0e0;fill-opacity:1;stroke-width:24.54374886"
-         sodipodi:nodetypes="cccccccccccccccccccccccccccccc" />
+  <g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" transform="translate(0,203)">
+    <g id="g1692" transform="translate(225.80952,20.630958)">
+      <path id="path842" d="m 171.45297,209.34328 c -1.5e-4,-35.02329 -8.9e-4,-182.974241 -8.9e-4,-182.974241 H 57.963601 V 114.82404 H 44.454353 V 26.369039 H -40.6539 v 13.509248 c 0,0 11.388036,5.592777 13.509247,13.509247 H -56.864997 C -54.838192,45.823395 -43.35575,39.878287 -43.35575,39.878287 V 26.369039 H -123.072 v 88.455001 h 294.52408 l 4.5e-4,11.05688 H 3.9266139 v 83.46276 H -9.5826326 c -2.2515404,0 2.2515408,-83.46276 0,-83.46276 H -123.07156 l -4.4e-4,83.46276 M 24.190484,-205.69207 267.41895,37.536403 H 220.54078 V 258.43015 H -172.1598 V 37.536403 h -46.87819 z" inkscape:connector-curvature="0" style="fill:#e0e0e0;fill-opacity:1;stroke-width:24.54374886" sodipodi:nodetypes="cccccccccccccccccccccccccccccc" />
     </g>
-    <g
-       inkscape:groupmode="layer"
-       id="layer2"
-       inkscape:label="Foreground" />
+    <g inkscape:groupmode="layer" id="layer2" inkscape:label="Foreground" />
   </g>
 </svg>

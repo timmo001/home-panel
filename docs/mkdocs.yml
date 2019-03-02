@@ -9,33 +9,33 @@ repo_name: timmo001/home-panel
 repo_url: https://github.com/timmo001/home-panel
 
 # Copyright
-copyright: 'Copyright &copy; Timmo'
+copyright: "Copyright &copy; Timmo"
 
 # Configuration
 theme:
-  name: 'material'
-  language: 'en'
+  name: "material"
+  language: "en"
   palette:
-    primary: 'blue grey'
-    accent: 'light blue'
+    primary: "blue grey"
+    accent: "light blue"
   font:
-    text: 'Roboto'
-    code: 'Roboto Mono'
-  favicon: 'favicon.ico'
-  logo: 'logo.svg'
+    text: "Roboto"
+    code: "Roboto Mono"
+  favicon: "favicon.ico"
+  logo: "logo.svg"
 
 # Customization
 extra:
   search:
-    language: 'en'
+    language: "en"
     tokenizer: '[\s\-\.]+'
   social:
-    - type: 'github'
-      link: 'https://github.com/timmo001/home-panel'
-    - type: 'twitter'
-      link: 'https://twitter.com/timmo001'
-    - type: 'stack-overflow'
-      link: 'https://stackoverflow.com/users/1888770/timmo'
+    - type: "github"
+      link: "https://github.com/timmo001/home-panel"
+    - type: "twitter"
+      link: "https://twitter.com/timmo001"
+    - type: "stack-overflow"
+      link: "https://stackoverflow.com/users/1888770/timmo"
 
 # Extensions
 markdown_extensions:

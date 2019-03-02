@@ -1,33 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Header from './Header';
-import Page from './Cards/Page';
-import PageNavigation from './PageNavigation';
-import Radio from './Radio/Radio';
-import EditCard from './EditConfig/EditCard';
-import EditPage from './EditConfig/EditPage';
-import EditGroup from './EditConfig/EditGroup';
-import defaultConfig from './EditConfig/defaultConfig.json';
-import isObject from './Common/isObject';
-import clone from './Common/clone';
+import React from "react";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Header from "./Header";
+import Page from "./Cards/Page";
+import PageNavigation from "./PageNavigation";
+import Radio from "./Radio/Radio";
+import EditCard from "./EditConfig/EditCard";
+import EditPage from "./EditConfig/EditPage";
+import EditGroup from "./EditConfig/EditGroup";
+import defaultConfig from "./EditConfig/defaultConfig.json";
+import isObject from "./Common/isObject";
+import clone from "./Common/clone";
 
 const styles = () => ({
   root: {
-    height: '100%',
-    width: '100%',
-    maxHeight: '100%',
-    maxWidth: '100%'
+    height: "100%",
+    width: "100%",
+    maxHeight: "100%",
+    maxWidth: "100%"
   },
   pageContainer: {
-    height: '100%',
-    overflowY: 'auto',
-    transition: 'height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
+    height: "100%",
+    overflowY: "auto",
+    transition: "height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms"
   },
   progress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%'
+    position: "absolute",
+    top: "50%",
+    left: "50%"
   }
 });
 
@@ -41,7 +41,7 @@ class Main extends React.PureComponent {
     radioShown: false,
     editing: false,
     addingPage: false,
-    currentPage: 0,
+    currentPage: 0
   };
 
   componentDidMount = () => {
@@ -75,9 +75,10 @@ class Main extends React.PureComponent {
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
 
-  handleClose = value => this.setState({ anchorEl: null }, () => {
-    this.props.setTheme(value);
-  });
+  handleClose = value =>
+    this.setState({ anchorEl: null }, () => {
+      this.props.setTheme(value);
+    });
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
 
@@ -85,45 +86,49 @@ class Main extends React.PureComponent {
 
   handleRadioHide = () => this.setState({ radioShown: false });
 
-  handleRadioToggle = () => this.setState({ radioShown: !this.state.radioShown });
+  handleRadioToggle = () =>
+    this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
-    localStorage.removeItem('should_login');
-    localStorage.removeItem('hass_tokens');
-    localStorage.removeItem('username');
-    sessionStorage.removeItem('password');
-    localStorage.setItem('been_here', true);
+    localStorage.removeItem("should_login");
+    localStorage.removeItem("hass_tokens");
+    localStorage.removeItem("username");
+    sessionStorage.removeItem("password");
+    localStorage.setItem("been_here", true);
     window.location.reload(true);
   };
 
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
   handleEditConfig = () =>
-    this.state.editing ?
-      this.setState({ editing: false })
+    this.state.editing
+      ? this.setState({ editing: false })
       : this.setState({ editing: true });
 
   handleConfigChange = (path, value) => {
-    console.log('handleConfigChange', clone(path), clone(value));
+    console.log("handleConfigChange", clone(path), clone(value));
     let config = clone(this.props.config);
     // Set the new value
     const lastItem = path.pop();
-    let secondLastItem = path.reduce((o, k) => o[k] = o[k] || {}, config);
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
     if (value === undefined)
       secondLastItem.splice(secondLastItem.indexOf(lastItem));
-    else
-      if (isObject(value)) {
-        const newValue = JSON.parse(JSON.stringify(value));
-        if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
-        secondLastItem[lastItem] = newValue;
-      } else secondLastItem[lastItem] = value;
+    else if (isObject(value)) {
+      const newValue = JSON.parse(JSON.stringify(value));
+      if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
+      secondLastItem[lastItem] = newValue;
+    } else secondLastItem[lastItem] = value;
     this.props.handleConfigChange(config);
   };
 
   handleCardAdd = (groupId, cardId) => {
-    console.log('defaultConfig', clone(defaultConfig));
+    console.log("defaultConfig", clone(defaultConfig));
     this.setState({
-      addingCard: { groupId, cardId, card: clone(defaultConfig).items[0].cards[0] }
+      addingCard: {
+        groupId,
+        cardId,
+        card: clone(defaultConfig).items[0].cards[0]
+      }
     });
   };
 
@@ -132,7 +137,8 @@ class Main extends React.PureComponent {
 
   handlePageAdd = () => this.setState({ addingPage: true });
 
-  handlePageEdit = (id, page) => this.setState({ editingPage: { id, page: clone(page) } });
+  handlePageEdit = (id, page) =>
+    this.setState({ editingPage: { id, page: clone(page) } });
 
   handleGroupAdd = (pageId, groupId) => {
     let group = clone(defaultConfig).items[0];
@@ -144,49 +150,69 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
 
   handleCardAddDone = (path, card) => {
-    console.log('handleCardAddDone', path, card);
+    console.log("handleCardAddDone", path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
   };
 
   handleCardEditDone = (path, card) => {
-    console.log('handleCardEditDone', path, card);
+    console.log("handleCardEditDone", path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAddDone = (id, page) => {
-    console.log('handlePageAddDone', id, page);
-    id && this.handleConfigChange(['pages', id], clone(page));
+    console.log("handlePageAddDone", id, page);
+    id && this.handleConfigChange(["pages", id], clone(page));
     this.setState({ addingPage: undefined });
   };
 
   handlePageEditDone = (id, page) => {
-    console.log('handlePageEditDone', id, page);
-    id && this.handleConfigChange(['pages', id], clone(page));
+    console.log("handlePageEditDone", id, page);
+    id && this.handleConfigChange(["pages", id], clone(page));
     this.setState({ editingPage: undefined });
   };
 
   handleGroupAddDone = (id, group) => {
-    console.log('handleGroupAddDone', id, group);
-    id && this.handleConfigChange(['items', id], clone(group));
+    console.log("handleGroupAddDone", id, group);
+    id && this.handleConfigChange(["items", id], clone(group));
     this.setState({ addingGroup: undefined });
   };
 
   handleGroupEditDone = (id, group) => {
-    console.log('handleGroupEditDone', id, group);
-    id && this.handleConfigChange(['items', id], clone(group));
+    console.log("handleGroupEditDone", id, group);
+    id && this.handleConfigChange(["items", id], clone(group));
     this.setState({ editingGroup: undefined });
   };
 
   render() {
-    const { classes, haUrl, haConfig, entities, config, themes,
-      theme, handleChange } = this.props;
-    const { moved, over, radioShown, currentPage, editing,
-      addingCard, editingCard, addingPage, editingPage,
-      addingGroup, editingGroup } = this.state;
+    const {
+      classes,
+      haUrl,
+      haConfig,
+      entities,
+      config,
+      themes,
+      theme,
+      handleChange
+    } = this.props;
+    const {
+      moved,
+      over,
+      radioShown,
+      currentPage,
+      editing,
+      addingCard,
+      editingCard,
+      addingPage,
+      editingPage,
+      addingGroup,
+      editingGroup
+    } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
-    const page = pages ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] } : { id: 1, name: "Home", icon: "home" };
+    const page = pages
+      ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] }
+      : { id: 1, name: "Home", icon: "home" };
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -204,10 +230,14 @@ class Main extends React.PureComponent {
           handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
           handleRadioHide={this.handleRadioHide}
-          handleEditConfig={this.handleEditConfig} />
-        <div className={classes.pageContainer} onClick={this.handleRadioHide} style={{
-          height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
-        }}>
+          handleEditConfig={this.handleEditConfig}
+        />
+        <div
+          className={classes.pageContainer}
+          onClick={this.handleRadioHide}
+          style={{
+            height: pages && (moved || over) ? "calc(100% - 72px)" : "inherit"
+          }}>
           <Page
             config={config}
             editing={editing}
@@ -220,9 +250,10 @@ class Main extends React.PureComponent {
             entities={entities}
             theme={theme}
             page={{ ...page }}
-            handleChange={handleChange} />
+            handleChange={handleChange}
+          />
         </div>
-        {pages &&
+        {pages && (
           <PageNavigation
             editing={editing}
             handlePageAdd={this.handlePageAdd}
@@ -232,13 +263,15 @@ class Main extends React.PureComponent {
             over={over}
             handleMouseOver={this.onMouseMoveHandler}
             handleMouseLeave={this.onMouseLeaveHandler}
-            handlePageChange={this.handlePageChange} />
-        }
+            handlePageChange={this.handlePageChange}
+          />
+        )}
         <Radio
           show={radioShown}
           apiUrl={this.props.apiUrl}
-          handleRadioHide={this.handleRadioHide} />
-        {addingCard &&
+          handleRadioHide={this.handleRadioHide}
+        />
+        {addingCard && (
           <EditCard
             config={config}
             add
@@ -249,9 +282,10 @@ class Main extends React.PureComponent {
             entities={entities}
             groupId={addingCard.groupId}
             cardId={addingCard.cardId}
-            handleCardAddDone={this.handleCardAddDone} />
-        }
-        {editingCard &&
+            handleCardAddDone={this.handleCardAddDone}
+          />
+        )}
+        {editingCard && (
           <EditCard
             config={config}
             card={editingCard.card}
@@ -261,38 +295,43 @@ class Main extends React.PureComponent {
             entities={entities}
             groupId={editingCard.groupId}
             cardId={editingCard.cardId}
-            handleCardEditDone={this.handleCardEditDone} />
-        }
-        {addingPage &&
+            handleCardEditDone={this.handleCardEditDone}
+          />
+        )}
+        {addingPage && (
           <EditPage
             config={config}
             add
             id={pages.length + 1}
             page={clone(defaultConfig).pages[0]}
-            handlePageAddDone={this.handlePageAddDone} />
-        }
-        {editingPage &&
+            handlePageAddDone={this.handlePageAddDone}
+          />
+        )}
+        {editingPage && (
           <EditPage
             config={config}
             id={editingPage.id}
             page={editingPage.page}
-            handlePageEditDone={this.handlePageEditDone} />
-        }
-        {addingGroup &&
+            handlePageEditDone={this.handlePageEditDone}
+          />
+        )}
+        {addingGroup && (
           <EditGroup
             add
             config={config}
             id={addingGroup.groupId}
             group={addingGroup.group}
-            handleGroupAddDone={this.handleGroupAddDone} />
-        }
-        {editingGroup &&
+            handleGroupAddDone={this.handleGroupAddDone}
+          />
+        )}
+        {editingGroup && (
           <EditGroup
             config={config}
             id={editingGroup.groupId}
             group={editingGroup.group}
-            handleGroupEditDone={this.handleGroupEditDone} />
-        }
+            handleGroupEditDone={this.handleGroupEditDone}
+          />
+        )}
       </div>
     );
   }
@@ -312,7 +351,7 @@ Main.propTypes = {
   password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
-  saveTokens: PropTypes.func.isRequired,
+  saveTokens: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Main);

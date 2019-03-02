@@ -1,30 +1,37 @@
-import React from 'react';
-import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import { getCardElevation, getSquareCards } from '../../Common/config';
-import card from '../../Common/Style/card';
+import React from "react";
+import classnames from "classnames";
+import PropTypes from "prop-types";
+import withStyles from "@material-ui/core/styles/withStyles";
+import Grid from "@material-ui/core/Grid";
+import Card from "@material-ui/core/Card";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import { getCardElevation, getSquareCards } from "../../Common/config";
+import card from "../../Common/Style/card";
 
 const styles = theme => ({
   ...card(theme),
   frameInnerContainer: {
-    height: '100%'
+    height: "100%"
   },
   frame: {
-    display: 'block',
-    width: '100%',
-    height: '100%',
-    border: 0,
-  },
+    display: "block",
+    width: "100%",
+    height: "100%",
+    border: 0
+  }
 });
 
 class Frame extends React.PureComponent {
   render() {
-    const { classes, config, card, editing,
-      handleCardEdit, groupId, cardId } = this.props;
+    const {
+      classes,
+      config,
+      card,
+      editing,
+      handleCardEdit,
+      groupId,
+      cardId
+    } = this.props;
     const { name, url } = card;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
@@ -32,8 +39,8 @@ class Frame extends React.PureComponent {
       <Grid
         className={classnames(classes.cardContainer)}
         style={{
-          '--width': card.width ? card.width : 1,
-          '--height': card.height ? card.height : 1,
+          "--width": card.width ? card.width : 1,
+          "--height": card.height ? card.height : 1
         }}
         item>
         <Card
@@ -45,12 +52,14 @@ class Frame extends React.PureComponent {
             title={name}
             src={url}
             sandbox="allow-forms allow-popups allow-pointer-lock allow-same-origin allow-scripts allow-presentation"
-            allowFullScreen={true} />
-          {editing &&
+            allowFullScreen={true}
+          />
+          {editing && (
             <ButtonBase
               className={classes.editOverlay}
-              onClick={() => editing && handleCardEdit(groupId, cardId, card)} />
-          }
+              onClick={() => editing && handleCardEdit(groupId, cardId, card)}
+            />
+          )}
         </Card>
       </Grid>
     );
@@ -64,7 +73,7 @@ Frame.propTypes = {
   handleCardEdit: PropTypes.func.isRequired,
   groupId: PropTypes.number.isRequired,
   cardId: PropTypes.number.isRequired,
-  card: PropTypes.object.isRequired,
+  card: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Frame);
