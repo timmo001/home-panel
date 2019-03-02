@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import request from "superagent";
+import React from 'react';
+import PropTypes from 'prop-types';
+import request from 'superagent';
 import {
   getAuth,
   getUser,
@@ -9,39 +9,39 @@ import {
   subscribeConfig,
   subscribeEntities,
   ERR_INVALID_AUTH
-} from "home-assistant-js-websocket";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Snackbar from "@material-ui/core/Snackbar";
-import { CircularProgress, Typography } from "@material-ui/core";
-import Login from "./Login";
-import Main from "./Main";
-import defaultConfig from "./EditConfig/defaultConfig.json";
+} from 'home-assistant-js-websocket';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import { CircularProgress, Typography } from '@material-ui/core';
+import Login from './Login';
+import Main from './Main';
+import defaultConfig from './EditConfig/defaultConfig.json';
 
 const styles = theme => ({
   root: {
-    position: "absolute",
-    height: "100%",
-    width: "100%",
-    maxHeight: "100%",
-    maxWidth: "100%",
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
     background: theme.palette.backgrounds.main
   },
   center: {
-    justifyContent: "center",
-    textAlign: "center",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translateX(-50%) translateY(-50%)"
+    justifyContent: 'center',
+    textAlign: 'center',
+    position: 'fixed',
+    top: '50%',
+    left: '50%',
+    transform: 'translateX(-50%) translateY(-50%)'
   },
   progress: {
     marginBottom: theme.spacing.unit
   },
   progressRoot: {
-    position: "absolute",
-    top: "50%",
-    left: "50%"
+    position: 'absolute',
+    top: '50%',
+    left: '50%'
   }
 });
 
@@ -49,18 +49,18 @@ var connection;
 
 class Root extends React.PureComponent {
   state = {
-    snackMessage: { open: false, text: "" },
+    snackMessage: { open: false, text: '' },
     connected: false
   };
 
   loggedIn = (config, username, password, api_url, hass_url) => {
-    localStorage.setItem("should_login", true);
+    localStorage.setItem('should_login', true);
     config = { ...defaultConfig, ...config };
     this.setState({ config, username, password, api_url, hass_url }, () => {
       if (this.state.hass_url) {
         if (this.loadTokens()) this.connectToHASS();
-        else if (localStorage.getItem("should_auth")) {
-          if (localStorage.getItem("auth_triggered")) this.connectToHASS();
+        else if (localStorage.getItem('should_auth')) {
+          if (localStorage.getItem('auth_triggered')) this.connectToHASS();
           else this.askAuth();
         }
       } else
@@ -69,7 +69,7 @@ class Root extends React.PureComponent {
           snackMessage: {
             open: true,
             text:
-              "No Home Assistant URL provided. Please re-login to enable HASS features."
+              'No Home Assistant URL provided. Please re-login to enable HASS features.'
           }
         });
       if (config.theme && config.theme.custom)
@@ -77,19 +77,19 @@ class Root extends React.PureComponent {
     });
   };
 
-  eventHandler = () => console.log("Connection has been established again");
+  eventHandler = () => console.log('Connection has been established again');
 
   loadTokens = () => {
     let hassTokens;
     try {
-      hassTokens = JSON.parse(localStorage.getItem("hass_tokens"));
+      hassTokens = JSON.parse(localStorage.getItem('hass_tokens'));
     } catch (err) {} // eslint-disable-line
     return hassTokens;
   };
 
   saveTokens = tokens => {
     try {
-      localStorage.setItem("hass_tokens", JSON.stringify(tokens));
+      localStorage.setItem('hass_tokens', JSON.stringify(tokens));
     } catch (err) {} // eslint-disable-line
   };
 
@@ -104,8 +104,8 @@ class Root extends React.PureComponent {
     try {
       const conn = await createConnection({ auth });
       // Clear url if we have been able to establish a connection
-      if (this.props.location.search.includes("auth_callback=1"))
-        this.props.history.push({ search: "" });
+      if (this.props.location.search.includes('auth_callback=1'))
+        this.props.history.push({ search: '' });
       return { auth, conn };
     } catch (err) {
       try {
@@ -122,7 +122,7 @@ class Root extends React.PureComponent {
         this.setState({
           snackMessage: {
             open: true,
-            text: "Connection to Home Assistant failed. Please try again later."
+            text: 'Connection to Home Assistant failed. Please try again later.'
           },
           entities: []
         });
@@ -133,18 +133,18 @@ class Root extends React.PureComponent {
 
   connectToHASS = () => {
     (async () => {
-      localStorage.setItem("auth_triggered", true);
+      localStorage.setItem('auth_triggered', true);
       connection = this.authProm().then(this.connProm);
       connection.then(({ conn }) => {
-        localStorage.removeItem("auth_triggered");
+        localStorage.removeItem('auth_triggered');
         this.setState({ connected: true });
-        conn.removeEventListener("ready", this.eventHandler);
-        conn.addEventListener("ready", this.eventHandler);
+        conn.removeEventListener('ready', this.eventHandler);
+        conn.addEventListener('ready', this.eventHandler);
         subscribeConfig(conn, this.updateConfig);
         subscribeEntities(conn, this.updateEntities);
         getUser(conn).then(user => {
-          console.log("Logged into Home Assistant as", user.name);
-          sessionStorage.setItem("hass_id", user.id);
+          console.log('Logged into Home Assistant as', user.name);
+          sessionStorage.setItem('hass_id', user.id);
         });
         connection = conn;
       });
@@ -156,7 +156,7 @@ class Root extends React.PureComponent {
       entities: [],
       snackMessage: {
         open: true,
-        text: "Please login to Home Assistant",
+        text: 'Please login to Home Assistant',
         persistent: true,
         actions: (
           <div>
@@ -189,15 +189,15 @@ class Root extends React.PureComponent {
   };
 
   handleChange = (domain, state, data = undefined) => {
-    if (typeof state === "string") {
+    if (typeof state === 'string') {
       callService(connection, domain, state, data).then(
         () => {
-          this.setState({ snackMessage: { open: true, text: "Changed." } });
+          this.setState({ snackMessage: { open: true, text: 'Changed.' } });
         },
         err => {
-          console.error("Error calling service:", err);
+          console.error('Error calling service:', err);
           this.setState({
-            snackMessage: { open: true, text: "Error calling service" },
+            snackMessage: { open: true, text: 'Error calling service' },
             entities: undefined
           });
         }
@@ -206,16 +206,16 @@ class Root extends React.PureComponent {
       callService(
         connection,
         domain,
-        state ? "turn_on" : "turn_off",
+        state ? 'turn_on' : 'turn_off',
         data
       ).then(
         () => {
-          this.setState({ snackMessage: { open: true, text: "Changed." } });
+          this.setState({ snackMessage: { open: true, text: 'Changed.' } });
         },
         err => {
-          console.error("Error calling service:", err);
+          console.error('Error calling service:', err);
           this.setState({
-            snackMessage: { open: true, text: "Error calling service" },
+            snackMessage: { open: true, text: 'Error calling service' },
             entities: undefined
           });
         }
@@ -233,11 +233,11 @@ class Root extends React.PureComponent {
     const lightThemeName =
       config.theme.auto && config.theme.auto.light_theme
         ? config.theme.auto.light_theme
-        : "light";
+        : 'light';
     const darkThemeName =
       config.theme.auto && config.theme.auto.dark_theme
         ? config.theme.auto.dark_theme
-        : "dark";
+        : 'dark';
 
     const lightTheme = this.props.themes.find(
       t => t.name.toLowerCase() === lightThemeName.toLowerCase()
@@ -247,7 +247,7 @@ class Root extends React.PureComponent {
     );
 
     if (!themeId && themeId !== 0)
-      themeId = Number(localStorage.getItem("theme"));
+      themeId = Number(localStorage.getItem('theme'));
     if (!themeId && themeId !== 0) themeId = -1;
     if (themeId === -1) {
       if (
@@ -264,20 +264,20 @@ class Root extends React.PureComponent {
           );
       } else {
         // theme from sunlight
-        console.log("Revert to sunlight sensor");
-        const sun = this.state.entities.find(entity => entity[0] === "sun.sun");
+        console.log('Revert to sunlight sensor');
+        const sun = this.state.entities.find(entity => entity[0] === 'sun.sun');
         if (sun)
           this.props.setTheme(
-            sun[1].state === "below_horizon" ? darkTheme : lightTheme
+            sun[1].state === 'below_horizon' ? darkTheme : lightTheme
           );
         else this.props.setTheme(lightTheme);
       }
     } else this.props.setTheme(this.props.themes.find(t => t.id === themeId));
-    localStorage.setItem("theme", themeId);
+    localStorage.setItem('theme', themeId);
   };
 
   handleSnackbarClose = () =>
-    this.setState({ snackMessage: { open: false, text: "" } });
+    this.setState({ snackMessage: { open: false, text: '' } });
 
   handlePageChange = page => {
     this.setState({ page }, () => {
@@ -302,11 +302,11 @@ class Root extends React.PureComponent {
         if (res.status === 200) {
           this.setState({ config }, () => this.setTheme());
         } else {
-          console.log("An error occurred: ", res.status);
+          console.log('An error occurred: ', res.status);
         }
       })
       .catch(err => {
-        console.log("An error occurred: ", err);
+        console.log('An error occurred: ', err);
       });
   };
 
@@ -362,11 +362,11 @@ class Root extends React.PureComponent {
           onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
           onExited={this.handleExited}
           anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right"
+            vertical: 'bottom',
+            horizontal: 'right'
           }}
           ContentProps={{
-            "aria-describedby": "message-id"
+            'aria-describedby': 'message-id'
           }}
           message={<span id="message-id">{snackMessage.text}</span>}
           action={snackMessage.actions}

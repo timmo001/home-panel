@@ -1,22 +1,22 @@
-import React from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import { getCardElevation, getSquareCards } from "../../Common/config";
-import card from "../../Common/Style/card";
+import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import { getCardElevation, getSquareCards } from '../../Common/config';
+import card from '../../Common/Style/card';
 
 const styles = theme => ({
   ...card(theme),
   frameInnerContainer: {
-    height: "100%"
+    height: '100%'
   },
   frame: {
-    display: "block",
-    width: "100%",
-    height: "100%",
+    display: 'block',
+    width: '100%',
+    height: '100%',
     border: 0
   }
 });
@@ -39,8 +39,8 @@ class Frame extends React.PureComponent {
       <Grid
         className={classnames(classes.cardContainer)}
         style={{
-          "--width": card.width ? card.width : 1,
-          "--height": card.height ? card.height : 1
+          '--width': card.width ? card.width : 1,
+          '--height': card.hseight ? card.height : 1
         }}
         item>
         <Card

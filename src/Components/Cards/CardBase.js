@@ -1,10 +1,10 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Camera from "./Camera/Camera";
-import Hass from "./Hass/Hass";
-import Link from "./Link/Link";
-import Frame from "./Frame/Frame";
-import Add from "./Add";
+import React from 'react';
+import PropTypes from 'prop-types';
+import Camera from './Camera/Camera';
+import Hass from './Hass/Hass';
+import Link from './Link/Link';
+import Frame from './Frame/Frame';
+import Add from './Add';
 
 class CardBase extends React.PureComponent {
   render() {
@@ -22,8 +22,8 @@ class CardBase extends React.PureComponent {
       card,
       handleChange
     } = this.props;
-    const type = !card.type ? "hass" : card.type;
-    if (type === "hass") {
+    const type = !card.type ? 'hass' : card.type;
+    if (type === 'hass') {
       return (
         <Hass
           config={config}
@@ -39,7 +39,7 @@ class CardBase extends React.PureComponent {
           handleChange={handleChange}
         />
       );
-    } else if (type === "link") {
+    } else if (type === 'link') {
       return (
         <Link
           config={config}
@@ -50,7 +50,7 @@ class CardBase extends React.PureComponent {
           card={card}
         />
       );
-    } else if (type === "camera") {
+    } else if (type === 'camera') {
       return (
         <Camera
           config={config}
@@ -61,7 +61,7 @@ class CardBase extends React.PureComponent {
           card={card}
         />
       );
-    } else if (type === "iframe") {
+    } else if (type === 'iframe') {
       return (
         <Frame
           config={config}
@@ -72,7 +72,7 @@ class CardBase extends React.PureComponent {
           card={card}
         />
       );
-    } else if (type === "add") {
+    } else if (type === 'add') {
       return (
         <Add
           config={config}

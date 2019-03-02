@@ -1,19 +1,19 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import ConfirmDialog from "../Common/ConfirmDialog";
-import defaultConfig from "./defaultConfig.json";
-import Item from "./Item";
-import clone from "../Common/clone";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import ConfirmDialog from '../Common/ConfirmDialog';
+import defaultConfig from './defaultConfig.json';
+import Item from './Item';
+import clone from '../Common/clone';
 
 const styles = () => ({
   fill: {
-    flex: "1 1 auto"
+    flex: '1 1 auto'
   }
 });
 
@@ -48,7 +48,7 @@ class EditGroup extends React.PureComponent {
   handleDelete = () =>
     this.handleClose(() => {
       this.setState({ confirm: false }, () => {
-        const path = ["items", this.props.id];
+        const path = ['items', this.props.id];
         this.props.add
           ? this.props.handleGroupAddDone(path)
           : this.props.handleGroupEditDone(path);
@@ -70,7 +70,7 @@ class EditGroup extends React.PureComponent {
     return (
       <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {add ? "Add" : "Edit"} Group
+          {add ? 'Add' : 'Edit'} Group
         </DialogTitle>
         <DialogContent>
           {Object.keys(defaultGroup).map((i, x) => (
@@ -79,8 +79,8 @@ class EditGroup extends React.PureComponent {
               objKey={i}
               defaultItem={defaultGroup[i]}
               item={group[i] !== undefined ? group[i] : defaultGroup[i]}
-              defaultItemPath={["items", 0, i]}
-              itemPath={["items", id, i]}
+              defaultItemPath={['items', 0, i]}
+              itemPath={['items', id, i]}
               handleConfigChange={this.handleConfigChange}
             />
           ))}
@@ -96,7 +96,7 @@ class EditGroup extends React.PureComponent {
             Cancel
           </Button>
           <Button onClick={this.handleSave} color="primary">
-            {add ? "Add" : "Save"}
+            {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
         {confirm && (

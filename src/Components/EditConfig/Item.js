@@ -1,38 +1,38 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import isObject from "../Common/isObject";
-import properCase from "../Common/properCase";
-import Input from "./Input";
-import NextItem from "./Item";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import isObject from '../Common/isObject';
+import properCase from '../Common/properCase';
+import Input from './Input';
+import NextItem from './Item';
 
 const styles = theme => ({
   root: {
-    display: "block",
+    display: 'block',
     color: theme.palette.text.main
   },
   dropdown: {
-    display: "flex",
-    width: "100%",
-    padding: "6px 4px"
+    display: 'flex',
+    width: '100%',
+    padding: '6px 4px'
   },
   dropdownText: {
     paddingTop: theme.spacing.unit * 2
   },
   dropdownSubText: {
-    margin: "0 16px",
-    flex: "1 1 auto",
-    fontSize: "1.0rem"
+    margin: '0 16px',
+    flex: '1 1 auto',
+    fontSize: '1.0rem'
   },
   container: {
-    display: "flex",
-    flexDirection: "column"
+    display: 'flex',
+    flexDirection: 'column'
   },
   addIcon: {
-    width: "100%",
-    margin: "2px 0",
+    width: '100%',
+    margin: '2px 0',
     padding: 8
   },
   iconButton: {

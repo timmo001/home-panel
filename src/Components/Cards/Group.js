@@ -1,55 +1,55 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Typography from "@material-ui/core/Typography";
-import Slide from "@material-ui/core/Slide";
-import CardBase from "./CardBase";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Typography from '@material-ui/core/Typography';
+import Slide from '@material-ui/core/Slide';
+import CardBase from './CardBase';
 
 const styles = theme => ({
   group: {
     height: `calc(100% + ${theme.spacing.unit}px)`,
-    width: "calc(var(--width) * 138px)",
-    overflow: "hidden",
-    [theme.breakpoints.down("sm")]: {
-      width: "calc(var(--width) * 114px)"
+    width: 'calc(var(--width) * 138px)',
+    overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      width: 'calc(var(--width) * 114px)'
     },
     marginRight: theme.spacing.unit
   },
   title: {
     color: theme.palette.text.light,
-    fontSize: "1.7rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.4rem"
+    fontSize: '1.7rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.4rem'
     }
   },
   gridInnerContainer: {
-    height: "calc(100% - 178px)",
-    overflowY: "auto",
-    overflowX: "hidden",
-    [theme.breakpoints.down("sm")]: {
-      height: "calc(100% - 132px)"
+    height: 'calc(100% - 178px)',
+    overflowY: 'auto',
+    overflowX: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      height: 'calc(100% - 132px)'
     }
   },
   gridInner: {
-    width: "100%"
+    width: '100%'
   }
 });
 
 class Group extends React.PureComponent {
   checkGroupToggle = (group, entities) => {
     const card = group.cards.find(card => {
-      const type = !card.type ? "hass" : card.type;
-      if (type === "hass") {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
         const entity_outer = entities.find(i => {
           return i[1].entity_id === card.entity_id;
         });
         if (entity_outer) {
           const entity = entity_outer[1];
           const { entity_id } = entity;
-          const domain = entity_id.substring(0, entity_id.indexOf("."));
-          return domain === "light" || domain === "switch";
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          return domain === 'light' || domain === 'switch';
         } else return false;
       } else return false;
     });
@@ -59,32 +59,32 @@ class Group extends React.PureComponent {
   handleGroupToggle = (group, entities) => {
     // Check if one card is 'on'
     const oneOn = group.cards.find(card => {
-      const type = !card.type ? "hass" : card.type;
-      if (type === "hass") {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
         const entity_outer = entities.find(i => {
           return i[1].entity_id === card.entity_id;
         });
         if (entity_outer) {
           const entity = entity_outer[1];
           const { entity_id, state } = entity;
-          const domain = entity_id.substring(0, entity_id.indexOf("."));
-          if (domain === "light" || domain === "switch") return state === "on";
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch') return state === 'on';
         }
       }
       return false;
     });
     // Switch all cards on/off
     group.cards.map(card => {
-      const type = !card.type ? "hass" : card.type;
-      if (type === "hass") {
+      const type = !card.type ? 'hass' : card.type;
+      if (type === 'hass') {
         const entity_outer = entities.find(i => {
           return i[1].entity_id === card.entity_id;
         });
         if (entity_outer) {
           const entity = entity_outer[1];
           const { entity_id } = entity;
-          const domain = entity_id.substring(0, entity_id.indexOf("."));
-          if (domain === "light" || domain === "switch") {
+          const domain = entity_id.substring(0, entity_id.indexOf('.'));
+          if (domain === 'light' || domain === 'switch') {
             this.props.handleChange(domain, oneOn ? false : true, {
               entity_id
             });
@@ -116,7 +116,7 @@ class Group extends React.PureComponent {
         <div>
           <Grid
             className={classes.group}
-            style={{ "--width": group.width ? group.width : 2 }}
+            style={{ '--width': group.width ? group.width : 2 }}
             item>
             <ButtonBase
               className={classes.groupButton}
@@ -143,7 +143,7 @@ class Group extends React.PureComponent {
                   if (!card) return null;
                   else if (
                     card.entity_id &&
-                    card.entity_id.startsWith("group")
+                    card.entity_id.startsWith('group')
                   ) {
                     const entity_outer = entities.find(i => {
                       return i && i[1].entity_id === card.entity_id;
@@ -202,7 +202,7 @@ class Group extends React.PureComponent {
                     entities={entities}
                     groupId={groupId}
                     cardId={group.cards.length + 1}
-                    card={{ type: "add" }}
+                    card={{ type: 'add' }}
                     handleChange={handleChange}
                   />
                 )}

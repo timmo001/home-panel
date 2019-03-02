@@ -1,41 +1,41 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Fab from "@material-ui/core/Fab";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import CardMedia from "@material-ui/core/CardMedia";
-import PauseIcon from "@material-ui/icons/Pause";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
-import SkipNextIcon from "@material-ui/icons/SkipNext";
-import VolumeDownIcon from "@material-ui/icons/VolumeDown";
-import VolumeUpIcon from "@material-ui/icons/VolumeUp";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Fab from '@material-ui/core/Fab';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import CardMedia from '@material-ui/core/CardMedia';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import VolumeDownIcon from '@material-ui/icons/VolumeDown';
+import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     flexGrow: 1,
-    height: "100%",
-    width: "100%"
+    height: '100%',
+    width: '100%'
   },
   info: {
-    width: "100%"
+    width: '100%'
   },
   media: {
-    backgroundSize: "contain",
+    backgroundSize: 'contain',
     marginBottom: theme.spacing.unit * 4
   },
   controls: {
-    display: "flex"
+    display: 'flex'
   },
   controlsMain: {
-    position: "absolute",
-    display: "flex",
-    alignItems: "flex-end",
-    left: "50%",
-    transform: "translateX(-50%)",
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'flex-end',
+    left: '50%',
+    transform: 'translateX(-50%)',
     bottom: theme.spacing.unit
   },
   button: {
@@ -49,27 +49,27 @@ class Media extends React.PureComponent {
     switch (action) {
       default:
         break;
-      case "play":
-        this.props.handleChange("media_player", "media_play", { entity_id });
+      case 'play':
+        this.props.handleChange('media_player', 'media_play', { entity_id });
         break;
-      case "pause":
-        this.props.handleChange("media_player", "media_pause", { entity_id });
+      case 'pause':
+        this.props.handleChange('media_player', 'media_pause', { entity_id });
         break;
-      case "next":
-        this.props.handleChange("media_player", "media_next_track", {
+      case 'next':
+        this.props.handleChange('media_player', 'media_next_track', {
           entity_id
         });
         break;
-      case "previous":
-        this.props.handleChange("media_player", "media_previous_track", {
+      case 'previous':
+        this.props.handleChange('media_player', 'media_previous_track', {
           entity_id
         });
         break;
-      case "vol_down":
-        this.props.handleChange("media_player", "volume_down", { entity_id });
+      case 'vol_down':
+        this.props.handleChange('media_player', 'volume_down', { entity_id });
         break;
-      case "vol_up":
-        this.props.handleChange("media_player", "volume_up", { entity_id });
+      case 'vol_up':
+        this.props.handleChange('media_player', 'volume_up', { entity_id });
         break;
     }
   };
@@ -99,37 +99,37 @@ class Media extends React.PureComponent {
         )}
         <div className={classes.controls}>
           <div className={classes.controlsMain}>
-            {card.width > 1 && state !== "off" && (
+            {card.width > 1 && state !== 'off' && (
               <IconButton
                 className={classes.button}
                 aria-label="Volume Down"
-                onClick={() => this.handleChange("vol_down")}>
+                onClick={() => this.handleChange('vol_down')}>
                 <VolumeDownIcon fontSize="small" />
               </IconButton>
             )}
             <IconButton
               className={classes.button}
               aria-label="Previous"
-              disabled={state !== "playing" && state !== "paused"}
-              onClick={() => this.handleChange("previous")}>
+              disabled={state !== 'playing' && state !== 'paused'}
+              onClick={() => this.handleChange('previous')}>
               <SkipPreviousIcon fontSize="small" />
             </IconButton>
-            {state === "playing" ? (
+            {state === 'playing' ? (
               <Fab
                 className={classes.buttonPlay}
                 color="primary"
                 aria-label="Pause"
                 size="small"
-                onClick={() => this.handleChange("pause")}>
+                onClick={() => this.handleChange('pause')}>
                 <PauseIcon />
               </Fab>
-            ) : state === "paused" ? (
+            ) : state === 'paused' ? (
               <Fab
                 className={classes.buttonPlay}
                 color="primary"
                 aria-label="Play"
                 size="small"
-                onClick={() => this.handleChange("play")}>
+                onClick={() => this.handleChange('play')}>
                 <PlayArrowIcon />
               </Fab>
             ) : (
@@ -145,15 +145,15 @@ class Media extends React.PureComponent {
             <IconButton
               className={classes.button}
               aria-label="Next"
-              disabled={state !== "playing" && state !== "paused"}
-              onClick={() => this.handleChange("next")}>
+              disabled={state !== 'playing' && state !== 'paused'}
+              onClick={() => this.handleChange('next')}>
               <SkipNextIcon fontSize="small" />
             </IconButton>
-            {card.width > 1 && state !== "off" && (
+            {card.width > 1 && state !== 'off' && (
               <IconButton
                 className={classes.button}
                 aria-label="Volume Up"
-                onClick={() => this.handleChange("vol_up")}>
+                onClick={() => this.handleChange('vol_up')}>
                 <VolumeUpIcon fontSize="small" />
               </IconButton>
             )}

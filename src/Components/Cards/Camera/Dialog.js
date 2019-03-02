@@ -1,31 +1,31 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Dialog from "@material-ui/core/Dialog";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Dialog from '@material-ui/core/Dialog';
 
 const styles = () => ({
   appBar: {
-    position: "relative"
+    position: 'relative'
   },
   flex: {
     flex: 1
   },
   camera: {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    paddingBottom: "56.25%" // 16:9
+    position: 'relative',
+    width: '100%',
+    height: '100%',
+    paddingBottom: '56.25%' // 16:9
   },
   cameraContent: {
-    position: "absolute",
-    height: "100%",
-    width: "100%",
-    cursor: "pointer"
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    cursor: 'pointer'
   },
   cameraOverlay: {
-    position: "fixed",
-    height: "100%",
-    width: "100%"
+    position: 'fixed',
+    height: '100%',
+    width: '100%'
   }
 });
 

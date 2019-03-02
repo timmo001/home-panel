@@ -1,44 +1,44 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import withStyles from "@material-ui/core/styles/withStyles";
-import MUIInput from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import Checkbox from "@material-ui/core/Checkbox";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import IconButton from "@material-ui/core/IconButton";
-import AutoLinkText from "react-autolink-text2";
-import properCase from "../Common/properCase";
-import clone from "../Common/clone";
-import defaultConfig from "./defaultConfig.json";
-import configExplanations from "./configExplanations.json";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import withStyles from '@material-ui/core/styles/withStyles';
+import MUIInput from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Checkbox from '@material-ui/core/Checkbox';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import IconButton from '@material-ui/core/IconButton';
+import AutoLinkText from 'react-autolink-text2';
+import properCase from '../Common/properCase';
+import clone from '../Common/clone';
+import defaultConfig from './defaultConfig.json';
+import configExplanations from './configExplanations.json';
 
 const styles = () => ({
   input: {
-    margin: "4px 0",
-    flex: "1 1 auto",
-    flexDirection: "row",
-    alignItems: "baseline"
+    margin: '4px 0',
+    flex: '1 1 auto',
+    flexDirection: 'row',
+    alignItems: 'baseline'
   },
   checkboxHelper: {
-    transform: "translateY(-50%)"
+    transform: 'translateY(-50%)'
   },
   resetIconButton: {
     height: 32,
     width: 32,
     marginRight: 8,
-    transform: "translateY(4px)"
+    transform: 'translateY(4px)'
   },
   resetInputIconButton: {
-    transform: "translateY(12px)"
+    transform: 'translateY(12px)'
   },
   resetIcon: {
     fontSize: 22,
-    transform: "translateY(-8px)"
+    transform: 'translateY(-8px)'
   },
   select: {
     marginRight: 8
@@ -58,36 +58,36 @@ class Input extends React.PureComponent {
       handleConfigChange
     } = this.props;
     const type =
-      defaultItemPath.findIndex(i => i === "cards") > -1 &&
-      this.props.name === "type"
-        ? "card_type"
-        : defaultValue === "true"
-        ? "boolean"
-        : defaultValue === "false"
-        ? "boolean"
+      defaultItemPath.findIndex(i => i === 'cards') > -1 &&
+      this.props.name === 'type'
+        ? 'card_type'
+        : defaultValue === 'true'
+        ? 'boolean'
+        : defaultValue === 'false'
+        ? 'boolean'
         : typeof defaultValue;
     const helpText = defaultItemPath.reduce(
       (o, k) => (o[k] = o[k] || {}),
       configExplanations
     );
     const value =
-      this.props.value === "true"
+      this.props.value === 'true'
         ? true
-        : this.props.value === "false"
+        : this.props.value === 'false'
         ? false
         : this.props.value;
 
     switch (type) {
       default:
         return null;
-      case "string":
+      case 'string':
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
             <MUIInput
               id={name}
               type="string"
-              inputProps={{ autoCapitalize: "none" }}
+              inputProps={{ autoCapitalize: 'none' }}
               value={value}
               onChange={event =>
                 handleConfigChange(itemPath, event.target.value)
@@ -100,27 +100,27 @@ class Input extends React.PureComponent {
               )}
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
               <span
-                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+                className={classnames('mdi', 'mdi-restore', classes.resetIcon)}
               />
             </IconButton>
             {helpText && (
               <FormHelperText id={name}>
                 <AutoLinkText
                   text={helpText}
-                  linkProps={{ target: "_blank", rel: "nofollow" }}
+                  linkProps={{ target: '_blank', rel: 'nofollow' }}
                 />
               </FormHelperText>
             )}
           </FormControl>
         );
-      case "number":
+      case 'number':
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
             <MUIInput
               id={name}
               type="number"
-              inputProps={{ autoCapitalize: "none" }}
+              inputProps={{ autoCapitalize: 'none' }}
               value={value}
               onChange={event =>
                 handleConfigChange(itemPath, Number(event.target.value))
@@ -133,7 +133,7 @@ class Input extends React.PureComponent {
               )}
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
               <span
-                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+                className={classnames('mdi', 'mdi-restore', classes.resetIcon)}
               />
             </IconButton>
             <FormHelperText id={name}>
@@ -141,7 +141,7 @@ class Input extends React.PureComponent {
             </FormHelperText>
           </FormControl>
         );
-      case "boolean":
+      case 'boolean':
         return (
           <FormControl className={classes.input}>
             <FormControlLabel
@@ -160,7 +160,7 @@ class Input extends React.PureComponent {
               className={classes.resetIconButton}
               onClick={() => handleConfigChange(itemPath, defaultValue)}>
               <span
-                className={classnames("mdi", "mdi-restore", classes.resetIcon)}
+                className={classnames('mdi', 'mdi-restore', classes.resetIcon)}
               />
             </IconButton>
             <FormHelperText id={name} className={classes.checkboxHelper}>
@@ -168,7 +168,7 @@ class Input extends React.PureComponent {
             </FormHelperText>
           </FormControl>
         );
-      case "card_type":
+      case 'card_type':
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>

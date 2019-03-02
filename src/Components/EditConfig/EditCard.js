@@ -1,32 +1,32 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 // import JSONInput from 'react-json-editor-ajrm';
 // import locale from 'react-json-editor-ajrm/locale/en';
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import CardBase from "../Cards/CardBase";
-import defaultConfig from "./defaultConfig.json";
-import ConfirmDialog from "../Common/ConfirmDialog";
-import Item from "./Item";
-import clone from "../Common/clone";
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CardBase from '../Cards/CardBase';
+import defaultConfig from './defaultConfig.json';
+import ConfirmDialog from '../Common/ConfirmDialog';
+import Item from './Item';
+import clone from '../Common/clone';
 
 const styles = theme => ({
   dialog: {
-    overflow: "none"
+    overflow: 'none'
   },
   dialogContent: {
-    overflowX: "auto"
+    overflowX: 'auto'
   },
   cardContainer: {
     margin: theme.spacing.unit
   },
   fill: {
-    flex: "1 1 auto"
+    flex: '1 1 auto'
   }
 });
 
@@ -54,7 +54,7 @@ class EditCard extends React.PureComponent {
 
   handleSave = () =>
     this.handleClose(() => {
-      const path = ["items", this.props.groupId, "cards", this.props.cardId];
+      const path = ['items', this.props.groupId, 'cards', this.props.cardId];
       this.props.add
         ? this.props.handleCardAddDone(path, this.state.card)
         : this.props.handleCardEditDone(path, this.state.card);
@@ -67,7 +67,7 @@ class EditCard extends React.PureComponent {
   handleDelete = () =>
     this.handleClose(() => {
       this.setState({ confirm: false }, () => {
-        const path = ["items", this.props.groupId, "cards", this.props.cardId];
+        const path = ['items', this.props.groupId, 'cards', this.props.cardId];
         this.props.add
           ? this.props.handleCardAddDone(path)
           : this.props.handleCardEditDone(path);
@@ -78,14 +78,14 @@ class EditCard extends React.PureComponent {
     const cardLcl = clone(this.state.card),
       defaultConfigLcl = clone(defaultConfig);
 
-    console.log("card pre:", cardLcl);
+    console.log('card pre:', cardLcl);
 
     const key = path.pop();
     cardLcl[key] = value;
     const defaultCard =
       defaultConfigLcl.items[0].cards.find(c => c.type === cardLcl.type) ||
       defaultConfigLcl.items[0].cards[0];
-    if (key === "type") {
+    if (key === 'type') {
       // Delete any unused props and set the new props
       Object.keys(cardLcl).map(c =>
         !defaultCard[c] ? delete cardLcl[c] : (cardLcl[c] = defaultCard[c])
@@ -124,7 +124,7 @@ class EditCard extends React.PureComponent {
         maxWidth="md"
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {add ? "Add" : "Edit"} Card
+          {add ? 'Add' : 'Edit'} Card
         </DialogTitle>
         <div className={classes.cardContainer}>
           <Grid container justify="center">
@@ -162,13 +162,13 @@ class EditCard extends React.PureComponent {
                 defaultItem={defaultCard[i]}
                 item={card[i] !== undefined ? card[i] : defaultCard[i]}
                 defaultItemPath={[
-                  "items",
+                  'items',
                   0,
-                  "cards",
+                  'cards',
                   typePath > -1 ? typePath : 0,
                   i
                 ]}
-                itemPath={["items", groupId, "cards", cardId, i]}
+                itemPath={['items', groupId, 'cards', cardId, i]}
                 handleConfigChange={this.handleConfigChange}
               />
             ))}
@@ -189,7 +189,7 @@ class EditCard extends React.PureComponent {
             Cancel
           </Button>
           <Button onClick={this.handleSave} color="primary">
-            {add ? "Add" : "Save"}
+            {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
         {confirm && (

@@ -1,33 +1,33 @@
-import React from "react";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Header from "./Header";
-import Page from "./Cards/Page";
-import PageNavigation from "./PageNavigation";
-import Radio from "./Radio/Radio";
-import EditCard from "./EditConfig/EditCard";
-import EditPage from "./EditConfig/EditPage";
-import EditGroup from "./EditConfig/EditGroup";
-import defaultConfig from "./EditConfig/defaultConfig.json";
-import isObject from "./Common/isObject";
-import clone from "./Common/clone";
+import React from 'react';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Header from './Header';
+import Page from './Cards/Page';
+import PageNavigation from './PageNavigation';
+import Radio from './Radio/Radio';
+import EditCard from './EditConfig/EditCard';
+import EditPage from './EditConfig/EditPage';
+import EditGroup from './EditConfig/EditGroup';
+import defaultConfig from './EditConfig/defaultConfig.json';
+import isObject from './Common/isObject';
+import clone from './Common/clone';
 
 const styles = () => ({
   root: {
-    height: "100%",
-    width: "100%",
-    maxHeight: "100%",
-    maxWidth: "100%"
+    height: '100%',
+    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%'
   },
   pageContainer: {
-    height: "100%",
-    overflowY: "auto",
-    transition: "height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms"
+    height: '100%',
+    overflowY: 'auto',
+    transition: 'height 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
   },
   progress: {
-    position: "absolute",
-    top: "50%",
-    left: "50%"
+    position: 'absolute',
+    top: '50%',
+    left: '50%'
   }
 });
 
@@ -90,11 +90,11 @@ class Main extends React.PureComponent {
     this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
-    localStorage.removeItem("should_login");
-    localStorage.removeItem("hass_tokens");
-    localStorage.removeItem("username");
-    sessionStorage.removeItem("password");
-    localStorage.setItem("been_here", true);
+    localStorage.removeItem('should_login');
+    localStorage.removeItem('hass_tokens');
+    localStorage.removeItem('username');
+    sessionStorage.removeItem('password');
+    localStorage.setItem('been_here', true);
     window.location.reload(true);
   };
 
@@ -106,7 +106,7 @@ class Main extends React.PureComponent {
       : this.setState({ editing: true });
 
   handleConfigChange = (path, value) => {
-    console.log("handleConfigChange", clone(path), clone(value));
+    console.log('handleConfigChange', clone(path), clone(value));
     let config = clone(this.props.config);
     // Set the new value
     const lastItem = path.pop();
@@ -122,7 +122,7 @@ class Main extends React.PureComponent {
   };
 
   handleCardAdd = (groupId, cardId) => {
-    console.log("defaultConfig", clone(defaultConfig));
+    console.log('defaultConfig', clone(defaultConfig));
     this.setState({
       addingCard: {
         groupId,
@@ -150,38 +150,38 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
 
   handleCardAddDone = (path, card) => {
-    console.log("handleCardAddDone", path, card);
+    console.log('handleCardAddDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
   };
 
   handleCardEditDone = (path, card) => {
-    console.log("handleCardEditDone", path, card);
+    console.log('handleCardEditDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAddDone = (id, page) => {
-    console.log("handlePageAddDone", id, page);
-    id && this.handleConfigChange(["pages", id], clone(page));
+    console.log('handlePageAddDone', id, page);
+    id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ addingPage: undefined });
   };
 
   handlePageEditDone = (id, page) => {
-    console.log("handlePageEditDone", id, page);
-    id && this.handleConfigChange(["pages", id], clone(page));
+    console.log('handlePageEditDone', id, page);
+    id && this.handleConfigChange(['pages', id], clone(page));
     this.setState({ editingPage: undefined });
   };
 
   handleGroupAddDone = (id, group) => {
-    console.log("handleGroupAddDone", id, group);
-    id && this.handleConfigChange(["items", id], clone(group));
+    console.log('handleGroupAddDone', id, group);
+    id && this.handleConfigChange(['items', id], clone(group));
     this.setState({ addingGroup: undefined });
   };
 
   handleGroupEditDone = (id, group) => {
-    console.log("handleGroupEditDone", id, group);
-    id && this.handleConfigChange(["items", id], clone(group));
+    console.log('handleGroupEditDone', id, group);
+    id && this.handleConfigChange(['items', id], clone(group));
     this.setState({ editingGroup: undefined });
   };
 
@@ -212,7 +212,7 @@ class Main extends React.PureComponent {
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages
       ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] }
-      : { id: 1, name: "Home", icon: "home" };
+      : { id: 1, name: 'Home', icon: 'home' };
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -236,7 +236,7 @@ class Main extends React.PureComponent {
           className={classes.pageContainer}
           onClick={this.handleRadioHide}
           style={{
-            height: pages && (moved || over) ? "calc(100% - 72px)" : "inherit"
+            height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
           }}>
           <Page
             config={config}

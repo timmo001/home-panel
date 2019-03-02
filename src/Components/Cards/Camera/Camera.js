@@ -1,24 +1,24 @@
-import React from "react";
-import PropTypes from "prop-types";
-import classnames from "classnames";
-import moment from "moment";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Grid from "@material-ui/core/Grid";
-import ButtonBase from "@material-ui/core/ButtonBase";
-import Card from "@material-ui/core/Card";
-import { getCardElevation, getSquareCards } from "../../Common/config";
-import Dialog from "./Dialog";
-import card from "../../Common/Style/card";
+import React from 'react';
+import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import moment from 'moment';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Grid from '@material-ui/core/Grid';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import Card from '@material-ui/core/Card';
+import { getCardElevation, getSquareCards } from '../../Common/config';
+import Dialog from './Dialog';
+import card from '../../Common/Style/card';
 
 const styles = theme => ({
   ...card(theme),
   cameraCard: {
-    height: "100%"
+    height: '100%'
   },
   camera: {
-    display: "block",
-    width: "100%",
-    height: "100%"
+    display: 'block',
+    width: '100%',
+    height: '100%'
   }
 });
 
@@ -46,14 +46,14 @@ class Camera extends React.PureComponent {
     } = this.props;
     const { camera } = this.state;
     const { name, url } = card;
-    const still_url = `${card.still_url}?${moment().format("HHmm")}`;
+    const still_url = `${card.still_url}?${moment().format('HHmm')}`;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     return (
       <Grid
         className={classes.cardContainer}
         style={{
-          "--width": card.width ? card.width : 2
+          '--width': card.width ? card.width : 2
         }}
         item>
         <ButtonBase

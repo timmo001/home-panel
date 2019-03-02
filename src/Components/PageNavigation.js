@@ -1,19 +1,19 @@
-import React from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import Slide from "@material-ui/core/Slide";
-import AddIcon from "@material-ui/icons/Add";
+import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import Slide from '@material-ui/core/Slide';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
   navigation: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    opacity: "0.94",
+    opacity: '0.94',
     background: theme.palette.backgrounds.navigation
   },
   iconButton: {
@@ -98,7 +98,7 @@ class PageNavigation extends React.PureComponent {
                     page.icon && (
                       <span
                         className={classnames(
-                          "mdi",
+                          'mdi',
                           `mdi-${page.icon}`,
                           classes.icon
                         )}

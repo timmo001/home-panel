@@ -1,25 +1,25 @@
-import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import moment from "moment";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import blueGrey from "@material-ui/core/colors/blueGrey";
-import grey from "@material-ui/core/colors/grey";
-import red from "@material-ui/core/colors/red";
-import orange from "@material-ui/core/colors/orange";
-import blue from "@material-ui/core/colors/blue";
-import Root from "./Components/Root";
-import clone from "./Components/Common/clone";
-import mapToColor from "./Components/Common/mapToColor";
-import "typeface-roboto";
-import "@mdi/font/css/materialdesignicons.min.css";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import moment from 'moment';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import grey from '@material-ui/core/colors/grey';
+import red from '@material-ui/core/colors/red';
+import orange from '@material-ui/core/colors/orange';
+import blue from '@material-ui/core/colors/blue';
+import Root from './Components/Root';
+import clone from './Components/Common/clone';
+import mapToColor from './Components/Common/mapToColor';
+import 'typeface-roboto';
+import '@mdi/font/css/materialdesignicons.min.css';
+import './App.css';
 
 var themes = [
   {
     id: 1,
-    name: "Light",
+    name: 'Light',
     palette: {
-      type: "light",
+      type: 'light',
       primary: blueGrey,
       secondary: grey,
       backgrounds: {
@@ -51,9 +51,9 @@ var themes = [
   },
   {
     id: 2,
-    name: "Dark",
+    name: 'Dark',
     palette: {
-      type: "dark",
+      type: 'dark',
       primary: blueGrey,
       secondary: grey,
       backgrounds: {

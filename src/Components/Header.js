@@ -1,44 +1,44 @@
-import React from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
-import ReactAnimatedWeather from "react-animated-weather";
-import Moment from "react-moment";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Hidden from "@material-ui/core/Hidden";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Slide from "@material-ui/core/Slide";
-import Grid from "@material-ui/core/Grid";
-import Tooltip from "@material-ui/core/Tooltip";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import FormatPaintIcon from "@material-ui/icons/FormatPaint";
-import EditIcon from "@material-ui/icons/Edit";
-import CheckIcon from "@material-ui/icons/Check";
-import RadioIcon from "@material-ui/icons/Radio";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import ReactAnimatedWeather from 'react-animated-weather';
+import Moment from 'react-moment';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Hidden from '@material-ui/core/Hidden';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Slide from '@material-ui/core/Slide';
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import FormatPaintIcon from '@material-ui/icons/FormatPaint';
+import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
+import RadioIcon from '@material-ui/icons/Radio';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const styles = theme => ({
   header: {
-    width: "100%",
+    width: '100%',
     margin: 4,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       margin: 0
     }
   },
   buttons: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       margin: 1
     },
-    [theme.breakpoints.down("sm")]: {
-      display: "grid",
+    [theme.breakpoints.down('sm')]: {
+      display: 'grid',
       margin: 4
     },
-    [theme.breakpoints.up("sm")]: {
-      display: "block"
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
     }
   },
   button: {
@@ -46,143 +46,143 @@ const styles = theme => ({
     width: 32,
     color: theme.palette.text.light,
     margin: 6,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       height: 26,
       width: 26,
       margin: 2,
       gridColumn: 1
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       margin: 1
     }
   },
   icon: {
     height: 22,
     width: 22,
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       height: 18,
       width: 18
     },
-    transform: "translateY(-8px)"
+    transform: 'translateY(-8px)'
   },
   weatherContainer: {
     width: 420,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       width: 340
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       width: 240
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       width: 0,
-      visibility: "hidden"
+      visibility: 'hidden'
     },
     marginLeft: theme.spacing.unit * 2,
-    textAlign: "start",
-    transition: "margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms"
+    textAlign: 'start',
+    transition: 'margin 225ms cubic-bezier(0, 0, 0.2, 1) 0ms'
   },
   condition: {
     color: theme.palette.text.main,
-    fontSize: "2.2rem",
-    overflow: "visible",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem"
+    fontSize: '2.2rem',
+    overflow: 'visible',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
     }
   },
   data: {
     maxWidth: 420,
     color: theme.palette.text.main,
-    fontSize: "1.6rem",
-    "& span": {
+    fontSize: '1.6rem',
+    '& span': {
       marginLeft: theme.spacing.unit * 2
     },
-    "& span:first-child": {
+    '& span:first-child': {
       marginLeft: 0
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       maxWidth: 340
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
-      fontSize: "1.2rem"
+      fontSize: '1.2rem'
     }
   },
   timeDateContainer: {
     width: 420,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       width: 340
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       width: 240
     }
   },
   time: {
-    textAlign: "center",
+    textAlign: 'center',
     color: theme.palette.text.main,
-    fontSize: "5.4rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "4.2rem"
+    fontSize: '5.4rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '4.2rem'
     },
-    overflow: "visible"
+    overflow: 'visible'
   },
   timePeriod: {
     marginLeft: theme.spacing.unit,
-    fontSize: "3.0rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "2.2rem"
+    fontSize: '3.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.2rem'
     },
-    overflow: "visible"
+    overflow: 'visible'
   },
   date: {
     color: theme.palette.text.main,
-    textAlign: "center",
-    overflow: "visible",
-    fontSize: "2.0rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem"
+    textAlign: 'center',
+    overflow: 'visible',
+    fontSize: '2.0rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
     }
   },
   indoorContainer: {
     width: 420,
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       width: 340
     },
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down('sm')]: {
       width: 240
     },
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down('xs')]: {
       width: 0,
-      visibility: "hidden"
+      visibility: 'hidden'
     },
     marginRight: theme.spacing.unit * 2,
-    textAlign: "end"
+    textAlign: 'end'
   },
   indoorInnerContainer: {
     marginTop: theme.spacing.unit / 2,
-    "&:first-child": {
+    '&:first-child': {
       marginTop: 0
     }
   },
   indoorLabel: {
     color: theme.palette.text.main,
-    fontSize: "2.0rem",
-    overflow: "visible",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.6rem"
+    fontSize: '2.0rem',
+    overflow: 'visible',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
     }
   },
   indoor: {
     color: theme.palette.text.main,
-    overflow: "visible",
-    fontSize: "1.6rem",
-    "& span": {
+    overflow: 'visible',
+    fontSize: '1.6rem',
+    '& span': {
       marginLeft: theme.spacing.unit * 2
     },
-    "& span:first-child": {
+    '& span:first-child': {
       marginLeft: 0
     },
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "1.2rem"
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.2rem'
     }
   }
 });
@@ -190,7 +190,7 @@ const styles = theme => ({
 // eslint-disable-next-line
 String.prototype.replaceAll = function(search, replacement) {
   let target = this;
-  return target.replace(new RegExp(search, "g"), replacement);
+  return target.replace(new RegExp(search, 'g'), replacement);
 };
 
 class Header extends React.PureComponent {
@@ -198,13 +198,13 @@ class Header extends React.PureComponent {
     anchorEl: null
   };
 
-  getState = (entities, entity, endAdornment = "") => {
+  getState = (entities, entity, endAdornment = '') => {
     let state = entities.find(i => {
       return i[1].entity_id === entity;
     });
     if (!state) return undefined;
     state = state[1].state;
-    return !state || state === "unknown" ? "" : state + endAdornment;
+    return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
   handleClick = event => this.setState({ anchorEl: event.currentTarget });
@@ -239,7 +239,7 @@ class Header extends React.PureComponent {
 
     const header = {
       left_outdoor_weather: config.header.left_outdoor_weather && {
-        icon: icon && icon.replaceAll("-", "_").toUpperCase(),
+        icon: icon && icon.replaceAll('-', '_').toUpperCase(),
         condition:
           config.header.left_outdoor_weather.condition &&
           this.getState(entities, config.header.left_outdoor_weather.condition),
@@ -276,7 +276,7 @@ class Header extends React.PureComponent {
         timeMilitary = config.header.time.military;
     }
     let dateDisabled = false,
-      dateFormat = "Do MMMM YYYY";
+      dateFormat = 'Do MMMM YYYY';
     if (config.header.date) {
       if (config.header.date.disable) dateDisabled = config.header.date.disable;
       if (config.header.date.format) dateFormat = config.header.date.format;
@@ -334,7 +334,7 @@ class Header extends React.PureComponent {
                   gridColumn: timeDisabled && dateDisabled ? 4 : 2
                 }}
                 aria-label="Theme"
-                aria-owns={anchorEl ? "simple-menu" : null}
+                aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup="true"
                 onClick={this.handleClick}>
                 <FormatPaintIcon className={classes.icon} />

@@ -1,39 +1,39 @@
-import React from "react";
-import classNames from "classnames";
-import PropTypes from "prop-types";
-import request from "superagent";
-import withStyles from "@material-ui/core/styles/withStyles";
-import green from "@material-ui/core/colors/green";
-import Grid from "@material-ui/core/Grid";
-import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import FormControl from "@material-ui/core/FormControl";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
-import Logo from "../resources/logo.svg";
+import React from 'react';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import request from 'superagent';
+import withStyles from '@material-ui/core/styles/withStyles';
+import green from '@material-ui/core/colors/green';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Logo from '../resources/logo.svg';
 
 const styles = theme => ({
   grid: {
-    height: "100%",
+    height: '100%',
     paddingTop: theme.spacing.unit * 8,
     paddingBottom: theme.spacing.unit * 2,
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
-    overflow: "auto"
+    overflow: 'auto'
   },
   media: {
-    backgroundSize: "contain",
+    backgroundSize: 'contain',
     height: 140,
-    [theme.breakpoints.up("md")]: {
+    [theme.breakpoints.up('md')]: {
       height: 240
     }
   },
@@ -47,7 +47,7 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2
   },
   textField: {
-    flexBasis: "50%"
+    flexBasis: '50%'
   },
   fakeButton: {
     width: 256
@@ -58,24 +58,24 @@ const styles = theme => ({
   },
   switch: {
     width: 256,
-    justifyContent: "center",
+    justifyContent: 'center',
     margin: `${theme.spacing.unit / 2}px ${theme.spacing.unit}px`
   },
   wrapper: {
     margin: theme.spacing.unit,
-    position: "relative"
+    position: 'relative'
   },
   buttonSuccess: {
     backgroundColor: green[500],
-    "&:hover": {
+    '&:hover': {
       backgroundColor: green[700]
     }
   },
   buttonProgress: {
     color: green[500],
-    position: "absolute",
-    top: "50%",
-    left: "50%",
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
     marginTop: -12,
     marginLeft: -12
   }
@@ -83,10 +83,10 @@ const styles = theme => ({
 
 class Login extends React.PureComponent {
   state = {
-    username: "",
-    password: "",
-    api_url: "",
-    hass_url: "",
+    username: '',
+    password: '',
+    api_url: '',
+    hass_url: '',
     showPassword: false,
     createAccount: false,
     loading: false,
@@ -96,34 +96,34 @@ class Login extends React.PureComponent {
   componentDidMount = () => {
     const username = process.env.REACT_APP_OVERRIDE_USERNAME
       ? process.env.REACT_APP_OVERRIDE_USERNAME
-      : localStorage.getItem("username");
+      : localStorage.getItem('username');
     const password = process.env.REACT_APP_OVERRIDE_PASSWORD
       ? process.env.REACT_APP_OVERRIDE_PASSWORD
-      : sessionStorage.getItem("password");
+      : sessionStorage.getItem('password');
     const api_url = process.env.REACT_APP_OVERRIDE_API_URL
       ? process.env.REACT_APP_OVERRIDE_API_URL
-      : localStorage.getItem("api_url");
+      : localStorage.getItem('api_url');
     const hass_url = process.env.REACT_APP_OVERRIDE_HASS_URL
       ? process.env.REACT_APP_OVERRIDE_HASS_URL
-      : localStorage.getItem("hass_url");
+      : localStorage.getItem('hass_url');
 
-    localStorage.setItem("should_auth", true);
+    localStorage.setItem('should_auth', true);
 
     this.setState(
       {
-        username: username ? username : "",
-        password: password ? password : "",
+        username: username ? username : '',
+        password: password ? password : '',
         api_url: api_url
           ? api_url
           : `${window.location.protocol}//${window.location.hostname}:3234`,
-        hass_url: hass_url ? hass_url : "",
-        createAccount: localStorage.getItem("been_here") ? false : true
+        hass_url: hass_url ? hass_url : '',
+        createAccount: localStorage.getItem('been_here') ? false : true
       },
       () => {
-        localStorage.setItem("been_here", true);
+        localStorage.setItem('been_here', true);
         this.handleValidation(invalid => {
           !invalid &&
-            localStorage.getItem("should_login") &&
+            localStorage.getItem('should_login') &&
             !this.state.createAccount &&
             this.handleLogIn();
         });
@@ -136,41 +136,41 @@ class Login extends React.PureComponent {
 
   handleValidation = cb => {
     if (!this.state.username) {
-      this.setState({ invalid: "No username!" });
+      this.setState({ invalid: 'No username!' });
       cb(this.state.invalid);
       return;
     }
     if (!this.state.password) {
-      this.setState({ invalid: "No password!" });
+      this.setState({ invalid: 'No password!' });
       cb(this.state.invalid);
       return;
     }
     if (
       !this.state.api_url ||
-      !this.state.api_url.startsWith("http") ||
-      !this.state.api_url.includes("://")
+      !this.state.api_url.startsWith('http') ||
+      !this.state.api_url.includes('://')
     ) {
-      this.setState({ invalid: "API URL invalid!" });
+      this.setState({ invalid: 'API URL invalid!' });
       cb(this.state.invalid);
       return;
     }
     if (this.state.hass_url) {
       if (
-        !this.state.hass_url.startsWith("http") ||
-        !this.state.hass_url.includes("://")
+        !this.state.hass_url.startsWith('http') ||
+        !this.state.hass_url.includes('://')
       ) {
-        this.setState({ invalid: "Home Assistant URL invalid!" });
+        this.setState({ invalid: 'Home Assistant URL invalid!' });
         cb(this.state.invalid);
         return;
       }
-      if (window.location.protocol === "https:") {
-        if (this.state.api_url.startsWith("http:")) {
-          this.setState({ invalid: "The API must use SSL/https." });
+      if (window.location.protocol === 'https:') {
+        if (this.state.api_url.startsWith('http:')) {
+          this.setState({ invalid: 'The API must use SSL/https.' });
           cb(this.state.invalid);
           return;
         }
-        if (this.state.hass_url.startsWith("http:")) {
-          this.setState({ invalid: "Your HASS instance must use SSL/https." });
+        if (this.state.hass_url.startsWith('http:')) {
+          this.setState({ invalid: 'Your HASS instance must use SSL/https.' });
           cb(this.state.invalid);
           return;
         }
@@ -193,7 +193,7 @@ class Login extends React.PureComponent {
     this.setState({ showPassword: !this.state.showPassword });
 
   handleKeyPress = e => {
-    if (e.key === "Enter" && !this.state.invalid) {
+    if (e.key === 'Enter' && !this.state.invalid) {
       this.state.createAccount
         ? this.handleCreateAccount()
         : this.handleLogIn();
@@ -202,12 +202,12 @@ class Login extends React.PureComponent {
 
   handleCreateAccount = () => {
     var api_url = this.state.api_url;
-    api_url = api_url.endsWith("/")
+    api_url = api_url.endsWith('/')
       ? api_url.substring(0, api_url.length - 1)
       : this.state.api_url;
     this.setState({ api_url, success: false, loading: true }, () => {
       if (this.state.username) {
-        console.log("Create account");
+        console.log('Create account');
         request
           .post(`${this.state.api_url}/login/setup`)
           .send({
@@ -221,10 +221,10 @@ class Login extends React.PureComponent {
           })
           .then(res => {
             if (res.status === 200) {
-              localStorage.setItem("username", this.state.username);
-              sessionStorage.setItem("password", this.state.password);
-              localStorage.setItem("api_url", this.state.api_url);
-              localStorage.setItem("hass_url", this.state.hass_url);
+              localStorage.setItem('username', this.state.username);
+              sessionStorage.setItem('password', this.state.password);
+              localStorage.setItem('api_url', this.state.api_url);
+              localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
                 this.props.loggedIn(
                   res.body,
@@ -281,12 +281,12 @@ class Login extends React.PureComponent {
 
   handleLogIn = () => {
     var api_url = this.state.api_url;
-    api_url = api_url.endsWith("/")
+    api_url = api_url.endsWith('/')
       ? api_url.substring(0, api_url.length - 1)
       : this.state.api_url;
     this.setState({ api_url, success: false, loading: true }, () => {
       if (this.state.username) {
-        console.log("Log In");
+        console.log('Log In');
         request
           .post(`${this.state.api_url}/login`)
           .send({
@@ -300,10 +300,10 @@ class Login extends React.PureComponent {
           })
           .then(res => {
             if (res.status === 200) {
-              localStorage.setItem("username", this.state.username);
-              sessionStorage.setItem("password", this.state.password);
-              localStorage.setItem("api_url", this.state.api_url);
-              localStorage.setItem("hass_url", this.state.hass_url);
+              localStorage.setItem('username', this.state.username);
+              sessionStorage.setItem('password', this.state.password);
+              localStorage.setItem('api_url', this.state.api_url);
+              localStorage.setItem('hass_url', this.state.hass_url);
               this.setState({ loading: false, success: true }, () => {
                 this.props.loggedIn(
                   res.body,
@@ -393,7 +393,7 @@ class Login extends React.PureComponent {
                 title="Home Panel"
               />
               <Typography variant="h5" component="h2">
-                {createAccount ? "Welcome!" : "Login"}
+                {createAccount ? 'Welcome!' : 'Login'}
               </Typography>
               {!process.env.REACT_APP_OVERRIDE_USERNAME && (
                 <FormControl
@@ -408,11 +408,11 @@ class Login extends React.PureComponent {
                     id="username"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none",
-                      autoComplete: "username"
+                      autoCapitalize: 'none',
+                      autoComplete: 'username'
                     }}
                     value={username}
-                    onChange={this.handleChange("username")}
+                    onChange={this.handleChange('username')}
                     onKeyPress={this.handleKeyPress}
                   />
                 </FormControl>
@@ -424,15 +424,15 @@ class Login extends React.PureComponent {
                   <Input
                     required
                     id="password"
-                    type={showPassword ? "text" : "password"}
+                    type={showPassword ? 'text' : 'password'}
                     inputProps={{
-                      autoCapitalize: "none",
+                      autoCapitalize: 'none',
                       autoComplete: createAccount
-                        ? "new-password"
-                        : "current-password"
+                        ? 'new-password'
+                        : 'current-password'
                     }}
                     value={password}
-                    onChange={this.handleChange("password")}
+                    onChange={this.handleChange('password')}
                     onKeyPress={this.handleKeyPress}
                     endAdornment={
                       <InputAdornment position="end">
@@ -460,11 +460,11 @@ class Login extends React.PureComponent {
                     id="api_url"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none",
-                      autoComplete: "url"
+                      autoCapitalize: 'none',
+                      autoComplete: 'url'
                     }}
                     value={api_url}
-                    onChange={this.handleChange("api_url")}
+                    onChange={this.handleChange('api_url')}
                     onKeyPress={this.handleKeyPress}
                   />
                 </FormControl>
@@ -482,11 +482,11 @@ class Login extends React.PureComponent {
                     id="hass_url"
                     type="text"
                     inputProps={{
-                      autoCapitalize: "none",
-                      autoComplete: "url"
+                      autoCapitalize: 'none',
+                      autoComplete: 'url'
                     }}
                     value={hass_url}
-                    onChange={this.handleChange("hass_url")}
+                    onChange={this.handleChange('hass_url')}
                     onKeyPress={this.handleKeyPress}
                   />
                 </FormControl>
@@ -503,8 +503,8 @@ class Login extends React.PureComponent {
               {!process.env.REACT_APP_OVERRIDE_API_URL && (
                 <Button onClick={this.toggleCreateAccount}>
                   {createAccount
-                    ? "Already have an account?"
-                    : "Create New Account"}
+                    ? 'Already have an account?'
+                    : 'Create New Account'}
                 </Button>
               )}
               <div className={classes.wrapper}>

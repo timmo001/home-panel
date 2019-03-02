@@ -1,26 +1,26 @@
-import React from "react";
-import classnames from "classnames";
-import PropTypes from "prop-types";
-import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import defaultConfig from "./defaultConfig.json";
-import ConfirmDialog from "../Common/ConfirmDialog";
-import Item from "./Item";
-import clone from "../Common/clone";
+import React from 'react';
+import classnames from 'classnames';
+import PropTypes from 'prop-types';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import defaultConfig from './defaultConfig.json';
+import ConfirmDialog from '../Common/ConfirmDialog';
+import Item from './Item';
+import clone from '../Common/clone';
 
 const styles = theme => ({
   navigation: {
-    opacity: "0.94",
+    opacity: '0.94',
     background: theme.palette.backgrounds.navigation
   },
   fill: {
-    flex: "1 1 auto"
+    flex: '1 1 auto'
   }
 });
 
@@ -53,7 +53,7 @@ class EditPage extends React.PureComponent {
   handleDelete = () =>
     this.handleClose(() => {
       this.setState({ confirm: false }, () => {
-        const path = ["pages", this.props.id];
+        const path = ['pages', this.props.id];
         this.props.add
           ? this.props.handlePageAddDone(path)
           : this.props.handlePageEditDone(path);
@@ -73,7 +73,7 @@ class EditPage extends React.PureComponent {
     return (
       <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {add ? "Add" : "Edit"} Page
+          {add ? 'Add' : 'Edit'} Page
         </DialogTitle>
         <BottomNavigation className={classes.navigation} showLabels value={0}>
           <BottomNavigationAction
@@ -82,7 +82,7 @@ class EditPage extends React.PureComponent {
               page.icon && (
                 <span
                   className={classnames(
-                    "mdi",
+                    'mdi',
                     `mdi-${page.icon}`,
                     classes.icon
                   )}
@@ -98,8 +98,8 @@ class EditPage extends React.PureComponent {
               objKey={i}
               defaultItem={defaultConfig.pages[0][i]}
               item={page[i] !== undefined ? page[i] : defaultConfig.pages[0][i]}
-              defaultItemPath={["pages", 0, i]}
-              itemPath={["pages", id, i]}
+              defaultItemPath={['pages', 0, i]}
+              itemPath={['pages', id, i]}
               handleConfigChange={this.handleConfigChange}
             />
           ))}
@@ -115,7 +115,7 @@ class EditPage extends React.PureComponent {
             Cancel
           </Button>
           <Button onClick={this.handleSave} color="primary">
-            {add ? "Add" : "Save"}
+            {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
         {confirm && (
