@@ -681,7 +681,7 @@ The amount of cards high.
           "height": 2
 ```
 
-[template]: https://git.timmo.xyz/home-panel/template/
+[template]: https://timmo.dev/home-panel/template/
 [hass]: https://www.home-assistant.io/
 [dark-sky]: https://www.home-assistant.io/components/sensor.darksky/
 [more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
@@ -690,6 +690,6 @@ The amount of cards high.
 [header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/header.png
 [weather-left]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-left.png
 [weather-right]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/weather-right.png
-[themes]: https://git.timmo.xyz/home-panel/themes/
+[themes]: https://timmo.dev/home-panel/themes/
 [mdi]: https://materialdesignicons.com
 [moment-docs]: https://momentjs.com/docs/#/displaying/format/

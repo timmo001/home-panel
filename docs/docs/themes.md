@@ -144,7 +144,7 @@ Here are some example themes you can use or expand on.
 
 ![Forest Theme][forest-theme]
 
-[template]: https://git.timmo.xyz/home-panel/template/
+[template]: https://timmo.dev/home-panel/template/
 [md-color]: https://material.io/design/color/#tools-for-picking-colors
 [midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
 [forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
