@@ -111,9 +111,11 @@ class Main extends React.PureComponent {
     // Set the new value
     const lastItem = path.pop();
     let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-    if (value === undefined)
-      secondLastItem.splice(secondLastItem.indexOf(lastItem));
-    else if (isObject(value)) {
+    console.log('lastItem:', lastItem);
+    console.log('secondLastItem:', secondLastItem);
+    if (value === undefined) {
+      secondLastItem.splice(lastItem, 1);
+    } else if (isObject(value)) {
       const newValue = JSON.parse(JSON.stringify(value));
       if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
       secondLastItem[lastItem] = newValue;
