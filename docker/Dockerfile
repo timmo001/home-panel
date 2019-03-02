@@ -33,9 +33,9 @@ RUN \
     && echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.63.0-r0 \
+        curl=7.64.0-r1 \
         git=2.20.1-r0 \
-        tar=1.31-r0 \
+        tar=1.32-r0 \
         yarn=1.12.3-r0 \
     \
     && apk add --no-cache \
@@ -49,7 +49,7 @@ RUN \
     \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; else S6_ARCH="${BUILD_ARCH}"; fi \
     \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.21.8.0/s6-overlay-${S6_ARCH}.tar.gz" \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.0.0/s6-overlay-${S6_ARCH}.tar.gz" \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
