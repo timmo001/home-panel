@@ -34,11 +34,12 @@ class EditGroup extends React.PureComponent {
 
   handleSave = () =>
     this.handleClose(() => {
-      let group = this.state.group;
+      const path = ['items', this.props.id];
+      let group = clone(this.state.group);
       if (this.props.add) group.cards = [];
       this.props.add
-        ? this.props.handleGroupAddDone(this.props.id, group)
-        : this.props.handleGroupEditDone(this.props.id, group);
+        ? this.props.handleGroupAddDone(path, group)
+        : this.props.handleGroupEditDone(path, group);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });

@@ -41,9 +41,10 @@ class EditPage extends React.PureComponent {
 
   handleSave = () =>
     this.handleClose(() => {
+      const path = ['pages', this.props.id];
       this.props.add
-        ? this.props.handlePageAddDone(this.props.id, this.state.page)
-        : this.props.handlePageEditDone(this.props.id, this.state.page);
+        ? this.props.handlePageAddDone(path, this.state.page)
+        : this.props.handlePageEditDone(path, this.state.page);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });

@@ -10,10 +10,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CardBase from '../Cards/CardBase';
-import defaultConfig from './defaultConfig.json';
+import dc from './defaultConfig.json';
 import ConfirmDialog from '../Common/ConfirmDialog';
 import Item from './Item';
 import clone from '../Common/clone';
+
+const defaultConfig = clone(dc);
 
 const styles = theme => ({
   dialog: {
