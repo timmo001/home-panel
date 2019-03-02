@@ -125,5 +125,5 @@ SOFTWARE.
 [radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
 [releases]: https://github.com/timmo001/home-panel/releases
-[setup-docs]: https://git.timmo.xyz/home-panel/setup/
+[setup-docs]: https://timmo.dev/home-panel/setup/
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
