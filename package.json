@@ -2,7 +2,7 @@
   "name": "home-panel",
   "version": "1.0.0",
   "private": true,
-  "author": "Timmo <contact@timmo.xyz> (https://git.timmo.xyz)",
+  "author": "Timmo <contact@timmo.xyz> (https://timmo.dev)",
   "dependencies": {
     "@material-ui/core": "3.9.2",
     "@material-ui/icons": "3.0.2",

@@ -227,4 +227,4 @@ yarn start
 
 - The app should open in your default browser under [http://localhost:3000](http://localhost:3000)
 
-[template]: https://git.timmo.xyz/home-panel/template/
+[template]: https://timmo.dev/home-panel/template/

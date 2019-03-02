@@ -88,7 +88,7 @@
   "items": [
     {
       "name": "The name of the group of cards",
-      "page": "The page the group is on. Refer to the pages docs for more info: https://git.timmo.xyz/home-panel/configuration/#pages",
+      "page": "The page the group is on. Refer to the pages docs for more info: https://timmo.dev/home-panel/configuration/#pages",
       "width": "The amount of cards wide you want the group to be",
       "cards": [
         {

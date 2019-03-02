@@ -62,7 +62,7 @@ You can also post an issue to the [GitHub repository]. If your issue is
 [app]: https://github.com/timmo001/home-panel/releases
 [api]: https://github.com/timmo001/home-panel-api/releases
 [forum thread]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
-[setup]: https://git.timmo.xyz/home-panel/setup/
-[login]: https://git.timmo.xyz/home-panel/login/
+[setup]: https://timmo.dev/home-panel/setup/
+[login]: https://timmo.dev/home-panel/login/
 [GitHub repository]: https://github.com/timmo001/home-panel/issues
 [here]: https://github.com/timmo001/addon-home-panel/issues
