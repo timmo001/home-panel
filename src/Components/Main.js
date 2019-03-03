@@ -8,6 +8,7 @@ import Radio from './Radio/Radio';
 import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import EditGroup from './EditConfig/EditGroup';
+import EditItem from './EditConfig/EditItem';
 import dc from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
 import clone from './Common/clone';
@@ -68,7 +69,7 @@ class Main extends React.PureComponent {
           }, 5000);
         });
       }
-    }
+    } else if (!this.state.over) this.setState({ moved: true, over: true });
   };
 
   onMouseOverHandler = () => this.setState({ over: true });
@@ -163,6 +164,13 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
+  handleEditItem = (path, defaultItem, item) => {
+    console.log('handleEditItem', path, defaultItem, item);
+    this.setState({
+      editingItem: { path, defaultItem: clone(defaultItem), item: clone(item) }
+    });
+  };
+
   handleCardAddDone = (path, card) => {
     console.log('handleCardAddDone', path, card);
     path && this.handleConfigChange(path, clone(card));
@@ -199,6 +207,11 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: undefined });
   };
 
+  handleEditItemDone = (path, item) => {
+    console.log('handleEditItemDone', path, item);
+    this.setState({ editingItem: undefined });
+  };
+
   render() {
     const {
       classes,
@@ -221,7 +234,8 @@ class Main extends React.PureComponent {
       addingPage,
       editingPage,
       addingGroup,
-      editingGroup
+      editingGroup,
+      editingItem
     } = this.state;
     const pages = config.pages && config.pages.length > 1 && config.pages;
     const page = pages
@@ -245,6 +259,7 @@ class Main extends React.PureComponent {
           handleLogOut={this.handleLogOut}
           handleRadioHide={this.handleRadioHide}
           handleEditConfig={this.handleEditConfig}
+          handleEditItem={this.handleEditItem}
         />
         <div
           className={classes.pageContainer}
@@ -343,7 +358,17 @@ class Main extends React.PureComponent {
             config={config}
             id={editingGroup.groupId}
             group={editingGroup.group}
+            EditItem
             handleGroupEditDone={this.handleGroupEditDone}
+          />
+        )}
+        {editingItem && (
+          <EditItem
+            config={config}
+            path={editingItem.path}
+            defaultItem={editingItem.defaultItem}
+            item={editingItem.item}
+            handleItemEditDone={this.handleItemEditDone}
           />
         )}
       </div>

@@ -28,7 +28,8 @@ const styles = theme => ({
   },
   container: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingLeft: theme.spacing.unit
   },
   addIcon: {
     width: '100%',
@@ -58,6 +59,13 @@ class Item extends React.PureComponent {
       handleConfigChange
     } = this.props;
 
+    console.log('');
+    console.log('Item');
+    console.log('objKey:', objKey);
+    console.log('defaultItemPath:', defaultItemPath);
+    console.log('itemPath:', itemPath);
+    console.log('item:', item);
+
     return isObject(defaultItem) ? (
       <div className={classes.root}>
         <Typography className={classes.dropdownText} variant="h6">
@@ -73,8 +81,8 @@ class Item extends React.PureComponent {
                   objKey={i}
                   defaultItem={defaultItem[i]}
                   item={item[i] !== undefined ? item[i] : defaultItem[i]}
-                  defaultItemPath={defaultItemPath.concat([i])}
-                  itemPath={itemPath.concat([i])}
+                  defaultItemPath={defaultItemPath.concat(objKey).concat([i])}
+                  itemPath={itemPath.concat(objKey).concat([i])}
                   handleConfigChange={handleConfigChange}
                 />
               );

@@ -58,7 +58,7 @@ class Input extends React.PureComponent {
       handleConfigChange
     } = this.props;
     const type =
-      defaultItemPath.findIndex(i => i === 'cards') > -1 &&
+      clone(defaultItemPath).findIndex(i => i === 'cards') > -1 &&
       this.props.name === 'type'
         ? 'card_type'
         : defaultValue === 'true'
@@ -66,9 +66,9 @@ class Input extends React.PureComponent {
         : defaultValue === 'false'
         ? 'boolean'
         : typeof defaultValue;
-    const helpText = defaultItemPath.reduce(
+    const helpText = clone(defaultItemPath).reduce(
       (o, k) => (o[k] = o[k] || {}),
-      configExplanations
+      clone(configExplanations)
     );
     const value =
       this.props.value === 'true'
@@ -76,6 +76,16 @@ class Input extends React.PureComponent {
         : this.props.value === 'false'
         ? false
         : this.props.value;
+
+    console.log('');
+    console.log('Input');
+    console.log('name:', name);
+    console.log('defaultValue:', defaultValue);
+    console.log('defaultItemPath:', defaultItemPath);
+    console.log('itemPath:', itemPath);
+    console.log('value:', value);
+    console.log('helpText:', helpText);
+    console.log('type:', type);
 
     switch (type) {
       default:

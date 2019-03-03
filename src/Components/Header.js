@@ -18,6 +18,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import defaultConfig from './EditConfig/defaultConfig.json';
+import clone from './Common/clone';
 
 const styles = theme => ({
   header: {
@@ -207,7 +209,15 @@ class Header extends React.PureComponent {
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
-  handleClick = event => this.setState({ anchorEl: event.currentTarget });
+  handleThemeClick = event => {
+    if (this.props.editing) {
+      this.props.handleEditItem(
+        ['theme'],
+        clone(defaultConfig).theme,
+        clone(this.props.config).theme
+      );
+    } else this.setState({ anchorEl: event.currentTarget });
+  };
 
   handleClose = value =>
     this.setState({ anchorEl: null }, () => {
@@ -336,7 +346,7 @@ class Header extends React.PureComponent {
                 aria-label="Theme"
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup="true"
-                onClick={this.handleClick}>
+                onClick={this.handleThemeClick}>
                 <FormatPaintIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
@@ -511,7 +521,8 @@ Header.propTypes = {
   handleRadioToggle: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
-  handleEditConfig: PropTypes.func.isRequired
+  handleEditConfig: PropTypes.func.isRequired,
+  handleEditItem: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Header);
