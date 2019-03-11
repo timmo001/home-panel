@@ -59,7 +59,15 @@ class EditItem extends React.PureComponent {
     });
 
   handleConfigChange = (path, value) => {
+    console.log('');
+    console.log('handleConfigChange');
+    console.log('path:', path);
+    console.log('value', value);
+
     let item = clone(this.state.item);
+
+    console.log('item', item);
+
     item[path.pop()] = value;
     this.setState({ item });
   };
@@ -72,11 +80,11 @@ class EditItem extends React.PureComponent {
       clone(defaultConfig)
     );
 
-    console.log('');
-    console.log('EditItem');
-    console.log('path:', path);
-    console.log('item', item);
-    console.log('defaultItem', defaultItem);
+    // console.log('');
+    // console.log('EditItem');
+    // console.log('path:', path);
+    // console.log('item', item);
+    // console.log('defaultItem', defaultItem);
 
     return (
       <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">

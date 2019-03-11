@@ -59,14 +59,17 @@ class Item extends React.PureComponent {
       handleConfigChange
     } = this.props;
 
-    console.log('');
-    console.log('Item');
-    console.log('objKey:', objKey);
-    console.log('defaultItemPath:', defaultItemPath);
-    console.log('itemPath:', itemPath);
-    console.log('item:', item);
+    // console.log('');
+    // console.log('Item');
+    // console.log('objKey:', objKey);
+    // console.log('defaultItemPath:', defaultItemPath);
+    // console.log('itemPath:', itemPath);
+    // console.log('defaultItem:', defaultItem);
+    // console.log('item:', item);
 
-    defaultItemPath = defaultItemPath.concat(objKey);
+    defaultItemPath = defaultItemPath.concat(
+      typeof objKey === 'number' && objKey > 0 ? 0 : objKey
+    );
     itemPath = itemPath.concat(objKey);
 
     if (isObject(defaultItem)) {
@@ -101,7 +104,35 @@ class Item extends React.PureComponent {
           </div>
         </div>
       );
-    } else
+    } else if (Array.isArray(defaultItem))
+      return (
+        <div className={classes.root}>
+          <Typography className={classes.dropdownText} variant="h6">
+            {objKey && properCase(objKey)}
+          </Typography>
+          <Divider />
+          <div className={classes.container}>
+            {item.map((i, x) => {
+              // if (typeof objKey === 'number' && objKey >1 )
+              console.log('Array - defaultItemPath:', defaultItemPath);
+              // defaultItemPath[defaultItemPath.length] = 0;
+              // itemPath = itemPath.concat(objKey);
+              return (
+                <NextItem
+                  key={x}
+                  objKey={x}
+                  defaultItem={defaultItem[0]}
+                  item={i}
+                  defaultItemPath={defaultItemPath}
+                  itemPath={itemPath}
+                  handleConfigChange={handleConfigChange}
+                />
+              );
+            })}
+          </div>
+        </div>
+      );
+    else {
       return (
         <Input
           name={String(objKey)}
@@ -112,18 +143,21 @@ class Item extends React.PureComponent {
           handleConfigChange={handleConfigChange}
         />
       );
+    }
   }
 }
 
 Item.propTypes = {
   classes: PropTypes.object.isRequired,
   defaultItem: PropTypes.oneOfType([
+    PropTypes.array,
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
     PropTypes.number
   ]).isRequired,
   item: PropTypes.oneOfType([
+    PropTypes.array,
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
