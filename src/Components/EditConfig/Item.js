@@ -49,7 +49,7 @@ const styles = theme => ({
 
 class Item extends React.PureComponent {
   render() {
-    const {
+    let {
       classes,
       objKey,
       defaultItem,
@@ -66,46 +66,52 @@ class Item extends React.PureComponent {
     console.log('itemPath:', itemPath);
     console.log('item:', item);
 
-    return isObject(defaultItem) ? (
-      <div className={classes.root}>
-        <Typography className={classes.dropdownText} variant="h6">
-          {objKey && properCase(objKey)}
-        </Typography>
-        <Divider />
-        <div className={classes.container}>
-          {defaultItem ? (
-            Object.keys(defaultItem).map((i, x) => {
-              return (
-                <NextItem
-                  key={x}
-                  objKey={i}
-                  defaultItem={defaultItem[i]}
-                  item={item[i] !== undefined ? item[i] : defaultItem[i]}
-                  defaultItemPath={defaultItemPath.concat(objKey).concat([i])}
-                  itemPath={itemPath.concat(objKey).concat([i])}
-                  handleConfigChange={handleConfigChange}
-                />
-              );
-            })
-          ) : (
-            <Typography color="error" variant="subtitle1">
-              No default config set for {JSON.stringify(item)}.<br />
-              Please report this error to Git repository&lsquo;s issue tracker
-              including a screenshot of this item&lsquo;s location.
-            </Typography>
-          )}
+    defaultItemPath = defaultItemPath.concat(objKey);
+    itemPath = itemPath.concat(objKey);
+
+    if (isObject(defaultItem)) {
+      return (
+        <div className={classes.root}>
+          <Typography className={classes.dropdownText} variant="h6">
+            {objKey && properCase(objKey)}
+          </Typography>
+          <Divider />
+          <div className={classes.container}>
+            {defaultItem ? (
+              Object.keys(defaultItem).map((i, x) => {
+                return (
+                  <NextItem
+                    key={x}
+                    objKey={i}
+                    defaultItem={defaultItem[i]}
+                    item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                    defaultItemPath={defaultItemPath}
+                    itemPath={itemPath}
+                    handleConfigChange={handleConfigChange}
+                  />
+                );
+              })
+            ) : (
+              <Typography color="error" variant="subtitle1">
+                No default config set for {JSON.stringify(item)}.<br />
+                Please report this error to Git repository&lsquo;s issue tracker
+                including a screenshot of this item&lsquo;s location.
+              </Typography>
+            )}
+          </div>
         </div>
-      </div>
-    ) : (
-      <Input
-        name={String(objKey)}
-        defaultValue={defaultItem}
-        value={item}
-        defaultItemPath={defaultItemPath}
-        itemPath={itemPath}
-        handleConfigChange={handleConfigChange}
-      />
-    );
+      );
+    } else
+      return (
+        <Input
+          name={String(objKey)}
+          defaultValue={defaultItem}
+          value={item}
+          defaultItemPath={defaultItemPath}
+          itemPath={itemPath}
+          handleConfigChange={handleConfigChange}
+        />
+      );
   }
 }
 
