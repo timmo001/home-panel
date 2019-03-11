@@ -113,10 +113,7 @@ class Item extends React.PureComponent {
           <Divider />
           <div className={classes.container}>
             {item.map((i, x) => {
-              // if (typeof objKey === 'number' && objKey >1 )
-              console.log('Array - defaultItemPath:', defaultItemPath);
-              // defaultItemPath[defaultItemPath.length] = 0;
-              // itemPath = itemPath.concat(objKey);
+              // console.log('Array - defaultItemPath:', defaultItemPath);
               return (
                 <NextItem
                   key={x}
