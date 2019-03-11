@@ -22,9 +22,6 @@ var themes = [
       type: 'light',
       primary: blueGrey,
       secondary: grey,
-      typography: {
-        useNextVariants: true
-      },
       backgrounds: {
         main: grey[100],
         default: grey[200],
@@ -59,9 +56,6 @@ var themes = [
       type: 'dark',
       primary: blueGrey,
       secondary: grey,
-      typography: {
-        useNextVariants: true
-      },
       backgrounds: {
         main: grey[900],
         default: grey[800],
@@ -93,8 +87,18 @@ var themes = [
 
 const defaultPalette =
   moment().hour >= 22 || moment().hour <= 4
-    ? createMuiTheme({ palette: themes[1].palette })
-    : createMuiTheme({ palette: themes[0].palette });
+    ? createMuiTheme({
+        typography: {
+          useNextVariants: true
+        },
+        palette: themes[1].palette
+      })
+    : createMuiTheme({
+        typography: {
+          useNextVariants: true
+        },
+        palette: themes[0].palette
+      });
 
 class App extends React.PureComponent {
   state = {
@@ -103,7 +107,14 @@ class App extends React.PureComponent {
 
   setTheme = theme => {
     const palette = theme ? theme.palette : themes[0].palette;
-    this.setState({ theme: createMuiTheme({ palette }) });
+    this.setState({
+      theme: createMuiTheme({
+        typography: {
+          useNextVariants: true
+        },
+        palette
+      })
+    });
   };
 
   addTheme = theme => {
