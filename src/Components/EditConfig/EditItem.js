@@ -66,9 +66,16 @@ class EditItem extends React.PureComponent {
 
     let item = clone(this.state.item);
 
-    console.log('item', item);
+    console.log('item:', clone(item));
 
-    item[path.pop()] = value;
+    const lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), item);
+    console.log('lastItem:', lastItem);
+    console.log('secondLastItem:', secondLastItem);
+    secondLastItem[lastItem] = value;
+
+    console.log('item after:', clone(item));
+
     this.setState({ item });
   };
 
