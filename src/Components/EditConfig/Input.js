@@ -77,26 +77,26 @@ class Input extends React.PureComponent {
         ? false
         : this.props.value;
 
-    // console.log('');
-    // console.log('Input');
-    // console.log('name:', name);
-    // console.log('defaultValue:', defaultValue);
-    // console.log('defaultItemPath:', defaultItemPath);
-    // console.log('itemPath:', itemPath);
-    // console.log('value:', value);
-    // console.log('helpText:', helpText);
-    // console.log('type:', type);
+    console.log('');
+    console.log('Input');
+    console.log('name:', name);
+    console.log('defaultValue:', defaultValue);
+    console.log('defaultItemPath:', defaultItemPath);
+    console.log('itemPath:', itemPath);
+    console.log('value:', value);
+    console.log('helpText:', helpText);
+    console.log('type:', type);
 
     switch (type) {
       default:
         return null;
-      case 'string':
+      case 'string' || 'number':
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
             <MUIInput
               id={name}
-              type="string"
+              type={type}
               inputProps={{ autoCapitalize: 'none' }}
               value={value}
               onChange={event =>
@@ -121,34 +121,6 @@ class Input extends React.PureComponent {
                 />
               </FormHelperText>
             )}
-          </FormControl>
-        );
-      case 'number':
-        return (
-          <FormControl className={classes.input}>
-            <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
-            <MUIInput
-              id={name}
-              type="number"
-              inputProps={{ autoCapitalize: 'none' }}
-              value={value}
-              onChange={event =>
-                handleConfigChange(itemPath, Number(event.target.value))
-              }
-            />
-            <IconButton
-              className={classnames(
-                classes.resetIconButton,
-                classes.resetInputIconButton
-              )}
-              onClick={() => handleConfigChange(itemPath, defaultValue)}>
-              <span
-                className={classnames('mdi', 'mdi-restore', classes.resetIcon)}
-              />
-            </IconButton>
-            <FormHelperText id={name}>
-              <AutoLinkText text={helpText} />
-            </FormHelperText>
           </FormControl>
         );
       case 'boolean':

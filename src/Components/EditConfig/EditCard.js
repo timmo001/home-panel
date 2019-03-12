@@ -157,23 +157,19 @@ class EditCard extends React.PureComponent {
               onChange={data => this.handleConfigChange(['items', groupId, 'cards', cardId], clone(data.jsObject))} />
             : */}
           <Grid container direction="column">
-            {Object.keys(defaultCard).map((i, x) => (
-              <Item
-                key={x}
-                objKey={i}
-                defaultItem={defaultCard[i]}
-                item={card[i] !== undefined ? card[i] : defaultCard[i]}
-                defaultItemPath={[
-                  'items',
-                  0,
-                  'cards',
-                  typePath > -1 ? typePath : 0,
-                  i
-                ]}
-                itemPath={['items', groupId, 'cards', cardId, i]}
-                handleConfigChange={this.handleConfigChange}
-              />
-            ))}
+            <Item
+              objKey={cardId}
+              defaultItem={defaultCard}
+              item={card}
+              defaultItemPath={[
+                'items',
+                0,
+                'cards'
+                // typePath > -1 ? typePath : 0
+              ]}
+              itemPath={['items', groupId, 'cards']}
+              handleConfigChange={this.handleConfigChange}
+            />
           </Grid>
           {/* } */}
         </DialogContent>
