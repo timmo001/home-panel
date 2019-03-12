@@ -74,17 +74,14 @@ class EditGroup extends React.PureComponent {
           {add ? 'Add' : 'Edit'} Group
         </DialogTitle>
         <DialogContent>
-          {Object.keys(defaultGroup).map((i, x) => (
-            <Item
-              key={x}
-              objKey={i}
-              defaultItem={defaultGroup[i]}
-              item={group[i] !== undefined ? group[i] : defaultGroup[i]}
-              defaultItemPath={['items', 0, i]}
-              itemPath={['items', id, i]}
-              handleConfigChange={this.handleConfigChange}
-            />
-          ))}
+          <Item
+            objKey={id}
+            defaultItem={defaultGroup}
+            item={group}
+            defaultItemPath={['items', 0]}
+            itemPath={['items', id]}
+            handleConfigChange={this.handleConfigChange}
+          />
         </DialogContent>
         <DialogActions>
           {!add && (
