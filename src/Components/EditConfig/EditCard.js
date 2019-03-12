@@ -115,9 +115,9 @@ class EditCard extends React.PureComponent {
     } = this.props;
     const { open, defaultCard, card, confirm /*jsonEdit*/ } = this.state;
     if (!open) return null;
-    const typePath = defaultConfig.items[0].cards.findIndex(
-      c => c.type === card.type
-    );
+    // const typePath = defaultConfig.items[0].cards.findIndex(
+    //   c => c.type === card.type
+    // );
 
     return (
       <Dialog
@@ -165,7 +165,6 @@ class EditCard extends React.PureComponent {
                 'items',
                 0,
                 'cards'
-                // typePath > -1 ? typePath : 0
               ]}
               itemPath={['items', groupId, 'cards']}
               handleConfigChange={this.handleConfigChange}

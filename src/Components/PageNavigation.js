@@ -74,8 +74,7 @@ class PageNavigation extends React.PureComponent {
           {pages.map(
             (page, x) =>
               page &&
-              page.name &&
-              page.icon && (
+              page.name && (
                 <BottomNavigationAction
                   key={x}
                   label={page.name}

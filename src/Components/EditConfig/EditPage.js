@@ -93,17 +93,14 @@ class EditPage extends React.PureComponent {
           />
         </BottomNavigation>
         <DialogContent>
-          {Object.keys(defaultConfig.pages[0]).map((i, x) => (
-            <Item
-              key={x}
-              objKey={i}
-              defaultItem={defaultConfig.pages[0][i]}
-              item={page[i] !== undefined ? page[i] : defaultConfig.pages[0][i]}
-              defaultItemPath={['pages', 0, i]}
-              itemPath={['pages', id, i]}
-              handleConfigChange={this.handleConfigChange}
-            />
-          ))}
+          <Item
+            objKey={id}
+            defaultItem={defaultConfig.pages[0]}
+            item={page}
+            defaultItemPath={['pages', 0]}
+            itemPath={['pages', id]}
+            handleConfigChange={this.handleConfigChange}
+          />
         </DialogContent>
         <DialogActions>
           {!add && (
