@@ -208,7 +208,7 @@ class Main extends React.PureComponent {
   };
 
   handleItemEditDone = (path, item) => {
-    console.log('handleEditItemDone', path, item);
+    console.log('handleItemEditDone', path, item);
     this.setState({ editingItem: undefined });
   };
 
