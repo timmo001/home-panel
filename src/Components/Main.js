@@ -209,6 +209,7 @@ class Main extends React.PureComponent {
 
   handleItemEditDone = (path, item) => {
     console.log('handleItemEditDone', path, item);
+    path && this.handleConfigChange(path, clone(item));
     this.setState({ editingItem: undefined });
   };
 
