@@ -90,7 +90,8 @@ class Input extends React.PureComponent {
     switch (type) {
       default:
         return null;
-      case 'string' || 'number':
+      case 'string':
+      case 'number':
         return (
           <FormControl className={classes.input}>
             <InputLabel htmlFor={name}>{properCase(name)}</InputLabel>
