@@ -18,8 +18,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import defaultConfig from './EditConfig/defaultConfig.json';
-import clone from './Common/clone';
 
 const styles = theme => ({
   header: {
@@ -211,11 +209,7 @@ class Header extends React.PureComponent {
 
   handleThemeClick = event => {
     if (this.props.editing) {
-      this.props.handleEditItem(
-        ['theme'],
-        clone(defaultConfig).theme,
-        clone(this.props.config).theme
-      );
+      this.props.handleEditItem(['theme']);
     } else this.setState({ anchorEl: event.currentTarget });
   };
 

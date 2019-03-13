@@ -164,10 +164,10 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
-  handleEditItem = (path, defaultItem, item) => {
-    console.log('handleEditItem', path, defaultItem, item);
+  handleEditItem = path => {
+    console.log('handleEditItem', path);
     this.setState({
-      editingItem: { path, defaultItem: clone(defaultItem), item: clone(item) }
+      editingItem: { path }
     });
   };
 
@@ -207,9 +207,9 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: undefined });
   };
 
-  handleItemEditDone = (path, item) => {
-    console.log('handleItemEditDone', path, item);
-    path && this.handleConfigChange(path, clone(item));
+  handleItemEditDone = (path, config) => {
+    console.log('handleItemEditDone', path, clone(config));
+    path && this.handleConfigChange(path, clone(config));
     this.setState({ editingItem: undefined });
   };
 
@@ -367,8 +367,6 @@ class Main extends React.PureComponent {
           <EditItem
             config={config}
             path={editingItem.path}
-            defaultItem={editingItem.defaultItem}
-            item={editingItem.item}
             handleItemEditDone={this.handleItemEditDone}
           />
         )}

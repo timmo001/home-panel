@@ -59,13 +59,13 @@ class Item extends React.PureComponent {
       handleConfigChange
     } = this.props;
 
-    console.log('');
-    console.log('Item');
-    console.log('objKey:', objKey);
-    console.log('defaultItemPath:', defaultItemPath);
-    console.log('itemPath:', itemPath);
-    console.log('defaultItem:', defaultItem);
-    console.log('item:', item);
+    // console.log('');
+    // console.log('Item');
+    // console.log('objKey:', objKey);
+    // console.log('defaultItemPath:', defaultItemPath);
+    // console.log('itemPath:', itemPath);
+    // console.log('defaultItem:', defaultItem);
+    // console.log('item:', item);
 
     defaultItemPath = defaultItemPath.concat(
       typeof objKey === 'number' && objKey > 0 ? 0 : objKey

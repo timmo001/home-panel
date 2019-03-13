@@ -23,7 +23,7 @@ const styles = () => ({
 class EditItem extends React.PureComponent {
   state = {
     open: true,
-    item: clone(this.props.item)
+    config: clone(this.props.config)
   };
 
   handleClose = cb => this.setState({ open: false }, cb);
@@ -38,10 +38,10 @@ class EditItem extends React.PureComponent {
   handleSave = () =>
     this.handleClose(() => {
       const path = clone(this.props.path);
-      let item = clone(this.state.item);
+      let config = clone(this.state.config);
       this.props.add
-        ? this.props.handleItemAddDone(path, item)
-        : this.props.handleItemEditDone(path, item);
+        ? this.props.handleItemAddDone(path, config)
+        : this.props.handleItemEditDone(path, config);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -64,34 +64,40 @@ class EditItem extends React.PureComponent {
     console.log('path:', path);
     console.log('value', value);
 
-    let item = clone(this.state.item);
+    let config = clone(this.state.config);
 
-    console.log('item:', clone(item));
+    console.log('config:', clone(config));
 
     const lastItem = path.pop();
-    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), item);
-    console.log('lastItem:', lastItem);
-    console.log('secondLastItem:', secondLastItem);
+    console.log('lastItem:', clone(lastItem));
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+    console.log('secondLastItem:', clone(secondLastItem));
     secondLastItem[lastItem] = value;
 
-    console.log('item after:', clone(item));
+    console.log('secondLastItem after:', clone(secondLastItem));
 
-    this.setState({ item });
+    console.log('config after:', clone(config));
+
+    this.setState({ config });
   };
 
   render() {
     const { classes, path } = this.props;
-    const { open, item, confirm } = this.state;
+    const { open, config, confirm } = this.state;
+    const item = clone(path).reduce(
+      (o, k) => (o[k] = o[k] || {}),
+      clone(config)
+    );
     let defaultItem = clone(path).reduce(
       (o, k) => (o[k] = o[k] || {}),
-      clone(defaultConfig)
+      defaultConfig
     );
 
-    // console.log('');
-    // console.log('EditItem');
-    // console.log('path:', path);
-    // console.log('item', item);
-    // console.log('defaultItem', defaultItem);
+    console.log('');
+    console.log('EditItem');
+    console.log('path:', path);
+    console.log('item', item);
+    console.log('defaultItem', defaultItem);
 
     return (
       <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
@@ -135,7 +141,7 @@ class EditItem extends React.PureComponent {
 EditItem.propTypes = {
   classes: PropTypes.object.isRequired,
   path: PropTypes.array.isRequired,
-  item: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
   handleItemEditDone: PropTypes.func
 };
 
