@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:3.9
+ARG BUILD_FROM=alpine:3.9.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -9,7 +9,7 @@ ENV \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_CMD_WAIT_FOR_SERVICES=1 \
-    TERM="xterm"
+    TERM="xterm-256color"
 
 # Copy app
 COPY build /opt/panel
@@ -39,15 +39,14 @@ RUN \
         yarn=1.12.3-r0 \
     \
     && apk add --no-cache \
-        apk-tools=2.10.3-r1 \
         bash=4.4.19-r1 \
-        busybox=1.29.3-r10 \
-        ca-certificates=20190108-r0 \
         nginx=1.14.2-r0 \
         nodejs-current=11.3.0-r0 \
         tzdata=2018i-r0 \
     \
-    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; else S6_ARCH="${BUILD_ARCH}"; fi \
+    && S6_ARCH="${BUILD_ARCH}" \
+    && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
+    && if [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
     \
     && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.0.0/s6-overlay-${S6_ARCH}.tar.gz" \
         | tar zxvf - -C / \
