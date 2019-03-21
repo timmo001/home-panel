@@ -9,7 +9,7 @@
     "@material-ui/lab": "3.0.0-alpha.30",
     "@mdi/font": "3.5.95",
     "classnames": "2.2.6",
-    "home-assistant-js-websocket": "3.3.0",
+    "home-assistant-js-websocket": "3.4.0",
     "is-plain-obj": "1.1.0",
     "moment": "2.24.0",
     "prop-types": "15.7.2",
