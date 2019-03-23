@@ -101,7 +101,12 @@ class Input extends React.PureComponent {
               inputProps={{ autoCapitalize: 'none' }}
               value={value}
               onChange={event =>
-                handleConfigChange(itemPath, event.target.value)
+                handleConfigChange(
+                  itemPath,
+                  type === 'number'
+                    ? Number(event.target.value)
+                    : event.target.value
+                )
               }
             />
             <IconButton
