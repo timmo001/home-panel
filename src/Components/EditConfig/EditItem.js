@@ -37,11 +37,15 @@ class EditItem extends React.PureComponent {
 
   handleSave = () =>
     this.handleClose(() => {
+      console.log('');
+      console.log('handleSave');
       const path = clone(this.props.path);
       let config = clone(this.state.config);
+      console.log('path', path);
+      console.log('config', config);
       this.props.add
-        ? this.props.handleItemAddDone(path, config)
-        : this.props.handleItemEditDone(path, config);
+        ? this.props.handleItemAddDone(config)
+        : this.props.handleItemEditDone(config);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });

@@ -111,18 +111,20 @@ class Main extends React.PureComponent {
   handleConfigChange = (path, value) => {
     console.log('handleConfigChange', clone(path), clone(value));
     let config = clone(this.props.config);
-    // Set the new value
-    const lastItem = path.pop();
-    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-    console.log('lastItem:', lastItem);
-    console.log('secondLastItem:', secondLastItem);
-    if (value === undefined) {
-      secondLastItem.splice(lastItem, 1);
-    } else if (isObject(value)) {
-      const newValue = JSON.parse(JSON.stringify(value));
-      if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
-      secondLastItem[lastItem] = newValue;
-    } else secondLastItem[lastItem] = value;
+    if (path.length > 0) {
+      // Set the new value
+      const lastItem = path.pop();
+      let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+      console.log('lastItem:', lastItem);
+      console.log('secondLastItem:', secondLastItem);
+      if (value === undefined) {
+        secondLastItem.splice(lastItem, 1);
+      } else if (isObject(value)) {
+        const newValue = JSON.parse(JSON.stringify(value));
+        if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
+        secondLastItem[lastItem] = newValue;
+      } else secondLastItem[lastItem] = value;
+    } else config = value;
     this.props.handleConfigChange(config);
   };
 
@@ -207,9 +209,9 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: undefined });
   };
 
-  handleItemEditDone = (path, config) => {
-    console.log('handleItemEditDone', path, clone(config));
-    path && this.handleConfigChange(path, clone(config));
+  handleItemEditDone = config => {
+    console.log('handleItemEditDone', clone(config));
+    config && this.handleConfigChange([], clone(config));
     this.setState({ editingItem: undefined });
   };
 
