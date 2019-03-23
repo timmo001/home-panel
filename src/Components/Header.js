@@ -209,7 +209,7 @@ class Header extends React.PureComponent {
 
   handleThemeClick = event => {
     if (this.props.editing) {
-      this.props.handleEditItem(['theme'], true);
+      this.props.handleEditConfig(['theme'], true);
     } else this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -230,7 +230,8 @@ class Header extends React.PureComponent {
       over,
       handleMouseOver,
       handleMouseLeave,
-      handleRadioHide
+      handleRadioHide,
+      handleConfigUI
     } = this.props;
     const { anchorEl } = this.state;
 
@@ -321,7 +322,7 @@ class Header extends React.PureComponent {
                     gridColumn: timeDisabled && dateDisabled ? 3 : 1
                   }}
                   aria-label="Edit Config"
-                  onClick={this.props.handleEditConfig}>
+                  onClick={handleConfigUI}>
                   {editing ? (
                     <CheckIcon className={classes.icon} />
                   ) : (
@@ -515,8 +516,8 @@ Header.propTypes = {
   handleRadioToggle: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
-  handleEditConfig: PropTypes.func.isRequired,
-  handleEditItem: PropTypes.func.isRequired
+  handleConfigUI: PropTypes.func.isRequired,
+  handleEditConfig: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Header);

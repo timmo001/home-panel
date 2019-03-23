@@ -20,7 +20,7 @@ const styles = () => ({
   }
 });
 
-class EditItem extends React.PureComponent {
+class EditConfig extends React.PureComponent {
   state = {
     open: true,
     config: clone(this.props.config)
@@ -98,7 +98,7 @@ class EditItem extends React.PureComponent {
     );
 
     console.log('');
-    console.log('EditItem');
+    console.log('EditConfig');
     console.log('path:', path);
     console.log('item', item);
     console.log('defaultItem', defaultItem);
@@ -146,7 +146,7 @@ class EditItem extends React.PureComponent {
   }
 }
 
-EditItem.propTypes = {
+EditConfig.propTypes = {
   classes: PropTypes.object.isRequired,
   path: PropTypes.array.isRequired,
   config: PropTypes.object.isRequired,
@@ -154,4 +154,4 @@ EditItem.propTypes = {
   handleItemEditDone: PropTypes.func
 };
 
-export default withStyles(styles)(EditItem);
+export default withStyles(styles)(EditConfig);

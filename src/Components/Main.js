@@ -8,7 +8,7 @@ import Radio from './Radio/Radio';
 import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import EditGroup from './EditConfig/EditGroup';
-import EditItem from './EditConfig/EditItem';
+import EditConfig from './EditConfig/EditConfig';
 import dc from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
 import clone from './Common/clone';
@@ -103,7 +103,7 @@ class Main extends React.PureComponent {
 
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
 
-  handleEditConfig = () =>
+  handleConfigUI = () =>
     this.state.editing
       ? this.setState({ editing: false })
       : this.setState({ editing: true });
@@ -166,8 +166,8 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
-  handleEditItem = (path, fullScreen) => {
-    console.log('handleEditItem', path);
+  handleEditConfig = (path, fullScreen) => {
+    console.log('handleEditConfig', path);
     this.setState({
       editingItem: { path, fullScreen }
     });
@@ -261,8 +261,8 @@ class Main extends React.PureComponent {
           handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
           handleRadioHide={this.handleRadioHide}
+          handleConfigUI={this.handleConfigUI}
           handleEditConfig={this.handleEditConfig}
-          handleEditItem={this.handleEditItem}
         />
         <div
           className={classes.pageContainer}
@@ -365,7 +365,7 @@ class Main extends React.PureComponent {
           />
         )}
         {editingItem && (
-          <EditItem
+          <EditConfig
             config={config}
             fullScreen={editingItem.fullScreen}
             path={editingItem.path}
