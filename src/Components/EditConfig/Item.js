@@ -56,6 +56,7 @@ class Item extends React.PureComponent {
       item,
       defaultItemPath,
       itemPath,
+      invisible,
       handleConfigChange
     } = this.props;
 
@@ -73,13 +74,41 @@ class Item extends React.PureComponent {
     itemPath = itemPath.concat(objKey);
 
     if (isObject(defaultItem)) {
-      return (
-        <div className={classes.root}>
-          <Typography className={classes.dropdownText} variant="h6">
-            {objKey && properCase(objKey)}
-          </Typography>
-          <Divider />
-          <div className={classes.container}>
+      if (!invisible)
+        return (
+          <div className={classes.root}>
+            <Typography className={classes.dropdownText} variant="h6">
+              {objKey && properCase(objKey)}
+            </Typography>
+            <Divider />
+            <div className={classes.container}>
+              {defaultItem ? (
+                Object.keys(defaultItem).map((i, x) => {
+                  return (
+                    <NextItem
+                      key={x}
+                      objKey={i}
+                      defaultItem={defaultItem[i]}
+                      item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                      defaultItemPath={defaultItemPath}
+                      itemPath={itemPath}
+                      handleConfigChange={handleConfigChange}
+                    />
+                  );
+                })
+              ) : (
+                <Typography color="error" variant="subtitle1">
+                  No default config set for {JSON.stringify(item)}.<br />
+                  Please report this error to Git repository&lsquo;s issue
+                  tracker including a screenshot of this item&lsquo;s location.
+                </Typography>
+              )}
+            </div>
+          </div>
+        );
+      else
+        return (
+          <div className={classes.root}>
             {defaultItem ? (
               Object.keys(defaultItem).map((i, x) => {
                 return (
@@ -102,8 +131,7 @@ class Item extends React.PureComponent {
               </Typography>
             )}
           </div>
-        </div>
-      );
+        );
     } else if (Array.isArray(defaultItem))
       return (
         <div className={classes.root}>
@@ -163,7 +191,8 @@ Item.propTypes = {
   objKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
-  handleConfigChange: PropTypes.func.isRequired
+  handleConfigChange: PropTypes.func.isRequired,
+  invisible: PropTypes.bool
 };
 
 export default withStyles(styles)(Item);

@@ -75,11 +75,12 @@ class EditGroup extends React.PureComponent {
         </DialogTitle>
         <DialogContent>
           <Item
+            invisible
             objKey={id}
             defaultItem={defaultGroup}
             item={group}
-            defaultItemPath={['items', 0]}
-            itemPath={['items', id]}
+            defaultItemPath={['items']}
+            itemPath={['items']}
             handleConfigChange={this.handleConfigChange}
           />
         </DialogContent>
