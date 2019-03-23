@@ -105,7 +105,7 @@ class EditItem extends React.PureComponent {
 
     return (
       <Dialog
-        fullScreen
+        fullScreen={fullScreen}
         fullWidth
         open={open}
         aria-labelledby="form-dialog-title">
