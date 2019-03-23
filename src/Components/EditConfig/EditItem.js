@@ -86,7 +86,7 @@ class EditItem extends React.PureComponent {
   };
 
   render() {
-    const { classes, path } = this.props;
+    const { classes, path, fullScreen } = this.props;
     const { open, config, confirm } = this.state;
     const item = clone(path).reduce(
       (o, k) => (o[k] = o[k] || {}),
@@ -104,7 +104,11 @@ class EditItem extends React.PureComponent {
     console.log('defaultItem', defaultItem);
 
     return (
-      <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
+      <Dialog
+        fullScreen
+        fullWidth
+        open={open}
+        aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
           Edit {properCase(path[path.length - 1])}
         </DialogTitle>
@@ -146,6 +150,7 @@ EditItem.propTypes = {
   classes: PropTypes.object.isRequired,
   path: PropTypes.array.isRequired,
   config: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   handleItemEditDone: PropTypes.func
 };
 

@@ -166,10 +166,10 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
-  handleEditItem = path => {
+  handleEditItem = (path, fullScreen) => {
     console.log('handleEditItem', path);
     this.setState({
-      editingItem: { path }
+      editingItem: { path, fullScreen }
     });
   };
 
@@ -361,13 +361,13 @@ class Main extends React.PureComponent {
             config={config}
             id={editingGroup.groupId}
             group={editingGroup.group}
-            EditItem
             handleGroupEditDone={this.handleGroupEditDone}
           />
         )}
         {editingItem && (
           <EditItem
             config={config}
+            fullScreen={editingItem.fullScreen}
             path={editingItem.path}
             handleItemEditDone={this.handleItemEditDone}
           />
