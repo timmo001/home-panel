@@ -186,7 +186,7 @@ class Hass extends React.PureComponent {
                   <span
                     className={classnames('mdi', `mdi-${icon}`, classes.icon)}
                     style={{
-                      fontSize: card.size && card.size.state && card.size.state
+                      fontSize: card.size && card.size.icon && card.size.icon
                     }}
                   />
                 )}
