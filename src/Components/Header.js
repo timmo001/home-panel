@@ -209,7 +209,7 @@ class Header extends React.PureComponent {
 
   handleThemeClick = event => {
     if (this.props.editing) {
-      this.props.handleEditConfig(['theme'], true);
+      this.props.handleEditConfig(['theme']);
     } else this.setState({ anchorEl: event.currentTarget });
   };
 

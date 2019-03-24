@@ -166,10 +166,10 @@ class Main extends React.PureComponent {
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
-  handleEditConfig = (path, fullScreen) => {
+  handleEditConfig = path => {
     console.log('handleEditConfig', path);
     this.setState({
-      editingItem: { path, fullScreen }
+      editingItem: { path }
     });
   };
 
@@ -308,7 +308,7 @@ class Main extends React.PureComponent {
             config={config}
             add
             card={addingCard.card}
-            theme={theme}
+            mainTheme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
@@ -321,7 +321,7 @@ class Main extends React.PureComponent {
           <EditCard
             config={config}
             card={editingCard.card}
-            theme={theme}
+            mainTheme={theme}
             haUrl={haUrl}
             haConfig={haConfig}
             entities={entities}
@@ -367,7 +367,6 @@ class Main extends React.PureComponent {
         {editingItem && (
           <EditConfig
             config={config}
-            fullScreen={editingItem.fullScreen}
             path={editingItem.path}
             handleItemEditDone={this.handleItemEditDone}
           />

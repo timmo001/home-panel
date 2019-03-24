@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -108,9 +110,10 @@ class EditConfig extends React.PureComponent {
 
     return (
       <Dialog
-        fullScreen={fullScreen}
-        fullWidth
+        className={classes.dialog}
         open={open}
+        fullScreen={fullScreen}
+        maxWidth="xl"
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
           Edit {properCase(path[path.length - 1])}
@@ -151,10 +154,13 @@ class EditConfig extends React.PureComponent {
 
 EditConfig.propTypes = {
   classes: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   path: PropTypes.array.isRequired,
   config: PropTypes.object.isRequired,
-  fullScreen: PropTypes.bool.isRequired,
   handleItemEditDone: PropTypes.func
 };
 
-export default withStyles(styles)(EditConfig);
+export default compose(
+  withMobileDialog(),
+  withStyles(styles)
+)(EditConfig);

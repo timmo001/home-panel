@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'recompose';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -63,13 +65,18 @@ class EditGroup extends React.PureComponent {
   };
 
   render() {
-    const { classes, add, id } = this.props;
+    const { classes, fullScreen, add, id } = this.props;
     const { open, group, confirm } = this.state;
     let defaultGroup = defaultConfig.items[0];
     delete defaultGroup.cards;
 
     return (
-      <Dialog fullWidth open={open} aria-labelledby="form-dialog-title">
+      <Dialog
+        className={classes.dialog}
+        open={open}
+        fullScreen={fullScreen}
+        maxWidth="xl"
+        aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
           {add ? 'Add' : 'Edit'} Group
         </DialogTitle>
@@ -112,6 +119,7 @@ class EditGroup extends React.PureComponent {
 
 EditGroup.propTypes = {
   classes: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
   group: PropTypes.object.isRequired,
   pageId: PropTypes.number,
@@ -120,4 +128,7 @@ EditGroup.propTypes = {
   handleGroupEditDone: PropTypes.func
 };
 
-export default withStyles(styles)(EditGroup);
+export default compose(
+  withMobileDialog(),
+  withStyles(styles)
+)(EditGroup);

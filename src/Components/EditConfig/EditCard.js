@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import JSONInput from 'react-json-editor-ajrm';
-// import locale from 'react-json-editor-ajrm/locale/en';
+import { compose } from 'recompose';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 import withStyles from '@material-ui/core/styles/withStyles';
+import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
@@ -18,14 +19,24 @@ import clone from '../Common/clone';
 const defaultConfig = clone(dc);
 
 const styles = theme => ({
-  dialog: {
-    overflow: 'none'
+  title: {
+    paddingBottom: 0
   },
-  dialogContent: {
-    overflowX: 'auto'
+  root: {
+    display: 'flex',
+    overflow: 'hidden',
+    maxHeight: '100%'
+  },
+  container: {
+    flex: '1 1 auto'
   },
   cardContainer: {
-    margin: theme.spacing.unit
+    padding: theme.spacing.unit * 2
+  },
+  dialogContent: {
+    height: 'calc(100% - 32px)',
+    maxHeight: 'calc(100% - 32px)',
+    padding: theme.spacing.unit
   },
   fill: {
     flex: '1 1 auto'
@@ -104,83 +115,78 @@ class EditCard extends React.PureComponent {
   render() {
     const {
       classes,
+      fullScreen,
       add,
       config,
-      theme,
+      mainTheme,
       haUrl,
       haConfig,
       entities,
       groupId,
       cardId
     } = this.props;
-    const { open, defaultCard, card, confirm /*jsonEdit*/ } = this.state;
+    const { open, defaultCard, card, confirm } = this.state;
     if (!open) return null;
-    // const typePath = defaultConfig.items[0].cards.findIndex(
-    //   c => c.type === card.type
-    // );
 
     return (
       <Dialog
         className={classes.dialog}
         open={open}
-        maxWidth="md"
+        fullScreen={fullScreen}
+        maxWidth="xl"
         aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">
+        <DialogTitle id="form-dialog-title" className={classes.title}>
           {add ? 'Add' : 'Edit'} Card
         </DialogTitle>
-        <div className={classes.cardContainer}>
-          <Grid container justify="center">
-            <CardBase
-              className={classes.card}
-              config={config}
-              editing
-              handleCardEdit={() => null}
-              handleCardAdd={() => null}
-              theme={theme}
-              haUrl={haUrl}
-              haConfig={haConfig}
-              entities={entities}
-              groupId={groupId}
-              cardId={cardId}
-              card={card}
-              handleChange={() => null}
-            />
+        <div className={classes.root}>
+          <Grid
+            className={classes.container}
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center">
+            <Hidden mdDown>
+              <Grid className={classes.cardContainer} item xs>
+                <Grid container justify="center" alignItems="center">
+                  <CardBase
+                    className={classes.card}
+                    config={config}
+                    editing
+                    handleCardEdit={() => null}
+                    handleCardAdd={() => null}
+                    theme={mainTheme}
+                    haUrl={haUrl}
+                    haConfig={haConfig}
+                    entities={entities}
+                    groupId={groupId}
+                    cardId={cardId}
+                    card={card}
+                    handleChange={() => null}
+                  />
+                </Grid>
+              </Grid>
+            </Hidden>
+            <DialogContent className={classes.dialogContent}>
+              <Grid className={classes.items} container direction="column">
+                <Item
+                  invisible
+                  objKey={cardId}
+                  defaultItem={defaultCard}
+                  item={card}
+                  defaultItemPath={['items', 0, 'cards']}
+                  itemPath={['items', groupId, 'cards']}
+                  handleConfigChange={this.handleConfigChange}
+                />
+              </Grid>
+            </DialogContent>
           </Grid>
         </div>
-        <DialogContent className={classes.dialogContent}>
-          {/* {jsonEdit ?
-            <JSONInput
-              id="card"
-              theme="dark_vscode_tribute"
-              placeholder={clone(jsonEdit)}
-              locale={locale}
-              onChange={data => this.handleConfigChange(['items', groupId, 'cards', cardId], clone(data.jsObject))} />
-            : */}
-          <Grid container direction="column">
-            <Item
-              objKey={cardId}
-              defaultItem={defaultCard}
-              item={card}
-              defaultItemPath={[
-                'items',
-                0,
-                'cards'
-              ]}
-              itemPath={['items', groupId, 'cards']}
-              handleConfigChange={this.handleConfigChange}
-            />
-          </Grid>
-          {/* } */}
-        </DialogContent>
-        <DialogActions>
+        <DialogActions className={classes.actions}>
           {!add && (
             <Button onClick={this.handleDeleteConfirm} color="primary">
               Delete
             </Button>
           )}
-          {/* <Button onClick={this.handleJSONEditor} color="primary">
-            {jsonEdit ? 'Standard Editor' : 'JSON Editor'}
-          </Button> */}
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel
@@ -203,7 +209,8 @@ class EditCard extends React.PureComponent {
 
 EditCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  fullScreen: PropTypes.bool.isRequired,
+  mainTheme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
@@ -215,4 +222,7 @@ EditCard.propTypes = {
   handleCardEditDone: PropTypes.func
 };
 
-export default withStyles(styles)(EditCard);
+export default compose(
+  withMobileDialog(),
+  withStyles(styles)
+)(EditCard);
