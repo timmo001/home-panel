@@ -18,6 +18,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import BorderTopIcon from '@material-ui/icons/BorderTop';
 
 const styles = theme => ({
   header: {
@@ -345,6 +346,20 @@ class Header extends React.PureComponent {
                 <FormatPaintIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
+            {editing && (
+              <Tooltip title="Edit Header">
+                <IconButton
+                  className={classes.button}
+                  style={{
+                    gridRow: timeDisabled && dateDisabled ? 1 : 3,
+                    gridColumn: timeDisabled && dateDisabled ? 5 : 1
+                  }}
+                  aria-label="Edit Header"
+                  onClick={() => this.props.handleEditConfig(['header'])}>
+                  <BorderTopIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
+            )}
             {!editing && (
               <Tooltip title="Radio">
                 <IconButton
