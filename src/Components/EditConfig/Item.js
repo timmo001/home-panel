@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
+import Add from '@material-ui/icons/Add';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Delete from '@material-ui/icons/Delete';
 import isObject from '../Common/isObject';
 import properCase from '../Common/properCase';
 import Input from './Input';
@@ -19,12 +26,13 @@ const styles = theme => ({
     padding: '6px 4px'
   },
   dropdownText: {
-    paddingTop: theme.spacing.unit * 2
+    // paddingTop: theme.spacing.unit * 2,
+    overflow: 'visible'
   },
   dropdownSubText: {
+    // paddingTop: theme.spacing.unit * 2,
     margin: '0 16px',
-    flex: '1 1 auto',
-    fontSize: '1.0rem'
+    flex: '1 1 auto'
   },
   container: {
     display: 'flex',
@@ -48,6 +56,12 @@ const styles = theme => ({
 });
 
 class Item extends React.PureComponent {
+  state = {
+    open: isObject(this.props.defaultItem) ? true : false
+  };
+
+  handleClick = () => this.setState(state => ({ open: !state.open }));
+
   render() {
     let {
       classes,
@@ -57,8 +71,10 @@ class Item extends React.PureComponent {
       defaultItemPath,
       itemPath,
       invisible,
-      handleConfigChange
+      handleConfigChange,
+      canDelete
     } = this.props;
+    const { open } = this.state;
 
     // console.log('');
     // console.log('Item');
@@ -73,14 +89,36 @@ class Item extends React.PureComponent {
     );
     itemPath = itemPath.concat(objKey);
 
+    const dropdown = (
+      <ButtonBase
+        className={classes.dropdown}
+        onClick={this.handleClick}
+        focusRipple>
+        <Typography className={classes.dropdownText} variant="h6" noWrap>
+          {canDelete && item.name ? item.name : objKey && properCase(objKey)}
+        </Typography>
+        <Typography className={classes.dropdownSubText} variant="body2" noWrap>
+          {!open && JSON.stringify(item, null, 2)}
+        </Typography>
+        {canDelete && (
+          <IconButton
+            className={classes.iconButton}
+            component={'span'}
+            aria-label="Delete"
+            onClick={() => handleConfigChange(itemPath, undefined)}>
+            <Delete className={classes.icon} />
+          </IconButton>
+        )}
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ButtonBase>
+    );
+
     if (isObject(defaultItem)) {
-      if (!invisible)
-        return (
-          <div className={classes.root}>
-            <Typography className={classes.dropdownText} variant="h6">
-              {objKey && properCase(objKey)}
-            </Typography>
-            <Divider />
+      return (
+        <div className={classes.root}>
+          {!invisible && dropdown}
+          {!invisible && <Divider />}
+          <Collapse in={open}>
             <div className={classes.container}>
               {defaultItem ? (
                 Object.keys(defaultItem).map((i, x) => {
@@ -104,57 +142,43 @@ class Item extends React.PureComponent {
                 </Typography>
               )}
             </div>
-          </div>
-        );
-      else
-        return (
-          <div className={classes.root}>
-            {defaultItem ? (
-              Object.keys(defaultItem).map((i, x) => {
+          </Collapse>
+        </div>
+      );
+    } else if (Array.isArray(defaultItem))
+      return (
+        <div className={classes.root}>
+          {!invisible && dropdown}
+          {!invisible && <Divider />}
+          <Collapse in={open}>
+            <div className={classes.container}>
+              {item.map((i, x) => {
                 return (
                   <NextItem
+                    canDelete
                     key={x}
-                    objKey={i}
-                    defaultItem={defaultItem[i]}
-                    item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                    objKey={x}
+                    defaultItem={defaultItem[0]}
+                    item={i}
                     defaultItemPath={defaultItemPath}
                     itemPath={itemPath}
                     handleConfigChange={handleConfigChange}
                   />
                 );
-              })
-            ) : (
-              <Typography color="error" variant="subtitle1">
-                No default config set for {JSON.stringify(item)}.<br />
-                Please report this error to Git repository&lsquo;s issue tracker
-                including a screenshot of this item&lsquo;s location.
-              </Typography>
-            )}
-          </div>
-        );
-    } else if (Array.isArray(defaultItem))
-      return (
-        <div className={classes.root}>
-          <Typography className={classes.dropdownText} variant="h6">
-            {objKey && properCase(objKey)}
-          </Typography>
-          <Divider />
-          <div className={classes.container}>
-            {item.map((i, x) => {
-              // console.log('Array - defaultItemPath:', defaultItemPath);
-              return (
-                <NextItem
-                  key={x}
-                  objKey={x}
-                  defaultItem={defaultItem[0]}
-                  item={i}
-                  defaultItemPath={defaultItemPath}
-                  itemPath={itemPath}
-                  handleConfigChange={handleConfigChange}
-                />
-              );
-            })}
-          </div>
+              })}
+              <ButtonBase
+                className={classes.addIcon}
+                aria-label="Add"
+                onClick={() =>
+                  handleConfigChange(
+                    itemPath.concat([item.length]),
+                    defaultItem[0]
+                  )
+                }>
+                <Add />
+              </ButtonBase>
+            </div>
+          </Collapse>
         </div>
       );
     else {

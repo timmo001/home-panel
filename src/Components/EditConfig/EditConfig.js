@@ -76,7 +76,10 @@ class EditConfig extends React.PureComponent {
     console.log('lastItem:', clone(lastItem));
     let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
     console.log('secondLastItem:', clone(secondLastItem));
-    secondLastItem[lastItem] = value;
+
+    if (!value && Array.isArray(secondLastItem))
+      secondLastItem.splice(lastItem);
+    else secondLastItem[lastItem] = value;
 
     console.log('secondLastItem after:', clone(secondLastItem));
 
