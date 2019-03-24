@@ -65,19 +65,10 @@ class EditConfig extends React.PureComponent {
     });
 
   handleConfigChange = (path, value) => {
-    console.log('');
-    console.log('handleConfigChange');
-    console.log('path:', path);
-    console.log('value', value);
-
     let config = clone(this.state.config);
 
-    console.log('config:', clone(config));
-
     const lastItem = path.pop();
-    console.log('lastItem:', clone(lastItem));
     let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-    console.log('secondLastItem:', clone(secondLastItem));
 
     if (!value && Array.isArray(secondLastItem))
       secondLastItem.splice(lastItem);

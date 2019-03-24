@@ -101,11 +101,12 @@ class EditPage extends React.PureComponent {
         </BottomNavigation>
         <DialogContent>
           <Item
+            invisible
             objKey={id}
             defaultItem={defaultConfig.pages[0]}
             item={page}
-            defaultItemPath={['pages', 0]}
-            itemPath={['pages', id]}
+            defaultItemPath={['pages']}
+            itemPath={['pages']}
             handleConfigChange={this.handleConfigChange}
           />
         </DialogContent>
