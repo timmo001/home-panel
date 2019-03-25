@@ -51,7 +51,6 @@ class EditCard extends React.PureComponent {
         defaultConfig.items[0].cards.find(c => c.type === this.props.card.type)
       ) || defaultConfig.items[0].cards[0],
     card: clone(this.props.card)
-    // jsonEdit: false
   };
 
   handleJSONEditor = () => this.setState({ jsonEdit: clone(this.state.card) });

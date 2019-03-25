@@ -75,10 +75,7 @@ class Radio extends React.PureComponent {
     dialogOpen: false
   };
 
-  handleUpdateRadio = () => console.log('source:', this.state.source);
-
   handleRadioChange = action => {
-    console.log('action:', action);
     var source = this.state.source;
     switch (action) {
       default:
@@ -111,7 +108,6 @@ class Radio extends React.PureComponent {
   handleInputDialogChange = (value = null) => {
     var source = this.state.source;
     if (value) source.source = value;
-    console.log('source:', source);
     this.setState({ dialogOpen: false, source }, () =>
       this.handleGetSource(this.state.source.source)
     );
@@ -126,7 +122,7 @@ class Radio extends React.PureComponent {
         var source = this.state.source;
         source.source = res.body;
         source.playing = Sound.status.PLAYING;
-        this.setState({ source }, () => console.log('source:', source));
+        this.setState({ source });
       })
       .catch(err => {
         console.error(err);

@@ -46,7 +46,6 @@ class InputDialog extends React.PureComponent {
   handleChange = (_event, value) => this.setState({ value });
 
   handleSearch = () => {
-    console.log('search:', this.state.search);
     request
       .post(`${this.props.apiUrl}/radio/search`)
       .send({ query: this.state.search })

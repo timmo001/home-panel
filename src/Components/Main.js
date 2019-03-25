@@ -109,14 +109,11 @@ class Main extends React.PureComponent {
       : this.setState({ editing: true });
 
   handleConfigChange = (path, value) => {
-    console.log('handleConfigChange', clone(path), clone(value));
     let config = clone(this.props.config);
     if (path.length > 0) {
       // Set the new value
       const lastItem = path.pop();
       let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-      console.log('lastItem:', lastItem);
-      console.log('secondLastItem:', secondLastItem);
       if (value === undefined) {
         secondLastItem.splice(lastItem, 1);
       } else if (isObject(value)) {
@@ -129,7 +126,6 @@ class Main extends React.PureComponent {
   };
 
   handleCardAdd = (groupId, cardId) => {
-    console.log('handleCardAdd', groupId, cardId);
     this.setState({
       addingCard: {
         groupId,
@@ -140,68 +136,55 @@ class Main extends React.PureComponent {
   };
 
   handleCardEdit = (groupId, cardId, card) => {
-    console.log('handleCardEdit', groupId, cardId, card);
     this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
   };
 
   handlePageAdd = () => {
-    console.log('handlePageAdd');
     this.setState({ addingPage: true });
   };
 
   handlePageEdit = (id, page) => {
-    console.log('handlePageEdit', id, page);
     this.setState({ editingPage: { id, page: clone(page) } });
   };
 
   handleGroupAdd = (pageId, groupId) => {
-    console.log('handleGroupAdd', pageId, groupId);
     let group = clone(defaultConfig).items[0];
     group.page = pageId;
     this.setState({ addingGroup: { groupId, group } });
   };
 
   handleGroupEdit = (groupId, group) => {
-    console.log('handleGroupEdit', groupId, group);
     this.setState({ editingGroup: { groupId, group: clone(group) } });
   };
 
   handleEditConfig = path => {
-    console.log('handleEditConfig', path);
     this.setState({
       editingItem: { path }
     });
   };
 
   handleCardAddDone = (path, card) => {
-    console.log('handleCardAddDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
   };
 
   handleCardEditDone = (path, card) => {
-    console.log('handleCardEditDone', path, card);
     path && this.handleConfigChange(path, clone(card));
     this.setState({ editingCard: undefined });
   };
 
   handlePageAddDone = (path, page) => {
-    console.log('handlePageAddDone', path, page);
     path && this.handleConfigChange(path, clone(page));
     this.setState({ addingPage: undefined });
   };
 
   handlePageEditDone = (path, page) => {
-    console.log('handlePageEditDone', path, page);
     let config = clone(this.props.config);
     const pageId = clone(path).pop() + 1;
     delete config.pages[pageId];
     if (path) {
       if (!page) {
         clone(config).items.map((i, x) => {
-          console.log('i, x', i, x);
-          console.log('i.page === pageId', i.page === pageId);
-          console.log('i.page > pageId', i.page > pageId);
           if (i.page === pageId) config.items.splice(x, 1);
           else if (i.page > pageId) config.items[x].page = i.page - 1;
           return config.items[x];
@@ -215,19 +198,16 @@ class Main extends React.PureComponent {
   };
 
   handleGroupAddDone = (path, group) => {
-    console.log('handleGroupAddDone', path, group);
     path && this.handleConfigChange(path, clone(group));
     this.setState({ addingGroup: undefined });
   };
 
   handleGroupEditDone = (path, group) => {
-    console.log('handleGroupEditDone', path, group);
     path && this.handleConfigChange(path, clone(group));
     this.setState({ editingGroup: undefined });
   };
 
   handleItemEditDone = config => {
-    console.log('handleItemEditDone', clone(config));
     config && this.handleConfigChange([], clone(config));
     this.setState({ editingItem: undefined });
   };

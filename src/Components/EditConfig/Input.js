@@ -77,16 +77,6 @@ class Input extends React.PureComponent {
         ? false
         : this.props.value;
 
-    // console.log('');
-    // console.log('Input');
-    // console.log('name:', name);
-    // console.log('defaultValue:', defaultValue);
-    // console.log('defaultItemPath:', defaultItemPath);
-    // console.log('itemPath:', itemPath);
-    // console.log('value:', value);
-    // console.log('helpText:', helpText);
-    // console.log('type:', type);
-
     switch (type) {
       default:
         return null;

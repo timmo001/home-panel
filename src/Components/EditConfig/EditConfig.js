@@ -39,12 +39,7 @@ class EditConfig extends React.PureComponent {
 
   handleSave = () =>
     this.handleClose(() => {
-      console.log('');
-      console.log('handleSave');
-      const path = clone(this.props.path);
       let config = clone(this.state.config);
-      console.log('path', path);
-      console.log('config', config);
       this.props.add
         ? this.props.handleItemAddDone(config)
         : this.props.handleItemEditDone(config);
@@ -74,10 +69,6 @@ class EditConfig extends React.PureComponent {
       secondLastItem.splice(lastItem);
     else secondLastItem[lastItem] = value;
 
-    console.log('secondLastItem after:', clone(secondLastItem));
-
-    console.log('config after:', clone(config));
-
     this.setState({ config });
   };
 
@@ -92,12 +83,6 @@ class EditConfig extends React.PureComponent {
       (o, k) => (o[k] = o[k] || {}),
       defaultConfig
     );
-
-    console.log('');
-    console.log('EditConfig');
-    console.log('path:', path);
-    console.log('item', item);
-    console.log('defaultItem', defaultItem);
 
     return (
       <Dialog

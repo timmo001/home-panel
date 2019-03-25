@@ -26,11 +26,9 @@ const styles = theme => ({
     padding: '6px 4px'
   },
   dropdownText: {
-    // paddingTop: theme.spacing.unit * 2,
     overflow: 'visible'
   },
   dropdownSubText: {
-    // paddingTop: theme.spacing.unit * 2,
     margin: '0 16px',
     flex: '1 1 auto'
   },
@@ -75,14 +73,6 @@ class Item extends React.PureComponent {
       canDelete
     } = this.props;
     const { open } = this.state;
-
-    // console.log('');
-    // console.log('Item');
-    // console.log('objKey:', objKey);
-    // console.log('defaultItemPath:', defaultItemPath);
-    // console.log('itemPath:', itemPath);
-    // console.log('defaultItem:', defaultItem);
-    // console.log('item:', item);
 
     defaultItemPath = defaultItemPath.concat(
       typeof objKey === 'number' && objKey > 0 ? 0 : objKey

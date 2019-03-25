@@ -288,9 +288,7 @@ class Root extends React.PureComponent {
   };
 
   handleConfigChange = config => {
-    console.log('config pre:', clone(config));
     config = cleanupObject(config);
-    console.log('config post:', clone(config));
     request
       .post(`${this.state.api_url}/config/set`)
       .send({
