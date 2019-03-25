@@ -17,6 +17,8 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
 import Main from './Main';
 import defaultConfig from './EditConfig/defaultConfig.json';
+import cleanupObject from './Common/cleanupObject';
+import clone from './Common/clone';
 
 const styles = theme => ({
   root: {
@@ -286,6 +288,9 @@ class Root extends React.PureComponent {
   };
 
   handleConfigChange = config => {
+    console.log('config pre:', clone(config));
+    config = cleanupObject(config);
+    console.log('config post:', clone(config));
     request
       .post(`${this.state.api_url}/config/set`)
       .send({
