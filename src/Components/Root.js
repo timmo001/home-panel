@@ -89,20 +89,17 @@ class Root extends React.PureComponent {
         this.login({ strategy: 'local', ...data });
       }
     });
-
     setTimeout(() => this.setState({ loginAttempted: true }), 500);
   };
 
   logout = () =>
-    app
-      .logout()
-      .then(() =>
-        this.setState({
-          loggedIn: false,
-          loginError: undefined,
-          config: undefined
-        })
-      );
+    app.logout().then(() =>
+      this.setState({
+        loggedIn: false,
+        loginError: undefined,
+        config: undefined
+      })
+    );
 
   login = (data = undefined) => {
     process.env.NODE_ENV === 'development' && console.log('login:', data);

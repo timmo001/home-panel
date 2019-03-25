@@ -292,10 +292,7 @@ class Main extends React.PureComponent {
             handlePageChange={this.handlePageChange}
           />
         )}
-        <Radio
-          show={radioShown}
-          handleRadioHide={this.handleRadioHide}
-        />
+        <Radio show={radioShown} handleRadioHide={this.handleRadioHide} />
         {addingCard && (
           <EditCard
             config={config}
