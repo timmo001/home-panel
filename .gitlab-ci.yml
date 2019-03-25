@@ -12,7 +12,7 @@ variables:
   ARMV7: "true"
   I386: "true"
 
-  LEGACY_TAGS: "false"
+  LEGACY_TAGS: "true"
 
   PREFLIGHT_HADOLINT: "true"
   PREFLIGHT_JSONLINT: "true"
