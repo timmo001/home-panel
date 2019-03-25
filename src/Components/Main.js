@@ -189,9 +189,7 @@ class Main extends React.PureComponent {
           else if (i.page > pageId) config.items[x].page = i.page - 1;
           return config.items[x];
         });
-        // this.handleConfigChange(['items'], config.items);
       }
-      // this.handleConfigChange(path, clone(page));
       this.props.handleConfigChange(config);
     }
     this.setState({ editingPage: undefined });
