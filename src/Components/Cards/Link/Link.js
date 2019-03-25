@@ -13,13 +13,20 @@ import card from '../../Common/Style/card';
 
 const styles = theme => ({
   ...grid(theme),
-  ...card(theme),
+  ...card(theme)
 });
 
-class Link extends React.Component {
-
+class Link extends React.PureComponent {
   render() {
-    const { classes, config, card } = this.props;
+    const {
+      classes,
+      config,
+      card,
+      editing,
+      handleCardEdit,
+      groupId,
+      cardId
+    } = this.props;
     const { name, url } = card;
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
@@ -30,20 +37,24 @@ class Link extends React.Component {
         className={classes.cardContainer}
         style={{
           '--width': card.width ? card.width : 1,
-          '--height': card.height ? card.height : 1,
+          '--height': card.height ? card.height : 1
         }}
         item>
         <ButtonBase
           className={classes.cardOuter}
           focusRipple
-          href={url}
+          onClick={() => editing && handleCardEdit(groupId, cardId, card)}
+          href={!editing ? url : null}
           target="_blank">
-          <Card className={classes.card} elevation={cardElevation} square={squareCards}>
+          <Card
+            className={classes.card}
+            elevation={cardElevation}
+            square={squareCards}>
             <CardContent
               className={classes.cardContent}
               style={{
-                '--height': card.height ?
-                  typeof card.height === 'number'
+                '--height': card.height
+                  ? typeof card.height === 'number'
                     ? `${98 * card.height}px`
                     : card.height
                   : '98px'
@@ -51,9 +62,11 @@ class Link extends React.Component {
               <Typography className={classes.name} variant="h5">
                 {name}
               </Typography>
-              {icon &&
-                <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
-              }
+              {icon && (
+                <span
+                  className={classnames('mdi', `mdi-${icon}`, classes.icon)}
+                />
+              )}
             </CardContent>
           </Card>
         </ButtonBase>
@@ -65,7 +78,11 @@ class Link extends React.Component {
 Link.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  card: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
+  groupId: PropTypes.number.isRequired,
+  cardId: PropTypes.number.isRequired,
+  card: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Link);

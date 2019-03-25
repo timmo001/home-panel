@@ -23,20 +23,21 @@ import { CirclePicker } from 'react-color';
 //     minWidth: 120,
 //   },
 //   picker: {
-//     
+//
 //   }
 // });
 
-class MoreInfo extends React.Component {
+class MoreInfo extends React.PureComponent {
   state = {
     open: true,
-    effect: '',
+    effect: ''
   };
 
   componentDidMount = () => this.updateProps();
 
-  componentDidUpdate = (prevProps) =>
-    this.props.data.attributes !== prevProps.data.attributes && this.updateProps();
+  componentDidUpdate = prevProps =>
+    this.props.data.attributes !== prevProps.data.attributes &&
+    this.updateProps();
 
   updateProps = () => {
     if (!this.state.defined) {
@@ -75,7 +76,7 @@ class MoreInfo extends React.Component {
             style={{
               position: 'absolute',
               right: 12,
-              top: 12,
+              top: 12
             }}
             aria-label="Close"
             onClick={() => this.handleClose()}>
@@ -83,12 +84,13 @@ class MoreInfo extends React.Component {
           </IconButton>
         </DialogTitle>
         <DialogContent>
-          {brightness &&
-            <FormControl style={{
-              display: 'flex',
-              margin: `16px 8px`,
-              minWidth: 120,
-            }}>
+          {brightness && (
+            <FormControl
+              style={{
+                display: 'flex',
+                margin: `16px 8px`,
+                minWidth: 120
+              }}>
               <Typography id="brightness">Brightness</Typography>
               <Slider
                 value={Number(brightness)}
@@ -104,15 +106,17 @@ class MoreInfo extends React.Component {
                     entity_id,
                     brightness
                   });
-                }} />
+                }}
+              />
             </FormControl>
-          }
-          {color_temp &&
-            <FormControl style={{
-              display: 'flex',
-              margin: `16px 8px`,
-              minWidth: 120,
-            }}>
+          )}
+          {color_temp && (
+            <FormControl
+              style={{
+                display: 'flex',
+                margin: `16px 8px`,
+                minWidth: 120
+              }}>
               <Typography id="color_temp">Color Temperature</Typography>
               <Slider
                 value={Number(color_temp)}
@@ -128,15 +132,17 @@ class MoreInfo extends React.Component {
                     entity_id,
                     color_temp
                   });
-                }} />
+                }}
+              />
             </FormControl>
-          }
-          {attributes.effect_list &&
-            <FormControl style={{
-              display: 'flex',
-              margin: `16px 8px`,
-              minWidth: 120,
-            }}>
+          )}
+          {attributes.effect_list && (
+            <FormControl
+              style={{
+                display: 'flex',
+                margin: `16px 8px`,
+                minWidth: 120
+              }}>
               <InputLabel htmlFor="effect">Effect</InputLabel>
               <Select
                 value={effect}
@@ -149,33 +155,39 @@ class MoreInfo extends React.Component {
                 }}
                 inputProps={{
                   name: 'effect',
-                  id: 'effect',
+                  id: 'effect'
                 }}>
                 {attributes.effect_list.map((effect, id) => {
                   return (
-                    <MenuItem key={id} value={effect}>{effect}</MenuItem>
+                    <MenuItem key={id} value={effect}>
+                      {effect}
+                    </MenuItem>
                   );
                 })}
               </Select>
             </FormControl>
-          }
-          {attributes.rgb_color &&
-            <FormControl style={{
-              display: 'flex',
-              margin: `16px 8px`,
-              minWidth: 120,
-            }}>
+          )}
+          {attributes.rgb_color && (
+            <FormControl
+              style={{
+                display: 'flex',
+                margin: `16px 8px`,
+                minWidth: 120
+              }}>
               <CirclePicker
                 style={{ marginTop: 16 }}
                 circleSize={36}
-                onChangeComplete={(color) => handleChange(domain, true, {
-                  entity_id,
-                  rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
-                })} />
+                onChangeComplete={color =>
+                  handleChange(domain, true, {
+                    entity_id,
+                    rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
+                  })
+                }
+              />
             </FormControl>
-          }
+          )}
         </DialogContent>
-      </Dialog >
+      </Dialog>
     );
   }
 }
@@ -184,7 +196,7 @@ MoreInfo.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   data: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleClose: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired
 };
 
 export default withMobileDialog()(MoreInfo);

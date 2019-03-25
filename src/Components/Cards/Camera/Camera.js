@@ -13,28 +13,37 @@ import card from '../../Common/Style/card';
 const styles = theme => ({
   ...card(theme),
   cameraCard: {
-    height: '100%',
+    height: '100%'
   },
   camera: {
     display: 'block',
     width: '100%',
-    height: '100%',
-  },
+    height: '100%'
+  }
 });
 
-class Camera extends React.Component {
+class Camera extends React.PureComponent {
   state = {
     camera: undefined
   };
 
-  handleShowCamera = (name, still_url, url) => this.setState({
-    camera: { name, still_url, url }
-  });
+  handleShowCamera = (name, still_url, url) =>
+    this.setState({
+      camera: { name, still_url, url }
+    });
 
   handleCameraClose = () => this.setState({ camera: undefined });
 
   render() {
-    const { classes, config, card } = this.props;
+    const {
+      classes,
+      config,
+      card,
+      editing,
+      handleCardEdit,
+      groupId,
+      cardId
+    } = this.props;
     const { camera } = this.state;
     const { name, url } = card;
     const still_url = `${card.still_url}?${moment().format('HHmm')}`;
@@ -44,23 +53,29 @@ class Camera extends React.Component {
       <Grid
         className={classes.cardContainer}
         style={{
-          '--width': card.width ? card.width : 2,
+          '--width': card.width ? card.width : 2
         }}
         item>
-        <ButtonBase className={classes.cardOuter} focusRipple
+        <ButtonBase
+          className={classes.cardOuter}
+          focusRipple
           onClick={() => this.handleShowCamera(name, still_url, url)}>
-          <Card className={classnames(classes.card, classes.cameraCard)} elevation={cardElevation} square={squareCards}>
-            <img
-              className={classes.camera}
-              src={still_url}
-              alt={name} />
+          <Card
+            className={classnames(classes.card, classes.cameraCard)}
+            elevation={cardElevation}
+            square={squareCards}>
+            <img className={classes.camera} src={still_url} alt={name} />
           </Card>
         </ButtonBase>
-        {camera &&
-          <Dialog
-            data={camera}
-            handleClose={this.handleCameraClose} />
-        }
+        {camera && (
+          <Dialog data={camera} handleClose={this.handleCameraClose} />
+        )}
+        {editing && (
+          <ButtonBase
+            className={classes.editOverlay}
+            onClick={() => editing && handleCardEdit(groupId, cardId, card)}
+          />
+        )}
       </Grid>
     );
   }
@@ -69,7 +84,11 @@ class Camera extends React.Component {
 Camera.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-  card: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
+  groupId: PropTypes.number.isRequired,
+  cardId: PropTypes.number.isRequired,
+  card: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Camera);

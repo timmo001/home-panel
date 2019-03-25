@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   min-height: 100%;
   height: 100%;
   width: 100%;
@@ -8,22 +9,23 @@ html, body {
 }
 
 a {
-  transition: color .4s;
-  color: #E0E0E0;
+  transition: color 0.4s;
+  color: #e0e0e0;
   text-decoration: none;
 }
 
-a:link, a:visited {
-  color: #E0E0E0;
+a:link,
+a:visited {
+  color: #e0e0e0;
 }
 
 a:hover {
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 a:active {
-  transition: color .3s;
-  color: #BDBDBD;
+  transition: color 0.3s;
+  color: #bdbdbd;
 }
 
 ::-webkit-scrollbar {
@@ -34,8 +36,8 @@ a:active {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: #757575; 
+  background: #757575;
 }
 ::-webkit-scrollbar-thumb:window-inactive {
-  background: #616161; 
+  background: #616161;
 }

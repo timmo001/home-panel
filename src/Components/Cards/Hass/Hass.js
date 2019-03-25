@@ -26,7 +26,7 @@ const styles = theme => ({
     fontSize: '1.0rem',
     color: theme.palette.text.light,
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.8rem',
+      fontSize: '0.8rem'
     }
   },
   alarmArmedHome: {
@@ -46,18 +46,20 @@ const styles = theme => ({
   }
 });
 
-class Hass extends React.Component {
+class Hass extends React.PureComponent {
   state = {
     alarmEntity: undefined
   };
 
   handleButtonPress = (domain, entity) => {
     if (domain === 'light' && entity.state === 'on')
-      this.buttonPressTimer =
-        setTimeout(() => this.setState({ moreInfo: entity }), 1000);
+      this.buttonPressTimer = setTimeout(
+        () => this.setState({ moreInfo: entity }),
+        1000
+      );
   };
 
-  handleAlarmPanelShow = (entity) => this.setState({ alarmEntity: entity });
+  handleAlarmPanelShow = entity => this.setState({ alarmEntity: entity });
 
   handleAlarmPanelClose = () => this.setState({ alarmEntity: undefined });
 
@@ -66,9 +68,24 @@ class Hass extends React.Component {
   handleMoreInfoClose = () => this.setState({ moreInfo: undefined });
 
   render() {
-    const { classes, config, theme, handleChange, haUrl, haConfig, entities, card } = this.props;
+    const {
+      classes,
+      config,
+      editing,
+      handleCardEdit,
+      theme,
+      handleChange,
+      haUrl,
+      haConfig,
+      entities,
+      groupId,
+      cardId,
+      card
+    } = this.props;
     const { alarmEntity, moreInfo } = this.state;
-    const entity_outer = entities.find(i => { return i[1].entity_id === card.entity_id });
+    const entity_outer = entities.find(i => {
+      return i[1].entity_id === card.entity_id;
+    });
     const cardElevation = getCardElevation(config);
     const squareCards = getSquareCards(config);
     if (entity_outer) {
@@ -83,35 +100,42 @@ class Hass extends React.Component {
           className={classes.cardContainer}
           style={{
             '--width': card.width ? card.width : 1,
-            '--height': card.height ? card.height : 1,
+            '--height': card.height ? card.height : 1
           }}
           item>
-          {domain === 'sensor'
-            || domain === 'weather'
-            || domain === 'climate'
-            || domain === 'media_player'
-            || domain === 'device_tracker' ?
-            <Card className={classnames(
-              classes.card,
-              domain === 'climate' && state === 'heat' && classes.climateHeat,
-              domain === 'climate' && state === 'cool' && classes.climateCool
-            )} elevation={cardElevation} square={squareCards}>
+          {domain === 'sensor' ||
+          domain === 'weather' ||
+          domain === 'climate' ||
+          domain === 'media_player' ||
+          domain === 'device_tracker' ? (
+            <Card
+              className={classnames(
+                classes.card,
+                domain === 'climate' && state === 'heat' && classes.climateHeat,
+                domain === 'climate' && state === 'cool' && classes.climateCool
+              )}
+              elevation={cardElevation}
+              square={squareCards}>
               <CardContent className={classes.cardContent}>
-                {domain === 'weather' ?
+                {domain === 'weather' ? (
                   <Weather
                     theme={theme}
                     haConfig={haConfig}
                     card={card}
                     state={state}
-                    attributes={attributes} />
-                  :
-                  <Typography className={classes.name} variant="h5" style={{
-                    fontSize: card.size && card.size.name && card.size.name
-                  }}>
+                    attributes={attributes}
+                  />
+                ) : (
+                  <Typography
+                    className={classes.name}
+                    variant="h5"
+                    style={{
+                      fontSize: card.size && card.size.name && card.size.name
+                    }}>
                     {name}
                   </Typography>
-                }
-                {domain === 'climate' &&
+                )}
+                {domain === 'climate' && (
                   <Climate
                     theme={theme}
                     haConfig={haConfig}
@@ -120,9 +144,10 @@ class Hass extends React.Component {
                     entity_id={entity_id}
                     state={state}
                     attributes={attributes}
-                    handleChange={handleChange} />
-                }
-                {domain === 'media_player' &&
+                    handleChange={handleChange}
+                  />
+                )}
+                {domain === 'media_player' && (
                   <Media
                     theme={theme}
                     haUrl={haUrl}
@@ -131,37 +156,63 @@ class Hass extends React.Component {
                     entity_id={entity_id}
                     state={state}
                     attributes={attributes}
-                    handleChange={handleChange} />
-                }
-                {domain === 'sensor' &&
-                  <Typography className={classes.state} variant="h5" component="h2" style={{
-                    fontSize: card.size && card.size.state && card.size.state
-                  }}>
-                    {state}{attributes.unit_of_measurement}
+                    handleChange={handleChange}
+                  />
+                )}
+                {domain === 'sensor' && (
+                  <Typography
+                    className={classes.state}
+                    variant="h5"
+                    component="h2"
+                    style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }}>
+                    {state}
+                    {attributes.unit_of_measurement}
                   </Typography>
-                }
-                {domain === 'device_tracker' &&
-                  <Typography className={classes.state} variant="h5" component="h2" style={{
-                    fontSize: card.size && card.size.state && card.size.state
-                  }}>
+                )}
+                {domain === 'device_tracker' && (
+                  <Typography
+                    className={classes.state}
+                    variant="h5"
+                    component="h2"
+                    style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }}>
                     {properCase(state)}
                   </Typography>
-                }
-                {icon &&
-                  <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
-                    fontSize: card.size && card.size.state && card.size.state
-                  }} />
-                }
+                )}
+                {icon && (
+                  <span
+                    className={classnames('mdi', `mdi-${icon}`, classes.icon)}
+                    style={{
+                      fontSize: card.size && card.size.icon && card.size.icon
+                    }}
+                  />
+                )}
+                {editing && (
+                  <ButtonBase
+                    className={classes.editOverlay}
+                    onClick={() =>
+                      editing && handleCardEdit(groupId, cardId, card)
+                    }
+                  />
+                )}
               </CardContent>
             </Card>
-            :
+          ) : (
             <ButtonBase
               className={classes.cardOuter}
               focusRipple
-              disabled={state === 'unavailable' || state === 'pending'}
+              disabled={
+                editing ? false : state === 'unavailable' || state === 'pending'
+              }
               onClick={() => {
-                if (domain === 'light' || domain === 'switch')
-                  handleChange(domain, state === 'on' ? false : true, { entity_id });
+                if (editing) handleCardEdit(groupId, cardId, card);
+                else if (domain === 'light' || domain === 'switch')
+                  handleChange(domain, state === 'on' ? false : true, {
+                    entity_id
+                  });
                 else if (domain === 'scene' || domain === 'script')
                   handleChange(domain, true, { entity_id });
                 else if (domain === 'alarm_control_panel')
@@ -171,46 +222,73 @@ class Hass extends React.Component {
               onMouseDown={() => this.handleButtonPress(domain, entity)}
               onTouchEnd={this.handleButtonRelease}
               onMouseUp={this.handleButtonRelease}>
-              <Card className={classnames(
-                classes.card,
-                state === 'on' ? classes.cardOn : state === 'unavailable' ? classes.cardUnavailable : classes.cardOff,
-                domain === 'alarm_control_panel' && state === 'armed_home' && classes.alarmArmedHome,
-                domain === 'alarm_control_panel' && state === 'armed_away' && classes.alarmArmedAway,
-                domain === 'alarm_control_panel' && state === 'triggered' && classes.alarmTriggered,
-              )} elevation={cardElevation} square={squareCards}>
+              <Card
+                className={classnames(
+                  classes.card,
+                  state === 'on'
+                    ? classes.cardOn
+                    : state === 'unavailable'
+                    ? classes.cardUnavailable
+                    : classes.cardOff,
+                  domain === 'alarm_control_panel' &&
+                    state === 'armed_home' &&
+                    classes.alarmArmedHome,
+                  domain === 'alarm_control_panel' &&
+                    state === 'armed_away' &&
+                    classes.alarmArmedAway,
+                  domain === 'alarm_control_panel' &&
+                    state === 'triggered' &&
+                    classes.alarmTriggered
+                )}
+                elevation={cardElevation}
+                square={squareCards}>
                 <CardContent className={classes.cardContent}>
-                  <Typography className={classes.name} variant="h5" style={{
-                    fontSize: card.size && card.size.name && card.size.name
-                  }}>
+                  <Typography
+                    className={classes.name}
+                    variant="h5"
+                    style={{
+                      fontSize: card.size && card.size.name && card.size.name
+                    }}>
                     {name}
                   </Typography>
-                  {domain === 'alarm_control_panel' &&
-                    <Typography className={classes.state} variant="h5" component="h2">
-                      {state.replace('_', ' ').replace(/^\w/, c => c.toUpperCase())}
+                  {domain === 'alarm_control_panel' && (
+                    <Typography
+                      className={classes.state}
+                      variant="h5"
+                      component="h2">
+                      {state
+                        .replace('_', ' ')
+                        .replace(/^\w/, c => c.toUpperCase())}
                     </Typography>
-                  }
-                  {icon &&
-                    <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }} />
-                  }
+                  )}
+                  {icon && (
+                    <span
+                      className={classnames('mdi', `mdi-${icon}`, classes.icon)}
+                      style={{
+                        fontSize:
+                          card.size && card.size.state && card.size.state
+                      }}
+                    />
+                  )}
                 </CardContent>
               </Card>
             </ButtonBase>
-          }
-          {alarmEntity &&
+          )}
+          {alarmEntity && (
             <AlarmPanel
               entity={alarmEntity}
               handleChange={handleChange}
-              handleClose={this.handleAlarmPanelClose} />
-          }
-          {moreInfo &&
+              handleClose={this.handleAlarmPanelClose}
+            />
+          )}
+          {moreInfo && (
             <MoreInfo
               theme={theme}
               data={moreInfo}
               handleChange={handleChange}
-              handleClose={this.handleMoreInfoClose} />
-          }
+              handleClose={this.handleMoreInfoClose}
+            />
+          )}
         </Grid>
       );
     } else return null;
@@ -220,10 +298,14 @@ class Hass extends React.Component {
 Hass.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
+  groupId: PropTypes.number.isRequired,
+  cardId: PropTypes.number.isRequired,
   card: PropTypes.object.isRequired,
   handleChange: PropTypes.func.isRequired
 };

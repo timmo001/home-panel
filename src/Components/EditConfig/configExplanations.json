@@ -107,6 +107,7 @@
         {
           "type": "What is the card's type?",
           "name": "The name of the link",
+          "url": "The URL of the link",
           "icon": "Icon shown in the middle of the card. Use https://materialdesignicons.com to find the icon you want to use",
           "width": "The amount of cards wide",
           "height": "The amount of cards high",

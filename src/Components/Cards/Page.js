@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Group from './Group';
+import AddGroup from './AddGroup';
 
 const styles = theme => ({
   grid: {
@@ -11,33 +12,59 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
     flexWrap: 'nowrap',
-    overflowY: 'hidden',
-  },
+    overflowY: 'hidden'
+  }
 });
 
-class Page extends React.Component {
-
+class Page extends React.PureComponent {
   render() {
-    const { classes, config, theme, page, handleChange, haUrl, haConfig, entities } = this.props;
+    const {
+      classes,
+      config,
+      editing,
+      handleCardEdit,
+      handleCardAdd,
+      theme,
+      page,
+      handleChange,
+      haUrl,
+      haConfig,
+      entities,
+      handleGroupEdit,
+      handleGroupAdd
+    } = this.props;
 
     return (
-      <Grid
-        container
-        className={classes.grid}
-        spacing={8}>
-        {config.items && config.items.map((group, x) => {
-          if (!group.page) group.page = 1;
-          return group.page === page.id ? <Group
-            key={x}
-            theme={theme}
-            haUrl={haUrl}
-            haConfig={haConfig}
-            entities={entities}
-            group={group}
-            config={config}
-            handleChange={handleChange} />
-            : null
-        })}
+      <Grid container className={classes.grid} spacing={8}>
+        {config.items &&
+          config.items.map((group, x) => {
+            if (!group.page) group.page = 1;
+            return group.page === page.id ? (
+              <Group
+                key={x}
+                config={config}
+                editing={editing}
+                handleCardEdit={handleCardEdit}
+                handleCardAdd={handleCardAdd}
+                handleGroupEdit={handleGroupEdit}
+                handleGroupAdd={handleGroupAdd}
+                theme={theme}
+                haUrl={haUrl}
+                haConfig={haConfig}
+                entities={entities}
+                groupId={x}
+                group={group}
+                handleChange={handleChange}
+              />
+            ) : null;
+          })}
+        {editing && (
+          <AddGroup
+            handleGroupAdd={handleGroupAdd}
+            pageId={page.id}
+            groupId={config.items.length}
+          />
+        )}
       </Grid>
     );
   }
@@ -46,12 +73,17 @@ class Page extends React.Component {
 Page.propTypes = {
   classes: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
+  handleCardEdit: PropTypes.func.isRequired,
+  handleCardAdd: PropTypes.func.isRequired,
+  handleGroupEdit: PropTypes.func.isRequired,
+  handleGroupAdd: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   page: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Page);

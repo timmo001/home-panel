@@ -22,6 +22,7 @@
     "react-router-dom": "5.0.0",
     "react-scripts": "2.1.8",
     "react-sound": "1.2.0",
+    "recompose": "^0.30.0",
     "superagent": "4.1.0",
     "typeface-roboto": "0.0.54"
   },

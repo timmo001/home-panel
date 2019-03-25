@@ -20,16 +20,17 @@ import SearchIcon from '@material-ui/icons/Search';
 
 var searchTimeout;
 
-class InputDialog extends React.Component {
+class InputDialog extends React.PureComponent {
   radioGroup = null;
   state = {
     search: '',
-    sources: [],
+    sources: []
   };
 
   componentDidMount = () => this.updateProps();
 
-  componentDidUpdate = (prevProps) => prevProps.value !== this.props.value && this.updateProps();
+  componentDidUpdate = prevProps =>
+    prevProps.value !== this.props.value && this.updateProps();
 
   updateProps = () => this.setState({ value: this.props.value });
 
@@ -37,14 +38,14 @@ class InputDialog extends React.Component {
 
   handleCancel = () => this.props.handleChange(this.props.value);
 
-  handleOk = () => this.props.handleChange(this.state.sources.find((source) =>
-    source.guide_id === this.state.value
-  ));
+  handleOk = () =>
+    this.props.handleChange(
+      this.state.sources.find(source => source.guide_id === this.state.value)
+    );
 
   handleChange = (_event, value) => this.setState({ value });
 
   handleSearch = () => {
-    console.log('search:', this.state.search);
     request
       .post(`${this.props.apiUrl}/radio/search`)
       .send({ query: this.state.search })
@@ -75,18 +76,18 @@ class InputDialog extends React.Component {
         <DialogTitle id="confirmation-dialog-title">Select Source</DialogTitle>
         <DialogContent>
           <form noValidate autoComplete="off">
-            <FormControl style={{ width: '100%' }} >
+            <FormControl style={{ width: '100%' }}>
               <InputLabel htmlFor="search">Search Radio Stations..</InputLabel>
               <Input
                 id="search"
                 type="text"
                 value={this.state.search}
-                onChange={(event) => {
+                onChange={event => {
                   this.handleSearchChange(event.target.value);
                   clearTimeout(searchTimeout);
                   searchTimeout = setTimeout(() => {
                     this.handleSearch();
-                  }, 1000)
+                  }, 1000);
                 }}
                 endAdornment={
                   <InputAdornment position="end">
@@ -96,7 +97,8 @@ class InputDialog extends React.Component {
                       <SearchIcon />
                     </IconButton>
                   </InputAdornment>
-                } />
+                }
+              />
             </FormControl>
           </form>
           <RadioGroup
@@ -112,7 +114,8 @@ class InputDialog extends React.Component {
                 value={source.guide_id}
                 key={source.guide_id}
                 control={<Radio />}
-                label={source.text} />
+                label={source.text}
+              />
             ))}
           </RadioGroup>
         </DialogContent>
@@ -134,7 +137,7 @@ InputDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
   value: PropTypes.string,
-  handleChange: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired
 };
 
 export default withMobileDialog()(InputDialog);

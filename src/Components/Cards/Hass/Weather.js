@@ -21,7 +21,7 @@ const styles = theme => ({
     color: theme.palette.text.main,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
-      lineHeight: '1.14rem',
+      lineHeight: '1.14rem'
     }
   },
   nameSub: {
@@ -64,41 +64,40 @@ const styles = theme => ({
 });
 
 const weatherMap = {
-  "clear-night": "weather-night",
-  cloudy: "weather-cloudy",
-  fog: "weather-fog",
-  hail: "weather-hail",
-  lightning: "weather-lightning",
-  "lightning-rainy": "weather-lightning-rainy",
-  partlycloudy: "weather-partlycloudy",
-  pouring: "weather-pouring",
-  rainy: "weather-rainy",
-  snowy: "weather-snowy",
-  "snowy-rainy": "weather-snowy-rainy",
-  sunny: "weather-sunny",
-  windy: "weather-windy",
-  "windy-variant": "weather-windy-variant"
+  'clear-night': 'weather-night',
+  cloudy: 'weather-cloudy',
+  fog: 'weather-fog',
+  hail: 'weather-hail',
+  lightning: 'weather-lightning',
+  'lightning-rainy': 'weather-lightning-rainy',
+  partlycloudy: 'weather-partlycloudy',
+  pouring: 'weather-pouring',
+  rainy: 'weather-rainy',
+  snowy: 'weather-snowy',
+  'snowy-rainy': 'weather-snowy-rainy',
+  sunny: 'weather-sunny',
+  windy: 'weather-windy',
+  'windy-variant': 'weather-windy-variant'
 };
 
 const weatherNameMap = {
-  "clear-night": "Clear",
-  cloudy: "Cloudy",
-  fog: "Fog",
-  hail: "Hail",
-  lightning: "Lightning",
-  "lightning-rainy": "Lightning & Rain",
-  partlycloudy: "Partly Cloudy",
-  pouring: "Rain",
-  rainy: "Rain",
-  snowy: "Snow",
-  "snowy-rainy": "Snow & Rain",
-  sunny: "Sunny",
-  windy: "Windy",
-  "windy-variant": "Windy"
+  'clear-night': 'Clear',
+  cloudy: 'Cloudy',
+  fog: 'Fog',
+  hail: 'Hail',
+  lightning: 'Lightning',
+  'lightning-rainy': 'Lightning & Rain',
+  partlycloudy: 'Partly Cloudy',
+  pouring: 'Rain',
+  rainy: 'Rain',
+  snowy: 'Snow',
+  'snowy-rainy': 'Snow & Rain',
+  sunny: 'Sunny',
+  windy: 'Windy',
+  'windy-variant': 'Windy'
 };
 
-class Weather extends React.Component {
-
+class Weather extends React.PureComponent {
   getUnit = measure => {
     if (this.props.haConfig) {
       const lengthUnit = this.props.haConfig.unit_system.length || '';
@@ -116,12 +115,12 @@ class Weather extends React.Component {
         case 'humidity':
           return '%';
         default:
-          return this.props.haConfig.unit_system[measure] ?
-            ` ${this.props.haConfig.unit_system[measure]}` :
-            '';
+          return this.props.haConfig.unit_system[measure]
+            ? ` ${this.props.haConfig.unit_system[measure]}`
+            : '';
       }
     } else return null;
-  }
+  };
 
   render() {
     const { classes, card, name, state, attributes } = this.props;
@@ -132,11 +131,11 @@ class Weather extends React.Component {
         <Typography className={classes.name} variant="h5" noWrap>
           {weatherNameMap[state]}
         </Typography>
-        {card.width > 1 &&
+        {card.width > 1 && (
           <Typography className={classes.nameSub} variant="caption" noWrap>
             {name}
           </Typography>
-        }
+        )}
         <Grid
           item
           container
@@ -145,7 +144,9 @@ class Weather extends React.Component {
           justify="space-between">
           <Grid item className={classes.main}>
             <div>
-              <i className={classnames('mdi', `mdi-${icon}`, classes.icon)} />
+              <span
+                className={classnames('mdi', `mdi-${icon}`, classes.icon)}
+              />
               <div className={classes.temperature}>
                 <Typography variant="subtitle1">
                   {attributes.temperature}
@@ -158,15 +159,21 @@ class Weather extends React.Component {
           </Grid>
           <Grid item>
             <div className={classes.attributes}>
-              {Object.keys(attributes).filter(i =>
-                typeof attributes[i] == 'number'
-              ).map((attribute, i) =>
-                attribute !== 'temperature' &&
-                attribute !== 'ozone' &&
-                <Typography key={i} className={classes.attribute} variant="body1">
-                  {properCase(attribute)}: {attributes[attribute]}{this.getUnit(attribute)}
-                </Typography>
-              )}
+              {Object.keys(attributes)
+                .filter(i => typeof attributes[i] == 'number')
+                .map(
+                  (attribute, i) =>
+                    attribute !== 'temperature' &&
+                    attribute !== 'ozone' && (
+                      <Typography
+                        key={i}
+                        className={classes.attribute}
+                        variant="body1">
+                        {properCase(attribute)}: {attributes[attribute]}
+                        {this.getUnit(attribute)}
+                      </Typography>
+                    )
+                )}
             </div>
           </Grid>
         </Grid>
@@ -177,12 +184,19 @@ class Weather extends React.Component {
             return (
               <div key={i} className={classes.forecastItem}>
                 <Typography noWrap className={classes.forecastText}>
-                  {datetime.format('ddd')}<br />
+                  {datetime.format('ddd')}
+                  <br />
                   {datetime.format('h a')}
                 </Typography>
 
                 <Typography className={classes.forecastTextIcon}>
-                  <i className={classnames('mdi', `mdi-${icon}`, classes.forecastIcon)} />
+                  <span
+                    className={classnames(
+                      'mdi',
+                      `mdi-${icon}`,
+                      classes.forecastIcon
+                    )}
+                  />
                 </Typography>
 
                 <Typography noWrap className={classes.forecastText}>
@@ -208,7 +222,7 @@ Weather.propTypes = {
   card: PropTypes.object.isRequired,
   name: PropTypes.string,
   state: PropTypes.string.isRequired,
-  attributes: PropTypes.object.isRequired,
+  attributes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(Weather);
