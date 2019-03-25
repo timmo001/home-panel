@@ -180,9 +180,9 @@ class Main extends React.PureComponent {
 
   handlePageEditDone = (path, page) => {
     let config = clone(this.props.config);
-    const pageId = clone(path).pop() + 1;
-    config.pages.splice(pageId - 1, 1);
     if (path) {
+      const pageId = clone(path).pop() + 1;
+      config.pages.splice(pageId - 1, 1);
       if (!page) {
         clone(config).items.map((i, x) => {
           if (i.page === pageId) config.items.splice(x, 1);
@@ -235,10 +235,13 @@ class Main extends React.PureComponent {
       editingGroup,
       editingItem
     } = this.state;
-    const pages = config.pages && config.pages.length > 1 && config.pages;
-    const page = pages
-      ? { id: currentPage === 0 ? 1 : currentPage, ...pages[currentPage] }
-      : { id: 1, name: 'Home', icon: 'home' };
+    const pages = config.pages
+      ? config.pages
+      : [{ id: 1, name: 'Home', icon: 'home' }];
+    const page = {
+      id: currentPage === 0 ? 1 : currentPage,
+      ...pages[currentPage]
+    };
 
     return (
       <div className={classes.root} onMouseMove={this.onMouseMoveHandler}>
@@ -280,7 +283,7 @@ class Main extends React.PureComponent {
             handleChange={handleChange}
           />
         </div>
-        {pages && (
+        {pages | editing && (
           <PageNavigation
             editing={editing}
             handlePageAdd={this.handlePageAdd}

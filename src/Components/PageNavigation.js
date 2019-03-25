@@ -71,42 +71,43 @@ class PageNavigation extends React.PureComponent {
           onMouseOver={handleMouseOver}
           onMouseLeave={handleMouseLeave}
           onChange={this.handleChange}>
-          {pages.map(
-            (page, x) =>
-              page &&
-              page.name && (
-                <BottomNavigationAction
-                  key={x}
-                  label={page.name}
-                  onTouchStart={() =>
-                    this.handleButtonPress(x, {
-                      name: page.name,
-                      icon: page.icon
-                    })
-                  }
-                  onTouchEnd={this.handleButtonRelease}
-                  onMouseDown={() =>
-                    this.handleButtonPress(x, {
-                      name: page.name,
-                      icon: page.icon
-                    })
-                  }
-                  onMouseUp={this.handleButtonRelease}
-                  onMouseLeave={this.handleButtonRelease}
-                  icon={
-                    page.icon && (
-                      <span
-                        className={classnames(
-                          'mdi',
-                          `mdi-${page.icon}`,
-                          classes.icon
-                        )}
-                      />
-                    )
-                  }
-                />
-              )
-          )}
+          {pages &&
+            pages.map(
+              (page, x) =>
+                page &&
+                page.name && (
+                  <BottomNavigationAction
+                    key={x}
+                    label={page.name}
+                    onTouchStart={() =>
+                      this.handleButtonPress(x, {
+                        name: page.name,
+                        icon: page.icon
+                      })
+                    }
+                    onTouchEnd={this.handleButtonRelease}
+                    onMouseDown={() =>
+                      this.handleButtonPress(x, {
+                        name: page.name,
+                        icon: page.icon
+                      })
+                    }
+                    onMouseUp={this.handleButtonRelease}
+                    onMouseLeave={this.handleButtonRelease}
+                    icon={
+                      page.icon && (
+                        <span
+                          className={classnames(
+                            'mdi',
+                            `mdi-${page.icon}`,
+                            classes.icon
+                          )}
+                        />
+                      )
+                    }
+                  />
+                )
+            )}
           {editing && (
             <BottomNavigationAction
               onClick={handlePageAdd}
