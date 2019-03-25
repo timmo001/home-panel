@@ -351,7 +351,7 @@ class Main extends React.PureComponent {
           <EditPage
             config={config}
             add
-            id={pages.length + 1}
+            id={pages.length}
             page={clone(defaultConfig).pages[0]}
             handlePageAddDone={this.handlePageAddDone}
           />
