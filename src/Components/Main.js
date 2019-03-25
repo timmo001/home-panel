@@ -283,7 +283,7 @@ class Main extends React.PureComponent {
             handleChange={handleChange}
           />
         </div>
-        {pages | editing && (
+        {pages && (
           <PageNavigation
             editing={editing}
             handlePageAdd={this.handlePageAdd}
