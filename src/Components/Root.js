@@ -18,7 +18,6 @@ import Login from './Login';
 import Main from './Main';
 import defaultConfig from './EditConfig/defaultConfig.json';
 import cleanupObject from './Common/cleanupObject';
-import clone from './Common/clone';
 
 const styles = theme => ({
   root: {
