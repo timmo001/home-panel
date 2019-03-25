@@ -1,8 +1,14 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import request from 'superagent';
 import {
-  getAuth, getUser, callService, createConnection,
-  subscribeConfig, subscribeEntities, ERR_INVALID_AUTH
+  getAuth,
+  getUser,
+  callService,
+  createConnection,
+  subscribeConfig,
+  subscribeEntities,
+  ERR_INVALID_AUTH
 } from 'home-assistant-js-websocket';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
@@ -11,6 +17,7 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
 import Main from './Main';
 import defaultConfig from './EditConfig/defaultConfig.json';
+// import cleanupObject from './Common/cleanupObject';
 
 const styles = theme => ({
   root: {
@@ -37,12 +44,11 @@ const styles = theme => ({
     top: '50%',
     left: '50%'
   }
-
 });
 
 var connection;
 
-class Root extends React.Component {
+class Root extends React.PureComponent {
   state = {
     snackMessage: { open: false, text: '' },
     connected: false
@@ -55,16 +61,20 @@ class Root extends React.Component {
       if (this.state.hass_url) {
         if (this.loadTokens()) this.connectToHASS();
         else if (localStorage.getItem('should_auth')) {
-          if (localStorage.getItem('auth_triggered'))
-            this.connectToHASS();
+          if (localStorage.getItem('auth_triggered')) this.connectToHASS();
           else this.askAuth();
         }
-      } else this.setState({
-        entities: [], snackMessage: {
-          open: true, text: 'No Home Assistant URL provided. Please re-login to enable HASS features.'
-        }
-      })
-      if (config.theme && config.theme.custom) config.theme.custom.map(theme => this.props.addTheme(theme));
+      } else
+        this.setState({
+          entities: [],
+          snackMessage: {
+            open: true,
+            text:
+              'No Home Assistant URL provided. Please re-login to enable HASS features.'
+          }
+        });
+      if (config.theme && config.theme.custom)
+        config.theme.custom.map(theme => this.props.addTheme(theme));
     });
   };
 
@@ -74,23 +84,24 @@ class Root extends React.Component {
     let hassTokens;
     try {
       hassTokens = JSON.parse(localStorage.getItem('hass_tokens'));
-    } catch (err) { }  // eslint-disable-line
+    } catch (err) {} // eslint-disable-line
     return hassTokens;
   };
 
-  saveTokens = (tokens) => {
+  saveTokens = tokens => {
     try {
       localStorage.setItem('hass_tokens', JSON.stringify(tokens));
-    } catch (err) { }  // eslint-disable-line
+    } catch (err) {} // eslint-disable-line
   };
 
-  authProm = () => getAuth({
-    hassUrl: this.state.hass_url,
-    saveTokens: this.saveTokens,
-    loadTokens: () => Promise.resolve(this.loadTokens()),
-  });
+  authProm = () =>
+    getAuth({
+      hassUrl: this.state.hass_url,
+      saveTokens: this.saveTokens,
+      loadTokens: () => Promise.resolve(this.loadTokens())
+    });
 
-  connProm = async (auth) => {
+  connProm = async auth => {
     try {
       const conn = await createConnection({ auth });
       // Clear url if we have been able to establish a connection
@@ -110,7 +121,10 @@ class Root extends React.Component {
         return { auth, conn };
       } catch (err) {
         this.setState({
-          snackMessage: { open: true, text: 'Connection to Home Assistant failed. Please try again later.' },
+          snackMessage: {
+            open: true,
+            text: 'Connection to Home Assistant failed. Please try again later.'
+          },
           entities: []
         });
         throw err;
@@ -136,29 +150,38 @@ class Root extends React.Component {
         connection = conn;
       });
     })();
-  }
+  };
 
-  askAuth = () => this.setState({
-    entities: [],
-    snackMessage: {
-      open: true,
-      text: 'Please login to Home Assistant',
-      persistent: true,
-      actions:
-        <div>
-          <Button color="primary" size="small" onClick={() => this.handleAuthAction(0)}>
-            No Thanks
-          </Button>
-          <Button color="primary" size="small" onClick={() => this.handleAuthAction(1)}>
-            Login
-          </Button>
-        </div>
-    }
-  });
+  askAuth = () =>
+    this.setState({
+      entities: [],
+      snackMessage: {
+        open: true,
+        text: 'Please login to Home Assistant',
+        persistent: true,
+        actions: (
+          <div>
+            <Button
+              color="primary"
+              size="small"
+              onClick={() => this.handleAuthAction(0)}>
+              No Thanks
+            </Button>
+            <Button
+              color="primary"
+              size="small"
+              onClick={() => this.handleAuthAction(1)}>
+              Login
+            </Button>
+          </div>
+        )
+      }
+    });
 
   handleAuthAction = action => {
     switch (action) {
-      default: break;
+      default:
+        break;
       case 1:
         this.connectToHASS();
         break;
@@ -168,122 +191,189 @@ class Root extends React.Component {
 
   handleChange = (domain, state, data = undefined) => {
     if (typeof state === 'string') {
-      callService(connection, domain, state, data).then(() => {
-        this.setState({ snackMessage: { open: true, text: 'Changed.' } });
-      }, err => {
-        console.error('Error calling service:', err);
-        this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
-      });
+      callService(connection, domain, state, data).then(
+        () => {
+          this.setState({ snackMessage: { open: true, text: 'Changed.' } });
+        },
+        err => {
+          console.error('Error calling service:', err);
+          this.setState({
+            snackMessage: { open: true, text: 'Error calling service' },
+            entities: undefined
+          });
+        }
+      );
     } else {
-      callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(() => {
-        this.setState({ snackMessage: { open: true, text: 'Changed.' } });
-      }, err => {
-        console.error('Error calling service:', err);
-        this.setState({ snackMessage: { open: true, text: 'Error calling service' }, entities: undefined });
-      });
+      callService(
+        connection,
+        domain,
+        state ? 'turn_on' : 'turn_off',
+        data
+      ).then(
+        () => {
+          this.setState({ snackMessage: { open: true, text: 'Changed.' } });
+        },
+        err => {
+          console.error('Error calling service:', err);
+          this.setState({
+            snackMessage: { open: true, text: 'Error calling service' },
+            entities: undefined
+          });
+        }
+      );
     }
   };
 
   updateConfig = config => this.setState({ haConfig: config });
 
-  updateEntities = entities => this.setState({ entities: Object.entries(entities) });
+  updateEntities = entities =>
+    this.setState({ entities: Object.entries(entities) });
 
   setTheme = (themeId = undefined) => {
-    const lightThemeName = this.state.config.theme.auto && this.state.config.theme.auto.light_theme ?
-      this.state.config.theme.auto.light_theme : 'light';
-    const darkThemeName = this.state.config.theme.auto && this.state.config.theme.auto.dark_theme ?
-      this.state.config.theme.auto.dark_theme : 'dark';
+    const { config } = this.state;
+    const lightThemeName =
+      config.theme.auto && config.theme.auto.light_theme
+        ? config.theme.auto.light_theme
+        : 'light';
+    const darkThemeName =
+      config.theme.auto && config.theme.auto.dark_theme
+        ? config.theme.auto.dark_theme
+        : 'dark';
 
-    const lightTheme = this.props.themes.find(t => t.name.toLowerCase() === lightThemeName.toLowerCase());
-    const darkTheme = this.props.themes.find(t => t.name.toLowerCase() === darkThemeName.toLowerCase());
+    const lightTheme = this.props.themes.find(
+      t => t.name.toLowerCase() === lightThemeName.toLowerCase()
+    );
+    const darkTheme = this.props.themes.find(
+      t => t.name.toLowerCase() === darkThemeName.toLowerCase()
+    );
 
     if (!themeId && themeId !== 0)
       themeId = Number(localStorage.getItem('theme'));
-    if (!themeId && themeId !== 0)
-      themeId = -1;
+    if (!themeId && themeId !== 0) themeId = -1;
     if (themeId === -1) {
-      if (this.state.config.theme.auto && this.state.entities && this.state.config.theme.auto.sensor) {
-        const state = this.state.entities.find(entity => entity[0] === this.state.config.theme.auto.sensor)[1].state;
-        this.props.setTheme(state <= this.state.config.theme.auto.below ? darkTheme : lightTheme);
+      if (
+        config.theme.auto &&
+        this.state.entities &&
+        config.theme.auto.sensor
+      ) {
+        const sensor = this.state.entities.find(
+          entity => entity[0] === config.theme.auto.sensor
+        );
+        if (sensor)
+          this.props.setTheme(
+            sensor[1].state <= config.theme.auto.below ? darkTheme : lightTheme
+          );
       } else {
         // theme from sunlight
         console.log('Revert to sunlight sensor');
         const sun = this.state.entities.find(entity => entity[0] === 'sun.sun');
-        if (sun) this.props.setTheme(sun[1].state === 'below_horizon' ? darkTheme : lightTheme);
+        if (sun)
+          this.props.setTheme(
+            sun[1].state === 'below_horizon' ? darkTheme : lightTheme
+          );
         else this.props.setTheme(lightTheme);
       }
-    } else
-      this.props.setTheme(this.props.themes.find(t => t.id === themeId));
+    } else this.props.setTheme(this.props.themes.find(t => t.id === themeId));
     localStorage.setItem('theme', themeId);
   };
 
-  handleSnackbarClose = () => this.setState({ snackMessage: { open: false, text: '' } });
+  handleSnackbarClose = () =>
+    this.setState({ snackMessage: { open: false, text: '' } });
 
-  handlePageChange = (page) => {
+  handlePageChange = page => {
     this.setState({ page }, () => {
       this.getEntities(this.state.entities, page);
     });
   };
 
-  handleConfigChange = config => this.setState(config, () => this.setTheme());
+  handleConfigChange = config => {
+    // config = cleanupObject(config);
+    request
+      .post(`${this.state.api_url}/config/set`)
+      .send({
+        username: this.state.username,
+        password: this.state.password,
+        config
+      })
+      .retry(2)
+      .timeout({
+        response: 5000,
+        deadline: 30000
+      })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({ config }, () => this.setTheme());
+        } else {
+          console.log('An error occurred: ', res.status);
+        }
+      })
+      .catch(err => {
+        console.log('An error occurred: ', err);
+      });
+  };
 
   render() {
     const { loggedIn, setTheme } = this;
     const { classes, themes, theme } = this.props;
-    const { config, snackMessage, hass_url, haConfig, entities, connected } = this.state;
+    const {
+      config,
+      snackMessage,
+      hass_url,
+      haConfig,
+      entities,
+      connected
+    } = this.state;
 
     return (
-      <Suspense fallback={<CircularProgress className={classes.progressRoot} />}>
-        <div className={classes.root}>
-          {!config ?
-            <Login loggedIn={loggedIn} />
-            :
-            entities ?
-              <Main
-                themes={themes}
-                theme={theme}
-                setTheme={setTheme}
-                config={config}
-                haUrl={hass_url}
-                haConfig={haConfig}
-                entities={entities}
-                username={this.state.username}
-                password={this.state.password}
-                apiUrl={this.state.api_url}
-                handleConfigChange={this.handleConfigChange}
-                handleChange={this.handleChange}
-                saveTokens={this.saveTokens} />
-              :
-              <div className={classes.center}>
-                <CircularProgress className={classes.progress} />
-                {connected ?
-                  <Typography variant="subtitle1">
-                    Loading Home Assistant data..
-                  </Typography>
-                  :
-                  <Typography variant="subtitle1">
-                    Attempting to connect to Home Assistant..
-                  </Typography>
-                }
-              </div>
-          }
-          <Snackbar
-            open={snackMessage.open}
-            autoHideDuration={!snackMessage.persistent ? 4000 : null}
-            onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
-            onExited={this.handleExited}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            ContentProps={{
-              'aria-describedby': 'message-id',
-            }}
-            message={<span id="message-id">{snackMessage.text}</span>}
-            action={snackMessage.actions} />
-
-        </div>
-      </Suspense>
+      <div className={classes.root}>
+        {!config ? (
+          <Login loggedIn={loggedIn} />
+        ) : entities ? (
+          <Main
+            themes={themes}
+            theme={theme}
+            setTheme={setTheme}
+            config={config}
+            haUrl={hass_url}
+            haConfig={haConfig}
+            entities={entities}
+            username={this.state.username}
+            password={this.state.password}
+            apiUrl={this.state.api_url}
+            handleConfigChange={this.handleConfigChange}
+            handleChange={this.handleChange}
+            saveTokens={this.saveTokens}
+          />
+        ) : (
+          <div className={classes.center}>
+            <CircularProgress className={classes.progress} />
+            {connected ? (
+              <Typography variant="subtitle1">
+                Loading Home Assistant data..
+              </Typography>
+            ) : (
+              <Typography variant="subtitle1">
+                Attempting to connect to Home Assistant..
+              </Typography>
+            )}
+          </div>
+        )}
+        <Snackbar
+          open={snackMessage.open}
+          autoHideDuration={!snackMessage.persistent ? 4000 : null}
+          onClose={!snackMessage.persistent ? this.handleSnackbarClose : null}
+          onExited={this.handleExited}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right'
+          }}
+          ContentProps={{
+            'aria-describedby': 'message-id'
+          }}
+          message={<span id="message-id">{snackMessage.text}</span>}
+          action={snackMessage.actions}
+        />
+      </div>
     );
   }
 }

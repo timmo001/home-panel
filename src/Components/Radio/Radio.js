@@ -26,62 +26,60 @@ const styles = theme => ({
     transition: 'transform 225ms cubic-bezier(0, 0, 0.2, 1) 0ms',
     zIndex: '1000',
     width: '18rem',
-    height: '18rem',
+    height: '18rem'
   },
   rootShown: {
-    transform: 'translate(-50%, 0px) !important',
+    transform: 'translate(-50%, 0px) !important'
   },
   backgroundOuter: {
     position: 'fixed',
     left: '50%',
     transform: 'translateX(-50%)',
     height: '18rem',
-    width: '100%',
+    width: '100%'
   },
   background: {
-    maxHeight: '18rem',
+    maxHeight: '18rem'
   },
   controls: {
     position: 'fixed',
     display: 'flex',
-    bottom: theme.spacing.unit * 5.8,
+    bottom: theme.spacing.unit * 5.8
   },
   controlsMain: {
     position: 'fixed',
     display: 'flex',
     alignItems: 'flex-end',
     left: '50%',
-    transform: 'translateX(-50%)',
+    transform: 'translateX(-50%)'
   },
   button: {
     margin: `0 ${theme.spacing.unit}px`,
     marginBottom: theme.spacing.unit / 4,
     backgroundColor: ''
-  },
+  }
 });
 
 const defaultSource = {
   source: {
-    image: sourcePlaceholder,
+    image: sourcePlaceholder
   },
   playing: Sound.status.STOPPED,
   shuffle: false,
-  repeat: false,
+  repeat: false
 };
 
-class Radio extends React.Component {
+class Radio extends React.PureComponent {
   state = {
     source: defaultSource,
-    dialogOpen: false,
+    dialogOpen: false
   };
 
-  handleUpdateRadio = () => console.log('source:', this.state.source);
-
-  handleRadioChange = (action) => {
-    console.log('action:', action);
+  handleRadioChange = action => {
     var source = this.state.source;
     switch (action) {
-      default: break;
+      default:
+        break;
       case 'play':
         source.playing = Sound.status.PLAYING;
         break;
@@ -110,13 +108,12 @@ class Radio extends React.Component {
   handleInputDialogChange = (value = null) => {
     var source = this.state.source;
     if (value) source.source = value;
-    console.log('source:', source);
     this.setState({ dialogOpen: false, source }, () =>
       this.handleGetSource(this.state.source.source)
     );
   };
 
-  handleGetSource = (source) => {
+  handleGetSource = source => {
     request
       .post(`${this.props.apiUrl}/radio/get`)
       .send(source)
@@ -125,7 +122,7 @@ class Radio extends React.Component {
         var source = this.state.source;
         source.source = res.body;
         source.playing = Sound.status.PLAYING;
-        this.setState({ source }, () => console.log('source:', source));
+        this.setState({ source });
       })
       .catch(err => {
         console.error(err);
@@ -133,10 +130,20 @@ class Radio extends React.Component {
   };
 
   render() {
-    const { handleRadioChange, handleInputDialog, handleInputDialogChange } = this;
+    const {
+      handleRadioChange,
+      handleInputDialog,
+      handleInputDialogChange
+    } = this;
     const { classes, show } = this.props;
     const { dialogOpen } = this.state;
-    const { source, playing, canSkip, canShuffle, canRepeat } = this.state.source;
+    const {
+      source,
+      playing,
+      canSkip,
+      canShuffle,
+      canRepeat
+    } = this.state.source;
     const { image, streams } = source;
 
     return (
@@ -145,30 +152,29 @@ class Radio extends React.Component {
           className={classNames(classes.root, show && classes.rootShown)}
           square
           elevation={2}>
-          {streams &&
+          {streams && (
             <Sound
               url={streams[0].url}
               playStatus={playing}
               onLoading={this.handleSongLoading}
               onPlaying={this.handleSongPlaying}
-              onFinishedPlaying={this.handleSongFinishedPlaying} />
-          }
+              onFinishedPlaying={this.handleSongFinishedPlaying}
+            />
+          )}
           <ButtonBase
             className={classes.backgroundOuter}
             focusRipple
             onClick={handleInputDialog}>
-            <img
-              className={classes.background}
-              src={image}
-              alt="background" />
+            <img className={classes.background} src={image} alt="background" />
           </ButtonBase>
           <InputDialog
             open={dialogOpen}
             apiUrl={this.props.apiUrl}
-            handleChange={handleInputDialogChange} />
+            handleChange={handleInputDialogChange}
+          />
           <div className={classes.controls}>
             <div className={classes.controlsMain}>
-              {canRepeat &&
+              {canRepeat && (
                 <Fab
                   className={classes.button}
                   mini
@@ -177,8 +183,8 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('repeat')}>
                   <RepeatIcon />
                 </Fab>
-              }
-              {canSkip &&
+              )}
+              {canSkip && (
                 <Fab
                   className={classes.button}
                   mini
@@ -187,8 +193,8 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('previous')}>
                   <SkipPreviousIcon />
                 </Fab>
-              }
-              {playing === Sound.status.PLAYING ?
+              )}
+              {playing === Sound.status.PLAYING ? (
                 <Fab
                   className={classes.buttonPlay}
                   color="primary"
@@ -196,7 +202,7 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('pause')}>
                   <PauseIcon />
                 </Fab>
-                :
+              ) : (
                 <Fab
                   className={classes.buttonPlay}
                   color="primary"
@@ -204,8 +210,8 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('play')}>
                   <PlayArrowIcon />
                 </Fab>
-              }
-              {canSkip &&
+              )}
+              {canSkip && (
                 <Fab
                   className={classes.button}
                   mini
@@ -214,8 +220,8 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('next')}>
                   <SkipNextIcon />
                 </Fab>
-              }
-              {canShuffle &&
+              )}
+              {canShuffle && (
                 <Fab
                   className={classes.button}
                   mini
@@ -224,7 +230,7 @@ class Radio extends React.Component {
                   onClick={() => handleRadioChange('shuffle')}>
                   <ShuffleIcon />
                 </Fab>
-              }
+              )}
             </div>
           </div>
         </Paper>
@@ -237,7 +243,7 @@ Radio.propTypes = {
   classes: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
   apiUrl: PropTypes.string.isRequired,
-  handleRadioHide: PropTypes.func.isRequired,
+  handleRadioHide: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Radio);

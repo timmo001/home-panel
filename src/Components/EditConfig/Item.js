@@ -30,13 +30,12 @@ const styles = theme => ({
   },
   dropdownSubText: {
     margin: '0 16px',
-    flex: '1 1 auto',
-    fontSize: '1.0rem'
+    flex: '1 1 auto'
   },
   container: {
     display: 'flex',
     flexDirection: 'column',
-    padding: '8px 8px 2px 16px'
+    paddingLeft: theme.spacing.unit
   },
   addIcon: {
     width: '100%',
@@ -54,35 +53,44 @@ const styles = theme => ({
   }
 });
 
-class Item extends React.Component {
+class Item extends React.PureComponent {
   state = {
-    open: this.props.open !== undefined ? this.props.open :
-      this.props.itemPath.length < 2 ||
-      this.props.itemPath.length > 2 ||
-      Array.isArray(this.props.item)
+    open: isObject(this.props.defaultItem) ? true : false
   };
 
   handleClick = () => this.setState(state => ({ open: !state.open }));
 
   render() {
-    const { classes, objKey, defaultItem, item, defaultItemPath, itemPath, canDelete, handleConfigChange } = this.props;
+    let {
+      classes,
+      objKey,
+      defaultItem,
+      item,
+      defaultItemPath,
+      itemPath,
+      invisible,
+      handleConfigChange,
+      canDelete
+    } = this.props;
     const { open } = this.state;
 
-    const dropdown = itemPath.length === 1 ?
-      <ButtonBase className={classes.dropdown} focusRipple>
-        <Typography className={classes.dropdownText} variant="h6">
-          {objKey && properCase(objKey)}
-        </Typography>
-      </ButtonBase>
-      :
-      <ButtonBase className={classes.dropdown} onClick={this.handleClick} focusRipple>
+    defaultItemPath = defaultItemPath.concat(
+      typeof objKey === 'number' && objKey > 0 ? 0 : objKey
+    );
+    itemPath = itemPath.concat(objKey);
+
+    const dropdown = (
+      <ButtonBase
+        className={classes.dropdown}
+        onClick={this.handleClick}
+        focusRipple>
         <Typography className={classes.dropdownText} variant="h6" noWrap>
-          {objKey && properCase(objKey)}
+          {canDelete && item.name ? item.name : objKey && properCase(objKey)}
         </Typography>
-        <Typography className={classes.dropdownSubText} noWrap>
+        <Typography className={classes.dropdownSubText} variant="body2" noWrap>
           {!open && JSON.stringify(item, null, 2)}
         </Typography>
-        {canDelete &&
+        {canDelete && (
           <IconButton
             className={classes.iconButton}
             component={'span'}
@@ -90,82 +98,91 @@ class Item extends React.Component {
             onClick={() => handleConfigChange(itemPath, undefined)}>
             <Delete className={classes.icon} />
           </IconButton>
-        }
+        )}
         {open ? <ExpandLess /> : <ExpandMore />}
-      </ButtonBase>;
+      </ButtonBase>
+    );
 
-    if (Array.isArray(defaultItem)) return (
-      <div className={classes.root}>
-        {dropdown}
-        <Divider />
-        <Collapse in={open}>
-          <div className={classes.container}>
-            {item && item.map((ai, ax) => {
-              return <NextItem
-                key={ax}
-                open={false}
-                canDelete={true}
-                objKey={ax}
-                defaultItem={defaultItem[objKey === 'cards' ?
-                  ai.type === 'link' ? 1 :
-                    ai.type === 'camera' ? 2 :
-                      ai.type === 'iframe' ? 3 :
-                        0 : 0]}
-                item={ai}
-                defaultItemPath={defaultItemPath.concat([objKey === 'cards' ?
-                  ai.type === 'link' ? 1 :
-                    ai.type === 'camera' ? 2 :
-                      ai.type === 'iframe' ? 3 :
-                        0 : 0])}
-                itemPath={itemPath.concat([ax])}
-                handleConfigChange={handleConfigChange} />
-            })}
-            <div className={classes.root}>
+    if (isObject(defaultItem)) {
+      return (
+        <div className={classes.root}>
+          {!invisible && dropdown}
+          {!invisible && <Divider />}
+          <Collapse in={open}>
+            <div className={classes.container}>
+              {defaultItem ? (
+                Object.keys(defaultItem).map((i, x) => {
+                  return (
+                    <NextItem
+                      key={x}
+                      objKey={i}
+                      defaultItem={defaultItem[i]}
+                      item={item[i] !== undefined ? item[i] : defaultItem[i]}
+                      defaultItemPath={defaultItemPath}
+                      itemPath={itemPath}
+                      handleConfigChange={handleConfigChange}
+                    />
+                  );
+                })
+              ) : (
+                <Typography color="error" variant="subtitle1">
+                  No default config set for {JSON.stringify(item)}.<br />
+                  Please report this error to Git repository&lsquo;s issue
+                  tracker including a screenshot of this item&lsquo;s location.
+                </Typography>
+              )}
+            </div>
+          </Collapse>
+        </div>
+      );
+    } else if (Array.isArray(defaultItem))
+      return (
+        <div className={classes.root}>
+          {!invisible && dropdown}
+          {!invisible && <Divider />}
+          <Collapse in={open}>
+            <div className={classes.container}>
+              {item.map((i, x) => {
+                return (
+                  <NextItem
+                    canDelete
+                    key={x}
+                    objKey={x}
+                    defaultItem={defaultItem[0]}
+                    item={i}
+                    defaultItemPath={defaultItemPath}
+                    itemPath={itemPath}
+                    handleConfigChange={handleConfigChange}
+                  />
+                );
+              })}
               <ButtonBase
                 className={classes.addIcon}
                 aria-label="Add"
-                onClick={() => handleConfigChange(itemPath, defaultItem[0])}>
+                onClick={() =>
+                  handleConfigChange(
+                    itemPath.concat([item.length]),
+                    defaultItem[0]
+                  )
+                }>
                 <Add />
               </ButtonBase>
             </div>
-          </div>
-        </Collapse>
-      </div>
-    ); else if (isObject(defaultItem)) return (
-      <div className={classes.root}>
-        {dropdown}
-        <Divider />
-        <Collapse in={open}>
-          <div className={classes.container}>
-            {defaultItem ?
-              Object.keys(defaultItem).map((i, x) => {
-                return <NextItem
-                  key={x}
-                  objKey={i}
-                  defaultItem={defaultItem[i]}
-                  item={item[i] !== undefined ? item[i] : defaultItem[i]}
-                  defaultItemPath={defaultItemPath.concat([i])}
-                  itemPath={itemPath.concat([i])}
-                  handleConfigChange={handleConfigChange} />
-              })
-              :
-              <Typography color="error" variant="subtitle1">
-                No default config set for {JSON.stringify(item)}.<br />
-                Please report this error to Git repository&lsquo;s issue tracker including a screenshot of this item&lsquo;s location.
-              </Typography>
-            }
-          </div>
-        </Collapse>
-      </div>
-    ); else return (
-      <Input
-        name={String(objKey)}
-        defaultValue={defaultItem}
-        value={item}
-        defaultItemPath={defaultItemPath}
-        itemPath={itemPath}
-        handleConfigChange={handleConfigChange} />
-    );
+          </Collapse>
+        </div>
+      );
+    else {
+      return (
+        <Input
+          name={String(objKey)}
+          defaultValue={defaultItem}
+          value={item}
+          defaultItemPath={defaultItemPath}
+          itemPath={itemPath}
+          handleConfigChange={handleConfigChange}
+        />
+      );
+    }
   }
 }
 
@@ -176,24 +193,20 @@ Item.propTypes = {
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]).isRequired,
   item: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.object,
     PropTypes.bool,
     PropTypes.string,
-    PropTypes.number,
+    PropTypes.number
   ]).isRequired,
-  objKey: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-  ]),
+  objKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
-  open: PropTypes.bool,
-  canDelete: PropTypes.bool,
   handleConfigChange: PropTypes.func.isRequired,
+  invisible: PropTypes.bool
 };
 
 export default withStyles(styles)(Item);

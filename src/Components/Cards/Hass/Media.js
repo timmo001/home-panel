@@ -40,15 +40,15 @@ const styles = theme => ({
   },
   button: {
     margin: `0 ${theme.spacing.unit / 2}px`
-  },
+  }
 });
 
-class Media extends React.Component {
-
-  handleChange = (action) => {
+class Media extends React.PureComponent {
+  handleChange = action => {
     const { entity_id } = this.props;
     switch (action) {
-      default: break;
+      default:
+        break;
       case 'play':
         this.props.handleChange('media_player', 'media_play', { entity_id });
         break;
@@ -56,10 +56,14 @@ class Media extends React.Component {
         this.props.handleChange('media_player', 'media_pause', { entity_id });
         break;
       case 'next':
-        this.props.handleChange('media_player', 'media_next_track', { entity_id });
+        this.props.handleChange('media_player', 'media_next_track', {
+          entity_id
+        });
         break;
       case 'previous':
-        this.props.handleChange('media_player', 'media_previous_track', { entity_id });
+        this.props.handleChange('media_player', 'media_previous_track', {
+          entity_id
+        });
         break;
       case 'vol_down':
         this.props.handleChange('media_player', 'volume_down', { entity_id });
@@ -74,34 +78,35 @@ class Media extends React.Component {
     const { classes, haUrl, card, state, attributes } = this.props;
     return (
       <div className={classes.root}>
-        {card.height > 1 &&
+        {card.height > 1 && (
           <div className={classes.info}>
-            {attributes.media_title &&
+            {attributes.media_title && (
               <Typography variant="body1">
                 {attributes.media_title} - {attributes.media_artist}
               </Typography>
-            }
+            )}
           </div>
-        }
-        {card.height > 1 &&
+        )}
+        {card.height > 1 && (
           <CardMedia
             className={classes.media}
             style={{
-              height: card.height ? card.height * 60 : 60,
+              height: card.height ? card.height * 60 : 60
             }}
             title={`${attributes.media_title} - ${attributes.media_artist}`}
-            image={haUrl + attributes.entity_picture} />
-        }
+            image={haUrl + attributes.entity_picture}
+          />
+        )}
         <div className={classes.controls}>
           <div className={classes.controlsMain}>
-            {card.width > 1 && state !== 'off' &&
+            {card.width > 1 && state !== 'off' && (
               <IconButton
                 className={classes.button}
                 aria-label="Volume Down"
                 onClick={() => this.handleChange('vol_down')}>
                 <VolumeDownIcon fontSize="small" />
               </IconButton>
-            }
+            )}
             <IconButton
               className={classes.button}
               aria-label="Previous"
@@ -109,7 +114,7 @@ class Media extends React.Component {
               onClick={() => this.handleChange('previous')}>
               <SkipPreviousIcon fontSize="small" />
             </IconButton>
-            {state === 'playing' ?
+            {state === 'playing' ? (
               <Fab
                 className={classes.buttonPlay}
                 color="primary"
@@ -118,25 +123,25 @@ class Media extends React.Component {
                 onClick={() => this.handleChange('pause')}>
                 <PauseIcon />
               </Fab>
-              : state === 'paused' ?
-                <Fab
-                  className={classes.buttonPlay}
-                  color="primary"
-                  aria-label="Play"
-                  size="small"
-                  onClick={() => this.handleChange('play')}>
-                  <PlayArrowIcon />
-                </Fab>
-                :
-                <Fab
-                  className={classes.buttonPlay}
-                  color="primary"
-                  aria-label="Play"
-                  size="small"
-                  disabled>
-                  <PlayArrowIcon />
-                </Fab>
-            }
+            ) : state === 'paused' ? (
+              <Fab
+                className={classes.buttonPlay}
+                color="primary"
+                aria-label="Play"
+                size="small"
+                onClick={() => this.handleChange('play')}>
+                <PlayArrowIcon />
+              </Fab>
+            ) : (
+              <Fab
+                className={classes.buttonPlay}
+                color="primary"
+                aria-label="Play"
+                size="small"
+                disabled>
+                <PlayArrowIcon />
+              </Fab>
+            )}
             <IconButton
               className={classes.button}
               aria-label="Next"
@@ -144,17 +149,17 @@ class Media extends React.Component {
               onClick={() => this.handleChange('next')}>
               <SkipNextIcon fontSize="small" />
             </IconButton>
-            {card.width > 1 && state !== 'off' &&
+            {card.width > 1 && state !== 'off' && (
               <IconButton
                 className={classes.button}
                 aria-label="Volume Up"
                 onClick={() => this.handleChange('vol_up')}>
                 <VolumeUpIcon fontSize="small" />
               </IconButton>
-            }
+            )}
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }

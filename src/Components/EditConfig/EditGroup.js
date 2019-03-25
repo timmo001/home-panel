@@ -9,12 +9,9 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ConfirmDialog from '../Common/ConfirmDialog';
-import dc from './defaultConfig.json';
+import defaultConfig from './defaultConfig.json';
 import Item from './Item';
 import clone from '../Common/clone';
-import properCase from '../Common/properCase';
-
-const defaultConfig = clone(dc);
 
 const styles = () => ({
   fill: {
@@ -22,10 +19,10 @@ const styles = () => ({
   }
 });
 
-class EditConfig extends React.PureComponent {
+class EditGroup extends React.PureComponent {
   state = {
     open: true,
-    config: clone(this.props.config)
+    group: this.props.group
   };
 
   handleClose = cb => this.setState({ open: false }, cb);
@@ -33,16 +30,18 @@ class EditConfig extends React.PureComponent {
   handleCancel = () =>
     this.handleClose(() => {
       this.props.add
-        ? this.props.handleItemAddDone()
-        : this.props.handleItemEditDone();
+        ? this.props.handleGroupAddDone()
+        : this.props.handleGroupEditDone();
     });
 
   handleSave = () =>
     this.handleClose(() => {
-      let config = clone(this.state.config);
+      const path = ['items', this.props.id];
+      let group = clone(this.state.group);
+      if (this.props.add) group.cards = [];
       this.props.add
-        ? this.props.handleItemAddDone(config)
-        : this.props.handleItemEditDone(config);
+        ? this.props.handleGroupAddDone(path, group)
+        : this.props.handleGroupEditDone(path, group);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -54,35 +53,22 @@ class EditConfig extends React.PureComponent {
       this.setState({ confirm: false }, () => {
         const path = ['items', this.props.id];
         this.props.add
-          ? this.props.handleItemAddDone(path)
-          : this.props.handleItemEditDone(path);
+          ? this.props.handleGroupAddDone(path)
+          : this.props.handleGroupEditDone(path);
       });
     });
 
   handleConfigChange = (path, value) => {
-    let config = clone(this.state.config);
-
-    const lastItem = path.pop();
-    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-
-    if (!value && Array.isArray(secondLastItem))
-      secondLastItem.splice(lastItem);
-    else secondLastItem[lastItem] = value;
-
-    this.setState({ config });
+    let group = clone(this.state.group);
+    group[path.pop()] = value;
+    this.setState({ group });
   };
 
   render() {
-    const { classes, path, fullScreen } = this.props;
-    const { open, config, confirm } = this.state;
-    const item = clone(path).reduce(
-      (o, k) => (o[k] = o[k] || {}),
-      clone(config)
-    );
-    let defaultItem = clone(path).reduce(
-      (o, k) => (o[k] = o[k] || {}),
-      defaultConfig
-    );
+    const { classes, fullScreen, add, id } = this.props;
+    const { open, group, confirm } = this.state;
+    let defaultGroup = defaultConfig.items[0];
+    delete defaultGroup.cards;
 
     return (
       <Dialog
@@ -92,33 +78,36 @@ class EditConfig extends React.PureComponent {
         maxWidth="xl"
         aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          Edit {properCase(path[path.length - 1])}
+          {add ? 'Add' : 'Edit'} Group
         </DialogTitle>
         <DialogContent>
-          {Object.keys(defaultItem).map((i, x) => (
-            <Item
-              key={x}
-              objKey={i}
-              defaultItem={defaultItem[i]}
-              item={item[i] !== undefined ? item[i] : defaultItem[i]}
-              defaultItemPath={path}
-              itemPath={path}
-              handleConfigChange={this.handleConfigChange}
-            />
-          ))}
+          <Item
+            invisible
+            objKey={id}
+            defaultItem={defaultGroup}
+            item={group}
+            defaultItemPath={['items']}
+            itemPath={['items']}
+            handleConfigChange={this.handleConfigChange}
+          />
         </DialogContent>
         <DialogActions>
+          {!add && (
+            <Button onClick={this.handleDeleteConfirm} color="primary">
+              Delete
+            </Button>
+          )}
           <div className={classes.fill} />
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
           <Button onClick={this.handleSave} color="primary">
-            Save
+            {add ? 'Add' : 'Save'}
           </Button>
         </DialogActions>
         {confirm && (
           <ConfirmDialog
-            text="Do you want to delete this item?"
+            text="Do you want to delete this group?"
             handleClose={this.handleDeleteConfirmClose}
             handleConfirm={this.handleDelete}
           />
@@ -128,15 +117,18 @@ class EditConfig extends React.PureComponent {
   }
 }
 
-EditConfig.propTypes = {
+EditGroup.propTypes = {
   classes: PropTypes.object.isRequired,
   fullScreen: PropTypes.bool.isRequired,
-  path: PropTypes.array.isRequired,
-  config: PropTypes.object.isRequired,
-  handleItemEditDone: PropTypes.func
+  id: PropTypes.number.isRequired,
+  group: PropTypes.object.isRequired,
+  pageId: PropTypes.number,
+  add: PropTypes.bool,
+  handleGroupAddDone: PropTypes.func,
+  handleGroupEditDone: PropTypes.func
 };
 
 export default compose(
   withMobileDialog(),
   withStyles(styles)
-)(EditConfig);
+)(EditGroup);

@@ -35,11 +35,12 @@ const styles = theme => ({
   }
 });
 
-class Weather extends React.Component {
-
+class Weather extends React.PureComponent {
   handleTempChange = (type, newTemp) => {
-    if (newTemp <= this.props.attributes.max_temp
-      && newTemp >= this.props.attributes.min_temp) {
+    if (
+      newTemp <= this.props.attributes.max_temp &&
+      newTemp >= this.props.attributes.min_temp
+    ) {
       const data = {
         entity_id: this.props.entity_id,
         [type]: newTemp
@@ -90,16 +91,18 @@ class Weather extends React.Component {
               </Typography>
             </div>
           </Grid>
-          {card.width > 1 &&
+          {card.width > 1 && (
             <Grid item>
-              {attributes.temperature ?
-                <Grid
-                  container
-                  alignItems="center"
-                  direction="column">
-                  <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('temperature',
-                      attributes.temperature + 0.5)}>
+              {attributes.temperature ? (
+                <Grid container alignItems="center" direction="column">
+                  <IconButton
+                    className={classes.iconContainer}
+                    onClick={() =>
+                      this.handleTempChange(
+                        'temperature',
+                        attributes.temperature + 0.5
+                      )
+                    }>
                     <KeyboardArrowUp fontSize="small" />
                   </IconButton>
                   <div className={classes.temperature}>
@@ -110,13 +113,18 @@ class Weather extends React.Component {
                       {haConfig.unit_system.temperature}
                     </Typography>
                   </div>
-                  <IconButton className={classes.iconContainer}
-                    onClick={() => this.handleTempChange('temperature',
-                      attributes.temperature - 0.5)}>
+                  <IconButton
+                    className={classes.iconContainer}
+                    onClick={() =>
+                      this.handleTempChange(
+                        'temperature',
+                        attributes.temperature - 0.5
+                      )
+                    }>
                     <KeyboardArrowDown fontSize="small" />
                   </IconButton>
                 </Grid>
-                :
+              ) : (
                 <Grid
                   item
                   container
@@ -129,9 +137,14 @@ class Weather extends React.Component {
                     container
                     alignItems="center"
                     direction="column">
-                    <IconButton className={classes.iconContainer}
-                      onClick={() => this.handleTempChange('target_temp_low',
-                        attributes.target_temp_low + 0.5)}>
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() =>
+                        this.handleTempChange(
+                          'target_temp_low',
+                          attributes.target_temp_low + 0.5
+                        )
+                      }>
                       <KeyboardArrowUp fontSize="small" />
                     </IconButton>
                     <div className={classes.temperature}>
@@ -142,9 +155,14 @@ class Weather extends React.Component {
                         {haConfig.unit_system.temperature}
                       </Typography>
                     </div>
-                    <IconButton className={classes.iconContainer}
-                      onClick={() => this.handleTempChange('target_temp_low',
-                        attributes.target_temp_low - 0.5)}>
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() =>
+                        this.handleTempChange(
+                          'target_temp_low',
+                          attributes.target_temp_low - 0.5
+                        )
+                      }>
                       <KeyboardArrowDown fontSize="small" />
                     </IconButton>
                   </Grid>
@@ -157,9 +175,14 @@ class Weather extends React.Component {
                     container
                     alignItems="center"
                     direction="column">
-                    <IconButton className={classes.iconContainer}
-                      onClick={() => this.handleTempChange('target_temp_high',
-                        attributes.target_temp_high + 0.5)}>
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() =>
+                        this.handleTempChange(
+                          'target_temp_high',
+                          attributes.target_temp_high + 0.5
+                        )
+                      }>
                       <KeyboardArrowUp fontSize="small" />
                     </IconButton>
                     <div className={classes.temperature}>
@@ -170,18 +193,23 @@ class Weather extends React.Component {
                         {haConfig.unit_system.temperature}
                       </Typography>
                     </div>
-                    <IconButton className={classes.iconContainer}
-                      onClick={() => this.handleTempChange('target_temp_high',
-                        attributes.target_temp_high - 0.5)}>
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() =>
+                        this.handleTempChange(
+                          'target_temp_high',
+                          attributes.target_temp_high - 0.5
+                        )
+                      }>
                       <KeyboardArrowDown fontSize="small" />
                     </IconButton>
                   </Grid>
                 </Grid>
-              }
+              )}
             </Grid>
-          }
+          )}
         </Grid>
-        {card.width > 1 && card.height > 1 &&
+        {card.width > 1 && card.height > 1 && (
           <Grid
             container
             spacing={8}
@@ -196,43 +224,74 @@ class Weather extends React.Component {
               alignItems="center"
               justify="center"
               direction="row">
-              {attributes.operation_list.map((op, i) =>
+              {attributes.operation_list.map((op, i) => (
                 <Grid key={i} item>
-                  {op === 'off' ?
-                    <IconButton className={classes.iconContainer}
+                  {op === 'off' ? (
+                    <IconButton
+                      className={classes.iconContainer}
                       onClick={() => this.handleOperationChange(op)}>
-                      <i className={classnames('mdi', 'mdi-power-off', classes.icon,
-                        attributes.operation_mode === op && classes.iconActive)} />
+                      <span
+                        className={classnames(
+                          'mdi',
+                          'mdi-power-off',
+                          classes.icon,
+                          attributes.operation_mode === op && classes.iconActive
+                        )}
+                      />
                     </IconButton>
-                    : op === 'heat' ?
-                      <IconButton className={classes.iconContainer}
-                        onClick={() => this.handleOperationChange(op)}>
-                        <i className={classnames('mdi', 'mdi-radiator', classes.icon,
-                          attributes.operation_mode === op && classes.iconActive)} />
-                      </IconButton>
-                      : op === 'cool' ?
-                        <IconButton className={classes.iconContainer}
-                          onClick={() => this.handleOperationChange(op)}>
-                          <i className={classnames('mdi', 'mdi-air-conditioner', classes.icon,
-                            attributes.operation_mode === op && classes.iconActive)} />
-                        </IconButton>
-                        : op === 'auto' ?
-                          <IconButton className={classes.iconContainer}
-                            onClick={() => this.handleOperationChange(op)}>
-                            <i className={classnames('mdi', 'mdi-autorenew', classes.icon,
-                              attributes.operation_mode === op && classes.iconActive)} />
-                          </IconButton>
-                          :
-                          <Button className={classnames(classes.button,
-                            attributes.operation_mode === op && classes.iconActive)}
-                            onClick={() => this.handleOperationChange(op)}>
-                            {op}
-                          </Button>
-                  }
+                  ) : op === 'heat' ? (
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() => this.handleOperationChange(op)}>
+                      <span
+                        className={classnames(
+                          'mdi',
+                          'mdi-radiator',
+                          classes.icon,
+                          attributes.operation_mode === op && classes.iconActive
+                        )}
+                      />
+                    </IconButton>
+                  ) : op === 'cool' ? (
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() => this.handleOperationChange(op)}>
+                      <span
+                        className={classnames(
+                          'mdi',
+                          'mdi-air-conditioner',
+                          classes.icon,
+                          attributes.operation_mode === op && classes.iconActive
+                        )}
+                      />
+                    </IconButton>
+                  ) : op === 'auto' ? (
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() => this.handleOperationChange(op)}>
+                      <span
+                        className={classnames(
+                          'mdi',
+                          'mdi-autorenew',
+                          classes.icon,
+                          attributes.operation_mode === op && classes.iconActive
+                        )}
+                      />
+                    </IconButton>
+                  ) : (
+                    <Button
+                      className={classnames(
+                        classes.button,
+                        attributes.operation_mode === op && classes.iconActive
+                      )}
+                      onClick={() => this.handleOperationChange(op)}>
+                      {op}
+                    </Button>
+                  )}
                 </Grid>
-              )}
+              ))}
             </Grid>
-            {attributes.away_mode &&
+            {attributes.away_mode && (
               <Grid
                 item
                 xs={4}
@@ -242,16 +301,23 @@ class Weather extends React.Component {
                 justify="space-around"
                 direction="row">
                 <Grid item>
-                  <IconButton className={classes.iconContainer}
+                  <IconButton
+                    className={classes.iconContainer}
                     onClick={() => this.handleAwayToggle()}>
-                    <i className={classnames('mdi', 'mdi-walk', classes.icon,
-                      attributes.away_mode === 'on' && classes.iconActive)} />
+                    <span
+                      className={classnames(
+                        'mdi',
+                        'mdi-walk',
+                        classes.icon,
+                        attributes.away_mode === 'on' && classes.iconActive
+                      )}
+                    />
                   </IconButton>
                 </Grid>
               </Grid>
-            }
+            )}
           </Grid>
-        }
+        )}
       </Grid>
     );
   }

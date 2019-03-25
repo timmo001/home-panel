@@ -15,15 +15,17 @@ import Tooltip from '@material-ui/core/Tooltip';
 import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import EditIcon from '@material-ui/icons/Edit';
+import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import BorderTopIcon from '@material-ui/icons/BorderTop';
 
 const styles = theme => ({
   header: {
     width: '100%',
     margin: 4,
     [theme.breakpoints.down('sm')]: {
-      margin: 0,
+      margin: 0
     }
   },
   buttons: {
@@ -52,7 +54,7 @@ const styles = theme => ({
       gridColumn: 1
     },
     [theme.breakpoints.down('xs')]: {
-      margin: 1,
+      margin: 1
     }
   },
   icon: {
@@ -67,10 +69,10 @@ const styles = theme => ({
   weatherContainer: {
     width: 420,
     [theme.breakpoints.down('md')]: {
-      width: 340,
+      width: 340
     },
     [theme.breakpoints.down('sm')]: {
-      width: 240,
+      width: 240
     },
     [theme.breakpoints.down('xs')]: {
       width: 0,
@@ -93,13 +95,13 @@ const styles = theme => ({
     color: theme.palette.text.main,
     fontSize: '1.6rem',
     '& span': {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 2
     },
     '& span:first-child': {
-      marginLeft: 0,
+      marginLeft: 0
     },
     [theme.breakpoints.down('md')]: {
-      maxWidth: 340,
+      maxWidth: 340
     },
     [theme.breakpoints.down('sm')]: {
       maxWidth: 240,
@@ -109,10 +111,10 @@ const styles = theme => ({
   timeDateContainer: {
     width: 420,
     [theme.breakpoints.down('md')]: {
-      width: 340,
+      width: 340
     },
     [theme.breakpoints.down('sm')]: {
-      width: 240,
+      width: 240
     }
   },
   time: {
@@ -144,10 +146,10 @@ const styles = theme => ({
   indoorContainer: {
     width: 420,
     [theme.breakpoints.down('md')]: {
-      width: 340,
+      width: 340
     },
     [theme.breakpoints.down('sm')]: {
-      width: 240,
+      width: 240
     },
     [theme.breakpoints.down('xs')]: {
       width: 0,
@@ -159,7 +161,7 @@ const styles = theme => ({
   indoorInnerContainer: {
     marginTop: theme.spacing.unit / 2,
     '&:first-child': {
-      marginTop: 0,
+      marginTop: 0
     }
   },
   indoorLabel: {
@@ -168,17 +170,17 @@ const styles = theme => ({
     overflow: 'visible',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.6rem'
-    },
+    }
   },
   indoor: {
     color: theme.palette.text.main,
     overflow: 'visible',
     fontSize: '1.6rem',
     '& span': {
-      marginLeft: theme.spacing.unit * 2,
+      marginLeft: theme.spacing.unit * 2
     },
     '& span:first-child': {
-      marginLeft: 0,
+      marginLeft: 0
     },
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.2rem'
@@ -187,14 +189,14 @@ const styles = theme => ({
 });
 
 // eslint-disable-next-line
-String.prototype.replaceAll = function (search, replacement) {
+String.prototype.replaceAll = function(search, replacement) {
   let target = this;
   return target.replace(new RegExp(search, 'g'), replacement);
 };
 
-class Header extends React.Component {
+class Header extends React.PureComponent {
   state = {
-    anchorEl: null,
+    anchorEl: null
   };
 
   getState = (entities, entity, endAdornment = '') => {
@@ -206,34 +208,55 @@ class Header extends React.Component {
     return !state || state === 'unknown' ? '' : state + endAdornment;
   };
 
-  handleClick = event => this.setState({ anchorEl: event.currentTarget });
+  handleThemeClick = event => {
+    if (this.props.editing) {
+      this.props.handleEditConfig(['theme']);
+    } else this.setState({ anchorEl: event.currentTarget });
+  };
 
-  handleClose = (value) => this.setState({ anchorEl: null }, () => {
-    if (Number(value))
-      this.props.setTheme(value);
-  });
+  handleClose = value =>
+    this.setState({ anchorEl: null }, () => {
+      if (Number(value)) this.props.setTheme(value);
+    });
 
   render() {
-    const { classes, config, entities, themes, theme, moved, over,
-      handleMouseOver, handleMouseLeave, handleRadioHide } = this.props;
+    const {
+      classes,
+      config,
+      editing,
+      entities,
+      themes,
+      theme,
+      moved,
+      over,
+      handleMouseOver,
+      handleMouseLeave,
+      handleRadioHide,
+      handleConfigUI
+    } = this.props;
     const { anchorEl } = this.state;
 
     if (!config.header) config.header = {};
 
-    const icon = config.header.left_outdoor_weather &&
+    const icon =
+      config.header.left_outdoor_weather &&
       config.header.left_outdoor_weather.dark_sky_icon &&
       this.getState(entities, config.header.left_outdoor_weather.dark_sky_icon);
 
     const header = {
       left_outdoor_weather: config.header.left_outdoor_weather && {
         icon: icon && icon.replaceAll('-', '_').toUpperCase(),
-        condition: config.header.left_outdoor_weather.condition &&
+        condition:
+          config.header.left_outdoor_weather.condition &&
           this.getState(entities, config.header.left_outdoor_weather.condition),
         data: []
       },
       right_indoor: []
     };
-    if (config.header.left_outdoor_weather && config.header.left_outdoor_weather.data)
+    if (
+      config.header.left_outdoor_weather &&
+      config.header.left_outdoor_weather.data
+    )
       config.header.left_outdoor_weather.data.map(d => {
         return header.left_outdoor_weather.data.push(
           this.getState(entities, d.entity_id, d.unit_of_measurement)
@@ -243,25 +266,32 @@ class Header extends React.Component {
       config.header.right_indoor.map(i => {
         let data = [];
         if (i.data)
-          i.data.map(d => data.push(this.getState(entities, d.entity_id, d.unit_of_measurement)));
+          i.data.map(d =>
+            data.push(
+              this.getState(entities, d.entity_id, d.unit_of_measurement)
+            )
+          );
         return header.right_indoor.push({ label: i.label, data });
       });
 
-    let timeDisabled, timeMilitary = false;
+    let timeDisabled,
+      timeMilitary = false;
     if (config.header.time) {
-      if (config.header.time.disable) timeDisabled = config.header.time.disable
-      if (config.header.time.military) timeMilitary = config.header.time.military
+      if (config.header.time.disable) timeDisabled = config.header.time.disable;
+      if (config.header.time.military)
+        timeMilitary = config.header.time.military;
     }
-    let dateDisabled = false, dateFormat = 'Do MMMM YYYY';
+    let dateDisabled = false,
+      dateFormat = 'Do MMMM YYYY';
     if (config.header.date) {
-      if (config.header.date.disable) dateDisabled = config.header.date.disable
+      if (config.header.date.disable) dateDisabled = config.header.date.disable;
       if (config.header.date.format) dateFormat = config.header.date.format;
     }
     const canEdit = !process.env.REACT_APP_OVERRIDE_API_URL ? true : false;
 
     return (
       <div className={classes.root}>
-        <Slide in={moved || over}>
+        <Slide in={editing || moved || over}>
           <div
             className={classes.buttons}
             onMouseOver={handleMouseOver}
@@ -284,37 +314,66 @@ class Header extends React.Component {
                 <RefreshIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
-            {canEdit &&
+            {canEdit && (
               <Tooltip title="Edit Config">
                 <IconButton
                   className={classes.button}
-                  style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 3 : 1 }}
+                  style={{
+                    gridRow: timeDisabled && dateDisabled ? 1 : 2,
+                    gridColumn: timeDisabled && dateDisabled ? 3 : 1
+                  }}
                   aria-label="Edit Config"
-                  onClick={this.props.handleEditConfig}>
-                  <EditIcon className={classes.icon} />
+                  onClick={handleConfigUI}>
+                  {editing ? (
+                    <CheckIcon className={classes.icon} />
+                  ) : (
+                    <EditIcon className={classes.icon} />
+                  )}
                 </IconButton>
               </Tooltip>
-            }
+            )}
             <Tooltip title="Theme">
               <IconButton
                 className={classes.button}
-                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 2, gridColumn: timeDisabled && dateDisabled ? 4 : 2 }}
+                style={{
+                  gridRow: timeDisabled && dateDisabled ? 1 : 2,
+                  gridColumn: timeDisabled && dateDisabled ? 4 : 2
+                }}
                 aria-label="Theme"
                 aria-owns={anchorEl ? 'simple-menu' : null}
                 aria-haspopup="true"
-                onClick={this.handleClick}>
+                onClick={this.handleThemeClick}>
                 <FormatPaintIcon className={classes.icon} />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Radio">
-              <IconButton
-                className={classes.button}
-                style={{ gridRow: timeDisabled && dateDisabled ? 1 : 3, gridColumn: timeDisabled && dateDisabled ? 5 : 1 }}
-                aria-label="Radio"
-                onClick={this.props.handleRadioToggle}>
-                <RadioIcon className={classes.icon} />
-              </IconButton>
-            </Tooltip>
+            {editing && (
+              <Tooltip title="Edit Header">
+                <IconButton
+                  className={classes.button}
+                  style={{
+                    gridRow: timeDisabled && dateDisabled ? 1 : 3,
+                    gridColumn: timeDisabled && dateDisabled ? 5 : 1
+                  }}
+                  aria-label="Edit Header"
+                  onClick={() => this.props.handleEditConfig(['header'])}>
+                  <BorderTopIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
+            )}
+            {!editing && (
+              <Tooltip title="Radio">
+                <IconButton
+                  className={classes.button}
+                  style={{
+                    gridRow: timeDisabled && dateDisabled ? 1 : 3,
+                    gridColumn: timeDisabled && dateDisabled ? 5 : 1
+                  }}
+                  aria-label="Radio"
+                  onClick={this.props.handleRadioToggle}>
+                  <RadioIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </Slide>
         <Menu
@@ -326,7 +385,11 @@ class Header extends React.Component {
           <MenuItem onClick={() => this.handleClose(-1)}>Auto</MenuItem>
           {themes.map(theme => {
             return (
-              <MenuItem key={theme.id} onClick={() => this.handleClose(theme.id)}>{theme.name}</MenuItem>
+              <MenuItem
+                key={theme.id}
+                onClick={() => this.handleClose(theme.id)}>
+                {theme.name}
+              </MenuItem>
             );
           })}
         </Menu>
@@ -340,9 +403,11 @@ class Header extends React.Component {
           wrap="nowrap"
           spacing={8}
           onClick={handleRadioHide}>
-
-          <Grid item className={classes.weatherContainer} style={{ marginTop: moved || over ? 32 : 0 }}>
-            {header.left_outdoor_weather &&
+          <Grid
+            item
+            className={classes.weatherContainer}
+            style={{ marginTop: moved || over ? 32 : 0 }}>
+            {header.left_outdoor_weather && (
               <Grid
                 container
                 direction="row"
@@ -350,83 +415,103 @@ class Header extends React.Component {
                 alignItems="center"
                 wrap="nowrap"
                 spacing={8}>
-
-                {header.left_outdoor_weather.icon &&
+                {header.left_outdoor_weather.icon && (
                   <Grid item>
                     <Hidden smDown>
                       <ReactAnimatedWeather
                         icon={header.left_outdoor_weather.icon}
                         color={theme.palette.text.main}
                         size={80}
-                        animate={true} />
+                        animate={true}
+                      />
                     </Hidden>
                     <Hidden mdUp>
                       <ReactAnimatedWeather
                         icon={header.left_outdoor_weather.icon}
                         color={theme.palette.text.main}
                         size={60}
-                        animate={true} />
+                        animate={true}
+                      />
                     </Hidden>
                   </Grid>
-                }
+                )}
                 <Grid item>
-                  {header.left_outdoor_weather.condition &&
-                    <Typography className={classes.condition} variant="h3" noWrap>
-                      {header.left_outdoor_weather.condition && header.left_outdoor_weather.condition}
+                  {header.left_outdoor_weather.condition && (
+                    <Typography
+                      className={classes.condition}
+                      variant="h3"
+                      noWrap>
+                      {header.left_outdoor_weather.condition &&
+                        header.left_outdoor_weather.condition}
                     </Typography>
-                  }
-                  {header.left_outdoor_weather.data &&
+                  )}
+                  {header.left_outdoor_weather.data && (
                     <Typography className={classes.data} variant="h3" noWrap>
                       {header.left_outdoor_weather.data.map((d, id) => {
-                        return <span key={id}>{d}</span>
+                        return <span key={id}>{d}</span>;
                       })}
                     </Typography>
-                  }
+                  )}
                 </Grid>
               </Grid>
-            }
+            )}
           </Grid>
           <Grid item className={classes.timeDateContainer}>
-            {!timeDisabled &&
+            {!timeDisabled && (
               <div>
-                {timeMilitary ?
+                {timeMilitary ? (
                   <Typography className={classes.time} variant="h1" noWrap>
                     <Moment format="HH:mm" />
                   </Typography>
-                  :
-                  <Typography className={classnames(classes.time, timeMilitary && classes.dateMilitary)} variant="h1" noWrap>
+                ) : (
+                  <Typography
+                    className={classnames(
+                      classes.time,
+                      timeMilitary && classes.dateMilitary
+                    )}
+                    variant="h1"
+                    noWrap>
                     <Moment format="hh:mm" />
                     <Moment className={classes.timePeriod} format="a" />
                   </Typography>
-                }
+                )}
               </div>
-            }
-            {!dateDisabled &&
-              <Typography className={classes.date} variant="h3" noWrap style={{
-                marginTop: (moved || over) && timeDisabled ? 58 : timeDisabled && 8
-              }}>
+            )}
+            {!dateDisabled && (
+              <Typography
+                className={classes.date}
+                variant="h3"
+                noWrap
+                style={{
+                  marginTop:
+                    (moved || over) && timeDisabled ? 58 : timeDisabled && 8
+                }}>
                 <Moment format={dateFormat} />
               </Typography>
-            }
+            )}
           </Grid>
           <Grid item className={classes.indoorContainer}>
-            {header.right_indoor && header.right_indoor.map((i, id) => {
-              return (
-                <div key={id} className={classes.indoorInnerContainer}>
-                  <Typography className={classes.indoorLabel} variant="h3" noWrap>
-                    {i.label}
-                  </Typography>
-                  <Typography className={classes.indoor} variant="h3" noWrap>
-                    {i.data.map((d, id) => {
-                      return <span key={id}>{d}</span>
-                    })}
-                  </Typography>
-                </div>
-              );
-            })}
+            {header.right_indoor &&
+              header.right_indoor.map((i, id) => {
+                return (
+                  <div key={id} className={classes.indoorInnerContainer}>
+                    <Typography
+                      className={classes.indoorLabel}
+                      variant="h3"
+                      noWrap>
+                      {i.label}
+                    </Typography>
+                    <Typography className={classes.indoor} variant="h3" noWrap>
+                      {i.data.map((d, id) => {
+                        return <span key={id}>{d}</span>;
+                      })}
+                    </Typography>
+                  </div>
+                );
+              })}
           </Grid>
         </Grid>
-      </div >
+      </div>
     );
   }
 }
@@ -436,6 +521,7 @@ Header.propTypes = {
   themes: PropTypes.array.isRequired,
   theme: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  editing: PropTypes.bool.isRequired,
   entities: PropTypes.array.isRequired,
   moved: PropTypes.bool.isRequired,
   over: PropTypes.bool.isRequired,
@@ -445,7 +531,8 @@ Header.propTypes = {
   handleRadioToggle: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
-  handleEditConfig: PropTypes.func.isRequired,
+  handleConfigUI: PropTypes.func.isRequired,
+  handleEditConfig: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Header);
