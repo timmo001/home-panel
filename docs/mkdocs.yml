@@ -69,7 +69,7 @@ nav:
       - Setup: setup.md
       - Login: login.md
   - Customization:
-      - Config UI: configui.md
+      - Configuration UI: configui.md
       - Configuration: configuration.md
       - Custom Themes: themes.md
       - Template: template.md
