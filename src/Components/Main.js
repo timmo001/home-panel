@@ -193,7 +193,24 @@ class Main extends React.PureComponent {
 
   handlePageEditDone = (path, page) => {
     console.log('handlePageEditDone', path, page);
-    path && this.handleConfigChange(path, clone(page));
+    let config = clone(this.props.config);
+    const pageId = clone(path).pop() + 1;
+    delete config.pages[pageId];
+    if (path) {
+      if (!page) {
+        clone(config).items.map((i, x) => {
+          console.log('i, x', i, x);
+          console.log('i.page === pageId', i.page === pageId);
+          console.log('i.page > pageId', i.page > pageId);
+          if (i.page === pageId) config.items.splice(x, 1);
+          else if (i.page > pageId) config.items[x].page = i.page - 1;
+          return config.items[x];
+        });
+        // this.handleConfigChange(['items'], config.items);
+      }
+      // this.handleConfigChange(path, clone(page));
+      this.props.handleConfigChange(config);
+    }
     this.setState({ editingPage: undefined });
   };
 
