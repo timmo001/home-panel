@@ -194,14 +194,13 @@ class Login extends React.PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
     const {
       username,
       password,
       hass_url,
       showPassword,
       createAccount,
-      error,
       loading,
       success,
       invalid
@@ -355,7 +354,8 @@ Login.propTypes = {
   classes: PropTypes.object.isRequired,
   setHassUrl: PropTypes.func.isRequired,
   handleCreateAccount: PropTypes.func.isRequired,
-  handleLogin: PropTypes.func.isRequired
+  handleLogin: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default withStyles(styles)(Login);

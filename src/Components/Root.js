@@ -132,14 +132,16 @@ class Root extends React.PureComponent {
         app.set('user', user);
         process.env.NODE_ENV === 'development' &&
           console.log('User:', app.get('user'));
-        this.setState({ loggedIn: true, userId: app.get('user')._id });
+        this.setState({
+          loggedIn: true,
+          loginError: undefined,
+          userId: app.get('user')._id
+        });
         this.getConfig();
       })
       .catch(e => {
         console.error('Authentication error:', e);
-        this.setState({ loggedIn: false, loginError: e.message }, () =>
-          setTimeout(() => this.setState({ loginError: undefined }), 4000)
-        );
+        this.setState({ loggedIn: false, loginError: e.message });
       });
 
   getConfig = async () => {
@@ -396,13 +398,15 @@ class Root extends React.PureComponent {
       hass_url,
       haConfig,
       entities,
-      connected
+      connected,
+      loginError
     } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ? (
           <Login
+            error={loginError}
             setHassUrl={this.setHassUrl}
             handleCreateAccount={this.createAccount}
             handleLogin={this.login}
