@@ -149,12 +149,10 @@ class Root extends React.PureComponent {
     const configService = await app.service('config');
     let getter = await configService.find();
 
-    let config = getter.data[0];
-
     process.env.NODE_ENV === 'development' &&
-      console.log('server config:', config);
+      console.log('server config:', getter.data[0]);
 
-    if (!config) {
+    if (!getter.data[0]) {
       try {
         await configService.create({ createNew: true });
         this.getConfig();
@@ -168,17 +166,15 @@ class Root extends React.PureComponent {
     process.env.NODE_ENV === 'development' &&
       console.log('getter.data[0]:', getter.data[0]);
 
-    config = { ...defaultConfig, ...getter.data[0].config };
+    const config = { ...defaultConfig, ...getter.data[0].config };
 
     process.env.NODE_ENV === 'development' &&
       console.log('local config:', config);
 
-    this.setState({ config }, () => {
+    this.setState({ configId: getter.data[0]._id, config }, () => {
       if (config.theme && config.theme.custom)
         config.theme.custom.map(theme => this.props.addTheme(theme));
     });
-    configService.on('created', () => this.getConfig());
-    configService.on('removed', () => this.getConfig());
     configService.on('updated', () => this.getConfig());
     configService.on('patched', () => this.getConfig());
   };
@@ -411,6 +407,20 @@ class Root extends React.PureComponent {
 
   handleConfigChange = config => {
     // config = cleanupObject(config);
+    socket.emit(
+      'patch',
+      'config',
+      this.state.configId,
+      { config },
+      (error, note) => {
+        if (error)
+          process.env.NODE_ENV === 'development' &&
+            console.error('Error updating', this.state.configId, ':', error);
+        else
+          process.env.NODE_ENV === 'development' &&
+            console.log('Updated config:', this.state.configId, note);
+      }
+    );
   };
 
   render() {
