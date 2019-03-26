@@ -5,10 +5,21 @@ module.exports = function(_options = {}) {
   // eslint-disable-line no-unused-vars
   return async context => {
     const { data } = context;
-    const { config } = data;
+    let { createNew, config } = data;
+
+    if (createNew) {
+      config = JSON.parse(
+        require('fs').readFileSync('config/config.default.json')
+      );
+      // Throw an error if there isn't any default config
+      if (!config)
+        throw new Error(
+          'No default config was found. This should be located in "api/config/config.default.json"'
+        );
+    }
 
     // Throw an error if there isn't any config
-    if (!config) throw new Error('config is required');
+    if (!config) throw new Error('Config is required');
 
     // The authenticated user
     const user = context.params.user;

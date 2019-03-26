@@ -137,6 +137,7 @@ class Root extends React.PureComponent {
           loginError: undefined,
           userId: app.get('user')._id
         });
+        this.loggedIn();
         this.getConfig();
       })
       .catch(e => {
@@ -146,35 +147,58 @@ class Root extends React.PureComponent {
 
   getConfig = async () => {
     const configService = await app.service('config');
-    const getter = await configService.find();
-    this.loggedIn(getter.data[0]);
+    let getter = await configService.find();
+
+    let config = getter.data[0];
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('server config:', config);
+
+    if (!config) {
+      try {
+        await configService.create({ createNew: true });
+        this.getConfig();
+      } catch (e) {
+        console.error(e.message);
+        this.setState({ loginError: e.message });
+      }
+      return;
+    }
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('getter.data[0]:', getter.data[0]);
+
+    config = { ...defaultConfig, ...getter.data[0].config };
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('local config:', config);
+
+    this.setState({ config }, () => {
+      if (config.theme && config.theme.custom)
+        config.theme.custom.map(theme => this.props.addTheme(theme));
+    });
     configService.on('created', () => this.getConfig());
     configService.on('removed', () => this.getConfig());
     configService.on('updated', () => this.getConfig());
     configService.on('patched', () => this.getConfig());
   };
 
-  loggedIn = config => {
-    config = { ...defaultConfig, ...config };
-    this.setState({ config }, () => {
-      if (this.state.hass_url) {
-        if (this.loadTokens()) this.connectToHASS();
-        else if (localStorage.getItem('should_auth')) {
-          if (localStorage.getItem('auth_triggered')) this.connectToHASS();
-          else this.askAuth();
+  loggedIn = () => {
+    if (this.state.hass_url) {
+      if (this.loadTokens()) this.connectToHASS();
+      else if (localStorage.getItem('should_auth')) {
+        if (localStorage.getItem('auth_triggered')) this.connectToHASS();
+        else this.askAuth();
+      }
+    } else
+      this.setState({
+        entities: [],
+        snackMessage: {
+          open: true,
+          text:
+            'No Home Assistant URL provided. Please re-login to enable HASS features.'
         }
-      } else
-        this.setState({
-          entities: [],
-          snackMessage: {
-            open: true,
-            text:
-              'No Home Assistant URL provided. Please re-login to enable HASS features.'
-          }
-        });
-      if (config.theme && config.theme.custom)
-        config.theme.custom.map(theme => this.props.addTheme(theme));
-    });
+      });
   };
 
   eventHandler = () => console.log('Connection has been established again');
