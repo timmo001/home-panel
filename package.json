@@ -2,7 +2,11 @@
   "name": "home-panel",
   "version": "1.0.0",
   "private": true,
-  "author": "Timmo <contact@timmo.xyz> (https://timmo.dev)",
+  "author": {
+    "name": "Timmo",
+    "email": "contact@timmo.xyz"
+  },
+  "license": "MIT",
   "dependencies": {
     "@feathersjs/authentication-client": "1.0.11",
     "@feathersjs/feathers": "3.3.1",
