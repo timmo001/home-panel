@@ -12,21 +12,21 @@ module.exports = function(_options = {}) {
 
     // Make sure that we always have a list of messages either by wrapping
     // a single message into an array or by getting the `data` from the `find` method's result
-    let notes = method === 'find' ? result.data : [result];
+    let config = method === 'find' ? result.data : [result];
 
     // Asynchronously get user object from each message's `userId`
     // and add it to the message
     await Promise.all(
-      notes.map(async note => {
+      config.map(async note => {
         // Also pass the original `params` to the service call
         // so that it has the same information available (e.g. who is requesting it)
         note.user = await app.service('users').get(note.userId, params);
       })
     );
 
-    notes = notes.filter(n => n.userId === userId);
+    config = config.filter(n => n.userId === userId);
 
-    if (method === 'find') result.data = notes;
+    if (method === 'find') result.data = config;
     else result = result.userId === userId ? result : null;
 
     // Best practice: hooks should always return the context
