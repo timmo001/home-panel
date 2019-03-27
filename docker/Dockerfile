@@ -11,14 +11,17 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
-# Copy app
-COPY build /opt/panel
-
 # Copy root filesystem
 COPY rootfs /
 
+# Copy app
+COPY build /opt/panel
+
 # Build arch argument
 ARG BUILD_ARCH=amd64
+
+# SHA to clone
+ARG BUILD_SHA=master
 
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
@@ -53,11 +56,13 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && git clone --branch "v0.5.0" --depth=1 \
-        "https://github.com/timmo001/home-panel-api.git" /opt/api \
+    && git clone --branch "${BUILD_SHA}" --depth=1 \
+        "https://github.com/timmo001/home-panel.git" /tmp/hp \
+    && mv /tmp/hp/api /opt/api \
     \
     && cd /opt/api \
     && yarn install \
+    && mkdir -p /data/db \
     \
     && yarn cache clean \
     && apk del --purge .build-dependencies \
