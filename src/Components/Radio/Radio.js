@@ -1,5 +1,5 @@
 import React from 'react';
-import request from 'superagent';
+// import request from 'superagent';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Sound from 'react-sound';
@@ -114,19 +114,19 @@ class Radio extends React.PureComponent {
   };
 
   handleGetSource = source => {
-    request
-      .post(`${this.props.apiUrl}/radio/get`)
-      .send(source)
-      .set('Accept', 'application/json')
-      .then(res => {
-        var source = this.state.source;
-        source.source = res.body;
-        source.playing = Sound.status.PLAYING;
-        this.setState({ source });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // request
+    //   .post(`${this.props.apiUrl}/radio/get`)
+    //   .send(source)
+    //   .set('Accept', 'application/json')
+    //   .then(res => {
+    //     var source = this.state.source;
+    //     source.source = res.body;
+    //     source.playing = Sound.status.PLAYING;
+    //     this.setState({ source });
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   };
 
   render() {
@@ -169,7 +169,6 @@ class Radio extends React.PureComponent {
           </ButtonBase>
           <InputDialog
             open={dialogOpen}
-            apiUrl={this.props.apiUrl}
             handleChange={handleInputDialogChange}
           />
           <div className={classes.controls}>
@@ -242,7 +241,6 @@ class Radio extends React.PureComponent {
 Radio.propTypes = {
   classes: PropTypes.object.isRequired,
   show: PropTypes.bool.isRequired,
-  apiUrl: PropTypes.string.isRequired,
   handleRadioHide: PropTypes.func.isRequired
 };
 

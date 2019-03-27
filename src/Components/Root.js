@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import request from 'superagent';
+import feathers from '@feathersjs/feathers';
+import socketio from '@feathersjs/socketio-client';
+import io from 'socket.io-client';
+import auth from '@feathersjs/authentication-client';
 import {
   getAuth,
   getUser,
@@ -46,36 +49,152 @@ const styles = theme => ({
   }
 });
 
-var connection;
+const app = feathers();
+const socket = io(
+  `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
+    .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${process.env
+    .REACT_APP_API_PORT || 3234}`
+);
+
+// Setup the transport (Rest, Socket, etc.) here
+app.configure(socketio(socket));
+
+// Available options are listed in the "Options" section
+app.configure(auth({ storage: localStorage }));
+
+let connection;
 
 class Root extends React.PureComponent {
   state = {
     snackMessage: { open: false, text: '' },
-    connected: false
+    connected: false,
+    hass_url:
+      localStorage.getItem('hass_url') ||
+      `${window.location.protocol}//hassio:8123`
   };
 
-  loggedIn = (config, username, password, api_url, hass_url) => {
-    localStorage.setItem('should_login', true);
-    config = { ...defaultConfig, ...config };
-    this.setState({ config, username, password, api_url, hass_url }, () => {
-      if (this.state.hass_url) {
-        if (this.loadTokens()) this.connectToHASS();
-        else if (localStorage.getItem('should_auth')) {
-          if (localStorage.getItem('auth_triggered')) this.connectToHASS();
-          else this.askAuth();
-        }
-      } else
+  componentDidMount = () => this.login();
+
+  setHassUrl = hass_url => this.setState({ hass_url });
+
+  createAccount = data => {
+    process.env.NODE_ENV === 'development' && console.log('account:', data);
+    socket.emit('create', 'users', data, error => {
+      if (error)
+        process.env.NODE_ENV === 'development' &&
+          console.error('Error creating account:', error);
+      else {
+        process.env.NODE_ENV === 'development' &&
+          console.log('Created new account.');
+        this.login({ strategy: 'local', ...data });
+      }
+    });
+    setTimeout(() => this.setState({ loginAttempted: true }), 500);
+  };
+
+  logout = () =>
+    app.logout().then(() =>
+      this.setState({
+        loggedIn: false,
+        loginError: undefined,
+        config: undefined
+      })
+    );
+
+  login = (data = undefined) => {
+    process.env.NODE_ENV === 'development' && console.log('login:', data);
+    if (!data)
+      app.passport.getJWT().then(accessToken => {
+        accessToken &&
+          this.authenticate({
+            strategy: 'jwt',
+            accessToken
+          });
+      });
+    else this.authenticate(data);
+    setTimeout(() => this.setState({ loginAttempted: true }), 500);
+  };
+
+  authenticate = data =>
+    app
+      .authenticate(data)
+      .then(response => {
+        process.env.NODE_ENV === 'development' &&
+          console.log('Authenticated:', response);
+        return app.passport.verifyJWT(response.accessToken);
+      })
+      .then(payload => {
+        process.env.NODE_ENV === 'development' &&
+          console.log('JWT Payload:', payload);
+        return app.service('users').get(payload.userId);
+      })
+      .then(user => {
+        app.set('user', user);
+        process.env.NODE_ENV === 'development' &&
+          console.log('User:', app.get('user'));
         this.setState({
-          entities: [],
-          snackMessage: {
-            open: true,
-            text:
-              'No Home Assistant URL provided. Please re-login to enable HASS features.'
-          }
+          loggedIn: true,
+          loginError: undefined,
+          userId: app.get('user')._id
         });
+        this.loggedIn();
+        this.getConfig();
+      })
+      .catch(e => {
+        console.error('Authentication error:', e);
+        this.setState({ loggedIn: false, loginError: e.message });
+      });
+
+  getConfig = async () => {
+    const configService = await app.service('config');
+    let getter = await configService.find();
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('server config:', getter.data[0]);
+
+    if (!getter.data[0]) {
+      try {
+        await configService.create({ createNew: true });
+        this.getConfig();
+      } catch (e) {
+        console.error(e.message);
+        this.setState({ loginError: e.message });
+      }
+      return;
+    }
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('getter.data[0]:', getter.data[0]);
+
+    const config = { ...defaultConfig, ...getter.data[0].config };
+
+    process.env.NODE_ENV === 'development' &&
+      console.log('local config:', config);
+
+    this.setState({ configId: getter.data[0]._id, config }, () => {
       if (config.theme && config.theme.custom)
         config.theme.custom.map(theme => this.props.addTheme(theme));
     });
+    configService.on('updated', () => this.getConfig());
+    configService.on('patched', () => this.getConfig());
+  };
+
+  loggedIn = () => {
+    if (this.state.hass_url) {
+      if (this.loadTokens()) this.connectToHASS();
+      else if (localStorage.getItem('should_auth')) {
+        if (localStorage.getItem('auth_triggered')) this.connectToHASS();
+        else this.askAuth();
+      }
+    } else
+      this.setState({
+        entities: [],
+        snackMessage: {
+          open: true,
+          text:
+            'No Home Assistant URL provided. Please re-login to enable HASS features.'
+        }
+      });
   };
 
   eventHandler = () => console.log('Connection has been established again');
@@ -288,32 +407,24 @@ class Root extends React.PureComponent {
 
   handleConfigChange = config => {
     // config = cleanupObject(config);
-    request
-      .post(`${this.state.api_url}/config/set`)
-      .send({
-        username: this.state.username,
-        password: this.state.password,
-        config
-      })
-      .retry(2)
-      .timeout({
-        response: 5000,
-        deadline: 30000
-      })
-      .then(res => {
-        if (res.status === 200) {
-          this.setState({ config }, () => this.setTheme());
-        } else {
-          console.log('An error occurred: ', res.status);
-        }
-      })
-      .catch(err => {
-        console.log('An error occurred: ', err);
-      });
+    socket.emit(
+      'patch',
+      'config',
+      this.state.configId,
+      { config },
+      (error, note) => {
+        if (error)
+          process.env.NODE_ENV === 'development' &&
+            console.error('Error updating', this.state.configId, ':', error);
+        else
+          process.env.NODE_ENV === 'development' &&
+            console.log('Updated config:', this.state.configId, note);
+      }
+    );
   };
 
   render() {
-    const { loggedIn, setTheme } = this;
+    const { setTheme } = this;
     const { classes, themes, theme } = this.props;
     const {
       config,
@@ -321,13 +432,19 @@ class Root extends React.PureComponent {
       hass_url,
       haConfig,
       entities,
-      connected
+      connected,
+      loginError
     } = this.state;
 
     return (
       <div className={classes.root}>
         {!config ? (
-          <Login loggedIn={loggedIn} />
+          <Login
+            error={loginError}
+            setHassUrl={this.setHassUrl}
+            handleCreateAccount={this.createAccount}
+            handleLogin={this.login}
+          />
         ) : entities ? (
           <Main
             themes={themes}
@@ -337,9 +454,7 @@ class Root extends React.PureComponent {
             haUrl={hass_url}
             haConfig={haConfig}
             entities={entities}
-            username={this.state.username}
-            password={this.state.password}
-            apiUrl={this.state.api_url}
+            logout={this.logout}
             handleConfigChange={this.handleConfigChange}
             handleChange={this.handleChange}
             saveTokens={this.saveTokens}
