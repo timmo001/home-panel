@@ -55,8 +55,8 @@ RUN \
     \
     && git clone "https://github.com/timmo001/home-panel.git" /tmp/panel \
     && cd /tmp/panel \
-    && git checkout "${BUILD_REF}" \
-    && mv /tmp/panel/api /opt/api \
+    && git checkout $BUILD_REF \
+    && mv api /opt/api \
     \
     && cd /opt/api \
     && yarn install \
