@@ -53,8 +53,9 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && git clone --branch "${BUILD_REF}" --depth=1 \
-        "https://github.com/timmo001/home-panel.git" /tmp/panel \
+    && git clone "https://github.com/timmo001/home-panel.git" /tmp/panel \
+    && cd /tmp/panel \
+    && git checkout "${BUILD_REF}" \
     && mv /tmp/panel/api /opt/api \
     \
     && cd /opt/api \
