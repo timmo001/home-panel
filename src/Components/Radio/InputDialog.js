@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import React from 'react';
-import request from 'superagent';
+// import request from 'superagent';
 import PropTypes from 'prop-types';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import IconButton from '@material-ui/core/IconButton';
@@ -46,16 +46,16 @@ class InputDialog extends React.PureComponent {
   handleChange = (_event, value) => this.setState({ value });
 
   handleSearch = () => {
-    request
-      .post(`${this.props.apiUrl}/radio/search`)
-      .send({ query: this.state.search })
-      .set('Accept', 'application/json')
-      .then(res => {
-        this.setState({ sources: res.body.slice(0, 100) });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // request
+    //   .post(`${this.props.apiUrl}/radio/search`)
+    //   .send({ query: this.state.search })
+    //   .set('Accept', 'application/json')
+    //   .then(res => {
+    //     this.setState({ sources: res.body.slice(0, 100) });
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
   };
 
   handleSearchChange = search => this.setState({ search });
@@ -135,7 +135,6 @@ class InputDialog extends React.PureComponent {
 InputDialog.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   open: PropTypes.bool.isRequired,
-  apiUrl: PropTypes.string.isRequired,
   value: PropTypes.string,
   handleChange: PropTypes.func.isRequired
 };

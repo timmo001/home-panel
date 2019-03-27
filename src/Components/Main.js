@@ -93,12 +93,9 @@ class Main extends React.PureComponent {
     this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
-    localStorage.removeItem('should_login');
     localStorage.removeItem('hass_tokens');
-    localStorage.removeItem('username');
-    sessionStorage.removeItem('password');
     localStorage.setItem('been_here', true);
-    window.location.reload(true);
+    this.props.logout();
   };
 
   handlePageChange = pageNo => this.setState({ currentPage: pageNo });
@@ -295,11 +292,7 @@ class Main extends React.PureComponent {
             handlePageChange={this.handlePageChange}
           />
         )}
-        <Radio
-          show={radioShown}
-          apiUrl={this.props.apiUrl}
-          handleRadioHide={this.handleRadioHide}
-        />
+        <Radio show={radioShown} handleRadioHide={this.handleRadioHide} />
         {addingCard && (
           <EditCard
             config={config}
@@ -382,11 +375,9 @@ Main.propTypes = {
   haUrl: PropTypes.string.isRequired,
   haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
-  apiUrl: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
   saveTokens: PropTypes.func.isRequired
 };
 

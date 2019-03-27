@@ -11,11 +11,14 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
-# Copy app
-COPY build /opt/panel
-
 # Copy root filesystem
 COPY rootfs /
+
+# Copy api
+COPY api /opt/api
+
+# Copy app
+COPY build /opt/panel
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
@@ -48,16 +51,14 @@ RUN \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
     && if [ "${BUILD_ARCH}" = "armv7" ]; then S6_ARCH="arm"; fi \
     \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.0.0/s6-overlay-${S6_ARCH}.tar.gz" \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-${S6_ARCH}.tar.gz" \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && git clone --branch "v0.5.0" --depth=1 \
-        "https://github.com/timmo001/home-panel-api.git" /opt/api \
-    \
     && cd /opt/api \
     && yarn install \
+    && mkdir -p /data/db \
     \
     && yarn cache clean \
     && apk del --purge .build-dependencies \

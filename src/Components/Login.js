@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import request from 'superagent';
 import withStyles from '@material-ui/core/styles/withStyles';
 import green from '@material-ui/core/colors/green';
 import Grid from '@material-ui/core/Grid';
@@ -85,7 +84,6 @@ class Login extends React.PureComponent {
   state = {
     username: '',
     password: '',
-    api_url: '',
     hass_url: '',
     showPassword: false,
     createAccount: false,
@@ -102,10 +100,11 @@ class Login extends React.PureComponent {
       : sessionStorage.getItem('password');
     const api_url = process.env.REACT_APP_OVERRIDE_API_URL
       ? process.env.REACT_APP_OVERRIDE_API_URL
-      : localStorage.getItem('api_url');
+      : `${window.location.protocol}//${window.location.hostname}:3234`;
     const hass_url = process.env.REACT_APP_OVERRIDE_HASS_URL
       ? process.env.REACT_APP_OVERRIDE_HASS_URL
-      : localStorage.getItem('hass_url');
+      : localStorage.getItem('hass_url') ||
+        `${window.location.protocol}//hassio:8123`;
 
     localStorage.setItem('should_auth', true);
 
@@ -113,20 +112,13 @@ class Login extends React.PureComponent {
       {
         username: username ? username : '',
         password: password ? password : '',
-        api_url: api_url
-          ? api_url
-          : `${window.location.protocol}//${window.location.hostname}:3234`,
+        api_url: api_url,
         hass_url: hass_url ? hass_url : '',
         createAccount: localStorage.getItem('been_here') ? false : true
       },
       () => {
         localStorage.setItem('been_here', true);
-        this.handleValidation(invalid => {
-          !invalid &&
-            localStorage.getItem('should_login') &&
-            !this.state.createAccount &&
-            this.handleLogIn();
-        });
+        this.handleValidation();
       }
     );
   };
@@ -134,24 +126,13 @@ class Login extends React.PureComponent {
   toggleCreateAccount = () =>
     this.setState({ createAccount: !this.state.createAccount });
 
-  handleValidation = cb => {
+  handleValidation = () => {
     if (!this.state.username) {
       this.setState({ invalid: 'No username!' });
-      cb(this.state.invalid);
       return;
     }
     if (!this.state.password) {
       this.setState({ invalid: 'No password!' });
-      cb(this.state.invalid);
-      return;
-    }
-    if (
-      !this.state.api_url ||
-      !this.state.api_url.startsWith('http') ||
-      !this.state.api_url.includes('://')
-    ) {
-      this.setState({ invalid: 'API URL invalid!' });
-      cb(this.state.invalid);
       return;
     }
     if (this.state.hass_url) {
@@ -160,28 +141,21 @@ class Login extends React.PureComponent {
         !this.state.hass_url.includes('://')
       ) {
         this.setState({ invalid: 'Home Assistant URL invalid!' });
-        cb(this.state.invalid);
         return;
       }
       if (window.location.protocol === 'https:') {
-        if (this.state.api_url.startsWith('http:')) {
-          this.setState({ invalid: 'The API must use SSL/https.' });
-          cb(this.state.invalid);
-          return;
-        }
         if (this.state.hass_url.startsWith('http:')) {
           this.setState({ invalid: 'Your HASS instance must use SSL/https.' });
-          cb(this.state.invalid);
           return;
         }
       }
     }
-    this.setState({ invalid: undefined }, () => cb(undefined));
+    this.setState({ invalid: undefined });
   };
 
   handleChange = prop => event =>
     this.setState({ [prop]: event.target.value }, () =>
-      this.handleValidation(() => {})
+      this.handleValidation()
     );
 
   handleCheckedChange = name => event =>
@@ -196,177 +170,37 @@ class Login extends React.PureComponent {
     if (e.key === 'Enter' && !this.state.invalid) {
       this.state.createAccount
         ? this.handleCreateAccount()
-        : this.handleLogIn();
+        : this.handleLogin();
     }
   };
 
   handleCreateAccount = () => {
-    var api_url = this.state.api_url;
-    api_url = api_url.endsWith('/')
-      ? api_url.substring(0, api_url.length - 1)
-      : this.state.api_url;
-    this.setState({ api_url, success: false, loading: true }, () => {
-      if (this.state.username) {
-        console.log('Create account');
-        request
-          .post(`${this.state.api_url}/login/setup`)
-          .send({
-            username: this.state.username,
-            password: this.state.password
-          })
-          .retry(2)
-          .timeout({
-            response: 10000,
-            deadline: 80000
-          })
-          .then(res => {
-            if (res.status === 200) {
-              localStorage.setItem('username', this.state.username);
-              sessionStorage.setItem('password', this.state.password);
-              localStorage.setItem('api_url', this.state.api_url);
-              localStorage.setItem('hass_url', this.state.hass_url);
-              this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(
-                  res.body,
-                  this.state.username,
-                  this.state.password,
-                  this.state.api_url,
-                  this.state.hass_url
-                );
-              });
-            } else {
-              this.setState({ loading: false, success: false }, () => {
-                console.error(`Error ${res.status}: ${res.body}`);
-                this.setState(
-                  {
-                    failed: true,
-                    error: `Error ${res.status}: ${
-                      res.body
-                    }\nCheck your credentials and try again`
-                  },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 20000)
-                );
-              });
-            }
-          })
-          .catch(err => {
-            this.setState({ loading: false, success: false }, () => {
-              if (err.response) {
-                console.error(`Error: ${err.status} - ${err.response.text}`);
-                this.setState(
-                  { error: `Error: ${err.status} - ${err.response.text}` },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 8000)
-                );
-              } else {
-                console.error(
-                  `Error: ${err.message} - Check your credentials and try again`
-                );
-                this.setState(
-                  {
-                    error: `Error: ${
-                      err.message
-                    } - Check your credentials and try again`
-                  },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 8000)
-                );
-              }
-            });
-          });
-      }
+    localStorage.setItem('hass_url', this.state.hass_url);
+    this.props.setHassUrl(this.state.hass_url);
+    this.props.handleCreateAccount({
+      username: this.state.username,
+      password: this.state.password
     });
   };
 
-  handleLogIn = () => {
-    var api_url = this.state.api_url;
-    api_url = api_url.endsWith('/')
-      ? api_url.substring(0, api_url.length - 1)
-      : this.state.api_url;
-    this.setState({ api_url, success: false, loading: true }, () => {
-      if (this.state.username) {
-        console.log('Log In');
-        request
-          .post(`${this.state.api_url}/login`)
-          .send({
-            username: this.state.username,
-            password: this.state.password
-          })
-          .retry(2)
-          .timeout({
-            response: 10000,
-            deadline: 40000
-          })
-          .then(res => {
-            if (res.status === 200) {
-              localStorage.setItem('username', this.state.username);
-              sessionStorage.setItem('password', this.state.password);
-              localStorage.setItem('api_url', this.state.api_url);
-              localStorage.setItem('hass_url', this.state.hass_url);
-              this.setState({ loading: false, success: true }, () => {
-                this.props.loggedIn(
-                  res.body,
-                  this.state.username,
-                  this.state.password,
-                  this.state.api_url,
-                  this.state.hass_url
-                );
-              });
-            } else {
-              this.setState({ loading: false, success: false }, () => {
-                console.error(`Error ${res.status}: ${res.body}`);
-                this.setState(
-                  {
-                    error: `Error ${res.status}: ${
-                      res.body
-                    }\nCheck your credentials and try again`
-                  },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 20000)
-                );
-              });
-            }
-          })
-          .catch(err => {
-            this.setState({ loading: false, success: false }, () => {
-              if (err.response) {
-                console.error(`Error: ${err.status} - ${err.response.text}`);
-                this.setState(
-                  { error: `Error: ${err.status} - ${err.response.text}` },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 8000)
-                );
-              } else {
-                console.error(
-                  `Error: ${err.message} - Check your credentials and try again`
-                );
-                this.setState(
-                  {
-                    error: `Error: ${
-                      err.message
-                    } - Check your credentials and try again`
-                  },
-                  () =>
-                    setTimeout(() => this.setState({ error: undefined }), 8000)
-                );
-              }
-            });
-          });
-      }
+  handleLogin = () => {
+    localStorage.setItem('hass_url', this.state.hass_url);
+    this.props.setHassUrl(this.state.hass_url);
+    this.props.handleLogin({
+      strategy: 'local',
+      username: this.state.username,
+      password: this.state.password
     });
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, error } = this.props;
     const {
       username,
       password,
-      api_url,
       hass_url,
       showPassword,
       createAccount,
-      error,
       loading,
       success,
       invalid
@@ -447,28 +281,6 @@ class Login extends React.PureComponent {
                   />
                 </FormControl>
               )}
-              {!process.env.REACT_APP_OVERRIDE_API_URL && (
-                <FormControl
-                  className={classNames(
-                    classes.margin,
-                    classes.textField,
-                    classes.fakeButton
-                  )}>
-                  <InputLabel htmlFor="api_url">API URL</InputLabel>
-                  <Input
-                    required
-                    id="api_url"
-                    type="text"
-                    inputProps={{
-                      autoCapitalize: 'none',
-                      autoComplete: 'url'
-                    }}
-                    value={api_url}
-                    onChange={this.handleChange('api_url')}
-                    onKeyPress={this.handleKeyPress}
-                  />
-                </FormControl>
-              )}
               {!process.env.REACT_APP_OVERRIDE_HASS_URL && (
                 <FormControl
                   className={classNames(
@@ -519,7 +331,7 @@ class Login extends React.PureComponent {
                   <Button
                     className={buttonClassname}
                     disabled={loading || invalid ? true : false}
-                    onClick={this.handleLogIn}>
+                    onClick={this.handleLogin}>
                     Log In
                   </Button>
                 )}
@@ -540,7 +352,10 @@ class Login extends React.PureComponent {
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
-  loggedIn: PropTypes.func.isRequired
+  setHassUrl: PropTypes.func.isRequired,
+  handleCreateAccount: PropTypes.func.isRequired,
+  handleLogin: PropTypes.func.isRequired,
+  error: PropTypes.string
 };
 
 export default withStyles(styles)(Login);
