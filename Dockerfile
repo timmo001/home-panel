@@ -20,6 +20,9 @@ COPY api /opt/api
 # Copy app
 COPY build /opt/panel
 
+# Build arch argument
+ARG BUILD_ARCH=amd64
+
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
