@@ -8,7 +8,6 @@ echo 'Run API..'
 cd /opt/api
 
 DB_PATH=/data/home-panel.db
-CONFIG_PATH=/data/config.json
 SSL_PATH_CERT=/ssl/%SSL_CERTFILE%
 SSL_PATH_KEY=/ssl/%SSL_KEYFILE%
 

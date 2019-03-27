@@ -4,7 +4,7 @@ include: https://raw.githubusercontent.com/timmo001/organization/master/gitlab-c
 variables:
   GITHUB_REPO: "timmo001/home-panel"
   SLUG: "home-panel"
-  TARGET: "docker"
+  TARGET: "."
 
   AARCH64: "true"
   AMD64: "true"

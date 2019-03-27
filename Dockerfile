@@ -14,11 +14,11 @@ ENV \
 # Copy root filesystem
 COPY rootfs /
 
+# Copy api
+COPY api /opt/api
+
 # Copy app
 COPY build /opt/panel
-
-# Build arch argument
-ARG BUILD_ARCH=amd64
 
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
@@ -52,11 +52,6 @@ RUN \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
-    \
-    && git clone "https://github.com/timmo001/home-panel.git" /tmp/panel \
-    && cd /tmp/panel \
-    && git checkout $BUILD_REF \
-    && mv api /opt/api \
     \
     && cd /opt/api \
     && yarn install \
