@@ -54,8 +54,8 @@ RUN \
     && mkdir -p /etc/fix-attrs.d \
     \
     && git clone --branch "${BUILD_REF}" --depth=1 \
-        "https://github.com/timmo001/home-panel.git" /tmp/hp \
-    && mv /tmp/hp/api /opt/api \
+        "https://github.com/timmo001/home-panel.git" /tmp/panel \
+    && mv /tmp/panel/api /opt/api \
     \
     && cd /opt/api \
     && yarn install \
