@@ -20,9 +20,6 @@ COPY build /opt/panel
 # Build arch argument
 ARG BUILD_ARCH=amd64
 
-# SHA to clone
-ARG BUILD_SHA=master
-
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
@@ -56,7 +53,7 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && git clone --branch "${BUILD_SHA}" --depth=1 \
+    && git clone --branch "${BUILD_REF}" --depth=1 \
         "https://github.com/timmo001/home-panel.git" /tmp/hp \
     && mv /tmp/hp/api /opt/api \
     \
