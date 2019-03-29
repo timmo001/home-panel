@@ -183,7 +183,7 @@ class Root extends React.PureComponent {
     if (this.state.hass_url) {
       if (this.loadTokens()) this.connectToHASS();
       else if (localStorage.getItem('should_auth')) {
-        if (localStorage.getItem('auth_triggered')) this.connectToHASS();
+        if (!localStorage.getItem('auth_triggered')) this.connectToHASS();
         else this.askAuth();
       }
     } else
