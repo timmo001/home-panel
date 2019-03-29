@@ -13,7 +13,6 @@ Find the docs [here](https://github.com/hassio-addons/addon-home-panel#readme)
 - Install [Docker](https://www.docker.com/community-edition) and
  [Docker Compose](https://docs.docker.com/compose/install/)
 - Create a directory for your compose file. For example, `home-panel`
-- Create a `config.json` using the [template][template]
 - Create a `docker-compose.yml` file:
 
 ### SSL
@@ -38,7 +37,6 @@ services:
       - 3234:3234
       - 8234:8234
     volumes:
-      - PATH_TO_CONFIG/home-panel-config.json:/data/config.json
       - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
       - ~/ssl/privkey.pem:/data/ssl/privkey.pem
 ```
@@ -61,7 +59,6 @@ services:
       - 3234:3234
       - 8234:8234
     volumes:
-      - PATH_TO_CONFIG/home-panel-config.json:/data/config.json
       - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
       - ~/ssl/privkey.pem:/data/ssl/privkey.pem
 ```
@@ -71,7 +68,6 @@ services:
 ---
 
 - Install [Docker](https://www.docker.com/community-edition)
-- Create a `config.json` using the [template][template]
 - Run image
 
 ### SSL
@@ -86,7 +82,6 @@ services:
 docker run -d \
   -p 3234:3234 \
   -p 8234:8234 \
-  -v PATH_TO_CONFIG/home-panel-config.json:/data/config.json
   -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
   -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
   -e SSL_CERTFILE=fullchain.pem \
@@ -105,7 +100,6 @@ docker run -d \
 docker run -d \
   -p 3234:3234 \
   -p 8234:8234 \
-  -v PATH_TO_CONFIG/home-panel-config.json:/data/config.json
   timmo001/home-panel
 ```
 
@@ -118,8 +112,6 @@ docker run -d \
 - First clone the
   [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
 - Checkout the version you want via releases
-- Copy `files/config.template.json` to `files/config.json`
-- Update `files/config.json` to your configuration
 - Install packages
 
 ```bash
@@ -226,5 +218,3 @@ yarn start
 ```
 
 - The app should open in your default browser under [http://localhost:3000](http://localhost:3000)
-
-[template]: https://timmo.dev/home-panel/template/
