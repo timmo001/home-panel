@@ -9,6 +9,7 @@ import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import EditGroup from './EditConfig/EditGroup';
 import EditConfig from './EditConfig/EditConfig';
+import RawEditor from './EditConfig/RawEditor';
 import dc from './EditConfig/defaultConfig.json';
 import isObject from './Common/isObject';
 import clone from './Common/clone';
@@ -160,6 +161,8 @@ class Main extends React.PureComponent {
     });
   };
 
+  handleEditConfigRaw = () => this.setState({ editingRaw: true });
+
   handleCardAddDone = (path, card) => {
     path && this.handleConfigChange(path, clone(card));
     this.setState({ addingCard: undefined });
@@ -206,6 +209,11 @@ class Main extends React.PureComponent {
     this.setState({ editingItem: undefined });
   };
 
+  handleRawEditDone = config => {
+    config && this.handleConfigChange([], clone(config));
+    this.setState({ editingRaw: undefined });
+  };
+
   render() {
     const {
       classes,
@@ -229,7 +237,8 @@ class Main extends React.PureComponent {
       editingPage,
       addingGroup,
       editingGroup,
-      editingItem
+      editingItem,
+      editingRaw
     } = this.state;
     const pages = config.pages
       ? config.pages
@@ -257,6 +266,7 @@ class Main extends React.PureComponent {
           handleRadioHide={this.handleRadioHide}
           handleConfigUI={this.handleConfigUI}
           handleEditConfig={this.handleEditConfig}
+          handleEditConfigRaw={this.handleEditConfigRaw}
         />
         <div
           className={classes.pageContainer}
@@ -359,6 +369,12 @@ class Main extends React.PureComponent {
             config={config}
             path={editingItem.path}
             handleItemEditDone={this.handleItemEditDone}
+          />
+        )}
+        {editingRaw && (
+          <RawEditor
+            config={config}
+            handleRawEditDone={this.handleRawEditDone}
           />
         )}
       </div>

@@ -19,6 +19,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BorderTopIcon from '@material-ui/icons/BorderTop';
+import CodeIcon from '@material-ui/icons/Code';
 
 const styles = theme => ({
   header: {
@@ -374,6 +375,20 @@ class Header extends React.PureComponent {
                 </IconButton>
               </Tooltip>
             )}
+            {editing && (
+              <Tooltip title="Raw Editor">
+                <IconButton
+                  className={classes.button}
+                  style={{
+                    gridRow: timeDisabled && dateDisabled ? 1 : 3,
+                    gridColumn: timeDisabled && dateDisabled ? 5 : 2
+                  }}
+                  aria-label="Raw Editor"
+                  onClick={this.props.handleEditConfigRaw}>
+                  <CodeIcon className={classes.icon} />
+                </IconButton>
+              </Tooltip>
+            )}
           </div>
         </Slide>
         <Menu
@@ -532,7 +547,8 @@ Header.propTypes = {
   handleLogOut: PropTypes.func.isRequired,
   handleRadioHide: PropTypes.func.isRequired,
   handleConfigUI: PropTypes.func.isRequired,
-  handleEditConfig: PropTypes.func.isRequired
+  handleEditConfig: PropTypes.func.isRequired,
+  handleEditConfigRaw: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(Header);
