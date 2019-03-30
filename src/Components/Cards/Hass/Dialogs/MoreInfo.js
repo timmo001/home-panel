@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Dialog from '@material-ui/core/Dialog';
@@ -63,6 +64,8 @@ class MoreInfo extends React.PureComponent {
     const { fullScreen, data, handleChange } = this.props;
     const { entity_id, attributes } = data;
     const domain = entity_id.substring(0, entity_id.indexOf('.'));
+    const name = data.name ? data.name : attributes.friendly_name;
+    const icon = data.icon && data.icon;
 
     return (
       <Dialog
@@ -71,7 +74,16 @@ class MoreInfo extends React.PureComponent {
         onClose={() => this.handleClose()}
         aria-labelledby="responsive-dialog-title">
         <DialogTitle id="responsive-dialog-title">
-          {attributes.friendly_name}
+          {icon && (
+            <span
+              className={classnames('mdi', `mdi-${icon}`)}
+              style={{
+                fontSize: data.size && data.size.icon && data.size.icon,
+                marginRight: 8
+              }}
+            />
+          )}
+          {name}
           <IconButton
             style={{
               position: 'absolute',
