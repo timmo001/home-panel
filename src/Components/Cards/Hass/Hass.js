@@ -104,10 +104,10 @@ class Hass extends React.PureComponent {
           }}
           item>
           {domain === 'sensor' ||
-          domain === 'weather' ||
           domain === 'climate' ||
+          domain === 'device_tracker' ||
           domain === 'media_player' ||
-          domain === 'device_tracker' ? (
+          domain === 'weather' ? (
             <Card
               className={classnames(
                 classes.card,
@@ -209,7 +209,11 @@ class Hass extends React.PureComponent {
               }
               onClick={() => {
                 if (editing) handleCardEdit(groupId, cardId, card);
-                else if (domain === 'light' || domain === 'switch')
+                else if (
+                  domain === 'input_boolean' ||
+                  domain === 'light' ||
+                  domain === 'switch'
+                )
                   handleChange(domain, state === 'on' ? false : true, {
                     entity_id
                   });
