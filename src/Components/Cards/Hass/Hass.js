@@ -51,10 +51,10 @@ class Hass extends React.PureComponent {
     alarmEntity: undefined
   };
 
-  handleButtonPress = (domain, entity) => {
+  handleButtonPress = (domain, entity, card) => {
     if (domain === 'light' && entity.state === 'on')
       this.buttonPressTimer = setTimeout(
-        () => this.setState({ moreInfo: entity }),
+        () => this.setState({ moreInfo: { ...entity, ...card } }),
         1000
       );
   };
@@ -222,8 +222,8 @@ class Hass extends React.PureComponent {
                 else if (domain === 'alarm_control_panel')
                   this.handleAlarmPanelShow(entity);
               }}
-              onTouchStart={() => this.handleButtonPress(domain, entity)}
-              onMouseDown={() => this.handleButtonPress(domain, entity)}
+              onTouchStart={() => this.handleButtonPress(domain, entity, card)}
+              onMouseDown={() => this.handleButtonPress(domain, entity, card)}
               onTouchEnd={this.handleButtonRelease}
               onMouseUp={this.handleButtonRelease}>
               <Card
