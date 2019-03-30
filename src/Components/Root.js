@@ -20,7 +20,6 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import Login from './Login';
 import Main from './Main';
 import defaultConfig from './EditConfig/defaultConfig.json';
-// import cleanupObject from './Common/cleanupObject';
 
 const styles = theme => ({
   root: {
@@ -92,7 +91,10 @@ class Root extends React.PureComponent {
     setTimeout(() => this.setState({ loginAttempted: true }), 500);
   };
 
-  logout = () =>
+  logout = () => {
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('hass_tokens');
     app.logout().then(() =>
       this.setState({
         loggedIn: false,
@@ -100,6 +102,7 @@ class Root extends React.PureComponent {
         config: undefined
       })
     );
+  };
 
   login = (data = undefined) => {
     process.env.NODE_ENV === 'development' && console.log('login:', data);
@@ -175,6 +178,9 @@ class Root extends React.PureComponent {
       if (config.theme && config.theme.custom)
         config.theme.custom.map(theme => this.props.addTheme(theme));
     });
+
+    this.setTheme();
+
     configService.on('updated', () => this.getConfig());
     configService.on('patched', () => this.getConfig());
   };
@@ -182,10 +188,9 @@ class Root extends React.PureComponent {
   loggedIn = () => {
     if (this.state.hass_url) {
       if (this.loadTokens()) this.connectToHASS();
-      else if (localStorage.getItem('should_auth')) {
-        if (!localStorage.getItem('auth_triggered')) this.connectToHASS();
-        else this.askAuth();
-      }
+      else if (this.props.location.search.includes('auth_callback=1'))
+        this.connectToHASS();
+      else this.askAuth();
     } else
       this.setState({
         entities: [],
@@ -204,6 +209,8 @@ class Root extends React.PureComponent {
     try {
       hassTokens = JSON.parse(localStorage.getItem('hass_tokens'));
     } catch (err) {} // eslint-disable-line
+    process.env.NODE_ENV === 'development' &&
+      console.log('loadTokens:', hassTokens);
     return hassTokens;
   };
 
@@ -252,6 +259,7 @@ class Root extends React.PureComponent {
   };
 
   connectToHASS = () => {
+    process.env.NODE_ENV === 'development' && console.log('connectToHASS');
     (async () => {
       localStorage.setItem('auth_triggered', true);
       connection = this.authProm().then(this.connProm);
@@ -349,6 +357,7 @@ class Root extends React.PureComponent {
     this.setState({ entities: Object.entries(entities) });
 
   setTheme = (themeId = undefined) => {
+    process.env.NODE_ENV === 'development' && console.log('setTheme:', themeId);
     const { config } = this.state;
     const lightThemeName =
       config.theme.auto && config.theme.auto.light_theme

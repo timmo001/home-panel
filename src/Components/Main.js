@@ -49,7 +49,6 @@ class Main extends React.PureComponent {
   };
 
   componentDidMount = () => {
-    this.props.setTheme();
     this.onMouseMoveHandler();
   };
 
