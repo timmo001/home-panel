@@ -40,7 +40,7 @@ class Frame extends React.PureComponent {
         className={classnames(classes.cardContainer)}
         style={{
           '--width': card.width ? card.width : 1,
-          '--height': card.hseight ? card.height : 1
+          '--height': card.height ? card.height : 1
         }}
         item>
         <Card
