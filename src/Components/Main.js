@@ -367,6 +367,7 @@ class Main extends React.PureComponent {
           <EditConfig
             config={config}
             path={editingItem.path}
+            entities={entities}
             handleItemEditDone={this.handleItemEditDone}
           />
         )}
