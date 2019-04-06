@@ -103,11 +103,11 @@ class Hass extends React.PureComponent {
             '--height': card.height ? card.height : 1
           }}
           item>
-          {domain === 'sensor' ||
-          domain === 'sun' ||
-          domain === 'climate' ||
+          {domain === 'climate' ||
           domain === 'device_tracker' ||
           domain === 'media_player' ||
+          domain === 'sensor' ||
+          domain === 'sun' ||
           domain === 'weather' ? (
             <Card
               className={classnames(
@@ -118,24 +118,14 @@ class Hass extends React.PureComponent {
               elevation={cardElevation}
               square={squareCards}>
               <CardContent className={classes.cardContent}>
-                {domain === 'weather' ? (
-                  <Weather
-                    theme={theme}
-                    haConfig={haConfig}
-                    card={card}
-                    state={state}
-                    attributes={attributes}
-                  />
-                ) : (
-                  <Typography
-                    className={classes.name}
-                    variant="h5"
-                    style={{
-                      fontSize: card.size && card.size.name && card.size.name
-                    }}>
-                    {name}
-                  </Typography>
-                )}
+                <Typography
+                  className={classes.name}
+                  variant="h5"
+                  style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                  {name}
+                </Typography>
                 {domain === 'climate' && (
                   <Climate
                     theme={theme}
@@ -147,6 +137,17 @@ class Hass extends React.PureComponent {
                     attributes={attributes}
                     handleChange={handleChange}
                   />
+                )}
+                {domain === 'device_tracker' && (
+                  <Typography
+                    className={classes.state}
+                    variant="h5"
+                    component="h2"
+                    style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }}>
+                    {properCase(state)}
+                  </Typography>
                 )}
                 {domain === 'media_player' && (
                   <Media
@@ -184,16 +185,14 @@ class Hass extends React.PureComponent {
                     {attributes.unit_of_measurement}
                   </Typography>
                 )}
-                {domain === 'device_tracker' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {properCase(state)}
-                  </Typography>
+                {domain === 'weather' && (
+                  <Weather
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    state={state}
+                    attributes={attributes}
+                  />
                 )}
                 {icon && (
                   <span
