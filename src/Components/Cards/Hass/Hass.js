@@ -121,6 +121,7 @@ class Hass extends React.PureComponent {
           domain === 'climate' ||
           domain === 'cover' ||
           domain === 'device_tracker' ||
+          domain === 'geo_location' ||
           domain === 'media_player' ||
           domain === 'sensor' ||
           domain === 'sun' ||
@@ -168,6 +169,7 @@ class Hass extends React.PureComponent {
                   />
                 )}
                 {domain === 'device_tracker' && textSection}
+                {domain === 'geo_location' && textSection}
                 {domain === 'media_player' && (
                   <Media
                     theme={theme}
