@@ -24,19 +24,12 @@ class RawEditor extends React.PureComponent {
 
   handleClose = cb => this.setState({ open: false }, cb);
 
-  handleCancel = () =>
-    this.handleClose(() => {
-      this.props.add
-        ? this.props.handleItemAddDone()
-        : this.props.handleItemEditDone();
-    });
+  handleCancel = () => this.handleClose(() => this.props.handleRawEditDone());
 
   handleSave = () =>
     this.handleClose(() => {
       let config = clone(this.state.config);
-      this.props.add
-        ? this.props.handleRawEditDone(config)
-        : this.props.handleRawEditDone(config);
+      this.props.handleRawEditDone(config);
     });
 
   handleConfigChange = config => this.setState({ config: config.jsObject });
