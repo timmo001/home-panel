@@ -160,20 +160,30 @@ class Hass extends React.PureComponent {
                     handleChange={handleChange}
                   />
                 )}
-                {domain === 'sensor' ||
-                  (domain === 'sun' && (
-                    <Typography
-                      className={classes.state}
-                      variant="h5"
-                      component="h2"
-                      style={{
-                        fontSize:
-                          card.size && card.size.state && card.size.state
-                      }}>
-                      {properCase(state)}
-                      {attributes.unit_of_measurement}
-                    </Typography>
-                  ))}
+                {domain === 'sensor' && (
+                  <Typography
+                    className={classes.state}
+                    variant="h5"
+                    component="h2"
+                    style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }}>
+                    {properCase(state)}
+                    {attributes.unit_of_measurement}
+                  </Typography>
+                )}
+                {domain === 'sun' && (
+                  <Typography
+                    className={classes.state}
+                    variant="h5"
+                    component="h2"
+                    style={{
+                      fontSize: card.size && card.size.state && card.size.state
+                    }}>
+                    {properCase(state)}
+                    {attributes.unit_of_measurement}
+                  </Typography>
+                )}
                 {domain === 'device_tracker' && (
                   <Typography
                     className={classes.state}
