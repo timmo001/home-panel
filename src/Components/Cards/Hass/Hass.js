@@ -280,9 +280,7 @@ class Hass extends React.PureComponent {
                       className={classes.state}
                       variant="h5"
                       component="h2">
-                      {state
-                        .replace('_', ' ')
-                        .replace(/^\w/, c => c.toUpperCase())}
+                      {properCase(state)}
                     </Typography>
                   ) : null}
                   {icon && (
