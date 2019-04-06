@@ -237,6 +237,10 @@ class Hass extends React.PureComponent {
                   handleChange(domain, true, { entity_id });
                 else if (domain === 'alarm_control_panel')
                   this.handleAlarmPanelShow(entity);
+                else if (domain === 'lock')
+                  handleChange(domain, state === 'locked' ? 'unlock' : 'lock', {
+                    entity_id
+                  });
               }}
               onTouchStart={() => this.handleButtonPress(domain, entity, card)}
               onMouseDown={() => this.handleButtonPress(domain, entity, card)}
@@ -245,7 +249,7 @@ class Hass extends React.PureComponent {
               <Card
                 className={classnames(
                   classes.card,
-                  state === 'on'
+                  state === 'on' || state === 'locked'
                     ? classes.cardOn
                     : state === 'unavailable'
                     ? classes.cardUnavailable
@@ -271,7 +275,7 @@ class Hass extends React.PureComponent {
                     }}>
                     {name}
                   </Typography>
-                  {domain === 'alarm_control_panel' && (
+                  {domain === 'alarm_control_panel' || domain === 'lock' ? (
                     <Typography
                       className={classes.state}
                       variant="h5"
@@ -280,7 +284,7 @@ class Hass extends React.PureComponent {
                         .replace('_', ' ')
                         .replace(/^\w/, c => c.toUpperCase())}
                     </Typography>
-                  )}
+                  ) : null}
                   {icon && (
                     <span
                       className={classnames('mdi', `mdi-${icon}`, classes.icon)}
