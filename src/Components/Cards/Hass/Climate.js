@@ -18,12 +18,14 @@ const styles = theme => ({
     marginLeft: 2
   },
   iconContainer: {
+    height: 28,
     width: 28,
     padding: 4
   },
   icon: {
-    opacity: 0.6,
-    color: theme.palette.text.icon
+    transform: 'translateY(-4px)',
+    color: theme.palette.text.icon,
+    opacity: 0.6
   },
   iconActive: {
     opacity: 1.0,
