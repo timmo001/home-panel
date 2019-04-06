@@ -225,6 +225,7 @@ class Hass extends React.PureComponent {
                 else if (
                   domain === 'input_boolean' ||
                   domain === 'light' ||
+                  domain === 'remote' ||
                   domain === 'switch'
                 )
                   handleChange(domain, state === 'on' ? false : true, {
