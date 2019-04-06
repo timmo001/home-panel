@@ -29,10 +29,11 @@
     "react-moment": "0.8.4",
     "react-router-dom": "5.0.0",
     "react-scripts": "2.1.8",
+    "react-select": "2.4.2",
     "react-sound": "1.2.0",
     "recompose": "0.30.0",
-    "superagent": "5.0.2",
     "socket.io-client": "2.2.0",
+    "superagent": "5.0.2",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {

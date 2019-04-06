@@ -64,6 +64,7 @@ class Item extends React.PureComponent {
     let {
       classes,
       objKey,
+      entities,
       defaultItem,
       item,
       defaultItemPath,
@@ -120,6 +121,7 @@ class Item extends React.PureComponent {
                       item={item[i] !== undefined ? item[i] : defaultItem[i]}
                       defaultItemPath={defaultItemPath}
                       itemPath={itemPath}
+                      entities={entities}
                       handleConfigChange={handleConfigChange}
                     />
                   );
@@ -152,6 +154,7 @@ class Item extends React.PureComponent {
                     item={i}
                     defaultItemPath={defaultItemPath}
                     itemPath={itemPath}
+                    entities={entities}
                     handleConfigChange={handleConfigChange}
                   />
                 );
@@ -179,6 +182,7 @@ class Item extends React.PureComponent {
           value={item}
           defaultItemPath={defaultItemPath}
           itemPath={itemPath}
+          entities={entities}
           handleConfigChange={handleConfigChange}
         />
       );
@@ -206,7 +210,8 @@ Item.propTypes = {
   defaultItemPath: PropTypes.array.isRequired,
   itemPath: PropTypes.array.isRequired,
   handleConfigChange: PropTypes.func.isRequired,
-  invisible: PropTypes.bool
+  invisible: PropTypes.bool,
+  entities: PropTypes.array
 };
 
 export default withStyles(styles)(Item);
