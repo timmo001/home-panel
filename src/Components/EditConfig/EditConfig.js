@@ -73,7 +73,7 @@ class EditConfig extends React.PureComponent {
   };
 
   render() {
-    const { classes, path, fullScreen } = this.props;
+    const { classes, path, entities, fullScreen } = this.props;
     const { open, config, confirm } = this.state;
     const item = clone(path).reduce(
       (o, k) => (o[k] = o[k] || {}),
@@ -98,6 +98,7 @@ class EditConfig extends React.PureComponent {
           {Object.keys(defaultItem).map((i, x) => (
             <Item
               key={x}
+              entities={entities}
               objKey={i}
               defaultItem={defaultItem[i]}
               item={item[i] !== undefined ? item[i] : defaultItem[i]}
@@ -133,7 +134,8 @@ EditConfig.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   path: PropTypes.array.isRequired,
   config: PropTypes.object.isRequired,
-  handleItemEditDone: PropTypes.func
+  handleItemEditDone: PropTypes.func,
+  entities: PropTypes.array
 };
 
 export default compose(
