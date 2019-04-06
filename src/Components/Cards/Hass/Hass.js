@@ -96,6 +96,19 @@ class Hass extends React.PureComponent {
       const name = card.name ? card.name : attributes.friendly_name;
       const icon = card.icon && card.icon;
 
+      const textSection = (
+        <Typography
+          className={classes.state}
+          variant="h5"
+          component="h2"
+          style={{
+            fontSize: card.size && card.size.state && card.size.state
+          }}>
+          {properCase(state)}
+          {attributes.unit_of_measurement}
+        </Typography>
+      );
+
       return (
         <Grid
           className={classes.cardContainer}
@@ -104,7 +117,8 @@ class Hass extends React.PureComponent {
             '--height': card.height ? card.height : 1
           }}
           item>
-          {domain === 'climate' ||
+          {domain === 'air_quality' ||
+          domain === 'climate' ||
           domain === 'cover' ||
           domain === 'device_tracker' ||
           domain === 'media_player' ||
@@ -128,6 +142,7 @@ class Hass extends React.PureComponent {
                   }}>
                   {name}
                 </Typography>
+                {domain === 'air_quality' && textSection}
                 {domain === 'climate' && (
                   <Climate
                     theme={theme}
@@ -152,17 +167,7 @@ class Hass extends React.PureComponent {
                     handleChange={handleChange}
                   />
                 )}
-                {domain === 'device_tracker' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {properCase(state)}
-                  </Typography>
-                )}
+                {domain === 'device_tracker' && textSection}
                 {domain === 'media_player' && (
                   <Media
                     theme={theme}
@@ -175,30 +180,8 @@ class Hass extends React.PureComponent {
                     handleChange={handleChange}
                   />
                 )}
-                {domain === 'sensor' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {properCase(state)}
-                    {attributes.unit_of_measurement}
-                  </Typography>
-                )}
-                {domain === 'sun' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {properCase(state)}
-                    {attributes.unit_of_measurement}
-                  </Typography>
-                )}
+                {domain === 'sensor' && textSection}
+                {domain === 'sun' && textSection}
                 {domain === 'weather' && (
                   <Weather
                     theme={theme}
@@ -231,7 +214,11 @@ class Hass extends React.PureComponent {
               className={classes.cardOuter}
               focusRipple
               disabled={
-                editing ? false : state === 'unavailable' || state === 'pending'
+                editing
+                  ? false
+                  : domain === 'binary_sensor' ||
+                    state === 'unavailable' ||
+                    state === 'pending'
               }
               onClick={() => {
                 if (editing) handleCardEdit(groupId, cardId, card);
