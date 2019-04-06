@@ -11,9 +11,10 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
-import Weather from './Weather';
+import Cover from './Cover';
 import Climate from './Climate';
 import Media from './Media';
+import Weather from './Weather';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -95,6 +96,19 @@ class Hass extends React.PureComponent {
       const name = card.name ? card.name : attributes.friendly_name;
       const icon = card.icon && card.icon;
 
+      const textSection = (
+        <Typography
+          className={classes.state}
+          variant="h5"
+          component="h2"
+          style={{
+            fontSize: card.size && card.size.state && card.size.state
+          }}>
+          {properCase(state)}
+          {attributes.unit_of_measurement}
+        </Typography>
+      );
+
       return (
         <Grid
           className={classes.cardContainer}
@@ -103,10 +117,14 @@ class Hass extends React.PureComponent {
             '--height': card.height ? card.height : 1
           }}
           item>
-          {domain === 'sensor' ||
+          {domain === 'air_quality' ||
           domain === 'climate' ||
+          domain === 'cover' ||
           domain === 'device_tracker' ||
+          domain === 'geo_location' ||
           domain === 'media_player' ||
+          domain === 'sensor' ||
+          domain === 'sun' ||
           domain === 'weather' ? (
             <Card
               className={classnames(
@@ -117,24 +135,15 @@ class Hass extends React.PureComponent {
               elevation={cardElevation}
               square={squareCards}>
               <CardContent className={classes.cardContent}>
-                {domain === 'weather' ? (
-                  <Weather
-                    theme={theme}
-                    haConfig={haConfig}
-                    card={card}
-                    state={state}
-                    attributes={attributes}
-                  />
-                ) : (
-                  <Typography
-                    className={classes.name}
-                    variant="h5"
-                    style={{
-                      fontSize: card.size && card.size.name && card.size.name
-                    }}>
-                    {name}
-                  </Typography>
-                )}
+                <Typography
+                  className={classes.name}
+                  variant="h5"
+                  style={{
+                    fontSize: card.size && card.size.name && card.size.name
+                  }}>
+                  {name}
+                </Typography>
+                {domain === 'air_quality' && textSection}
                 {domain === 'climate' && (
                   <Climate
                     theme={theme}
@@ -147,6 +156,20 @@ class Hass extends React.PureComponent {
                     handleChange={handleChange}
                   />
                 )}
+                {domain === 'cover' && (
+                  <Cover
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    name={name}
+                    entity_id={entity_id}
+                    state={state}
+                    attributes={attributes}
+                    handleChange={handleChange}
+                  />
+                )}
+                {domain === 'device_tracker' && textSection}
+                {domain === 'geo_location' && textSection}
                 {domain === 'media_player' && (
                   <Media
                     theme={theme}
@@ -159,28 +182,16 @@ class Hass extends React.PureComponent {
                     handleChange={handleChange}
                   />
                 )}
-                {domain === 'sensor' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {state}
-                    {attributes.unit_of_measurement}
-                  </Typography>
-                )}
-                {domain === 'device_tracker' && (
-                  <Typography
-                    className={classes.state}
-                    variant="h5"
-                    component="h2"
-                    style={{
-                      fontSize: card.size && card.size.state && card.size.state
-                    }}>
-                    {properCase(state)}
-                  </Typography>
+                {domain === 'sensor' && textSection}
+                {domain === 'sun' && textSection}
+                {domain === 'weather' && (
+                  <Weather
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    state={state}
+                    attributes={attributes}
+                  />
                 )}
                 {icon && (
                   <span
@@ -205,13 +216,18 @@ class Hass extends React.PureComponent {
               className={classes.cardOuter}
               focusRipple
               disabled={
-                editing ? false : state === 'unavailable' || state === 'pending'
+                editing
+                  ? false
+                  : domain === 'binary_sensor' ||
+                    state === 'unavailable' ||
+                    state === 'pending'
               }
               onClick={() => {
                 if (editing) handleCardEdit(groupId, cardId, card);
                 else if (
                   domain === 'input_boolean' ||
                   domain === 'light' ||
+                  domain === 'remote' ||
                   domain === 'switch'
                 )
                   handleChange(domain, state === 'on' ? false : true, {
@@ -221,6 +237,10 @@ class Hass extends React.PureComponent {
                   handleChange(domain, true, { entity_id });
                 else if (domain === 'alarm_control_panel')
                   this.handleAlarmPanelShow(entity);
+                else if (domain === 'lock')
+                  handleChange(domain, state === 'locked' ? 'unlock' : 'lock', {
+                    entity_id
+                  });
               }}
               onTouchStart={() => this.handleButtonPress(domain, entity, card)}
               onMouseDown={() => this.handleButtonPress(domain, entity, card)}
@@ -229,7 +249,7 @@ class Hass extends React.PureComponent {
               <Card
                 className={classnames(
                   classes.card,
-                  state === 'on'
+                  state === 'on' || state === 'locked'
                     ? classes.cardOn
                     : state === 'unavailable'
                     ? classes.cardUnavailable
@@ -255,16 +275,14 @@ class Hass extends React.PureComponent {
                     }}>
                     {name}
                   </Typography>
-                  {domain === 'alarm_control_panel' && (
+                  {domain === 'alarm_control_panel' || domain === 'lock' ? (
                     <Typography
                       className={classes.state}
                       variant="h5"
                       component="h2">
-                      {state
-                        .replace('_', ' ')
-                        .replace(/^\w/, c => c.toUpperCase())}
+                      {properCase(state)}
                     </Typography>
-                  )}
+                  ) : null}
                   {icon && (
                     <span
                       className={classnames('mdi', `mdi-${icon}`, classes.icon)}

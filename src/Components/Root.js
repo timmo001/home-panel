@@ -317,6 +317,8 @@ class Root extends React.PureComponent {
   };
 
   handleChange = (domain, state, data = undefined) => {
+    process.env.NODE_ENV === 'development' &&
+      console.log('handleChange:', domain, state, data);
     if (typeof state === 'string') {
       callService(connection, domain, state, data).then(
         () => {
