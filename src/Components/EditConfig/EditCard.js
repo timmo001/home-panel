@@ -177,6 +177,7 @@ class EditCard extends React.PureComponent {
                   item={card}
                   defaultItemPath={['items', 0, 'cards']}
                   itemPath={['items', groupId, 'cards']}
+                  entities={entities}
                   handleConfigChange={this.handleConfigChange}
                 />
               </Grid>
