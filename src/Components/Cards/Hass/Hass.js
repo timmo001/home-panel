@@ -11,9 +11,10 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
-import Weather from './Weather';
+import Cover from './Cover';
 import Climate from './Climate';
 import Media from './Media';
+import Weather from './Weather';
 import grid from '../../Common/Style/grid';
 import card from '../../Common/Style/card';
 
@@ -104,6 +105,7 @@ class Hass extends React.PureComponent {
           }}
           item>
           {domain === 'climate' ||
+          domain === 'cover' ||
           domain === 'device_tracker' ||
           domain === 'media_player' ||
           domain === 'sensor' ||
@@ -128,6 +130,18 @@ class Hass extends React.PureComponent {
                 </Typography>
                 {domain === 'climate' && (
                   <Climate
+                    theme={theme}
+                    haConfig={haConfig}
+                    card={card}
+                    name={name}
+                    entity_id={entity_id}
+                    state={state}
+                    attributes={attributes}
+                    handleChange={handleChange}
+                  />
+                )}
+                {domain === 'cover' && (
+                  <Cover
                     theme={theme}
                     haConfig={haConfig}
                     card={card}
