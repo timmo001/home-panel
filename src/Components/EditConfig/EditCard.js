@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import CardBase from '../Cards/CardBase';
 import dc from './defaultConfig.json';
 import ConfirmDialog from '../Common/ConfirmDialog';
@@ -125,7 +128,8 @@ class EditCard extends React.PureComponent {
       haConfig,
       entities,
       groupId,
-      cardId
+      cardId,
+      movePosition
     } = this.props;
     const { open, defaultCard, card, confirm } = this.state;
     if (!open) return null;
@@ -191,6 +195,24 @@ class EditCard extends React.PureComponent {
             </Button>
           )}
           <div className={classes.fill} />
+          {!add && (
+            <IconButton
+              onClick={() =>
+                movePosition(['items', groupId, 'cards', cardId], cardId - 1)
+              }
+              color="primary">
+              <ArrowUpwardIcon fontSize="small" />
+            </IconButton>
+          )}
+          {!add && (
+            <IconButton
+              onClick={() =>
+                movePosition(['items', groupId, 'cards', cardId], cardId + 1)
+              }
+              color="primary">
+              <ArrowDownwardsIcon fontSize="small" />
+            </IconButton>
+          )}
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
@@ -222,7 +244,8 @@ EditCard.propTypes = {
   card: PropTypes.object,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,
-  handleCardEditDone: PropTypes.func
+  handleCardEditDone: PropTypes.func,
+  movePosition: PropTypes.func
 };
 
 export default compose(

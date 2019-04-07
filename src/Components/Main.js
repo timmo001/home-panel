@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import arrayMove from 'array-move';
 import Header from './Header';
 import Page from './Cards/Page';
 import PageNavigation from './PageNavigation';
@@ -213,6 +214,15 @@ class Main extends React.PureComponent {
     this.setState({ editingRaw: undefined });
   };
 
+  handleCardMovePosition = (path, newPos) => {
+    let config = clone(this.props.config);
+    const lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+    arrayMove.mutate(secondLastItem, lastItem, newPos);
+    this.props.handleConfigChange(config);
+    this.setState({ editingGroup: undefined, editingCard: undefined });
+  };
+
   render() {
     const {
       classes,
@@ -304,8 +314,8 @@ class Main extends React.PureComponent {
         <Radio show={radioShown} handleRadioHide={this.handleRadioHide} />
         {addingCard && (
           <EditCard
-            config={config}
             add
+            config={config}
             card={addingCard.card}
             mainTheme={theme}
             haUrl={haUrl}
@@ -327,6 +337,7 @@ class Main extends React.PureComponent {
             groupId={editingCard.groupId}
             cardId={editingCard.cardId}
             handleCardEditDone={this.handleCardEditDone}
+            movePosition={this.handleCardMovePosition}
           />
         )}
         {addingPage && (
