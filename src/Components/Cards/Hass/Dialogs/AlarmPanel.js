@@ -124,7 +124,7 @@ class AlarmPanel extends React.PureComponent {
               <Button onClick={() => this.handleClear()}>Clear</Button>
             </Grid>
           </Grid>
-          {state.startsWith('armed') ? (
+          {state.startsWith('armed') || state.startsWith('pending') ? (
             <Grid container justify="center">
               <Grid item>
                 <Button
