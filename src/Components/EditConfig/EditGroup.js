@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ConfirmDialog from '../Common/ConfirmDialog';
 import defaultConfig from './defaultConfig.json';
 import Item from './Item';
@@ -65,7 +68,7 @@ class EditGroup extends React.PureComponent {
   };
 
   render() {
-    const { classes, fullScreen, add, id } = this.props;
+    const { classes, fullScreen, add, id, movePosition } = this.props;
     const { open, group, confirm } = this.state;
     let defaultGroup = defaultConfig.items[0];
     delete defaultGroup.cards;
@@ -98,6 +101,20 @@ class EditGroup extends React.PureComponent {
             </Button>
           )}
           <div className={classes.fill} />
+          {!add && (
+            <IconButton
+              onClick={() => movePosition(['items', id], id - 1)}
+              color="primary">
+              <ArrowUpwardIcon fontSize="small" />
+            </IconButton>
+          )}
+          {!add && (
+            <IconButton
+              onClick={() => movePosition(['items', id], id + 1)}
+              color="primary">
+              <ArrowDownwardsIcon fontSize="small" />
+            </IconButton>
+          )}
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
@@ -122,10 +139,10 @@ EditGroup.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
   group: PropTypes.object.isRequired,
-  pageId: PropTypes.number,
   add: PropTypes.bool,
   handleGroupAddDone: PropTypes.func,
-  handleGroupEditDone: PropTypes.func
+  handleGroupEditDone: PropTypes.func,
+  movePosition: PropTypes.func
 };
 
 export default compose(

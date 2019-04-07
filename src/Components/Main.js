@@ -342,8 +342,8 @@ class Main extends React.PureComponent {
         )}
         {addingPage && (
           <EditPage
-            config={config}
             add
+            config={config}
             id={pages.length}
             page={clone(defaultConfig).pages[0]}
             handlePageAddDone={this.handlePageAddDone}
@@ -372,6 +372,7 @@ class Main extends React.PureComponent {
             id={editingGroup.groupId}
             group={editingGroup.group}
             handleGroupEditDone={this.handleGroupEditDone}
+            movePosition={this.handleCardMovePosition}
           />
         )}
         {editingItem && (
