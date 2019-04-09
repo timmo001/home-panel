@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "eslint": "5.16.0",
-    "mocha": "6.1.0",
+    "mocha": "6.1.2",
     "nodemon": "1.18.10",
     "request": "2.88.0",
     "request-promise": "4.2.4"
