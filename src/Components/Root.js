@@ -180,8 +180,6 @@ class Root extends React.PureComponent {
     });
 
     this.setTheme();
-
-    configService.on('patched', () => this.getConfig());
   };
 
   loggedIn = () => {
