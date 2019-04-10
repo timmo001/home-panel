@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CardBase from '../Cards/CardBase';
 import dc from './defaultConfig.json';
 import ConfirmDialog from '../Common/ConfirmDialog';
@@ -64,12 +67,12 @@ class EditCard extends React.PureComponent {
         : this.props.handleCardEditDone();
     });
 
-  handleSave = () =>
+  handleSave = (cb = undefined) =>
     this.handleClose(() => {
       const path = ['items', this.props.groupId, 'cards', this.props.cardId];
       this.props.add
-        ? this.props.handleCardAddDone(path, this.state.card)
-        : this.props.handleCardEditDone(path, this.state.card);
+        ? this.props.handleCardAddDone(path, this.state.card, cb)
+        : this.props.handleCardEditDone(path, this.state.card, cb);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -125,7 +128,9 @@ class EditCard extends React.PureComponent {
       haConfig,
       entities,
       groupId,
-      cardId
+      cardId,
+      max,
+      movePosition
     } = this.props;
     const { open, defaultCard, card, confirm } = this.state;
     if (!open) return null;
@@ -191,6 +196,30 @@ class EditCard extends React.PureComponent {
             </Button>
           )}
           <div className={classes.fill} />
+          {!add && (
+            <IconButton
+              color="primary"
+              disabled={cardId < 1}
+              onClick={() =>
+                this.handleSave(() =>
+                  movePosition(['items', groupId, 'cards', cardId], cardId - 1)
+                )
+              }>
+              <ArrowUpwardIcon fontSize="small" />
+            </IconButton>
+          )}
+          {!add && (
+            <IconButton
+              color="primary"
+              disabled={cardId === max}
+              onClick={() =>
+                this.handleSave(() =>
+                  movePosition(['items', groupId, 'cards', cardId], cardId + 1)
+                )
+              }>
+              <ArrowDownwardsIcon fontSize="small" />
+            </IconButton>
+          )}
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
@@ -215,14 +244,16 @@ EditCard.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   mainTheme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
-  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   groupId: PropTypes.number.isRequired,
   cardId: PropTypes.number.isRequired,
+  haConfig: PropTypes.object,
+  max: PropTypes.number,
   card: PropTypes.object,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,
-  handleCardEditDone: PropTypes.func
+  handleCardEditDone: PropTypes.func,
+  movePosition: PropTypes.func
 };
 
 export default compose(

@@ -2,15 +2,18 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { compose } from 'recompose';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
-import withStyles from '@material-ui/core/styles/withStyles';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import IconButton from '@material-ui/core/IconButton';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import withStyles from '@material-ui/core/styles/withStyles';
+import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import defaultConfig from './defaultConfig.json';
 import ConfirmDialog from '../Common/ConfirmDialog';
 import Item from './Item';
@@ -41,12 +44,12 @@ class EditPage extends React.PureComponent {
         : this.props.handlePageEditDone();
     });
 
-  handleSave = () =>
+  handleSave = (cb = undefined) =>
     this.handleClose(() => {
       const path = ['pages', this.props.id];
       this.props.add
-        ? this.props.handlePageAddDone(path, this.state.page)
-        : this.props.handlePageEditDone(path, this.state.page);
+        ? this.props.handlePageAddDone(path, this.state.page, cb)
+        : this.props.handlePageEditDone(path, this.state.page, cb);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -70,7 +73,7 @@ class EditPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, fullScreen, add, id } = this.props;
+    const { classes, fullScreen, add, id, max, movePosition } = this.props;
     const { open, page, confirm } = this.state;
 
     return (
@@ -117,6 +120,26 @@ class EditPage extends React.PureComponent {
             </Button>
           )}
           <div className={classes.fill} />
+          {!add && (
+            <IconButton
+              color="primary"
+              disabled={id < 1}
+              onClick={() => {
+                this.handleSave(() => movePosition(['pages', id], id - 1));
+              }}>
+              <ArrowUpwardIcon fontSize="small" />
+            </IconButton>
+          )}
+          {!add && (
+            <IconButton
+              color="primary"
+              disabled={id === max}
+              onClick={() => {
+                this.handleSave(() => movePosition(['pages', id], id + 1));
+              }}>
+              <ArrowDownwardsIcon fontSize="small" />
+            </IconButton>
+          )}
           <Button onClick={this.handleCancel} color="primary">
             Cancel
           </Button>
@@ -141,9 +164,11 @@ EditPage.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
   page: PropTypes.object.isRequired,
+  max: PropTypes.number,
   add: PropTypes.bool,
   handlePageAddDone: PropTypes.func,
-  handlePageEditDone: PropTypes.func
+  handlePageEditDone: PropTypes.func,
+  movePosition: PropTypes.func
 };
 
 export default compose(

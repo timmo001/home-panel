@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
+import arrayMove from 'array-move';
 import Header from './Header';
 import Page from './Cards/Page';
 import PageNavigation from './PageNavigation';
@@ -105,7 +106,7 @@ class Main extends React.PureComponent {
       ? this.setState({ editing: false })
       : this.setState({ editing: true });
 
-  handleConfigChange = (path, value) => {
+  handleConfigChange = (path, value, cb = undefined) => {
     let config = clone(this.props.config);
     if (path.length > 0) {
       // Set the new value
@@ -119,7 +120,7 @@ class Main extends React.PureComponent {
         secondLastItem[lastItem] = newValue;
       } else secondLastItem[lastItem] = value;
     } else config = value;
-    this.props.handleConfigChange(config);
+    this.props.handleConfigChange(config, cb);
   };
 
   handleCardAdd = (groupId, cardId) => {
@@ -132,17 +133,26 @@ class Main extends React.PureComponent {
     });
   };
 
-  handleCardEdit = (groupId, cardId, card) => {
-    this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
-  };
+  handleCardEdit = (groupId, cardId, card) =>
+    this.setState({
+      editingCard: {
+        groupId,
+        cardId,
+        max: this.props.config.items[groupId].cards.length - 1,
+        card: clone(card)
+      }
+    });
 
-  handlePageAdd = () => {
-    this.setState({ addingPage: true });
-  };
+  handlePageAdd = () => this.setState({ addingPage: true });
 
-  handlePageEdit = (id, page) => {
-    this.setState({ editingPage: { id, page: clone(page) } });
-  };
+  handlePageEdit = (id, page) =>
+    this.setState({
+      editingPage: {
+        id,
+        max: this.props.config.pages.length - 1,
+        page: clone(page)
+      }
+    });
 
   handleGroupAdd = (pageId, groupId) => {
     let group = clone(defaultConfig).items[0];
@@ -151,7 +161,16 @@ class Main extends React.PureComponent {
   };
 
   handleGroupEdit = (groupId, group) => {
-    this.setState({ editingGroup: { groupId, group: clone(group) } });
+    let groupKey = 0,
+      max = 0;
+    this.props.config.items.map(i => {
+      if (i.page === this.state.currentPage + 1) max += 1;
+      if (i === group) groupKey = clone(max);
+      return i;
+    });
+    this.setState({
+      editingGroup: { groupId, groupKey, max, group: clone(group) }
+    });
   };
 
   handleEditConfig = path => {
@@ -167,8 +186,8 @@ class Main extends React.PureComponent {
     this.setState({ addingCard: undefined });
   };
 
-  handleCardEditDone = (path, card) => {
-    path && this.handleConfigChange(path, clone(card));
+  handleCardEditDone = (path, card, cb) => {
+    path && this.handleConfigChange(path, clone(card), cb);
     this.setState({ editingCard: undefined });
   };
 
@@ -177,7 +196,7 @@ class Main extends React.PureComponent {
     this.setState({ addingPage: undefined });
   };
 
-  handlePageEditDone = (path, page) => {
+  handlePageEditDone = (path, page, cb) => {
     let config = clone(this.props.config);
     if (path)
       if (!page) {
@@ -188,8 +207,8 @@ class Main extends React.PureComponent {
           else if (i.page > pageId) config.items[x].page = i.page - 1;
           return config.items[x];
         });
-        this.props.handleConfigChange(config);
-      } else this.handleConfigChange(path, clone(page));
+        this.props.handleConfigChange(config, cb);
+      } else this.handleConfigChange(path, clone(page), cb);
     this.setState({ editingPage: undefined });
   };
 
@@ -198,8 +217,8 @@ class Main extends React.PureComponent {
     this.setState({ addingGroup: undefined });
   };
 
-  handleGroupEditDone = (path, group) => {
-    path && this.handleConfigChange(path, clone(group));
+  handleGroupEditDone = (path, group, cb) => {
+    path && this.handleConfigChange(path, clone(group), cb);
     this.setState({ editingGroup: undefined });
   };
 
@@ -211,6 +230,37 @@ class Main extends React.PureComponent {
   handleRawEditDone = config => {
     config && this.handleConfigChange([], clone(config));
     this.setState({ editingRaw: undefined });
+  };
+
+  handleMovePosition = (path, newPos) => {
+    let config = clone(this.props.config);
+    const lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+    arrayMove.mutate(secondLastItem, lastItem, newPos);
+    this.props.handleConfigChange(config);
+    this.setState({
+      editingGroup: undefined,
+      editingCard: undefined
+    });
+  };
+
+  handlePageMovePosition = (path, newPos) => {
+    let config = clone(this.props.config);
+    let lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+    arrayMove.mutate(secondLastItem, lastItem, newPos);
+
+    lastItem += 1;
+    newPos += 1;
+    // Move groups in previous id to new id and vice-versa
+    config.items = config.items.map(i => {
+      if (i.page === lastItem) i.page = newPos;
+      else if (i.page === newPos) i.page = lastItem;
+      return i;
+    });
+
+    this.props.handleConfigChange(config);
+    this.setState({ editingPage: undefined });
   };
 
   render() {
@@ -304,8 +354,8 @@ class Main extends React.PureComponent {
         <Radio show={radioShown} handleRadioHide={this.handleRadioHide} />
         {addingCard && (
           <EditCard
-            config={config}
             add
+            config={config}
             card={addingCard.card}
             mainTheme={theme}
             haUrl={haUrl}
@@ -326,13 +376,15 @@ class Main extends React.PureComponent {
             entities={entities}
             groupId={editingCard.groupId}
             cardId={editingCard.cardId}
+            max={editingCard.max}
             handleCardEditDone={this.handleCardEditDone}
+            movePosition={this.handleMovePosition}
           />
         )}
         {addingPage && (
           <EditPage
-            config={config}
             add
+            config={config}
             id={pages.length}
             page={clone(defaultConfig).pages[0]}
             handlePageAddDone={this.handlePageAddDone}
@@ -342,8 +394,10 @@ class Main extends React.PureComponent {
           <EditPage
             config={config}
             id={editingPage.id}
+            max={editingPage.max}
             page={editingPage.page}
             handlePageEditDone={this.handlePageEditDone}
+            movePosition={this.handlePageMovePosition}
           />
         )}
         {addingGroup && (
@@ -359,8 +413,11 @@ class Main extends React.PureComponent {
           <EditGroup
             config={config}
             id={editingGroup.groupId}
+            groupKey={editingGroup.groupKey}
+            max={editingGroup.max}
             group={editingGroup.group}
             handleGroupEditDone={this.handleGroupEditDone}
+            movePosition={this.handleMovePosition}
           />
         )}
         {editingItem && (
