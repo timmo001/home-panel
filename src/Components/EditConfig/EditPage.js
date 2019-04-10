@@ -44,12 +44,12 @@ class EditPage extends React.PureComponent {
         : this.props.handlePageEditDone();
     });
 
-  handleSave = () =>
+  handleSave = (cb = undefined) =>
     this.handleClose(() => {
       const path = ['pages', this.props.id];
       this.props.add
-        ? this.props.handlePageAddDone(path, this.state.page)
-        : this.props.handlePageEditDone(path, this.state.page);
+        ? this.props.handlePageAddDone(path, this.state.page, cb)
+        : this.props.handlePageEditDone(path, this.state.page, cb);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -124,7 +124,9 @@ class EditPage extends React.PureComponent {
             <IconButton
               color="primary"
               disabled={id < 1}
-              onClick={() => movePosition(['pages', id], id - 1)}>
+              onClick={() => {
+                this.handleSave(() => movePosition(['pages', id], id - 1));
+              }}>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
@@ -132,7 +134,9 @@ class EditPage extends React.PureComponent {
             <IconButton
               color="primary"
               disabled={id === max}
-              onClick={() => movePosition(['pages', id], id + 1)}>
+              onClick={() => {
+                this.handleSave(() => movePosition(['pages', id], id + 1));
+              }}>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
           )}

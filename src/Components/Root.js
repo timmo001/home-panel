@@ -415,8 +415,7 @@ class Root extends React.PureComponent {
     });
   };
 
-  handleConfigChange = config => {
-    // config = cleanupObject(config);
+  handleConfigChange = (config, cb = undefined) => {
     socket.emit(
       'patch',
       'config',
@@ -429,6 +428,7 @@ class Root extends React.PureComponent {
         else
           process.env.NODE_ENV === 'development' &&
             console.log('Updated config:', this.state.configId, note);
+        this.setState({ config }, () => cb instanceof Function && cb());
       }
     );
   };

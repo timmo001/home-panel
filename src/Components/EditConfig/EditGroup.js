@@ -37,14 +37,14 @@ class EditGroup extends React.PureComponent {
         : this.props.handleGroupEditDone();
     });
 
-  handleSave = () =>
+  handleSave = (cb = undefined) =>
     this.handleClose(() => {
       const path = ['items', this.props.id];
       let group = clone(this.state.group);
       if (this.props.add) group.cards = [];
       this.props.add
         ? this.props.handleGroupAddDone(path, group)
-        : this.props.handleGroupEditDone(path, group);
+        : this.props.handleGroupEditDone(path, group, cb);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -114,16 +114,18 @@ class EditGroup extends React.PureComponent {
             <IconButton
               color="primary"
               disabled={groupKey <= 1}
-              onClick={() => {
-                const pageId = group.page;
-                let newId = id - 1;
-                for (let i = newId; i >= 0; i--)
-                  if (config.items[i].page === pageId) {
-                    newId = i;
-                    break;
-                  }
-                movePosition(['items', id], newId);
-              }}>
+              onClick={() =>
+                this.handleSave(() => {
+                  const pageId = group.page;
+                  let newId = id - 1;
+                  for (let i = newId; i >= 0; i--)
+                    if (config.items[i].page === pageId) {
+                      newId = i;
+                      break;
+                    }
+                  movePosition(['items', id], newId);
+                })
+              }>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
@@ -131,16 +133,18 @@ class EditGroup extends React.PureComponent {
             <IconButton
               color="primary"
               disabled={groupKey === max}
-              onClick={() => {
-                const pageId = group.page;
-                let newId = id + 1;
-                for (let i = newId; i < config.items.length; i++)
-                  if (config.items[i].page === pageId) {
-                    newId = i;
-                    break;
-                  }
-                movePosition(['items', id], newId);
-              }}>
+              onClick={() =>
+                this.handleSave(() => {
+                  const pageId = group.page;
+                  let newId = id + 1;
+                  for (let i = newId; i < config.items.length; i++)
+                    if (config.items[i].page === pageId) {
+                      newId = i;
+                      break;
+                    }
+                  movePosition(['items', id], newId);
+                })
+              }>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
           )}

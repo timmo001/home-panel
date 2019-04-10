@@ -106,7 +106,7 @@ class Main extends React.PureComponent {
       ? this.setState({ editing: false })
       : this.setState({ editing: true });
 
-  handleConfigChange = (path, value) => {
+  handleConfigChange = (path, value, cb = undefined) => {
     let config = clone(this.props.config);
     if (path.length > 0) {
       // Set the new value
@@ -120,7 +120,7 @@ class Main extends React.PureComponent {
         secondLastItem[lastItem] = newValue;
       } else secondLastItem[lastItem] = value;
     } else config = value;
-    this.props.handleConfigChange(config);
+    this.props.handleConfigChange(config, cb);
   };
 
   handleCardAdd = (groupId, cardId) => {
@@ -186,8 +186,8 @@ class Main extends React.PureComponent {
     this.setState({ addingCard: undefined });
   };
 
-  handleCardEditDone = (path, card) => {
-    path && this.handleConfigChange(path, clone(card));
+  handleCardEditDone = (path, card, cb) => {
+    path && this.handleConfigChange(path, clone(card), cb);
     this.setState({ editingCard: undefined });
   };
 
@@ -196,7 +196,7 @@ class Main extends React.PureComponent {
     this.setState({ addingPage: undefined });
   };
 
-  handlePageEditDone = (path, page) => {
+  handlePageEditDone = (path, page, cb) => {
     let config = clone(this.props.config);
     if (path)
       if (!page) {
@@ -207,8 +207,8 @@ class Main extends React.PureComponent {
           else if (i.page > pageId) config.items[x].page = i.page - 1;
           return config.items[x];
         });
-        this.props.handleConfigChange(config);
-      } else this.handleConfigChange(path, clone(page));
+        this.props.handleConfigChange(config, cb);
+      } else this.handleConfigChange(path, clone(page), cb);
     this.setState({ editingPage: undefined });
   };
 
@@ -217,8 +217,8 @@ class Main extends React.PureComponent {
     this.setState({ addingGroup: undefined });
   };
 
-  handleGroupEditDone = (path, group) => {
-    path && this.handleConfigChange(path, clone(group));
+  handleGroupEditDone = (path, group, cb) => {
+    path && this.handleConfigChange(path, clone(group), cb);
     this.setState({ editingGroup: undefined });
   };
 

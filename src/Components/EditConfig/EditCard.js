@@ -67,12 +67,12 @@ class EditCard extends React.PureComponent {
         : this.props.handleCardEditDone();
     });
 
-  handleSave = () =>
+  handleSave = (cb = undefined) =>
     this.handleClose(() => {
       const path = ['items', this.props.groupId, 'cards', this.props.cardId];
       this.props.add
-        ? this.props.handleCardAddDone(path, this.state.card)
-        : this.props.handleCardEditDone(path, this.state.card);
+        ? this.props.handleCardAddDone(path, this.state.card, cb)
+        : this.props.handleCardEditDone(path, this.state.card, cb);
     });
 
   handleDeleteConfirm = () => this.setState({ confirm: true });
@@ -201,7 +201,9 @@ class EditCard extends React.PureComponent {
               color="primary"
               disabled={cardId < 1}
               onClick={() =>
-                movePosition(['items', groupId, 'cards', cardId], cardId - 1)
+                this.handleSave(() =>
+                  movePosition(['items', groupId, 'cards', cardId], cardId - 1)
+                )
               }>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
@@ -211,7 +213,9 @@ class EditCard extends React.PureComponent {
               color="primary"
               disabled={cardId === max}
               onClick={() =>
-                movePosition(['items', groupId, 'cards', cardId], cardId + 1)
+                this.handleSave(() =>
+                  movePosition(['items', groupId, 'cards', cardId], cardId + 1)
+                )
               }>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
