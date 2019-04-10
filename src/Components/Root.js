@@ -181,7 +181,6 @@ class Root extends React.PureComponent {
 
     this.setTheme();
 
-    configService.on('updated', () => this.getConfig());
     configService.on('patched', () => this.getConfig());
   };
 
