@@ -73,7 +73,7 @@ class EditPage extends React.PureComponent {
   };
 
   render() {
-    const { classes, fullScreen, add, id, movePosition } = this.props;
+    const { classes, fullScreen, add, id, max, movePosition } = this.props;
     const { open, page, confirm } = this.state;
 
     return (
@@ -122,15 +122,17 @@ class EditPage extends React.PureComponent {
           <div className={classes.fill} />
           {!add && (
             <IconButton
-              onClick={() => movePosition(['pages', id], id - 1)}
-              color="primary">
+              color="primary"
+              disabled={id < 1}
+              onClick={() => movePosition(['pages', id], id - 1)}>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
           {!add && (
             <IconButton
-              onClick={() => movePosition(['pages', id], id + 1)}
-              color="primary">
+              color="primary"
+              disabled={id === max}
+              onClick={() => movePosition(['pages', id], id + 1)}>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
           )}
@@ -158,6 +160,7 @@ EditPage.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
   page: PropTypes.object.isRequired,
+  max: PropTypes.number,
   add: PropTypes.bool,
   handlePageAddDone: PropTypes.func,
   handlePageEditDone: PropTypes.func,

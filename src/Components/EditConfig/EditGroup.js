@@ -68,7 +68,16 @@ class EditGroup extends React.PureComponent {
   };
 
   render() {
-    const { classes, fullScreen, add, config, id, movePosition } = this.props;
+    const {
+      classes,
+      fullScreen,
+      add,
+      config,
+      id,
+      groupKey,
+      max,
+      movePosition
+    } = this.props;
     const { open, group, confirm } = this.state;
     let defaultGroup = defaultConfig.items[0];
     delete defaultGroup.cards;
@@ -103,6 +112,8 @@ class EditGroup extends React.PureComponent {
           <div className={classes.fill} />
           {!add && (
             <IconButton
+              color="primary"
+              disabled={groupKey <= 1}
               onClick={() => {
                 const pageId = group.page;
                 let newId = id - 1;
@@ -112,13 +123,14 @@ class EditGroup extends React.PureComponent {
                     break;
                   }
                 movePosition(['items', id], newId);
-              }}
-              color="primary">
+              }}>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
           {!add && (
             <IconButton
+              color="primary"
+              disabled={groupKey === max}
               onClick={() => {
                 const pageId = group.page;
                 let newId = id + 1;
@@ -128,8 +140,7 @@ class EditGroup extends React.PureComponent {
                     break;
                   }
                 movePosition(['items', id], newId);
-              }}
-              color="primary">
+              }}>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
           )}
@@ -158,6 +169,8 @@ EditGroup.propTypes = {
   id: PropTypes.number.isRequired,
   config: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
+  groupKey: PropTypes.number,
+  max: PropTypes.number,
   add: PropTypes.bool,
   handleGroupAddDone: PropTypes.func,
   handleGroupEditDone: PropTypes.func,

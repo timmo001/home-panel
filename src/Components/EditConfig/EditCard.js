@@ -129,6 +129,7 @@ class EditCard extends React.PureComponent {
       entities,
       groupId,
       cardId,
+      max,
       movePosition
     } = this.props;
     const { open, defaultCard, card, confirm } = this.state;
@@ -197,19 +198,21 @@ class EditCard extends React.PureComponent {
           <div className={classes.fill} />
           {!add && (
             <IconButton
+              color="primary"
+              disabled={cardId < 1}
               onClick={() =>
                 movePosition(['items', groupId, 'cards', cardId], cardId - 1)
-              }
-              color="primary">
+              }>
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
           {!add && (
             <IconButton
+              color="primary"
+              disabled={cardId === max}
               onClick={() =>
                 movePosition(['items', groupId, 'cards', cardId], cardId + 1)
-              }
-              color="primary">
+              }>
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
           )}
@@ -237,10 +240,11 @@ EditCard.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   mainTheme: PropTypes.object.isRequired,
   haUrl: PropTypes.string.isRequired,
-  haConfig: PropTypes.object,
   entities: PropTypes.array.isRequired,
   groupId: PropTypes.number.isRequired,
   cardId: PropTypes.number.isRequired,
+  haConfig: PropTypes.object,
+  max: PropTypes.number,
   card: PropTypes.object,
   add: PropTypes.bool,
   handleCardAddDone: PropTypes.func,

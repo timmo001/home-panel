@@ -133,17 +133,26 @@ class Main extends React.PureComponent {
     });
   };
 
-  handleCardEdit = (groupId, cardId, card) => {
-    this.setState({ editingCard: { groupId, cardId, card: clone(card) } });
-  };
+  handleCardEdit = (groupId, cardId, card) =>
+    this.setState({
+      editingCard: {
+        groupId,
+        cardId,
+        max: this.props.config.items[groupId].cards.length - 1,
+        card: clone(card)
+      }
+    });
 
-  handlePageAdd = () => {
-    this.setState({ addingPage: true });
-  };
+  handlePageAdd = () => this.setState({ addingPage: true });
 
-  handlePageEdit = (id, page) => {
-    this.setState({ editingPage: { id, page: clone(page) } });
-  };
+  handlePageEdit = (id, page) =>
+    this.setState({
+      editingPage: {
+        id,
+        max: this.props.config.pages.length - 1,
+        page: clone(page)
+      }
+    });
 
   handleGroupAdd = (pageId, groupId) => {
     let group = clone(defaultConfig).items[0];
@@ -152,7 +161,16 @@ class Main extends React.PureComponent {
   };
 
   handleGroupEdit = (groupId, group) => {
-    this.setState({ editingGroup: { groupId, group: clone(group) } });
+    let groupKey = 0,
+      max = 0;
+    this.props.config.items.map(i => {
+      if (i.page === this.state.currentPage + 1) max += 1;
+      if (i === group) groupKey = clone(max);
+      return i;
+    });
+    this.setState({
+      editingGroup: { groupId, groupKey, max, group: clone(group) }
+    });
   };
 
   handleEditConfig = path => {
@@ -358,6 +376,7 @@ class Main extends React.PureComponent {
             entities={entities}
             groupId={editingCard.groupId}
             cardId={editingCard.cardId}
+            max={editingCard.max}
             handleCardEditDone={this.handleCardEditDone}
             movePosition={this.handleMovePosition}
           />
@@ -375,6 +394,7 @@ class Main extends React.PureComponent {
           <EditPage
             config={config}
             id={editingPage.id}
+            max={editingPage.max}
             page={editingPage.page}
             handlePageEditDone={this.handlePageEditDone}
             movePosition={this.handlePageMovePosition}
@@ -393,6 +413,8 @@ class Main extends React.PureComponent {
           <EditGroup
             config={config}
             id={editingGroup.groupId}
+            groupKey={editingGroup.groupKey}
+            max={editingGroup.max}
             group={editingGroup.group}
             handleGroupEditDone={this.handleGroupEditDone}
             movePosition={this.handleMovePosition}
