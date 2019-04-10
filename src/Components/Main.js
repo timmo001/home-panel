@@ -214,13 +214,35 @@ class Main extends React.PureComponent {
     this.setState({ editingRaw: undefined });
   };
 
-  handleCardMovePosition = (path, newPos) => {
+  handleMovePosition = (path, newPos) => {
     let config = clone(this.props.config);
     const lastItem = path.pop();
     let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
     arrayMove.mutate(secondLastItem, lastItem, newPos);
     this.props.handleConfigChange(config);
-    this.setState({ editingGroup: undefined, editingCard: undefined });
+    this.setState({
+      editingGroup: undefined,
+      editingCard: undefined
+    });
+  };
+
+  handlePageMovePosition = (path, newPos) => {
+    let config = clone(this.props.config);
+    let lastItem = path.pop();
+    let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+    arrayMove.mutate(secondLastItem, lastItem, newPos);
+
+    lastItem += 1;
+    newPos += 1;
+    // Move groups in previous id to new id and vice-versa
+    config.items = config.items.map(i => {
+      if (i.page === lastItem) i.page = newPos;
+      else if (i.page === newPos) i.page = lastItem;
+      return i;
+    });
+
+    this.props.handleConfigChange(config);
+    this.setState({ editingPage: undefined });
   };
 
   render() {
@@ -337,7 +359,7 @@ class Main extends React.PureComponent {
             groupId={editingCard.groupId}
             cardId={editingCard.cardId}
             handleCardEditDone={this.handleCardEditDone}
-            movePosition={this.handleCardMovePosition}
+            movePosition={this.handleMovePosition}
           />
         )}
         {addingPage && (
@@ -355,6 +377,7 @@ class Main extends React.PureComponent {
             id={editingPage.id}
             page={editingPage.page}
             handlePageEditDone={this.handlePageEditDone}
+            movePosition={this.handlePageMovePosition}
           />
         )}
         {addingGroup && (
@@ -372,7 +395,7 @@ class Main extends React.PureComponent {
             id={editingGroup.groupId}
             group={editingGroup.group}
             handleGroupEditDone={this.handleGroupEditDone}
-            movePosition={this.handleCardMovePosition}
+            movePosition={this.handleMovePosition}
           />
         )}
         {editingItem && (
