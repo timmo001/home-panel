@@ -68,7 +68,7 @@ class EditGroup extends React.PureComponent {
   };
 
   render() {
-    const { classes, fullScreen, add, id, movePosition } = this.props;
+    const { classes, fullScreen, add, config, id, movePosition } = this.props;
     const { open, group, confirm } = this.state;
     let defaultGroup = defaultConfig.items[0];
     delete defaultGroup.cards;
@@ -103,14 +103,32 @@ class EditGroup extends React.PureComponent {
           <div className={classes.fill} />
           {!add && (
             <IconButton
-              onClick={() => movePosition(['items', id], id - 1)}
+              onClick={() => {
+                const pageId = group.page;
+                let newId = id - 1;
+                for (let i = newId; i >= 0; i--)
+                  if (config.items[i].page === pageId) {
+                    newId = i;
+                    break;
+                  }
+                movePosition(['items', id], newId);
+              }}
               color="primary">
               <ArrowUpwardIcon fontSize="small" />
             </IconButton>
           )}
           {!add && (
             <IconButton
-              onClick={() => movePosition(['items', id], id + 1)}
+              onClick={() => {
+                const pageId = group.page;
+                let newId = id + 1;
+                for (let i = newId; i < config.items.length; i++)
+                  if (config.items[i].page === pageId) {
+                    newId = i;
+                    break;
+                  }
+                movePosition(['items', id], newId);
+              }}
               color="primary">
               <ArrowDownwardsIcon fontSize="small" />
             </IconButton>
@@ -138,6 +156,7 @@ EditGroup.propTypes = {
   classes: PropTypes.object.isRequired,
   fullScreen: PropTypes.bool.isRequired,
   id: PropTypes.number.isRequired,
+  config: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
   add: PropTypes.bool,
   handleGroupAddDone: PropTypes.func,
