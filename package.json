@@ -14,7 +14,7 @@
     "@material-ui/core": "3.9.3",
     "@material-ui/icons": "3.0.2",
     "@material-ui/lab": "3.0.0-alpha.30",
-    "@mdi/font": "3.5.95",
+    "@mdi/font": "3.6.95",
     "array-move": "2.1.0",
     "classnames": "2.2.6",
     "home-assistant-js-websocket": "3.4.0",
