@@ -45,7 +45,7 @@ RUN \
         bash=4.4.19-r1 \
         nginx=1.14.2-r0 \
         nodejs-current=11.3.0-r0 \
-        tzdata=2018i-r0 \
+        tzdata=2019a-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
