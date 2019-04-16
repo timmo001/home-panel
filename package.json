@@ -7,6 +7,7 @@
     "email": "contact@timmo.xyz"
   },
   "license": "MIT",
+  "homepage": ".",
   "dependencies": {
     "@feathersjs/authentication-client": "1.0.11",
     "@feathersjs/feathers": "3.3.1",
