@@ -963,14 +963,14 @@ debug@2.6.9, debug@^2.1.2, debug@^2.2.0, debug@^2.3.3:
   dependencies:
     ms "2.0.0"
 
-debug@3.2.6, debug@^3.0.0, debug@^3.1.0:
+debug@3.2.6, debug@^3.1.0:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
   dependencies:
     ms "^2.1.1"
 
-debug@^4.0.0, debug@^4.0.1, debug@~4.1.0:
+debug@^4.0.0, debug@^4.0.1, debug@^4.1.1, debug@~4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
   integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
@@ -1583,13 +1583,6 @@ fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-feathers-errors@^2.5.0:
-  version "2.9.2"
-  resolved "https://registry.yarnpkg.com/feathers-errors/-/feathers-errors-2.9.2.tgz#96ca0e5fe50cc56f0eccc90ce3fa5e1f8840828d"
-  integrity sha512-qwIX97bNW7+1tWVG073+omUA0rCYKJtTtwuzTrrvfrtdr8J8Dk1Fy4iaV9Fa6/YBD5AZu0lsplPE0iu4u/d4GQ==
-  dependencies:
-    debug "^3.0.0"
-
 feathers-nedb@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/feathers-nedb/-/feathers-nedb-4.0.1.tgz#51985b2e2e4d274d626f985741081ab97b21bafc"
@@ -1599,16 +1592,15 @@ feathers-nedb@4.0.1:
     "@feathersjs/commons" "^4.0.0"
     "@feathersjs/errors" "^3.3.4"
 
-feathers-swagger@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-0.7.2.tgz#6fd1f102cf14cfbe4f6b0d0c6a086b10c4c739ff"
-  integrity sha512-ePFqPAB2jVJEkYbMZC8uILZ1sZflq7SldyKQbgREUEOsRvbSE7yMiybz/LssXdFn8VIqcLE8FTq4beFGAXfZUA==
+feathers-swagger@0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-0.7.3.tgz#c33dd4744af7ee05328b194da315574b39e3559b"
+  integrity sha512-hLTJMdSUPd5dCitoX6R8DgtEXeVCYas8jKXgcODqjm4MhsAnLRX+Awg67qiv7493T3tnZS0k+DfIwwcb+vvLCg==
   dependencies:
-    debug "^3.1.0"
-    feathers-errors "^2.5.0"
-    serve-static "^1.12.4"
-    swagger-ui "^3.2.0"
-    swagger-ui-dist "^3.2.0"
+    debug "^4.1.1"
+    serve-static "^1.13.2"
+    swagger-ui "^3.20.8"
+    swagger-ui-dist "^3.20.8"
 
 feature-policy@0.2.0:
   version "0.2.0"
@@ -3905,7 +3897,7 @@ serve-favicon@2.5.0:
     parseurl "~1.3.2"
     safe-buffer "5.1.1"
 
-serve-static@1.13.2, serve-static@^1.12.4:
+serve-static@1.13.2, serve-static@^1.13.2:
   version "1.13.2"
   resolved "https://registry.yarnpkg.com/serve-static/-/serve-static-1.13.2.tgz#095e8472fd5b46237db50ce486a43f4b86c6cec1"
   integrity sha512-p/tdJrO4U387R9oMjb1oj7qSMaMfmOyd4j9hOFoxZe2baQszgHcSWjuya/CiT5kgZZKRudHNOA0pYXOl8rQ5nw==
@@ -4250,15 +4242,15 @@ swagger-client@^3.8.25:
     utf8-bytes "0.0.1"
     utfstring "^2.0.0"
 
-swagger-ui-dist@^3.2.0:
-  version "3.22.0"
-  resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-3.22.0.tgz#9f2417d774f21fac260b1497ead0650dc3e92861"
-  integrity sha512-ZFcQoi4XT2t/NGKByVwmb4iERLtGmQQEFqHNC1PmdauWVZ2y80akkzctghgAftTlc8xpUp+I62nm4Km2q82ajQ==
+swagger-ui-dist@^3.20.8:
+  version "3.22.1"
+  resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-3.22.1.tgz#a7a4ebc5af5d28f7c9e1436be9a9258f5d23497e"
+  integrity sha512-KITbEqXkXrjGH12A0lpVZlH3uODFkwUh8d15My1YD4N0PSZDnIiC1iMFT6ryyuJxDYWZh0qezKpPqa5FRowngw==
 
-swagger-ui@^3.2.0:
-  version "3.22.0"
-  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.0.tgz#986da491937eac4b72cb074f027024abdf2bdb94"
-  integrity sha512-OeEm0EG1aIqRdbZUOACSGvPTNPMsA0BwMPN+PlV/ZlS9a8OPP05Njv+lmDW7BL4FgvSDVaH2Ago+4SVCvNpcJA==
+swagger-ui@^3.20.8:
+  version "3.22.1"
+  resolved "https://registry.yarnpkg.com/swagger-ui/-/swagger-ui-3.22.1.tgz#5a2cc1d7fe3d6854bd09a7e2c2034ef68f3b1d34"
+  integrity sha512-dx5U5DNBOAgqUvcebpyHtztXx8NRuk9YrSqHoROV2iA8rzVaFimcsfYEu5o/ztsHDbLI2svhb5rC4iZeRPQC7w==
   dependencies:
     "@braintree/sanitize-url" "^2.0.2"
     "@kyleshockey/js-yaml" "^1.0.1"
