@@ -19,7 +19,7 @@
     "array-move": "2.1.0",
     "classnames": "2.2.6",
     "home-assistant-js-websocket": "3.4.0",
-    "is-plain-obj": "1.1.0",
+    "is-plain-obj": "2.0.0",
     "moment": "2.24.0",
     "prop-types": "15.7.2",
     "react": "16.8.6",
