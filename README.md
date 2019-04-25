@@ -39,12 +39,6 @@ A touch-compatible web frontend for controlling the home. Integrates with
 - Customizable interface
 - Custom theme support
 
-## Demo
-
-You can use a demo of this app [here][demo-app].
-
-> This will only work with Home Assistant instances served over HTTPS
-
 ## Docs
 
 Setup and configuration is available [here][setup-docs]
