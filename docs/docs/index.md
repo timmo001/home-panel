@@ -28,7 +28,6 @@ A touch-compatible web frontend for controlling the home. Integrates with
 - Supports MJPEG and related image-based camera/image feeds. Images can also
   be used
 - Light control with brightness, temperature, color and effects support
-- Supports Radio playback from TuneIn
 - Add weather and weather icons using Home Assistant's
   [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
   component
@@ -52,8 +51,6 @@ A touch-compatible web frontend for controlling the home. Integrates with
 
 ![Dark Theme Screenshot][dark-theme]
 ![More Info Dark Screenshot][more-info-dark]
-
-![Radio Screenshot][radio]
 
 ![Forest Theme][forest-theme]
 
@@ -87,7 +84,6 @@ A touch-compatible web frontend for controlling the home. Integrates with
 [more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
-[radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
 [releases]: https://github.com/timmo001/home-panel/releases
 [setup-docs]: https://timmo.dev/home-panel/setup/
