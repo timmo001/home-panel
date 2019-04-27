@@ -59,8 +59,6 @@ Setup and configuration is available [here][setup-docs]
 
 ![Forest Theme][forest-theme]
 
-![Radio Screenshot][radio]
-
 ![More Info Dark Screenshot][more-info-dark]
 
 ## License
@@ -116,7 +114,6 @@ SOFTWARE.
 [more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
-[radio]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/radio.png
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
 [releases]: https://github.com/timmo001/home-panel/releases
 [setup-docs]: https://timmo.dev/home-panel/setup/
