@@ -16,7 +16,6 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import FormatPaintIcon from '@material-ui/icons/FormatPaint';
 import EditIcon from '@material-ui/icons/Edit';
 import CheckIcon from '@material-ui/icons/Check';
-import RadioIcon from '@material-ui/icons/Radio';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import BorderTopIcon from '@material-ui/icons/BorderTop';
 import CodeIcon from '@material-ui/icons/Code';
@@ -358,20 +357,6 @@ class Header extends React.PureComponent {
                   aria-label="Edit Header"
                   onClick={() => this.props.handleEditConfig(['header'])}>
                   <BorderTopIcon className={classes.icon} />
-                </IconButton>
-              </Tooltip>
-            )}
-            {!editing && (
-              <Tooltip title="Radio">
-                <IconButton
-                  className={classes.button}
-                  style={{
-                    gridRow: timeDisabled && dateDisabled ? 1 : 3,
-                    gridColumn: timeDisabled && dateDisabled ? 5 : 1
-                  }}
-                  aria-label="Radio"
-                  onClick={this.props.handleRadioToggle}>
-                  <RadioIcon className={classes.icon} />
                 </IconButton>
               </Tooltip>
             )}
