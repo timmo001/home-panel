@@ -98,9 +98,6 @@ class Login extends React.PureComponent {
     const password = process.env.REACT_APP_OVERRIDE_PASSWORD
       ? process.env.REACT_APP_OVERRIDE_PASSWORD
       : sessionStorage.getItem('password');
-    const api_url = process.env.REACT_APP_OVERRIDE_API_URL
-      ? process.env.REACT_APP_OVERRIDE_API_URL
-      : `${window.location.protocol}//${window.location.hostname}:3234`;
     const hass_url = process.env.REACT_APP_OVERRIDE_HASS_URL
       ? process.env.REACT_APP_OVERRIDE_HASS_URL
       : localStorage.getItem('hass_url') ||
@@ -112,7 +109,6 @@ class Login extends React.PureComponent {
       {
         username: username ? username : '',
         password: password ? password : '',
-        api_url: api_url,
         hass_url: hass_url ? hass_url : '',
         createAccount: localStorage.getItem('been_here') ? false : true
       },
