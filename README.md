@@ -30,7 +30,6 @@ A touch-compatible web frontend for controlling the home. Integrates with
 - Supports MJPEG and related image-based camera/image feeds. Images can also
  be used
 - Light control with brightness, temperature, color and effects support
-- Supports Radio playback from TuneIn
 - Add weather and weather icons using Home Assistant's
  [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
  component

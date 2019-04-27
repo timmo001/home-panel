@@ -5,7 +5,6 @@ import arrayMove from 'array-move';
 import Header from './Header';
 import Page from './Cards/Page';
 import PageNavigation from './PageNavigation';
-import Radio from './Radio/Radio';
 import EditCard from './EditConfig/EditCard';
 import EditPage from './EditConfig/EditPage';
 import EditGroup from './EditConfig/EditGroup';
@@ -43,7 +42,6 @@ class Main extends React.PureComponent {
     moved: true,
     over: false,
     hovered: false,
-    radioShown: false,
     editing: false,
     addingPage: false,
     currentPage: 0
@@ -85,13 +83,6 @@ class Main extends React.PureComponent {
     });
 
   handleButtonRelease = () => clearTimeout(this.buttonPressTimer);
-
-  handleRadioShow = () => this.setState({ radioShown: true });
-
-  handleRadioHide = () => this.setState({ radioShown: false });
-
-  handleRadioToggle = () =>
-    this.setState({ radioShown: !this.state.radioShown });
 
   handleLogOut = () => {
     localStorage.removeItem('hass_tokens');
@@ -277,7 +268,6 @@ class Main extends React.PureComponent {
     const {
       moved,
       over,
-      radioShown,
       currentPage,
       editing,
       addingCard,
@@ -310,16 +300,13 @@ class Main extends React.PureComponent {
           handleMouseOver={this.onMouseMoveHandler}
           handleMouseLeave={this.onMouseLeaveHandler}
           setTheme={this.props.setTheme}
-          handleRadioToggle={this.handleRadioToggle}
           handleLogOut={this.handleLogOut}
-          handleRadioHide={this.handleRadioHide}
           handleConfigUI={this.handleConfigUI}
           handleEditConfig={this.handleEditConfig}
           handleEditConfigRaw={this.handleEditConfigRaw}
         />
         <div
           className={classes.pageContainer}
-          onClick={this.handleRadioHide}
           style={{
             height: pages && (moved || over) ? 'calc(100% - 72px)' : 'inherit'
           }}>
@@ -351,7 +338,6 @@ class Main extends React.PureComponent {
             handlePageChange={this.handlePageChange}
           />
         )}
-        <Radio show={radioShown} handleRadioHide={this.handleRadioHide} />
         {addingCard && (
           <EditCard
             add

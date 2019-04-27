@@ -231,7 +231,6 @@ class Header extends React.PureComponent {
       over,
       handleMouseOver,
       handleMouseLeave,
-      handleRadioHide,
       handleConfigUI
     } = this.props;
     const { anchorEl } = this.state;
@@ -401,8 +400,7 @@ class Header extends React.PureComponent {
           justify="space-between"
           alignItems="center"
           wrap="nowrap"
-          spacing={8}
-          onClick={handleRadioHide}>
+          spacing={8}>
           <Grid
             item
             className={classes.weatherContainer}
@@ -528,9 +526,7 @@ Header.propTypes = {
   handleMouseOver: PropTypes.func.isRequired,
   handleMouseLeave: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  handleRadioToggle: PropTypes.func.isRequired,
   handleLogOut: PropTypes.func.isRequired,
-  handleRadioHide: PropTypes.func.isRequired,
   handleConfigUI: PropTypes.func.isRequired,
   handleEditConfig: PropTypes.func.isRequired,
   handleEditConfigRaw: PropTypes.func.isRequired
