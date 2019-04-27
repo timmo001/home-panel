@@ -8962,10 +8962,10 @@ react-autolink-text2@3.2.0:
   dependencies:
     prop-types "^0.14.9 || ^15.3.0 || ^16.0.0"
 
-react-color@2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.17.1.tgz#f114811c83f5d80a1bd1b80466c2f7ddcc58da9d"
-  integrity sha512-S+I6TkUKJaqfALLkAIfiCZ/MANQyy7dKkf7g9ZU5GTUy2rf8c2Rx62otyvADAviWR+6HRkzdf2vL1Qvz9goCLQ==
+react-color@2.17.2:
+  version "2.17.2"
+  resolved "https://registry.yarnpkg.com/react-color/-/react-color-2.17.2.tgz#ef002cafd5ae8daf3d374b85bb44ac9d36785c0a"
+  integrity sha512-TpT/D3wEQmyCOcIXrUgKOvEXpJtMylEx5yzw0laGP30mfC5yO4CoUsiYvfPiUbbkFjMGurPJjkKOkkOfBBIjFQ==
   dependencies:
     "@icons/material" "^0.2.4"
     lodash "^4.17.11"
