@@ -218,12 +218,12 @@ class Hass extends React.PureComponent {
               disabled={
                 editing
                   ? false
-                  : domain === 'binary_sensor' ||
-                    state === 'unavailable'
+                  : domain === 'binary_sensor' || state === 'unavailable'
               }
               onClick={() => {
                 if (editing) handleCardEdit(groupId, cardId, card);
                 else if (
+                  domain === 'automation' ||
                   domain === 'input_boolean' ||
                   domain === 'light' ||
                   domain === 'remote' ||
