@@ -11,8 +11,9 @@ import { getCardElevation, getSquareCards } from '../../Common/config';
 import properCase from '../../Common/properCase';
 import AlarmPanel from './Dialogs/AlarmPanel';
 import MoreInfo from './Dialogs/MoreInfo';
-import Cover from './Cover';
+import Frame from '../Frame/Frame';
 import Climate from './Climate';
+import Cover from './Cover';
 import Media from './Media';
 import Weather from './Weather';
 import grid from '../../Common/Style/grid';
@@ -109,7 +110,20 @@ class Hass extends React.PureComponent {
         </Typography>
       );
 
-      return (
+      return domain === 'camera' ? (
+        <Frame
+          config={config}
+          editing={editing}
+          handleCardEdit={handleCardEdit}
+          groupId={groupId}
+          cardId={cardId}
+          card={{
+            url: `${haUrl}${attributes.entity_picture}`,
+            height: card.height,
+            width: card.width
+          }}
+        />
+      ) : (
         <Grid
           className={classes.cardContainer}
           style={{
