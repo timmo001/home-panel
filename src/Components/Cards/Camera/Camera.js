@@ -27,6 +27,12 @@ class Camera extends React.PureComponent {
     camera: undefined
   };
 
+  handleCardEdit = (groupId, cardId, card) => {
+    if (card.type === 'hass')
+      card = { ...card, url: undefined, live: undefined };
+    this.props.handleCardEdit(groupId, cardId, card);
+  };
+
   handleShowCamera = (name, still_url, url) =>
     this.setState({
       camera: { name, still_url, url }
@@ -35,15 +41,7 @@ class Camera extends React.PureComponent {
   handleCameraClose = () => this.setState({ camera: undefined });
 
   render() {
-    const {
-      classes,
-      config,
-      card,
-      editing,
-      handleCardEdit,
-      groupId,
-      cardId
-    } = this.props;
+    const { classes, config, card, editing, groupId, cardId } = this.props;
     const { camera } = this.state;
     const { name, url } = card;
     const still_url = `${card.still_url}?${moment().format('HHmm')}`;
@@ -64,7 +62,11 @@ class Camera extends React.PureComponent {
             className={classnames(classes.card, classes.cameraCard)}
             elevation={cardElevation}
             square={squareCards}>
-            <img className={classes.camera} src={still_url} alt={name} />
+            <img
+              className={classes.camera}
+              src={card.live ? url : still_url}
+              alt={name}
+            />
           </Card>
         </ButtonBase>
         {camera && (
@@ -73,7 +75,9 @@ class Camera extends React.PureComponent {
         {editing && (
           <ButtonBase
             className={classes.editOverlay}
-            onClick={() => editing && handleCardEdit(groupId, cardId, card)}
+            onClick={() =>
+              editing && this.handleCardEdit(groupId, cardId, card)
+            }
           />
         )}
       </Grid>
