@@ -121,6 +121,7 @@
           "name": "Purely for reference. This isn't used in the UI",
           "url": "The url of the camera feed for use in full screen when the smaller camera card is clicked",
           "still_url": "The url of a still image for use in the main view. This updates every minute",
+          "live": "Should the URL be used instead of the still_url? You can use this to make your live feed show in the main ui",
           "width": "The amount of cards wide"
         },
         {
