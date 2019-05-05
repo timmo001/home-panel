@@ -27,9 +27,9 @@ A touch-compatible web frontend for controlling the home. Integrates with
 ## Features
 
 - Supports [Home Assistant][hass] entities, MJPEG camera feeds, iFrames, and
-more.
+ more.
 - Made for touch screens and desktops with a sideways scrolling Material Design
-interface.
+ interface.
 - Fully customizable interface.
 - Custom theme support.
 - Full in application configuration UI. (as well as raw config support)
