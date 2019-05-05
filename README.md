@@ -20,27 +20,23 @@
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
 A touch-compatible web frontend for controlling the home. Integrates with
- [Home Assistant][hass] as an alternative / additional frontend.
+[Home Assistant][hass] as an additional frontend.
 
 ![banner][banner]
 
 ## Features
 
-- Card based user interface with support for [Home Assistant][hass]
-- Supports MJPEG and related image-based camera/image feeds. Images can also
- be used
-- Light control with brightness, temperature, color and effects support
-- Add weather and weather icons using Home Assistant's
- [Dark Sky](https://www.home-assistant.io/components/weather.darksky/)
- component
-- Made for touch screens with a sideways scrolling Material
- Design interface. (Compatible with desktops as well)
-- Customizable interface
-- Custom theme support
+- Supports [Home Assistant][hass] entities, MJPEG camera feeds, iFrames, and
+more.
+- Made for touch screens and desktops with a sideways scrolling Material Design
+interface.
+- Fully customizable interface.
+- Custom theme support.
+- Full in application configuration UI. (as well as raw config support)
 
-## Docs
+## Documentation / Setup
 
-Setup and configuration is available [here][setup-docs]
+Setup and configuration for the app is available [here][setup-docs]
 
 ## Links
 
