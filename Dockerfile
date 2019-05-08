@@ -43,7 +43,7 @@ RUN \
     \
     && apk add --no-cache \
         bash=4.4.19-r1 \
-        nginx=1.14.2-r1 \
+        nginx>1.14.2-r0 \
         nodejs-current=11.3.0-r0 \
         tzdata=2019a-r0 \
     \
