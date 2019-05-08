@@ -27,7 +27,7 @@ ARG BUILD_ARCH=amd64
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
 # Install system
-# hadolint ignore=DL3003
+# hadolint ignore=DL3003,DL3018
 RUN \
     set -o pipefail \
     \
