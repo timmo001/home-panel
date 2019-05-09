@@ -5286,10 +5286,10 @@ hoist-non-react-statics@^3.2.1:
   dependencies:
     react-is "^16.3.2"
 
-home-assistant-js-websocket@4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-4.1.1.tgz#b85152c223a20bfe8827b817b927fd97cc021157"
-  integrity sha512-hNk8bj9JObd3NpgQ1+KtQCbSoz/TWockC8T/L8KvsPrDtkl1oQddajirumaMDgrJg/su4QsxFNUcDPGJyJ05UA==
+home-assistant-js-websocket@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-4.1.2.tgz#dbcdb4b67df8d189d29bbf5603771d5bc80ef031"
+  integrity sha512-/I0m6FTDEq3LkzFc4tmgHJHTj9gWA6Wn/fgaa1ghIJJY0Yqb3x6whovN5pRNFsl6bnKzOCR+nmJ2ruVTBa5mVQ==
 
 hosted-git-info@^2.1.4:
   version "2.7.1"
