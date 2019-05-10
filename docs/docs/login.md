@@ -10,9 +10,7 @@ the users you have setup on Home Assistant.
 
 ## Create Account
 
-On your first run of the app, you will be presented with an account creation screen:
-
-![Create Account][account-creation]
+On your first run of the app, you will be presented with an account creation screen.
 
 If you already have a user setup, click the `Already have an account?` button.
 
@@ -42,9 +40,7 @@ Example URLs:
 
 ## Login
 
-Once you have created an account, you may get this screen:
-
-![Login][account-login]
+Once you have created an account, you will need to log in. Your session will be saved automatically.
 
 If you need to create a new account or your credentials have changed,
 Click the `Create New Account` button.
