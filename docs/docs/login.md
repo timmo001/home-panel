@@ -40,7 +40,8 @@ Example URLs:
 
 ## Login
 
-Once you have created an account, you will need to log in. Your session will be saved automatically.
+Once you have created an account, you will need to log in. Your session will
+be saved automatically.
 
 If you need to create a new account or your credentials have changed,
 Click the `Create New Account` button.
