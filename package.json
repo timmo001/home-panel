@@ -18,7 +18,7 @@
     "@mdi/font": "3.6.95",
     "array-move": "2.1.0",
     "classnames": "2.2.6",
-    "home-assistant-js-websocket": "4.1.2",
+    "home-assistant-js-websocket": "4.2.2",
     "is-plain-obj": "2.0.0",
     "moment": "2.24.0",
     "prop-types": "15.7.2",
