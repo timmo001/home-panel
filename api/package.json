@@ -37,7 +37,7 @@
     "compression": "1.7.4",
     "cors": "2.8.5",
     "feathers-nedb": "4.0.1",
-    "feathers-swagger": "0.7.3",
+    "feathers-swagger": "1.0.0",
     "helmet": "3.18.0",
     "nedb": "1.8.0",
     "serve-favicon": "2.5.0",
