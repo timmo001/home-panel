@@ -1,9 +1,5 @@
 # TODO
 
-- [x] Create connect to hass button
-  - [x] Add Dialog for hass url
-- [x] Row / column ui
-- [x] Move to Home Panel
 - [ ] Header with added customization
 - [ ] Add cards compatible with v1
   - [ ] All entities previously supported
