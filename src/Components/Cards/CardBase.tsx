@@ -228,14 +228,16 @@ function CardBase(props: CardBaseProps) {
               </Grid>
             </div>
           ) : (
-            <Typography
-              color="textPrimary"
-              variant="h5"
-              component="h3"
-              gutterBottom
-              noWrap>
-              {props.card.title}
-            </Typography>
+            props.card.title && (
+              <Typography
+                color="textPrimary"
+                variant="h5"
+                component="h3"
+                gutterBottom
+                noWrap>
+                {props.card.title}
+              </Typography>
+            )
           )}
           {props.card.type === 'entity' && (
             <Entity

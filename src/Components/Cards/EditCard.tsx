@@ -18,11 +18,10 @@ export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
-    width: '100%'
+    overflow: 'visible'
   },
   dialogContent: {
-    // padding: 0
+    overflow: 'visible'
   },
   background: {
     background: theme.palette.background.default
@@ -73,6 +72,7 @@ function EditCard(props: EditCardProps) {
   const classes = useStyles();
   return (
     <Dialog
+      className={classes.root}
       open
       fullScreen={props.fullScreen}
       fullWidth={true}
