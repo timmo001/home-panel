@@ -21,9 +21,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     width: '100%'
   },
-  media: {
-    width: '100%',
-    height: 48
+  dialogContent: {
+    // padding: 0
   },
   background: {
     background: theme.palette.background.default
@@ -80,16 +79,18 @@ function EditCard(props: EditCardProps) {
       maxWidth="lg"
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
-      <DialogContent>
+      <DialogContent className={classes.dialogContent}>
         <Grid
           container
-          direction="column"
+          direction="row"
           alignContent="center"
           justify="space-around"
           spacing={2}>
           <Grid
             item
+            xs
             container
+            // direction="column"
             alignContent="center"
             justify="space-around"
             spacing={1}>
