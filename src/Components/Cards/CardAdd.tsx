@@ -8,13 +8,23 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 
-import { cardStyles } from './CardBase';
+// import { cardStyles } from './CardBase';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  ...cardStyles,
+  buttonCardContainer: {
+    height: '100%',
+    width: '100%',
+    flex: 1
+  },
+  card: {
+    position: 'relative',
+    height: '100%',
+    width: '100%',
+    flex: 1
+  },
   icon: {
     fontSize: 48,
-    lineHeight: '78px'
+    lineHeight: '70px'
   }
 }));
 
@@ -39,7 +49,7 @@ function CardAdd(props: CardAddProps) {
         focusRipple
         onClick={props.handleAdd}>
         <Card className={classes.card}>
-          <CardContent className={classes.cardContent}>
+          <CardContent>
             <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
           </CardContent>
         </Card>

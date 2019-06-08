@@ -27,21 +27,35 @@ import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
 
-export const cardStyles = {
+// export const cardStyles = {
+// };
+
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',
     overflow: 'visible'
   },
-  buttonCardContainer: {
+  card: {
+    position: 'relative',
     height: '100%',
     width: '100%',
     flex: 1
   },
-  card: {
+  cardActions: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     height: '100%',
     width: '100%',
-    flex: 1,
-    overflow: 'visible'
+    zIndex: 1000,
+    transition: '.4s ease',
+    background: `${theme.palette.background.default}dd`,
+    opacity: 0,
+    '&:hover': {
+      opacity: 1
+    }
   },
   cardContent: {
     '&:last-child': {
@@ -57,15 +71,6 @@ export const cardStyles = {
   },
   switch: {
     margin: 4
-  }
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-  ...cardStyles,
-  cardActions: {
-    height: '100%',
-    width: '100%',
-    background: `${theme.palette.background.default}99`
   }
 }));
 
@@ -280,11 +285,13 @@ function CardBase(props: CardBaseProps) {
               container
               alignContent="center"
               justify="center"
-              style={{
-                height: props.card.height * cardSize || cardSize,
-                width: props.card.width * cardSize || cardSize,
-                margin: -(props.card.padding ? props.card.padding : 16)
-              }}>
+              style={
+                {
+                  // height: props.card.height * cardSize || cardSize,
+                  // width: props.card.width * cardSize || cardSize,
+                  // margin: -(props.card.padding ? props.card.padding : 16)
+                }
+              }>
               <IconButton color="primary" onClick={handleEdit}>
                 <EditIcon fontSize="small" />
               </IconButton>
