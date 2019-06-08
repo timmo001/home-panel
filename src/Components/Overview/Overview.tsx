@@ -80,8 +80,6 @@ function Overview(props: OverviewProps) {
 
   const classes = useStyles();
 
-  console.log('groups:', groups);
-
   return (
     <Grid
       container
