@@ -2,12 +2,26 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import { ConfigProps, defaultCard } from '../Configuration/Config';
 import CardAdd from '../Cards/CardAdd';
-import CardBase, { CardBaseProps } from 'Components/Cards/CardBase';
-import chunk from '../Utils/chunk';
+import CardBase, { CardBaseProps } from '../Cards/CardBase';
+import { Typography } from '@material-ui/core';
+
+const useStyles = makeStyles((theme: Theme) => ({
+  groupName: {
+    // fontSize: '1.9rem'
+  }
+}));
+
+export type GroupProps = {
+  name: string;
+  cards: CardBaseProps[];
+  page: number;
+  width: number;
+};
 
 interface OverviewProps extends RouteComponentProps, ConfigProps {
   config: any;
@@ -23,12 +37,10 @@ interface OverviewProps extends RouteComponentProps, ConfigProps {
 }
 
 function Overview(props: OverviewProps) {
-  const [currentPage, setCurrentPage] = React.useState(0);
-
-  const config = props.config.overview!;
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   function handleAdd() {
-    const newId: number = config.pages![currentPage].cards!.length;
+    const newId: number = props.config.pages![currentPage].cards!.length;
     props.handleUpdateConfig!(
       ['overview', 'pages', currentPage, 'cards', newId],
       defaultCard
@@ -63,18 +75,23 @@ function Overview(props: OverviewProps) {
     );
   }
 
-  const rows = chunk(config.pages![currentPage].cards!, config.rows || 3);
+  const groups =
+    props.config.items.filter((item: any) => item.page === currentPage) || [];
+
+  const classes = useStyles();
+
+  console.log('groups:', groups);
 
   return (
     <Grid
       container
       direction="row"
-      justify="center"
+      justify="flex-start"
       alignItems="flex-start"
       spacing={1}>
-      {rows.map((row: CardBaseProps[], rowKey: number) => (
+      {groups.map((group: GroupProps, groupKey: number) => (
         <Grid
-          key={rowKey}
+          key={groupKey}
           item
           lg={3}
           md={6}
@@ -83,13 +100,16 @@ function Overview(props: OverviewProps) {
           container
           direction="column"
           justify="center"
-          alignItems="center"
+          alignItems="flex-start"
           spacing={1}>
-          {row.map((card: CardBaseProps, key: number) => (
+          <Typography className={classes.groupName} variant="h5" component="h2">
+            {group.name}
+          </Typography>
+          {group.cards.map((card: CardBaseProps, key: number) => (
             <CardBase
               {...props}
               key={key}
-              id={rowKey * (config.rows || 3) + key}
+              id={groupKey}
               card={card}
               editing={props.editing}
               hassConfig={props.hassConfig}

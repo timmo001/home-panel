@@ -2,7 +2,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   ...cardStyles,
   icon: {
     fontSize: 48,
-    lineHeight: '46px'
+    lineHeight: '78px'
   }
 }));
 
@@ -24,8 +24,16 @@ export interface CardAddProps {
 
 function CardAdd(props: CardAddProps) {
   const classes = useStyles();
+  const theme = useTheme();
+
+  const cardSize = theme.breakpoints.down('sm') ? 120 : 100;
   return (
-    <Grid item>
+    <Grid
+      item
+      style={{
+        height: cardSize,
+        width: cardSize
+      }}>
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple

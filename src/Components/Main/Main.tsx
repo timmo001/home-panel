@@ -46,7 +46,6 @@ function Main(props: MainProps) {
   const [hassEntities, setHassEntities] = React.useState();
 
   useEffect(() => {
-    if (!props.loggedIn) props.history.replace('/login');
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
       if (haUrl) setHassUrl(haUrl);
@@ -84,6 +83,11 @@ function Main(props: MainProps) {
   }
 
   const classes = useStyles();
+
+  if (!props.loggedIn) {
+    props.history.replace('/login');
+    return null;
+  }
 
   const search =
     props.location!.search && queryString.parse(props.location!.search);

@@ -74,62 +74,17 @@
   ],
   "items": [
     {
-      "name": "Living Room",
+      "name": "Welcome",
       "cards": [
         {
-          "entity_id": "light.tv_light",
-          "name": "TV",
-          "icon": "lightbulb"
+          "content": "Hi there! Thanks for using Home Panel.<br /><br />Make sure to read the [docs](https://timmo.dev/home-panel) to get the most out of the app.",
+          "title": "Welcome!",
+          "type": "markdown",
+          "width": 3
         }
       ],
       "page": 1,
-      "width": 2
-    },
-    {
-      "name": "Dining Room",
-      "cards": [
-        {
-          "entity_id": "light.table_light",
-          "icon": "ceiling-light",
-          "name": "Table Light"
-        }
-      ],
-      "page": 1,
-      "width": 2
-    },
-    {
-      "name": "Weather",
-      "page": 2,
-      "width": 8,
-      "cards": [
-        {
-          "type": "hass",
-          "name": "",
-          "entity_id": "weather.dark_sky",
-          "icon": "",
-          "width": 3,
-          "height": 2,
-          "size": {
-            "name": "",
-            "state": "",
-            "icon": ""
-          }
-        },
-        {
-          "type": "iframe",
-          "name": "",
-          "entity_id": "",
-          "icon": "",
-          "width": 4,
-          "height": 4,
-          "size": {
-            "name": "",
-            "state": "",
-            "icon": ""
-          },
-          "url": "https://embed.windy.com/embed2.html"
-        }
-      ]
+      "width": 3
     }
   ]
 }

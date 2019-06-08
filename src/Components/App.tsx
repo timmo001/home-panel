@@ -106,6 +106,8 @@ function App() {
     data: FeathersAuthCredentials,
     callback?: (error?: string) => void
   ) {
+    process.env.NODE_ENV === 'development' &&
+      console.log('authenticate:', data);
     app
       .authenticate(data)
       .then(response => {
@@ -143,10 +145,10 @@ function App() {
     if (!getter.data[0]) {
       try {
         await configService.create({ createNew: true });
-        getConfig();
       } catch (e) {
         console.error(e.message);
       }
+      getConfig();
       return;
     }
 
@@ -192,7 +194,9 @@ function App() {
             <Route
               path="/"
               render={props =>
-                config ? (
+                !config ? (
+                  <Loading text="Please Wait.." />
+                ) : (
                   <Main
                     {...props}
                     loggedIn={loginCredentials ? true : false}
@@ -201,8 +205,6 @@ function App() {
                     handleConfigChange={handleConfigChange}
                     handleLogout={handleLogout}
                   />
-                ) : (
-                  <Loading text="Please Wait.." />
                 )
               }
             />

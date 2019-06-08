@@ -2,9 +2,8 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -34,9 +33,13 @@ export const cardStyles = {
     overflow: 'visible'
   },
   buttonCardContainer: {
+    height: '100%',
+    width: '100%',
     flex: 1
   },
   card: {
+    height: '100%',
+    width: '100%',
     flex: 1,
     overflow: 'visible'
   },
@@ -57,8 +60,9 @@ export const cardStyles = {
 const useStyles = makeStyles((theme: Theme) => ({
   ...cardStyles,
   cardActions: {
-    background: theme.palette.background.paper,
-    borderTop: '1px solid #757575'
+    height: '100%',
+    width: '100%',
+    background: `${theme.palette.background.default}99`
   }
 }));
 
@@ -134,8 +138,22 @@ function CardBase(props: CardBaseProps) {
   }
 
   const classes = useStyles();
+  const theme = useTheme();
+
+  const cardSize = theme.breakpoints.down('sm') ? 120 : 100;
+
+  let height = props.card.height * cardSize || cardSize;
+  if (props.card.type !== 'entity') height = -1;
+  const width = props.card.width * cardSize || cardSize;
+
   return (
-    <Grid className={classes.root} item>
+    <Grid
+      className={classes.root}
+      item
+      style={{
+        height,
+        width
+      }}>
       <Card
         className={classes.card}
         square={props.card.round ? (props.card.round ? false : true) : false}
@@ -252,31 +270,39 @@ function CardBase(props: CardBaseProps) {
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}
+          {props.editing === 1 && (
+            <Grid
+              className={classes.cardActions}
+              container
+              alignContent="center"
+              justify="center"
+              style={{
+                height: props.card.height * cardSize || cardSize,
+                width: props.card.width * cardSize || cardSize,
+                margin: -(props.card.padding ? props.card.padding : 16)
+              }}>
+              <IconButton color="primary" onClick={handleEdit}>
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={handleDeleteConfirm}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={handleMoveUp}>
+                <ArrowUpwardIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={handleMoveDown}>
+                <ArrowDownwardsIcon fontSize="small" />
+              </IconButton>
+              {deleteConfirm && (
+                <ConfirmDialog
+                  text="Are you sure you want to delete this card?"
+                  handleClose={handleConfirmClose}
+                  handleConfirm={handleDelete}
+                />
+              )}
+            </Grid>
+          )}
         </CardContent>
-        {props.editing === 1 && (
-          <CardActions className={classes.cardActions}>
-            <IconButton color="primary" onClick={handleEdit}>
-              <EditIcon fontSize="small" />
-            </IconButton>
-            <div className="fill" />
-            <IconButton color="primary" onClick={handleDeleteConfirm}>
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-            <IconButton color="primary" onClick={handleMoveUp}>
-              <ArrowUpwardIcon fontSize="small" />
-            </IconButton>
-            <IconButton color="primary" onClick={handleMoveDown}>
-              <ArrowDownwardsIcon fontSize="small" />
-            </IconButton>
-            {deleteConfirm && (
-              <ConfirmDialog
-                text="Are you sure you want to delete this card?"
-                handleClose={handleConfirmClose}
-                handleConfirm={handleDelete}
-              />
-            )}
-          </CardActions>
-        )}
         {editCard && (
           <EditCard
             {...props}
