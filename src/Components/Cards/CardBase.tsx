@@ -52,6 +52,9 @@ export const cardStyles = {
     flex: '1 1 auto',
     margin: 4
   },
+  title: {
+    fontWeight: 400
+  },
   switch: {
     margin: 4
   }
@@ -248,8 +251,9 @@ function CardBase(props: CardBaseProps) {
           ) : (
             props.card.title && (
               <Typography
+                className={classes.title}
                 color="textPrimary"
-                variant="h5"
+                variant="h6"
                 component="h3"
                 gutterBottom
                 noWrap>

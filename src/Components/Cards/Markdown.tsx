@@ -58,7 +58,7 @@ function Markdown(props: MarkdownProps) {
     .render(props.card.content);
 
   return (
-    <Typography className={classes.text} color="textPrimary" component="span">
+    <Typography className={classes.text} color="textPrimary" variant="body2" component="span">
       {ReactHtmlParser(text)}
     </Typography>
   );
