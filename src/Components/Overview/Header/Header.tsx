@@ -71,7 +71,7 @@ function Header(props: HeaderProps) {
   let dateLocation = props.config.header.date_location;
   let timeFormat = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
 
-  if (timeLocation === dateLocation)
+  if (timeLocation === dateLocation && props.config.header.date_show)
     timeFormat += `-_-${props.config.header.date_format}`;
 
   const timeRows = moment()
@@ -79,7 +79,7 @@ function Header(props: HeaderProps) {
     .split('-_-')
     .map((timeColumn: string) => timeColumn.split('_-_'));
 
-  const time = (
+  const time = props.config.header.time_show && (
     <Typography
       className={classes.text}
       color="textPrimary"
@@ -94,7 +94,7 @@ function Header(props: HeaderProps) {
     </Typography>
   );
 
-  const date = (
+  const date = props.config.header.date_show && (
     <Typography
       className={classes.text}
       color="textPrimary"
@@ -106,7 +106,8 @@ function Header(props: HeaderProps) {
 
   let columns: any = ['', '', ''];
   columns[timeLocation] = time;
-  if (timeLocation !== dateLocation) columns[dateLocation] = date;
+  if (timeLocation !== dateLocation || !props.config.header.time_show)
+    columns[dateLocation] = date;
   const entitiesIndex = columns.findIndex((i: any) => i === '');
   columns[entitiesIndex] = entities;
 
