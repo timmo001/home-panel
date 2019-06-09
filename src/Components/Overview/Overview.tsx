@@ -2,26 +2,25 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
-import { ConfigProps, defaultCard } from '../Configuration/Config';
-import CardAdd from '../Cards/CardAdd';
+import {
+  ConfigProps,
+  defaultCard,
+  defaultGroup,
+  GroupProps
+} from '../Configuration/Config';
+import AddCard from '../Cards/AddCard';
+import AddGroup from '../Cards/AddGroup';
 import CardBase, { CardBaseProps } from '../Cards/CardBase';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   groupName: {
     // fontSize: '1.9rem'
   }
 }));
-
-export type GroupProps = {
-  name: string;
-  cards: CardBaseProps[];
-  page: number;
-  width: number;
-};
 
 interface OverviewProps extends RouteComponentProps, ConfigProps {
   config: any;
@@ -39,13 +38,16 @@ interface OverviewProps extends RouteComponentProps, ConfigProps {
 function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(1);
 
-  function handleAdd() {
-    const newId: number = props.config.pages![currentPage].cards!.length;
+  const handleAddGroup = (groupKey: number) => () => {
+    props.handleUpdateConfig!(['items', groupKey], defaultGroup(currentPage));
+  };
+
+  const handleAddCard = (groupKey: number, cardKey: number) => () => {
     props.handleUpdateConfig!(
-      ['overview', 'pages', currentPage, 'cards', newId],
+      ['items', groupKey, 'cards', cardKey],
       defaultCard
     );
-  }
+  };
 
   function handleDelete(key: number) {
     props.handleUpdateConfig!(
@@ -79,7 +81,9 @@ function Overview(props: OverviewProps) {
     props.config.items.filter((item: any) => item.page === currentPage) || [];
 
   const classes = useStyles();
+  const theme = useTheme();
 
+  const groupWidth = theme.breakpoints.down('sm') ? 120 : 100;
   return (
     <Grid
       container
@@ -91,15 +95,12 @@ function Overview(props: OverviewProps) {
         <Grid
           key={groupKey}
           item
-          lg={3}
-          md={6}
-          sm={8}
-          xs={12}
           container
           direction="column"
           justify="center"
           alignItems="flex-start"
-          spacing={1}>
+          spacing={1}
+          style={{ width: groupWidth * group.width + theme.spacing(1) }}>
           <Typography className={classes.groupName} variant="h5" component="h2">
             {group.name}
           </Typography>
@@ -119,9 +120,23 @@ function Overview(props: OverviewProps) {
               handleUpdate={handleUpdate}
             />
           ))}
+          {props.editing === 1 && (
+            <AddCard handleAdd={handleAddCard(groupKey, group.cards.length)} />
+          )}
         </Grid>
       ))}
-      {props.editing === 1 && <CardAdd handleAdd={handleAdd} />}
+      <Grid
+        item
+        container
+        direction="column"
+        justify="center"
+        alignItems="flex-start"
+        spacing={1}
+        style={{ width: groupWidth * 2 + theme.spacing(1) }}>
+        {props.editing === 1 && (
+          <AddGroup handleAdd={handleAddGroup(groups.length)} />
+        )}
+      </Grid>
     </Grid>
   );
 }

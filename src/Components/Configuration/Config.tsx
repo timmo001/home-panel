@@ -1,4 +1,6 @@
 // @flow
+import { CardBaseProps } from '../../Components/Cards/CardBase';
+
 export interface ConfigProps {
   config: any;
   // items?: [
@@ -13,6 +15,20 @@ export interface ConfigProps {
   handleUpdateConfig?: (path: any[], data: any) => void;
   handleConfigChange?: (config: any) => void;
 }
+
+export type GroupProps = {
+  name: string;
+  cards: CardBaseProps[];
+  page: number;
+  width: number;
+};
+
+export const defaultGroup = (page: number) => ({
+  name: 'New group',
+  cards: [],
+  page,
+  width: 2
+});
 
 export const defaultCard = {
   title: 'New card',

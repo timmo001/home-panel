@@ -4,13 +4,10 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 
-// import { cardStyles } from './CardBase';
-
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((_theme: Theme) => ({
   buttonCardContainer: {
     height: '100%',
     width: '100%',
@@ -28,11 +25,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface CardAddProps {
+export interface AddGroupProps {
   handleAdd: () => void;
 }
 
-function CardAdd(props: CardAddProps) {
+function AddGroup(props: AddGroupProps) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -42,24 +39,22 @@ function CardAdd(props: CardAddProps) {
       item
       style={{
         height: cardSize,
-        width: cardSize
+        width: cardSize * 2
       }}>
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple
         onClick={props.handleAdd}>
-        <Card className={classes.card}>
-          <CardContent>
-            <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
-          </CardContent>
-        </Card>
+        <CardContent>
+          <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
+        </CardContent>
       </ButtonBase>
     </Grid>
   );
 }
 
-CardAdd.propTypes = {
+AddGroup.propTypes = {
   handleAdd: PropTypes.func.isRequired
 };
 
-export default CardAdd;
+export default AddGroup;
