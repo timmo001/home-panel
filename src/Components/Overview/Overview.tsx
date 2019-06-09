@@ -12,22 +12,16 @@ import {
   defaultGroup,
   GroupProps
 } from '../Configuration/Config';
+import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import CardBase, { CardBaseProps } from '../Cards/CardBase';
-import Header from '../Header/Header';
+import Header from './Header/Header';
 
-interface OverviewProps extends RouteComponentProps, ConfigProps {
-  config: any;
-  editing: number;
-  hassConfig: any;
-  hassEntities: any;
-  handleHassChange: (
-    domain: string,
-    state: string | boolean,
-    data?: any
-  ) => void;
-}
+interface OverviewProps
+  extends RouteComponentProps,
+    ConfigProps,
+    HomeAssistantChangeProps {}
 
 function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -72,11 +66,7 @@ function Overview(props: OverviewProps) {
       justify="flex-start"
       alignItems="flex-start"
       spacing={1}>
-      <Header
-        editing={props.editing}
-        hassConfig={props.hassConfig}
-        hassEntities={props.hassEntities}
-      />
+      <Header {...props} />
       <Grid
         item
         xs
@@ -104,9 +94,6 @@ function Overview(props: OverviewProps) {
                 key={key}
                 card={card}
                 editing={props.editing}
-                hassConfig={props.hassConfig}
-                hassEntities={props.hassEntities}
-                handleHassChange={props.handleHassChange}
                 handleDelete={handleDelete(groupKey, key)}
                 handleMoveUp={handleMoveUp(groupKey, key)}
                 handleMoveDown={handleMoveDown(groupKey, key)}

@@ -5,8 +5,10 @@
   "header": {
     "time_show": true,
     "time_military": false,
+    "time_location": 0,
     "date_show": true,
     "date_format": "Do MMMM YYYY",
+    "date_location": 1,
     "entities": []
   },
   "pages": [

@@ -3,6 +3,7 @@ import { CardBaseProps } from '../../Components/Cards/CardBase';
 
 export interface ConfigProps {
   config: any;
+  editing?: any;
   handleUpdateConfig?: (path: any[], data: any) => void;
   handleConfigChange?: (config: any) => void;
 }
@@ -50,7 +51,7 @@ export const items = [
         name: 'time_show',
         title: 'Show Time',
         description: 'Show the time?',
-        icon: 'mdi-clock-outline',
+        icon: 'mdi-progress-clock',
         type: 'switch',
         default: true
       },
@@ -61,6 +62,28 @@ export const items = [
         icon: 'mdi-clock-outline',
         type: 'switch',
         default: false
+      },
+      {
+        name: 'time_location',
+        title: 'Time Location',
+        description: 'Where should the time be shown?',
+        icon: 'mdi-format-horizontal-align-center',
+        type: 'radio',
+        default: 'left',
+        items: [
+          {
+            name: '0',
+            title: 'Left'
+          },
+          {
+            name: '1',
+            title: 'Center'
+          },
+          {
+            name: '2',
+            title: 'Right'
+          }
+        ]
       },
       {
         name: 'date_show',
@@ -79,6 +102,29 @@ export const items = [
         type: 'input',
         default: 'Do MMMM YYYY'
       },
+      {
+        name: 'date_location',
+        title: 'Date Location',
+        description: 'Where should the date be shown?',
+        icon: 'mdi-format-horizontal-align-center',
+        type: 'radio',
+        default: 'left',
+        items: [
+          {
+            name: '0',
+            title: 'Left'
+          },
+          {
+            name: '1',
+            title: 'Center'
+          },
+          {
+            name: '2',
+            title: 'Right'
+          }
+        ]
+      },
+
       {
         name: 'entities',
         title: 'Entities',

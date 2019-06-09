@@ -309,7 +309,7 @@ function CardBase(props: CardBaseProps) {
 
 CardBase.propTypes = {
   card: PropTypes.any.isRequired,
-  editing: PropTypes.number.isRequired,
+  editing: PropTypes.number,
   hassConfig: PropTypes.any,
   hassEntities: PropTypes.any,
   handleHassChange: PropTypes.func.isRequired,

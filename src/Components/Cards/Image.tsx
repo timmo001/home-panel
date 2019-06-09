@@ -75,7 +75,7 @@ function Image(props: ImageProps) {
 
 Image.propTypes = {
   card: PropTypes.any.isRequired,
-  editing: PropTypes.number.isRequired,
+  editing: PropTypes.number,
   handleChange: PropTypes.func
 };
 

@@ -57,7 +57,7 @@ function Markdown(props: MarkdownProps) {
 
 Markdown.propTypes = {
   card: PropTypes.any.isRequired,
-  editing: PropTypes.number.isRequired,
+  editing: PropTypes.number,
   handleChange: PropTypes.func
 };
 

@@ -67,7 +67,10 @@ function Configuration(props: ConfigurationProps) {
   const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
   ) => {
-    props.handleUpdateConfig!(path, (event.target as HTMLInputElement).value);
+    props.handleUpdateConfig!(
+      path,
+      Number((event.target as HTMLInputElement).value)
+    );
   };
 
   const handleSwitchChange = (path: any[]) => (

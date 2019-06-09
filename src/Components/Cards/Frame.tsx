@@ -65,7 +65,7 @@ function Frame(props: FrameProps) {
 
 Frame.propTypes = {
   card: PropTypes.any.isRequired,
-  editing: PropTypes.number.isRequired,
+  editing: PropTypes.number,
   handleChange: PropTypes.func
 };
 

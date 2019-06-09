@@ -78,7 +78,7 @@ function Entity(props: EntityProps) {
 
 Entity.propTypes = {
   card: PropTypes.any.isRequired,
-  editing: PropTypes.number.isRequired,
+  editing: PropTypes.number,
   hassConfig: PropTypes.any,
   hassEntities: PropTypes.any,
   handleChange: PropTypes.func

@@ -50,7 +50,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     flexDirection: 'row'
   },
   textField: {
-    maxWidth: 100
+    minWidth: 100,
+    maxWidth: 130
   }
 }));
 
@@ -212,7 +213,7 @@ function Item(props: ItemProps) {
             className={classes.radioGroup}
             aria-label={props.item.title}
             name={props.item.name}
-            defaultValue={value}
+            defaultValue={String(value)}
             onChange={props.handleRadioChange!([
               ...props.path!,
               props.item.name
@@ -220,7 +221,7 @@ function Item(props: ItemProps) {
             {props.item.items.map((rItem: any) => (
               <FormControlLabel
                 key={rItem.name}
-                value={rItem.name}
+                value={String(rItem.name)}
                 label={rItem.title}
                 control={<Radio color="primary" />}
               />
