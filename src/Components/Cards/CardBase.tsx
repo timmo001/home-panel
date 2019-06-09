@@ -150,7 +150,7 @@ function CardBase(props: CardBaseProps) {
             ? Number(props.card.elevation)
             : 1
         }
-        onClick={props.card.togglable && handleHassToggle}
+        onClick={props.card.toggleable && handleHassToggle}
         style={{
           background:
             props.editing !== 2 &&
