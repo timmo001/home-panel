@@ -14,9 +14,14 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import withMobileDialog, {
+  WithMobileDialog
+} from '@material-ui/core/withMobileDialog';
 
 import { ConfigurationProps } from './Configuration';
 import Section from './Section';
+
+export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -47,7 +52,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ItemProps extends ConfigurationProps {}
+interface ItemProps extends ConfigurationProps {
+  fullScreen?: boolean;
+}
 
 function Item(props: ItemProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -126,8 +133,16 @@ function Item(props: ItemProps) {
               className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
             />
           </IconButton>
-          <Dialog open={dialogOpen} onClose={handleDialogToggle}>
-            <DialogTitle>{props.item.title}</DialogTitle>
+          <Dialog
+            open={dialogOpen}
+            onClose={handleDialogToggle}
+            fullScreen={props.fullScreen}
+            fullWidth={true}
+            maxWidth="xs"
+            aria-labelledby="responsive-dialog-title">
+            <DialogTitle id="responsive-dialog-title">
+              {props.item.title}
+            </DialogTitle>
             <DialogContent>
               <Grid
                 container
@@ -135,7 +150,7 @@ function Item(props: ItemProps) {
                 alignItems="center"
                 className={classes.item}>
                 {Array.isArray(value) &&
-                  value.map((items: any[], id: number) => {
+                  value.map((_items: any[], id: number) => {
                     return (
                       <Grid
                         key={id}
@@ -148,12 +163,13 @@ function Item(props: ItemProps) {
                           <Section
                             key={id}
                             {...props}
-                            path={[...props.path!, id]}
+                            path={[...props.path!, props.item.name, id]}
                             section={{ name: id, items: props.item.items }}
                           />
                         </Grid>
                         <Grid item>
                           <IconButton
+                            color="secondary"
                             onClick={props.handleDelete!([
                               ...props.path!,
                               props.item.name,
@@ -199,14 +215,16 @@ function Item(props: ItemProps) {
 }
 
 Item.propTypes = {
+  fullScreen: PropTypes.bool.isRequired,
   config: PropTypes.any,
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
   section: PropTypes.any.isRequired,
   handleAdd: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
   handleSwitchChange: PropTypes.func.isRequired
 };
 
-export default Item;
+export default withMobileDialog()(Item);
