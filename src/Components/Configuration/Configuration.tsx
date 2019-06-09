@@ -2,6 +2,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -28,6 +29,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       paddingBottom: theme.spacing(2.5)
     }
   },
+  icon: {
+    marginRight: theme.spacing(2),
+    fontSize: 24
+  },
   item: {
     padding: theme.spacing(1.5, 1),
     borderBottom: '1px solid #EEE',
@@ -42,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   radioGroup: {
     display: 'flex',
     flexDirection: 'row'
+  },
+  textField: {
+    maxWidth: 100
   }
 }));
 
@@ -109,17 +117,21 @@ function Configuration(props: ConfigurationProps) {
                   direction="row"
                   alignItems="center"
                   className={classes.item}>
+                  <Grid item>
+                    <span
+                      className={classnames('mdi', item.icon, classes.icon)}
+                    />
+                  </Grid>
                   <Grid item xs>
-                    <Typography variant="subtitle1">
-                      <MarkdownText text={item.title} />
-                    </Typography>
-                    <Typography variant="body2">
+                    <Typography variant="subtitle1">{item.title}</Typography>
+                    <Typography variant="body2" component="span">
                       <MarkdownText text={item.description} />
                     </Typography>
                   </Grid>
                   <Grid item>
                     {item.type === 'input' && (
                       <TextField
+                        className={classes.textField}
                         placeholder={String(item.default)}
                         type={
                           typeof item.default === 'number' ? 'number' : 'text'

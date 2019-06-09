@@ -36,6 +36,7 @@ export const items = [
         name: 'dense_toolbar',
         title: 'Dense Toolbar',
         description: 'Should the toolbar use less space?',
+        icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
       }
@@ -49,6 +50,7 @@ export const items = [
         name: 'time_show',
         title: 'Show Time',
         description: 'Show the time?',
+        icon: 'mdi-clock-outline',
         type: 'switch',
         default: true
       },
@@ -56,6 +58,7 @@ export const items = [
         name: 'time_military',
         title: 'Military Time',
         description: 'Should time be using the 24 hour clock?',
+        icon: 'mdi-clock-outline',
         type: 'switch',
         default: false
       },
@@ -63,6 +66,7 @@ export const items = [
         name: 'date_show',
         title: 'Show Date',
         description: 'Show the date?',
+        icon: 'mdi-calendar',
         type: 'switch',
         default: true
       },
@@ -70,7 +74,8 @@ export const items = [
         name: 'date_format',
         title: 'Date format',
         description:
-          'Format of the date. See [here](https://momentjs.com/docs/#/displaying/format) for more info',
+          'Format of the date. See [here](https://momentjs.com/docs/#/displaying/format) for options.',
+        icon: 'mdi-calendar-range',
         type: 'input',
         default: 'Do MMMM YYYY'
       },
@@ -78,6 +83,7 @@ export const items = [
         name: 'sensors_show',
         title: 'Show Sensors',
         description: 'Show the sensors?',
+        icon: 'mdi-thermometer',
         type: 'switch',
         default: true
       }
