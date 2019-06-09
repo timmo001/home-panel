@@ -3,7 +3,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -15,13 +15,33 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2)
   },
   icon: {},
-  text: {}
+  text: {},
+  date: {
+    fontSize: '2.8rem',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '2.4rem'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.0rem'
+    }
+  },
+  timePeriod: {
+    marginLeft: theme.spacing(1),
+    fontSize: '2.4rem',
+    [theme.breakpoints.down('md')]: {
+      fontSize: '2.0rem'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
+    }
+  }
 }));
 
 interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 
 function Header(props: HeaderProps) {
   const classes = useStyles();
+  const theme = useTheme();
 
   const entities = (
     <Grid
@@ -49,18 +69,28 @@ function Header(props: HeaderProps) {
 
   let timeLocation = props.config.header.time_location;
   let dateLocation = props.config.header.date_location;
-  let timeFormat = props.config.header.time_military ? 'HH:mm' : 'hh:mm';
+  let timeFormat = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
 
   if (timeLocation === dateLocation)
-    timeFormat += ` ${props.config.header.date_format}`;
+    timeFormat += `-_-${props.config.header.date_format}`;
+
+  const timeRows = moment()
+    .format(timeFormat)
+    .split('-_-')
+    .map((timeColumn: string) => timeColumn.split('_-_'));
 
   const time = (
     <Typography
       className={classes.text}
       color="textPrimary"
       variant="h2"
-      component="h1">
-      {moment().format(timeFormat)}
+      component="h2">
+      {timeRows[0][0]}
+      {timeRows[0][1] && (
+        <span className={classes.timePeriod}>{timeRows[0][1]}</span>
+      )}
+      <br />
+      {timeRows[1] && <span className={classes.date}>{timeRows[1][0]}</span>}
     </Typography>
   );
 
@@ -74,11 +104,12 @@ function Header(props: HeaderProps) {
     </Typography>
   );
 
-  let columns = [<div />, <div />, <div />];
+  let columns: any = ['', '', ''];
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation) columns[dateLocation] = date;
-  console.log(columns.findIndex((i: any) => i === <div />));
-  columns[columns.findIndex((i: any) => i === <div />)] = entities;
+  const entitiesIndex = columns.findIndex((i: any) => i === '');
+  console.log(entitiesIndex);
+  columns[entitiesIndex] = entities;
 
   return (
     <Grid
@@ -95,7 +126,10 @@ function Header(props: HeaderProps) {
           xs
           container
           justify={key === 2 ? 'flex-end' : key === 1 ? 'center' : 'flex-start'}
-          alignItems="flex-start">
+          alignItems="flex-start"
+          style={{
+            textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start'
+          }}>
           {columnData}
         </Grid>
       ))}
