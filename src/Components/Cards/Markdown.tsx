@@ -48,7 +48,7 @@ function Markdown(props: MarkdownProps) {
     <Typography
       className={classes.text}
       color="textPrimary"
-      variant="body2"
+      variant="body1"
       component="span">
       <MarkdownText text={props.card.content} />
     </Typography>

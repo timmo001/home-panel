@@ -64,9 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: '1 1 auto',
     margin: 4
   },
-  title: {
-    fontWeight: 400
-  },
+  title: {},
   switch: {
     margin: 4
   }
@@ -238,7 +236,7 @@ function CardBase(props: CardBaseProps) {
               <Typography
                 className={classes.title}
                 color="textPrimary"
-                variant="h6"
+                variant="h5"
                 component="h3"
                 gutterBottom
                 noWrap>

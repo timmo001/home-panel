@@ -19,7 +19,7 @@
   ],
   "items": [
     {
-      "name": "Welcome",
+      "name": "Welcome Group",
       "cards": [
         {
           "content": "Hi there! Thanks for using Home Panel.\n\nMake sure to read the [docs](https://timmo.dev/home-panel) to get the most out of the app.",
