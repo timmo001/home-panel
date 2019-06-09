@@ -108,7 +108,6 @@ function Header(props: HeaderProps) {
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation) columns[dateLocation] = date;
   const entitiesIndex = columns.findIndex((i: any) => i === '');
-  console.log(entitiesIndex);
   columns[entitiesIndex] = entities;
 
   return (
