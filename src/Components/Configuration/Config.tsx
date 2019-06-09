@@ -25,7 +25,8 @@ export const defaultGroup = (page: number) => ({
 export const defaultCard = {
   title: 'New card',
   type: 'markdown',
-  content: ''
+  content: '',
+  width: 2
 };
 
 export const items = [
