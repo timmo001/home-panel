@@ -19,6 +19,16 @@ interface HomeAssistantProps {
   setEntities: (entities: any) => void;
 }
 
+export interface HomeAssistantChangeProps {
+  hassConfig: any;
+  hassEntities: any;
+  handleHassChange?: (
+    domain: string,
+    state: string | boolean,
+    data?: any
+  ) => void;
+}
+
 let connection: any,
   connected: boolean = false;
 

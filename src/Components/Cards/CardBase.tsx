@@ -20,6 +20,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from './EditCard';
 import Entity from './Entity';
@@ -71,16 +72,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface CardBaseProps extends RouteComponentProps {
+export interface CardBaseProps
+  extends RouteComponentProps,
+    HomeAssistantChangeProps {
   card: any;
   editing: number;
-  hassConfig: any;
-  hassEntities: any;
-  handleHassChange: (
-    domain: string,
-    state: string | boolean,
-    data?: any
-  ) => void;
   handleDelete: () => void;
   handleMoveUp: () => void;
   handleMoveDown: () => void;
@@ -112,7 +108,7 @@ function CardBase(props: CardBaseProps) {
     console.log(props.card.domain, props.card.state === 'on' ? false : true, {
       entity_id: props.card.entity
     });
-    props.handleHassChange(
+    props.handleHassChange!(
       props.card.domain,
       props.card.state === 'on' ? false : true,
       {

@@ -15,6 +15,7 @@ import {
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import CardBase, { CardBaseProps } from '../Cards/CardBase';
+import Header from '../Header/Header';
 
 interface OverviewProps extends RouteComponentProps, ConfigProps {
   config: any;
@@ -71,50 +72,66 @@ function Overview(props: OverviewProps) {
       justify="flex-start"
       alignItems="flex-start"
       spacing={1}>
-      {groups.map((group: GroupProps, groupKey: number) => (
+      <Header
+        editing={props.editing}
+        hassConfig={props.hassConfig}
+        hassEntities={props.hassEntities}
+      />
+      <Grid
+        item
+        xs
+        container
+        direction="row"
+        justify="flex-start"
+        alignItems="flex-start"
+        spacing={1}>
+        {groups.map((group: GroupProps, groupKey: number) => (
+          <Grid
+            key={groupKey}
+            item
+            container
+            direction="column"
+            justify="center"
+            alignItems="flex-start"
+            spacing={1}
+            style={{ width: groupWidth * group.width + theme.spacing(1) }}>
+            <Typography variant="h5" component="h2">
+              {group.name}
+            </Typography>
+            {group.cards.map((card: CardBaseProps, key: number) => (
+              <CardBase
+                {...props}
+                key={key}
+                card={card}
+                editing={props.editing}
+                hassConfig={props.hassConfig}
+                hassEntities={props.hassEntities}
+                handleHassChange={props.handleHassChange}
+                handleDelete={handleDelete(groupKey, key)}
+                handleMoveUp={handleMoveUp(groupKey, key)}
+                handleMoveDown={handleMoveDown(groupKey, key)}
+                handleUpdate={handleUpdate(groupKey, key)}
+              />
+            ))}
+            {props.editing === 1 && (
+              <AddCard
+                handleAdd={handleAddCard(groupKey, group.cards.length)}
+              />
+            )}
+          </Grid>
+        ))}
         <Grid
-          key={groupKey}
           item
           container
           direction="column"
           justify="center"
           alignItems="flex-start"
           spacing={1}
-          style={{ width: groupWidth * group.width + theme.spacing(1) }}>
-          <Typography variant="h5" component="h2">
-            {group.name}
-          </Typography>
-          {group.cards.map((card: CardBaseProps, key: number) => (
-            <CardBase
-              {...props}
-              key={key}
-              card={card}
-              editing={props.editing}
-              hassConfig={props.hassConfig}
-              hassEntities={props.hassEntities}
-              handleHassChange={props.handleHassChange}
-              handleDelete={handleDelete(groupKey, key)}
-              handleMoveUp={handleMoveUp(groupKey, key)}
-              handleMoveDown={handleMoveDown(groupKey, key)}
-              handleUpdate={handleUpdate(groupKey, key)}
-            />
-          ))}
+          style={{ width: groupWidth * 2 + theme.spacing(1) }}>
           {props.editing === 1 && (
-            <AddCard handleAdd={handleAddCard(groupKey, group.cards.length)} />
+            <AddGroup handleAdd={handleAddGroup(groups.length)} />
           )}
         </Grid>
-      ))}
-      <Grid
-        item
-        container
-        direction="column"
-        justify="center"
-        alignItems="flex-start"
-        spacing={1}
-        style={{ width: groupWidth * 2 + theme.spacing(1) }}>
-        {props.editing === 1 && (
-          <AddGroup handleAdd={handleAddGroup(groups.length)} />
-        )}
       </Grid>
     </Grid>
   );
