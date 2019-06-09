@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import emoji from 'markdown-it-emoji';
-import markdownIt from 'markdown-it';
-import ReactHtmlParser from 'react-html-parser';
 
 import { CardBaseProps } from './CardBase';
+import MarkdownText from '../Utils/MarkdownText';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {
@@ -46,20 +44,13 @@ function Markdown(props: MarkdownProps) {
       />
     );
 
-  const text = new markdownIt({
-    html: true,
-    xhtmlOut: true,
-    breaks: false,
-    langPrefix: 'language-',
-    linkify: true,
-    typographer: true
-  })
-    .use(emoji)
-    .render(props.card.content);
-
   return (
-    <Typography className={classes.text} color="textPrimary" variant="body2" component="span">
-      {ReactHtmlParser(text)}
+    <Typography
+      className={classes.text}
+      color="textPrimary"
+      variant="body2"
+      component="span">
+      <MarkdownText text={props.card.content} />
     </Typography>
   );
 }

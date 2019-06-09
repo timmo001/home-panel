@@ -42,16 +42,77 @@ export const items = [
     ]
   },
   {
-    name: 'overview',
-    title: 'Overview',
+    name: 'header',
+    title: 'Header',
     items: [
       {
-        name: 'rows',
-        title: 'Rows per Column',
-        description: 'How many rows should show per column?',
+        name: 'time_show',
+        title: 'Show Time',
+        description: 'Show the time?',
+        type: 'switch',
+        default: true
+      },
+      {
+        name: 'time_military',
+        title: 'Military Time',
+        description: 'Should time be using the 24 hour clock?',
+        type: 'switch',
+        default: false
+      },
+      {
+        name: 'date_show',
+        title: 'Show Date',
+        description: 'Show the date?',
+        type: 'switch',
+        default: true
+      },
+      {
+        name: 'date_format',
+        title: 'Date format',
+        description:
+          'Format of the date. See [here](https://momentjs.com/docs/#/displaying/format) for more info',
         type: 'input',
-        default: 3
+        default: 'Do MMMM YYYY'
+      },
+      {
+        name: 'sensors_show',
+        title: 'Show Sensors',
+        description: 'Show the sensors?',
+        type: 'switch',
+        default: true
       }
     ]
   }
 ];
+
+// "header": {
+//   "time": {
+//     "disable": false,
+//     "military": false
+//   },
+//   "date": {
+//     "disable": false,
+//     "format": "Do MMMM YYYY"
+//   },
+//   "left_outdoor_weather": {
+//     "dark_sky_icon": "sensor.dark_sky_icon",
+//     "condition": "",
+//     "data": [
+//       {
+//         "entity_id": "",
+//         "unit_of_measurement": ""
+//       }
+//     ]
+//   },
+//   "right_indoor": [
+//     {
+//       "label": "",
+//       "data": [
+//         {
+//           "entity_id": "",
+//           "unit_of_measurement": ""
+//         }
+//       ]
+//     }
+//   ]
+// },

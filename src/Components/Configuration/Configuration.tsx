@@ -15,6 +15,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import { items, ConfigProps } from './Config';
+import MarkdownText from '../Utils/MarkdownText';
 
 const useStyles = makeStyles((theme: Theme) => ({
   section: {
@@ -22,9 +23,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginBottom: theme.spacing(2),
     '&:last-child': { marginBottom: 0 }
   },
+  cardContent: {
+    '&:last-child': {
+      paddingBottom: theme.spacing(2.5)
+    }
+  },
   item: {
+    padding: theme.spacing(1.5, 1),
     borderBottom: '1px solid #EEE',
-    '&:last-child': { borderBottom: 'none' }
+    '&:first-child': {
+      paddingTop: 0
+    },
+    '&:last-child': {
+      borderBottom: 'none',
+      paddingBottom: 0
+    }
   },
   radioGroup: {
     display: 'flex',
@@ -88,7 +101,7 @@ function Configuration(props: ConfigurationProps) {
             {section.title}
           </Typography>
           <Card>
-            <CardContent>
+            <CardContent className={classes.cardContent}>
               {section.items.map((item: any) => (
                 <Grid
                   key={item.name}
@@ -97,8 +110,12 @@ function Configuration(props: ConfigurationProps) {
                   alignItems="center"
                   className={classes.item}>
                   <Grid item xs>
-                    <Typography variant="subtitle1">{item.title}</Typography>
-                    <Typography variant="body2">{item.description}</Typography>
+                    <Typography variant="subtitle1">
+                      <MarkdownText text={item.title} />
+                    </Typography>
+                    <Typography variant="body2">
+                      <MarkdownText text={item.description} />
+                    </Typography>
                   </Grid>
                   <Grid item>
                     {item.type === 'input' && (

@@ -9,6 +9,16 @@ body {
   height: 100%;
 }
 
+* > :first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+* > :last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -16,21 +26,21 @@ code {
 
 a {
   transition: color 0.4s;
-  color: #E0E0E0;
+  color: #e0e0e0;
   text-decoration: none;
 }
 
 a:visited {
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 a:hover {
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 a:active {
   transition: color 0.3s;
-  color: #BDBDBD;
+  color: #bdbdbd;
 }
 
 ::-webkit-scrollbar {
