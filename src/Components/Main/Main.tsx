@@ -15,6 +15,7 @@ import HomeAssistant, {
   handleChange as handleHassChange
 } from '../HomeAssistant/HomeAssistant';
 import isObject from '../Utils/isObject';
+import Loading from '../Utils/Loading';
 import Overview from '../Overview/Overview';
 import properCase from '../Utils/properCase';
 
@@ -87,6 +88,10 @@ function Main(props: MainProps) {
   if (!props.loggedIn) {
     props.history.replace('/login');
     return null;
+  }
+
+  if (!props.config) {
+    return <Loading text="Loading Config. Please Wait.." />;
   }
 
   const search =
@@ -164,7 +169,7 @@ function Main(props: MainProps) {
 Main.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   loginCredentials: PropTypes.any,
-  config: PropTypes.object.isRequired,
+  config: PropTypes.object,
   handleConfigChange: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired
 };

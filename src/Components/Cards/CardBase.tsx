@@ -27,9 +27,6 @@ import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
 
-// export const cardStyles = {
-// };
-
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: '100%',

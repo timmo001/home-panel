@@ -193,20 +193,16 @@ function App() {
             />
             <Route
               path="/"
-              render={props =>
-                !config ? (
-                  <Loading text="Please Wait.." />
-                ) : (
-                  <Main
-                    {...props}
-                    loggedIn={loginCredentials ? true : false}
-                    loginCredentials={loginCredentials}
-                    config={config}
-                    handleConfigChange={handleConfigChange}
-                    handleLogout={handleLogout}
-                  />
-                )
-              }
+              render={props => (
+                <Main
+                  {...props}
+                  loggedIn={loginCredentials ? true : false}
+                  loginCredentials={loginCredentials}
+                  config={config}
+                  handleConfigChange={handleConfigChange}
+                  handleLogout={handleLogout}
+                />
+              )}
             />
           </Switch>
         </Router>
