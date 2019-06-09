@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import emoji from 'markdown-it-emoji';
+import externalLinks from 'markdown-it-external-links';
 import markdownIt from 'markdown-it';
 import ReactHtmlParser from 'react-html-parser';
 
@@ -19,6 +20,7 @@ function MarkdownText(props: MarkdownTextProps) {
     typographer: true
   })
     .use(emoji)
+    .use(externalLinks, { externalTarget: '_blank' })
     .render(props.text);
 
   return <span>{ReactHtmlParser(text)}</span>;
