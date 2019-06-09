@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1
   },
   icon: {
-    fontSize: 24,
-    lineHeight: '22px'
+    fontSize: 22,
+    height: 24
   },
   link: {
     color: theme.palette.text.primary,

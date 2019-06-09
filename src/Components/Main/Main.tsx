@@ -58,6 +58,7 @@ function Main(props: MainProps) {
   }, [hassConnected, props.history, props.location.search, props.loggedIn]);
 
   function handleUpdateConfig(path: any[], data: any) {
+    console.log(clone(path), clone(data));
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value

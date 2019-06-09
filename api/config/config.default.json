@@ -7,7 +7,7 @@
     "time_military": false,
     "date_show": true,
     "date_format": "Do MMMM YYYY",
-    "sensors_show": true
+    "entities": []
   },
   "pages": [
     {

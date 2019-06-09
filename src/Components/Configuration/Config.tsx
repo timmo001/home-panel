@@ -80,12 +80,31 @@ export const items = [
         default: 'Do MMMM YYYY'
       },
       {
-        name: 'sensors_show',
-        title: 'Show Sensors',
-        description: 'Show the sensors?',
-        icon: 'mdi-thermometer',
-        type: 'switch',
-        default: true
+        name: 'entities',
+        title: 'Entities',
+        description: 'Additional data to show across the header.',
+        icon: 'mdi-text',
+        type: 'array',
+        default: [{ entity: '', icon: '' }],
+        items: [
+          {
+            name: 'entity',
+            title: 'Entity',
+            description: 'The `entity_id`.',
+            icon: 'mdi-home-assistant',
+            type: 'entity',
+            default: ''
+          },
+          {
+            name: 'icon',
+            title: 'Icon',
+            description:
+              'The icon. See [here](https://materialdesignicons.com) for icons.',
+            icon: 'mdi-thermometer',
+            type: 'input',
+            default: ''
+          }
+        ]
       }
     ]
   }

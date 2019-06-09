@@ -2,21 +2,14 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
 import { items, ConfigProps } from './Config';
-import MarkdownText from '../Utils/MarkdownText';
+import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
   section: {
@@ -28,57 +21,56 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:last-child': {
       paddingBottom: theme.spacing(2.5)
     }
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-    fontSize: 24
-  },
-  item: {
-    padding: theme.spacing(1.5, 1),
-    borderBottom: '1px solid #EEE',
-    '&:first-child': {
-      paddingTop: 0
-    },
-    '&:last-child': {
-      borderBottom: 'none',
-      paddingBottom: 0
-    }
-  },
-  radioGroup: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  textField: {
-    maxWidth: 100
   }
 }));
 
-interface ConfigurationProps extends RouteComponentProps, ConfigProps {
-  config: any;
-  handleUpdateConfig: (path: any[], data: any) => void;
+export interface ConfigurationProps extends RouteComponentProps, ConfigProps {
+  path?: any[];
+  item?: any;
+  section?: any;
+  handleAdd?: (path: any[], defaultItem: any) => () => void;
+  handleDelete?: (path: any[]) => () => void;
+  handleChange?: (
+    path: any[],
+    type: string
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRadioChange?: (
+    path: any[]
+  ) => (event: React.ChangeEvent<unknown>) => void;
+  handleSwitchChange?: (
+    path: any[]
+  ) => (_event: React.ChangeEvent<{}>, checked: boolean) => void;
 }
 
 function Configuration(props: ConfigurationProps) {
-  const handleChange = (path: string[], type: string) => (
+  const handleAdd = (path: any[], defaultItem: any) => () => {
+    props.handleUpdateConfig!(path, defaultItem);
+  };
+
+  const handleDelete = (path: any[]) => () => {
+    props.handleUpdateConfig!(path, undefined);
+  };
+
+  const handleChange = (path: any[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    props.handleUpdateConfig(
+    props.handleUpdateConfig!(
       path,
       type === 'number' ? Number(event.target.value) : event.target.value
     );
   };
 
-  const handleRadioChange = (path: string[]) => (
+  const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
   ) => {
-    props.handleUpdateConfig(path, (event.target as HTMLInputElement).value);
+    props.handleUpdateConfig!(path, (event.target as HTMLInputElement).value);
   };
 
-  const handleSwitchChange = (path: string[]) => (
+  const handleSwitchChange = (path: any[]) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
   ) => {
-    props.handleUpdateConfig(path, checked);
+    props.handleUpdateConfig!(path, checked);
   };
 
   // function handleSelectChange(
@@ -96,85 +88,30 @@ function Configuration(props: ConfigurationProps) {
       justify="center"
       alignItems="center"
       spacing={1}>
-      {items.map((section: any) => (
+      {items.map((item: any) => (
         <Grid
           className={classes.section}
-          key={section.name}
+          key={item.name}
           item
           lg={3}
           md={6}
           sm={8}
           xs={12}>
           <Typography variant="h4" gutterBottom noWrap>
-            {section.title}
+            {item.title}
           </Typography>
           <Card>
             <CardContent className={classes.cardContent}>
-              {section.items.map((item: any) => (
-                <Grid
-                  key={item.name}
-                  container
-                  direction="row"
-                  alignItems="center"
-                  className={classes.item}>
-                  <Grid item>
-                    <span
-                      className={classnames('mdi', item.icon, classes.icon)}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <Typography variant="subtitle1">{item.title}</Typography>
-                    <Typography variant="body2" component="span">
-                      <MarkdownText text={item.description} />
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    {item.type === 'input' && (
-                      <TextField
-                        className={classes.textField}
-                        placeholder={String(item.default)}
-                        type={
-                          typeof item.default === 'number' ? 'number' : 'text'
-                        }
-                        defaultValue={props.config[section.name][item.name]}
-                        onChange={handleChange(
-                          [section.name, item.name],
-                          typeof item.default === 'number' ? 'number' : 'string'
-                        )}
-                      />
-                    )}
-                    {item.type === 'radio' && (
-                      <FormControl component="fieldset">
-                        <RadioGroup
-                          className={classes.radioGroup}
-                          aria-label={item.title}
-                          name={item.name}
-                          defaultValue={props.config[section.name][item.name]}
-                          onChange={handleRadioChange([
-                            section.name,
-                            item.name
-                          ])}>
-                          {item.items.map((rItem: any) => (
-                            <FormControlLabel
-                              key={rItem.name}
-                              value={rItem.name}
-                              label={rItem.title}
-                              control={<Radio color="primary" />}
-                            />
-                          ))}
-                        </RadioGroup>
-                      </FormControl>
-                    )}
-                    {item.type === 'switch' && (
-                      <Switch
-                        color="primary"
-                        defaultChecked={props.config[section.name][item.name]}
-                        onChange={handleSwitchChange([section.name, item.name])}
-                      />
-                    )}
-                  </Grid>
-                </Grid>
-              ))}
+              <Section
+                {...props}
+                path={[item.name]}
+                section={item}
+                handleAdd={handleAdd}
+                handleDelete={handleDelete}
+                handleChange={handleChange}
+                handleRadioChange={handleRadioChange}
+                handleSwitchChange={handleSwitchChange}
+              />
             </CardContent>
           </Card>
         </Grid>
