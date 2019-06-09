@@ -3,15 +3,6 @@ import { CardBaseProps } from '../../Components/Cards/CardBase';
 
 export interface ConfigProps {
   config: any;
-  // items?: [
-  //   {
-  //     name: string;
-  //     title: string;
-  //     items: [
-  //       { name: string; title: string; description?: string; type: string }
-  //     ];
-  //   }
-  // ];
   handleUpdateConfig?: (path: any[], data: any) => void;
   handleConfigChange?: (config: any) => void;
 }

@@ -44,7 +44,7 @@ function EditCard(props: EditCardProps) {
 
   function handleConfirm() {
     handleClose();
-    props.handleUpdate!(props.id, card);
+    props.handleUpdate!(card);
   }
 
   const handleChange = (name: string) => (
@@ -127,7 +127,6 @@ EditCard.propTypes = {
   fullScreen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired
-  // handleHassChange: PropTypes.func.isRequired,
 };
 
 export default withMobileDialog()(EditCard);

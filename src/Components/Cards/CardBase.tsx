@@ -72,7 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export interface CardBaseProps extends RouteComponentProps {
-  id: number;
   card: any;
   editing: number;
   hassConfig: any;
@@ -82,10 +81,10 @@ export interface CardBaseProps extends RouteComponentProps {
     state: string | boolean,
     data?: any
   ) => void;
-  handleDelete?: (key: number) => void;
-  handleMoveUp?: (key: number) => void;
-  handleMoveDown?: (key: number) => void;
-  handleUpdate?: (key: number, value: any) => void;
+  handleDelete: () => void;
+  handleMoveUp: () => void;
+  handleMoveDown: () => void;
+  handleUpdate?: (data: any) => void;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -107,18 +106,6 @@ function CardBase(props: CardBaseProps) {
 
   function handleConfirmClose() {
     setDeleteConfirm(false);
-  }
-
-  function handleDelete() {
-    props.handleDelete!(props.id);
-  }
-
-  function handleMoveUp() {
-    props.handleMoveUp!(props.id);
-  }
-
-  function handleMoveDown() {
-    props.handleMoveDown!(props.id);
   }
 
   function handleHassToggle() {
@@ -295,17 +282,17 @@ function CardBase(props: CardBaseProps) {
               <IconButton color="primary" onClick={handleDeleteConfirm}>
                 <DeleteIcon fontSize="small" />
               </IconButton>
-              <IconButton color="primary" onClick={handleMoveUp}>
+              <IconButton color="primary" onClick={props.handleMoveUp}>
                 <ArrowUpwardIcon fontSize="small" />
               </IconButton>
-              <IconButton color="primary" onClick={handleMoveDown}>
+              <IconButton color="primary" onClick={props.handleMoveDown}>
                 <ArrowDownwardsIcon fontSize="small" />
               </IconButton>
               {deleteConfirm && (
                 <ConfirmDialog
                   text="Are you sure you want to delete this card?"
                   handleClose={handleConfirmClose}
-                  handleConfirm={handleDelete}
+                  handleConfirm={props.handleDelete}
                 />
               )}
             </Grid>
@@ -325,7 +312,6 @@ function CardBase(props: CardBaseProps) {
 }
 
 CardBase.propTypes = {
-  id: PropTypes.number.isRequired,
   card: PropTypes.any.isRequired,
   editing: PropTypes.number.isRequired,
   hassConfig: PropTypes.any,

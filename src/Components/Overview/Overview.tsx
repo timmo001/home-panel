@@ -32,7 +32,6 @@ interface OverviewProps extends RouteComponentProps, ConfigProps {
     state: string | boolean,
     data?: any
   ) => void;
-  handleUpdateConfig: (path: any[], data: any) => void;
 }
 
 function Overview(props: OverviewProps) {
@@ -49,33 +48,21 @@ function Overview(props: OverviewProps) {
     );
   };
 
-  function handleDelete(key: number) {
-    props.handleUpdateConfig!(
-      ['overview', 'pages', currentPage, 'cards', key],
-      undefined
-    );
-  }
+  const handleDelete = (groupKey: number, cardKey: number) => () => {
+    props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], undefined);
+  };
 
-  function handleMoveUp(key: number) {
-    props.handleUpdateConfig!(
-      ['overview', 'pages', currentPage, 'cards', key],
-      [-1]
-    );
-  }
+  const handleMoveUp = (groupKey: number, cardKey: number) => () => {
+    props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [-1]);
+  };
 
-  function handleMoveDown(key: number) {
-    props.handleUpdateConfig!(
-      ['overview', 'pages', currentPage, 'cards', key],
-      [+1]
-    );
-  }
+  const handleMoveDown = (groupKey: number, cardKey: number) => () => {
+    props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [+1]);
+  };
 
-  function handleUpdate(key: number, data: any) {
-    props.handleUpdateConfig!(
-      ['overview', 'pages', currentPage, 'cards', key],
-      data
-    );
-  }
+  const handleUpdate = (groupKey: number, cardKey: number) => (data: any) => {
+    props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], data);
+  };
 
   const groups =
     props.config.items.filter((item: any) => item.page === currentPage) || [];
@@ -108,16 +95,15 @@ function Overview(props: OverviewProps) {
             <CardBase
               {...props}
               key={key}
-              id={groupKey}
               card={card}
               editing={props.editing}
               hassConfig={props.hassConfig}
               hassEntities={props.hassEntities}
               handleHassChange={props.handleHassChange}
-              handleDelete={handleDelete}
-              handleMoveUp={handleMoveUp}
-              handleMoveDown={handleMoveDown}
-              handleUpdate={handleUpdate}
+              handleDelete={handleDelete(groupKey, key)}
+              handleMoveUp={handleMoveUp(groupKey, key)}
+              handleMoveDown={handleMoveDown(groupKey, key)}
+              handleUpdate={handleUpdate(groupKey, key)}
             />
           ))}
           {props.editing === 1 && (
