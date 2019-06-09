@@ -19,6 +19,8 @@ import withMobileDialog, {
 } from '@material-ui/core/withMobileDialog';
 
 import { ConfigurationProps } from './Configuration';
+import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import EntitySelect from '../HomeAssistant/EntitySelect';
 import Section from './Section';
 
 export type ResponsiveDialogProps = WithMobileDialog;
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ItemProps extends ConfigurationProps {
+interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
   fullScreen?: boolean;
 }
 
@@ -75,53 +77,6 @@ function Item(props: ItemProps) {
   switch (props.item.type) {
     default:
       return null;
-    case 'input':
-      return (
-        <TextField
-          className={classes.textField}
-          placeholder={String(props.item.default)}
-          type={typeof props.item.default === 'number' ? 'number' : 'text'}
-          defaultValue={value}
-          onChange={props.handleChange!(
-            [...props.path!, props.item.name],
-            typeof props.item.default === 'number' ? 'number' : 'string'
-          )}
-        />
-      );
-    case 'radio':
-      return (
-        <FormControl component="fieldset">
-          <RadioGroup
-            className={classes.radioGroup}
-            aria-label={props.item.title}
-            name={props.item.name}
-            defaultValue={value}
-            onChange={props.handleRadioChange!([
-              ...props.path!,
-              props.item.name
-            ])}>
-            {props.item.items.map((rItem: any) => (
-              <FormControlLabel
-                key={rItem.name}
-                value={rItem.name}
-                label={rItem.title}
-                control={<Radio color="primary" />}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      );
-    case 'switch':
-      return (
-        <Switch
-          color="primary"
-          defaultChecked={value}
-          onChange={props.handleSwitchChange!([
-            ...props.path!,
-            props.item.name
-          ])}
-        />
-      );
     case 'array':
       return (
         <div>
@@ -210,6 +165,79 @@ function Item(props: ItemProps) {
             </DialogContent>
           </Dialog>
         </div>
+      );
+    case 'entity':
+      if (props.hassEntities)
+        return (
+          <EntitySelect
+            entity={value}
+            hassConfig={props.hassConfig}
+            hassEntities={props.hassEntities}
+            handleChange={props.handleChange!(
+              [...props.path!, props.item.name],
+              typeof props.item.default === 'number' ? 'number' : 'string'
+            )}
+          />
+        );
+      return (
+        <TextField
+          className={classes.textField}
+          InputLabelProps={{ shrink: true }}
+          label="Entity"
+          placeholder="sensor.myamazingsensor"
+          defaultValue={value}
+          onChange={props.handleChange!(
+            [...props.path!, props.item.name],
+            typeof props.item.default === 'number' ? 'number' : 'string'
+          )}
+        />
+      );
+    case 'input':
+      return (
+        <TextField
+          className={classes.textField}
+          placeholder={String(props.item.default)}
+          type={typeof props.item.default === 'number' ? 'number' : 'text'}
+          defaultValue={value}
+          onChange={props.handleChange!(
+            [...props.path!, props.item.name],
+            typeof props.item.default === 'number' ? 'number' : 'string'
+          )}
+        />
+      );
+    case 'radio':
+      return (
+        <FormControl component="fieldset">
+          <RadioGroup
+            className={classes.radioGroup}
+            aria-label={props.item.title}
+            name={props.item.name}
+            defaultValue={value}
+            onChange={props.handleRadioChange!([
+              ...props.path!,
+              props.item.name
+            ])}>
+            {props.item.items.map((rItem: any) => (
+              <FormControlLabel
+                key={rItem.name}
+                value={rItem.name}
+                label={rItem.title}
+                control={<Radio color="primary" />}
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      );
+    case 'switch':
+      return (
+        <Switch
+          color="primary"
+          defaultChecked={value}
+          onChange={props.handleSwitchChange!([
+            ...props.path!,
+            props.item.name
+          ])}
+        />
       );
   }
 }

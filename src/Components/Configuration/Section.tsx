@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigurationProps } from './Configuration';
+import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Item from './Item';
 import MarkdownText from '../Utils/MarkdownText';
 
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface SectionProps extends ConfigurationProps {}
+interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Section(props: SectionProps) {
   const classes = useStyles();
@@ -57,11 +58,7 @@ function Section(props: SectionProps) {
         </Typography>
       </Grid>
       <Grid item>
-        <Item
-          {...props}
-          item={item}
-          path={[...props.path!, item.name]}
-        />
+        <Item {...props} item={item} path={[...props.path!, item.name]} />
       </Grid>
     </Grid>
   ));

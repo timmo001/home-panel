@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
 import Section from './Section';
 
@@ -24,7 +25,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface ConfigurationProps extends RouteComponentProps, ConfigProps {
+export interface ConfigurationProps
+  extends RouteComponentProps,
+    ConfigProps,
+    HomeAssistantEntityProps {
   path?: any[];
   item?: any;
   section?: any;

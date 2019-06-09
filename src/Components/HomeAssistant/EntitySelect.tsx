@@ -21,9 +21,12 @@ import Paper from '@material-ui/core/Paper';
 import TextField, { BaseTextFieldProps } from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
+import { HomeAssistantEntityProps } from './HomeAssistant';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      minWidth: 120,
       flexGrow: 1
     },
     textField: {
@@ -66,9 +69,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface EntitySelectProps {
-  card: any;
-  hassEntities: any;
+interface EntitySelectProps extends HomeAssistantEntityProps {
+  entity: string;
   handleChange: (value: any) => void;
 }
 
@@ -261,7 +263,7 @@ function EntitySelect(props: EntitySelectProps) {
   });
 
   const value = suggestions.find(
-    (entity: OptionType) => entity.value === props.card.entity
+    (entity: OptionType) => entity.value === props.entity
   );
 
   return (
@@ -282,7 +284,7 @@ function EntitySelect(props: EntitySelectProps) {
 }
 
 EntitySelect.propTypes = {
-  card: PropTypes.any.isRequired,
+  entity: PropTypes.string.isRequired,
   hassEntities: PropTypes.any.isRequired,
   handleChange: PropTypes.func
 };

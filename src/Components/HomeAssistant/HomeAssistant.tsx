@@ -19,9 +19,12 @@ interface HomeAssistantProps {
   setEntities: (entities: any) => void;
 }
 
-export interface HomeAssistantChangeProps {
+export interface HomeAssistantEntityProps {
   hassConfig: any;
   hassEntities: any;
+}
+
+export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   handleHassChange?: (
     domain: string,
     state: string | boolean,

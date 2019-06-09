@@ -156,6 +156,8 @@ function Main(props: MainProps) {
               <Configuration
                 {...rrProps}
                 config={props.config}
+                hassConfig={hassConfig}
+                hassEntities={hassEntities}
                 handleUpdateConfig={handleUpdateConfig}
               />
             )}

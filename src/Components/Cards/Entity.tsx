@@ -44,8 +44,8 @@ function Entity(props: EntityProps) {
       <div>
         {props.hassEntities ? (
           <EntitySelect
-            card={props.card}
-            hassEntities={props.hassEntities}
+            {...props}
+            entity={props.card.entity}
             handleChange={props.handleChange!('entity')}
           />
         ) : (
