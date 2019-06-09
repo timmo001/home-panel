@@ -2,7 +2,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -15,12 +15,6 @@ import {
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import CardBase, { CardBaseProps } from '../Cards/CardBase';
-
-const useStyles = makeStyles((theme: Theme) => ({
-  groupName: {
-    // fontSize: '1.9rem'
-  }
-}));
 
 interface OverviewProps extends RouteComponentProps, ConfigProps {
   config: any;
@@ -67,7 +61,6 @@ function Overview(props: OverviewProps) {
   const groups =
     props.config.items.filter((item: any) => item.page === currentPage) || [];
 
-  const classes = useStyles();
   const theme = useTheme();
 
   const groupWidth = theme.breakpoints.down('sm') ? 120 : 100;
@@ -88,7 +81,7 @@ function Overview(props: OverviewProps) {
           alignItems="flex-start"
           spacing={1}
           style={{ width: groupWidth * group.width + theme.spacing(1) }}>
-          <Typography className={classes.groupName} variant="h5" component="h2">
+          <Typography variant="h5" component="h2">
             {group.name}
           </Typography>
           {group.cards.map((card: CardBaseProps, key: number) => (
