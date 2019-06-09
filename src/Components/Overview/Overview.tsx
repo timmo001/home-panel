@@ -85,7 +85,7 @@ function Overview(props: OverviewProps) {
             alignItems="flex-start"
             spacing={1}
             style={{ width: groupWidth * group.width + theme.spacing(1) }}>
-            <Typography variant="h5" component="h2">
+            <Typography variant="h4" component="h2">
               {group.name}
             </Typography>
             {group.cards.map((card: CardBaseProps, key: number) => (
