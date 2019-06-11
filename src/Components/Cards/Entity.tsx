@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { CardBaseProps } from './CardBase';
@@ -9,9 +10,10 @@ import EntitySelect from '../HomeAssistant/EntitySelect';
 import State from '../HomeAssistant/State';
 import Toggle from '../HomeAssistant/Toggle';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   textField: {
-    width: 'calc(100% - 8px)',
+    width: `calc(100% - ${theme.spacing(1)}px)`,
+    flex: '1 1 auto',
     margin: 4
   }
 }));
@@ -38,27 +40,30 @@ function Entity(props: EntityProps) {
   const classes = useStyles();
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
   props.card.domain = domain;
+  if (!props.card.entity) props.card.entity = '';
 
   if (props.editing === 2)
     return (
-      <div>
-        {props.hassEntities ? (
-          <EntitySelect
-            {...props}
-            entity={props.card.entity}
-            handleChange={props.handleChange!('entity')}
-          />
-        ) : (
-          <TextField
-            className={classes.textField}
-            InputLabelProps={{ shrink: true }}
-            label="Entity"
-            placeholder="sensor.myamazingsensor"
-            defaultValue={props.card.entity}
-            onChange={props.handleChange!('entity')}
-          />
-        )}
-      </div>
+      <Grid container direction="row" justify="center" alignItems="stretch">
+        <Grid item xs>
+          {props.hassEntities ? (
+            <EntitySelect
+              {...props}
+              entity={props.card.entity}
+              handleChange={props.handleChange!('entity')}
+            />
+          ) : (
+            <TextField
+              className={classes.textField}
+              InputLabelProps={{ shrink: true }}
+              label="Entity"
+              placeholder="sensor.myamazingsensor"
+              defaultValue={props.card.entity}
+              onChange={props.handleChange!('entity')}
+            />
+          )}
+        </Grid>
+      </Grid>
     );
 
   return (

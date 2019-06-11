@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { CardBaseProps } from './CardBase';
@@ -29,24 +30,28 @@ function Frame(props: FrameProps) {
 
   if (props.editing === 2)
     return (
-      <div>
-        <TextField
-          className={classes.textField}
-          InputLabelProps={{ shrink: true }}
-          label="URL"
-          placeholder="http://timmo.dev/home-panel"
-          defaultValue={props.card.url}
-          onChange={props.handleChange!('url')}
-        />
-        <TextField
-          className={classes.textField}
-          InputLabelProps={{ shrink: true }}
-          label="Height"
-          placeholder="auto"
-          defaultValue={props.card.height}
-          onChange={props.handleChange!('height')}
-        />
-      </div>
+      <Grid container direction="row" justify="center" alignItems="stretch">
+        <Grid item xs>
+          <TextField
+            className={classes.textField}
+            InputLabelProps={{ shrink: true }}
+            label="URL"
+            placeholder="http://timmo.dev/home-panel"
+            defaultValue={props.card.url}
+            onChange={props.handleChange!('url')}
+          />
+        </Grid>
+        <Grid item xs>
+          <TextField
+            className={classes.textField}
+            InputLabelProps={{ shrink: true }}
+            label="Height"
+            placeholder="auto"
+            defaultValue={props.card.height}
+            onChange={props.handleChange!('height')}
+          />
+        </Grid>
+      </Grid>
     );
 
   return (

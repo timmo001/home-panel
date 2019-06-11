@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
+import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { CardBaseProps } from './CardBase';
@@ -39,7 +40,8 @@ function Image(props: ImageProps) {
 
   if (props.editing === 2)
     return (
-      <div>
+      <Grid container direction="row" justify="center" alignItems="stretch">
+        <Grid item xs>
         <TextField
           className={classes.textField}
           InputLabelProps={{ shrink: true }}
@@ -48,7 +50,8 @@ function Image(props: ImageProps) {
           defaultValue={props.card.url}
           onChange={props.handleChange!('url')}
         />
-      </div>
+        </Grid>
+      </Grid>
     );
 
   return (

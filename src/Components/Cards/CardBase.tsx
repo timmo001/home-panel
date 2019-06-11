@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   textField: {
+    width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
     margin: 4
   },
@@ -136,6 +137,7 @@ function CardBase(props: CardBaseProps) {
     <Grid
       className={classes.root}
       item
+      xs
       style={{
         height,
         width
@@ -165,70 +167,88 @@ function CardBase(props: CardBaseProps) {
                 container
                 direction="row"
                 justify="center"
-                alignItems="baseline">
-                <TextField
-                  className={classes.textField}
-                  InputLabelProps={{ shrink: true }}
-                  label="Title"
-                  placeholder={'Card Title'}
-                  defaultValue={props.card.title}
-                  onChange={props.handleChange!('title')}
-                />
-                <FormControl className={classes.textField}>
-                  <InputLabel htmlFor="type">Type</InputLabel>
-                  <Select
-                    // defaultValue={props.card.type}
-                    value={props.card.type}
-                    onChange={props.handleSelectChange}
-                    inputProps={{
-                      name: 'type',
-                      id: 'type'
-                    }}>
-                    <MenuItem value="entity">Entity</MenuItem>
-                    <MenuItem value="iframe">iFrame</MenuItem>
-                    <MenuItem value="image">Image</MenuItem>
-                    <MenuItem value="markdown">Markdown</MenuItem>
-                  </Select>
-                </FormControl>
+                alignItems="stretch">
+                <Grid item xs>
+                  <TextField
+                    className={classes.textField}
+                    InputLabelProps={{ shrink: true }}
+                    label="Title"
+                    placeholder={'Card Title'}
+                    defaultValue={props.card.title}
+                    onChange={props.handleChange!('title')}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <FormControl className={classes.textField}>
+                    <InputLabel htmlFor="type">Type</InputLabel>
+                    <Select
+                      // defaultValue={props.card.type}
+                      value={props.card.type}
+                      onChange={props.handleSelectChange}
+                      inputProps={{
+                        name: 'type',
+                        id: 'type'
+                      }}>
+                      <MenuItem value="entity">Entity</MenuItem>
+                      <MenuItem value="iframe">iFrame</MenuItem>
+                      <MenuItem value="image">Image</MenuItem>
+                      <MenuItem value="markdown">Markdown</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
               </Grid>
               <Grid
                 container
                 direction="row"
                 justify="center"
-                alignItems="baseline">
-                <TextField
-                  className={classes.textField}
-                  InputLabelProps={{ shrink: true }}
-                  type="number"
-                  label="Elevation"
-                  placeholder="1"
-                  defaultValue={props.card.elevation}
-                  onChange={props.handleChange!('elevation')}
-                />
-                <TextField
-                  className={classes.textField}
-                  InputLabelProps={{ shrink: true }}
-                  label="Background"
-                  placeholder="default"
-                  defaultValue={props.card.background}
-                  onChange={props.handleChange!('background')}
-                />
-                <TextField
-                  className={classes.textField}
-                  InputLabelProps={{ shrink: true }}
-                  label="Padding"
-                  placeholder="16px"
-                  defaultValue={props.card.padding}
-                  onChange={props.handleChange!('padding')}
-                />
-                <FormControlLabel
-                  className={classes.switch}
-                  label="Round?"
-                  labelPlacement="start"
-                  control={<Switch color="primary" />}
-                  defaultValue={props.card.round}
-                  onChange={props.handleSwitchChange!('round')}
-                />
+                alignItems="stretch">
+                <Grid item xs>
+                  <TextField
+                    className={classes.textField}
+                    InputLabelProps={{ shrink: true }}
+                    type="number"
+                    label="Elevation"
+                    placeholder="1"
+                    defaultValue={props.card.elevation}
+                    onChange={props.handleChange!('elevation')}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    className={classes.textField}
+                    InputLabelProps={{ shrink: true }}
+                    label="Background"
+                    placeholder="default"
+                    defaultValue={props.card.background}
+                    onChange={props.handleChange!('background')}
+                  />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="stretch">
+                <Grid item xs>
+                  <TextField
+                    className={classes.textField}
+                    InputLabelProps={{ shrink: true }}
+                    label="Padding"
+                    placeholder="16px"
+                    defaultValue={props.card.padding}
+                    onChange={props.handleChange!('padding')}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <FormControlLabel
+                    className={classes.switch}
+                    label="Round?"
+                    labelPlacement="start"
+                    control={<Switch color="primary" />}
+                    defaultValue={props.card.round}
+                    onChange={props.handleSwitchChange!('round')}
+                  />
+                </Grid>
               </Grid>
             </div>
           ) : (

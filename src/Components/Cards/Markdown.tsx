@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { CardBaseProps } from './CardBase';
@@ -33,15 +34,19 @@ function Markdown(props: MarkdownProps) {
 
   if (props.editing === 2)
     return (
-      <TextField
-        className={classes.textField}
-        InputLabelProps={{ shrink: true }}
-        multiline
-        label="Content"
-        placeholder="- Markdown"
-        defaultValue={props.card.content}
-        onChange={props.handleChange!('content')}
-      />
+      <Grid container direction="row" justify="center" alignItems="stretch">
+        <Grid item xs>
+          <TextField
+            className={classes.textField}
+            InputLabelProps={{ shrink: true }}
+            multiline
+            label="Content"
+            placeholder="- Markdown"
+            defaultValue={props.card.content}
+            onChange={props.handleChange!('content')}
+          />
+        </Grid>
+      </Grid>
     );
 
   return (
