@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     overflow: 'visible'
   },
+  dialogContent: {
+    overflow: 'visible'
+  },
   container: {
     overflow: 'visible'
   },
