@@ -17,14 +17,18 @@ import CardBase, { CardBaseProps } from './CardBase';
 export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
-  dialogContent: {
+  root: {
     overflow: 'visible'
   },
-  container: {},
+  container: {
+    overflow: 'visible'
+  },
   background: {
     background: theme.palette.background.default
   },
-  editView: {}
+  editView: {
+    overflow: 'visible'
+  }
 }));
 
 interface EditCardProps extends CardBaseProps {
@@ -71,6 +75,9 @@ function EditCard(props: EditCardProps) {
   const classes = useStyles();
   return (
     <Dialog
+      PaperProps={{
+        className: classes.root
+      }}
       open
       fullScreen={props.fullScreen}
       fullWidth={true}

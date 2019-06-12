@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     height: '100%',
     width: '100%',
+    overflow: 'visible',
     flex: 1
   },
   cardActions: {
@@ -129,7 +130,8 @@ function CardBase(props: CardBaseProps) {
 
   const cardSize = theme.breakpoints.down('sm') ? 120 : 100;
 
-  let height = props.card.height * cardSize || cardSize;
+  let height =
+    props.editing === 2 ? 'initial' : props.card.height * cardSize || cardSize;
   if (props.card.type !== 'entity') height = -1;
   const width = props.card.width * cardSize || cardSize;
 
