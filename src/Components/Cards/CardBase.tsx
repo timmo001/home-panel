@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: 0,
     height: '100%',
     width: '100%',
+    padding: theme.spacing(1),
     zIndex: 1000,
     transition: '.4s ease',
     background: `${theme.palette.background.default}dd`,
