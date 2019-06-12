@@ -128,7 +128,7 @@ function CardBase(props: CardBaseProps) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const cardSize = theme.breakpoints.down('sm') ? 120 : 100;
+  const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
   let height =
     props.editing === 2 ? 'initial' : props.card.height * cardSize || cardSize;
@@ -251,6 +251,36 @@ function CardBase(props: CardBaseProps) {
                     onChange={props.handleSwitchChange!('round')}
                   />
                 </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="stretch">
+                  <Grid item xs>
+                    <TextField
+                      className={classes.textField}
+                      InputLabelProps={{ shrink: true }}
+                      type="number"
+                      label="Width"
+                      placeholder="1"
+                      defaultValue={props.card.width}
+                      onChange={props.handleChange!('width')}
+                    />
+                  </Grid>
+                  {props.card.type === 'entity' && (
+                    <Grid item xs>
+                      <TextField
+                        className={classes.textField}
+                        InputLabelProps={{ shrink: true }}
+                        type="number"
+                        label="Height"
+                        placeholder="1"
+                        defaultValue={props.card.height}
+                        onChange={props.handleChange!('height')}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
             </div>
           ) : (
@@ -258,7 +288,7 @@ function CardBase(props: CardBaseProps) {
               <Typography
                 className={classes.title}
                 color="textPrimary"
-                variant="h5"
+                variant="h6"
                 component="h3"
                 gutterBottom
                 noWrap>
