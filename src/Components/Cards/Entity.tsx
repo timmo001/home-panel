@@ -21,22 +21,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface EntityProps extends CardBaseProps {}
 
 function Entity(props: EntityProps) {
-  const state = (
-    <State
-      card={props.card}
-      hassConfig={props.hassConfig}
-      hassEntities={props.hassEntities}
-    />
-  );
-
-  const toggle = (
-    <Toggle
-      card={props.card}
-      hassConfig={props.hassConfig}
-      hassEntities={props.hassEntities}
-    />
-  );
-
   const classes = useStyles();
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
   props.card.domain = domain;
@@ -66,19 +50,32 @@ function Entity(props: EntityProps) {
       </Grid>
     );
 
-  return (
-    <div>
-      {domain === 'air_quality' && state}
-      {domain === 'binary_sensor' && state}
-      {domain === 'device_tracker' && state}
-      {domain === 'geo_location' && state}
-      {domain === 'input_boolean' && toggle}
-      {domain === 'light' && toggle}
-      {domain === 'sensor' && state}
-      {domain === 'sun' && state}
-      {domain === 'switch' && toggle}
-    </div>
-  );
+  if (
+    domain === 'air_quality' ||
+    'binary_sensor' ||
+    'device_tracker' ||
+    'geo_location' ||
+    'sensor' ||
+    'sun'
+  )
+    return (
+      <State
+        card={props.card}
+        hassConfig={props.hassConfig}
+        hassEntities={props.hassEntities}
+      />
+    );
+
+  if (domain === 'input_boolean' || domain === 'light' || domain === 'switch')
+    return (
+      <Toggle
+        card={props.card}
+        hassConfig={props.hassConfig}
+        hassEntities={props.hassEntities}
+      />
+    );
+
+  return null;
 }
 
 Entity.propTypes = {

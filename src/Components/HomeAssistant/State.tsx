@@ -9,6 +9,7 @@ import properCase from '../Utils/properCase';
 const useStyles = makeStyles((theme: Theme) => ({
   text: {
     width: '100%',
+    flex: 1,
     overflow: 'hidden',
     textAlign: 'center',
     textOverflow: 'ellipsis',
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   icon: {
-    marginRight: theme.spacing(0.5)
+    flex: 1
   }
 }));
 
@@ -57,6 +58,7 @@ function State(props: StateProps) {
       variant="subtitle1"
       component="span">
       {icon && <span className={classnames('mdi', icon, classes.icon)} />}
+      <br />
       {state}
     </Typography>
   );
