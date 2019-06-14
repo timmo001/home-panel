@@ -70,7 +70,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: '1 1 auto',
     margin: 4
   },
-  title: {},
+  title: {
+    lineHeight: 1.2
+  },
   switch: {
     margin: 4
   }

@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis'
   },
   iconContainer: {
+    height: `calc(100% - ${theme.spacing(1)}px)`,
+    marginTop: theme.spacing(-0.5),
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'center'
   },
   icon: {
@@ -63,7 +66,7 @@ function State(props: StateProps) {
           <Typography
             className={classnames('mdi', icon, classes.icon)}
             color="textPrimary"
-            variant="h4"
+            variant="h2"
             component="h5"
           />
         )}
