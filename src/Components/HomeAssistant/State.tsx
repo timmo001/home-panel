@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   iconContainer: {
     height: `calc(100% - ${theme.spacing(1)}px)`,
-    marginTop: theme.spacing(-0.5),
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
