@@ -11,6 +11,7 @@ import MarkdownText from '../Utils/MarkdownText';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {
+    margin: theme.spacing(0, 0.25),
     '&a': {
       color: theme.palette.text.secondary,
       '&:visited': {
