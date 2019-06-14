@@ -3,25 +3,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import properCase from '../Utils/properCase';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flex: 1
+  },
   text: {
-    width: '100%',
-    flex: 1,
     overflow: 'hidden',
     textAlign: 'center',
-    textOverflow: 'ellipsis',
-    fontSize: '1.12rem',
-    lineHeight: '1.34rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.9rem',
-      lineHeight: '1.14rem'
-    }
+    textOverflow: 'ellipsis'
+  },
+  iconContainer: {
+    display: 'flex',
+    justifyContent: 'center'
   },
   icon: {
-    flex: 1
+    textAlign: 'center',
+    opacity: 0.9
   }
 }));
 
@@ -52,15 +53,32 @@ function State(props: StateProps) {
     }
   }
   return (
-    <Typography
-      className={classes.text}
-      color="textPrimary"
-      variant="subtitle1"
-      component="span">
-      {icon && <span className={classnames('mdi', icon, classes.icon)} />}
-      <br />
-      {state}
-    </Typography>
+    <Grid
+      className={classes.root}
+      container
+      direction="row"
+      alignContent="center"
+      justify="center">
+      <Grid className={classes.iconContainer} item xs={12}>
+        {icon && (
+          <Typography
+            className={classnames('mdi', icon, classes.icon)}
+            color="textPrimary"
+            variant="h4"
+            component="h5"
+          />
+        )}
+      </Grid>
+      <Grid item xs>
+        <Typography
+          className={classes.text}
+          color="textPrimary"
+          variant="body1"
+          component="h5">
+          {state}
+        </Typography>
+      </Grid>
+    </Grid>
   );
 }
 

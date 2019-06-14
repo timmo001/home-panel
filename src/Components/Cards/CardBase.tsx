@@ -58,8 +58,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
     '&:last-child': {
-      paddingBottom: '16px'
+      paddingBottom: 'initial'
     }
   },
   textField: {
@@ -163,7 +166,8 @@ function CardBase(props: CardBaseProps) {
             props.card.background
         }}>
         <CardContent
-          style={{ padding: props.card.padding ? props.card.padding : 16 }}>
+          className={classes.cardContent}
+          style={{ padding: props.card.padding ? props.card.padding : 12 }}>
           {props.editing === 2 ? (
             <div>
               <Grid
@@ -237,7 +241,7 @@ function CardBase(props: CardBaseProps) {
                     className={classes.textField}
                     InputLabelProps={{ shrink: true }}
                     label="Padding"
-                    placeholder="16px"
+                    placeholder="12px"
                     defaultValue={props.card.padding}
                     onChange={props.handleChange!('padding')}
                   />
