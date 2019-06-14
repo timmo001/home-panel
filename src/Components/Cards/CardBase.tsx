@@ -151,6 +151,8 @@ function CardBase(props: CardBaseProps) {
       style={{
         height,
         width,
+        minHeight: height,
+        minWidth: width,
         maxHeight: height,
         maxWidth: width
       }}>

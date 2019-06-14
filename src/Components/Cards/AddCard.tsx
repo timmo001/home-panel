@@ -22,7 +22,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
   },
   icon: {
     fontSize: 48,
-    lineHeight: '70px'
+    lineHeight: '90px'
   }
 }));
 
@@ -34,19 +34,23 @@ function AddCard(props: AddCardProps) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const cardSize = theme.breakpoints.down('sm') ? 120 : 100;
+  const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
   return (
     <Grid
       item
       style={{
         height: cardSize,
-        width: cardSize
+        width: cardSize,
+        minHeight: cardSize,
+        minWidth: cardSize,
+        maxHeight: cardSize,
+        maxWidth: cardSize
       }}>
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple
         onClick={props.handleAdd}>
-        <Card className={classes.card}>
+        <Card className={classes.card} elevation={1}>
           <CardContent>
             <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
           </CardContent>

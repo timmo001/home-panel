@@ -87,14 +87,16 @@ function Overview(props: OverviewProps) {
             key={groupKey}
             item
             container
-            direction="column"
-            justify="center"
+            direction="row"
+            justify="flex-start"
             alignItems="flex-start"
             spacing={1}
             style={{ width: groupWidth * group.width + theme.spacing(2) }}>
-            <Typography className={classes.title} variant="h4" component="h2">
-              {group.name}
-            </Typography>
+            <Grid item xs={12}>
+              <Typography className={classes.title} variant="h4" component="h2">
+                {group.name}
+              </Typography>
+            </Grid>
             {group.cards.map((card: CardBaseProps, key: number) => (
               <CardBase
                 {...props}
