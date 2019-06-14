@@ -139,7 +139,8 @@ function CardBase(props: CardBaseProps) {
   let height =
     props.editing === 2 ? 'initial' : props.card.height * cardSize || cardSize;
   if (props.card.type !== 'entity') height = -1;
-  const width = props.card.width * cardSize || cardSize;
+  const width =
+    props.editing === 2 ? 'initial' : props.card.width * cardSize || cardSize;
 
   return (
     <Grid
@@ -148,7 +149,9 @@ function CardBase(props: CardBaseProps) {
       xs
       style={{
         height,
-        width
+        width,
+        maxHeight: height,
+        maxWidth: width
       }}>
       <Card
         className={classes.card}
