@@ -3,7 +3,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -41,7 +41,6 @@ interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 
 function Header(props: HeaderProps) {
   const classes = useStyles();
-  const theme = useTheme();
 
   const entities = (
     <Grid

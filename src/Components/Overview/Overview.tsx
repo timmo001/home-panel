@@ -2,7 +2,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -17,6 +17,13 @@ import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import CardBase, { CardBaseProps } from '../Cards/CardBase';
 import Header from './Header/Header';
+
+const useStyles = makeStyles((_theme: Theme) => ({
+  title: {
+    fontWeight: 300,
+    lineHeight: 1.2
+  }
+}));
 
 interface OverviewProps
   extends RouteComponentProps,
@@ -56,16 +63,16 @@ function Overview(props: OverviewProps) {
   const groups =
     props.config.items.filter((item: any) => item.page === currentPage) || [];
 
+  const classes = useStyles();
   const theme = useTheme();
 
-  const groupWidth = theme.breakpoints.down('sm') ? 120 : 100;
+  const groupWidth = theme.breakpoints.down('sm') ? 140 : 120;
   return (
     <Grid
       container
       direction="row"
       justify="flex-start"
-      alignItems="flex-start"
-      spacing={1}>
+      alignItems="flex-start">
       <Header {...props} />
       <Grid
         item
@@ -84,8 +91,8 @@ function Overview(props: OverviewProps) {
             justify="center"
             alignItems="flex-start"
             spacing={1}
-            style={{ width: groupWidth * group.width + theme.spacing(1) }}>
-            <Typography variant="h4" component="h2">
+            style={{ width: groupWidth * group.width + theme.spacing(2) }}>
+            <Typography className={classes.title} variant="h4" component="h2">
               {group.name}
             </Typography>
             {group.cards.map((card: CardBaseProps, key: number) => (

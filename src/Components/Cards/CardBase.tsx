@@ -71,6 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 4
   },
   title: {
+    fontWeight: 400,
     lineHeight: 1.2
   },
   switch: {
