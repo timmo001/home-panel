@@ -21,8 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center'
   },
   icon: {
-    textAlign: 'center',
-    opacity: 0.9
+    textAlign: 'center'
   }
 }));
 
