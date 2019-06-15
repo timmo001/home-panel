@@ -1,6 +1,5 @@
 # TODO
 
-- [ ] Header with added customization
 - [ ] Add cards compatible with v1
   - [ ] All entities previously supported
   - [ ] Custom icons

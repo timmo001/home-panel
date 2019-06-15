@@ -52,11 +52,11 @@ function Entity(props: EntityProps) {
 
   if (
     domain === 'air_quality' ||
-    'binary_sensor' ||
-    'device_tracker' ||
-    'geo_location' ||
-    'sensor' ||
-    'sun'
+    domain === 'binary_sensor' ||
+    domain === 'device_tracker' ||
+    domain === 'geo_location' ||
+    domain === 'sensor' ||
+    domain === 'sun'
   )
     return (
       <State
