@@ -54,7 +54,7 @@ function Base(props: BaseProps) {
   return (
     <div>
       <Grid container direction="row" justify="center" alignItems="stretch">
-        <Grid item xs>
+        <Grid container alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -64,7 +64,7 @@ function Base(props: BaseProps) {
             onChange={props.handleChange!('title')}
           />
         </Grid>
-        <Grid item xs>
+        <Grid container alignContent="center">
           <FormControl className={classes.textField}>
             <InputLabel htmlFor="type">Type</InputLabel>
             <Select
@@ -83,7 +83,7 @@ function Base(props: BaseProps) {
         </Grid>
       </Grid>
       <Grid container direction="row" justify="center" alignItems="stretch">
-        <Grid item xs>
+        <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -94,7 +94,7 @@ function Base(props: BaseProps) {
             onChange={props.handleChange!('elevation')}
           />
         </Grid>
-        <Grid item xs>
+        <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -106,7 +106,7 @@ function Base(props: BaseProps) {
         </Grid>
       </Grid>
       <Grid container direction="row" justify="center" alignItems="stretch">
-        <Grid item xs>
+        <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -116,7 +116,7 @@ function Base(props: BaseProps) {
             onChange={props.handleChange!('padding')}
           />
         </Grid>
-        <Grid item xs>
+        <Grid item xs container justify="flex-start" alignContent="center">
           <FormControlLabel
             className={classes.switch}
             label="Square?"
@@ -126,32 +126,32 @@ function Base(props: BaseProps) {
             onChange={props.handleSwitchChange!('square')}
           />
         </Grid>
-        <Grid container direction="row" justify="center" alignItems="stretch">
-          <Grid item xs>
+      </Grid>
+      <Grid container direction="row" justify="center" alignItems="stretch">
+        <Grid item xs container justify="flex-start" alignContent="center">
+          <TextField
+            className={classes.textField}
+            InputLabelProps={{ shrink: true }}
+            type="number"
+            label="Width"
+            placeholder="1"
+            defaultValue={props.card.width}
+            onChange={props.handleChange!('width')}
+          />
+        </Grid>
+        {props.card.type === 'entity' && (
+          <Grid item xs container justify="flex-start" alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               type="number"
-              label="Width"
+              label="Height"
               placeholder="1"
-              defaultValue={props.card.width}
-              onChange={props.handleChange!('width')}
+              defaultValue={props.card.height}
+              onChange={props.handleChange!('height')}
             />
           </Grid>
-          {props.card.type === 'entity' && (
-            <Grid item xs>
-              <TextField
-                className={classes.textField}
-                InputLabelProps={{ shrink: true }}
-                type="number"
-                label="Height"
-                placeholder="1"
-                defaultValue={props.card.height}
-                onChange={props.handleChange!('height')}
-              />
-            </Grid>
-          )}
-        </Grid>
+        )}
       </Grid>
       {props.card.type === 'entity' && <Entity {...props} />}
       {props.card.type === 'iframe' && <Frame {...props} />}
