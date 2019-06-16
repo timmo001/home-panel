@@ -16,7 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
-import EditCard from '../Configuration/EditCard';
+import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from './Entity';
 import Frame from './Frame';
 import Image from './Image';
