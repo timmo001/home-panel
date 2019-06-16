@@ -140,7 +140,7 @@ function Base(props: BaseProps) {
         onClick={props.card.toggleable && handleHassToggle}>
         <Card
           className={classes.card}
-          square={!props.card.round}
+          square={props.card.square}
           elevation={
             props.editing === 2
               ? 0

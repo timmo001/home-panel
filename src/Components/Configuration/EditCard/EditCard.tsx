@@ -18,22 +18,17 @@ import CardBase from '../../Cards/Base';
 export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    overflow: 'visible'
-  },
   dialogContent: {
-    overflow: 'visible'
+    paddingLeft: 0,
+    paddingRight: 0
   },
-  container: {
-    overflow: 'visible'
-  },
+  container: {},
   background: {
-    padding: theme.spacing(4),
+    padding: theme.spacing(2),
     background: theme.palette.background.default
   },
   editView: {
-    padding: theme.spacing(4),
-    overflow: 'visible'
+    padding: theme.spacing(2)
   }
 }));
 
@@ -82,9 +77,6 @@ function EditCard(props: EditCardProps) {
   const classes = useStyles();
   return (
     <Dialog
-      PaperProps={{
-        className: classes.root
-      }}
       open
       fullScreen={props.fullScreen}
       fullWidth={true}
@@ -97,7 +89,7 @@ function EditCard(props: EditCardProps) {
           container
           direction="row"
           alignContent="center"
-          justify="space-around">
+          justify="center">
           <Grid
             className={classes.editView}
             item
