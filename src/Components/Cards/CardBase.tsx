@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import FormControl from '@material-ui/core/FormControl';
@@ -30,14 +31,9 @@ import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: '100%',
     overflow: 'visible'
   },
   card: {
-    position: 'relative',
-    height: '100%',
-    width: '100%',
-    overflow: 'visible',
     flex: 1
   },
   cardActions: {
@@ -58,9 +54,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   cardContent: {
+    textAlign: 'start',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
     '&:last-child': {
       paddingBottom: 'initial'
     }
@@ -140,129 +136,81 @@ function CardBase(props: CardBaseProps) {
   let height =
     props.editing === 2 ? 'initial' : props.card.height * cardSize || cardSize;
   if (props.card.type !== 'entity') height = -1;
-  const width =
-    props.editing === 2 ? 'initial' : props.card.width * cardSize || cardSize;
+  let width =
+    props.editing === 2 ? -1 : props.card.width * cardSize || cardSize;
+  if (width !== cardSize) {
+    // Adjust for margins
+    width = props.card.width * theme.spacing(1) + width;
+  }
 
   return (
-    <Grid
-      className={classes.root}
-      item
-      xs
-      style={{
-        height,
-        width,
-        minHeight: height,
-        minWidth: width,
-        maxHeight: height,
-        maxWidth: width
-      }}>
-      <Card
-        className={classes.card}
-        square={props.card.round ? (props.card.round ? false : true) : false}
-        elevation={
-          props.editing === 2
-            ? 0
-            : props.card.elevation
-            ? Number(props.card.elevation)
-            : 1
-        }
-        onClick={props.card.toggleable && handleHassToggle}
-        style={{
-          background:
-            props.editing !== 2 &&
-            props.card.background &&
-            props.card.background
-        }}>
-        <CardContent
-          className={classes.cardContent}
-          style={{ padding: props.card.padding ? props.card.padding : 12 }}>
-          {props.editing === 2 ? (
-            <div>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="stretch">
-                <Grid item xs>
-                  <TextField
-                    className={classes.textField}
-                    InputLabelProps={{ shrink: true }}
-                    label="Title"
-                    placeholder={'Card Title'}
-                    defaultValue={props.card.title}
-                    onChange={props.handleChange!('title')}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <FormControl className={classes.textField}>
-                    <InputLabel htmlFor="type">Type</InputLabel>
-                    <Select
-                      // defaultValue={props.card.type}
-                      value={props.card.type}
-                      onChange={props.handleSelectChange}
-                      inputProps={{
-                        name: 'type',
-                        id: 'type'
-                      }}>
-                      <MenuItem value="entity">Entity</MenuItem>
-                      <MenuItem value="iframe">iFrame</MenuItem>
-                      <MenuItem value="image">Image</MenuItem>
-                      <MenuItem value="markdown">Markdown</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="stretch">
-                <Grid item xs>
-                  <TextField
-                    className={classes.textField}
-                    InputLabelProps={{ shrink: true }}
-                    type="number"
-                    label="Elevation"
-                    placeholder="1"
-                    defaultValue={props.card.elevation}
-                    onChange={props.handleChange!('elevation')}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <TextField
-                    className={classes.textField}
-                    InputLabelProps={{ shrink: true }}
-                    label="Background"
-                    placeholder="default"
-                    defaultValue={props.card.background}
-                    onChange={props.handleChange!('background')}
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="stretch">
-                <Grid item xs>
-                  <TextField
-                    className={classes.textField}
-                    InputLabelProps={{ shrink: true }}
-                    label="Padding"
-                    placeholder="12px"
-                    defaultValue={props.card.padding}
-                    onChange={props.handleChange!('padding')}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <FormControlLabel
-                    className={classes.switch}
-                    label="Round?"
-                    labelPlacement="start"
-                    control={<Switch color="primary" />}
-                    defaultValue={props.card.round}
-                    onChange={props.handleSwitchChange!('round')}
-                  />
+    <Grid className={classes.root} item>
+      <ButtonBase
+        focusRipple
+        disabled={!props.card.toggleable}
+        onClick={props.card.toggleable && handleHassToggle}>
+        <Card
+          className={classes.card}
+          square={props.card.round ? (props.card.round ? false : true) : false}
+          elevation={
+            props.editing === 2
+              ? 0
+              : props.card.elevation
+              ? Number(props.card.elevation)
+              : 1
+          }
+          style={{
+            background:
+              props.editing !== 2 &&
+              props.card.background &&
+              props.card.background
+          }}>
+          <CardContent
+            className={classes.cardContent}
+            style={{
+              height,
+              width,
+              minHeight: height,
+              minWidth: width,
+              maxHeight: height,
+              maxWidth: width,
+              padding: props.card.padding ? props.card.padding : 12
+            }}>
+            {props.editing === 2 ? (
+              <div>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="stretch">
+                  <Grid item xs>
+                    <TextField
+                      className={classes.textField}
+                      InputLabelProps={{ shrink: true }}
+                      label="Title"
+                      placeholder={'Card Title'}
+                      defaultValue={props.card.title}
+                      onChange={props.handleChange!('title')}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <FormControl className={classes.textField}>
+                      <InputLabel htmlFor="type">Type</InputLabel>
+                      <Select
+                        // defaultValue={props.card.type}
+                        value={props.card.type}
+                        onChange={props.handleSelectChange}
+                        inputProps={{
+                          name: 'type',
+                          id: 'type'
+                        }}>
+                        <MenuItem value="entity">Entity</MenuItem>
+                        <MenuItem value="iframe">iFrame</MenuItem>
+                        <MenuItem value="image">Image</MenuItem>
+                        <MenuItem value="markdown">Markdown</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
                 </Grid>
                 <Grid
                   container
@@ -274,98 +222,151 @@ function CardBase(props: CardBaseProps) {
                       className={classes.textField}
                       InputLabelProps={{ shrink: true }}
                       type="number"
-                      label="Width"
+                      label="Elevation"
                       placeholder="1"
-                      defaultValue={props.card.width}
-                      onChange={props.handleChange!('width')}
+                      defaultValue={props.card.elevation}
+                      onChange={props.handleChange!('elevation')}
                     />
                   </Grid>
-                  {props.card.type === 'entity' && (
+                  <Grid item xs>
+                    <TextField
+                      className={classes.textField}
+                      InputLabelProps={{ shrink: true }}
+                      label="Background"
+                      placeholder="default"
+                      defaultValue={props.card.background}
+                      onChange={props.handleChange!('background')}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="stretch">
+                  <Grid item xs>
+                    <TextField
+                      className={classes.textField}
+                      InputLabelProps={{ shrink: true }}
+                      label="Padding"
+                      placeholder="12px"
+                      defaultValue={props.card.padding}
+                      onChange={props.handleChange!('padding')}
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <FormControlLabel
+                      className={classes.switch}
+                      label="Round?"
+                      labelPlacement="start"
+                      control={<Switch color="primary" />}
+                      defaultValue={props.card.round}
+                      onChange={props.handleSwitchChange!('round')}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="stretch">
                     <Grid item xs>
                       <TextField
                         className={classes.textField}
                         InputLabelProps={{ shrink: true }}
                         type="number"
-                        label="Height"
+                        label="Width"
                         placeholder="1"
-                        defaultValue={props.card.height}
-                        onChange={props.handleChange!('height')}
+                        defaultValue={props.card.width}
+                        onChange={props.handleChange!('width')}
                       />
                     </Grid>
-                  )}
+                    {props.card.type === 'entity' && (
+                      <Grid item xs>
+                        <TextField
+                          className={classes.textField}
+                          InputLabelProps={{ shrink: true }}
+                          type="number"
+                          label="Height"
+                          placeholder="1"
+                          defaultValue={props.card.height}
+                          onChange={props.handleChange!('height')}
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
                 </Grid>
+              </div>
+            ) : (
+              props.card.title && (
+                <Typography
+                  className={classes.title}
+                  color="textPrimary"
+                  variant="h6"
+                  component="h3"
+                  gutterBottom
+                  noWrap>
+                  {props.card.title}
+                </Typography>
+              )
+            )}
+            {props.card.type === 'entity' && (
+              <Entity
+                {...props}
+                card={props.card}
+                editing={props.editing}
+                hassConfig={props.hassConfig}
+                hassEntities={props.hassEntities}
+                handleChange={props.handleChange!}
+              />
+            )}
+            {props.card.type === 'iframe' && <Frame {...props} />}
+            {props.card.type === 'image' && <Image {...props} />}
+            {props.card.type === 'markdown' && <Markdown {...props} />}
+            {props.editing === 1 && (
+              <Grid
+                className={classes.cardActions}
+                container
+                alignContent="center"
+                justify="center"
+                style={
+                  {
+                    // height: props.card.height * cardSize || cardSize,
+                    // width: props.card.width * cardSize || cardSize,
+                    // margin: -(props.card.padding ? props.card.padding : 16)
+                  }
+                }>
+                <IconButton color="primary" onClick={handleEdit}>
+                  <EditIcon fontSize="small" />
+                </IconButton>
+                <IconButton color="primary" onClick={handleDeleteConfirm}>
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+                <IconButton color="primary" onClick={props.handleMoveUp}>
+                  <ArrowUpwardIcon fontSize="small" />
+                </IconButton>
+                <IconButton color="primary" onClick={props.handleMoveDown}>
+                  <ArrowDownwardsIcon fontSize="small" />
+                </IconButton>
+                {deleteConfirm && (
+                  <ConfirmDialog
+                    text="Are you sure you want to delete this card?"
+                    handleClose={handleConfirmClose}
+                    handleConfirm={props.handleDelete}
+                  />
+                )}
               </Grid>
-            </div>
-          ) : (
-            props.card.title && (
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                variant="h6"
-                component="h3"
-                gutterBottom
-                noWrap>
-                {props.card.title}
-              </Typography>
-            )
-          )}
-          {props.card.type === 'entity' && (
-            <Entity
+            )}
+          </CardContent>
+          {editCard && (
+            <EditCard
               {...props}
-              card={props.card}
-              editing={props.editing}
-              hassConfig={props.hassConfig}
-              hassEntities={props.hassEntities}
-              handleChange={props.handleChange!}
+              handleClose={handleEditClose}
+              handleHassChange={props.handleHassChange}
+              handleUpdate={props.handleUpdate}
             />
           )}
-          {props.card.type === 'iframe' && <Frame {...props} />}
-          {props.card.type === 'image' && <Image {...props} />}
-          {props.card.type === 'markdown' && <Markdown {...props} />}
-          {props.editing === 1 && (
-            <Grid
-              className={classes.cardActions}
-              container
-              alignContent="center"
-              justify="center"
-              style={
-                {
-                  // height: props.card.height * cardSize || cardSize,
-                  // width: props.card.width * cardSize || cardSize,
-                  // margin: -(props.card.padding ? props.card.padding : 16)
-                }
-              }>
-              <IconButton color="primary" onClick={handleEdit}>
-                <EditIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={handleDeleteConfirm}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleMoveUp}>
-                <ArrowUpwardIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleMoveDown}>
-                <ArrowDownwardsIcon fontSize="small" />
-              </IconButton>
-              {deleteConfirm && (
-                <ConfirmDialog
-                  text="Are you sure you want to delete this card?"
-                  handleClose={handleConfirmClose}
-                  handleConfirm={props.handleDelete}
-                />
-              )}
-            </Grid>
-          )}
-        </CardContent>
-        {editCard && (
-          <EditCard
-            {...props}
-            handleClose={handleEditClose}
-            handleHassChange={props.handleHassChange}
-            handleUpdate={props.handleUpdate}
-          />
-        )}
-      </Card>
+        </Card>
+      </ButtonBase>
     </Grid>
   );
 }

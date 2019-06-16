@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis'
   },
   iconContainer: {
-    height: `calc(100% - ${theme.spacing(1)}px)`,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'

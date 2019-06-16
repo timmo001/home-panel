@@ -90,8 +90,8 @@ function Overview(props: OverviewProps) {
             direction="row"
             justify="flex-start"
             alignItems="flex-start"
-            spacing={1}
-            style={{ width: groupWidth * group.width + theme.spacing(2) }}>
+            style={{ width: groupWidth * group.width + theme.spacing(6.5) }}
+            spacing={1}>
             <Grid item xs={12}>
               <Typography className={classes.title} variant="h4" component="h2">
                 {group.name}
