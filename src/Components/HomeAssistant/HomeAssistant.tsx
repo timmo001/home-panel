@@ -93,7 +93,7 @@ function HomeAssistant(props: HomeAssistantProps) {
   });
 
   function eventHandler() {
-    console.log('Home Assistatn connection has been established again.');
+    console.log('Home Assistant connection has been established again.');
   }
 
   function authProm() {
