@@ -15,7 +15,7 @@ import {
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
-import CardBase, { CardBaseProps } from '../Cards/CardBase';
+import Base, { BaseProps } from '../Cards/Base';
 import Header from './Header/Header';
 
 const useStyles = makeStyles((_theme: Theme) => ({
@@ -97,8 +97,8 @@ function Overview(props: OverviewProps) {
                 {group.name}
               </Typography>
             </Grid>
-            {group.cards.map((card: CardBaseProps, key: number) => (
-              <CardBase
+            {group.cards.map((card: BaseProps, key: number) => (
+              <Base
                 {...props}
                 key={key}
                 card={card}

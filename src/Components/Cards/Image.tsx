@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 
-import { CardBaseProps } from './CardBase';
+import { BaseProps } from './Base';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface ImageProps extends CardBaseProps {}
+interface ImageProps extends BaseProps {}
 
 function Image(props: ImageProps) {
   const [dialogOpen, setDialogOpen] = React.useState(false);

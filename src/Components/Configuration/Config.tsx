@@ -1,5 +1,5 @@
 // @flow
-import { CardBaseProps } from '../../Components/Cards/CardBase';
+import { BaseProps } from '../Cards/Base';
 
 export interface ConfigProps {
   config: any;
@@ -10,7 +10,7 @@ export interface ConfigProps {
 
 export type GroupProps = {
   name: string;
-  cards: CardBaseProps[];
+  cards: BaseProps[];
   page: number;
   width: number;
 };

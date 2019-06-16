@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { CardBaseProps } from './CardBase';
+import { BaseProps } from './Base';
 import State from '../HomeAssistant/State';
 import Toggle from '../HomeAssistant/Toggle';
 
-interface EntityProps extends CardBaseProps {}
+interface EntityProps extends BaseProps {}
 
 function Entity(props: EntityProps) {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();

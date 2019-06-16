@@ -119,11 +119,11 @@ function Base(props: BaseProps) {
         <Grid item xs>
           <FormControlLabel
             className={classes.switch}
-            label="Round?"
+            label="Square?"
             labelPlacement="start"
             control={<Switch color="primary" />}
-            defaultValue={props.card.round}
-            onChange={props.handleSwitchChange!('round')}
+            defaultValue={props.card.square}
+            onChange={props.handleSwitchChange!('square')}
           />
         </Grid>
         <Grid container direction="row" justify="center" alignItems="stretch">

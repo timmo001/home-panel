@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface CardBaseProps
+export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: any;
@@ -79,7 +79,7 @@ export interface CardBaseProps
   handleUpdate: (data: any) => void;
 }
 
-function CardBase(props: CardBaseProps) {
+function Base(props: BaseProps) {
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
   const [editCard, setEditCard] = React.useState(false);
 
@@ -230,7 +230,7 @@ function CardBase(props: CardBaseProps) {
   );
 }
 
-CardBase.propTypes = {
+Base.propTypes = {
   card: PropTypes.any.isRequired,
   editing: PropTypes.number,
   handleChange: PropTypes.func,
@@ -245,4 +245,4 @@ CardBase.propTypes = {
   hassEntities: PropTypes.any
 };
 
-export default CardBase;
+export default Base;

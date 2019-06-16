@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { CardBaseProps } from './CardBase';
+import { BaseProps } from './Base';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface FrameProps extends CardBaseProps {}
+interface FrameProps extends BaseProps {}
 
 function Frame(props: FrameProps) {
   const classes = useStyles();

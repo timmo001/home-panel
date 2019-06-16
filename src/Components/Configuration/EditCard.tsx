@@ -13,7 +13,7 @@ import withMobileDialog, {
 } from '@material-ui/core/withMobileDialog';
 
 import Base, { BaseProps } from './Cards/Base';
-import CardBase from '../Cards/CardBase';
+import CardBase from '../Cards/Base';
 
 export type ResponsiveDialogProps = WithMobileDialog;
 
