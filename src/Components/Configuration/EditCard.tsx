@@ -12,7 +12,8 @@ import withMobileDialog, {
   WithMobileDialog
 } from '@material-ui/core/withMobileDialog';
 
-import CardBase, { CardBaseProps } from './CardBase';
+import Base, { BaseProps } from './Cards/Base';
+import CardBase from '../Cards/CardBase';
 
 export type ResponsiveDialogProps = WithMobileDialog;
 
@@ -27,16 +28,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     overflow: 'visible'
   },
   background: {
+    padding: theme.spacing(4),
     background: theme.palette.background.default
   },
   editView: {
+    padding: theme.spacing(4),
     overflow: 'visible'
   }
 }));
 
-interface EditCardProps extends CardBaseProps {
+interface EditCardProps extends BaseProps {
   fullScreen?: boolean;
   handleClose: () => void;
+  handleUpdate: (data: any) => void;
 }
 
 function EditCard(props: EditCardProps) {
@@ -50,7 +54,7 @@ function EditCard(props: EditCardProps) {
 
   function handleConfirm() {
     handleClose();
-    props.handleUpdate!(card);
+    props.handleUpdate(card);
   }
 
   const handleChange = (name: string) => (
@@ -93,8 +97,7 @@ function EditCard(props: EditCardProps) {
           container
           direction="row"
           alignContent="center"
-          justify="space-around"
-          spacing={2}>
+          justify="space-around">
           <Grid
             className={classes.editView}
             item
@@ -102,12 +105,10 @@ function EditCard(props: EditCardProps) {
             container
             direction="row"
             alignContent="center"
-            justify="space-around"
-            spacing={1}>
-            <CardBase
+            justify="space-around">
+            <Base
               {...props}
               card={card}
-              editing={2}
               handleChange={handleChange}
               handleSelectChange={handleSelectChange}
               handleSwitchChange={handleSwitchChange}
@@ -119,8 +120,7 @@ function EditCard(props: EditCardProps) {
             xs
             container
             alignContent="center"
-            justify="space-around"
-            spacing={2}>
+            justify="space-around">
             <CardBase {...props} card={card} editing={0} />
           </Grid>
         </Grid>

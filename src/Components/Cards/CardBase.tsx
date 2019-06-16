@@ -6,15 +6,8 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -23,7 +16,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
-import EditCard from './EditCard';
+import EditCard from '../Configuration/EditCard';
 import Entity from './Entity';
 import Frame from './Frame';
 import Image from './Image';
@@ -80,19 +73,10 @@ export interface CardBaseProps
     HomeAssistantChangeProps {
   card: any;
   editing: number;
-  handleDelete: () => void;
-  handleMoveUp: () => void;
-  handleMoveDown: () => void;
-  handleUpdate?: (data: any) => void;
-  handleChange?: (
-    name: string
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSwitchChange?: (
-    name: string
-  ) => (_event: React.ChangeEvent<{}>, checked: boolean) => void;
-  handleSelectChange?: (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => void;
+  handleDelete?: () => void;
+  handleMoveDown?: () => void;
+  handleMoveUp?: () => void;
+  handleUpdate: (data: any) => void;
 }
 
 function CardBase(props: CardBaseProps) {
@@ -146,6 +130,7 @@ function CardBase(props: CardBaseProps) {
   return (
     <Grid className={classes.root} item>
       <ButtonBase
+        component="div"
         disableRipple={!props.card.toggleable}
         focusRipple={props.card.toggleable}
         style={{
@@ -155,7 +140,7 @@ function CardBase(props: CardBaseProps) {
         onClick={props.card.toggleable && handleHassToggle}>
         <Card
           className={classes.card}
-          square={props.card.round ? (props.card.round ? false : true) : false}
+          square={!props.card.round}
           elevation={
             props.editing === 2
               ? 0
@@ -180,138 +165,16 @@ function CardBase(props: CardBaseProps) {
               maxWidth: width,
               padding: props.card.padding ? props.card.padding : 12
             }}>
-            {props.editing === 2 ? (
-              <div>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="stretch">
-                  <Grid item xs>
-                    <TextField
-                      className={classes.textField}
-                      InputLabelProps={{ shrink: true }}
-                      label="Title"
-                      placeholder={'Card Title'}
-                      defaultValue={props.card.title}
-                      onChange={props.handleChange!('title')}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <FormControl className={classes.textField}>
-                      <InputLabel htmlFor="type">Type</InputLabel>
-                      <Select
-                        // defaultValue={props.card.type}
-                        value={props.card.type}
-                        onChange={props.handleSelectChange}
-                        inputProps={{
-                          name: 'type',
-                          id: 'type'
-                        }}>
-                        <MenuItem value="entity">Entity</MenuItem>
-                        <MenuItem value="iframe">iFrame</MenuItem>
-                        <MenuItem value="image">Image</MenuItem>
-                        <MenuItem value="markdown">Markdown</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="stretch">
-                  <Grid item xs>
-                    <TextField
-                      className={classes.textField}
-                      InputLabelProps={{ shrink: true }}
-                      type="number"
-                      label="Elevation"
-                      placeholder="1"
-                      defaultValue={props.card.elevation}
-                      onChange={props.handleChange!('elevation')}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <TextField
-                      className={classes.textField}
-                      InputLabelProps={{ shrink: true }}
-                      label="Background"
-                      placeholder="default"
-                      defaultValue={props.card.background}
-                      onChange={props.handleChange!('background')}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="stretch">
-                  <Grid item xs>
-                    <TextField
-                      className={classes.textField}
-                      InputLabelProps={{ shrink: true }}
-                      label="Padding"
-                      placeholder="12px"
-                      defaultValue={props.card.padding}
-                      onChange={props.handleChange!('padding')}
-                    />
-                  </Grid>
-                  <Grid item xs>
-                    <FormControlLabel
-                      className={classes.switch}
-                      label="Round?"
-                      labelPlacement="start"
-                      control={<Switch color="primary" />}
-                      defaultValue={props.card.round}
-                      onChange={props.handleSwitchChange!('round')}
-                    />
-                  </Grid>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="stretch">
-                    <Grid item xs>
-                      <TextField
-                        className={classes.textField}
-                        InputLabelProps={{ shrink: true }}
-                        type="number"
-                        label="Width"
-                        placeholder="1"
-                        defaultValue={props.card.width}
-                        onChange={props.handleChange!('width')}
-                      />
-                    </Grid>
-                    {props.card.type === 'entity' && (
-                      <Grid item xs>
-                        <TextField
-                          className={classes.textField}
-                          InputLabelProps={{ shrink: true }}
-                          type="number"
-                          label="Height"
-                          placeholder="1"
-                          defaultValue={props.card.height}
-                          onChange={props.handleChange!('height')}
-                        />
-                      </Grid>
-                    )}
-                  </Grid>
-                </Grid>
-              </div>
-            ) : (
-              props.card.title && (
-                <Typography
-                  className={classes.title}
-                  color="textPrimary"
-                  variant="h6"
-                  component="h3"
-                  gutterBottom
-                  noWrap>
-                  {props.card.title}
-                </Typography>
-              )
+            {props.card.title && (
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                variant="h6"
+                component="h3"
+                gutterBottom
+                noWrap>
+                {props.card.title}
+              </Typography>
             )}
             {props.card.type === 'entity' && (
               <Entity
@@ -320,7 +183,6 @@ function CardBase(props: CardBaseProps) {
                 editing={props.editing}
                 hassConfig={props.hassConfig}
                 hassEntities={props.hassEntities}
-                handleChange={props.handleChange!}
               />
             )}
             {props.card.type === 'iframe' && <Frame {...props} />}
@@ -331,14 +193,7 @@ function CardBase(props: CardBaseProps) {
                 className={classes.cardActions}
                 container
                 alignContent="center"
-                justify="center"
-                style={
-                  {
-                    // height: props.card.height * cardSize || cardSize,
-                    // width: props.card.width * cardSize || cardSize,
-                    // margin: -(props.card.padding ? props.card.padding : 16)
-                  }
-                }>
+                justify="center">
                 <IconButton color="primary" onClick={handleEdit}>
                   <EditIcon fontSize="small" />
                 </IconButton>
@@ -364,8 +219,8 @@ function CardBase(props: CardBaseProps) {
           {editCard && (
             <EditCard
               {...props}
+              card={props.card}
               handleClose={handleEditClose}
-              handleHassChange={props.handleHassChange}
               handleUpdate={props.handleUpdate}
             />
           )}
@@ -378,16 +233,16 @@ function CardBase(props: CardBaseProps) {
 CardBase.propTypes = {
   card: PropTypes.any.isRequired,
   editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleHassChange: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func,
-  handleMoveUp: PropTypes.func,
-  handleMoveDown: PropTypes.func,
-  handleUpdate: PropTypes.func,
   handleChange: PropTypes.func,
+  handleDelete: PropTypes.func,
+  handleHassChange: PropTypes.func.isRequired,
+  handleMoveDown: PropTypes.func,
+  handleMoveUp: PropTypes.func,
   handleSelectChange: PropTypes.func,
-  handleSwitchChange: PropTypes.func
+  handleSwitchChange: PropTypes.func,
+  handleUpdate: PropTypes.func.isRequired,
+  hassConfig: PropTypes.any,
+  hassEntities: PropTypes.any
 };
 
 export default CardBase;

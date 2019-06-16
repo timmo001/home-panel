@@ -10,18 +10,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 interface ConfirmDialogProps {
   text?: string;
-  handleClose: () => void;
-  handleConfirm: () => void;
+  handleClose?: () => void;
+  handleConfirm?: () => void;
 }
 
 function ConfirmDialog(props: ConfirmDialogProps) {
   function handleClose() {
-    props.handleClose();
+    props.handleClose!();
   }
 
   function handleConfirm() {
     handleClose();
-    props.handleConfirm();
+    props.handleConfirm!();
   }
 
   return (
