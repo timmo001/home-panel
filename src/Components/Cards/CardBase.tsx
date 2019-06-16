@@ -146,8 +146,12 @@ function CardBase(props: CardBaseProps) {
   return (
     <Grid className={classes.root} item>
       <ButtonBase
-        focusRipple
-        disabled={!props.card.toggleable}
+        disableRipple={!props.card.toggleable}
+        focusRipple={props.card.toggleable}
+        style={{
+          cursor: !props.card.toggleable ? 'unset' : 'pointer',
+          userSelect: !props.card.toggleable ? 'text' : 'none'
+        }}
         onClick={props.card.toggleable && handleHassToggle}>
         <Card
           className={classes.card}
