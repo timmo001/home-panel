@@ -20,9 +20,17 @@ const useStyles = makeStyles((_theme: Theme) => ({
     width: '100%',
     flex: 1
   },
+  cardContent: {
+    padding: 12,
+    '&:last-child': {
+      paddingBottom: 12
+    }
+  },
+  grid: {
+    height: '100%'
+  },
   icon: {
-    fontSize: 48,
-    lineHeight: '90px'
+    fontSize: 48
   }
 }));
 
@@ -36,23 +44,29 @@ function AddCard(props: AddCardProps) {
 
   const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
   return (
-    <Grid
-      item
-      style={{
-        height: cardSize,
-        width: cardSize,
-        minHeight: cardSize,
-        minWidth: cardSize,
-        maxHeight: cardSize,
-        maxWidth: cardSize
-      }}>
+    <Grid item>
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple
         onClick={props.handleAdd}>
         <Card className={classes.card} elevation={1}>
-          <CardContent>
-            <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
+          <CardContent
+            className={classes.cardContent}
+            style={{
+              height: cardSize,
+              width: cardSize,
+              minHeight: cardSize,
+              minWidth: cardSize,
+              maxHeight: cardSize,
+              maxWidth: cardSize
+            }}>
+            <Grid
+              className={classes.grid}
+              container
+              alignContent="center"
+              justify="center">
+              <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
+            </Grid>
           </CardContent>
         </Card>
       </ButtonBase>
