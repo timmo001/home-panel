@@ -139,7 +139,7 @@ function Base(props: BaseProps) {
           cursor: !toggleable ? 'unset' : 'pointer',
           userSelect: !toggleable ? 'text' : 'none'
         }}
-        onClick={toggleable && handleHassToggle}>
+        onClick={toggleable ? handleHassToggle : undefined}>
         <Card
           className={classes.card}
           square={props.card.square}
