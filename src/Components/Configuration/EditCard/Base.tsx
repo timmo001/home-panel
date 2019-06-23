@@ -121,8 +121,9 @@ function Base(props: BaseProps) {
             className={classes.switch}
             label="Square?"
             labelPlacement="start"
-            control={<Switch color="primary" />}
-            defaultValue={props.card.square}
+            control={
+              <Switch color="primary" defaultChecked={props.card.square} />
+            }
             onChange={props.handleSwitchChange!('square')}
           />
         </Grid>
