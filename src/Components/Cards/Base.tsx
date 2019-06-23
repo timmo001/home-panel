@@ -127,17 +127,19 @@ function Base(props: BaseProps) {
     width = props.card.width * theme.spacing(1) + width;
   }
 
+  const toggleable = props.editing === 1 ? false : props.card.toggleable;
+
   return (
     <Grid className={classes.root} item>
       <ButtonBase
         component="div"
-        disableRipple={!props.card.toggleable}
-        focusRipple={props.card.toggleable}
+        disableRipple={!toggleable}
+        focusRipple={toggleable}
         style={{
-          cursor: !props.card.toggleable ? 'unset' : 'pointer',
-          userSelect: !props.card.toggleable ? 'text' : 'none'
+          cursor: !toggleable ? 'unset' : 'pointer',
+          userSelect: !toggleable ? 'text' : 'none'
         }}
-        onClick={props.card.toggleable && handleHassToggle}>
+        onClick={toggleable && handleHassToggle}>
         <Card
           className={classes.card}
           square={props.card.square}
