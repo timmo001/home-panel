@@ -49,8 +49,9 @@ function Header(props: HeaderProps) {
       direction="column"
       justify="center"
       alignItems="center">
-      {props.config.header.entities.map((entity: any) => (
+      {props.config.header.entities.map((entity: any, key: number) => (
         <Typography
+          key={key}
           className={classes.text}
           color="textPrimary"
           variant="subtitle1"
