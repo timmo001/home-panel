@@ -46,8 +46,7 @@
     "eject": "react-scripts eject",
     "eslint": "eslint -c .eslintrc.json --color src",
     "flow": "flow",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "snyk-protect": "snyk protect"
   },
   "eslintConfig": {
     "extends": "react-app"
