@@ -36,7 +36,8 @@
     "recompose": "0.30.0",
     "socket.io-client": "2.2.0",
     "superagent": "5.0.6",
-    "typeface-roboto": "0.0.54"
+    "typeface-roboto": "0.0.54",
+    "snyk": "^1.192.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,7 +45,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint": "eslint -c .eslintrc.json --color src",
-    "flow": "flow"
+    "flow": "flow",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -80,5 +83,6 @@
     "awesome-typescript-loader": "5.2.1",
     "source-map-loader": "0.2.4",
     "tslint": "5.18.0"
-  }
+  },
+  "snyk": true
 }
