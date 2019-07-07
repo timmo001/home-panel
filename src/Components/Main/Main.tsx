@@ -57,7 +57,6 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.replace({ search: '' });
     }
-
   }, [hassConnected, props.history, props.location.search, props.loggedIn]);
 
   function handleUpdateConfig(path: any[], data: any) {
@@ -124,7 +123,10 @@ function Main(props: MainProps) {
     props.location!.pathname === '/configuration';
 
   return (
-    <div className={classes.root} onClick={handleMouseMove} onMouseMove={handleMouseMove}>
+    <div
+      className={classes.root}
+      onClick={handleMouseMove}
+      onMouseMove={handleMouseMove}>
       <Drawer
         {...props}
         currentPage={currentPage}
