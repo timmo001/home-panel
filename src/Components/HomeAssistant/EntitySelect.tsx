@@ -1,13 +1,6 @@
 // @flow
 import React, { CSSProperties, HTMLAttributes } from 'react';
 import PropTypes from 'prop-types';
-import { ControlProps } from 'react-select/lib/components/Control';
-import { MenuProps, NoticeProps } from 'react-select/lib/components/Menu';
-import { OptionProps } from 'react-select/lib/components/Option';
-import { PlaceholderProps } from 'react-select/lib/components/Placeholder';
-import { SingleValueProps } from 'react-select/lib/components/SingleValue';
-import { ValueContainerProps } from 'react-select/lib/components/containers';
-import { ValueType } from 'react-select/lib/types';
 import Select from 'react-select';
 import {
   createStyles,
@@ -79,7 +72,7 @@ interface OptionType {
   value: string;
 }
 
-function NoOptionsMessage(props: NoticeProps<OptionType>) {
+function NoOptionsMessage(props: any) {
   return (
     <Typography
       color="textSecondary"
@@ -107,7 +100,7 @@ inputComponent.propTypes = {
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
 } as any;
 
-function Control(props: ControlProps<OptionType>) {
+function Control(props: any) {
   return (
     <TextField
       className={props.selectProps.classes.textField}
@@ -136,7 +129,7 @@ Control.propTypes = {
   selectProps: PropTypes.object.isRequired
 } as any;
 
-function Option(props: OptionProps<OptionType>) {
+function Option(props: any) {
   return (
     <MenuItem
       ref={props.innerRef}
@@ -159,7 +152,7 @@ Option.propTypes = {
   isSelected: PropTypes.bool
 } as any;
 
-function Placeholder(props: PlaceholderProps<OptionType>) {
+function Placeholder(props: any) {
   return (
     <Typography
       color="textSecondary"
@@ -176,7 +169,7 @@ Placeholder.propTypes = {
   selectProps: PropTypes.object.isRequired
 } as any;
 
-function SingleValue(props: SingleValueProps<OptionType>) {
+function SingleValue(props: any) {
   return (
     <Typography
       className={props.selectProps.classes.singleValue}
@@ -192,7 +185,7 @@ SingleValue.propTypes = {
   selectProps: PropTypes.object.isRequired
 } as any;
 
-function ValueContainer(props: ValueContainerProps<OptionType>) {
+function ValueContainer(props: any) {
   return (
     <div className={props.selectProps.classes.valueContainer}>
       {props.children}
@@ -205,7 +198,7 @@ ValueContainer.propTypes = {
   selectProps: PropTypes.object.isRequired
 } as any;
 
-function Menu(props: MenuProps<OptionType>) {
+function Menu(props: any) {
   return (
     <Paper
       square
@@ -236,7 +229,7 @@ function EntitySelect(props: EntitySelectProps) {
   const classes = useStyles();
   const theme = useTheme();
 
-  function handleChange(option: ValueType<OptionType>) {
+  function handleChange(option: any) {
     if (option) {
       const opt: any = option;
       props.handleChange(opt.value);
