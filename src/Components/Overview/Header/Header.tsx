@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -41,31 +40,6 @@ interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 
 function Header(props: HeaderProps) {
   const classes = useStyles();
-
-  const entities = (
-    <Grid
-      item
-      container
-      direction="column"
-      justify="center"
-      alignItems="center">
-      {props.config.header.entities.map((entity: any, key: number) => (
-        <Typography
-          key={key}
-          className={classes.text}
-          color="textPrimary"
-          variant="subtitle1"
-          component="span">
-          {entity.icon && (
-            <span className={classnames('mdi', entity.icon, classes.icon)} />
-          )}
-          {entity.entity &&
-            props.hassEntities.find((e: any) => e[0] === entity.entity)[1]
-              .state}
-        </Typography>
-      ))}
-    </Grid>
-  );
 
   let timeLocation = props.config.header.time_location;
   let dateLocation = props.config.header.date_location;
@@ -108,8 +82,6 @@ function Header(props: HeaderProps) {
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation || !props.config.header.time_show)
     columns[dateLocation] = date;
-  const entitiesIndex = columns.findIndex((i: any) => i === '');
-  columns[entitiesIndex] = entities;
 
   return (
     <Grid
@@ -140,8 +112,7 @@ function Header(props: HeaderProps) {
 Header.propTypes = {
   editing: PropTypes.number,
   config: PropTypes.any,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
+  hassConfig: PropTypes.any
 };
 
 export default Header;

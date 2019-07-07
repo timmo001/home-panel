@@ -20,7 +20,6 @@ import withMobileDialog, {
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import EntitySelect from '../HomeAssistant/EntitySelect';
 import Section from './Section';
 
 export type ResponsiveDialogProps = WithMobileDialog;
@@ -166,32 +165,6 @@ function Item(props: ItemProps) {
             </DialogContent>
           </Dialog>
         </div>
-      );
-    case 'entity':
-      if (props.hassEntities)
-        return (
-          <EntitySelect
-            entity={value}
-            hassConfig={props.hassConfig}
-            hassEntities={props.hassEntities}
-            handleChange={props.handleChange!(
-              [...props.path!, props.item.name],
-              typeof props.item.default === 'number' ? 'number' : 'string'
-            )}
-          />
-        );
-      return (
-        <TextField
-          className={classes.textField}
-          InputLabelProps={{ shrink: true }}
-          label="Entity"
-          placeholder="sensor.myamazingsensor"
-          defaultValue={value}
-          onChange={props.handleChange!(
-            [...props.path!, props.item.name],
-            typeof props.item.default === 'number' ? 'number' : 'string'
-          )}
-        />
       );
     case 'input':
       return (

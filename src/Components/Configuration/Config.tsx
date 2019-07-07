@@ -124,67 +124,7 @@ export const items = [
             title: 'Right'
           }
         ]
-      },
-
-      {
-        name: 'entities',
-        title: 'Entities',
-        description: 'Additional data to show across the header.',
-        icon: 'mdi-text',
-        type: 'array',
-        default: [{ entity: '', icon: '' }],
-        items: [
-          {
-            name: 'entity',
-            title: 'Entity',
-            description: 'The `entity_id`.',
-            icon: 'mdi-home-assistant',
-            type: 'entity',
-            default: ''
-          },
-          {
-            name: 'icon',
-            title: 'Icon',
-            description:
-              'The icon. See [here](https://materialdesignicons.com) for icons.',
-            icon: 'mdi-thermometer',
-            type: 'input',
-            default: ''
-          }
-        ]
       }
     ]
   }
 ];
-
-// "header": {
-//   "time": {
-//     "disable": false,
-//     "military": false
-//   },
-//   "date": {
-//     "disable": false,
-//     "format": "Do MMMM YYYY"
-//   },
-//   "left_outdoor_weather": {
-//     "dark_sky_icon": "sensor.dark_sky_icon",
-//     "condition": "",
-//     "data": [
-//       {
-//         "entity_id": "",
-//         "unit_of_measurement": ""
-//       }
-//     ]
-//   },
-//   "right_indoor": [
-//     {
-//       "label": "",
-//       "data": [
-//         {
-//           "entity_id": "",
-//           "unit_of_measurement": ""
-//         }
-//       ]
-//     }
-//   ]
-// },

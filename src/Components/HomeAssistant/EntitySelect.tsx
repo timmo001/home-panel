@@ -275,7 +275,7 @@ function EntitySelect(props: EntitySelectProps) {
       setValue(
         suggestions.find((entity: OptionType) => entity.value === props.entity)
       ),
-    [props.entity]
+    [props.entity, suggestions]
   );
 
   const resultLimit = 20;
