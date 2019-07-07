@@ -55,7 +55,7 @@ function Overview(props: OverviewProps) {
   };
 
   const handleDelete = (groupKey: number, cardKey?: number) => () => {
-    if (cardKey)
+    if (cardKey !== undefined)
       props.handleUpdateConfig!(
         ['items', groupKey, 'cards', cardKey],
         undefined
@@ -64,13 +64,13 @@ function Overview(props: OverviewProps) {
   };
 
   const handleMoveUp = (groupKey: number, cardKey?: number) => () => {
-    if (cardKey)
+    if (cardKey !== undefined)
       props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [-1]);
     else props.handleUpdateConfig!(['items', groupKey], [-1]);
   };
 
   const handleMoveDown = (groupKey: number, cardKey?: number) => () => {
-    if (cardKey)
+    if (cardKey !== undefined)
       props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [+1]);
     else props.handleUpdateConfig!(['items', groupKey], [+1]);
   };
