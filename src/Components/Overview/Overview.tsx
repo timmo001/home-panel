@@ -170,7 +170,7 @@ function Overview(props: OverviewProps) {
                     </IconButton>
                     {deleteConfirm && (
                       <ConfirmDialog
-                        text="Are you sure you want to delete this card?"
+                        text="Are you sure you want to delete this group?"
                         handleClose={handleConfirmClose}
                         handleConfirm={handleDelete(groupKey)}
                       />
