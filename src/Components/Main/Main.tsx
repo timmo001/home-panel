@@ -60,8 +60,6 @@ function Main(props: MainProps) {
 
   }, [hassConnected, props.history, props.location.search, props.loggedIn]);
 
-  // useEffect(() => handleMouseMove(), [props.config]);
-
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
     if (path.length > 0) {
