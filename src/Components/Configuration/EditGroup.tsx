@@ -67,7 +67,7 @@ function EditGroup(props: EditGroupProps) {
       fullScreen={fullScreen}
       fullWidth={true}
       PaperProps={{ className: classes.dialog }}
-      maxWidth="lg"
+      maxWidth="md"
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Group</DialogTitle>
       <DialogContent className={classes.dialogContent}>
@@ -78,7 +78,7 @@ function EditGroup(props: EditGroupProps) {
           alignContent="flex-start"
           justify="flex-start"
           alignItems="stretch">
-          <Grid container alignContent="center">
+          <Grid item xs container justify="flex-start" alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -86,6 +86,17 @@ function EditGroup(props: EditGroupProps) {
               placeholder={'Group Name'}
               defaultValue={props.group.name}
               onChange={handleChange('name')}
+            />
+          </Grid>
+          <Grid item xs container justify="flex-start" alignContent="center">
+            <TextField
+              className={classes.textField}
+              InputLabelProps={{ shrink: true }}
+              type="number"
+              label="Width"
+              placeholder="2"
+              defaultValue={props.group.width}
+              onChange={handleChange!('width')}
             />
           </Grid>
         </Grid>
