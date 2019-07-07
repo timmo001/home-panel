@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -14,15 +14,11 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import withMobileDialog, {
-  WithMobileDialog
-} from '@material-ui/core/withMobileDialog';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Section from './Section';
-
-export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -54,9 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
-  fullScreen?: boolean;
-}
+interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Item(props: ItemProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -66,6 +60,8 @@ function Item(props: ItemProps) {
   }
 
   const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const lastItem = props.path!.pop();
   let secondLastItem = props.path!.reduce(
@@ -91,7 +87,7 @@ function Item(props: ItemProps) {
           <Dialog
             open={dialogOpen}
             onClose={handleDialogToggle}
-            fullScreen={props.fullScreen}
+            fullScreen={fullScreen}
             fullWidth={true}
             maxWidth="xs"
             aria-labelledby="responsive-dialog-title">
@@ -217,7 +213,6 @@ function Item(props: ItemProps) {
 }
 
 Item.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
   config: PropTypes.any,
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
@@ -229,4 +224,4 @@ Item.propTypes = {
   handleSwitchChange: PropTypes.func.isRequired
 };
 
-export default withMobileDialog()(Item);
+export default Item;

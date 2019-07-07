@@ -1,21 +1,17 @@
 // @flow
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
-import withMobileDialog, {
-  WithMobileDialog
-} from '@material-ui/core/withMobileDialog';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
-
-export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
@@ -79,10 +75,13 @@ function EditCard(props: EditCardProps) {
   }
 
   const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Dialog
       open
-      fullScreen={props.fullScreen}
+      fullScreen={fullScreen}
       fullWidth={true}
       PaperProps={{ className: classes.dialog }}
       maxWidth="lg"
@@ -137,4 +136,4 @@ EditCard.propTypes = {
   handleUpdate: PropTypes.func.isRequired
 };
 
-export default withMobileDialog()(EditCard);
+export default EditCard;
