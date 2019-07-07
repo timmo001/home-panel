@@ -34,10 +34,11 @@
     "react-select": "3.0.4",
     "react-sound": "1.2.0",
     "recompose": "0.30.0",
+    "snyk": "1.192.3",
     "socket.io-client": "2.2.0",
     "superagent": "5.1.0",
     "typeface-roboto": "0.0.54",
-    "snyk": "1.192.3"
+    "typescript": "3.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
