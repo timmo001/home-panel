@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@types/array-move": "2.0.0",
-    "@types/classnames": "2.2.8",
+    "@types/classnames": "2.2.9",
     "@types/feathersjs__authentication-client": "1.0.5",
     "@types/feathersjs__feathers": "3.1.5",
     "@types/feathersjs__socketio-client": "1.0.3",
