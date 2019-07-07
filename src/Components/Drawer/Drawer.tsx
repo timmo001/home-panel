@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -14,6 +15,7 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Slide from '@material-ui/core/Slide';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
@@ -77,12 +79,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ResponsiveDrawerProps {
+interface ResponsiveDrawerProps extends RouteComponentProps {
   currentPage: string;
   userInitials: string;
   config?: any;
   editing: number;
   hassConnected: boolean;
+  mouseMoved: boolean;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
 }
@@ -152,57 +155,65 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     (item: ItemsProps) => props.currentPage === item.name
   );
 
+  const showToolbar =
+    !props.config.general.autohide_toolbar ||
+    props.location!.pathname === '/configuration' ||
+    mobileOpen ||
+    props.mouseMoved;
+
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed">
-        <Toolbar
-          variant={
-            props.config &&
-            props.config.general &&
-            props.config.general.dense_toolbar
-              ? 'dense'
-              : 'regular'
-          }>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            className={classes.menuButton}>
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.heading} variant="h6" noWrap>
-            {props.currentPage}
-          </Typography>
-          {currentPageItem &&
-            currentPageItem.menuItems &&
-            currentPageItem.menuItems.map(
-              (item: MenuItemsProps, key: number) => {
-                const edit = item.icon === 'mdi-pencil' && props.editing;
-                return (
-                  <Link
-                    className={classes.linkToolbar}
-                    to={edit ? '?edit=false' : item.link}
-                    key={key}>
-                    <IconButton
-                      color="inherit"
-                      aria-label={item.name}
-                      className={classes.menuButton}>
-                      <span
-                        className={classnames(
-                          'mdi',
-                          edit ? 'mdi-check' : item.icon,
-                          classes.icon
-                        )}
-                      />
-                    </IconButton>
-                  </Link>
-                );
-              }
-            )}
-        </Toolbar>
-      </AppBar>
+      <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
+        <AppBar position="fixed">
+          <Toolbar
+            variant={
+              props.config &&
+              props.config.general &&
+              props.config.general.dense_toolbar
+                ? 'dense'
+                : 'regular'
+            }>
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              className={classes.menuButton}>
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.heading} variant="h6" noWrap>
+              {props.currentPage}
+            </Typography>
+            {currentPageItem &&
+              currentPageItem.menuItems &&
+              currentPageItem.menuItems.map(
+                (item: MenuItemsProps, key: number) => {
+                  const edit = item.icon === 'mdi-pencil' && props.editing;
+                  return (
+                    <Link
+                      className={classes.linkToolbar}
+                      to={edit ? '?edit=false' : item.link}
+                      key={key}>
+                      <IconButton
+                        color="inherit"
+                        aria-label={item.name}
+                        className={classes.menuButton}>
+                        <span
+                          className={classnames(
+                            'mdi',
+                            edit ? 'mdi-check' : item.icon,
+                            classes.icon
+                          )}
+                        />
+                      </IconButton>
+                    </Link>
+                  );
+                }
+              )}
+          </Toolbar>
+        </AppBar>
+      </Slide>
       <nav className={classes.drawer}>
         <Drawer
           variant="temporary"
@@ -227,6 +238,7 @@ ResponsiveDrawer.propTypes = {
   config: PropTypes.any.isRequired,
   editing: PropTypes.number,
   hassConnected: PropTypes.bool,
+  mouseMoved: PropTypes.bool.isRequired,
   handleHassLogin: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired
 };

@@ -35,6 +35,14 @@ export const items = [
     title: 'General',
     items: [
       {
+        name: 'autohide_toolbar',
+        title: 'Auto Hide Toolbar',
+        description: 'Should the toolbar hide after a given time?',
+        icon: 'mdi-page-layout-header',
+        type: 'switch',
+        default: false
+      },
+      {
         name: 'dense_toolbar',
         title: 'Dense Toolbar',
         description: 'Should the toolbar use less space?',

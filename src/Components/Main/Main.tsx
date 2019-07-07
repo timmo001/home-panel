@@ -40,11 +40,13 @@ interface MainProps extends RouteComponentProps, ConfigProps {
   handleLogout(): any;
 }
 
+let moveTimeout: NodeJS.Timeout;
 function Main(props: MainProps) {
   const [hassUrl, setHassUrl] = React.useState();
   const [hassConnected, setHassConnected] = React.useState(false);
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
+  const [mouseMoved, setMouseMoved] = React.useState(false);
 
   useEffect(() => {
     if (!hassConnected) {
@@ -55,7 +57,10 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.replace({ search: '' });
     }
+
   }, [hassConnected, props.history, props.location.search, props.loggedIn]);
+
+  // useEffect(() => handleMouseMove(), [props.config]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -83,6 +88,17 @@ function Main(props: MainProps) {
     setHassUrl(url);
   }
 
+  function handleMouseMove() {
+    clearTimeout(moveTimeout);
+    if (
+      props.config.general.autohide_toolbar &&
+      props.location!.pathname !== '/configuration'
+    ) {
+      setMouseMoved(true);
+      moveTimeout = setTimeout(() => setMouseMoved(false), 2000);
+    }
+  }
+
   const classes = useStyles();
 
   if (!props.loggedIn) {
@@ -105,25 +121,31 @@ function Main(props: MainProps) {
     props.loginCredentials &&
     props.loginCredentials.username.substring(0, 1).toUpperCase();
 
+  const showToolbar =
+    !props.config.general.autohide_toolbar ||
+    props.location!.pathname === '/configuration';
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} onClick={handleMouseMove} onMouseMove={handleMouseMove}>
       <Drawer
+        {...props}
         currentPage={currentPage}
         userInitials={userInitials}
-        config={props.config}
         editing={editing}
         hassConnected={hassConnected}
         handleHassLogin={handleHassLogin}
-        handleLogout={props.handleLogout}
+        mouseMoved={mouseMoved}
       />
-      <div
-        className={classnames(
-          classes.toolbar,
-          props.config.general &&
-            props.config.general.dense_toolbar &&
-            classes.denseToolbar
-        )}
-      />
+      {showToolbar && (
+        <div
+          className={classnames(
+            classes.toolbar,
+            props.config.general &&
+              props.config.general.dense_toolbar &&
+              classes.denseToolbar
+          )}
+        />
+      )}
       {props.config && (
         <main className={classes.content}>
           {hassUrl && (
