@@ -149,7 +149,7 @@ function Overview(props: OverviewProps) {
                     xs
                     container
                     alignContent="center"
-                    justify="center">
+                    justify="flex-end">
                     <IconButton
                       color="primary"
                       onClick={handleEditingGroup(groupKey, group)}>
