@@ -71,7 +71,7 @@
     "@types/feathersjs__feathers": "3.1.5",
     "@types/feathersjs__socketio-client": "1.0.3",
     "@types/jest": "24.0.15",
-    "@types/markdown-it": "0.0.7",
+    "@types/markdown-it": "0.0.8",
     "@types/node": "12.0.12",
     "@types/react": "16.8.22",
     "@types/react-dom": "16.8.4",
