@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:3.9.2
+ARG BUILD_FROM=alpine:3.10.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -36,15 +36,15 @@ RUN \
     && echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.64.0-r1 \
-        git=2.20.1-r0 \
+        curl=7.65.1-r0 \
+        git=2.22.0-r0 \
         tar=1.32-r0 \
-        yarn=1.12.3-r0 \
+        yarn=1.16.0-r0 \
     \
     && apk add --no-cache \
-        bash=4.4.19-r1 \
-        nginx>1.14.2-r0 \
-        nodejs-current=11.3.0-r0 \
+        bash=5.0.0-r0 \
+        nginx=1.16.0-r2 \
+        nodejs-current=12.4.0-r0 \
         tzdata=2019a-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
