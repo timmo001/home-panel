@@ -18,9 +18,13 @@ import CardBase from '../../Cards/Base';
 export type ResponsiveDialogProps = WithMobileDialog;
 
 const useStyles = makeStyles((theme: Theme) => ({
+  dialog: {
+    overflow: 'visible'
+  },
   dialogContent: {
     paddingLeft: 0,
-    paddingRight: 0
+    paddingRight: 0,
+    overflow: 'visible'
   },
   container: {},
   background: {
@@ -80,6 +84,7 @@ function EditCard(props: EditCardProps) {
       open
       fullScreen={props.fullScreen}
       fullWidth={true}
+      PaperProps={{ className: classes.dialog }}
       maxWidth="lg"
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
