@@ -16,14 +16,14 @@ export type GroupProps = {
 };
 
 export const defaultGroup = (page: number) => ({
-  name: 'New group',
+  name: 'Group',
   cards: [],
   page,
   width: 2
 });
 
 export const defaultCard = {
-  title: 'New card',
+  title: 'Card',
   type: 'entity',
   content: '',
   width: 1
