@@ -2,7 +2,7 @@
 repository:
   description: "A touch-compatible web frontend for controlling the home."
   homepage: https://timmo.dev/home-panel/
-  topics: home-panel, home-automation, javascript, reactjs, websocket, hass, user-interface, webapp, material-design
+  topics: home-panel, home-automation, typescript, javascript, reactjs, websocket, hass, webapp, material-design
   private: false
   has_issues: true
   has_projects: false
