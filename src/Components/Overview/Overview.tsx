@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import ButtonBase from '@material-ui/core/ButtonBase';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -16,6 +17,7 @@ import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import Base, { BaseProps } from '../Cards/Base';
+import EditGroup from '../Configuration/EditGroup';
 import Header from './Header/Header';
 
 const useStyles = makeStyles((_theme: Theme) => ({
@@ -32,6 +34,7 @@ interface OverviewProps
 
 function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [editingGroup, setEditingGroup] = React.useState();
 
   const handleAddGroup = (groupKey: number) => () => {
     props.handleUpdateConfig!(['items', groupKey], defaultGroup(currentPage));
@@ -58,6 +61,18 @@ function Overview(props: OverviewProps) {
 
   const handleUpdate = (groupKey: number, cardKey: number) => (data: any) => {
     props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], data);
+  };
+
+  const handleEditingGroup = (groupKey: number, group: GroupProps) => () => {
+    setEditingGroup({ key: groupKey, group });
+  };
+
+  function handleDoneEditingGroup() {
+    setEditingGroup(undefined);
+  }
+
+  const handleUpdateGroup = (groupKey: number) => (data: any) => {
+    props.handleUpdateConfig!(['items', groupKey], data);
   };
 
   const groups =
@@ -93,9 +108,16 @@ function Overview(props: OverviewProps) {
             style={{ width: groupWidth * group.width + theme.spacing(6.5) }}
             spacing={1}>
             <Grid item xs={12}>
-              <Typography className={classes.title} variant="h4" component="h2">
-                {group.name}
-              </Typography>
+              <ButtonBase
+                disabled={props.editing === 1}
+                onClick={handleEditingGroup(groupKey, group)}>
+                <Typography
+                  className={classes.title}
+                  variant="h4"
+                  component="h2">
+                  {group.name}
+                </Typography>
+              </ButtonBase>
             </Grid>
             {group.cards.map((card: BaseProps, key: number) => (
               <Base
@@ -129,6 +151,13 @@ function Overview(props: OverviewProps) {
           )}
         </Grid>
       </Grid>
+      {editingGroup && (
+        <EditGroup
+          group={editingGroup.group}
+          handleClose={handleDoneEditingGroup}
+          handleUpdate={handleUpdateGroup(editingGroup.key)}
+        />
+      )}
     </Grid>
   );
 }
