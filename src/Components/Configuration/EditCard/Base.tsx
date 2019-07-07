@@ -19,6 +19,9 @@ import Image from './Image';
 import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: '100%'
+  },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
@@ -52,7 +55,7 @@ function Base(props: BaseProps) {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className={classes.root}>
       <Grid container direction="row" justify="center" alignItems="stretch">
         <Grid container alignContent="center">
           <TextField
