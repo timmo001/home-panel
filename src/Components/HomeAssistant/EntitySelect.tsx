@@ -1,5 +1,10 @@
 // @flow
-import React, { CSSProperties, HTMLAttributes } from 'react';
+import React, {
+  CSSProperties,
+  HTMLAttributes,
+  useEffect,
+  useState
+} from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {
@@ -239,6 +244,7 @@ function EntitySelect(props: EntitySelectProps) {
   const selectStyles = {
     input: (base: CSSProperties) => ({
       ...base,
+      overflow: 'visible',
       color: theme.palette.text.primary,
       '& input': {
         font: 'inherit'
@@ -246,18 +252,34 @@ function EntitySelect(props: EntitySelectProps) {
     })
   };
 
-  const suggestions: OptionType[] = props.hassEntities.map((entity: any) => {
-    return {
-      label: entity[1].attributes.friendly_name
-        ? `${entity[1].attributes.friendly_name} - ${entity[0]}`
-        : entity[0],
-      value: entity[0]
-    };
-  });
+  const [suggestions, setSuggestions] = useState([]);
+  const [value, setValue] = useState();
 
-  const value = suggestions.find(
-    (entity: OptionType) => entity.value === props.entity
+  useEffect(
+    () =>
+      setSuggestions(
+        props.hassEntities.map((entity: any) => {
+          return {
+            label: entity[1].attributes.friendly_name
+              ? `${entity[1].attributes.friendly_name} - ${entity[0]}`
+              : entity[0],
+            value: entity[0]
+          };
+        })
+      ),
+    [props.hassEntities]
   );
+
+  useEffect(
+    () =>
+      setValue(
+        suggestions.find((entity: OptionType) => entity.value === props.entity)
+      ),
+    [props.entity]
+  );
+
+  const resultLimit = 20;
+  let i = 0;
 
   return (
     <div className={classes.root}>
@@ -269,6 +291,12 @@ function EntitySelect(props: EntitySelectProps) {
           components={components}
           value={value}
           onChange={handleChange}
+          filterOption={({ label }, query) =>
+            label.indexOf(query) >= 0 && i++ < resultLimit
+          }
+          onInputChange={() => {
+            i = 0;
+          }}
           placeholder="Search for entities"
         />
       </NoSsr>
