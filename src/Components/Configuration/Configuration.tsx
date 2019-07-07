@@ -100,9 +100,9 @@ function Configuration(props: ConfigurationProps) {
           className={classes.section}
           key={item.name}
           item
-          lg={3}
-          md={6}
-          sm={8}
+          lg={4}
+          md={8}
+          sm={10}
           xs={12}>
           <Typography variant="h4" gutterBottom noWrap>
             {item.title}
