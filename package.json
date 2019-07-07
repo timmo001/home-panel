@@ -37,7 +37,7 @@
     "socket.io-client": "2.2.0",
     "superagent": "5.0.6",
     "typeface-roboto": "0.0.54",
-    "snyk": "^1.192.3"
+    "snyk": "1.192.3"
   },
   "scripts": {
     "start": "react-scripts start",
