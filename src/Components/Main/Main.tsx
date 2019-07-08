@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from '../Configuration/Config';
 import clone from '../Utils/clone';
@@ -117,7 +118,8 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!.pathname === '/configuration';
+    props.location!.pathname === '/configuration' ||
+    mouseMoved;
 
   return (
     <div
@@ -133,7 +135,7 @@ function Main(props: MainProps) {
         handleHassLogin={handleHassLogin}
         mouseMoved={mouseMoved}
       />
-      {showToolbar && (
+      <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
           className={classnames(
             classes.toolbar,
@@ -142,7 +144,7 @@ function Main(props: MainProps) {
               classes.denseToolbar
           )}
         />
-      )}
+      </Slide>
       {props.config && (
         <main className={classes.content}>
           {hassUrl && (
