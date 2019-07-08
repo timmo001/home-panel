@@ -20,6 +20,11 @@ export type GroupProps = {
   width: number;
 };
 
+export const defaultPage = {
+  name: 'Page',
+  icon: 'file'
+};
+
 export const defaultGroup = (page: number) => ({
   name: 'Group',
   cards: [],

@@ -9,7 +9,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
-import { ConfigProps, PageProps } from '../Configuration/Config';
+import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -52,12 +52,19 @@ function Pages(props: PagesProps) {
     props.setPage(newValue + 1);
   }
 
+  function handleAdd() {
+    props.handleUpdateConfig!(
+      ['pages', props.config.pages.length],
+      defaultPage
+    );
+  }
+
   const classes = useStyles();
   return (
     <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
       <BottomNavigation
         className={classes.root}
-        value={props.currentPage}
+        value={props.currentPage - 1}
         onChange={handleChange}
         showLabels>
         {props.config &&
@@ -66,7 +73,6 @@ function Pages(props: PagesProps) {
               key={key}
               value={key}
               label={page.name}
-              selected={props.currentPage === key}
               icon={
                 <Typography
                   className={classnames(
@@ -74,13 +80,24 @@ function Pages(props: PagesProps) {
                     `mdi-${page.icon}`,
                     classes.icon
                   )}
-                  color="textPrimary"
-                  variant="h2"
+                  variant="h4"
                   component="h5"
                 />
               }
             />
           ))}
+        {props.editing === 1 && (
+          <BottomNavigationAction
+            onClick={handleAdd}
+            icon={
+              <Typography
+                className={classnames('mdi', 'mdi-plus', classes.icon)}
+                variant="h4"
+                component="h5"
+              />
+            }
+          />
+        )}
       </BottomNavigation>
     </Slide>
   );
@@ -91,6 +108,7 @@ Pages.propTypes = {
   editing: PropTypes.number,
   mouseMoved: PropTypes.bool,
   currentPage: PropTypes.number.isRequired,
+  handleUpdateConfig: PropTypes.func,
   setPage: PropTypes.func.isRequired
 };
 
