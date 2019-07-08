@@ -87,12 +87,9 @@ function Main(props: MainProps) {
 
   function handleMouseMove() {
     clearTimeout(moveTimeout);
-    if (
-      props.config.general.autohide_toolbar &&
-      props.location!.pathname !== '/configuration'
-    ) {
+    if (props.location!.pathname !== '/configuration') {
       setMouseMoved(true);
-      moveTimeout = setTimeout(() => setMouseMoved(false), 2000);
+      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
   }
 
@@ -163,6 +160,7 @@ function Main(props: MainProps) {
                 {...rrProps}
                 config={props.config}
                 editing={editing}
+                mouseMoved={mouseMoved}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
                 handleHassChange={handleHassChange}

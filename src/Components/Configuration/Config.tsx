@@ -8,6 +8,11 @@ export interface ConfigProps {
   handleConfigChange?: (config: any) => void;
 }
 
+export type PageProps = {
+  name: string;
+  icon: string;
+};
+
 export type GroupProps = {
   name: string;
   cards: BaseProps[];

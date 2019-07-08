@@ -24,6 +24,7 @@ import Base, { BaseProps } from '../Cards/Base';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditGroup from '../Configuration/EditGroup';
 import Header from './Header/Header';
+import Pages from './Pages';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   title: {
@@ -36,7 +37,9 @@ const useStyles = makeStyles((_theme: Theme) => ({
 interface OverviewProps
   extends RouteComponentProps,
     ConfigProps,
-    HomeAssistantChangeProps {}
+    HomeAssistantChangeProps {
+  mouseMoved: boolean;
+}
 
 function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(1);
@@ -108,125 +111,129 @@ function Overview(props: OverviewProps) {
   const groupWidth = theme.breakpoints.down('sm') ? 140 : 120;
 
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="flex-start">
-      <Header {...props} />
+    <div>
       <Grid
-        item
-        xs
         container
         direction="row"
         justify="flex-start"
-        alignItems="flex-start"
-        spacing={1}>
-        {groups.map((group: GroupProps, groupKey: number) => {
-          if (!group.width) group.width = 2;
-          return (
-            <Grid
-              key={groupKey}
-              item
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
-              style={{ width: groupWidth * group.width + theme.spacing(6.5) }}
-              spacing={1}>
-              <Grid item xs={12} container>
-                <Grid item>
-                  <Typography
-                    className={classes.title}
-                    variant="h4"
-                    component="h2">
-                    {group.name}
-                  </Typography>
-                </Grid>
-                {props.editing === 1 && (
-                  <Grid
-                    item
-                    xs
-                    container
-                    alignContent="center"
-                    justify="flex-end">
-                    <IconButton
-                      color="primary"
-                      onClick={handleEditingGroup(groupKey, group)}>
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      color="primary"
-                      onClick={handleDeleteConfirm(groupKey)}>
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      color="primary"
-                      onClick={handleMoveUp(groupKey)}>
-                      <ArrowLeftIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton
-                      color="primary"
-                      onClick={handleMoveDown(groupKey)}>
-                      <ArrowRightIcon fontSize="small" />
-                    </IconButton>
-                    {deleteConfirm && (
-                      <ConfirmDialog
-                        text="Are you sure you want to delete this group?"
-                        handleClose={handleConfirmClose}
-                        handleConfirm={handleDelete(deleteConfirm)}
-                      />
-                    )}
-                  </Grid>
-                )}
-              </Grid>
-              {group.cards.map((card: BaseProps, key: number) => (
-                <Base
-                  {...props}
-                  key={key}
-                  card={card}
-                  editing={props.editing}
-                  handleDelete={handleDelete(groupKey, key)}
-                  handleMoveUp={handleMoveUp(groupKey, key)}
-                  handleMoveDown={handleMoveDown(groupKey, key)}
-                  handleUpdate={handleUpdate(groupKey, key)}
-                />
-              ))}
-              {props.editing === 1 && (
-                <AddCard
-                  handleAdd={handleAddCard(groupKey, group.cards.length)}
-                />
-              )}
-            </Grid>
-          );
-        })}
+        alignItems="flex-start">
+        <Header {...props} />
         <Grid
           item
+          xs
           container
-          direction="column"
-          justify="center"
+          direction="row"
+          justify="flex-start"
           alignItems="flex-start"
-          spacing={1}
-          style={{ width: groupWidth * 2 + theme.spacing(1) }}>
-          {props.editing === 1 && (
-            <AddGroup handleAdd={handleAddGroup(groups.length)} />
-          )}
+          spacing={1}>
+          {groups.map((group: GroupProps, groupKey: number) => {
+            if (!group.width) group.width = 2;
+            return (
+              <Grid
+                key={groupKey}
+                item
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+                style={{ width: groupWidth * group.width + theme.spacing(6.5) }}
+                spacing={1}>
+                <Grid item xs={12} container>
+                  <Grid item>
+                    <Typography
+                      className={classes.title}
+                      variant="h4"
+                      component="h2">
+                      {group.name}
+                    </Typography>
+                  </Grid>
+                  {props.editing === 1 && (
+                    <Grid
+                      item
+                      xs
+                      container
+                      alignContent="center"
+                      justify="flex-end">
+                      <IconButton
+                        color="primary"
+                        onClick={handleEditingGroup(groupKey, group)}>
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        color="primary"
+                        onClick={handleDeleteConfirm(groupKey)}>
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        color="primary"
+                        onClick={handleMoveUp(groupKey)}>
+                        <ArrowLeftIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        color="primary"
+                        onClick={handleMoveDown(groupKey)}>
+                        <ArrowRightIcon fontSize="small" />
+                      </IconButton>
+                      {deleteConfirm && (
+                        <ConfirmDialog
+                          text="Are you sure you want to delete this group?"
+                          handleClose={handleConfirmClose}
+                          handleConfirm={handleDelete(deleteConfirm)}
+                        />
+                      )}
+                    </Grid>
+                  )}
+                </Grid>
+                {group.cards.map((card: BaseProps, key: number) => (
+                  <Base
+                    {...props}
+                    key={key}
+                    card={card}
+                    editing={props.editing}
+                    handleDelete={handleDelete(groupKey, key)}
+                    handleMoveUp={handleMoveUp(groupKey, key)}
+                    handleMoveDown={handleMoveDown(groupKey, key)}
+                    handleUpdate={handleUpdate(groupKey, key)}
+                  />
+                ))}
+                {props.editing === 1 && (
+                  <AddCard
+                    handleAdd={handleAddCard(groupKey, group.cards.length)}
+                  />
+                )}
+              </Grid>
+            );
+          })}
+          <Grid
+            item
+            container
+            direction="column"
+            justify="center"
+            alignItems="flex-start"
+            spacing={1}
+            style={{ width: groupWidth * 2 + theme.spacing(1) }}>
+            {props.editing === 1 && (
+              <AddGroup handleAdd={handleAddGroup(groups.length)} />
+            )}
+          </Grid>
         </Grid>
+        {editingGroup && (
+          <EditGroup
+            group={editingGroup.group}
+            handleClose={handleDoneEditingGroup}
+            handleUpdate={handleUpdateGroup(editingGroup.key)}
+          />
+        )}
       </Grid>
-      {editingGroup && (
-        <EditGroup
-          group={editingGroup.group}
-          handleClose={handleDoneEditingGroup}
-          handleUpdate={handleUpdateGroup(editingGroup.key)}
-        />
-      )}
-    </Grid>
+      <Pages {...props} currentPage={currentPage} setPage={setCurrentPage} />
+    </div>
   );
 }
 
 Overview.propTypes = {
   config: PropTypes.any,
   editing: PropTypes.number,
+  mouseMoved: PropTypes.bool,
   hassConfig: PropTypes.any,
   hassEntities: PropTypes.any,
   handleHassChange: PropTypes.func.isRequired,
