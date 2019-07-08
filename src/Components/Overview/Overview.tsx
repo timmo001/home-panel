@@ -41,7 +41,7 @@ interface OverviewProps
 function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [editingGroup, setEditingGroup] = React.useState();
-  const [deleteConfirm, setDeleteConfirm] = React.useState(false);
+  const [deleteConfirm, setDeleteConfirm] = React.useState();
 
   const handleAddGroup = (groupKey: number) => () => {
     props.handleUpdateConfig!(['items', groupKey], defaultGroup(currentPage));
@@ -91,12 +91,12 @@ function Overview(props: OverviewProps) {
     props.handleUpdateConfig!(['items', groupKey], data);
   };
 
-  function handleDeleteConfirm() {
-    setDeleteConfirm(true);
-  }
+  const handleDeleteConfirm = (groupKey: number) => () => {
+    setDeleteConfirm(groupKey);
+  };
 
   function handleConfirmClose() {
-    setDeleteConfirm(false);
+    setDeleteConfirm(undefined);
   }
 
   const groups =
@@ -155,7 +155,9 @@ function Overview(props: OverviewProps) {
                       onClick={handleEditingGroup(groupKey, group)}>
                       <EditIcon fontSize="small" />
                     </IconButton>
-                    <IconButton color="primary" onClick={handleDeleteConfirm}>
+                    <IconButton
+                      color="primary"
+                      onClick={handleDeleteConfirm(groupKey)}>
                       <DeleteIcon fontSize="small" />
                     </IconButton>
                     <IconButton
@@ -172,7 +174,7 @@ function Overview(props: OverviewProps) {
                       <ConfirmDialog
                         text="Are you sure you want to delete this group?"
                         handleClose={handleConfirmClose}
-                        handleConfirm={handleDelete(groupKey)}
+                        handleConfirm={handleDelete(deleteConfirm)}
                       />
                     )}
                   </Grid>
