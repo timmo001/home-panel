@@ -15,8 +15,7 @@ import {
   ConfigProps,
   defaultCard,
   defaultGroup,
-  GroupProps,
-  items
+  GroupProps
 } from '../Configuration/Config';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
