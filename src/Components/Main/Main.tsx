@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from '../Configuration/Config';
 import clone from '../Utils/clone';
@@ -87,12 +88,9 @@ function Main(props: MainProps) {
 
   function handleMouseMove() {
     clearTimeout(moveTimeout);
-    if (
-      props.config.general.autohide_toolbar &&
-      props.location!.pathname !== '/configuration'
-    ) {
+    if (props.location!.pathname !== '/configuration') {
       setMouseMoved(true);
-      moveTimeout = setTimeout(() => setMouseMoved(false), 2000);
+      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
   }
 
@@ -120,7 +118,8 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!.pathname === '/configuration';
+    props.location!.pathname === '/configuration' ||
+    mouseMoved;
 
   return (
     <div
@@ -136,7 +135,7 @@ function Main(props: MainProps) {
         handleHassLogin={handleHassLogin}
         mouseMoved={mouseMoved}
       />
-      {showToolbar && (
+      <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
           className={classnames(
             classes.toolbar,
@@ -145,7 +144,7 @@ function Main(props: MainProps) {
               classes.denseToolbar
           )}
         />
-      )}
+      </Slide>
       {props.config && (
         <main className={classes.content}>
           {hassUrl && (
@@ -163,6 +162,7 @@ function Main(props: MainProps) {
                 {...rrProps}
                 config={props.config}
                 editing={editing}
+                mouseMoved={mouseMoved}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
                 handleHassChange={handleHassChange}
