@@ -126,11 +126,14 @@ function Overview(props: OverviewProps) {
           justify="flex-start"
           alignItems="flex-start"
           spacing={1}>
-          {groups.map((group: GroupProps, groupKey: number) => {
+          {groups.map((group: GroupProps, key: number) => {
             if (!group.width) group.width = 2;
+            const groupKey = props.config.items.findIndex(
+              (item: GroupProps) => item === group
+            );
             return (
               <Grid
-                key={groupKey}
+                key={key}
                 item
                 container
                 direction="row"
@@ -213,7 +216,7 @@ function Overview(props: OverviewProps) {
             spacing={1}
             style={{ width: groupWidth * 2 + theme.spacing(1) }}>
             {props.editing === 1 && (
-              <AddGroup handleAdd={handleAddGroup(groups.length)} />
+              <AddGroup handleAdd={handleAddGroup(props.config.items.length)} />
             )}
           </Grid>
         </Grid>
