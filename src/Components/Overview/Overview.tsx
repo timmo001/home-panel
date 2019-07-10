@@ -15,7 +15,8 @@ import {
   ConfigProps,
   defaultCard,
   defaultGroup,
-  GroupProps
+  GroupProps,
+  items
 } from '../Configuration/Config';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
@@ -67,15 +68,49 @@ function Overview(props: OverviewProps) {
   };
 
   const handleMoveUp = (groupKey: number, cardKey?: number) => () => {
-    if (cardKey !== undefined)
+    if (cardKey !== undefined) {
       props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [-1]);
-    else props.handleUpdateConfig!(['items', groupKey], [-1]);
+    } else {
+      let pos = 0;
+      for (let i = groupKey - 1; i < props.config.items.length; i++) {
+        pos--;
+        if (props.config.items[i].page === props.config.items[groupKey].page)
+          break;
+      }
+      process.env.NODE_ENV === 'development' &&
+        console.log(
+          'groupKey:',
+          groupKey,
+          'pos:',
+          pos,
+          'Result:',
+          groupKey + pos
+        );
+      props.handleUpdateConfig!(['items', groupKey], [pos]);
+    }
   };
 
   const handleMoveDown = (groupKey: number, cardKey?: number) => () => {
     if (cardKey !== undefined)
       props.handleUpdateConfig!(['items', groupKey, 'cards', cardKey], [+1]);
-    else props.handleUpdateConfig!(['items', groupKey], [+1]);
+    else {
+      let pos = 0;
+      for (let i = groupKey + 1; i < props.config.items.length; i++) {
+        pos++;
+        if (props.config.items[i].page === props.config.items[groupKey].page)
+          break;
+      }
+      process.env.NODE_ENV === 'development' &&
+        console.log(
+          'groupKey:',
+          groupKey,
+          'pos:',
+          pos,
+          'Result:',
+          groupKey + pos
+        );
+      props.handleUpdateConfig!(['items', groupKey], [pos]);
+    }
   };
 
   const handleUpdate = (groupKey: number, cardKey: number) => (data: any) => {
