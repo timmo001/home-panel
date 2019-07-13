@@ -9,12 +9,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
-import {
-  ConfigProps,
-  defaultPage,
-  PageProps,
-  GroupProps
-} from '../Configuration/Config';
+import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
 import clone from '../Utils/clone';
 import EditPage from '../Configuration/EditPage';
 
