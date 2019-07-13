@@ -9,7 +9,14 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
-import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
+import {
+  ConfigProps,
+  defaultPage,
+  PageProps,
+  GroupProps
+} from '../Configuration/Config';
+import clone from '../Utils/clone';
+import EditPage from '../Configuration/EditPage';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -41,6 +48,7 @@ TabContainer.propTypes = {
   children: PropTypes.node.isRequired
 };
 
+let editTimeout: NodeJS.Timeout;
 interface PagesProps extends RouteComponentProps, ConfigProps {
   currentPage: number;
   mouseMoved: boolean;
@@ -48,6 +56,8 @@ interface PagesProps extends RouteComponentProps, ConfigProps {
 }
 
 function Pages(props: PagesProps) {
+  const [editingPage, setEditingPage] = React.useState();
+
   function handleChange(_event: React.ChangeEvent<{}>, newValue: number) {
     props.setPage(newValue + 1);
   }
@@ -59,47 +69,93 @@ function Pages(props: PagesProps) {
     );
   }
 
+  const handleEditingPage = (pageKey: number, page: PageProps) => () => {
+    if (props.editing === 1)
+      editTimeout = setTimeout(
+        () => setEditingPage({ key: pageKey, page }),
+        1000
+      );
+  };
+
+  function handleCancelEdit() {
+    clearTimeout(editTimeout);
+  }
+
+  function handleDoneEditingPage() {
+    setEditingPage(undefined);
+  }
+
+  const handleUpdatePage = (pageKey: number) => (data: any) => {
+    if (!data) {
+      const groups = clone(props.config.items);
+      console.log(clone(groups));
+      const page = pageKey + 1;
+      for (let i = 0; i < groups.length; i++) {
+        console.log('before:', i, clone(groups[i]));
+        if (groups[i].page === page) groups.splice(i, 1);
+        if (groups[i].page > page) groups[i].page -= 1;
+        console.log('after:', i, clone(groups[i]));
+      }
+      console.log(clone(groups));
+      props.handleUpdateConfig!(['items'], groups);
+      props.setPage(1);
+    }
+    props.handleUpdateConfig!(['pages', pageKey], data);
+  };
+
   const classes = useStyles();
   return (
-    <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
-      <BottomNavigation
-        className={classes.root}
-        value={props.currentPage - 1}
-        onChange={handleChange}
-        showLabels>
-        {props.config &&
-          props.config.pages.map((page: PageProps, key: number) => (
+    <div>
+      <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
+        <BottomNavigation
+          className={classes.root}
+          value={props.currentPage - 1}
+          onChange={handleChange}
+          showLabels>
+          {props.config &&
+            props.config.pages.map((page: PageProps, key: number) => (
+              <BottomNavigationAction
+                key={key}
+                value={key}
+                label={page.name}
+                onMouseDown={handleEditingPage(key, page)}
+                onMouseUp={handleCancelEdit}
+                onMouseLeave={handleCancelEdit}
+                icon={
+                  <Typography
+                    className={classnames(
+                      'mdi',
+                      `mdi-${page.icon}`,
+                      classes.icon
+                    )}
+                    variant="h4"
+                    component="h5"
+                  />
+                }
+              />
+            ))}
+          {props.editing === 1 && (
             <BottomNavigationAction
-              key={key}
-              value={key}
-              label={page.name}
+              onClick={handleAdd}
               icon={
                 <Typography
-                  className={classnames(
-                    'mdi',
-                    `mdi-${page.icon}`,
-                    classes.icon
-                  )}
+                  className={classnames('mdi', 'mdi-plus', classes.icon)}
                   variant="h4"
                   component="h5"
                 />
               }
             />
-          ))}
-        {props.editing === 1 && (
-          <BottomNavigationAction
-            onClick={handleAdd}
-            icon={
-              <Typography
-                className={classnames('mdi', 'mdi-plus', classes.icon)}
-                variant="h4"
-                component="h5"
-              />
-            }
-          />
-        )}
-      </BottomNavigation>
-    </Slide>
+          )}
+        </BottomNavigation>
+      </Slide>
+      {editingPage && (
+        <EditPage
+          page={editingPage.page}
+          handleClose={handleDoneEditingPage}
+          handleUpdate={handleUpdatePage(editingPage.key)}
+        />
+      )}
+    </div>
   );
 }
 
