@@ -2,7 +2,11 @@
   "extends": [
     "config:base"
   ],
-  "commitMessagePrefix": ":arrow_up:",
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+ "commitMessagePrefix": ":arrow_up:",
   "pin": {
     "commitMessagePrefix": ":pushpin:"
   },
