@@ -3,16 +3,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    flex: 1
+  },
   text: {
-    margin: theme.spacing(2, 0.5),
-    fontSize: 20
+    overflow: 'hidden',
+    textAlign: 'center',
+    textOverflow: 'ellipsis'
+  },
+  iconContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   icon: {
-    marginRight: theme.spacing(0.5)
+    textAlign: 'center'
   }
 }));
 
@@ -50,13 +60,23 @@ function Toggle(props: ToggleProps) {
     }
   }
   return (
-    <Typography
-      className={classes.text}
-      color="textPrimary"
-      variant="subtitle1"
-      component="span">
-      {icon && <span className={classnames('mdi', icon, classes.icon)} />}
-    </Typography>
+    <Grid
+      className={classes.root}
+      container
+      direction="row"
+      alignContent="center"
+      justify="center">
+      <Grid className={classes.iconContainer} item xs={12}>
+        {icon && (
+          <Typography
+            className={classnames('mdi', icon, classes.icon)}
+            color="textPrimary"
+            variant="h2"
+            component="h5"
+          />
+        )}
+      </Grid>
+    </Grid>
   );
 }
 
