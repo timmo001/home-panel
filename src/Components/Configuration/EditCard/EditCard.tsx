@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EditCardProps extends BaseProps {
-  fullScreen?: boolean;
   handleClose: () => void;
   handleUpdate: (data: any) => void;
 }
@@ -131,7 +130,6 @@ function EditCard(props: EditCardProps) {
 }
 
 EditCard.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired
 };
