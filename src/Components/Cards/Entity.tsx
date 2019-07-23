@@ -29,7 +29,12 @@ function Entity(props: EntityProps) {
       />
     );
 
-  if (domain === 'input_boolean' || domain === 'light' || domain === 'switch')
+  if (
+    domain === 'input_boolean' ||
+    domain === 'light' ||
+    domain === 'remote' ||
+    domain === 'switch'
+  )
     return (
       <Toggle
         card={props.card}
