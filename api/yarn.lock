@@ -1399,10 +1399,10 @@ fast-safe-stringify@^2.0.4:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-2.0.6.tgz#04b26106cc56681f51a044cfc0d76cf0008ac2c2"
   integrity sha512-q8BZ89jjc+mz08rSxROs8VsrBBcn1SIw1kq9NjolL509tkABRk9io01RAjSaEv1Xb2uFLt8VtRiZbGp5H8iDtg==
 
-feathers-nedb@5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/feathers-nedb/-/feathers-nedb-5.0.0.tgz#abcf657fb5fc0903b2effa31bfc03576057ad69e"
-  integrity sha512-2ZP0Kanx3JcM0OS6CnJ2nMCFGBSOnIMusU9CAqeKWGqMVejohbG7LEAwtcqYlzk2jEdpf1kMwXXzaYbOIt3yFg==
+feathers-nedb@5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/feathers-nedb/-/feathers-nedb-5.0.1.tgz#7051739edebee33d78fb7dae0733b1ec42fe990b"
+  integrity sha512-AZiaxC0045vQC9n0aIbVbJwGXh2dXY48XyZp/s0KNKdo9kNvmyTt0MpfEiHIPVrO6yR26PKDUUeKty7t6uLpsw==
   dependencies:
     "@feathersjs/adapter-commons" "^4.0.0-pre.4"
     "@feathersjs/commons" "^4.0.0"
