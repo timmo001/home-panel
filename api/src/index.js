@@ -8,18 +8,23 @@ const port = app.get('port');
 
 let server;
 if (fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')) {
-  server = https.createServer(
-    {
-      cert: fs
-        .readFileSync(process.env.SSL_PATH_CERT || 'fullchain.pem')
-        .toString(),
-      key: fs.readFileSync(process.env.SSL_PATH_KEY || 'privkey.pem').toString()
-    },
-    app
-  ).listen(port);
+  server = https
+    .createServer(
+      {
+        cert: fs
+          .readFileSync(process.env.SSL_PATH_CERT || 'fullchain.pem')
+          .toString(),
+        key: fs
+          .readFileSync(process.env.SSL_PATH_KEY || 'privkey.pem')
+          .toString()
+      },
+      app
+    )
+    .listen(port);
 } else {
   server = http.createServer(app).listen(port);
-  console.warn('SSL (HTTPS) is not active!!!');
+  if (process.env.SSL_SUPPRESS_WARNING !== 'true')
+    console.warn('SSL (HTTPS) is not active!!!');
 }
 
 app.setup(server);
