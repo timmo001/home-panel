@@ -24,7 +24,7 @@ if (fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')) {
 } else {
   server = http.createServer(app).listen(port);
   if (process.env.SSL_SUPPRESS_WARNING !== 'true')
-    console.warn('SSL (HTTPS) is not active!!!');
+    logger.warning('SSL (HTTPS) is not active!!!');
 }
 
 app.setup(server);
@@ -33,13 +33,15 @@ process.on('unhandledRejection', (reason, p) =>
   logger.error('Unhandled Rejection at: Promise ', p, reason)
 );
 
-server.on('listening', () =>
-  logger.info(
-    'Started on %s://%s:%d',
-    fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')
-      ? 'https'
-      : 'http',
-    app.get('host'),
-    port
-  )
-);
+server.on('listening', () => {
+  if (process.env.SUPPRESS_ADDRESS === 'true') logger.info('Server started');
+  else
+    logger.info(
+      'Server started on %s://%s:%d',
+      fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')
+        ? 'https'
+        : 'http',
+      app.get('host'),
+      port
+    );
+});
