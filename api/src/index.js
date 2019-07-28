@@ -30,7 +30,7 @@ process.on('unhandledRejection', (reason, p) =>
 
 server.on('listening', () =>
   logger.info(
-    'API started on %s://%s:%d',
+    'Started on %s://%s:%d',
     fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')
       ? 'https'
       : 'http',

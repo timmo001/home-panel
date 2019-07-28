@@ -36,7 +36,7 @@ const app = feathers();
 const socket = io(
   `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
     .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${process.env
-    .REACT_APP_API_PORT || 3234}`
+    .REACT_APP_API_PORT || 8234}`
 );
 app.configure(socketio(socket));
 app.configure(auth({ storage: localStorage }));

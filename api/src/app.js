@@ -37,7 +37,7 @@ app.configure(express.rest());
 app.configure(socketio());
 app.configure(
   swagger({
-    docsPath: '/docs',
+    docsPath: '/api/docs',
     uiIndex: true,
     info: {
       title: 'Noteboard API',
