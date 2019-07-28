@@ -60,4 +60,6 @@ app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
+app.set('trust proxy', true);
+
 module.exports = app;
