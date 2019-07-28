@@ -3,14 +3,6 @@ version: "3"
 
 services:
   home-panel:
-    image: timmo001/home-panel:edge
-    environment:
-      SSL_CERTFILE: fullchain.pem
-      SSL_KEYFILE: privkey.pem
+    build: .
     ports:
-      - 3234:3234
       - 8234:8234
-    volumes:
-      - ~/home-panel-config.json:/data/config.json
-      - ~/ssl/fullchain.pem:/ssl/fullchain.pem
-      - ~/ssl/privkey.pem:/ssl/privkey.pem
