@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:3.10.0
+ARG BUILD_FROM=alpine:3.10.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -15,10 +15,10 @@ ENV \
 COPY rootfs /
 
 # Copy api
-COPY api /opt/api
+COPY api /opt/panel
 
 # Copy app
-COPY build /opt/panel
+COPY build /opt/panel/public
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
@@ -52,7 +52,7 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && cd /opt/api \
+    && cd /opt/panel \
     && yarn install \
     && mkdir -p /data/db \
     \

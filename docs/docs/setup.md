@@ -34,7 +34,6 @@ services:
       SSL_CERTFILE: fullchain.pem
       SSL_KEYFILE: privkey.pem
     ports:
-      - 3234:3234
       - 8234:8234
     volumes:
       - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
@@ -56,7 +55,6 @@ services:
   home-panel:
     image: timmo001/home-panel
     ports:
-      - 3234:3234
       - 8234:8234
     volumes:
       - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
@@ -80,7 +78,6 @@ services:
 
 ```bash
 docker run -d \
-  -p 3234:3234 \
   -p 8234:8234 \
   -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
   -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
@@ -98,7 +95,6 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -p 3234:3234 \
   -p 8234:8234 \
   timmo001/home-panel
 ```

@@ -1,11 +1,11 @@
 #!/usr/bin/with-contenv bash
 # ==============================================================================
-# Starts server to serve the API
+# Starts server to serve the app
 # ==============================================================================
-echo 'Run API..'
+echo 'Run Home Panel..'
 
 # shellcheck disable=SC2164
-cd /opt/api
+cd /opt/panel
 
 DB_PATH=/data/home-panel.db
 SSL_PATH_CERT=/ssl/%SSL_CERTFILE%
