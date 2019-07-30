@@ -41,9 +41,10 @@ const socket = io(
       : window.location.port
   }`,
   {
-    path: `${window.location.pathname
-      .replace('login', '')
-      .replace('configuration', '')}socket.io`
+    path: `${window.location.pathname.replace(
+      /login|configuration/gi,
+      ''
+    )}socket.io`
   }
 );
 app.configure(socketio(socket));
