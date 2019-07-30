@@ -35,8 +35,17 @@ theme = responsiveFontSizes(theme);
 const app = feathers();
 const socket = io(
   `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
-    .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${process.env
-    .REACT_APP_API_PORT || window.location.port}`
+    .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${
+    process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
+      ? '8234'
+      : window.location.port
+  }`,
+  {
+    path: `${window.location.pathname.replace(
+      'login' || 'configuration',
+      ''
+    )}socket.io`
+  }
 );
 app.configure(socketio(socket));
 app.configure(auth({ storage: localStorage }));
