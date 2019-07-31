@@ -127,13 +127,13 @@ function Base(props: BaseProps) {
     width = props.card.width * theme.spacing(1) + width;
   }
 
-  const toggleable = props.editing === 1 ? false : props.card.toggleable;
+  const toggleable =
+    props.editing === 1 ? false : !props.card.disabled && props.card.toggleable;
 
   return (
     <Grid className={classes.root} item>
       <ButtonBase
         component="div"
-        disabled={props.card.disabled}
         disableRipple={!toggleable}
         focusRipple={toggleable}
         style={{
