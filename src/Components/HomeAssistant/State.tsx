@@ -34,16 +34,22 @@ interface StateProps {
 
 function State(props: StateProps) {
   const classes = useStyles();
-  let entity: any;
-  if (!props.hassEntities) entity = 'Home Assistant not connected.';
-  else
+  let entity: any, state: string | undefined, icon: string | undefined;
+
+  if (!props.hassEntities) {
+    entity = 'Home Assistant not connected.';
+    state = entity;
+    props.card.disabled = true;
+  } else
     entity = props.hassEntities.find(
       (entity: any) => entity[0] === props.card.entity
     );
 
-  let state: string, icon: string | undefined;
-  if (!entity) state = `No entity found for ${props.card.entity}`;
-  else {
+  if (!entity) {
+    props.card.disabled = true;
+    state = `No entity found for ${props.card.entity}`;
+  } else if (!state) {
+    props.card.disabled = false;
     state = properCase(entity[1].state);
     if (entity[1].attributes) {
       if (entity[1].attributes.icon)

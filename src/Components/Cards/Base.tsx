@@ -133,6 +133,7 @@ function Base(props: BaseProps) {
     <Grid className={classes.root} item>
       <ButtonBase
         component="div"
+        disabled={props.card.disabled}
         disableRipple={!toggleable}
         focusRipple={toggleable}
         style={{
@@ -151,10 +152,11 @@ function Base(props: BaseProps) {
               : 1
           }
           style={{
-            background:
-              props.editing !== 2 &&
-              props.card.background &&
-              props.card.background
+            background: props.card.disabled
+              ? theme.palette.error.main
+              : props.editing !== 2 &&
+                props.card.background &&
+                props.card.background
           }}>
           <CardContent
             className={classes.cardContent}
