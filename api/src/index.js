@@ -24,7 +24,7 @@ if (fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem')) {
 } else {
   server = http.createServer(app).listen(port);
   if (process.env.SSL_SUPPRESS_WARNING !== 'true')
-    logger.warning('SSL (HTTPS) is not active!!!');
+    logger.warn('SSL (HTTPS) is not active!!!');
 }
 
 app.setup(server);
