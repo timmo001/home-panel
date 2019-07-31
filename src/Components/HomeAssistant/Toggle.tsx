@@ -35,16 +35,19 @@ interface ToggleProps {
 function Toggle(props: ToggleProps) {
   const classes = useStyles();
   const theme = useTheme();
-  let entity: any;
-  if (!props.hassEntities) entity = 'Home Assistant not connected.';
-  else
+  let entity: any, state: string | undefined, icon: string | undefined;
+  if (!props.hassEntities) {
+    entity = 'Home Assistant not connected.';
+    state = entity;
+    icon = 'mdi-exclamation';
+    props.card.disabled = true;
+  } else
     entity = props.hassEntities.find(
       (entity: any) => entity[0] === props.card.entity
     );
 
-  let state: string, icon: string | undefined;
   if (!entity) state = `No entity found for ${props.card.entity}`;
-  else {
+  else if (!state) {
     state = entity[1].state;
     props.card.state = state;
     props.card.toggleable = state === 'unavailable' ? false : true;
