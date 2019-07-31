@@ -39,7 +39,6 @@ function Toggle(props: ToggleProps) {
   if (!props.hassEntities) {
     entity = 'Home Assistant not connected.';
     state = entity;
-    icon = 'mdi-exclamation';
     props.card.disabled = true;
   } else
     entity = props.hassEntities.find(
