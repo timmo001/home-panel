@@ -46,8 +46,11 @@ function Toggle(props: ToggleProps) {
       (entity: any) => entity[0] === props.card.entity
     );
 
-  if (!entity) state = `No entity found for ${props.card.entity}`;
-  else if (!state) {
+  if (!entity) {
+    props.card.disabled = true;
+    state = `${props.card.entity} not found`;
+  } else if (!state) {
+    props.card.disabled = false;
     state = entity[1].state;
     props.card.state = state;
     props.card.toggleable = state === 'unavailable' ? false : true;
@@ -79,6 +82,17 @@ function Toggle(props: ToggleProps) {
           />
         )}
       </Grid>
+      {props.card.disabled && (
+        <Grid item xs>
+          <Typography
+            className={classes.text}
+            color="textPrimary"
+            variant="body1"
+            component="h5">
+            {state}
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
 }

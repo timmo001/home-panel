@@ -47,7 +47,7 @@ function State(props: StateProps) {
 
   if (!entity) {
     props.card.disabled = true;
-    state = `No entity found for ${props.card.entity}`;
+    state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
     state = properCase(entity[1].state);
