@@ -2,11 +2,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import grey from '@material-ui/core/colors/grey';
 
-import properCase from '../Utils/properCase';
+import { EntityProps } from './Entity';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -27,19 +28,14 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface StateProps {
-  card: any;
-  hassConfig: any;
-  hassEntities: any;
-}
+interface ToggleProps extends EntityProps {}
 
-function State(props: StateProps) {
+function Toggle(props: ToggleProps) {
   const classes = useStyles();
+  const theme = useTheme();
   let entity: any, state: string | undefined, icon: string | undefined;
-
   if (!props.hassEntities) {
-    entity = 'Home Assistant not connected.';
-    state = entity;
+    state = 'Home Assistant not connected.';
     props.card.disabled = true;
   } else
     entity = props.hassEntities.find(
@@ -51,12 +47,18 @@ function State(props: StateProps) {
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = properCase(entity[1].state);
+    state = entity[1].state;
+    props.card.state = state;
+    props.card.toggleable = state === 'unavailable' ? false : true;
+    props.card.background =
+      state === 'unavailable'
+        ? grey[600]
+        : state === 'on'
+        ? theme.palette.primary.main
+        : theme.palette.background.paper;
     if (entity[1].attributes) {
       if (entity[1].attributes.icon)
         icon = entity[1].attributes.icon.replace(':', '-');
-      if (entity[1].attributes.unit_of_measurement)
-        state += ` ${entity[1].attributes.unit_of_measurement}`;
     }
   }
   return (
@@ -76,23 +78,25 @@ function State(props: StateProps) {
           />
         )}
       </Grid>
-      <Grid item xs>
-        <Typography
-          className={classes.text}
-          color="textPrimary"
-          variant="body1"
-          component="h5">
-          {state}
-        </Typography>
-      </Grid>
+      {props.card.disabled && (
+        <Grid item xs>
+          <Typography
+            className={classes.text}
+            color="textPrimary"
+            variant="body1"
+            component="h5">
+            {state}
+          </Typography>
+        </Grid>
+      )}
     </Grid>
   );
 }
 
-State.propTypes = {
+Toggle.propTypes = {
   card: PropTypes.any.isRequired,
   hassConfig: PropTypes.any,
   hassEntities: PropTypes.any
 };
 
-export default State;
+export default Toggle;
