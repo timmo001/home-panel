@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import properCase from '../Utils/properCase';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme: Theme) => ({
+import properCase from '../Utils/properCase';
+
+const useStyles = makeStyles((_theme: Theme) => ({
   root: {
     flex: 1
   },
