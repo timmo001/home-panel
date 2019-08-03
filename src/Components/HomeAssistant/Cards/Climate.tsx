@@ -244,8 +244,7 @@ function Climate(props: ClimateProps) {
           container
           alignItems="center"
           justify="center"
-          direction="row"
-          spacing={1}>
+          direction="row">
           {attributes.hvac_modes.map((mode: any, key: number) => {
             let icon: string | undefined =
               mode === 'off'
@@ -257,7 +256,7 @@ function Climate(props: ClimateProps) {
                 : mode === 'heat_cool'
                 ? 'mdi-autorenew'
                 : mode === 'auto'
-                ? 'mdi-autorenew'
+                ? 'mdi-calendar-repeat'
                 : mode === 'dry'
                 ? 'mdi-water-percent'
                 : mode === 'fan_only'
@@ -272,7 +271,7 @@ function Climate(props: ClimateProps) {
                         'mdi',
                         icon,
                         classes.icon,
-                        attributes.hvac_mode === mode && classes.iconActive
+                        attributes.hvac_action === mode && classes.iconActive
                       )}
                     />
                   </IconButton>
@@ -282,7 +281,7 @@ function Climate(props: ClimateProps) {
               <Grid key={key} item>
                 <Button
                   className={classnames(
-                    attributes.hvac_mode === mode && classes.iconActive
+                    attributes.hvac_action === mode && classes.iconActive
                   )}
                   onClick={() => handleHvacChange(mode)}>
                   {mode}
