@@ -170,15 +170,17 @@ function Base(props: BaseProps) {
               padding: props.card.padding ? props.card.padding : 12
             }}>
             {props.card.title && (
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                variant="h6"
-                component="h3"
-                gutterBottom
-                noWrap>
-                {props.card.title}
-              </Typography>
+              <div>
+                <Typography
+                  className={classes.title}
+                  color="textPrimary"
+                  variant="h6"
+                  component="h3"
+                  gutterBottom
+                  noWrap>
+                  {props.card.title}
+                </Typography>
+              </div>
             )}
             {props.card.type === 'entity' && (
               <Entity

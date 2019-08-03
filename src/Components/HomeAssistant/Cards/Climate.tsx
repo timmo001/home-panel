@@ -14,7 +14,9 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flex: 1
+    position: 'absolute',
+    top: theme.spacing(3),
+    bottom: 0
   },
   text: {
     overflow: 'hidden',
@@ -121,6 +123,7 @@ function Climate(props: ClimateProps) {
       direction="column">
       <Grid
         item
+        xs
         container
         alignItems="center"
         justify="space-around"
