@@ -14,9 +14,7 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    position: 'absolute',
-    top: theme.spacing(3),
-    bottom: 0
+    flex: 1
   },
   text: {
     overflow: 'hidden',
@@ -27,14 +25,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'inline-flex',
     marginLeft: theme.spacing(1)
   },
+  iconContainer: {
+    height: 32,
+    width: 32,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   icon: {
+    transform: 'translateY(-8px)',
+    textAlign: 'center',
     color: theme.palette.text.primary,
-    opacity: 0.6,
-    textAlign: 'center'
+    opacity: 0.6
   },
   iconActive: {
     opacity: 1.0,
     color: theme.palette.primary.main
+  },
+  iconNormal: {
+    opacity: 1.0
   },
   hyphen: {
     marginLeft: theme.spacing(1)
@@ -143,13 +152,17 @@ function Climate(props: ClimateProps) {
             {attributes.temperature ? (
               <Grid container alignItems="center" direction="column">
                 <IconButton
+                  className={classes.iconContainer}
                   onClick={() =>
                     handleTempChange(
                       'temperature',
                       attributes.temperature + 0.5
                     )
                   }>
-                  <KeyboardArrowUp fontSize="small" />
+                  <KeyboardArrowUp
+                    className={classnames(classes.icon, classes.iconNormal)}
+                    fontSize="small"
+                  />
                 </IconButton>
                 <div className={classes.temperature}>
                   <Typography variant="h5">{attributes.temperature}</Typography>
@@ -158,13 +171,17 @@ function Climate(props: ClimateProps) {
                   </Typography>
                 </div>
                 <IconButton
+                  className={classes.iconContainer}
                   onClick={() =>
                     handleTempChange(
                       'temperature',
                       attributes.temperature - 0.5
                     )
                   }>
-                  <KeyboardArrowDown fontSize="small" />
+                  <KeyboardArrowDown
+                    className={classnames(classes.icon, classes.iconNormal)}
+                    fontSize="small"
+                  />
                 </IconButton>
               </Grid>
             ) : (
@@ -176,6 +193,7 @@ function Climate(props: ClimateProps) {
                 direction="row">
                 <Grid item xs container alignItems="center" direction="column">
                   <IconButton
+                    className={classes.iconContainer}
                     onClick={() =>
                       handleTempChange(
                         'target_temp_low',
@@ -193,13 +211,17 @@ function Climate(props: ClimateProps) {
                     </Typography>
                   </div>
                   <IconButton
+                    className={classes.iconContainer}
                     onClick={() =>
                       handleTempChange(
                         'target_temp_low',
                         attributes.target_temp_low - 0.5
                       )
                     }>
-                    <KeyboardArrowDown fontSize="small" />
+                    <KeyboardArrowDown
+                      className={classnames(classes.icon, classes.iconNormal)}
+                      fontSize="small"
+                    />
                   </IconButton>
                 </Grid>
                 <Grid item xs className={classes.hyphen}>
@@ -213,7 +235,10 @@ function Climate(props: ClimateProps) {
                         attributes.target_temp_high + 0.5
                       )
                     }>
-                    <KeyboardArrowUp fontSize="small" />
+                    <KeyboardArrowUp
+                      className={classnames(classes.icon, classes.iconNormal)}
+                      fontSize="small"
+                    />
                   </IconButton>
                   <div className={classes.temperature}>
                     <Typography variant="h5">
@@ -230,7 +255,10 @@ function Climate(props: ClimateProps) {
                         attributes.target_temp_high - 0.5
                       )
                     }>
-                    <KeyboardArrowDown fontSize="small" />
+                    <KeyboardArrowDown
+                      className={classnames(classes.icon, classes.iconNormal)}
+                      fontSize="small"
+                    />
                   </IconButton>
                 </Grid>
               </Grid>
@@ -242,6 +270,7 @@ function Climate(props: ClimateProps) {
         <Grid
           item
           container
+          spacing={1}
           alignItems="center"
           justify="center"
           direction="row">
@@ -265,7 +294,9 @@ function Climate(props: ClimateProps) {
             if (icon)
               return (
                 <Grid key={key} item>
-                  <IconButton onClick={() => handleHvacChange(mode)}>
+                  <IconButton
+                    className={classes.iconContainer}
+                    onClick={() => handleHvacChange(mode)}>
                     <span
                       className={classnames(
                         'mdi',
