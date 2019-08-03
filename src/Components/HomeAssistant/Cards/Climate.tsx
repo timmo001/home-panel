@@ -23,10 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   temperature: {
     display: 'inline-flex',
-    marginLeft: theme.spacing(2)
-  },
-  unit: {
-    marginLeft: 2
+    marginLeft: theme.spacing(1)
   },
   icon: {
     color: theme.palette.text.primary,
@@ -38,8 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.primary.main
   },
   hyphen: {
-    marginLeft: theme.spacing,
-    marginRight: theme.spacing(-1)
+    marginLeft: theme.spacing(1)
   }
 }));
 
@@ -124,6 +120,7 @@ function Climate(props: ClimateProps) {
       justify="space-between"
       direction="column">
       <Grid
+        item
         container
         alignItems="center"
         justify="space-around"
@@ -133,7 +130,7 @@ function Climate(props: ClimateProps) {
             <Typography variant="h4">
               {attributes.current_temperature}
             </Typography>
-            <Typography variant="subtitle1" className={classes.unit}>
+            <Typography variant="subtitle1">
               {props.hassConfig.unit_system.temperature}
             </Typography>
           </div>
@@ -153,7 +150,7 @@ function Climate(props: ClimateProps) {
                 </IconButton>
                 <div className={classes.temperature}>
                   <Typography variant="h5">{attributes.temperature}</Typography>
-                  <Typography variant="body1" className={classes.unit}>
+                  <Typography variant="body1">
                     {props.hassConfig.unit_system.temperature}
                   </Typography>
                 </div>
@@ -188,7 +185,7 @@ function Climate(props: ClimateProps) {
                     <Typography variant="h5">
                       {attributes.target_temp_low}
                     </Typography>
-                    <Typography variant="body1" className={classes.unit}>
+                    <Typography variant="body1">
                       {props.hassConfig.unit_system.temperature}
                     </Typography>
                   </div>
@@ -219,7 +216,7 @@ function Climate(props: ClimateProps) {
                     <Typography variant="h5">
                       {attributes.target_temp_high}
                     </Typography>
-                    <Typography variant="body1" className={classes.unit}>
+                    <Typography variant="body1">
                       {props.hassConfig.unit_system.temperature}
                     </Typography>
                   </div>
@@ -239,43 +236,50 @@ function Climate(props: ClimateProps) {
         )}
       </Grid>
       {props.card.width > 1 && props.card.height > 1 && (
-        <Grid container alignItems="center" justify="center" direction="row">
+        <Grid
+          item
+          container
+          alignItems="center"
+          justify="center"
+          direction="row"
+          spacing={1}>
           {attributes.hvac_modes.map((mode: any, key: number) => {
             let icon: string | undefined =
               mode === 'off'
-                ? 'mdi-power-off'
+                ? 'mdi-power'
                 : mode === 'heat'
-                ? 'mdi-radiator'
+                ? 'mdi-fire'
                 : mode === 'cool'
-                ? 'mdi-air-conditioner'
+                ? 'mdi-snowflake'
+                : mode === 'heat_cool'
+                ? 'mdi-autorenew'
                 : mode === 'auto'
                 ? 'mdi-autorenew'
                 : mode === 'dry'
-                ? 'mdi-waves'
+                ? 'mdi-water-percent'
                 : mode === 'fan_only'
                 ? 'mdi-fan'
                 : undefined;
             if (icon)
               return (
-                <Grid item xs>
-                  <IconButton key={key} onClick={() => handleHvacChange(mode)}>
+                <Grid key={key} item>
+                  <IconButton onClick={() => handleHvacChange(mode)}>
                     <span
                       className={classnames(
                         'mdi',
                         icon,
                         classes.icon,
-                        attributes.operation_mode === mode && classes.iconActive
+                        attributes.hvac_mode === mode && classes.iconActive
                       )}
                     />
                   </IconButton>
                 </Grid>
               );
             return (
-              <Grid item xs>
+              <Grid key={key} item>
                 <Button
-                  key={key}
                   className={classnames(
-                    attributes.operation_mode === mode && classes.iconActive
+                    attributes.hvac_mode === mode && classes.iconActive
                   )}
                   onClick={() => handleHvacChange(mode)}>
                   {mode}
