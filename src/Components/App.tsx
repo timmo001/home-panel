@@ -32,8 +32,12 @@ let theme = createMuiTheme({
 });
 theme = responsiveFontSizes(theme);
 
-const app = feathers();
-const socket = io(
+let socketioPath: string = `${window.location.pathname.replace(
+  /login|configuration/gi,
+  ''
+)}socket.io`;
+const app: any = feathers();
+const socket: SocketIOClient.Socket = io(
   `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
     .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${
     process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
@@ -41,10 +45,7 @@ const socket = io(
       : window.location.port
   }`,
   {
-    path: `${window.location.pathname.replace(
-      /login|configuration/gi,
-      ''
-    )}socket.io`
+    path: socketioPath
   }
 );
 app.configure(socketio(socket));
@@ -82,11 +83,14 @@ function App() {
     data?: FeathersAuthCredentials,
     callback?: (error?: string) => void
   ) {
-    process.env.NODE_ENV === 'development' && console.log('login:', data);
-    if (!data)
+    process.env.NODE_ENV === 'development' &&
+      console.log('login:', socketioPath, data);
+    if (!app) {
+      console.warn('Feathers app is undefined');
+    } else if (!data)
       app.passport
         .getJWT()
-        .then(accessToken => {
+        .then((accessToken: string) => {
           accessToken
             ? authenticate(
                 {
@@ -119,17 +123,17 @@ function App() {
       console.log('authenticate:', data);
     app
       .authenticate(data)
-      .then(response => {
+      .then((response: { accessToken: any }) => {
         process.env.NODE_ENV === 'development' &&
           console.log('Authenticated:', response);
         return app.passport.verifyJWT(response.accessToken);
       })
-      .then(payload => {
+      .then((payload: { userId: any }) => {
         process.env.NODE_ENV === 'development' &&
           console.log('JWT Payload:', payload);
         return app.service('users').get(payload.userId);
       })
-      .then(user => {
+      .then((user: any) => {
         app.set('user', user);
         process.env.NODE_ENV === 'development' && console.log('User:', user);
         setLoginCredentials(user);
@@ -137,7 +141,7 @@ function App() {
         if (callback) callback();
         getConfig();
       })
-      .catch(e => {
+      .catch((e: { message: any }) => {
         console.error('Authentication error:', e);
         if (callback) callback(`Authentication error: ${e.message}`);
         setLoginAttempted(true);
