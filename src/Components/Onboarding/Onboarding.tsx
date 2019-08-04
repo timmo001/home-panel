@@ -33,7 +33,7 @@ function Onboarding(props: OnboardingProps) {
     process.env.NODE_ENV === 'development' &&
       console.log('route props:', props);
 
-    app.path = `${props.location.pathname.replace(
+    app.path = `${window.location.pathname.replace(
       /overview|login|configuration/gi,
       ''
     )}socket.io`;
