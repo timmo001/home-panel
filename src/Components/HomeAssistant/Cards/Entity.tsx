@@ -8,6 +8,7 @@ import Cover from './Cover';
 import Media from './Media';
 import State from './State';
 import Toggle from './Toggle';
+import Weather from './Weather';
 
 export interface EntityProps extends BaseProps {}
 
@@ -36,6 +37,7 @@ function Entity(props: EntityProps) {
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
   if (domain === 'media_player') return <Media {...props} />;
+  if (domain === 'weather') return <Weather {...props} />;
 
   return null;
 }
