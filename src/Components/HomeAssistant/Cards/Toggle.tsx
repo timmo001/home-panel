@@ -42,7 +42,7 @@ function Toggle(props: ToggleProps) {
       (entity: any) => entity[0] === props.card.entity
     );
 
-  if (!entity) {
+  if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
