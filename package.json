@@ -69,7 +69,7 @@
     "@types/feathersjs__authentication-client": "1.0.5",
     "@types/feathersjs__feathers": "3.1.5",
     "@types/feathersjs__socketio-client": "1.0.3",
-    "@types/jest": "24.0.16",
+    "@types/jest": "24.0.17",
     "@types/markdown-it": "0.0.8",
     "@types/node": "12.6.9",
     "@types/react": "16.8.24",
