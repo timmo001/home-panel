@@ -76,7 +76,7 @@
     "@types/react-dom": "16.8.5",
     "@types/react-html-parser": "2.0.1",
     "@types/react-router-dom": "4.3.4",
-    "@types/react-select": "3.0.0",
+    "@types/react-select": "3.0.2",
     "@types/socket.io": "2.1.2",
     "@types/socket.io-client": "1.4.32",
     "awesome-typescript-loader": "5.2.1",
