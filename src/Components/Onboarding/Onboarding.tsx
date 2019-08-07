@@ -32,8 +32,10 @@ function Onboarding(props: OnboardingProps) {
   useEffect(() => {
     // process.env.NODE_ENV === 'development' &&
     console.log('route props:', props);
+    console.log('window.location:', window.location);
+    console.log('window.location.pathname:', window.location.pathname);
 
-    app.path = `${props.location.pathname.replace(
+    app.path = `${window.location.pathname.replace(
       /overview|login|configuration/gi,
       ''
     )}socket.io`;
