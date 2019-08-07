@@ -30,8 +30,8 @@ app.configure(auth({ storage: localStorage }));
 
 function Onboarding(props: OnboardingProps) {
   useEffect(() => {
-    process.env.NODE_ENV === 'development' &&
-      console.log('route props:', props);
+    // process.env.NODE_ENV === 'development' &&
+    console.log('route props:', props);
 
     app.path = `${props.location.pathname.replace(
       /overview|login|configuration/gi,
