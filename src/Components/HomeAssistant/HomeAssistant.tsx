@@ -155,7 +155,7 @@ function HomeAssistant(props: HomeAssistantProps) {
   }
 
   function updateConfig(config: any) {
-    props.setConfig(config);
+    props.setConfig({ ...config, url: props.url });
   }
 
   function updateEntities(entities: { [s: string]: {} } | ArrayLike<{}>) {

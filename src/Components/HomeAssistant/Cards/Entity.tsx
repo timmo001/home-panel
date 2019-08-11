@@ -2,11 +2,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { BaseProps } from './Base';
-import State from '../HomeAssistant/State';
-import Toggle from '../HomeAssistant/Toggle';
+import { BaseProps } from '../../Cards/Base';
+import Climate from './Climate';
+import Cover from './Cover';
+import Fan from './Fan';
+import Media from './Media';
+import State from './State';
+import Toggle from './Toggle';
+import Weather from './Weather';
 
-interface EntityProps extends BaseProps {}
+export interface EntityProps extends BaseProps {}
 
 function Entity(props: EntityProps) {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
@@ -21,13 +26,7 @@ function Entity(props: EntityProps) {
     domain === 'sensor' ||
     domain === 'sun'
   )
-    return (
-      <State
-        card={props.card}
-        hassConfig={props.hassConfig}
-        hassEntities={props.hassEntities}
-      />
-    );
+    return <State {...props} />;
 
   if (
     domain === 'input_boolean' ||
@@ -35,13 +34,12 @@ function Entity(props: EntityProps) {
     domain === 'remote' ||
     domain === 'switch'
   )
-    return (
-      <Toggle
-        card={props.card}
-        hassConfig={props.hassConfig}
-        hassEntities={props.hassEntities}
-      />
-    );
+    return <Toggle {...props} />;
+  if (domain === 'climate') return <Climate {...props} />;
+  if (domain === 'cover') return <Cover {...props} />;
+  if (domain === 'fan') return <Fan {...props} />;
+  if (domain === 'media_player') return <Media {...props} />;
+  if (domain === 'weather') return <Weather {...props} />;
 
   return null;
 }
