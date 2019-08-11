@@ -1,4 +1,7 @@
 // @flow
+import { Color } from '@material-ui/core';
+import { CommonColors } from '@material-ui/core/colors/common';
+
 import { BaseProps } from '../Cards/Base';
 
 export interface ConfigProps {
@@ -20,6 +23,17 @@ export type GroupProps = {
   width: number;
 };
 
+export type ThemeProps = {
+  name: string;
+  type: string;
+  primary: string | Color | CommonColors;
+  secondary: string | Color | CommonColors;
+  background: {
+    default: string;
+    paper: string;
+  };
+};
+
 export const defaultPage = {
   name: 'Page',
   icon: 'file'
@@ -37,6 +51,16 @@ export const defaultCard = {
   type: 'entity',
   content: '',
   width: 1
+};
+
+export const defaultTheme = {
+  type: 'dark',
+  primary: 'pink',
+  secondary: 'purple',
+  background: {
+    default: '#303030',
+    paper: '#383c45'
+  }
 };
 
 export const items = [
@@ -59,6 +83,39 @@ export const items = [
         icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
+      }
+    ]
+  },
+  {
+    name: 'theme',
+    title: 'Theme',
+    items: [
+      {
+        name: 'current',
+        title: 'Current Theme',
+        description: 'Current theme?',
+        icon: 'mdi-compare',
+        type: 'theme',
+        default: 0
+      },
+      {
+        name: 'themes',
+        title: 'Themes',
+        description: 'Configured themes.',
+        icon: 'mdi-format-list-bulleted-type',
+        type: 'array',
+        default: [
+          {
+            name: 'Midnight',
+            type: 'dark',
+            primary: 'pink',
+            secondary: 'purple',
+            background: {
+              default: '#303030',
+              paper: '#383c45'
+            }
+          }
+        ]
       }
     ]
   },

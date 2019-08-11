@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
-import { ConfigProps } from '../Configuration/Config';
+import { ConfigProps, ThemeProps } from '../Configuration/Config';
 import clone from '../Utils/clone';
 import Configuration from '../Configuration/Configuration';
 import Drawer from '../Drawer/Drawer';
@@ -18,6 +18,7 @@ import HomeAssistant, {
 import isObject from '../Utils/isObject';
 import Loading from '../Utils/Loading';
 import Overview from '../Overview/Overview';
+import parseColors from '../Utils/parseColors';
 import properCase from '../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,6 +40,7 @@ interface MainProps extends RouteComponentProps, ConfigProps {
   loggedIn: boolean;
   loginCredentials: any;
   handleLogout(): any;
+  handleSetTheme: (theme: ThemeProps) => void;
 }
 
 let moveTimeout: NodeJS.Timeout;
@@ -58,7 +60,21 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.replace({ search: '' });
     }
-  }, [hassConnected, props.history, props.location.search, props.loggedIn]);
+    if (
+      props.config &&
+      props.config.theme.themes &&
+      props.config.theme.current !== undefined
+    )
+      props.handleSetTheme(
+        parseColors(props.config.theme.themes[props.config.theme.current])
+      );
+  }, [
+    hassConnected,
+    props.config,
+    props.history,
+    props.location.search,
+    props.loggedIn
+  ]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -195,7 +211,8 @@ Main.propTypes = {
   loginCredentials: PropTypes.any,
   config: PropTypes.object,
   handleConfigChange: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired
+  handleLogout: PropTypes.func.isRequired,
+  handleSetTheme: PropTypes.func.isRequired
 };
 
 export default Main;

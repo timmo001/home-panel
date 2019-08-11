@@ -70,7 +70,8 @@ Section.propTypes = {
   section: PropTypes.any.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired
+  handleSwitchChange: PropTypes.func.isRequired,
+  handleSelectChange: PropTypes.func.isRequired
 };
 
 export default Section;

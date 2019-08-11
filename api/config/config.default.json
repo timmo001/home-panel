@@ -1,6 +1,22 @@
 {
   "general": {
+    "autohide_toolbar": false,
     "dense_toolbar": false
+  },
+  "theme": {
+    "current": 0,
+    "themes": [
+      {
+        "name": "Midnight",
+        "type": "dark",
+        "primary": "pink",
+        "secondary": "purple",
+        "background": {
+          "default": "#303030",
+          "paper": "#383c45"
+        }
+      }
+    ]
   },
   "header": {
     "time_show": true,
@@ -8,8 +24,7 @@
     "time_location": 0,
     "date_show": true,
     "date_format": "Do MMMM YYYY",
-    "date_location": 1,
-    "entities": []
+    "date_location": 1
   },
   "pages": [
     {

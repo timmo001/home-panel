@@ -10,8 +10,11 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -19,6 +22,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Section from './Section';
+import { ThemeProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -209,6 +213,32 @@ function Item(props: ItemProps) {
           ])}
         />
       );
+    case 'theme':
+      return (
+        <FormControl>
+          <InputLabel htmlFor="theme">Theme</InputLabel>
+          <Select
+            value={value}
+            onChange={props.handleSelectChange!([
+              ...props.path!,
+              props.item.name
+            ])}
+            inputProps={{
+              name: 'theme',
+              id: 'theme'
+            }}>
+            {props.config.theme.themes ? (
+              props.config.theme.themes.map(
+                (theme: ThemeProps, key: number) => (
+                  <MenuItem value={key}>{theme.name}</MenuItem>
+                )
+              )
+            ) : (
+              <MenuItem>No themes found</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+      );
   }
 }
 
@@ -221,7 +251,8 @@ Item.propTypes = {
   handleDelete: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired
+  handleSwitchChange: PropTypes.func.isRequired,
+  handleSelectChange: PropTypes.func.isRequired
 };
 
 export default Item;

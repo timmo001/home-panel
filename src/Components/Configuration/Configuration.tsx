@@ -44,6 +44,9 @@ export interface ConfigurationProps
   handleSwitchChange?: (
     path: any[]
   ) => (_event: React.ChangeEvent<{}>, checked: boolean) => void;
+  handleSelectChange?: (
+    path: any[]
+  ) => (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
 }
 
 function Configuration(props: ConfigurationProps) {
@@ -80,11 +83,11 @@ function Configuration(props: ConfigurationProps) {
     props.handleUpdateConfig!(path, checked);
   };
 
-  // function handleSelectChange(
-  //   event: React.ChangeEvent<{ name?: string; value: unknown }>
-  // ) {
-  //   setCard({ ...card, [event.target.name as string]: event.target.value });
-  // }
+  const handleSelectChange = (path: any[]) => (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    props.handleUpdateConfig!(path, event.target.value);
+  };
 
   const classes = useStyles();
 
@@ -118,6 +121,7 @@ function Configuration(props: ConfigurationProps) {
                 handleChange={handleChange}
                 handleRadioChange={handleRadioChange}
                 handleSwitchChange={handleSwitchChange}
+                handleSelectChange={handleSelectChange}
               />
             </CardContent>
           </Card>
