@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { BaseProps } from '../../Cards/Base';
 import Climate from './Climate';
 import Cover from './Cover';
+import Fan from './Fan';
 import Media from './Media';
 import State from './State';
 import Toggle from './Toggle';
@@ -36,6 +37,7 @@ function Entity(props: EntityProps) {
     return <Toggle {...props} />;
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
+  if (domain === 'fan') return <Fan {...props} />;
   if (domain === 'media_player') return <Media {...props} />;
   if (domain === 'weather') return <Weather {...props} />;
 
