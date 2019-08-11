@@ -83,8 +83,6 @@ function Fan(props: FanProps) {
       </Grid>
     );
 
-  console.log(attributes);
-
   function handleSpeedChange(speed: string) {
     props.handleHassChange!('fan', 'set_speed', {
       entity_id: entity[1].entity_id,
@@ -96,7 +94,7 @@ function Fan(props: FanProps) {
     <Grid
       className={classes.root}
       container
-      // spacing={1}
+      spacing={1}
       alignItems="center"
       justify="center"
       direction="column">
