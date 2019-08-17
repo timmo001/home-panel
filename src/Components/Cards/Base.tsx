@@ -17,7 +17,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
-import Entity from './Entity';
+import Entity from '../HomeAssistant/Cards/Entity';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
@@ -170,15 +170,17 @@ function Base(props: BaseProps) {
               padding: props.card.padding ? props.card.padding : 12
             }}>
             {props.card.title && (
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                variant="h6"
-                component="h3"
-                gutterBottom
-                noWrap>
-                {props.card.title}
-              </Typography>
+              <div>
+                <Typography
+                  className={classes.title}
+                  color="textPrimary"
+                  variant="h6"
+                  component="h3"
+                  gutterBottom
+                  noWrap>
+                  {props.card.title}
+                </Typography>
+              </div>
             )}
             {props.card.type === 'entity' && (
               <Entity
