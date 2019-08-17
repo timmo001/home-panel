@@ -7,6 +7,10 @@ import auth, {
 } from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import pink from '@material-ui/core/colors/pink';
+import purple from '@material-ui/core/colors/purple';
 
 import Loading from '../Utils/Loading';
 import Main from '../Main/Main';
@@ -17,14 +21,11 @@ interface OnboardingProps extends RouteComponentProps {}
 let socket: SocketIOClient.Socket, app: any;
 
 app = feathers();
-let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
-  window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
-  window.location.hostname}:${
-  process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
-    ? '8234'
-    : window.location.port
-}`;
-socket = io(url);
+socket = io(
+  `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
+    .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${process.env
+    .REACT_APP_API_PORT || 8234}`
+);
 app.configure(socketio(socket));
 app.configure(auth({ storage: localStorage }));
 
@@ -47,6 +48,25 @@ function Onboarding(props: OnboardingProps) {
   const [loginCredentials, setLoginCredentials] = React.useState();
   const [config, setConfig] = React.useState();
   const [configId, setConfigId] = React.useState();
+  const [theme, setTheme] = React.useState(
+    responsiveFontSizes(
+      createMuiTheme({
+        palette: {
+          type: 'dark',
+          primary: pink,
+          secondary: purple,
+          background: {
+            default: '#303030',
+            paper: '#383c45'
+          }
+        }
+      })
+    )
+  );
+
+  function handleSetTheme(palette: object) {
+    setTheme(responsiveFontSizes(createMuiTheme({ palette })));
+  }
 
   function handleCreateAccount(
     data: FeathersAuthCredentials,
@@ -176,35 +196,38 @@ function Onboarding(props: OnboardingProps) {
     return <Loading text="Attempting Login. Please Wait.." />;
 
   return (
-    <Switch>
-      <Route
-        exact
-        path="/login"
-        render={(props: RouteComponentProps) => (
-          <Login
-            {...props}
-            loggedIn={loginCredentials ? true : false}
-            handleCreateAccount={handleCreateAccount}
-            handleLogin={handleLogin}
-          />
-        )}
-      />
-      <Route
-        exact
-        path="/(overview|configuration)/"
-        render={(props: RouteComponentProps) => (
-          <Main
-            {...props}
-            loggedIn={loginCredentials ? true : false}
-            loginCredentials={loginCredentials}
-            config={config}
-            handleConfigChange={handleConfigChange}
-            handleLogout={handleLogout}
-          />
-        )}
-      />
-      <Redirect to="/overview" />
-    </Switch>
+    <ThemeProvider theme={theme}>
+      <Switch>
+        <Route
+          exact
+          path="/login"
+          render={(props: RouteComponentProps) => (
+            <Login
+              {...props}
+              loggedIn={loginCredentials ? true : false}
+              handleCreateAccount={handleCreateAccount}
+              handleLogin={handleLogin}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/(overview|configuration)/"
+          render={(props: RouteComponentProps) => (
+            <Main
+              {...props}
+              loggedIn={loginCredentials ? true : false}
+              loginCredentials={loginCredentials}
+              config={config}
+              handleConfigChange={handleConfigChange}
+              handleLogout={handleLogout}
+              handleSetTheme={handleSetTheme}
+            />
+          )}
+        />
+        <Redirect to="/overview" />
+      </Switch>
+    </ThemeProvider>
   );
 }
 
