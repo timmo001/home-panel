@@ -156,8 +156,9 @@ function Main(props: MainProps) {
             />
           )}
           <Route
-            path="/"
-            render={rrProps => (
+            exact
+            path="/overview"
+            render={(rrProps: RouteComponentProps) => (
               <Overview
                 {...rrProps}
                 config={props.config}
@@ -169,11 +170,11 @@ function Main(props: MainProps) {
                 handleUpdateConfig={handleUpdateConfig}
               />
             )}
-            exact
           />
           <Route
+            exact
             path="/configuration"
-            render={rrProps => (
+            render={(rrProps: RouteComponentProps) => (
               <Configuration
                 {...rrProps}
                 config={props.config}
@@ -182,7 +183,6 @@ function Main(props: MainProps) {
                 handleUpdateConfig={handleUpdateConfig}
               />
             )}
-            exact
           />
         </main>
       )}
