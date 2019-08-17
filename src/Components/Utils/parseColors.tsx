@@ -22,6 +22,7 @@ import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 
 import { ThemeProps } from 'Components/Configuration/Config';
+import clone from './clone';
 
 const mapColor = (color: string): Color | CommonColors =>
   color === 'amber'
@@ -67,9 +68,10 @@ const mapColor = (color: string): Color | CommonColors =>
     : grey;
 
 const parseColors = (palette: ThemeProps) => {
-  palette.primary = mapColor(String(palette.primary));
-  palette.secondary = mapColor(String(palette.secondary));
-  return palette;
+  let paletteNew = clone(palette);
+  paletteNew.primary = mapColor(String(paletteNew.primary));
+  paletteNew.secondary = mapColor(String(paletteNew.secondary));
+  return paletteNew;
 };
 
 export default parseColors;
