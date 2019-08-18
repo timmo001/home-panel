@@ -121,48 +121,50 @@ export const items = [
               {
                 name: 'name',
                 title: 'Name',
-                description: 'test',
-                icon: 'mdi-compare',
+                description: 'Theme name.',
+                icon: 'mdi-rename-box',
                 type: 'input',
                 default: 'Midnight'
               },
               {
                 name: 'type',
                 title: 'Type',
-                description: 'test',
-                icon: 'mdi-compare',
+                description: 'Light or dark? (`light` or `dark`)',
+                icon: 'mdi-theme-light-dark',
                 type: 'input',
                 default: 'dark'
               },
               {
                 name: 'primary',
                 title: 'Primary',
-                description: 'test',
-                icon: 'mdi-compare',
+                description:
+                  'Primary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
+                icon: 'mdi-palette',
                 type: 'input',
                 default: 'pink'
               },
               {
                 name: 'secondary',
                 title: 'Secondary',
-                description: 'test',
-                icon: 'mdi-compare',
+                description:
+                  'Secondary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
+                icon: 'mdi-palette',
                 type: 'input',
                 default: 'pink'
               },
               {
                 name: 'background_default',
                 title: 'Background',
-                description: 'test',
-                icon: 'mdi-compare',
+                description: 'Background color.',
+                icon: 'mdi-format-color-fill',
                 type: 'input',
                 default: '#303030'
               },
               {
                 name: 'background_paper',
                 title: 'Paper',
-                description: 'test',
-                icon: 'mdi-compare',
+                description: 'Card color.',
+                icon: 'mdi-card-bulleted',
                 type: 'input',
                 default: '#383c45'
               }
