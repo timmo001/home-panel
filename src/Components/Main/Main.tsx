@@ -18,7 +18,6 @@ import HomeAssistant, {
 import isObject from '../Utils/isObject';
 import Loading from '../Utils/Loading';
 import Overview from '../Overview/Overview';
-import parseTheme from '../Utils/parseTheme';
 import properCase from '../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -60,21 +59,7 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.replace({ search: '' });
     }
-    if (
-      props.config &&
-      props.config.theme.themes &&
-      props.config.theme.current !== undefined
-    )
-      props.handleSetTheme(
-        parseTheme(props.config.theme.themes[props.config.theme.current])
-      );
-  }, [
-    hassConnected,
-    props.config,
-    props.history,
-    props.location.search,
-    props.loggedIn
-  ]);
+  }, [hassConnected, props.history, props.location.search, props.loggedIn]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);

@@ -13,8 +13,9 @@ import pink from '@material-ui/core/colors/pink';
 import purple from '@material-ui/core/colors/purple';
 
 import Loading from '../Utils/Loading';
-import Main from '../Main/Main';
 import Login from '../Login/Login';
+import Main from '../Main/Main';
+import parseTheme from '../Utils/parseTheme';
 
 interface OnboardingProps extends RouteComponentProps {}
 
@@ -172,8 +173,14 @@ function Onboarding(props: OnboardingProps) {
       process.env.NODE_ENV === 'development' &&
         console.log('getter.data[0]:', getter.data[0]);
 
-      setConfig(getter.data[0].config);
+      const configLcl = getter.data[0].config;
+      setConfig(configLcl);
       setConfigId(getter.data[0]._id);
+
+      if (configLcl.theme.themes && configLcl.theme.current !== undefined)
+        handleSetTheme(
+          parseTheme(configLcl.theme.themes[configLcl.theme.current])
+        );
     } catch (e) {
       console.error(e.message);
     }
