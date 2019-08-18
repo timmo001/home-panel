@@ -42,7 +42,7 @@ function Section(props: SectionProps) {
   const classes = useStyles();
 
   return props.section.items.map((item: any, key: number) => {
-    if (props.section.type === 'array') item.name = key;
+    if (props.section.type === 'array') item.name = Number(key);
     return (
       <Grid
         key={key}
