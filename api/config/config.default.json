@@ -10,11 +10,9 @@
         "name": "Midnight",
         "type": "dark",
         "primary": "pink",
-        "secondary": "purple",
-        "background": {
-          "default": "#303030",
-          "paper": "#383c45"
-        }
+        "secondary": "pink",
+        "background_default": "#303030",
+        "background_paper": "#383c45"
       }
     ]
   },

@@ -18,7 +18,7 @@ import HomeAssistant, {
 import isObject from '../Utils/isObject';
 import Loading from '../Utils/Loading';
 import Overview from '../Overview/Overview';
-import parseColors from '../Utils/parseColors';
+import parseTheme from '../Utils/parseTheme';
 import properCase from '../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -66,7 +66,7 @@ function Main(props: MainProps) {
       props.config.theme.current !== undefined
     )
       props.handleSetTheme(
-        parseColors(props.config.theme.themes[props.config.theme.current])
+        parseTheme(props.config.theme.themes[props.config.theme.current])
       );
   }, [
     hassConnected,

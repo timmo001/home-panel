@@ -1,14 +1,10 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,7 +13,6 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
@@ -57,15 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Item(props: ItemProps) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  function handleDialogToggle() {
-    setDialogOpen(!dialogOpen);
-  }
-
   const classes = useStyles();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const lastItem = props.path!.pop();
   let secondLastItem = props.path!.reduce(
@@ -79,92 +66,14 @@ function Item(props: ItemProps) {
       return null;
     case 'array':
       return (
-        <div>
-          <IconButton
-            color="inherit"
-            aria-label="Edit"
-            onClick={handleDialogToggle}>
-            <span
-              className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
-            />
-          </IconButton>
-          <Dialog
-            open={dialogOpen}
-            onClose={handleDialogToggle}
-            fullScreen={fullScreen}
-            fullWidth={true}
-            maxWidth="xs"
-            aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-              {props.item.title}
-            </DialogTitle>
-            <DialogContent>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                className={classes.item}>
-                {Array.isArray(value) &&
-                  value.map((_items: any[], id: number) => {
-                    return (
-                      <Grid
-                        key={id}
-                        item
-                        container
-                        direction="row"
-                        alignItems="center"
-                        className={classes.item}>
-                        <Grid item xs>
-                          <Section
-                            key={id}
-                            {...props}
-                            path={[...props.path!, props.item.name, id]}
-                            section={{ name: id, items: props.item.items }}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <IconButton
-                            color="secondary"
-                            onClick={props.handleDelete!([
-                              ...props.path!,
-                              props.item.name,
-                              id
-                            ])}>
-                            <span
-                              className={classnames(
-                                'mdi',
-                                'mdi-delete',
-                                classes.iconButton
-                              )}
-                            />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    );
-                  })}
-                <IconButton
-                  color="inherit"
-                  aria-label="Add"
-                  onClick={props.handleAdd!(
-                    [
-                      ...props.path!,
-                      props.item.name,
-                      Array.isArray(value) ? value.length : 0
-                    ],
-                    props.item.default[0]
-                  )}>
-                  <span
-                    className={classnames(
-                      'mdi',
-                      'mdi-plus',
-                      classes.iconButton
-                    )}
-                  />
-                </IconButton>
-              </Grid>
-            </DialogContent>
-          </Dialog>
-        </div>
+        <IconButton
+          color="inherit"
+          aria-label="Edit"
+          onClick={props.handleSetSections!([...props.path!], props.item)}>
+          <span
+            className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
+          />
+        </IconButton>
       );
     case 'input':
       return (
@@ -177,6 +86,14 @@ function Item(props: ItemProps) {
             [...props.path!, props.item.name],
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
+        />
+      );
+    case 'object':
+      return (
+        <Section
+          {...props}
+          path={[...props.path!, props.item.name]}
+          section={{ name: props.item.name, items: props.item.items }}
         />
       );
     case 'radio':

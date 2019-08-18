@@ -21,7 +21,7 @@ import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 
-import { ThemeProps } from 'Components/Configuration/Config';
+import { ThemeProps, defaultTheme } from 'Components/Configuration/Config';
 import clone from './clone';
 
 const mapColor = (color: string): Color | CommonColors =>
@@ -67,11 +67,20 @@ const mapColor = (color: string): Color | CommonColors =>
     ? yellow
     : grey;
 
-const parseColors = (palette: ThemeProps) => {
+const parseTheme = (palette: ThemeProps) => {
   let paletteNew = clone(palette);
   paletteNew.primary = mapColor(String(paletteNew.primary));
   paletteNew.secondary = mapColor(String(paletteNew.secondary));
+  paletteNew.background = {
+    default: paletteNew.background_default,
+    paper: paletteNew.background_paper
+  };
+  delete paletteNew.background_default;
+  delete paletteNew.background_paper;
+  // Handle bad config
+  if (!paletteNew.type.match(/light|dark/gi))
+    paletteNew.type = defaultTheme.type;
   return paletteNew;
 };
 
-export default parseColors;
+export default parseTheme;

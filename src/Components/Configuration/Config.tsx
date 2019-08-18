@@ -28,10 +28,8 @@ export type ThemeProps = {
   type: string;
   primary: string | Color | CommonColors;
   secondary: string | Color | CommonColors;
-  background: {
-    default: string;
-    paper: string;
-  };
+  background_default: string;
+  background_paper: string;
 };
 
 export const defaultPage = {
@@ -57,10 +55,8 @@ export const defaultTheme = {
   type: 'dark',
   primary: 'pink',
   secondary: 'purple',
-  background: {
-    default: '#303030',
-    paper: '#383c45'
-  }
+  background_default: '#303030',
+  background_paper: '#383c45'
 };
 
 export const items = [
@@ -109,11 +105,68 @@ export const items = [
             name: 'Midnight',
             type: 'dark',
             primary: 'pink',
-            secondary: 'purple',
-            background: {
-              default: '#303030',
-              paper: '#383c45'
-            }
+            secondary: 'pink',
+            background_default: '#303030',
+            background_paper: '#383c45'
+          }
+        ],
+        items: [
+          {
+            name: 'theme',
+            title: 'Theme',
+            description: 'test',
+            icon: 'mdi-format-list-bulleted-type',
+            type: 'object',
+            items: [
+              {
+                name: 'name',
+                title: 'Name',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: 'Midnight'
+              },
+              {
+                name: 'type',
+                title: 'Type',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: 'dark'
+              },
+              {
+                name: 'primary',
+                title: 'Primary',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: 'pink'
+              },
+              {
+                name: 'secondary',
+                title: 'Secondary',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: 'pink'
+              },
+              {
+                name: 'background_default',
+                title: 'Background',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: '#303030'
+              },
+              {
+                name: 'background_paper',
+                title: 'Paper',
+                description: 'test',
+                icon: 'mdi-compare',
+                type: 'input',
+                default: '#383c45'
+              }
+            ]
           }
         ]
       }

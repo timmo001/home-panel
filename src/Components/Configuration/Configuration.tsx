@@ -6,7 +6,9 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
@@ -47,9 +49,16 @@ export interface ConfigurationProps
   handleSelectChange?: (
     path: any[]
   ) => (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
+  handleSetSections?: (
+    path: any[],
+    section: any | any[]
+  ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 function Configuration(props: ConfigurationProps) {
+  const [sections, setSections]: any[] = React.useState(items);
+  const [path, setPath]: any[] = React.useState([]);
+
   const handleAdd = (path: any[], defaultItem: any) => () => {
     props.handleUpdateConfig!(path, defaultItem);
   };
@@ -89,6 +98,13 @@ function Configuration(props: ConfigurationProps) {
     props.handleUpdateConfig!(path, event.target.value);
   };
 
+  const handleSetSections = (path: any[], section: any | any[]) => (
+    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    setPath(path);
+    setSections(Array.isArray(section) ? section : [section]);
+  };
+
   const classes = useStyles();
 
   return (
@@ -98,7 +114,7 @@ function Configuration(props: ConfigurationProps) {
       justify="center"
       alignItems="center"
       spacing={1}>
-      {items.map((item: any) => (
+      {sections.map((item: any) => (
         <Grid
           className={classes.section}
           key={item.name}
@@ -108,20 +124,26 @@ function Configuration(props: ConfigurationProps) {
           sm={10}
           xs={12}>
           <Typography variant="h4" gutterBottom noWrap>
+            {sections !== items && (
+              <IconButton onClick={handleSetSections([], items)}>
+                <ArrowBack />
+              </IconButton>
+            )}
             {item.title}
           </Typography>
           <Card>
             <CardContent className={classes.cardContent}>
               <Section
                 {...props}
-                path={[item.name]}
+                path={[...path, item.name]}
                 section={item}
                 handleAdd={handleAdd}
-                handleDelete={handleDelete}
                 handleChange={handleChange}
+                handleDelete={handleDelete}
                 handleRadioChange={handleRadioChange}
-                handleSwitchChange={handleSwitchChange}
                 handleSelectChange={handleSelectChange}
+                handleSetSections={handleSetSections}
+                handleSwitchChange={handleSwitchChange}
               />
             </CardContent>
           </Card>
