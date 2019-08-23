@@ -112,63 +112,54 @@ export const items = [
         ],
         items: [
           {
-            name: 'theme',
-            title: 'Theme',
-            description: 'test',
-            icon: 'mdi-format-list-bulleted-type',
-            type: 'object',
-            items: [
-              {
-                name: 'name',
-                title: 'Name',
-                description: 'Theme name.',
-                icon: 'mdi-rename-box',
-                type: 'input',
-                default: 'Midnight'
-              },
-              {
-                name: 'type',
-                title: 'Type',
-                description: 'Light or dark? (`light` or `dark`)',
-                icon: 'mdi-theme-light-dark',
-                type: 'input',
-                default: 'dark'
-              },
-              {
-                name: 'primary',
-                title: 'Primary',
-                description:
-                  'Primary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
-                icon: 'mdi-palette',
-                type: 'input',
-                default: 'pink'
-              },
-              {
-                name: 'secondary',
-                title: 'Secondary',
-                description:
-                  'Secondary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
-                icon: 'mdi-palette',
-                type: 'input',
-                default: 'pink'
-              },
-              {
-                name: 'background_default',
-                title: 'Background',
-                description: 'Background color.',
-                icon: 'mdi-format-color-fill',
-                type: 'input',
-                default: '#303030'
-              },
-              {
-                name: 'background_paper',
-                title: 'Paper',
-                description: 'Card color.',
-                icon: 'mdi-card-bulleted',
-                type: 'input',
-                default: '#383c45'
-              }
-            ]
+            name: 'name',
+            title: 'Name',
+            description: 'Theme name.',
+            icon: 'mdi-rename-box',
+            type: 'input',
+            default: 'Midnight'
+          },
+          {
+            name: 'type',
+            title: 'Type',
+            description: 'Light or dark? (`light` or `dark`)',
+            icon: 'mdi-theme-light-dark',
+            type: 'input',
+            default: 'dark'
+          },
+          {
+            name: 'primary',
+            title: 'Primary',
+            description:
+              'Primary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
+            icon: 'mdi-palette',
+            type: 'input',
+            default: 'pink'
+          },
+          {
+            name: 'secondary',
+            title: 'Secondary',
+            description:
+              'Secondary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
+            icon: 'mdi-palette',
+            type: 'input',
+            default: 'pink'
+          },
+          {
+            name: 'background_default',
+            title: 'Background',
+            description: 'Background color.',
+            icon: 'mdi-format-color-fill',
+            type: 'input',
+            default: '#303030'
+          },
+          {
+            name: 'background_paper',
+            title: 'Paper',
+            description: 'Card color.',
+            icon: 'mdi-card-bulleted',
+            type: 'input',
+            default: '#383c45'
           }
         ]
       }

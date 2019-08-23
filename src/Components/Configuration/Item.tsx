@@ -65,11 +65,19 @@ function Item(props: ItemProps) {
     default:
       return null;
     case 'array':
+      const items = value.map((item: any, key: number) => ({
+        name: key,
+        title: Object.values(item)[0],
+        items: props.item.items
+      }));
       return (
         <IconButton
           color="inherit"
           aria-label="Edit"
-          onClick={props.handleSetSections!([...props.path!], props.item)}>
+          onClick={props.handleSetSections!(
+            [...props.path!, props.item.name],
+            items
+          )}>
           <span
             className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
           />
@@ -93,7 +101,7 @@ function Item(props: ItemProps) {
         <Section
           {...props}
           path={[...props.path!, props.item.name]}
-          section={{ name: props.item.name, items: props.item.items }}
+          section={props.item}
         />
       );
     case 'radio':

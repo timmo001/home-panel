@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
@@ -60,6 +61,7 @@ function Configuration(props: ConfigurationProps) {
   const [path, setPath]: any[] = React.useState([]);
 
   const handleAdd = (path: any[], defaultItem: any) => () => {
+    console.log(path, defaultItem);
     props.handleUpdateConfig!(path, defaultItem);
   };
 
@@ -114,39 +116,60 @@ function Configuration(props: ConfigurationProps) {
       justify="center"
       alignItems="center"
       spacing={1}>
-      {sections.map((item: any) => (
+      {sections.map((item: any, key: number) => (
         <Grid
           className={classes.section}
-          key={item.name}
+          key={key}
+          container
+          direction="column"
           item
           lg={4}
           md={8}
           sm={10}
           xs={12}>
-          <Typography variant="h4" gutterBottom noWrap>
+          <Grid item xs container>
             {sections !== items && (
-              <IconButton onClick={handleSetSections([], items)}>
-                <ArrowBack />
-              </IconButton>
+              <Grid item>
+                <IconButton onClick={handleSetSections([], items)}>
+                  <ArrowBack />
+                </IconButton>
+              </Grid>
             )}
-            {item.title}
-          </Typography>
-          <Card>
-            <CardContent className={classes.cardContent}>
-              <Section
-                {...props}
-                path={[...path, item.name]}
-                section={item}
-                handleAdd={handleAdd}
-                handleChange={handleChange}
-                handleDelete={handleDelete}
-                handleRadioChange={handleRadioChange}
-                handleSelectChange={handleSelectChange}
-                handleSetSections={handleSetSections}
-                handleSwitchChange={handleSwitchChange}
-              />
-            </CardContent>
-          </Card>
+            {item.title && (
+              <Grid item xs>
+                <Typography variant="h4" gutterBottom noWrap>
+                  {item.title}
+                </Typography>
+              </Grid>
+            )}
+            {
+              <Grid item>
+                <IconButton
+                  // onClick={props.handleDelete!([...props.path!, item.name])}>
+                  color="secondary">
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+            }
+          </Grid>
+          <Grid item xs>
+            <Card>
+              <CardContent className={classes.cardContent}>
+                <Section
+                  {...props}
+                  path={[...path, item.name]}
+                  section={item}
+                  handleAdd={handleAdd}
+                  handleChange={handleChange}
+                  handleDelete={handleDelete}
+                  handleRadioChange={handleRadioChange}
+                  handleSelectChange={handleSelectChange}
+                  handleSetSections={handleSetSections}
+                  handleSwitchChange={handleSwitchChange}
+                />
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
       ))}
     </Grid>
