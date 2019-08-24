@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import AddIcon from '@material-ui/icons/Add';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -25,6 +27,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&:last-child': {
       paddingBottom: theme.spacing(2.5)
     }
+  },
+  fab: {
+    position: 'fixed',
+    right: theme.spacing(2),
+    bottom: theme.spacing(2)
   }
 }));
 
@@ -109,6 +116,8 @@ function Configuration(props: ConfigurationProps) {
 
   const classes = useStyles();
 
+  console.log('sections:', sections);
+
   return (
     <Grid
       container
@@ -142,7 +151,7 @@ function Configuration(props: ConfigurationProps) {
                 </Typography>
               </Grid>
             )}
-            {
+            {item.type === 'object' && (
               <Grid item>
                 <IconButton
                   // onClick={props.handleDelete!([...props.path!, item.name])}>
@@ -150,7 +159,7 @@ function Configuration(props: ConfigurationProps) {
                   <DeleteIcon />
                 </IconButton>
               </Grid>
-            }
+            )}
           </Grid>
           <Grid item xs>
             <Card>
@@ -172,6 +181,18 @@ function Configuration(props: ConfigurationProps) {
           </Grid>
         </Grid>
       ))}
+      {sections[0].type === 'object' && (
+        <Fab
+          className={classes.fab}
+          color="primary"
+          aria-label="Add"
+          onClick={handleAdd(
+            [...path, sections.length],
+            sections[0].default[0]
+          )}>
+          <AddIcon />
+        </Fab>
+      )}
     </Grid>
   );
 }
