@@ -151,8 +151,8 @@ function Configuration(props: ConfigurationProps) {
             {item.type === 'object' && (
               <Grid item>
                 <IconButton
-                  // onClick={props.handleDelete!([...props.path!, item.name])}>
-                  color="secondary">
+                  color="secondary"
+                  onClick={handleDelete([...path, item.name])}>
                   <DeleteIcon />
                 </IconButton>
               </Grid>
