@@ -54,14 +54,14 @@ function Section(props: SectionProps) {
               direction="row"
               alignItems="center"
               justify="space-between">
-              {props.section.type !== 'array' && (
+              {item.icon && (
                 <Grid item>
                   <span
                     className={classnames('mdi', item.icon, classes.icon)}
                   />
                 </Grid>
               )}
-              {props.section.type !== 'array' && (
+              {item.title && item.description && (
                 <Grid item xs>
                   <Typography variant="subtitle1">{item.title}</Typography>
                   <Typography variant="body2" component="span">

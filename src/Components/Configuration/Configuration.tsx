@@ -63,8 +63,8 @@ export interface ConfigurationProps
 }
 
 function Configuration(props: ConfigurationProps) {
-  const [sections, setSections]: any[] = React.useState(items);
   const [path, setPath]: any[] = React.useState([]);
+  const [sections, setSections]: any[] = React.useState(items);
 
   useEffect(() => {
     if (!props.back) {
