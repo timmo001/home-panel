@@ -7,8 +7,10 @@ import { BaseProps } from '../Cards/Base';
 export interface ConfigProps {
   config: any;
   editing?: any;
+  back?: boolean;
   handleUpdateConfig?: (path: any[], data: any) => void;
   handleConfigChange?: (config: any) => void;
+  handleSetBack?: (back: boolean) => void;
 }
 
 export type PageProps = {
@@ -102,7 +104,7 @@ export const items = [
         type: 'array',
         default: [
           {
-            name: 'Midnight',
+            name: 'Theme',
             type: 'dark',
             primary: 'pink',
             secondary: 'pink',

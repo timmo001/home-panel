@@ -34,8 +34,6 @@ interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}
 function Section(props: SectionProps) {
   const classes = useStyles();
 
-  console.log('Section:', props.path, props.section);
-
   return (
     <Grid container direction="row" alignItems="center" justify="space-between">
       {props.section.items.map((item: any, key: number) => {

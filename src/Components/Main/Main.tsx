@@ -49,6 +49,7 @@ function Main(props: MainProps) {
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
   const [mouseMoved, setMouseMoved] = React.useState(false);
+  const [back, setBack] = React.useState(false);
 
   useEffect(() => {
     if (!hassConnected) {
@@ -95,6 +96,10 @@ function Main(props: MainProps) {
     }
   }
 
+  function handleBack() {
+    setBack(false);
+  }
+
   const classes = useStyles();
 
   if (!props.loggedIn) {
@@ -135,6 +140,8 @@ function Main(props: MainProps) {
         hassConnected={hassConnected}
         handleHassLogin={handleHassLogin}
         mouseMoved={mouseMoved}
+        back={back}
+        handleBack={handleBack}
       />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
@@ -181,7 +188,9 @@ function Main(props: MainProps) {
                 config={props.config}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
+                back={back}
                 handleUpdateConfig={handleUpdateConfig}
+                handleSetBack={setBack}
               />
             )}
           />

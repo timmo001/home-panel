@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -10,7 +10,6 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
@@ -67,8 +66,14 @@ function Configuration(props: ConfigurationProps) {
   const [sections, setSections]: any[] = React.useState(items);
   const [path, setPath]: any[] = React.useState([]);
 
+  useEffect(() => {
+    if (!props.back) {
+      setPath([]);
+      setSections(items);
+    }
+  }, [props.back]);
+
   const handleAdd = (path: any[], defaultItem: any) => () => {
-    console.log(path, defaultItem);
     props.handleUpdateConfig!(path, defaultItem);
   };
 
@@ -112,11 +117,10 @@ function Configuration(props: ConfigurationProps) {
   ) => {
     setPath(path);
     setSections(Array.isArray(section) ? section : [section]);
+    if (path !== []) props.handleSetBack!(true);
   };
 
   const classes = useStyles();
-
-  console.log('sections:', sections);
 
   return (
     <Grid
@@ -137,13 +141,6 @@ function Configuration(props: ConfigurationProps) {
           sm={10}
           xs={12}>
           <Grid item xs container>
-            {sections !== items && (
-              <Grid item>
-                <IconButton onClick={handleSetSections([], items)}>
-                  <ArrowBack />
-                </IconButton>
-              </Grid>
-            )}
             {item.title && (
               <Grid item xs>
                 <Typography variant="h4" gutterBottom noWrap>
@@ -199,7 +196,9 @@ function Configuration(props: ConfigurationProps) {
 
 Configuration.propTypes = {
   config: PropTypes.any,
-  handleUpdateConfig: PropTypes.func.isRequired
+  back: PropTypes.bool.isRequired,
+  handleUpdateConfig: PropTypes.func.isRequired,
+  handleSetBack: PropTypes.func.isRequired
 };
 
 export default Configuration;
