@@ -13,6 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import clone from '../Utils/clone';
 import { items, ConfigProps } from './Config';
 import Section from './Section';
 
@@ -90,17 +91,13 @@ function Configuration(props: ConfigurationProps) {
   };
 
   const handleDelete = (path: any[]) => () => {
-    // if (path !== []) {
-    //   console.log('pt:', clone(path));
-    //   console.log('pp:', clone(path.pop()));
-    //   console.log('ps:', clone(sections));
-
-    //   const newSections = clone(sections).slice(path.pop(), 1);
-
-    //   console.log('ns:', clone(newSections));
-    //   setSections(newSections);
-    // }
+    const id = clone(path).pop();
     props.handleUpdateConfig!(path, undefined);
+    if (path !== []) {
+      const newSections = clone(sections);
+      newSections.splice(id, 1);
+      setSections(newSections);
+    }
   };
 
   const handleChange = (path: any[], type: string) => (
