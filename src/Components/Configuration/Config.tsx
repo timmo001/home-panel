@@ -193,7 +193,7 @@ export const items = [
         description: 'Where should the time be shown?',
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
-        default: 'left',
+        default: '0',
         items: [
           {
             name: '0',
@@ -232,7 +232,7 @@ export const items = [
         description: 'Where should the date be shown?',
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
-        default: 'left',
+        default: '1',
         items: [
           {
             name: '0',
