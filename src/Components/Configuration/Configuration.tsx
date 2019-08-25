@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
+import clone from '../Utils/clone';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -74,10 +75,34 @@ function Configuration(props: ConfigurationProps) {
   }, [props.back]);
 
   const handleAdd = (path: any[], defaultItem: any) => () => {
+    console.table(defaultItem);
     props.handleUpdateConfig!(path, defaultItem);
+    if (path !== []) {
+      const newSections = [
+        ...sections,
+        {
+          ...sections[0],
+          name: sections.length,
+          title: Object.values(defaultItem)[0]
+        }
+      ];
+
+      console.table(newSections);
+      setSections(newSections);
+    }
   };
 
   const handleDelete = (path: any[]) => () => {
+    // if (path !== []) {
+    //   console.log('pt:', clone(path));
+    //   console.log('pp:', clone(path.pop()));
+    //   console.log('ps:', clone(sections));
+
+    //   const newSections = clone(sections).slice(path.pop(), 1);
+
+    //   console.log('ns:', clone(newSections));
+    //   setSections(newSections);
+    // }
     props.handleUpdateConfig!(path, undefined);
   };
 
@@ -167,7 +192,6 @@ function Configuration(props: ConfigurationProps) {
                   section={item}
                   handleAdd={handleAdd}
                   handleChange={handleChange}
-                  handleDelete={handleDelete}
                   handleRadioChange={handleRadioChange}
                   handleSelectChange={handleSelectChange}
                   handleSetSections={handleSetSections}

@@ -59,7 +59,8 @@ function Item(props: ItemProps) {
     (o, k) => (o[k] = o[k] || {}),
     props.config
   );
-  const value = secondLastItem[lastItem];
+  let value = secondLastItem[lastItem];
+  if (!value) value = props.item.default;
 
   switch (props.item.type) {
     default:
@@ -176,8 +177,6 @@ Item.propTypes = {
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
   section: PropTypes.any.isRequired,
-  handleAdd: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
   handleSwitchChange: PropTypes.func.isRequired,
