@@ -161,6 +161,7 @@ export const items = [
         type: 'array',
         default: [
           {
+            key: 'abcdefghijklmnop',
             name: 'Theme',
             type: 'dark',
             primary: 'pink',

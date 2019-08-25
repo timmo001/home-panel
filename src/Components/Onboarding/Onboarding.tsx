@@ -10,7 +10,6 @@ import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
-import purple from '@material-ui/core/colors/purple';
 
 import { ThemesProps } from '../Configuration/Config';
 import Loading from '../Utils/Loading';
@@ -59,7 +58,7 @@ function Onboarding(props: OnboardingProps) {
         palette: {
           type: 'dark',
           primary: pink,
-          secondary: purple,
+          secondary: pink,
           background: {
             default: '#303030',
             paper: '#383c45'
@@ -183,12 +182,12 @@ function Onboarding(props: OnboardingProps) {
       setConfig(configLcl);
       setConfigId(getter.data[0]._id);
 
-      if (configLcl.theme.themes && !configLcl.theme.current)
-        handleSetTheme(
-          configLcl.theme.themes.find(
-            (theme: ThemesProps) => theme.key === configLcl.theme.current
-          )
+      if (configLcl.theme.themes && configLcl.theme.current) {
+        let theme = configLcl.theme.themes.find(
+          (theme: ThemesProps) => theme.key === configLcl.theme.current
         );
+        if (theme) handleSetTheme(theme);
+      }
     } catch (e) {
       console.error(e.message);
     }
