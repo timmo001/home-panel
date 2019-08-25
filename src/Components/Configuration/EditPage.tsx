@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface EditPageProps extends ConfigProps {
   page: PageProps;
   handleClose: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data?: PageProps) => void;
 }
 
 function EditPage(props: EditPageProps) {

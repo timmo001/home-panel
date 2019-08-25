@@ -76,7 +76,7 @@ function Pages(props: PagesProps) {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (page: PageProps) => (data: PageProps) => {
+  const handleUpdatePage = (page: PageProps) => (data?: PageProps) => {
     props.handleUpdateConfig!(
       ['pages', findPageIdByPage(props.config, page)],
       data

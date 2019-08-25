@@ -77,7 +77,7 @@ export interface BaseProps
   handleDelete?: () => void;
   handleMoveDown?: () => void;
   handleMoveUp?: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data: CardProps) => void;
 }
 
 function Base(props: BaseProps) {

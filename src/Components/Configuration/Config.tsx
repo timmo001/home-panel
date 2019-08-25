@@ -9,8 +9,8 @@ export interface ConfigProps {
   config: ConfigurationProps;
   editing: number;
   back?: boolean;
-  handleUpdateConfig?: (path: any[], data: any) => void;
-  handleConfigChange?: (config: any) => void;
+  handleUpdateConfig?: (path: any[], data?: any) => void;
+  handleConfigChange?: (config: ConfigurationProps) => void;
   handleSetBack?: (back: boolean) => void;
   handleSetTheme?: (palette: ThemesProps) => void;
 }
