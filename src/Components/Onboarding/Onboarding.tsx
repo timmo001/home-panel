@@ -23,11 +23,14 @@ interface OnboardingProps extends RouteComponentProps {}
 let socket: SocketIOClient.Socket, app: any;
 
 app = feathers();
-socket = io(
-  `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${process
-    .env.REACT_APP_API_HOSTNAME || window.location.hostname}:${process.env
-    .REACT_APP_API_PORT || 8234}`
-);
+let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
+  window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
+  window.location.hostname}:${
+  process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
+    ? '8234'
+    : window.location.port
+}`;
+socket = io(url);
 app.configure(socketio(socket));
 app.configure(auth({ storage: localStorage }));
 
