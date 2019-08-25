@@ -19,6 +19,7 @@ import Slide from '@material-ui/core/Slide';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import Items, { ItemsProps, MenuItemsProps } from './Items';
@@ -86,8 +87,10 @@ interface ResponsiveDrawerProps extends RouteComponentProps {
   editing: number;
   hassConnected: boolean;
   mouseMoved: boolean;
+  back: boolean;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
+  handleBack: () => void;
 }
 
 function ResponsiveDrawer(props: ResponsiveDrawerProps) {
@@ -174,14 +177,25 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                 ? 'dense'
                 : 'regular'
             }>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              className={classes.menuButton}>
-              <MenuIcon />
-            </IconButton>
+            {props.back ? (
+              <IconButton
+                color="inherit"
+                aria-label="Back"
+                edge="start"
+                onClick={props.handleBack}
+                className={classes.menuButton}>
+                <ArrowBack />
+              </IconButton>
+            ) : (
+              <IconButton
+                color="inherit"
+                aria-label="Open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                className={classes.menuButton}>
+                <MenuIcon />
+              </IconButton>
+            )}
             <Typography className={classes.heading} variant="h6" noWrap>
               {props.currentPage}
             </Typography>
@@ -238,6 +252,7 @@ ResponsiveDrawer.propTypes = {
   config: PropTypes.any.isRequired,
   editing: PropTypes.number,
   hassConnected: PropTypes.bool,
+  back: PropTypes.bool.isRequired,
   mouseMoved: PropTypes.bool.isRequired,
   handleHassLogin: PropTypes.func.isRequired,
   handleLogout: PropTypes.func.isRequired

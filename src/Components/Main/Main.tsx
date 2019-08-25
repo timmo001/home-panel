@@ -48,6 +48,7 @@ function Main(props: MainProps) {
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
   const [mouseMoved, setMouseMoved] = React.useState(false);
+  const [back, setBack] = React.useState(false);
 
   useEffect(() => {
     if (!hassConnected) {
@@ -94,6 +95,10 @@ function Main(props: MainProps) {
     }
   }
 
+  function handleBack() {
+    setBack(false);
+  }
+
   const classes = useStyles();
 
   if (!props.loggedIn) {
@@ -128,12 +133,14 @@ function Main(props: MainProps) {
       onMouseMove={handleMouseMove}>
       <Drawer
         {...props}
+        back={back}
         currentPage={currentPage}
-        userInitials={userInitials}
         editing={editing}
         hassConnected={hassConnected}
-        handleHassLogin={handleHassLogin}
         mouseMoved={mouseMoved}
+        userInitials={userInitials}
+        handleBack={handleBack}
+        handleHassLogin={handleHassLogin}
       />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
@@ -150,8 +157,8 @@ function Main(props: MainProps) {
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
-              setConnected={setHassConnected}
               setConfig={setHassConfig}
+              setConnected={setHassConnected}
               setEntities={setHassEntities}
             />
           )}
@@ -163,9 +170,9 @@ function Main(props: MainProps) {
                 {...rrProps}
                 config={props.config}
                 editing={editing}
-                mouseMoved={mouseMoved}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
+                mouseMoved={mouseMoved}
                 handleHassChange={handleHassChange}
                 handleUpdateConfig={handleUpdateConfig}
               />
@@ -177,9 +184,12 @@ function Main(props: MainProps) {
             render={(rrProps: RouteComponentProps) => (
               <Configuration
                 {...rrProps}
+                back={back}
                 config={props.config}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
+                handleSetBack={setBack}
+                handleSetTheme={props.handleSetTheme}
                 handleUpdateConfig={handleUpdateConfig}
               />
             )}
@@ -195,7 +205,8 @@ Main.propTypes = {
   loginCredentials: PropTypes.any,
   config: PropTypes.object,
   handleConfigChange: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired
+  handleLogout: PropTypes.func.isRequired,
+  handleSetTheme: PropTypes.func.isRequired
 };
 
 export default Main;
