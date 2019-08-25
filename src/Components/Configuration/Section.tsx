@@ -26,13 +26,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       borderBottom: 'none',
       paddingBottom: 0
     }
-  },
-  radioGroup: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  textField: {
-    maxWidth: 100
   }
 }));
 
@@ -41,27 +34,54 @@ interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}
 function Section(props: SectionProps) {
   const classes = useStyles();
 
-  return props.section.items.map((item: any) => (
-    <Grid
-      key={item.name}
-      container
-      direction="row"
-      alignItems="center"
-      className={classes.item}>
-      <Grid item>
-        <span className={classnames('mdi', item.icon, classes.icon)} />
-      </Grid>
-      <Grid item xs>
-        <Typography variant="subtitle1">{item.title}</Typography>
-        <Typography variant="body2" component="span">
-          <MarkdownText text={item.description} />
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Item {...props} item={item} path={[...props.path!, item.name]} />
-      </Grid>
+  return (
+    <Grid container direction="row" alignItems="center" justify="space-between">
+      {props.section.items.map((item: any, key: number) => {
+        if (props.section.type === 'array') item.name = Number(key);
+        return (
+          <Grid
+            key={key}
+            item
+            container
+            direction="row"
+            alignItems="center"
+            justify="space-between"
+            className={classes.item}>
+            <Grid
+              item
+              xs
+              container
+              direction="row"
+              alignItems="center"
+              justify="space-between">
+              {item.icon && (
+                <Grid item>
+                  <span
+                    className={classnames('mdi', item.icon, classes.icon)}
+                  />
+                </Grid>
+              )}
+              {item.title && item.description && (
+                <Grid item xs>
+                  <Typography variant="subtitle1">{item.title}</Typography>
+                  <Typography variant="body2" component="span">
+                    <MarkdownText text={item.description} />
+                  </Typography>
+                </Grid>
+              )}
+              <Grid item>
+                <Item
+                  {...props}
+                  item={item}
+                  path={[...props.path!, item.name]}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+        );
+      })}
     </Grid>
-  ));
+  );
 }
 
 Section.propTypes = {
@@ -70,7 +90,8 @@ Section.propTypes = {
   section: PropTypes.any.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired
+  handleSwitchChange: PropTypes.func.isRequired,
+  handleSelectChange: PropTypes.func.isRequired
 };
 
 export default Section;

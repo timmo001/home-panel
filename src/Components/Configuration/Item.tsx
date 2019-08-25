@@ -1,24 +1,23 @@
 // @flow
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Section from './Section';
+import { ThemeProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -53,114 +52,40 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Item(props: ItemProps) {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  function handleDialogToggle() {
-    setDialogOpen(!dialogOpen);
-  }
-
   const classes = useStyles();
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const lastItem = props.path!.pop();
   let secondLastItem = props.path!.reduce(
     (o, k) => (o[k] = o[k] || {}),
     props.config
   );
-  const value = secondLastItem[lastItem];
+  let value: any = !secondLastItem[lastItem]
+    ? props.item.default
+    : secondLastItem[lastItem];
 
   switch (props.item.type) {
     default:
       return null;
     case 'array':
+      const items = value.map((item: any, key: number) => ({
+        name: key,
+        title: Object.values(item)[0],
+        type: 'object',
+        default: props.item.default,
+        items: props.item.items
+      }));
       return (
-        <div>
-          <IconButton
-            color="inherit"
-            aria-label="Edit"
-            onClick={handleDialogToggle}>
-            <span
-              className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
-            />
-          </IconButton>
-          <Dialog
-            open={dialogOpen}
-            onClose={handleDialogToggle}
-            fullScreen={fullScreen}
-            fullWidth={true}
-            maxWidth="xs"
-            aria-labelledby="responsive-dialog-title">
-            <DialogTitle id="responsive-dialog-title">
-              {props.item.title}
-            </DialogTitle>
-            <DialogContent>
-              <Grid
-                container
-                direction="column"
-                alignItems="center"
-                className={classes.item}>
-                {Array.isArray(value) &&
-                  value.map((_items: any[], id: number) => {
-                    return (
-                      <Grid
-                        key={id}
-                        item
-                        container
-                        direction="row"
-                        alignItems="center"
-                        className={classes.item}>
-                        <Grid item xs>
-                          <Section
-                            key={id}
-                            {...props}
-                            path={[...props.path!, props.item.name, id]}
-                            section={{ name: id, items: props.item.items }}
-                          />
-                        </Grid>
-                        <Grid item>
-                          <IconButton
-                            color="secondary"
-                            onClick={props.handleDelete!([
-                              ...props.path!,
-                              props.item.name,
-                              id
-                            ])}>
-                            <span
-                              className={classnames(
-                                'mdi',
-                                'mdi-delete',
-                                classes.iconButton
-                              )}
-                            />
-                          </IconButton>
-                        </Grid>
-                      </Grid>
-                    );
-                  })}
-                <IconButton
-                  color="inherit"
-                  aria-label="Add"
-                  onClick={props.handleAdd!(
-                    [
-                      ...props.path!,
-                      props.item.name,
-                      Array.isArray(value) ? value.length : 0
-                    ],
-                    props.item.default[0]
-                  )}>
-                  <span
-                    className={classnames(
-                      'mdi',
-                      'mdi-plus',
-                      classes.iconButton
-                    )}
-                  />
-                </IconButton>
-              </Grid>
-            </DialogContent>
-          </Dialog>
-        </div>
+        <IconButton
+          color="inherit"
+          aria-label="Edit"
+          onClick={props.handleSetSections!(
+            [...props.path!, props.item.name],
+            items
+          )}>
+          <span
+            className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
+          />
+        </IconButton>
       );
     case 'input':
       return (
@@ -168,11 +93,19 @@ function Item(props: ItemProps) {
           className={classes.textField}
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
-          defaultValue={value}
+          value={value}
           onChange={props.handleChange!(
             [...props.path!, props.item.name],
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
+        />
+      );
+    case 'object':
+      return (
+        <Section
+          {...props}
+          path={[...props.path!, props.item.name]}
+          section={props.item}
         />
       );
     case 'radio':
@@ -209,6 +142,34 @@ function Item(props: ItemProps) {
           ])}
         />
       );
+    case 'theme':
+      return (
+        <FormControl>
+          <InputLabel htmlFor="theme">Theme</InputLabel>
+          <Select
+            value={value}
+            onChange={props.handleSelectChange!([
+              ...props.path!,
+              props.item.name
+            ])}
+            inputProps={{
+              name: 'theme',
+              id: 'theme'
+            }}>
+            {props.config.theme.themes ? (
+              props.config.theme.themes.map(
+                (theme: ThemeProps, key: number) => (
+                  <MenuItem key={key} value={key}>
+                    {theme.name}
+                  </MenuItem>
+                )
+              )
+            ) : (
+              <MenuItem>No themes found</MenuItem>
+            )}
+          </Select>
+        </FormControl>
+      );
   }
 }
 
@@ -217,11 +178,10 @@ Item.propTypes = {
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
   section: PropTypes.any.isRequired,
-  handleAdd: PropTypes.func.isRequired,
-  handleDelete: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired
+  handleSwitchChange: PropTypes.func.isRequired,
+  handleSelectChange: PropTypes.func.isRequired
 };
 
 export default Item;
