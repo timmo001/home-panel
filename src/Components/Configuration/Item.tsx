@@ -92,7 +92,7 @@ function Item(props: ItemProps) {
           className={classes.textField}
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
-          defaultValue={value}
+          value={value}
           onChange={props.handleChange!(
             [...props.path!, props.item.name],
             typeof props.item.default === 'number' ? 'number' : 'string'

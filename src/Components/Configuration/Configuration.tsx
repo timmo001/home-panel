@@ -14,7 +14,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
-import clone from '../Utils/clone';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -75,7 +74,6 @@ function Configuration(props: ConfigurationProps) {
   }, [props.back]);
 
   const handleAdd = (path: any[], defaultItem: any) => () => {
-    console.table(defaultItem);
     props.handleUpdateConfig!(path, defaultItem);
     if (path !== []) {
       const newSections = [
@@ -87,7 +85,6 @@ function Configuration(props: ConfigurationProps) {
         }
       ];
 
-      console.table(newSections);
       setSections(newSections);
     }
   };
