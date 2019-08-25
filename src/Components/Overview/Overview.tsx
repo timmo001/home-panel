@@ -161,8 +161,9 @@ function Overview(props: OverviewProps) {
   }
 
   const groups =
-    props.config.groups.filter((group: any) => group.page === currentPage) ||
-    [];
+    props.config.groups.filter(
+      (group: GroupProps) => group.page === currentPage
+    ) || [];
 
   const classes = useStyles();
   const theme = useTheme();

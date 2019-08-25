@@ -274,7 +274,7 @@ function Climate(props: ClimateProps) {
           alignItems="center"
           justify="center"
           direction="row">
-          {attributes.hvac_modes.map((mode: any, key: number) => {
+          {attributes.hvac_modes.map((mode: string, key: number) => {
             let icon: string | undefined =
               mode === 'off'
                 ? 'mdi-power'
