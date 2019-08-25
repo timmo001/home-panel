@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Section from './Section';
-import { ThemeProps } from './Config';
+import { ThemesProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -69,7 +69,7 @@ function Item(props: ItemProps) {
     case 'array':
       const items = value.map((item: any, key: number) => ({
         name: key,
-        title: Object.values(item)[0],
+        title: item.name,
         type: 'object',
         default: props.item.default,
         items: props.item.items
@@ -158,8 +158,8 @@ function Item(props: ItemProps) {
             }}>
             {props.config.theme.themes ? (
               props.config.theme.themes.map(
-                (theme: ThemeProps, key: number) => (
-                  <MenuItem key={key} value={key}>
+                (theme: ThemesProps, key: number) => (
+                  <MenuItem key={key} value={theme.key}>
                     {theme.name}
                   </MenuItem>
                 )

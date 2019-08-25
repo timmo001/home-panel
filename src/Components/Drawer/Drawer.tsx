@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { ConfigurationProps } from '../Configuration/Config';
 import Items, { ItemsProps, MenuItemsProps } from './Items';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
 
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ResponsiveDrawerProps extends RouteComponentProps {
   currentPage: string;
   userInitials: string;
-  config?: any;
+  config: ConfigurationProps;
   editing: number;
   hassConnected: boolean;
   mouseMoved: boolean;

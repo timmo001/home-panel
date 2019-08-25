@@ -13,8 +13,9 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import { items, ConfigProps, ThemesProps } from './Config';
 import clone from '../Utils/clone';
-import { items, ConfigProps } from './Config';
+import makeKey from '../Utils/makeKey';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -75,6 +76,7 @@ function Configuration(props: ConfigurationProps) {
   }, [props.back]);
 
   const handleAdd = (path: any[], defaultItem: any) => () => {
+    if (defaultItem.key) defaultItem.key = makeKey(16);
     props.handleUpdateConfig!(path, defaultItem);
     if (path !== []) {
       const newSections = [
@@ -82,7 +84,7 @@ function Configuration(props: ConfigurationProps) {
         {
           ...sections[0],
           name: sections.length,
-          title: Object.values(defaultItem)[0]
+          title: defaultItem.name
         }
       ];
 
@@ -129,10 +131,12 @@ function Configuration(props: ConfigurationProps) {
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
     props.handleUpdateConfig!(path, event.target.value);
-    if (path.pop() === 'theme')
-      props.handleSetTheme!(
-        props.config.theme.themes[Number(event.target.value)]
+    if (path.pop() === 'theme') {
+      const theme = props.config.theme.themes.find(
+        (theme: ThemesProps) => theme.key === event.target.value
       );
+      if (theme) props.handleSetTheme!(theme);
+    }
   };
 
   const handleSetSections = (path: any[], section: any | any[]) => (

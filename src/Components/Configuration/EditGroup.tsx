@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface EditGroupProps {
   group: GroupProps;
   handleClose: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data: GroupProps) => void;
 }
 
 function EditGroup(props: EditGroupProps) {

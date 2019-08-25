@@ -10,10 +10,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { PageProps } from './Config';
+import { ConfigProps, PageProps, GroupProps } from './Config';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -33,10 +34,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface EditPageProps {
+interface EditPageProps extends ConfigProps {
   page: PageProps;
   handleClose: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data?: PageProps) => void;
 }
 
 function EditPage(props: EditPageProps) {
@@ -75,6 +76,12 @@ function EditPage(props: EditPageProps) {
       [name]: typeof event === 'string' ? event : event.target.value
     });
   };
+
+  const foundGroups = props.config.groups.find(
+    (group: GroupProps) => group.page === props.page.key
+  )
+    ? true
+    : false;
 
   const classes = useStyles();
   const theme = useTheme();
@@ -119,16 +126,24 @@ function EditPage(props: EditPageProps) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <IconButton color="primary" onClick={handleDeleteConfirm}>
+        <IconButton
+          color="primary"
+          onClick={handleDeleteConfirm}
+          disabled={foundGroups}>
           <DeleteIcon fontSize="small" />
         </IconButton>
+        {foundGroups && (
+          <Typography variant="body2" component="span">
+            To delete this page, first delete all groups inside this page.
+          </Typography>
+        )}
         <div className={classes.fill} />
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleConfirm}>Save</Button>
       </DialogActions>
       {deleteConfirm && (
         <ConfirmDialog
-          text="Are you sure you want to delete this page? This will also delete any groups and cards that this page contains."
+          text="Are you sure you want to delete this page?"
           handleClose={handleConfirmClose}
           handleConfirm={handleDelete}
         />

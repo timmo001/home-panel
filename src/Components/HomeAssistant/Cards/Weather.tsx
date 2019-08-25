@@ -203,7 +203,7 @@ function Weather(props: WeatherProps) {
               </Typography>
             </Grid>
           </Grid>
-          {props.card.width > 1 || props.card.height > 1 ? (
+          {props.card.width > 1 || props.card.height! > 1 ? (
             <Grid item xs>
               {Object.keys(attributes)
                 .filter(i => typeof attributes[i] == 'number')
@@ -224,7 +224,7 @@ function Weather(props: WeatherProps) {
           ) : null}
         </Grid>
       </Grid>
-      {props.card.width > 1 && props.card.height > 1 && (
+      {props.card.width > 1 && props.card.height! > 1 && (
         <Grid item className={classes.forecast}>
           {attributes.forecast.map((w: object | any, key: number) => {
             const datetime = moment(w.datetime);

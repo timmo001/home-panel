@@ -14,6 +14,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
+import { CardProps } from '../Configuration/Config';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
@@ -71,12 +72,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
-  card: any;
+  card: CardProps;
   editing: number;
   handleDelete?: () => void;
   handleMoveDown?: () => void;
   handleMoveUp?: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data: CardProps) => void;
 }
 
 function Base(props: BaseProps) {
@@ -96,7 +97,7 @@ function Base(props: BaseProps) {
       entity_id: props.card.entity
     });
     props.handleHassChange!(
-      props.card.domain,
+      props.card.domain!,
       props.card.state === 'on' ? false : true,
       {
         entity_id: props.card.entity
@@ -118,13 +119,13 @@ function Base(props: BaseProps) {
   const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
   let height =
-    props.editing === 2 ? 'initial' : props.card.height * cardSize || cardSize;
+    props.editing === 2 ? 'initial' : props.card.height! * cardSize || cardSize;
   if (props.card.type !== 'entity') height = -1;
   let width =
-    props.editing === 2 ? -1 : props.card.width * cardSize || cardSize;
+    props.editing === 2 ? -1 : props.card.width! * cardSize || cardSize;
   if (width !== cardSize) {
     // Adjust for margins
-    width = props.card.width * theme.spacing(1) + width;
+    width = props.card.width! * theme.spacing(1) + width;
   }
 
   const toggleable =
@@ -154,9 +155,9 @@ function Base(props: BaseProps) {
           style={{
             background: props.card.disabled
               ? theme.palette.error.main
-              : props.editing !== 2 &&
-                props.card.background &&
-                props.card.background
+              : props.editing !== 2 && props.card.background
+              ? props.card.background
+              : ''
           }}>
           <CardContent
             className={classes.cardContent}

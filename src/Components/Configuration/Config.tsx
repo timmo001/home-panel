@@ -3,30 +3,82 @@ import { Color } from '@material-ui/core';
 import { CommonColors } from '@material-ui/core/colors/common';
 
 import { BaseProps } from '../Cards/Base';
+import makeKey from '../Utils/makeKey';
 
 export interface ConfigProps {
-  config: any;
-  editing?: any;
+  config: ConfigurationProps;
+  editing: number;
   back?: boolean;
-  handleUpdateConfig?: (path: any[], data: any) => void;
-  handleConfigChange?: (config: any) => void;
+  handleUpdateConfig?: (path: any[], data?: any) => void;
+  handleConfigChange?: (config: ConfigurationProps) => void;
   handleSetBack?: (back: boolean) => void;
-  handleSetTheme?: (palette: ThemeProps) => void;
+  handleSetTheme?: (palette: ThemesProps) => void;
 }
 
+export type ConfigurationProps = {
+  general: GeneralProps;
+  theme: ThemeProps;
+  header: HeaderProps;
+  pages: [PageProps];
+  groups: [GroupProps];
+  cards: [CardProps];
+};
+
+export type GeneralProps = {
+  autohide_toolbar: boolean;
+  dense_toolbar: boolean;
+};
+
+export type ThemeProps = {
+  current: string;
+  themes: [ThemesProps];
+};
+
+export type HeaderProps = {
+  time_show: boolean;
+  time_military: boolean;
+  time_location: number;
+  date_show: boolean;
+  date_format: string;
+  date_location: number;
+};
+
 export type PageProps = {
+  key: string;
   name: string;
   icon: string;
 };
 
 export type GroupProps = {
+  key: string;
+  page: string;
   name: string;
   cards: BaseProps[];
-  page: number;
   width: number;
 };
 
-export type ThemeProps = {
+export type CardProps = {
+  key: string;
+  group: string;
+  type: string;
+  width: number;
+  height?: number;
+  square?: boolean;
+  padding?: number;
+  elevation?: number;
+  background?: string;
+  title?: string;
+  content?: string;
+  url?: string;
+  domain?: string;
+  entity?: string;
+  state?: string | boolean;
+  disabled?: boolean;
+  toggleable?: boolean;
+};
+
+export type ThemesProps = {
+  key: string;
   name: string;
   type: string;
   primary: string | Color | CommonColors;
@@ -35,32 +87,36 @@ export type ThemeProps = {
   background_paper: string;
 };
 
-export const defaultPage = {
+export const defaultPage = () => ({
+  key: makeKey(16),
   name: 'Page',
   icon: 'file'
-};
+});
 
-export const defaultGroup = (page: number) => ({
+export const defaultGroup = (pageKey: string) => ({
+  key: makeKey(16),
   name: 'Group',
-  cards: [],
-  page,
+  page: pageKey,
   width: 2
 });
 
-export const defaultCard = {
+export const defaultCard = (groupKey: string) => ({
+  key: makeKey(16),
+  group: groupKey,
   title: 'Card',
   type: 'entity',
-  content: '',
   width: 1
-};
+});
 
-export const defaultTheme = {
+export const defaultTheme = () => ({
+  key: makeKey(16),
+  name: 'Theme',
   type: 'dark',
   primary: 'pink',
   secondary: 'purple',
   background_default: '#303030',
   background_paper: '#383c45'
-};
+});
 
 export const items = [
   {
@@ -105,6 +161,7 @@ export const items = [
         type: 'array',
         default: [
           {
+            key: 'abcdefghijklmnop',
             name: 'Theme',
             type: 'dark',
             primary: 'pink',
