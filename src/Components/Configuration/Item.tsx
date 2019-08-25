@@ -69,7 +69,7 @@ function Item(props: ItemProps) {
     case 'array':
       const items = value.map((item: any, key: number) => ({
         name: key,
-        title: Object.values(item)[0],
+        title: item.name,
         type: 'object',
         default: props.item.default,
         items: props.item.items
