@@ -129,6 +129,10 @@ function Configuration(props: ConfigurationProps) {
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
     props.handleUpdateConfig!(path, event.target.value);
+    if (path.pop() === 'theme')
+      props.handleSetTheme!(
+        props.config.theme.themes[Number(event.target.value)]
+      );
   };
 
   const handleSetSections = (path: any[], section: any | any[]) => (

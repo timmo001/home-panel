@@ -8,7 +8,7 @@ import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
-import { ConfigProps, ThemeProps } from '../Configuration/Config';
+import { ConfigProps } from '../Configuration/Config';
 import clone from '../Utils/clone';
 import Configuration from '../Configuration/Configuration';
 import Drawer from '../Drawer/Drawer';
@@ -39,7 +39,6 @@ interface MainProps extends RouteComponentProps, ConfigProps {
   loggedIn: boolean;
   loginCredentials: any;
   handleLogout(): any;
-  handleSetTheme: (theme: ThemeProps) => void;
 }
 
 let moveTimeout: NodeJS.Timeout;
@@ -134,14 +133,14 @@ function Main(props: MainProps) {
       onMouseMove={handleMouseMove}>
       <Drawer
         {...props}
+        back={back}
         currentPage={currentPage}
-        userInitials={userInitials}
         editing={editing}
         hassConnected={hassConnected}
-        handleHassLogin={handleHassLogin}
         mouseMoved={mouseMoved}
-        back={back}
+        userInitials={userInitials}
         handleBack={handleBack}
+        handleHassLogin={handleHassLogin}
       />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
@@ -158,8 +157,8 @@ function Main(props: MainProps) {
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
-              setConnected={setHassConnected}
               setConfig={setHassConfig}
+              setConnected={setHassConnected}
               setEntities={setHassEntities}
             />
           )}
@@ -171,9 +170,9 @@ function Main(props: MainProps) {
                 {...rrProps}
                 config={props.config}
                 editing={editing}
-                mouseMoved={mouseMoved}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
+                mouseMoved={mouseMoved}
                 handleHassChange={handleHassChange}
                 handleUpdateConfig={handleUpdateConfig}
               />
@@ -185,12 +184,13 @@ function Main(props: MainProps) {
             render={(rrProps: RouteComponentProps) => (
               <Configuration
                 {...rrProps}
+                back={back}
                 config={props.config}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
-                back={back}
-                handleUpdateConfig={handleUpdateConfig}
                 handleSetBack={setBack}
+                handleSetTheme={props.handleSetTheme}
+                handleUpdateConfig={handleUpdateConfig}
               />
             )}
           />

@@ -11,6 +11,7 @@ export interface ConfigProps {
   handleUpdateConfig?: (path: any[], data: any) => void;
   handleConfigChange?: (config: any) => void;
   handleSetBack?: (back: boolean) => void;
+  handleSetTheme?: (palette: ThemeProps) => void;
 }
 
 export type PageProps = {

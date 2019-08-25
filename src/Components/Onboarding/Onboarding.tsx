@@ -12,6 +12,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
 import purple from '@material-ui/core/colors/purple';
 
+import { ThemeProps } from '../Configuration/Config';
 import Loading from '../Utils/Loading';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -65,8 +66,10 @@ function Onboarding(props: OnboardingProps) {
     )
   );
 
-  function handleSetTheme(palette: object) {
-    setTheme(responsiveFontSizes(createMuiTheme({ palette })));
+  function handleSetTheme(palette: ThemeProps) {
+    setTheme(
+      responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
+    );
   }
 
   function handleCreateAccount(
@@ -178,9 +181,7 @@ function Onboarding(props: OnboardingProps) {
       setConfigId(getter.data[0]._id);
 
       if (configLcl.theme.themes && configLcl.theme.current !== undefined)
-        handleSetTheme(
-          parseTheme(configLcl.theme.themes[configLcl.theme.current])
-        );
+        handleSetTheme(configLcl.theme.themes[configLcl.theme.current]);
     } catch (e) {
       console.error(e.message);
     }
