@@ -59,8 +59,9 @@ function Item(props: ItemProps) {
     (o, k) => (o[k] = o[k] || {}),
     props.config
   );
-  let value = secondLastItem[lastItem];
-  if (!value) value = props.item.default;
+  let value: any = !secondLastItem[lastItem]
+    ? props.item.default
+    : secondLastItem[lastItem];
 
   switch (props.item.type) {
     default:
