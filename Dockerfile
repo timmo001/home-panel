@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:3.10.1
+ARG BUILD_FROM=alpine:3.10.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -39,7 +39,7 @@ RUN \
     \
     && apk add --no-cache \
         bash=5.0.0-r0 \
-        nginx=1.16.0-r2 \
+        nginx=1.16.1-r0 \
         nodejs-current=12.4.0-r0 \
         tzdata=2019a-r0 \
     \
