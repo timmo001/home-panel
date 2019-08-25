@@ -39,18 +39,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'absolute',
     top: '50%',
     left: '50%',
-    marginTop: -12,
-    marginLeft: -12
+    marginTop: theme.spacing(-1),
+    marginLeft: theme.spacing(-1)
   },
   margin: {
     margin: theme.spacing(0.5, 1)
   },
   media: {
     backgroundSize: 'contain',
-    // height: 140,
-    // [theme.breakpoints.up('md')]: {
     height: 240
-    // }
   },
   textField: {
     flexBasis: '50%',
@@ -70,7 +67,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface LoginProps extends RouteComponentProps {
   loggedIn: boolean;
-  // setHassUrl(hass_url: string): any;
   handleCreateAccount(
     data: FeathersAuthCredentials,
     callback?: (error?: string) => void
@@ -118,29 +114,12 @@ function Login(props: LoginProps) {
       setInvalidText('No password!');
       return;
     }
-    // if (values.hass_url) {
-    //   if (
-    //     !values.hass_url.startsWith('http') ||
-    //     !values.hass_url.includes('://')
-    //   ) {
-    //     setInvalidText('Home Assistant URL invalid!');
-    //     return;
-    //   }
-    //   if (window.location.protocol === 'https:') {
-    //     if (values.hass_url.startsWith('http:')) {
-    //       setInvalidText('Your HASS instance must use SSL/https.');
-    //       return;
-    //     }
-    //   }
-    // }
     setInvalidText(null);
   }
 
   function handleCreateAccount() {
     setLoading(true);
     localStorage.setItem('not_my_first_rodeo', 'true');
-    // localStorage.setItem('hass_url', values.hass_url);
-    // props.setHassUrl(values.hass_url);
     props.handleCreateAccount(
       {
         strategy: 'local',
@@ -162,8 +141,6 @@ function Login(props: LoginProps) {
 
   function handleLogin() {
     setLoading(true);
-    // localStorage.setItem('hass_url', values.hass_url);
-    // props.setHassUrl(values.hass_url);
     props.handleLogin(
       {
         strategy: 'local',
@@ -215,7 +192,7 @@ function Login(props: LoginProps) {
       direction="column"
       justify="center"
       alignItems="center">
-      <Grid item lg={4} md={8} sm={8} xs={12}>
+      <Grid item>
         <CardMedia className={classes.media} image={Logo} title="Home Panel" />
         <Grid container direction="column" justify="center" alignItems="center">
           <Typography color="textPrimary" variant="h5" component="h2">
@@ -265,22 +242,6 @@ function Login(props: LoginProps) {
               }
             />
           </FormControl>
-          {/* <FormControl
-            className={classnames(classes.margin, classes.textField)}>
-            <InputLabel htmlFor="hass_url">Home Assistant URL</InputLabel>
-            <Input
-              required
-              id="hass_url"
-              type="text"
-              inputProps={{
-                autoCapitalize: 'none',
-                autoComplete: 'url'
-              }}
-              value={values.hass_url}
-              onChange={handleChange('hass_url')}
-              onKeyPress={handleKeyPress}
-            />
-          </FormControl> */}
         </Grid>
       </Grid>
       <Grid container direction="column" justify="center" alignItems="center">
@@ -319,10 +280,13 @@ function Login(props: LoginProps) {
               disabled={loading || invalidText ? true : false}
               onClick={handleLogin}>
               Log In
+              {loading && (
+                <CircularProgress
+                  size={18}
+                  className={classes.buttonProgress}
+                />
+              )}
             </Button>
-          )}
-          {loading && (
-            <CircularProgress size={24} className={classes.buttonProgress} />
           )}
         </div>
       </Grid>
@@ -332,7 +296,6 @@ function Login(props: LoginProps) {
 
 Login.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
-  // setHassUrl: PropTypes.func.isRequired,
   handleCreateAccount: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired
 };
