@@ -159,7 +159,7 @@ function Item(props: ItemProps) {
             {props.config.theme.themes ? (
               props.config.theme.themes.map(
                 (theme: ThemesProps, key: number) => (
-                  <MenuItem key={key} value={key}>
+                  <MenuItem key={key} value={theme.key}>
                     {theme.name}
                   </MenuItem>
                 )

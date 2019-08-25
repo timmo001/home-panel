@@ -7,6 +7,7 @@
     "current": "qwertyuiop123456",
     "themes": [
       {
+        "key": "qwertyuiop123456",
         "name": "Midnight",
         "type": "dark",
         "primary": "pink",
