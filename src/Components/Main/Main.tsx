@@ -167,8 +167,8 @@ function Main(props: MainProps) {
             path="/overview"
             render={(rrProps: RouteComponentProps) => (
               <Overview
+                {...props}
                 {...rrProps}
-                config={props.config}
                 editing={editing}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
@@ -183,13 +183,13 @@ function Main(props: MainProps) {
             path="/configuration"
             render={(rrProps: RouteComponentProps) => (
               <Configuration
+                {...props}
                 {...rrProps}
                 back={back}
-                config={props.config}
+                editing={editing}
                 hassConfig={hassConfig}
                 hassEntities={hassEntities}
                 handleSetBack={setBack}
-                handleSetTheme={props.handleSetTheme}
                 handleUpdateConfig={handleUpdateConfig}
               />
             )}

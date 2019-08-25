@@ -4,7 +4,7 @@
     "dense_toolbar": false
   },
   "theme": {
-    "current": 0,
+    "current": "qwertyuiop123456",
     "themes": [
       {
         "name": "Midnight",
@@ -26,23 +26,27 @@
   },
   "pages": [
     {
+      "key": "abcdefghijklmnop",
       "name": "Home",
       "icon": "home"
     }
   ],
-  "items": [
+  "groups": [
     {
+      "key": "abcd1234efgh4567",
+      "page": "abcdefghijklmnop",
       "name": "Welcome Group",
-      "cards": [
-        {
-          "content": "Hi there! Thanks for using Home Panel.\n\nMake sure to read the [docs](https://timmo.dev/home-panel) to get the most out of the app.",
-          "title": "Welcome!",
-          "type": "markdown",
-          "width": 3
-        }
-      ],
-      "page": 1,
       "width": 3
+    }
+  ],
+  "cards": [
+    {
+      "key": "1234abcd5678efgh",
+      "group": "abcd1234efgh4567",
+      "type": "markdown",
+      "width": 3,
+      "title": "Welcome!",
+      "content": "Hi there! Thanks for using Home Panel.\n\nMake sure to read the [docs](https://timmo.dev/home-panel) to get the most out of the app."
     }
   ]
 }

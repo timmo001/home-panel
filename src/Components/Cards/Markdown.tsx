@@ -27,6 +27,7 @@ interface MarkdownProps extends BaseProps {}
 function Markdown(props: MarkdownProps) {
   const classes = useStyles();
 
+  if (!props.card.content) return null;
   return (
     <Typography
       className={classes.text}

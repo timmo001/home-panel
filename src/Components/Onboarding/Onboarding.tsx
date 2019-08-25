@@ -12,7 +12,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
 import purple from '@material-ui/core/colors/purple';
 
-import { ThemeProps } from '../Configuration/Config';
+import { ThemesProps } from '../Configuration/Config';
 import Loading from '../Utils/Loading';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -69,7 +69,7 @@ function Onboarding(props: OnboardingProps) {
     )
   );
 
-  function handleSetTheme(palette: ThemeProps) {
+  function handleSetTheme(palette: ThemesProps) {
     setTheme(
       responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
     );
@@ -183,8 +183,12 @@ function Onboarding(props: OnboardingProps) {
       setConfig(configLcl);
       setConfigId(getter.data[0]._id);
 
-      if (configLcl.theme.themes && configLcl.theme.current !== undefined)
-        handleSetTheme(configLcl.theme.themes[configLcl.theme.current]);
+      if (configLcl.theme.themes && !configLcl.theme.current)
+        handleSetTheme(
+          configLcl.theme.themes.find(
+            (theme: ThemesProps) => theme.key === configLcl.theme.current
+          )
+        );
     } catch (e) {
       console.error(e.message);
     }
@@ -227,9 +231,10 @@ function Onboarding(props: OnboardingProps) {
           render={(props: RouteComponentProps) => (
             <Main
               {...props}
+              config={config}
+              editing={0}
               loggedIn={loginCredentials ? true : false}
               loginCredentials={loginCredentials}
-              config={config}
               handleConfigChange={handleConfigChange}
               handleLogout={handleLogout}
               handleSetTheme={handleSetTheme}

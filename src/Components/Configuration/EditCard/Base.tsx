@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
+import { CardProps } from '../Config';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import Entity from './Entity';
 import Frame from './Frame';
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
-  card: any;
+  card: CardProps;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;

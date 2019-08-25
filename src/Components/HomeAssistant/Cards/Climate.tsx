@@ -266,7 +266,7 @@ function Climate(props: ClimateProps) {
           </Grid>
         )}
       </Grid>
-      {props.card.width > 1 && props.card.height > 1 && (
+      {props.card.width > 1 && props.card.height! > 1 && (
         <Grid
           item
           container
