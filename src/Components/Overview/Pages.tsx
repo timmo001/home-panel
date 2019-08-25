@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
-import clone from '../Utils/clone';
+import { findPageIdByPage } from '../Utils/find';
 import EditPage from '../Configuration/EditPage';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -45,31 +45,27 @@ TabContainer.propTypes = {
 
 let editTimeout: NodeJS.Timeout;
 interface PagesProps extends RouteComponentProps, ConfigProps {
-  currentPage: number;
+  currentPage: string;
   mouseMoved: boolean;
-  setPage: (page: number) => void;
+  setPage: (pageKey: string) => void;
 }
 
 function Pages(props: PagesProps) {
   const [editingPage, setEditingPage] = React.useState();
 
-  function handleChange(_event: React.ChangeEvent<{}>, newValue: number) {
-    props.setPage(newValue + 1);
+  function handlePageChange(_event: React.ChangeEvent<{}>, pageKey: string) {
+    props.setPage(pageKey);
   }
 
   function handleAdd() {
-    props.handleUpdateConfig!(
-      ['pages', props.config.pages.length],
-      defaultPage
-    );
+    const newPage = defaultPage();
+    props.handleUpdateConfig!(['pages', props.config.pages.length], newPage);
+    props.setPage(newPage.key);
   }
 
-  const handleEditingPage = (pageKey: number, page: PageProps) => () => {
+  const handleEditingPage = (page: PageProps) => () => {
     if (props.editing === 1)
-      editTimeout = setTimeout(
-        () => setEditingPage({ key: pageKey, page }),
-        1000
-      );
+      editTimeout = setTimeout(() => setEditingPage(page), 1000);
   };
 
   function handleCancelEdit() {
@@ -80,22 +76,12 @@ function Pages(props: PagesProps) {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (pageKey: number) => (data: any) => {
-    if (!data) {
-      const groups = clone(props.config.items);
-      console.log(clone(groups));
-      const page = pageKey + 1;
-      for (let i = 0; i < groups.length; i++) {
-        console.log('before:', i, clone(groups[i]));
-        if (groups[i].page === page) groups.splice(i, 1);
-        if (groups[i].page > page) groups[i].page -= 1;
-        console.log('after:', i, clone(groups[i]));
-      }
-      console.log(clone(groups));
-      props.handleUpdateConfig!(['items'], groups);
-      props.setPage(1);
-    }
-    props.handleUpdateConfig!(['pages', pageKey], data);
+  const handleUpdatePage = (page: PageProps) => (data?: PageProps) => {
+    props.handleUpdateConfig!(
+      ['pages', findPageIdByPage(props.config, page)],
+      data
+    );
+    props.setPage(props.config.pages[0].key);
   };
 
   const classes = useStyles();
@@ -104,16 +90,16 @@ function Pages(props: PagesProps) {
       <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
         <BottomNavigation
           className={classes.root}
-          value={props.currentPage - 1}
-          onChange={handleChange}
+          value={props.currentPage}
+          onChange={handlePageChange}
           showLabels>
           {props.config &&
             props.config.pages.map((page: PageProps, key: number) => (
               <BottomNavigationAction
                 key={key}
-                value={key}
+                value={page.key}
                 label={page.name}
-                onMouseDown={handleEditingPage(key, page)}
+                onMouseDown={handleEditingPage(page)}
                 onMouseUp={handleCancelEdit}
                 onMouseLeave={handleCancelEdit}
                 icon={
@@ -145,9 +131,10 @@ function Pages(props: PagesProps) {
       </Slide>
       {editingPage && (
         <EditPage
-          page={editingPage.page}
+          {...props}
+          page={editingPage}
           handleClose={handleDoneEditingPage}
-          handleUpdate={handleUpdatePage(editingPage.key)}
+          handleUpdate={handleUpdatePage(editingPage)}
         />
       )}
     </div>
@@ -158,7 +145,7 @@ Pages.propTypes = {
   config: PropTypes.any,
   editing: PropTypes.number,
   mouseMoved: PropTypes.bool,
-  currentPage: PropTypes.number.isRequired,
+  currentPage: PropTypes.string.isRequired,
   handleUpdateConfig: PropTypes.func,
   setPage: PropTypes.func.isRequired
 };

@@ -27,7 +27,7 @@ function Entity(props: EntityProps) {
         {props.hassEntities ? (
           <EntitySelect
             {...props}
-            entity={props.card.entity}
+            entity={props.card.entity!}
             handleChange={props.handleChange!('entity')}
           />
         ) : (

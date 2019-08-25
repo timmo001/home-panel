@@ -10,6 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+import { CardProps } from '../Config';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface EditCardProps extends BaseProps {
   handleClose: () => void;
-  handleUpdate: (data: any) => void;
+  handleUpdate: (data: CardProps) => void;
 }
 
 function EditCard(props: EditCardProps) {

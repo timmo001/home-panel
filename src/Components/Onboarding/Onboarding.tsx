@@ -10,9 +10,8 @@ import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
-import purple from '@material-ui/core/colors/purple';
 
-import { ThemeProps } from '../Configuration/Config';
+import { ThemesProps } from '../Configuration/Config';
 import Loading from '../Utils/Loading';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -59,7 +58,7 @@ function Onboarding(props: OnboardingProps) {
         palette: {
           type: 'dark',
           primary: pink,
-          secondary: purple,
+          secondary: pink,
           background: {
             default: '#303030',
             paper: '#383c45'
@@ -69,7 +68,7 @@ function Onboarding(props: OnboardingProps) {
     )
   );
 
-  function handleSetTheme(palette: ThemeProps) {
+  function handleSetTheme(palette: ThemesProps) {
     setTheme(
       responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
     );
@@ -183,8 +182,12 @@ function Onboarding(props: OnboardingProps) {
       setConfig(configLcl);
       setConfigId(getter.data[0]._id);
 
-      if (configLcl.theme.themes && configLcl.theme.current !== undefined)
-        handleSetTheme(configLcl.theme.themes[configLcl.theme.current]);
+      if (configLcl.theme.themes && configLcl.theme.current) {
+        let theme = configLcl.theme.themes.find(
+          (theme: ThemesProps) => theme.key === configLcl.theme.current
+        );
+        if (theme) handleSetTheme(theme);
+      }
     } catch (e) {
       console.error(e.message);
     }
@@ -227,9 +230,10 @@ function Onboarding(props: OnboardingProps) {
           render={(props: RouteComponentProps) => (
             <Main
               {...props}
+              config={config}
+              editing={0}
               loggedIn={loginCredentials ? true : false}
               loginCredentials={loginCredentials}
-              config={config}
               handleConfigChange={handleConfigChange}
               handleLogout={handleLogout}
               handleSetTheme={handleSetTheme}

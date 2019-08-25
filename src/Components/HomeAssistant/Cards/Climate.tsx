@@ -266,7 +266,7 @@ function Climate(props: ClimateProps) {
           </Grid>
         )}
       </Grid>
-      {props.card.width > 1 && props.card.height > 1 && (
+      {props.card.width > 1 && props.card.height! > 1 && (
         <Grid
           item
           container
@@ -274,7 +274,7 @@ function Climate(props: ClimateProps) {
           alignItems="center"
           justify="center"
           direction="row">
-          {attributes.hvac_modes.map((mode: any, key: number) => {
+          {attributes.hvac_modes.map((mode: string, key: number) => {
             let icon: string | undefined =
               mode === 'off'
                 ? 'mdi-power'

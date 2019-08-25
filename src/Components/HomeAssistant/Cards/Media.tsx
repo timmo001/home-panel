@@ -130,7 +130,7 @@ function Media(props: MediaProps) {
 
   return (
     <div className={classes.root}>
-      {props.card.height > 1 && (
+      {props.card.height! > 1 && (
         <div className={classes.info}>
           {attributes.media_title && (
             <Typography variant="body1" noWrap>
@@ -142,7 +142,7 @@ function Media(props: MediaProps) {
           )}
         </div>
       )}
-      {props.card.height > 1 && (
+      {props.card.height! > 1 && (
         <CardMedia
           className={classes.media}
           style={{
