@@ -1,8 +1,8 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -28,6 +28,8 @@ const useStyles = makeStyles(() => ({
 interface CameraProps extends EntityProps {}
 
 function Camera(props: CameraProps) {
+  const [url, setUrl] = React.useState();
+
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
@@ -45,6 +47,15 @@ function Camera(props: CameraProps) {
     props.card.disabled = false;
     attributes = entity!.attributes;
   }
+
+  useEffect(() => {
+    if (attributes)
+      setUrl(
+        `${props.hassConfig.url}${
+          attributes.entity_picture
+        }&${new Date().toISOString().slice(-13, -5)}`
+      );
+  }, [attributes, props.hassConfig]);
 
   if (!entity)
     return (
@@ -70,7 +81,7 @@ function Camera(props: CameraProps) {
     <img
       className={classes.frame}
       style={{ height: props.card.height ? props.card.height : 'auto' }}
-      src={`${props.hassConfig.url}${attributes.entity_picture}`}
+      src={url}
       alt={state}
     />
   );
