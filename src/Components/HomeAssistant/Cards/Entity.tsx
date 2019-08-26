@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import { BaseProps } from '../../Cards/Base';
 import AlarmPanel from './AlarmPanel';
+import Camera from './Camera';
 import Climate from './Climate';
 import Cover from './Cover';
 import Fan from './Fan';
@@ -42,6 +43,7 @@ function Entity(props: EntityProps) {
   )
     return <Toggle {...props} />;
   if (domain === 'alarm_control_panel') return <AlarmPanel {...props} />;
+  if (domain === 'camera') return <Camera {...props} />;
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
   if (domain === 'fan') return <Fan {...props} />;

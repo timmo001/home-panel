@@ -13,7 +13,8 @@ import {
   HassEntities,
   HassUser,
   subscribeConfig,
-  subscribeEntities
+  subscribeEntities,
+  HassService
 } from 'home-assistant-js-websocket';
 
 export declare type HassConfigExt = HassConfig & {
