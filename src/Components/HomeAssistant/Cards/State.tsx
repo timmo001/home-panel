@@ -32,7 +32,7 @@ interface StateProps extends EntityProps {}
 
 function State(props: StateProps) {
   const classes = useStyles();
-  let entity: any, state: string | undefined, icon: string | undefined;
+  let entity: any, state: string | undefined;
 
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
@@ -49,8 +49,6 @@ function State(props: StateProps) {
     props.card.disabled = false;
     state = properCase(entity[1].state);
     if (entity[1].attributes) {
-      if (entity[1].attributes.icon)
-        icon = entity[1].attributes.icon.replace(':', '-');
       if (entity[1].attributes.unit_of_measurement)
         state += ` ${entity[1].attributes.unit_of_measurement}`;
     }
@@ -63,9 +61,9 @@ function State(props: StateProps) {
       alignContent="center"
       justify="center">
       <Grid className={classes.iconContainer} item xs={12}>
-        {icon && (
+        {props.card.icon && (
           <Typography
-            className={classnames('mdi', icon, classes.icon)}
+            className={classnames('mdi', props.card.icon, classes.icon)}
             color="textPrimary"
             variant="h2"
             component="h5"

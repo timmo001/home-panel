@@ -52,6 +52,13 @@ function EditCard(props: EditCardProps) {
     props.handleUpdate(card);
   }
 
+  function handleManualChange(name: string, value: string) {
+    setCard({
+      ...card,
+      [name]: value
+    });
+  }
+
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement> | string
   ) => {
@@ -106,6 +113,7 @@ function EditCard(props: EditCardProps) {
             <Base
               {...props}
               card={card}
+              handleManualChange={handleManualChange}
               handleChange={handleChange}
               handleSelectChange={handleSelectChange}
               handleSwitchChange={handleSwitchChange}
