@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -33,7 +34,7 @@ interface ToggleProps extends EntityProps {}
 function Toggle(props: ToggleProps) {
   const classes = useStyles();
   const theme = useTheme();
-  let entity: any, state: string | undefined;
+  let entity: HassEntity | undefined, state: string | undefined;
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
@@ -44,7 +45,7 @@ function Toggle(props: ToggleProps) {
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity.state;
+    state = entity!.state;
     props.card.state = state;
     props.card.toggleable = state === 'unavailable' ? false : true;
     props.card.background =

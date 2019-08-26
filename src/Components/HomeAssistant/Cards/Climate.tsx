@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -55,7 +56,9 @@ interface ClimateProps extends EntityProps {}
 function Climate(props: ClimateProps) {
   const classes = useStyles();
 
-  let entity: any, state: string | undefined, attributes: any | undefined;
+  let entity: HassEntity | undefined,
+    state: string | undefined,
+    attributes: any | undefined;
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
@@ -66,8 +69,8 @@ function Climate(props: ClimateProps) {
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity.state;
-    attributes = entity.attributes;
+    state = entity!.state;
+    attributes = entity!.attributes;
     props.card.state = state;
   }
 
@@ -94,7 +97,7 @@ function Climate(props: ClimateProps) {
   function handleTempChange(type: string, newTemp: number) {
     if (newTemp <= attributes.max_temp && newTemp >= attributes.min_temp) {
       const data = {
-        entity_id: entity.entity_id,
+        entity_id: entity!.entity_id,
         [type]: newTemp
       };
       if (type === 'target_temp_low')
@@ -107,14 +110,14 @@ function Climate(props: ClimateProps) {
 
   function handleHvacChange(hvac_mode: string) {
     props.handleHassChange!('climate', 'set_hvac_mode', {
-      entity_id: entity.entity_id,
+      entity_id: entity!.entity_id,
       hvac_mode
     });
   }
 
   function handleAwayToggle() {
     props.handleHassChange!('climate', 'set_away_mode', {
-      entity_id: entity.entity_id,
+      entity_id: entity!.entity_id,
       away_mode: attributes.away_mode === 'on' ? 'off' : 'on'
     });
   }

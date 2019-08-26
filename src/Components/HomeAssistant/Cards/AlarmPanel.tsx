@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -34,20 +35,21 @@ interface AlarmPanelProps extends EntityProps {}
 function AlarmPanel(props: AlarmPanelProps) {
   const [code, setCode] = React.useState('');
   const classes = useStyles();
-  let entity: any, state: string | undefined, attributes: any | undefined;
+  let entity: HassEntity | undefined,
+    state: string | undefined,
+    attributes: any | undefined;
 
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities[props.card.entity!];
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    attributes = entity.attributes;
+    attributes = entity!.attributes;
   }
 
   if (!entity)
@@ -87,8 +89,7 @@ function AlarmPanel(props: AlarmPanelProps) {
     setCode('');
   };
 
-  const armed =
-    entity.state === 'armed_away' || entity.state === 'armed_home';
+  const armed = entity.state === 'armed_away' || entity.state === 'armed_home';
 
   console.log(armed);
 
@@ -183,7 +184,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
                 <Button
-                  disabled={entity.state === 'pending'}
+                  disabled={entity!.state === 'pending'}
                   onClick={handleCodePressed(String(value))}>
                   {value}
                 </Button>

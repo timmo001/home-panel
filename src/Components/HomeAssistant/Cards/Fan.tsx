@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -45,7 +46,9 @@ interface FanProps extends EntityProps {}
 
 function Fan(props: FanProps) {
   const classes = useStyles();
-  let entity: any, state: string | undefined, attributes: any | undefined;
+  let entity: HassEntity | undefined,
+    state: string | undefined,
+    attributes: any | undefined;
 
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
@@ -57,7 +60,7 @@ function Fan(props: FanProps) {
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    attributes = entity.attributes;
+    attributes = entity!.attributes;
   }
 
   if (!entity)
@@ -82,7 +85,7 @@ function Fan(props: FanProps) {
 
   function handleSpeedChange(speed: string) {
     props.handleHassChange!('fan', 'set_speed', {
-      entity_id: entity.entity_id,
+      entity_id: entity!.entity_id,
       speed
     });
   }
