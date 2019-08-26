@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
+import { HassEntity } from 'home-assistant-js-websocket';
 import {
   createStyles,
   makeStyles,
@@ -252,20 +253,18 @@ function EntitySelect(props: EntitySelectProps) {
     })
   };
 
-  const [suggestions, setSuggestions] = useState([]);
+  const [suggestions, setSuggestions]: OptionType[] | any[] = useState([]);
   const [value, setValue] = useState();
 
   useEffect(
     () =>
       setSuggestions(
-        props.hassEntities.map((entity: any) => {
-          return {
-            label: entity[1].attributes.friendly_name
-              ? `${entity[1].attributes.friendly_name} - ${entity[0]}`
-              : entity[0],
-            value: entity[0]
-          };
-        })
+        Object.values(props.hassEntities).map((entity: HassEntity) => ({
+          label: entity.attributes.friendly_name
+            ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
+            : entity.entity_id,
+          value: entity.entity_id
+        }))
       ),
     [props.hassEntities]
   );
