@@ -3,6 +3,7 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -41,6 +42,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
+  handleManualChange?: (name: string, value: string) => void;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -53,22 +55,43 @@ export interface BaseProps
 }
 
 function Base(props: BaseProps) {
+  function handleGetEntityTitle() {
+    const entity = props.hassEntities.find(
+      (entity: any) => entity[0] === props.card.entity
+    );
+    if (entity && entity[1].attributes.friendly_name)
+      props.handleManualChange!('title', entity[1].attributes.friendly_name);
+  }
+
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="center" alignItems="stretch">
-        <Grid container alignContent="center">
-          <TextField
-            className={classes.textField}
-            InputLabelProps={{ shrink: true }}
-            label="Title"
-            placeholder={'Card Title'}
-            defaultValue={props.card.title}
-            onChange={props.handleChange!('title')}
-          />
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-end"
+          item
+          xs>
+          <Grid item xs>
+            <TextField
+              className={classes.textField}
+              InputLabelProps={{ shrink: true }}
+              label="Title"
+              placeholder={'Card Title'}
+              value={props.card.title}
+              onChange={props.handleChange!('title')}
+            />
+          </Grid>
+          {props.card.type === 'entity' && props.card.entity && (
+            <Grid item>
+              <Button onClick={handleGetEntityTitle}>Get from HA</Button>
+            </Grid>
+          )}
         </Grid>
-        <Grid container alignContent="center">
+        <Grid item container alignContent="center">
           <FormControl className={classes.textField}>
             <InputLabel htmlFor="type">Type</InputLabel>
             <Select
@@ -86,7 +109,12 @@ function Base(props: BaseProps) {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container direction="row" justify="center" alignItems="stretch">
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignItems="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
@@ -94,7 +122,7 @@ function Base(props: BaseProps) {
             type="number"
             label="Elevation"
             placeholder="1"
-            defaultValue={props.card.elevation}
+            value={props.card.elevation}
             onChange={props.handleChange!('elevation')}
           />
         </Grid>
@@ -104,19 +132,24 @@ function Base(props: BaseProps) {
             InputLabelProps={{ shrink: true }}
             label="Background"
             placeholder="default"
-            defaultValue={props.card.background}
+            value={props.card.background}
             onChange={props.handleChange!('background')}
           />
         </Grid>
       </Grid>
-      <Grid container direction="row" justify="center" alignItems="stretch">
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignItems="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
             label="Padding"
             placeholder="12px"
-            defaultValue={props.card.padding}
+            value={props.card.padding}
             onChange={props.handleChange!('padding')}
           />
         </Grid>
@@ -132,7 +165,12 @@ function Base(props: BaseProps) {
           />
         </Grid>
       </Grid>
-      <Grid container direction="row" justify="center" alignItems="stretch">
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignItems="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
@@ -140,7 +178,7 @@ function Base(props: BaseProps) {
             type="number"
             label="Width"
             placeholder="1"
-            defaultValue={props.card.width}
+            value={props.card.width}
             onChange={props.handleChange!('width')}
           />
         </Grid>
@@ -152,7 +190,7 @@ function Base(props: BaseProps) {
               type="number"
               label="Height"
               placeholder="1"
-              defaultValue={props.card.height}
+              value={props.card.height}
               onChange={props.handleChange!('height')}
             />
           </Grid>

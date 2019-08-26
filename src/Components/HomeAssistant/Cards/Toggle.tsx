@@ -33,7 +33,7 @@ interface ToggleProps extends EntityProps {}
 function Toggle(props: ToggleProps) {
   const classes = useStyles();
   const theme = useTheme();
-  let entity: any, state: string | undefined, icon: string | undefined;
+  let entity: any, state: string | undefined;
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
@@ -56,10 +56,6 @@ function Toggle(props: ToggleProps) {
         : state === 'on'
         ? theme.palette.primary.main
         : theme.palette.background.paper;
-    if (entity[1].attributes) {
-      if (entity[1].attributes.icon)
-        icon = entity[1].attributes.icon.replace(':', '-');
-    }
   }
   return (
     <Grid
@@ -69,9 +65,13 @@ function Toggle(props: ToggleProps) {
       alignContent="center"
       justify="center">
       <Grid className={classes.iconContainer} item xs={12}>
-        {icon && (
+        {props.card.icon && (
           <Typography
-            className={classnames('mdi', icon, classes.icon)}
+            className={classnames(
+              'mdi',
+              `mdi-${props.card.icon}`,
+              classes.icon
+            )}
             color="textPrimary"
             variant="h2"
             component="h5"
