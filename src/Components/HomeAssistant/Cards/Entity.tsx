@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { BaseProps } from '../../Cards/Base';
+import AlarmPanel from './AlarmPanel';
 import Climate from './Climate';
 import Cover from './Cover';
 import Fan from './Fan';
@@ -35,6 +36,7 @@ function Entity(props: EntityProps) {
     domain === 'switch'
   )
     return <Toggle {...props} />;
+  if (domain === 'alarm_control_panel') return <AlarmPanel {...props} />;
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
   if (domain === 'fan') return <Fan {...props} />;
