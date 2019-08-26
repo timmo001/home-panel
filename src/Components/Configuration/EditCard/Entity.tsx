@@ -43,6 +43,8 @@ function Entity(props: EntityProps) {
     domain === 'input_boolean' ||
     domain === 'light' ||
     domain === 'remote' ||
+    domain === 'scene' ||
+    domain === 'script' ||
     domain === 'sensor' ||
     domain === 'sun' ||
     domain === 'switch'

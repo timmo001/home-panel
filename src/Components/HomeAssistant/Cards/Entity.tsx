@@ -33,6 +33,8 @@ function Entity(props: EntityProps) {
     domain === 'input_boolean' ||
     domain === 'light' ||
     domain === 'remote' ||
+    domain === 'scene' ||
+    domain === 'script' ||
     domain === 'switch'
   )
     return <Toggle {...props} />;
