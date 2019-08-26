@@ -63,7 +63,11 @@ function State(props: StateProps) {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={classnames('mdi', props.card.icon, classes.icon)}
+            className={classnames(
+              'mdi',
+              `mdi-${props.card.icon}`,
+              classes.icon
+            )}
             color="textPrimary"
             variant="h2"
             component="h5"
