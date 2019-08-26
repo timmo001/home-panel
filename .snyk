@@ -3154,3 +3154,5 @@ patch:
         patched: '2019-07-07T12:01:58.635Z'
     - snyk > snyk-nuget-plugin > dotnet-deps-parser > lodash:
         patched: '2019-08-17T17:39:16.004Z'
+    - react-color > lodash:
+        patched: '2019-08-26T21:24:09.593Z'
