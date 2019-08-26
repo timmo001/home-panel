@@ -28,7 +28,7 @@ function Markdown(props: MarkdownProps) {
           multiline
           label="Content"
           placeholder="- Markdown"
-          defaultValue={props.card.content}
+          value={props.card.content}
           onChange={props.handleChange!('content')}
         />
       </Grid>

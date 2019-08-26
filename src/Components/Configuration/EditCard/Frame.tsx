@@ -27,7 +27,7 @@ function Frame(props: FrameProps) {
           InputLabelProps={{ shrink: true }}
           label="URL"
           placeholder="https://timmo.dev/home-panel"
-          defaultValue={props.card.url}
+          value={props.card.url}
           onChange={props.handleChange!('url')}
         />
       </Grid>
@@ -37,7 +37,7 @@ function Frame(props: FrameProps) {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          defaultValue={props.card.height}
+          value={props.card.height}
           onChange={props.handleChange!('height')}
         />
       </Grid>
