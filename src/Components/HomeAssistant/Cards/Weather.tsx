@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -100,7 +101,7 @@ interface WeatherProps extends EntityProps {}
 
 function Weather(props: WeatherProps) {
   const classes = useStyles();
-  let entity: any,
+  let entity: HassEntity | undefined,
     state: string | undefined,
     attributes: any | undefined,
     icon: string;
@@ -108,19 +109,16 @@ function Weather(props: WeatherProps) {
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity[1].state;
+    state = entity!.state;
     icon = weatherMap[state!];
-    attributes = entity[1].attributes;
+    attributes = entity!.attributes;
   }
 
   if (!entity)
@@ -156,9 +154,10 @@ function Weather(props: WeatherProps) {
         case 'humidity':
           return '%';
         default:
-          return props.hassConfig.unit_system[measure]
-            ? `${props.hassConfig.unit_system[measure]}`
-            : '';
+          return '';
+        // return props.hassConfig.unit_system[measure]
+        //   ? `${props.hassConfig.unit_system[measure]}`
+        //   : '';
       }
     } else return null;
   }

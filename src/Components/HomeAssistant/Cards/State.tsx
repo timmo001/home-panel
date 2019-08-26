@@ -2,6 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -32,25 +33,22 @@ interface StateProps extends EntityProps {}
 
 function State(props: StateProps) {
   const classes = useStyles();
-  let entity: any, state: string | undefined;
+  let entity: HassEntity | undefined, state: string | undefined;
 
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = properCase(entity[1].state);
-    if (entity[1].attributes) {
-      if (entity[1].attributes.unit_of_measurement)
-        state += ` ${entity[1].attributes.unit_of_measurement}`;
+    state = properCase(entity!.state);
+    if (entity!.attributes) {
+      if (entity!.attributes.unit_of_measurement)
+        state += ` ${entity!.attributes.unit_of_measurement}`;
     }
   }
   return (
