@@ -66,8 +66,6 @@ function Camera(props: CameraProps) {
       </Grid>
     );
 
-  console.table(attributes);
-
   return (
     <img
       className={classes.frame}
