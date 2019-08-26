@@ -56,11 +56,9 @@ export interface BaseProps
 
 function Base(props: BaseProps) {
   function handleGetEntityTitle() {
-    const entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
-    if (entity && entity[1].attributes.friendly_name)
-      props.handleManualChange!('title', entity[1].attributes.friendly_name);
+    const entity = props.hassEntities[props.card.entity!];
+    if (entity && entity.attributes.friendly_name)
+      props.handleManualChange!('title', entity.attributes.friendly_name);
   }
 
   const classes = useStyles();

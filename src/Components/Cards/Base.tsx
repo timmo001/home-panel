@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 4
   },
   title: {
+    minHeight: 20,
     fontWeight: 400,
     lineHeight: 1.2
   },
@@ -93,16 +94,27 @@ function Base(props: BaseProps) {
   }
 
   function handleHassToggle() {
-    console.log(props.card.domain, props.card.state === 'on' ? false : true, {
-      entity_id: props.card.entity
-    });
-    props.handleHassChange!(
-      props.card.domain!,
-      props.card.state === 'on' ? false : true,
-      {
+    if (props.card.domain === 'lock') {
+      console.log(props.card.state);
+      props.handleHassChange!(
+        props.card.domain!,
+        props.card.state === 'locked' ? 'unlock' : 'lock',
+        {
+          entity_id: props.card.entity
+        }
+      );
+    } else {
+      console.log(props.card.domain, props.card.state === 'on' ? false : true, {
         entity_id: props.card.entity
-      }
-    );
+      });
+      props.handleHassChange!(
+        props.card.domain!,
+        props.card.state === 'on' ? false : true,
+        {
+          entity_id: props.card.entity
+        }
+      );
+    }
   }
 
   function handleEdit() {
@@ -173,17 +185,15 @@ function Base(props: BaseProps) {
               padding: props.card.padding ? props.card.padding : 12
             }}>
             {props.card.title && (
-              <div>
-                <Typography
-                  className={classes.title}
-                  color="textPrimary"
-                  variant="h6"
-                  component="h3"
-                  gutterBottom
-                  noWrap>
-                  {props.card.title}
-                </Typography>
-              </div>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                variant="h6"
+                component="h3"
+                gutterBottom
+                noWrap>
+                {props.card.title}
+              </Typography>
             )}
             {props.card.type === 'entity' && (
               <Entity
@@ -192,6 +202,7 @@ function Base(props: BaseProps) {
                 editing={props.editing}
                 hassConfig={props.hassConfig}
                 hassEntities={props.hassEntities}
+                handleHassToggle={handleHassToggle}
               />
             )}
             {props.card.type === 'iframe' && <Frame {...props} />}

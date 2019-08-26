@@ -21,13 +21,11 @@ interface EntityProps extends BaseProps {}
 
 function Entity(props: EntityProps) {
   function handleGetEntityIcon() {
-    const entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
-    if (entity && entity[1].attributes.icon)
+    const entity = props.hassEntities[props.card.entity!];
+    if (entity && entity.attributes.icon)
       props.handleManualChange!(
         'icon',
-        entity[1].attributes.icon.replace('mdi:', '')
+        entity.attributes.icon.replace('mdi:', '')
       );
   }
 
@@ -42,7 +40,10 @@ function Entity(props: EntityProps) {
     domain === 'geo_location' ||
     domain === 'input_boolean' ||
     domain === 'light' ||
+    domain === 'lock' ||
     domain === 'remote' ||
+    domain === 'scene' ||
+    domain === 'script' ||
     domain === 'sensor' ||
     domain === 'sun' ||
     domain === 'switch'

@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import PropTypes from 'prop-types';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
 import Fab from '@material-ui/core/Fab';
@@ -52,23 +53,22 @@ interface MediaProps extends EntityProps {}
 
 function Media(props: MediaProps) {
   const classes = useStyles();
-  let entity: any, state: string | undefined, attributes: any | undefined;
+  let entity: HassEntity | undefined,
+    state: string | undefined,
+    attributes: any | undefined;
 
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity[1].state;
-    attributes = entity[1].attributes;
+    state = entity!.state;
+    attributes = entity!.attributes;
   }
 
   if (!entity)
@@ -97,32 +97,32 @@ function Media(props: MediaProps) {
         break;
       case 'play':
         props.handleHassChange!('media_player', 'media_play', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
       case 'pause':
         props.handleHassChange!('media_player', 'media_pause', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
       case 'next':
         props.handleHassChange!('media_player', 'media_next_track', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
       case 'previous':
         props.handleHassChange!('media_player', 'media_previous_track', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
       case 'vol_down':
         props.handleHassChange!('media_player', 'volume_down', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
       case 'vol_up':
         props.handleHassChange!('media_player', 'volume_up', {
-          entity_id: entity[1].entity_id
+          entity_id: entity!.entity_id
         });
         break;
     }
