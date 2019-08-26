@@ -149,7 +149,9 @@ function Light(props: LightProps) {
             attributes
               ? attributes.brightness_pct
                 ? attributes.brightness_pct
-                : (attributes.brightness / 255) * 100
+                : attributes.brightness
+                ? (attributes.brightness / 255) * 100
+                : 0
               : 0
           }
           getAriaValueText={getText}
