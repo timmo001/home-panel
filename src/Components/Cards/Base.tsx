@@ -191,6 +191,7 @@ function Base(props: BaseProps) {
                 editing={props.editing}
                 hassConfig={props.hassConfig}
                 hassEntities={props.hassEntities}
+                handleHassToggle={handleHassToggle}
               />
             )}
             {props.card.type === 'iframe' && <Frame {...props} />}

@@ -2,26 +2,34 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  getAuth,
-  getUser,
+  Auth,
+  AuthData,
   callService,
   createConnection,
-  subscribeConfig,
-  subscribeEntities,
   ERR_INVALID_AUTH,
-  AuthData
+  getAuth,
+  getUser,
+  HassConfig,
+  HassEntities,
+  HassUser,
+  subscribeConfig,
+  subscribeEntities
 } from 'home-assistant-js-websocket';
+
+export declare type HassConfigExt = HassConfig & {
+  url: string;
+};
 
 interface HomeAssistantProps {
   url: string;
   setConnected: (connected: boolean) => void;
-  setConfig: (config: any) => void;
-  setEntities: (entities: any) => void;
+  setConfig: (config: HassConfigExt) => void;
+  setEntities: (entities: HassEntities) => void;
 }
 
 export interface HomeAssistantEntityProps {
-  hassConfig: any;
-  hassEntities: any;
+  hassConfig: HassConfigExt;
+  hassEntities: HassEntities;
 }
 
 export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
@@ -39,7 +47,7 @@ export function loadTokens() {
   let hassTokens;
   try {
     hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
-  } catch (err) {} // eslint-disable-line
+  } catch (err) {}
   process.env.NODE_ENV === 'development' &&
     console.log('loadTokens:', hassTokens);
   return hassTokens;
@@ -48,7 +56,7 @@ export function loadTokens() {
 export function saveTokens(tokens?: AuthData | null) {
   try {
     localStorage.setItem('hass_tokens', JSON.stringify(tokens));
-  } catch (err) {} // eslint-disable-line
+  } catch (err) {}
 }
 
 export function handleChange(
@@ -60,28 +68,16 @@ export function handleChange(
     console.log('handleChange:', domain, state, data);
   if (typeof state === 'string') {
     callService(connection, domain, state, data).then(
-      () => {
-        // setState({ snackMessage: { open: true, text: 'Changed.' } });
-      },
+      () => {},
       err => {
         console.error('Error calling service:', err);
-        // setState({
-        //   snackMessage: { open: true, text: 'Error calling service' },
-        //   entities: undefined
-        // });
       }
     );
   } else {
     callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(
-      () => {
-        // setState({ snackMessage: { open: true, text: 'Changed.' } });
-      },
+      () => {},
       err => {
         console.error('Error calling service:', err);
-        // setState({
-        //   snackMessage: { open: true, text: 'Error calling service' },
-        //   entities: undefined
-        // });
       }
     );
   }
@@ -104,7 +100,7 @@ function HomeAssistant(props: HomeAssistantProps) {
     });
   }
 
-  async function connProm(auth: any) {
+  async function connProm(auth: Auth) {
     try {
       const conn = await createConnection({ auth });
       return { auth, conn };
@@ -144,8 +140,8 @@ function HomeAssistant(props: HomeAssistantProps) {
         conn.removeEventListener('ready', eventHandler);
         conn.addEventListener('ready', eventHandler);
         subscribeConfig(conn, updateConfig);
-        subscribeEntities(conn, updateEntities);
-        getUser(conn).then(user => {
+        subscribeEntities(conn, updateEntites);
+        getUser(conn).then((user: HassUser) => {
           console.log('Logged into Home Assistant as', user.name);
           sessionStorage.setItem('hass_id', user.id);
         });
@@ -154,12 +150,13 @@ function HomeAssistant(props: HomeAssistantProps) {
     })();
   }
 
-  function updateConfig(config: any) {
+  function updateConfig(config: HassConfig) {
     props.setConfig({ ...config, url: props.url });
   }
 
-  function updateEntities(entities: { [s: string]: {} } | ArrayLike<{}>) {
-    props.setEntities(Object.entries(entities));
+  function updateEntites(entities: HassEntities) {
+    console.table(entities);
+    props.setEntities(entities);
   }
 
   return null;

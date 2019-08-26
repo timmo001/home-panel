@@ -7,12 +7,15 @@ import AlarmPanel from './AlarmPanel';
 import Climate from './Climate';
 import Cover from './Cover';
 import Fan from './Fan';
+import Light from './Light';
 import Media from './Media';
 import State from './State';
 import Toggle from './Toggle';
 import Weather from './Weather';
 
-export interface EntityProps extends BaseProps {}
+export interface EntityProps extends BaseProps {
+  handleHassToggle: () => void;
+}
 
 function Entity(props: EntityProps) {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
@@ -31,7 +34,6 @@ function Entity(props: EntityProps) {
 
   if (
     domain === 'input_boolean' ||
-    domain === 'light' ||
     domain === 'remote' ||
     domain === 'scene' ||
     domain === 'script' ||
@@ -42,6 +44,7 @@ function Entity(props: EntityProps) {
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
   if (domain === 'fan') return <Fan {...props} />;
+  if (domain === 'light') return <Light {...props} />;
   if (domain === 'media_player') return <Media {...props} />;
   if (domain === 'weather') return <Weather {...props} />;
 
