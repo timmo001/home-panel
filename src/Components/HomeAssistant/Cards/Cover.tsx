@@ -44,17 +44,14 @@ function Cover(props: CoverProps) {
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    attributes = entity[1].attributes;
+    attributes = entity.attributes;
   }
 
   if (!entity)
@@ -97,7 +94,7 @@ function Cover(props: CoverProps) {
             disabled={attributes.current_position > 99}
             onClick={() =>
               props.handleHassChange!('cover', 'open_cover', {
-                entity_id: entity[1].entity_id
+                entity_id: entity.entity_id
               })
             }>
             <span
@@ -113,7 +110,7 @@ function Cover(props: CoverProps) {
             className={classes.iconContainer}
             onClick={() =>
               props.handleHassChange!('cover', 'stop_cover', {
-                entity_id: entity[1].entity_id
+                entity_id: entity.entity_id
               })
             }>
             <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
@@ -123,7 +120,7 @@ function Cover(props: CoverProps) {
             disabled={attributes.current_position < 1}
             onClick={() =>
               props.handleHassChange!('cover', 'close_cover', {
-                entity_id: entity[1].entity_id
+                entity_id: entity.entity_id
               })
             }>
             <span
@@ -144,7 +141,7 @@ function Cover(props: CoverProps) {
               disabled={attributes.current_tilt_position > 99}
               onClick={() =>
                 props.handleHassChange!('cover', 'open_cover_tilt', {
-                  entity_id: entity[1].entity_id
+                  entity_id: entity.entity_id
                 })
               }>
               <span
@@ -160,7 +157,7 @@ function Cover(props: CoverProps) {
               className={classes.iconContainer}
               onClick={() =>
                 props.handleHassChange!('cover', 'stop_cover_tilt', {
-                  entity_id: entity[1].entity_id
+                  entity_id: entity.entity_id
                 })
               }>
               <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
@@ -170,7 +167,7 @@ function Cover(props: CoverProps) {
               disabled={attributes.current_tilt_position < 1}
               onClick={() =>
                 props.handleHassChange!('cover', 'close_cover_tilt', {
-                  entity_id: entity[1].entity_id
+                  entity_id: entity.entity_id
                 })
               }>
               <span

@@ -108,19 +108,16 @@ function Weather(props: WeatherProps) {
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity[1].state;
+    state = entity.state;
     icon = weatherMap[state!];
-    attributes = entity[1].attributes;
+    attributes = entity.attributes;
   }
 
   if (!entity)
@@ -156,9 +153,10 @@ function Weather(props: WeatherProps) {
         case 'humidity':
           return '%';
         default:
-          return props.hassConfig.unit_system[measure]
-            ? `${props.hassConfig.unit_system[measure]}`
-            : '';
+          return '';
+        // return props.hassConfig.unit_system[measure]
+        //   ? `${props.hassConfig.unit_system[measure]}`
+        //   : '';
       }
     } else return null;
   }

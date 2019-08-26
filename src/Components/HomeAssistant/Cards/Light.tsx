@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -55,19 +54,16 @@ function Light(props: LightProps) {
   if (!props.hassEntities) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
-  } else
-    entity = props.hassEntities.find(
-      (entity: HassEntity) => entity.entity_id === props.card.entity
-    );
+  } else entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity[1].state;
+    state = entity.state;
     props.card.state = state;
-    attributes = entity[1].attributes;
+    attributes = entity.attributes;
     console.log(attributes);
 
     attrClasses = [featureClassNames(entity, FEATURE_CLASS_NAMES)];

@@ -116,13 +116,6 @@ function HomeAssistant(props: HomeAssistantProps) {
         const conn = await createConnection({ auth });
         return { auth, conn };
       } catch (err) {
-        // setState({
-        //   snackMessage: {
-        //     open: true,
-        //     text: 'Connection to Home Assistant failed. Please try again later.'
-        //   },
-        //   entities: []
-        // });
         throw err;
       }
     }
@@ -155,7 +148,6 @@ function HomeAssistant(props: HomeAssistantProps) {
   }
 
   function updateEntites(entities: HassEntities) {
-    console.table(entities);
     props.setEntities(entities);
   }
 

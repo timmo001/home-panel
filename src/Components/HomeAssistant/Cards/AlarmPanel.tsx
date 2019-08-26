@@ -40,16 +40,14 @@ function AlarmPanel(props: AlarmPanelProps) {
     state = 'Home Assistant not connected.';
     props.card.disabled = true;
   } else
-    entity = props.hassEntities.find(
-      (entity: any) => entity[0] === props.card.entity
-    );
+    entity = props.hassEntities[props.card.entity!];
 
   if (!entity && !state) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    attributes = entity[1].attributes;
+    attributes = entity.attributes;
   }
 
   if (!entity)
@@ -90,7 +88,7 @@ function AlarmPanel(props: AlarmPanelProps) {
   };
 
   const armed =
-    entity[1].state === 'armed_away' || entity[1].state === 'armed_home';
+    entity.state === 'armed_away' || entity.state === 'armed_home';
 
   console.log(armed);
 
@@ -106,7 +104,7 @@ function AlarmPanel(props: AlarmPanelProps) {
         color="textPrimary"
         variant="body1"
         component="h5">
-        {properCase(entity[1].state)}
+        {properCase(entity.state)}
       </Typography>
       {props.card.width > 1 && (
         <Grid
@@ -123,7 +121,7 @@ function AlarmPanel(props: AlarmPanelProps) {
                 onClick={handleUpdate('alarm_arm_away')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
-                  entity[1].state === 'pending'
+                  entity.state === 'pending'
                 }>
                 Arm Away
               </Button>
@@ -136,7 +134,7 @@ function AlarmPanel(props: AlarmPanelProps) {
                 onClick={handleUpdate('alarm_arm_home')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
-                  entity[1].state === 'pending'
+                  entity.state === 'pending'
                 }>
                 Arm Home
               </Button>
@@ -149,7 +147,7 @@ function AlarmPanel(props: AlarmPanelProps) {
                 onClick={handleUpdate('alarm_disarm')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
-                  entity[1].state === 'pending'
+                  entity.state === 'pending'
                 }>
                 Disarm
               </Button>
@@ -165,7 +163,7 @@ function AlarmPanel(props: AlarmPanelProps) {
               'aria-label': 'code',
               style: { textAlign: 'center' }
             }}
-            disabled={entity[1].state === 'pending'}
+            disabled={entity.state === 'pending'}
             placeholder="1234"
             type="number"
             value={code}
@@ -185,7 +183,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
                 <Button
-                  disabled={entity[1].state === 'pending'}
+                  disabled={entity.state === 'pending'}
                   onClick={handleCodePressed(String(value))}>
                   {value}
                 </Button>

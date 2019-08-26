@@ -2,7 +2,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -57,29 +56,7 @@ export interface BaseProps
 
 function Base(props: BaseProps) {
   function handleGetEntityTitle() {
-    // const entity = props.hassEntities.find(
-    //   (entity: any) => entity.entity_id === props.card.entity
-    // );
-    const entity = {
-      entity_id: '',
-      state: '',
-      last_changed: '',
-      last_updated: '',
-      context: {
-        id: '',
-        user_id: ''
-      },
-      attributes: {
-        friendly_name: '',
-        unit_of_measurement: '',
-        icon: '',
-        entity_picture: '',
-        supported_features: 0,
-        hidden: false,
-        assumed_state: false,
-        device_class: ''
-      }
-    };
+    const entity = props.hassEntities[props.card.entity!];
     if (entity && entity.attributes.friendly_name)
       props.handleManualChange!('title', entity.attributes.friendly_name);
   }

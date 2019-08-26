@@ -110,14 +110,14 @@ function EditCard(props: EditCardProps) {
             alignContent="flex-start"
             justify="flex-start"
             alignItems="stretch">
-            {/* <Base
+            <Base
               {...props}
               card={card}
               handleManualChange={handleManualChange}
               handleChange={handleChange}
               handleSelectChange={handleSelectChange}
               handleSwitchChange={handleSwitchChange}
-            /> */}
+            />
           </Grid>
           <Grid
             className={classes.background}
