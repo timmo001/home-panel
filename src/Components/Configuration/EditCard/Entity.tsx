@@ -65,7 +65,7 @@ function Entity(props: EntityProps) {
               InputLabelProps={{ shrink: true }}
               label="Icon"
               placeholder="thermometer"
-              defaultValue={props.card.icon}
+              value={props.card.icon}
               onChange={props.handleChange!('icon')}
             />
           </Grid>
@@ -89,7 +89,7 @@ function Entity(props: EntityProps) {
             InputLabelProps={{ shrink: true }}
             label="Entity"
             placeholder="sensor.myamazingsensor"
-            defaultValue={props.card.entity}
+            value={props.card.entity}
             onChange={props.handleChange!('entity')}
           />
         )}

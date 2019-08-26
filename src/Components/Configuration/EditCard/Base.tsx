@@ -81,7 +81,7 @@ function Base(props: BaseProps) {
               InputLabelProps={{ shrink: true }}
               label="Title"
               placeholder={'Card Title'}
-              defaultValue={props.card.title}
+              value={props.card.title}
               onChange={props.handleChange!('title')}
             />
           </Grid>
@@ -122,7 +122,7 @@ function Base(props: BaseProps) {
             type="number"
             label="Elevation"
             placeholder="1"
-            defaultValue={props.card.elevation}
+            value={props.card.elevation}
             onChange={props.handleChange!('elevation')}
           />
         </Grid>
@@ -132,7 +132,7 @@ function Base(props: BaseProps) {
             InputLabelProps={{ shrink: true }}
             label="Background"
             placeholder="default"
-            defaultValue={props.card.background}
+            value={props.card.background}
             onChange={props.handleChange!('background')}
           />
         </Grid>
@@ -149,7 +149,7 @@ function Base(props: BaseProps) {
             InputLabelProps={{ shrink: true }}
             label="Padding"
             placeholder="12px"
-            defaultValue={props.card.padding}
+            value={props.card.padding}
             onChange={props.handleChange!('padding')}
           />
         </Grid>
@@ -178,7 +178,7 @@ function Base(props: BaseProps) {
             type="number"
             label="Width"
             placeholder="1"
-            defaultValue={props.card.width}
+            value={props.card.width}
             onChange={props.handleChange!('width')}
           />
         </Grid>
@@ -190,7 +190,7 @@ function Base(props: BaseProps) {
               type="number"
               label="Height"
               placeholder="1"
-              defaultValue={props.card.height}
+              value={props.card.height}
               onChange={props.handleChange!('height')}
             />
           </Grid>
