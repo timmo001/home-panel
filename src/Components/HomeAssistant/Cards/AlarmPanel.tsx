@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1
   },
   text: {
-    marginTop: theme.spacing(-1),
     marginBottom: theme.spacing(0.2),
     overflow: 'hidden',
     textAlign: 'center',
@@ -97,6 +96,7 @@ function Cover(props: CoverProps) {
 
   return (
     <Grid
+      className={classes.root}
       container
       alignItems="center"
       justify="space-between"
@@ -120,7 +120,6 @@ function Cover(props: CoverProps) {
             <Grid item>
               <Button
                 color="primary"
-                variant="outlined"
                 onClick={handleUpdate('alarm_arm_away')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
@@ -134,7 +133,6 @@ function Cover(props: CoverProps) {
             <Grid item>
               <Button
                 color="primary"
-                variant="outlined"
                 onClick={handleUpdate('alarm_arm_home')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
@@ -148,7 +146,6 @@ function Cover(props: CoverProps) {
             <Grid item>
               <Button
                 color="primary"
-                variant="outlined"
                 onClick={handleUpdate('alarm_disarm')}
                 disabled={
                   (attributes.code_arm_required && !code) ||
@@ -187,7 +184,9 @@ function Cover(props: CoverProps) {
             justify="center">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
-                <Button onClick={handleCodePressed(String(value))}>
+                <Button
+                  disabled={entity[1].state === 'pending'}
+                  onClick={handleCodePressed(String(value))}>
                   {value}
                 </Button>
               </Grid>

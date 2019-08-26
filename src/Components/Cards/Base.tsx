@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 4
   },
   title: {
+    minHeight: 20,
     fontWeight: 400,
     lineHeight: 1.2
   },
@@ -173,17 +174,15 @@ function Base(props: BaseProps) {
               padding: props.card.padding ? props.card.padding : 12
             }}>
             {props.card.title && (
-              <div>
-                <Typography
-                  className={classes.title}
-                  color="textPrimary"
-                  variant="h6"
-                  component="h3"
-                  gutterBottom
-                  noWrap>
-                  {props.card.title}
-                </Typography>
-              </div>
+              <Typography
+                className={classes.title}
+                color="textPrimary"
+                variant="h6"
+                component="h3"
+                gutterBottom
+                noWrap>
+                {props.card.title}
+              </Typography>
             )}
             {props.card.type === 'entity' && (
               <Entity
