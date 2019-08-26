@@ -40,6 +40,7 @@ function Entity(props: EntityProps) {
     domain === 'geo_location' ||
     domain === 'input_boolean' ||
     domain === 'light' ||
+    domain === 'lock' ||
     domain === 'remote' ||
     domain === 'scene' ||
     domain === 'script' ||

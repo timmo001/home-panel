@@ -94,16 +94,27 @@ function Base(props: BaseProps) {
   }
 
   function handleHassToggle() {
-    console.log(props.card.domain, props.card.state === 'on' ? false : true, {
-      entity_id: props.card.entity
-    });
-    props.handleHassChange!(
-      props.card.domain!,
-      props.card.state === 'on' ? false : true,
-      {
+    if (props.card.domain === 'lock') {
+      console.log(props.card.state);
+      props.handleHassChange!(
+        props.card.domain!,
+        props.card.state === 'locked' ? 'unlock' : 'lock',
+        {
+          entity_id: props.card.entity
+        }
+      );
+    } else {
+      console.log(props.card.domain, props.card.state === 'on' ? false : true, {
         entity_id: props.card.entity
-      }
-    );
+      });
+      props.handleHassChange!(
+        props.card.domain!,
+        props.card.state === 'on' ? false : true,
+        {
+          entity_id: props.card.entity
+        }
+      );
+    }
   }
 
   function handleEdit() {

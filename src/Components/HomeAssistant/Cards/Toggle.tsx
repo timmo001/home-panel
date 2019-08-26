@@ -51,7 +51,7 @@ function Toggle(props: ToggleProps) {
     props.card.background =
       state === 'unavailable'
         ? grey[600]
-        : state === 'on'
+        : state === 'on' || state === 'locked'
         ? theme.palette.primary.main
         : theme.palette.background.paper;
   }

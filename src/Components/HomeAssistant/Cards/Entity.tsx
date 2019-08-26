@@ -34,6 +34,7 @@ function Entity(props: EntityProps) {
 
   if (
     domain === 'input_boolean' ||
+    domain === 'lock' ||
     domain === 'remote' ||
     domain === 'scene' ||
     domain === 'script' ||
