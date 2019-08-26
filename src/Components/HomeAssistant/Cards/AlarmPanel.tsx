@@ -29,9 +29,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface CoverProps extends EntityProps {}
+interface AlarmPanelProps extends EntityProps {}
 
-function Cover(props: CoverProps) {
+function AlarmPanel(props: AlarmPanelProps) {
   const [code, setCode] = React.useState('');
   const classes = useStyles();
   let entity: any, state: string | undefined, attributes: any | undefined;
@@ -197,10 +197,10 @@ function Cover(props: CoverProps) {
   );
 }
 
-Cover.propTypes = {
+AlarmPanel.propTypes = {
   card: PropTypes.any.isRequired,
   hassConfig: PropTypes.any,
   hassEntities: PropTypes.any
 };
 
-export default Cover;
+export default AlarmPanel;
