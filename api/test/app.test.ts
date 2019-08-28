@@ -6,12 +6,13 @@ import axios from 'axios';
 import app from '../src/app';
 
 const port = app.get('port') || 8998;
-const getUrl = (pathname?: string) => url.format({
-  hostname: app.get('host') || 'localhost',
-  protocol: 'http',
-  port,
-  pathname
-});
+const getUrl = (pathname?: string) =>
+  url.format({
+    hostname: app.get('host') || 'localhost',
+    protocol: 'http',
+    port,
+    pathname
+  });
 
 describe('Feathers application tests (with jest)', () => {
   let server: Server;
@@ -40,7 +41,7 @@ describe('Feathers application tests (with jest)', () => {
       try {
         await axios.get(getUrl('path/to/nowhere'), {
           headers: {
-            'Accept': 'text/html'
+            Accept: 'text/html'
           }
         });
       } catch (error) {
@@ -53,7 +54,7 @@ describe('Feathers application tests (with jest)', () => {
 
     it('shows a 404 JSON error without stack trace', async () => {
       expect.assertions(4);
-      
+
       try {
         await axios.get(getUrl('path/to/nowhere'));
       } catch (error) {
