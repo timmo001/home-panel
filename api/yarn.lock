@@ -39,16 +39,15 @@
     lodash.pick "^4.4.0"
     passport-jwt "^4.0.0"
 
-"@feathersjs/authentication-local@1.2.9":
-  version "1.2.9"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-1.2.9.tgz#4467230db1775124794efcceb4901efc4568f824"
-  integrity sha512-EqUuUgiULpfe46oprIeHkY4CjlWIT+abtMnVOOeRmaJTPRDnPe72wJoQ3jomSTJpr7KARkWog6sAUZa+NMC3UA==
+"@feathersjs/authentication-local@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.0.tgz#bce4564b8b929b9298f0ec7b82fb08e34c7b426a"
+  integrity sha512-zmI21nohmQdsJi87nPec0wD/2U6Hxo4bpasVjbT1PMrXd1z95N8w/eL5kesfXxBMArFeZ1PBYA+AMgf0evSbHw==
   dependencies:
-    "@feathersjs/errors" "^3.3.6"
-    bcryptjs "^2.3.0"
-    debug "^4.0.0"
-    lodash "^4.17.5"
-    passport-local "^1.0.0"
+    "@feathersjs/errors" "^4.3.0"
+    bcryptjs "^2.4.3"
+    debug "^4.1.1"
+    lodash "^4.17.15"
 
 "@feathersjs/authentication@2.1.16":
   version "2.1.16"
@@ -93,6 +92,13 @@
   version "4.0.0-pre.4"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.0.0-pre.4.tgz#0c960523a81d09d8cdc4a0bbafab5e70991d8356"
   integrity sha512-vO4hxTQsqU0NttbD3nBqZ1qMVrtYGkQkmnvnblEcKB8zW4IrvU+tIQMQYcsYbz8hd9ONoadCnm4mRxzolbQjNg==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.0.tgz#7ac89396ef868061b6a1d9b0f9005f6403cafbf6"
+  integrity sha512-tOwBpJmLYy0Fq/Dp8Y3dO2/B6ojfqSrTFXixTYH2qBR3aFS/U0VzhoyEa1O+/FcJRDqgW54HNCyy520zqYB/pw==
   dependencies:
     debug "^4.1.1"
 
@@ -397,7 +403,7 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-bcryptjs@^2.3.0:
+bcryptjs@^2.4.3:
   version "2.4.3"
   resolved "https://registry.yarnpkg.com/bcryptjs/-/bcryptjs-2.4.3.tgz#9ab5627b93e60621ff7cdac5da9733027df1d0cb"
   integrity sha1-mrVie5PmBiH/fNrF2pczAn3x0Ms=
@@ -2433,12 +2439,12 @@ lodash.pick@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.pick/-/lodash.pick-4.4.0.tgz#52f05610fff9ded422611441ed1fc123a03001b3"
   integrity sha1-UvBWEP/53tQiYRRB7R/BI6AwAbM=
 
-lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5:
+lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4:
   version "4.17.14"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
   integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
 
-lodash@^4.17.12, lodash@^4.17.14:
+lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -3048,13 +3054,6 @@ passport-jwt@^4.0.0:
   dependencies:
     jsonwebtoken "^8.2.0"
     passport-strategy "^1.0.0"
-
-passport-local@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
-  integrity sha1-H+YyaMkudWBmJkN+O5BmYsFbpu4=
-  dependencies:
-    passport-strategy "1.x.x"
 
 passport-strategy@1.x.x, passport-strategy@^1.0.0:
   version "1.0.0"
