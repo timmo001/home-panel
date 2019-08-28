@@ -33,7 +33,7 @@
     "@feathersjs/errors": "3.3.6",
     "@feathersjs/express": "1.3.1",
     "@feathersjs/feathers": "3.3.1",
-    "@feathersjs/socketio": "3.2.9",
+    "@feathersjs/socketio": "4.3.0",
     "compression": "1.7.4",
     "cors": "2.8.5",
     "feathers-nedb": "5.0.1",
