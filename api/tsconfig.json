@@ -7,7 +7,5 @@
     "strict": true,
     "esModuleInterop": true
   },
-  "exclude": [
-    "test"
-  ]
+  "exclude": ["test"]
 }
