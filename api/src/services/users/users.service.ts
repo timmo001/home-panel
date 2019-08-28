@@ -8,11 +8,11 @@ import hooks from './users.hooks';
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    'users': Users & ServiceAddons<any>;
+    users: Users & ServiceAddons<any>;
   }
 }
 
-export default function (app: Application) {
+export default function(app: Application) {
   const Model = createModel(app);
   const paginate = app.get('paginate');
 

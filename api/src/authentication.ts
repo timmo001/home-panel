@@ -7,7 +7,7 @@ import { Application } from './declarations';
 
 declare module './declarations' {
   interface ServiceTypes {
-    'authentication': AuthenticationService & ServiceAddons<any>;
+    authentication: AuthenticationService & ServiceAddons<any>;
   }
 }
 
