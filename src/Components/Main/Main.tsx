@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface MainProps extends RouteComponentProps, ConfigProps {
   loggedIn: boolean;
-  loginCredentials: any;
   handleLogout(): any;
 }
 
@@ -117,9 +116,6 @@ function Main(props: MainProps) {
     props.location!.pathname !== '/'
       ? properCase(props.location!.pathname.substring(1))
       : 'Overview';
-  const userInitials =
-    props.loginCredentials &&
-    props.loginCredentials.username.substring(0, 1).toUpperCase();
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
@@ -138,7 +134,6 @@ function Main(props: MainProps) {
         editing={editing}
         hassConnected={hassConnected}
         mouseMoved={mouseMoved}
-        userInitials={userInitials}
         handleBack={handleBack}
         handleHassLogin={handleHassLogin}
       />

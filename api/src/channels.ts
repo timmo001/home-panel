@@ -1,15 +1,18 @@
-module.exports = function(app) {
+import { HookContext } from '@feathersjs/feathers';
+import { Application } from './declarations';
+
+export default function(app: Application) {
   if(typeof app.channel !== 'function') {
     // If no real-time functionality has been configured just return
     return;
   }
 
-  app.on('connection', connection => {
+  app.on('connection', (connection: any) => {
     // On a new real-time connection, add it to the anonymous channel
     app.channel('anonymous').join(connection);
   });
 
-  app.on('login', (authResult, { connection }) => {
+  app.on('login', (authResult: any, { connection }: any) => {
     // connection can be undefined if there is no
     // real-time connection, e.g. when logging in via REST
     if(connection) {
@@ -30,14 +33,14 @@ module.exports = function(app) {
       // If the user has joined e.g. chat rooms
       // if(Array.isArray(user.rooms)) user.rooms.forEach(room => app.channel(`rooms/${room.id}`).join(channel));
 
-      // Easily organize users by email and userid for things like messaging
-      // app.channel(`emails/${user.email}`).join(channel);
+      // Easily organize users by username and userid for things like messaging
+      // app.channel(`usernames/${user.username}`).join(channel);
       // app.channel(`userIds/$(user.id}`).join(channel);
     }
   });
 
   // eslint-disable-next-line no-unused-vars
-  app.publish((data, hook) => {
+  app.publish((data: any, hook: HookContext) => {
     // Here you can add event publishers to channels set up in `channels.js`
     // To publish only for a specific event use `app.publish(eventname, () => {})`
 
@@ -51,11 +54,11 @@ module.exports = function(app) {
   // e.g. the publish the `users` service `created` event to the `admins` channel
   // app.service('users').publish('created', () => app.channel('admins'));
 
-  // With the userid and email organization from above you can easily select involved users
+  // With the userid and username organization from above you can easily select involved users
   // app.service('messages').publish(() => {
   //   return [
   //     app.channel(`userIds/${data.createdBy}`),
-  //     app.channel(`emails/${data.recipientEmail}`)
+  //     app.channel(`usernames/${data.recipientUsername}`)
   //   ];
   // });
 };
