@@ -26,7 +26,7 @@
     "mocha": "mocha test/ --recursive --exit"
   },
   "dependencies": {
-    "@feathersjs/authentication": "2.1.16",
+    "@feathersjs/authentication": "4.3.0",
     "@feathersjs/authentication-jwt": "2.0.10",
     "@feathersjs/authentication-local": "1.2.9",
     "@feathersjs/configuration": "2.0.6",
