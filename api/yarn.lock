@@ -74,6 +74,11 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.0.0.tgz#ae49bae4025c35aaeb9aacb6a0c27a3d1def5062"
   integrity sha512-hyCLse4RiNt7WLPQ0KSudjoVnwiRykhYzIZdtDon9i2usPaoYkFw/fEYZrkE5HVB+sUTwphZoZ1oOntRk1MShg==
 
+"@feathersjs/commons@^4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
+  integrity sha512-N3CDavCNRp+usgyfDSFXCwETnp4nIEevl5v1nqULGhPYco0SjF15zu4hYyd3GCn0aAwzaIehYyaMcdee9Eo1KQ==
+
 "@feathersjs/configuration@2.0.6":
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-2.0.6.tgz#b53e0361eba80ac2ed5708e22db1e546397e8729"
@@ -107,15 +112,15 @@
     express "^4.16.2"
     uberproto "^2.0.0"
 
-"@feathersjs/feathers@3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-3.3.1.tgz#fcba030847f8418d711135112f01fad64bfb277c"
-  integrity sha512-Mb7Maz03TIIksomXeInmXNb5ykxgsAyBCuJDQHK+oIDrDRR9m+ZbUrslCkMk/s0nr6cW5DmVbWz9s11SCXFW5A==
+"@feathersjs/feathers@4.3.0":
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.0.tgz#aa9a8b491f7bfabce10919f0c6b753466b8e065c"
+  integrity sha512-iH/T8UGvv5gbDqHnU2Rlf5NZxqBmFvrl9BdNPNl2EYPGBvkfi/Dxp3+xJLyw8MZFbtgG+4fxP1KyFG1uGivGrA==
   dependencies:
-    "@feathersjs/commons" "^4.0.0"
-    debug "^4.0.0"
+    "@feathersjs/commons" "^4.3.0"
+    debug "^4.1.1"
     events "^3.0.0"
-    uberproto "^2.0.2"
+    uberproto "^2.0.4"
 
 "@feathersjs/feathers@^4.0.0-pre.4":
   version "4.0.0-pre.4"
@@ -3937,7 +3942,7 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-uberproto@^2.0.0, uberproto@^2.0.1, uberproto@^2.0.2, uberproto@^2.0.4:
+uberproto@^2.0.0, uberproto@^2.0.1, uberproto@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/uberproto/-/uberproto-2.0.4.tgz#f215bcc227c1b8fd8fccd8d701b9c96dd71ff85d"
   integrity sha512-c/5xjTcztW9XVhrkCycHQRBIAxww5JpDKk/q0zc2tVdQn6ZQvnChWgLvQaWAT1Al5JvRyvloUI15ad41m6dYwg==
