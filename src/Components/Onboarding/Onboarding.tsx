@@ -2,9 +2,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, RouteComponentProps, Redirect } from 'react-router-dom';
 import io from 'socket.io-client';
-import auth, {
-  FeathersAuthCredentials
-} from '@feathersjs/authentication-client';
+import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
@@ -19,9 +17,9 @@ import parseTheme from '../Utils/parseTheme';
 
 interface OnboardingProps extends RouteComponentProps {}
 
-let socket: SocketIOClient.Socket, app: any;
+let socket: SocketIOClient.Socket, client: any;
 
-app = feathers();
+client = feathers();
 let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
   window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
   window.location.hostname}:${
@@ -30,26 +28,12 @@ let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
     : window.location.port
 }`;
 socket = io(url);
-app.configure(socketio(socket));
-app.configure(auth({ storage: localStorage }));
+client.configure(socketio(socket));
+client.configure(authentication());
 
 function Onboarding(props: OnboardingProps) {
-  useEffect(() => {
-    // process.env.NODE_ENV === 'development' &&
-    console.log('route props:', props);
-    console.log('window.location:', window.location);
-    console.log('window.location.pathname:', window.location.pathname);
-
-    app.path = `${window.location.pathname.replace(
-      /overview|login|configuration/gi,
-      ''
-    )}socket.io`;
-
-    if (!loginCredentials) handleLogin();
-  });
-
   const [loginAttempted, setLoginAttempted] = React.useState(false);
-  const [loginCredentials, setLoginCredentials] = React.useState();
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [config, setConfig] = React.useState();
   const [configId, setConfigId] = React.useState();
   const [theme, setTheme] = React.useState(
@@ -68,16 +52,28 @@ function Onboarding(props: OnboardingProps) {
     )
   );
 
+  useEffect(() => {
+    console.log('route props:', props.location);
+    console.log('window.location:', window.location);
+    console.log('window.location.pathname:', window.location.pathname);
+
+    client.path = `${window.location.pathname.replace(
+      /overview|login|configuration/gi,
+      ''
+    )}socket.io`;
+  }, [props.location]);
+
+  useEffect(() => {
+    if (!loggedIn) handleLogin();
+  });
+
   function handleSetTheme(palette: ThemesProps) {
     setTheme(
       responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
     );
   }
 
-  function handleCreateAccount(
-    data: FeathersAuthCredentials,
-    callback?: (error?: string) => void
-  ) {
+  function handleCreateAccount(data: any, callback?: (error?: string) => void) {
     process.env.NODE_ENV === 'development' && console.log('account:', data);
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
@@ -92,104 +88,55 @@ function Onboarding(props: OnboardingProps) {
     });
   }
 
-  function handleLogin(
-    data?: FeathersAuthCredentials,
-    callback?: (error?: string) => void
-  ) {
-    process.env.NODE_ENV === 'development' &&
-      console.log('login:', app.path, data);
-    if (!app) {
-      console.warn('Feathers app is undefined');
-    } else if (!data)
-      app.passport
-        .getJWT()
-        .then((accessToken: string) => {
-          accessToken
-            ? authenticate(
-                {
-                  strategy: 'jwt',
-                  accessToken
-                },
-                callback
-              )
-            : setLoginAttempted(true);
-        })
-        .catch(() => setLoginAttempted(true));
-    else authenticate(data, callback);
+  async function handleLogin(data?: any, callback?: (error?: string) => void) {
+    try {
+      process.env.NODE_ENV === 'development' &&
+        console.log('login:', client.path, data);
+      if (!client) {
+        console.warn('Feathers app is undefined');
+      } else if (!data) await client.reAuthenticate();
+      else await client.authenticate(data, callback);
+      setLoggedIn(true);
+      setLoginAttempted(true);
+      getConfig();
+    } catch (error) {
+      console.error('Error in handleLogin:', error);
+      setLoginAttempted(true);
+      setLoggedIn(false);
+      if (callback) callback(`Login error: ${error.message}`);
+    }
   }
 
   function handleLogout() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('password');
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
-    app.logout().then(() => {
+    client.logout().then(() => {
       props.history.replace('/login');
     });
   }
 
-  function authenticate(
-    data: FeathersAuthCredentials,
-    callback?: (error?: string) => void
-  ) {
-    process.env.NODE_ENV === 'development' &&
-      console.log('authenticate:', data);
-    app
-      .authenticate(data)
-      .then((response: { accessToken: any }) => {
-        process.env.NODE_ENV === 'development' &&
-          console.log('Authenticated:', response);
-        return app.passport.verifyJWT(response.accessToken);
-      })
-      .then((payload: { userId: any }) => {
-        process.env.NODE_ENV === 'development' &&
-          console.log('JWT Payload:', payload);
-        return app.service('users').get(payload.userId);
-      })
-      .then((user: any) => {
-        app.set('user', user);
-        process.env.NODE_ENV === 'development' && console.log('User:', user);
-        setLoginCredentials(user);
-        setLoginAttempted(true);
-        if (callback) callback();
-      })
-      .then(getConfig)
-      .catch((e: { message: any }) => {
-        console.error('Authentication error:', e);
-        if (callback) callback(`Authentication error: ${e.message}`);
-        setLoginAttempted(true);
-      });
-  }
-
   async function getConfig() {
-    try {
-      const configService = await app.service('config');
-      let getter = await configService.find();
+    const configService = await client.service('config');
+    let getter = await configService.find();
 
-      process.env.NODE_ENV === 'development' &&
-        console.log('server config:', getter.data[0]);
+    if (!getter.data[0]) {
+      await configService.create({ createNew: true });
+      getConfig();
+      return;
+    }
 
-      if (!getter.data[0]) {
-        await configService.create({ createNew: true });
-        getConfig();
-        return;
-      }
+    process.env.NODE_ENV === 'development' &&
+      console.log('Config:', getter.data[0]);
 
-      process.env.NODE_ENV === 'development' &&
-        console.log('getter.data[0]:', getter.data[0]);
+    const configLcl = getter.data[0].config;
+    setConfig(configLcl);
+    setConfigId(getter.data[0]._id);
 
-      const configLcl = getter.data[0].config;
-      setConfig(configLcl);
-      setConfigId(getter.data[0]._id);
-
-      if (configLcl.theme.themes && configLcl.theme.current) {
-        let theme = configLcl.theme.themes.find(
-          (theme: ThemesProps) => theme.key === configLcl.theme.current
-        );
-        if (theme) handleSetTheme(theme);
-      }
-    } catch (e) {
-      console.error(e.message);
+    if (configLcl.theme.themes && configLcl.theme.current) {
+      let theme = configLcl.theme.themes.find(
+        (theme: ThemesProps) => theme.key === configLcl.theme.current
+      );
+      if (theme) handleSetTheme(theme);
     }
   }
 
@@ -218,7 +165,7 @@ function Onboarding(props: OnboardingProps) {
           render={(props: RouteComponentProps) => (
             <Login
               {...props}
-              loggedIn={loginCredentials ? true : false}
+              loggedIn={loggedIn}
               handleCreateAccount={handleCreateAccount}
               handleLogin={handleLogin}
             />
@@ -232,8 +179,7 @@ function Onboarding(props: OnboardingProps) {
               {...props}
               config={config}
               editing={0}
-              loggedIn={loginCredentials ? true : false}
-              loginCredentials={loginCredentials}
+              loggedIn={loggedIn}
               handleConfigChange={handleConfigChange}
               handleLogout={handleLogout}
               handleSetTheme={handleSetTheme}

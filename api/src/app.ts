@@ -1,24 +1,25 @@
-const path = require('path');
-const favicon = require('serve-favicon');
-const compress = require('compression');
-const helmet = require('helmet');
-const cors = require('cors');
-const logger = require('./logger');
+import path from 'path';
+import favicon from 'serve-favicon';
+import compress from 'compression';
+import helmet from 'helmet';
+import cors from 'cors';
 
-const feathers = require('@feathersjs/feathers');
-const configuration = require('@feathersjs/configuration');
-const express = require('@feathersjs/express');
-const socketio = require('@feathersjs/socketio');
-const swagger = require('feathers-swagger');
+import feathers from '@feathersjs/feathers';
+import configuration from '@feathersjs/configuration';
+import express from '@feathersjs/express';
+import socketio from '@feathersjs/socketio';
+import swagger from 'feathers-swagger';
 
-const middleware = require('./middleware');
-const services = require('./services');
-const appHooks = require('./app.hooks');
-const channels = require('./channels');
+import { Application } from './declarations';
+import logger from './logger';
+import middleware from './middleware';
+import services from './services';
+import appHooks from './app.hooks';
+import channels from './channels';
+import authentication from './authentication';
+// Don't remove this comment. It's needed to format import lines nicely.
 
-const authentication = require('./authentication');
-
-const app = express(feathers());
+const app: Application = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
@@ -43,9 +44,12 @@ app.configure(
   swagger({
     docsPath: '/api/docs',
     uiIndex: true,
-    info: {
-      title: 'Noteboard API',
-      description: 'API for Noteboard'
+    specs: {
+      info: {
+        title: 'Home Panel API',
+        description: 'API for Home Panel',
+        version: '2.0.0'
+      }
     }
   })
 );
@@ -60,10 +64,10 @@ app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
-app.use(express.errorHandler({ logger }));
+app.use(express.errorHandler({ logger } as any));
 
 app.hooks(appHooks);
 
 app.set('trust proxy', true);
 
-module.exports = app;
+export default app;

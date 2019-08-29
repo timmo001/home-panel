@@ -1,10 +1,6 @@
 {
-  "extends": [
-    "react-app"
-  ],
-  "plugins": [
-    "react"
-  ],
+  "extends": ["react-app"],
+  "plugins": ["react"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,

@@ -6,7 +6,6 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -83,7 +82,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ResponsiveDrawerProps extends RouteComponentProps {
   currentPage: string;
-  userInitials: string;
   config: ConfigurationProps;
   editing: number;
   hassConnected: boolean;
@@ -108,9 +106,6 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         <Typography variant="h6" noWrap>
           Home Panel
         </Typography>
-        <Avatar className={classes.avatar}>
-          {props.userInitials && props.userInitials}
-        </Avatar>
       </div>
       <Divider />
       <div className={classes.drawerInner}>

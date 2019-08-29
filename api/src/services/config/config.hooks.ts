@@ -1,12 +1,11 @@
-const { authenticate } = require('@feathersjs/authentication').hooks;
+import * as authentication from '@feathersjs/authentication';
+import processConfig from '../../hooks/process-config';
+import processConfigUpdate from '../../hooks/process-config-update';
+// Don't remove this comment. It's needed to format import lines nicely.
 
-const populateUser = require('../../hooks/populate-user');
+const { authenticate } = authentication.hooks;
 
-const processConfig = require('../../hooks/process-config');
-
-const processConfigUpdate = require('../../hooks/process-config-update');
-
-module.exports = {
+export default {
   before: {
     all: [authenticate('jwt')],
     find: [],
@@ -18,7 +17,7 @@ module.exports = {
   },
 
   after: {
-    all: [populateUser()],
+    all: [],
     find: [],
     get: [],
     create: [],

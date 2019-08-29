@@ -1,9 +1,9 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
+import { Hook, HookContext } from '@feathersjs/feathers';
 
-module.exports = function(_options = {}) {
-  // eslint-disable-line no-unused-vars
-  return async context => {
+export default (options = {}): Hook => {
+  return async (context: HookContext) => {
     const { data } = context;
     const { config, createdAt } = data;
 

@@ -1,7 +1,8 @@
-const NeDB = require('nedb');
-const path = require('path');
+import NeDB from 'nedb';
+import path from 'path';
+import { Application } from '../declarations';
 
-module.exports = function(app) {
+export default function(app: Application) {
   const dbPath = app.get('nedb');
   const Model = new NeDB({
     filename: path.join(dbPath, 'config.db'),
@@ -9,4 +10,4 @@ module.exports = function(app) {
   });
 
   return Model;
-};
+}
