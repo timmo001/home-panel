@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { RouteComponentProps } from 'react-router-dom';
-import { FeathersAuthCredentials } from '@feathersjs/authentication-client';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -67,14 +66,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface LoginProps extends RouteComponentProps {
   loggedIn: boolean;
-  handleCreateAccount(
-    data: FeathersAuthCredentials,
-    callback?: (error?: string) => void
-  ): any;
-  handleLogin(
-    data: FeathersAuthCredentials,
-    callback?: (error?: string) => void
-  ): any;
+  handleCreateAccount(data: any, callback?: (error?: string) => void): any;
+  handleLogin(data: any, callback?: (error?: string) => void): any;
 }
 
 interface State {

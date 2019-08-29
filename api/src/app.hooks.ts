@@ -1,9 +1,9 @@
 // Application hooks that run for every service
-const log = require('./hooks/log');
+// Don't remove this comment. It's needed to format import lines nicely.
 
-module.exports = {
+export default {
   before: {
-    all: [log()],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -13,7 +13,7 @@ module.exports = {
   },
 
   after: {
-    all: [log()],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   error: {
-    all: [log()],
+    all: [],
     find: [],
     get: [],
     create: [],

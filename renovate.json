@@ -1,17 +1,13 @@
 {
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["config:base"],
   "automerge": true,
   "major": {
     "automerge": false
   },
- "commitMessagePrefix": ":arrow_up:",
+  "commitMessagePrefix": ":arrow_up:",
   "pin": {
     "commitMessagePrefix": ":pushpin:"
   },
   "rangeStrategy": "pin",
-  "labels": [
-    "Type: Maintenance"
-  ]
+  "labels": ["Type: Maintenance"]
 }

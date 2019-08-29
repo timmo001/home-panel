@@ -6,4 +6,5 @@ rules:
   line-length:
     ignore: |
       .gitlab-ci.yml
+      .github/
     level: warning
