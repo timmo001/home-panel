@@ -35,7 +35,7 @@
     "react-scripts": "3.1.1",
     "react-select": "3.0.4",
     "react-sound": "1.2.0",
-    "snyk": "1.222.0",
+    "snyk": "1.222.1",
     "socket.io-client": "2.2.0",
     "superagent": "5.1.0",
     "typeface-roboto": "0.0.75",
