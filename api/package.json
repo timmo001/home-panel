@@ -19,10 +19,6 @@
     "test": "test/",
     "config": "config/"
   },
-  "engines": {
-    "node": "12.9.1",
-    "yarn": "1.17.3"
-  },
   "scripts": {
     "test": "yarn run compile && yarn run jest",
     "dev": "ts-node-dev --no-notify src/",
