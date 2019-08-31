@@ -127,15 +127,16 @@ function Climate(props: ClimateProps) {
       className={classes.root}
       container
       spacing={1}
-      alignContent="center"
       justify="space-between"
+      alignContent="center"
       direction="column">
       <Grid
         item
         xs
         container
-        alignContent="center"
         justify="space-around"
+        alignContent="center"
+        alignItems="center"
         direction="row">
         <Grid item>
           <div className={classes.temperature}>
@@ -150,7 +151,12 @@ function Climate(props: ClimateProps) {
         {props.card.width > 1 && (
           <Grid item>
             {attributes.temperature ? (
-              <Grid container alignContent="center" direction="column">
+              <Grid
+                container
+                justify="center"
+                alignContent="center"
+                alignItems="center"
+                direction="column">
                 <IconButton
                   className={classes.iconContainer}
                   onClick={() =>
@@ -189,9 +195,15 @@ function Climate(props: ClimateProps) {
                 item
                 container
                 spacing={1}
+                justify="center"
                 alignContent="center"
                 direction="row">
-                <Grid item xs container alignContent="center" direction="column">
+                <Grid
+                  item
+                  xs
+                  container
+                  alignContent="center"
+                  direction="column">
                   <IconButton
                     className={classes.iconContainer}
                     onClick={() =>
@@ -227,7 +239,12 @@ function Climate(props: ClimateProps) {
                 <Grid item xs className={classes.hyphen}>
                   <Typography variant="h5">-</Typography>
                 </Grid>
-                <Grid item xs container alignContent="center" direction="column">
+                <Grid
+                  item
+                  xs
+                  container
+                  alignContent="center"
+                  direction="column">
                   <IconButton
                     onClick={() =>
                       handleTempChange(
