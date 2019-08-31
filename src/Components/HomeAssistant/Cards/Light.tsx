@@ -214,12 +214,13 @@ function Light(props: LightProps) {
           <InputLabel htmlFor="effect">Effect</InputLabel>
           <Select
             className={classes.select}
-            value={attributes ? attributes.effect : ''}
+            value={attributes && attributes.effect ? attributes.effect : 'none'}
             onChange={handleSelectChange('effect')}
             inputProps={{
               name: 'effect',
               id: 'effect'
             }}>
+            <MenuItem value="none">None</MenuItem>
             {attributes &&
               attributes.effect_list.map((effect: string, key: number) => (
                 <MenuItem key={key} value={effect}>
