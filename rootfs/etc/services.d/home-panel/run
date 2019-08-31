@@ -13,4 +13,4 @@ SSL_PATH_KEY=/ssl/%SSL_KEYFILE%
 export SSL_PATH_CERT
 export SSL_PATH_KEY
 
-exec yarn run compile && node lib/
+exec node lib/
