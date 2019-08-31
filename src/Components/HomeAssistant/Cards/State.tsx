@@ -67,7 +67,7 @@ function State(props: StateProps) {
               classes.icon
             )}
             color="textPrimary"
-            variant="h2"
+            variant="h3"
             component="h5"
           />
         )}

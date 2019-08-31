@@ -61,7 +61,7 @@ function Onboarding(props: OnboardingProps) {
       /overview|login|configuration/gi,
       ''
     )}socket.io`;
-  }, [props.location]);
+  });
 
   useEffect(() => {
     if (!loginCredentials) handleLogin();
