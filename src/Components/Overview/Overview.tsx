@@ -2,6 +2,7 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -28,15 +29,36 @@ import EditGroup from '../Configuration/EditGroup';
 import Header from './Header/Header';
 import Pages from './Pages';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    height: '100%',
     maxHeight: '100%',
-    overflowX: 'hidden'
+    overflow: 'hidden'
   },
   title: {
     width: '100%',
     fontWeight: 300,
     lineHeight: 1.2
+  },
+  container: {
+    height: '100%',
+    maxHeight: '100%',
+    overflow: 'hidden',
+    paddingLeft: theme.spacing(1),
+    paddingBottom: theme.spacing(4)
+  },
+  containerNavShown: {
+    paddingBottom: theme.spacing(10)
+  },
+  groupContainer: {
+    overflowX: 'auto',
+    overflowY: 'hidden'
+  },
+  group: {
+    height: '100%',
+    maxHeight: '100%',
+    marginBottom: theme.spacing(0.5),
+    overflowX: 'auto'
   }
 }));
 
@@ -177,19 +199,23 @@ function Overview(props: OverviewProps) {
   return (
     <div className={classes.root}>
       <Grid
-        className={classes.root}
+        className={classnames(
+          classes.container,
+          props.mouseMoved && classes.containerNavShown
+        )}
         container
-        direction="row"
+        direction="column"
         justify="flex-start"
-        alignItems="flex-start">
+        alignContent="flex-start">
         <Header {...props} />
         <Grid
+          className={classes.groupContainer}
           item
           xs
           container
-          direction="row"
+          direction="column"
           justify="flex-start"
-          alignItems="flex-start"
+          alignContent="flex-start"
           spacing={1}>
           {groups.map((group: GroupProps, groupId: number) => {
             if (!group.width) group.width = 2;
@@ -197,25 +223,33 @@ function Overview(props: OverviewProps) {
               <Grid
                 key={groupId}
                 item
+                xs={12}
                 container
-                direction="row"
+                direction="column"
                 justify="flex-start"
-                alignItems="flex-start"
-                style={{ width: groupWidth * group.width + theme.spacing(6.5) }}
-                spacing={1}>
-                <Grid item xs={12} container>
-                  <Grid item>
+                alignContent="flex-start"
+                style={{
+                  width: groupWidth * group.width + theme.spacing(6.5)
+                }}>
+                <Grid
+                  item
+                  container
+                  direction="row"
+                  justify="flex-start"
+                  alignContent="flex-start">
+                  <Grid item xs>
                     <Typography
                       className={classes.title}
                       variant="h4"
-                      component="h2">
+                      component="h2"
+                      gutterBottom>
                       {group.name}
                     </Typography>
                   </Grid>
                   {props.editing === 1 && (
                     <Grid
                       item
-                      xs
+                      style={{ width: 'fit-content' }}
                       container
                       alignContent="center"
                       justify="flex-end">
@@ -247,23 +281,33 @@ function Overview(props: OverviewProps) {
                     </Grid>
                   )}
                 </Grid>
-                {props.config.cards
-                  .filter((card: CardProps) => card.group === group.key)
-                  .map((card: CardProps, key: number) => (
-                    <Base
-                      {...props}
-                      key={key}
-                      card={card}
-                      editing={props.editing}
-                      handleDelete={handleDelete(group, card)}
-                      handleMoveUp={handleMoveUp(group, card)}
-                      handleMoveDown={handleMoveDown(group, card)}
-                      handleUpdate={handleUpdateCard(card)}
-                    />
-                  ))}
-                {props.editing === 1 && (
-                  <AddCard handleAdd={handleAddCard(group.key)} />
-                )}
+                <Grid
+                  className={classes.group}
+                  item
+                  xs
+                  container
+                  direction="row"
+                  justify="flex-start"
+                  alignContent="flex-start"
+                  spacing={1}>
+                  {props.config.cards
+                    .filter((card: CardProps) => card.group === group.key)
+                    .map((card: CardProps, key: number) => (
+                      <Base
+                        {...props}
+                        key={key}
+                        card={card}
+                        editing={props.editing}
+                        handleDelete={handleDelete(group, card)}
+                        handleMoveUp={handleMoveUp(group, card)}
+                        handleMoveDown={handleMoveDown(group, card)}
+                        handleUpdate={handleUpdateCard(card)}
+                      />
+                    ))}
+                  {props.editing === 1 && (
+                    <AddCard handleAdd={handleAddCard(group.key)} />
+                  )}
+                </Grid>
               </Grid>
             );
           })}
@@ -272,7 +316,7 @@ function Overview(props: OverviewProps) {
             container
             direction="column"
             justify="center"
-            alignItems="flex-start"
+            alignContent="flex-start"
             spacing={1}
             style={{ width: groupWidth * 2 + theme.spacing(1) }}>
             {props.editing === 1 && <AddGroup handleAdd={handleAddGroup} />}

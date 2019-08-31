@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 32,
     width: 32,
     display: 'flex',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center'
   },
   icon: {
@@ -127,14 +127,14 @@ function Climate(props: ClimateProps) {
       className={classes.root}
       container
       spacing={1}
-      alignItems="center"
+      alignContent="center"
       justify="space-between"
       direction="column">
       <Grid
         item
         xs
         container
-        alignItems="center"
+        alignContent="center"
         justify="space-around"
         direction="row">
         <Grid item>
@@ -150,7 +150,7 @@ function Climate(props: ClimateProps) {
         {props.card.width > 1 && (
           <Grid item>
             {attributes.temperature ? (
-              <Grid container alignItems="center" direction="column">
+              <Grid container alignContent="center" direction="column">
                 <IconButton
                   className={classes.iconContainer}
                   onClick={() =>
@@ -189,9 +189,9 @@ function Climate(props: ClimateProps) {
                 item
                 container
                 spacing={1}
-                alignItems="center"
+                alignContent="center"
                 direction="row">
-                <Grid item xs container alignItems="center" direction="column">
+                <Grid item xs container alignContent="center" direction="column">
                   <IconButton
                     className={classes.iconContainer}
                     onClick={() =>
@@ -227,7 +227,7 @@ function Climate(props: ClimateProps) {
                 <Grid item xs className={classes.hyphen}>
                   <Typography variant="h5">-</Typography>
                 </Grid>
-                <Grid item xs container alignItems="center" direction="column">
+                <Grid item xs container alignContent="center" direction="column">
                   <IconButton
                     onClick={() =>
                       handleTempChange(
@@ -271,7 +271,7 @@ function Climate(props: ClimateProps) {
           item
           container
           spacing={1}
-          alignItems="center"
+          alignContent="center"
           justify="center"
           direction="row">
           {attributes.hvac_modes.map((mode: string, key: number) => {
@@ -326,7 +326,7 @@ function Climate(props: ClimateProps) {
               xs={4}
               container
               spacing={1}
-              alignItems="center"
+              alignContent="center"
               justify="space-around"
               direction="row">
               <Grid item>

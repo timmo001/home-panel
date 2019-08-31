@@ -107,9 +107,8 @@ function EditCard(props: EditCardProps) {
             xs
             container
             direction="row"
-            alignContent="flex-start"
             justify="flex-start"
-            alignItems="stretch">
+            alignContent="stretch">
             <Base
               {...props}
               card={card}

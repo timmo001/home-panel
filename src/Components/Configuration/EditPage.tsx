@@ -100,9 +100,8 @@ function EditPage(props: EditPageProps) {
         <Grid
           container
           direction="row"
-          alignContent="flex-start"
           justify="flex-start"
-          alignItems="stretch">
+          alignContent="stretch">
           <Grid item xs container justify="flex-start" alignContent="center">
             <TextField
               className={classes.textField}

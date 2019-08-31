@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 32,
     width: 32,
     display: 'flex',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center'
   },
   icon: {
@@ -81,14 +81,14 @@ function Cover(props: CoverProps) {
     <Grid
       container
       spacing={1}
-      alignItems="center"
+      alignContent="center"
       justify="space-between"
       direction="column">
       <Grid
         item
         xs
         container
-        alignItems="center"
+        alignContent="center"
         justify="space-around"
         direction="row">
         <Grid item>

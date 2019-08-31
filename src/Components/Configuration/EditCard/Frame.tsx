@@ -20,7 +20,7 @@ function Frame(props: FrameProps) {
   const classes = useStyles();
 
   return (
-    <Grid container direction="row" justify="center" alignItems="stretch">
+    <Grid container direction="row" justify="center" alignContent="stretch">
       <Grid item xs>
         <TextField
           className={classes.textField}

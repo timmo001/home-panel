@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexWrap: 'wrap',
       flex: 1,
-      alignItems: 'center',
+      alignContent: 'center',
       overflow: 'hidden'
     },
     noOptionsMessage: {

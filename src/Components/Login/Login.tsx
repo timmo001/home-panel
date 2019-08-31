@@ -50,12 +50,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textField: {
     flexBasis: '50%',
-    width: 'calc(100% - 24px)'
-  },
-  switch: {
-    width: 256,
-    justifyContent: 'center',
-    margin: theme.spacing(0.5, 1)
   },
   wrapper: {
     display: 'flex',
@@ -184,11 +178,11 @@ function Login(props: LoginProps) {
       container
       direction="column"
       justify="center"
-      alignItems="center">
+      alignContent="center">
       <Grid item>
         <CardMedia className={classes.media} image={Logo} title="Home Panel" />
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Typography color="textPrimary" variant="h5" component="h2">
+        <Grid container direction="column" justify="center" alignContent="center">
+          <Typography color="textPrimary" variant="h5" component="h2" align="center">
             {createAccount ? 'Welcome!' : 'Login'}
           </Typography>
           <FormControl
@@ -237,7 +231,7 @@ function Login(props: LoginProps) {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container direction="column" justify="center" alignItems="center">
+      <Grid container direction="column" justify="center" alignContent="center">
         <div className={classes.wrapper}>
           {errorText && <Typography color="error">{errorText}</Typography>}
           {invalidText && (

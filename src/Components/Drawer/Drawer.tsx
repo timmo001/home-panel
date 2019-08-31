@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   drawerHeader: {
     ...theme.mixins.toolbar,
     display: 'flex',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'space-between',
     padding: theme.spacing(1, 1.5, 1, 1.5)
   },

@@ -51,13 +51,13 @@ function Entity(props: EntityProps) {
     iconAllowed = true;
 
   return (
-    <Grid container direction="column" justify="center" alignItems="stretch">
+    <Grid container direction="column" justify="center" alignContent="stretch">
       {iconAllowed && (
         <Grid
           container
           direction="row"
           justify="center"
-          alignItems="flex-end"
+          alignContent="flex-end"
           item
           xs>
           <Grid item xs>

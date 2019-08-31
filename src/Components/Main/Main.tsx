@@ -27,12 +27,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2, 2, 1)
   },
   noHeight: {
-    maxHeight: '100%',
-    overflowX: 'hidden'
+    height: `calc(100% - ${theme.spacing(1.5)}px)`,
+    maxHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
+    overflow: 'hidden'
   },
   toolbar: theme.mixins.toolbar,
   denseToolbar: {
@@ -129,7 +129,10 @@ function Main(props: MainProps) {
 
   return (
     <div
-      className={classes.root}
+      className={classnames(
+        classes.root,
+        props.location.pathname.includes('overview') && classes.noHeight
+      )}
       onClick={handleMouseMove}
       onMouseMove={handleMouseMove}>
       <Drawer

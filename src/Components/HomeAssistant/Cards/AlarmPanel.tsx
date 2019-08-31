@@ -97,7 +97,7 @@ function AlarmPanel(props: AlarmPanelProps) {
     <Grid
       className={classes.root}
       container
-      alignItems="center"
+      alignContent="center"
       justify="space-between"
       direction="column">
       <Typography
@@ -112,7 +112,7 @@ function AlarmPanel(props: AlarmPanelProps) {
           item
           container
           spacing={1}
-          alignItems="center"
+          alignContent="center"
           justify="center"
           direction="row">
           {!armed && (
@@ -179,7 +179,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             className={classes.codes}
             item
             container
-            alignItems="center"
+            alignContent="center"
             justify="center">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
