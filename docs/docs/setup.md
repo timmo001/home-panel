@@ -1,8 +1,8 @@
 # Setup
 
-## Hassio Add-on
+## Hass.io Add-on
 
-If you have Hassio, you can install the app via the community add-ons repo.
+If you have Hass.io, you can install the app via the community add-ons repo.
 
 Find the docs [here](https://github.com/hassio-addons/addon-home-panel#readme)
 
@@ -99,110 +99,7 @@ docker run -d \
   timmo001/home-panel
 ```
 
-## Node JS
-
----
-
-### API Setup
-
-- First clone the
-  [Home Assistant API](https://github.com/timmo001/home-panel-api) repository
-- Checkout the version you want via releases
-- Install packages
-
-```bash
-yarn install
-```
-
-- Run
-
-```bash
-node index.js
-```
-
-### Webapp
-
-- Clone this repository
-- Checkout the version you want via releases
-- Install packages
-
-```bash
-yarn install
-```
-
-#### Production - SSL
-
-- Build a production version
-
-```bash
-yarn build
-```
-
-- Install nginx
-- Edit your server config `/etc/nginx/conf.d/default.conf`
-
-```conf
-server {
-  listen 443 ssl http2 default_server;
-  listen [::]:443 ssl http2 default_server;
-
-  root /usr/share/nginx/html;
-  index index.html;
-  server_name 172.0.0.1;
-
-  ssl_certificate /ssl/fullchain.pem;
-  ssl_certificate_key /ssl/privkey.pem;
-
-  location / {
-    try_files $uri /index.html;
-  }
-}
-```
-
-- Copy the files in the build folder into nginx's html directory at
- `/usr/share/nginx/html`
-- Start your server
-
-```bash
-nginx -g "daemon off;"
-```
-
-#### Production - Non-SSL
-
-!!! warning ""
-    **This option is not secure. Do not open to the outside world!**
-
-- Build a production version
-
-```bash
-yarn build
-```
-
-- Install nginx
-- Edit your server config `/etc/nginx/conf.d/default.conf`
-
-```conf
-server {
-  listen 80 default_server;
-  listen [::]:80 default_server;
-  root /usr/share/nginx/html;
-  index index.html;
-  server_name 172.0.0.1;
-  location / {
-    try_files \$uri /index.html;
-  }
-}
-```
-
-- Copy the files in the build folder into nginx's html directory at
- `/usr/share/nginx/html`
-- Start your server
-
-```bash
-nginx -g "daemon off;"
-```
-
-#### Development
+### Development
 
 !!! warning ""
     **This option is not secure. Do not open to the outside world!**
@@ -210,6 +107,15 @@ nginx -g "daemon off;"
 - Run the app
 
 ```bash
+yarn install
+yarn start
+```
+
+- Open another session and run the API
+
+```bash
+cd api
+yarn install
 yarn start
 ```
 

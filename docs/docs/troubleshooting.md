@@ -26,38 +26,14 @@ and run the containers again. You may have to clear the cache/cookies in your
 If running natively, checkout the latest version from the release page for
  the [app] and the [api] and rerun the app.
 
-## Before posting your issue
-
-Before posting your issue, make sure you check the logs for any errors.
- You may be able to find out the issue for yourself.
-
-If your issue is inside the webapp, first check the developer console.
- To do this press `F12` on the keyboard if you are running Chrome.
-
-Also check the main app logs. With Docker Compose, `cd` into the
-directory containing `docker-compose.yml` and run:
-
- ```bash
- docker-compose logs -f
- ```
-
-If using Docker, run:
-
-```bash
-docker logs -f APP_CONTAINER_ID
-docker logs -f API_CONTAINER_ID
-```
-
-If you are using the Hassio add-on, you can check the logs in the add-on page.
-
 ## I'm still having issues
 
 If you are still stuck, post any logs you can gather from the steps above
  to the [forum thread] where the community will be able to help you.
  Make sure to remove any personal data such as a public address or password.
 
-You can also post an issue to the [GitHub repository]. If your issue is
- related to the Hassio add-on, post your issue [here]
+You can also post an issue on the GitHub repositories if you have uncovered a
+ bug.
 
 [app]: https://github.com/timmo001/home-panel/releases
 [api]: https://github.com/timmo001/home-panel-api/releases

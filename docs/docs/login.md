@@ -27,26 +27,12 @@ The username you will use to login.
 
 The password you will use to login.
 
-### Home Assistant URL
-
-Enter your Home Assistant instance's url including the port if required.
-
-Example URLs:
-
-- `https://my.ddns.address`
-- `http://localhost:8123`
-- `http://192.168.1.100:8123`
-- `https://mylocalserverhostname.local:8123`
-
 ## Login
 
-Once you have created an account, you will need to log in. Your session will
+Once you have created an account, and have logged in, your session will
 be saved automatically.
 
 If you need to create a new account or your credentials have changed,
 Click the `Create New Account` button.
 
 Enter your username and password you used previously and click `Log In`.
-
-[account-creation]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/account-creation.png
-[account-login]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/account-login.png
