@@ -33,8 +33,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
     justifyContent: 'center'
   },
   icon: {
-    height: 64,
-    width: 64,
+    height: 48,
+    width: 48,
     textAlign: 'center',
     verticalAlign: 'center'
   },
@@ -249,7 +249,7 @@ function Light(props: LightProps) {
               classes.icon
             )}
             style={{ color }}
-            variant="h2"
+            variant="h3"
             component="h5"
           />
         </IconButton>

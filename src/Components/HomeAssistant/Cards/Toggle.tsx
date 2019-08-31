@@ -71,7 +71,7 @@ function Toggle(props: ToggleProps) {
               classes.icon
             )}
             color="textPrimary"
-            variant="h2"
+            variant="h3"
             component="h5"
           />
         )}
