@@ -64,7 +64,7 @@ function AlarmPanel(props: AlarmPanelProps) {
           <Typography
             className={classes.text}
             color="textPrimary"
-
+            variant="body2"
             component="h5">
             {state}
           </Typography>
@@ -101,11 +101,7 @@ function AlarmPanel(props: AlarmPanelProps) {
       alignContent="center"
       alignItems="center"
       direction="column">
-      <Typography
-        className={classes.text}
-        color="textPrimary"
-
-        component="h5">
+      <Typography className={classes.text} color="textPrimary" component="h5">
         {properCase(entity.state)}
       </Typography>
       {props.card.width > 1 && (
