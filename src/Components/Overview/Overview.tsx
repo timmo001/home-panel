@@ -29,6 +29,10 @@ import Header from './Header/Header';
 import Pages from './Pages';
 
 const useStyles = makeStyles((_theme: Theme) => ({
+  root: {
+    maxHeight: '100%',
+    overflowX: 'hidden'
+  },
   title: {
     width: '100%',
     fontWeight: 300,
@@ -171,8 +175,9 @@ function Overview(props: OverviewProps) {
   const groupWidth = theme.breakpoints.down('sm') ? 140 : 120;
 
   return (
-    <div>
+    <div className={classes.root}>
       <Grid
+        className={classes.root}
         container
         direction="row"
         justify="flex-start"

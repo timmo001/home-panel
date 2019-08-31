@@ -22,12 +22,17 @@ import properCase from '../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    maxHeight: '100%',
+    overflowX: 'hidden',
     background: theme.palette.background.default
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(2)
+  },
+  noHeight: {
+    maxHeight: '100%',
+    overflowX: 'hidden'
   },
   toolbar: theme.mixins.toolbar,
   denseToolbar: {
@@ -148,7 +153,11 @@ function Main(props: MainProps) {
         />
       </Slide>
       {props.config && (
-        <main className={classes.content}>
+        <main
+          className={classnames(
+            classes.content,
+            props.location.pathname.includes('overview') && classes.noHeight
+          )}>
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
