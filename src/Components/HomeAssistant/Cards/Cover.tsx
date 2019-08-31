@@ -69,7 +69,7 @@ function Cover(props: CoverProps) {
           <Typography
             className={classes.text}
             color="textPrimary"
-
+            variant="body2"
             component="h5">
             {state}
           </Typography>

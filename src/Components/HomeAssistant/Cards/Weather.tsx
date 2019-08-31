@@ -15,6 +15,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1
   },
+  text: {
+    overflow: 'hidden',
+    textAlign: 'center',
+    textOverflow: 'ellipsis'
+  },
   name: {
     margin: 'auto 0',
     overflow: 'hidden',
@@ -130,7 +135,11 @@ function Weather(props: WeatherProps) {
         alignContent="center"
         justify="center">
         <Grid item xs>
-          <Typography color="textPrimary" variant="body1" component="h5">
+          <Typography
+            className={classes.text}
+            color="textPrimary"
+            variant="body2"
+            component="h5">
             {state}
           </Typography>
         </Grid>
