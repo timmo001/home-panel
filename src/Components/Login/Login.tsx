@@ -72,7 +72,7 @@ interface State {
 let firstTime = false;
 function Login(props: LoginProps) {
   useEffect(() => {
-    firstTime = localStorage.getItem('not_my_first_rodeo') === 'true';
+    firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
     handleValidation();
     if (props.loggedIn) props.history.replace('/');
   });

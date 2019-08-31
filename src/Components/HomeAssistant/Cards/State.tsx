@@ -76,7 +76,7 @@ function State(props: StateProps) {
         <Typography
           className={classes.text}
           color="textPrimary"
-          variant="body1"
+          variant={props.card.disabled ? 'body2' : 'body1'}
           component="h5">
           {state}
         </Typography>
