@@ -68,11 +68,9 @@ nav:
   - Getting Started:
       - Setup: setup.md
       - Login: login.md
-  - Customization:
-      - Configuration UI: configui.md
-      - Configuration: configuration.md
-      - Custom Themes: themes.md
-      - Template: template.md
+      - Home Assistant: home-assistant.md
+  - Configuration UI: configui.md
   - Troubleshooting: troubleshooting.md
+  - Posting an Issue: issue-posting.md
   - Contributing: contributing.md
   - License: license.md

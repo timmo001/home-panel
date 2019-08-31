@@ -26,13 +26,12 @@ A touch-compatible web frontend for controlling the home. Integrates with
 
 ## Features
 
-- Supports [Home Assistant][hass] entities, MJPEG camera feeds, iFrames, and
- more.
+- Supports [Home Assistant][hass] entities, Camera feeds, iFrames, and more.
 - Made for touch screens and desktops with a sideways scrolling Material Design
  interface.
 - Fully customizable interface.
 - Custom theme support.
-- Full in application configuration UI. (as well as raw config support)
+- Full in application configuration UI.
 
 ## Links
 
@@ -44,13 +43,9 @@ A touch-compatible web frontend for controlling the home. Integrates with
 
 ## Screenshots
 
-![Light Theme Screenshot][light-theme]
-![More Info Light Screenshot][more-info-light]
+![Midnight Theme Screenshot][midnight-theme]
 
-![Dark Theme Screenshot][dark-theme]
-![More Info Dark Screenshot][more-info-dark]
-
-![Forest Theme][forest-theme]
+![Settings Screenshot][settings-screen]
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
@@ -62,10 +57,8 @@ A touch-compatible web frontend for controlling the home. Integrates with
 [commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
 [commits]: https://github.com/timmo001/home-panel/commits/master
 [contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
-[dark-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/dark-theme.png
 [demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
-[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
 [gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
@@ -74,12 +67,10 @@ A touch-compatible web frontend for controlling the home. Integrates with
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
-[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
+[settings-screen]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/settings-main.png
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
-[more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
-[more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
