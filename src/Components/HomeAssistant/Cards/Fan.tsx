@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 32,
     width: 32,
     display: 'flex',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center'
   },
   icon: {
@@ -95,14 +95,14 @@ function Fan(props: FanProps) {
       className={classes.root}
       container
       spacing={1}
-      alignItems="center"
+      alignContent="center"
       justify="center"
       direction="column">
       <Grid
         item
         xs
         container
-        alignItems="center"
+        alignContent="center"
         justify="center"
         direction="row">
         {attributes.speed_list.map((speed: string, key: number) => {

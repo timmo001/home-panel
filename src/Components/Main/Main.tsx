@@ -22,12 +22,17 @@ import properCase from '../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    maxHeight: '100%',
+    overflowX: 'hidden',
     background: theme.palette.background.default
   },
   content: {
-    flexGrow: 1,
-    padding: theme.spacing(3)
+    padding: theme.spacing(2, 2, 1)
+  },
+  noHeight: {
+    height: `calc(100% - ${theme.spacing(1.5)}px)`,
+    maxHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
+    overflow: 'hidden'
   },
   toolbar: theme.mixins.toolbar,
   denseToolbar: {
@@ -124,7 +129,10 @@ function Main(props: MainProps) {
 
   return (
     <div
-      className={classes.root}
+      className={classnames(
+        classes.root,
+        props.location.pathname.includes('overview') && classes.noHeight
+      )}
       onClick={handleMouseMove}
       onMouseMove={handleMouseMove}>
       <Drawer
@@ -148,7 +156,11 @@ function Main(props: MainProps) {
         />
       </Slide>
       {props.config && (
-        <main className={classes.content}>
+        <main
+          className={classnames(
+            classes.content,
+            props.location.pathname.includes('overview') && classes.noHeight
+          )}>
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}

@@ -154,7 +154,7 @@ function Configuration(props: ConfigurationProps) {
       container
       direction="column"
       justify="center"
-      alignItems="center"
+      alignContent="center"
       spacing={1}>
       {sections.map((item: any, key: number) => (
         <Grid

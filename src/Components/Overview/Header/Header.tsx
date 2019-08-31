@@ -90,7 +90,7 @@ function Header(props: HeaderProps) {
       container
       direction="row"
       justify="flex-start"
-      alignItems="center">
+      alignContent="center">
       {columns.map((columnData: any, key: number) => (
         <Grid
           key={key}
@@ -98,7 +98,7 @@ function Header(props: HeaderProps) {
           xs
           container
           justify={key === 2 ? 'flex-end' : key === 1 ? 'center' : 'flex-start'}
-          alignItems="flex-start"
+          alignContent="flex-start"
           style={{
             textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start'
           }}>

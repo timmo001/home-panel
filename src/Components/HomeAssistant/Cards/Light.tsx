@@ -29,7 +29,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
   },
   iconContainer: {
     display: 'flex',
-    alignItems: 'center',
+    alignContent: 'center',
     justifyContent: 'center'
   },
   icon: {
@@ -238,7 +238,7 @@ function Light(props: LightProps) {
       className={classes.root}
       container
       direction="row"
-      alignItems="center"
+      alignContent="center"
       justify="center">
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton onClick={props.handleHassToggle}>

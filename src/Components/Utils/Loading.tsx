@@ -29,7 +29,7 @@ function Loading(props: LoadingProps) {
       container
       direction="column"
       justify="center"
-      alignItems="center">
+      alignContent="center">
       <CircularProgress size={42} />
       <Typography
         className={classes.text}
