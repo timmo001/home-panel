@@ -35,7 +35,11 @@ function Section(props: SectionProps) {
   const classes = useStyles();
 
   return (
-    <Grid container direction="row" alignContent="center" justify="space-between">
+    <Grid
+      container
+      direction="row"
+      alignContent="center"
+      justify="space-between">
       {props.section.items.map((item: any, key: number) => {
         if (props.section.type === 'array') item.name = Number(key);
         return (
