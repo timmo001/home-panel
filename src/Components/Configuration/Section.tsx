@@ -35,7 +35,7 @@ function Section(props: SectionProps) {
   const classes = useStyles();
 
   return (
-    <Grid container direction="row" alignItems="center" justify="space-between">
+    <Grid container direction="row" alignContent="center" justify="space-between">
       {props.section.items.map((item: any, key: number) => {
         if (props.section.type === 'array') item.name = Number(key);
         return (
@@ -44,7 +44,7 @@ function Section(props: SectionProps) {
             item
             container
             direction="row"
-            alignItems="center"
+            alignContent="center"
             justify="space-between"
             className={classes.item}>
             <Grid
@@ -52,7 +52,7 @@ function Section(props: SectionProps) {
               xs
               container
               direction="row"
-              alignItems="center"
+              alignContent="center"
               justify="space-between">
               {item.icon && (
                 <Grid item>

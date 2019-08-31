@@ -65,12 +65,12 @@ function Base(props: BaseProps) {
 
   return (
     <div className={classes.root}>
-      <Grid container direction="row" justify="center" alignItems="stretch">
+      <Grid container direction="row" justify="center" alignContent="stretch">
         <Grid
           container
           direction="row"
           justify="center"
-          alignItems="flex-end"
+          alignContent="flex-end"
           item
           xs>
           <Grid item xs>
@@ -112,7 +112,7 @@ function Base(props: BaseProps) {
         container
         direction="row"
         justify="center"
-        alignItems="stretch">
+        alignContent="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
@@ -140,7 +140,7 @@ function Base(props: BaseProps) {
         container
         direction="row"
         justify="center"
-        alignItems="stretch">
+        alignContent="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}
@@ -168,7 +168,7 @@ function Base(props: BaseProps) {
         container
         direction="row"
         justify="center"
-        alignItems="stretch">
+        alignContent="stretch">
         <Grid item xs container justify="flex-start" alignContent="center">
           <TextField
             className={classes.textField}

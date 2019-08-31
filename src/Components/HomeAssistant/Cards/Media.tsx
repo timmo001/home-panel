@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   controlsMain: {
     position: 'absolute',
     display: 'flex',
-    alignItems: 'flex-end',
+    alignContent: 'flex-end',
     left: '50%',
     transform: 'translateX(-50%)',
     bottom: theme.spacing(1)
