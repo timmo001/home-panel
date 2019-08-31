@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 240
   },
   textField: {
-    flexBasis: '50%',
+    flexBasis: '50%'
   },
   wrapper: {
     display: 'flex',
@@ -178,11 +178,20 @@ function Login(props: LoginProps) {
       container
       direction="column"
       justify="center"
-      alignContent="center">
+      alignContent="center"
+      alignItems="center">
       <Grid item>
         <CardMedia className={classes.media} image={Logo} title="Home Panel" />
-        <Grid container direction="column" justify="center" alignContent="center">
-          <Typography color="textPrimary" variant="h5" component="h2" align="center">
+        <Grid
+          container
+          direction="column"
+          justify="center"
+          alignContent="center">
+          <Typography
+            color="textPrimary"
+            variant="h5"
+            component="h2"
+            align="center">
             {createAccount ? 'Welcome!' : 'Login'}
           </Typography>
           <FormControl
