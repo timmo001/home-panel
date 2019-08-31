@@ -26,5 +26,5 @@
       "passwordField": "password"
     }
   },
-  "nedb": "../data"
+  "nedb": "../db"
 }
