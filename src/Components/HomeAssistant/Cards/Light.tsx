@@ -222,6 +222,7 @@ function Light(props: LightProps) {
             }}>
             <MenuItem value="none">None</MenuItem>
             {attributes &&
+              attributes.effect_list &&
               attributes.effect_list.map((effect: string, key: number) => (
                 <MenuItem key={key} value={effect}>
                   {effect}
