@@ -58,8 +58,8 @@ function AlarmPanel(props: AlarmPanelProps) {
         className={classes.root}
         container
         direction="row"
-        alignContent="space-between"
-        justify="center">
+        justify="center"
+        alignContent="space-between">
         <Grid item xs>
           <Typography
             className={classes.text}
@@ -97,8 +97,9 @@ function AlarmPanel(props: AlarmPanelProps) {
     <Grid
       className={classes.root}
       container
-      alignContent="center"
       justify="space-between"
+      alignContent="center"
+      alignItems="center"
       direction="column">
       <Typography
         className={classes.text}
