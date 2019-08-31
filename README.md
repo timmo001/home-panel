@@ -48,13 +48,9 @@ Setup and configuration for the app is available [here][setup-docs]
 
 ## Screenshots
 
-![Light Theme Screenshot][light-theme]
-
 ![Midnight Theme Screenshot][midnight-theme]
 
-![Forest Theme][forest-theme]
-
-![More Info Dark Screenshot][more-info-dark]
+![Settings Screenshot][settings-screen]
 
 ## License
 
@@ -92,7 +88,6 @@ SOFTWARE.
 [CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
-[forest-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/forest-theme.png
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
 [gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
@@ -101,12 +96,10 @@ SOFTWARE.
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
-[light-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/light-theme.png
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
+[settings-screen]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/settings-main.png
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
-[more-info-dark]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-dark.png
-[more-info-light]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/more-info-light.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
