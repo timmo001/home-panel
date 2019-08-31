@@ -19,7 +19,7 @@
 
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
-A touch-compatible web frontend for controlling the home. Integrates with
+A web frontend for controlling the home. Integrates with
 [Home Assistant][hass] as an additional frontend.
 
 ![banner][banner]

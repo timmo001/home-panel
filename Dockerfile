@@ -35,13 +35,14 @@ RUN \
         curl=7.65.1-r0 \
         git=2.22.0-r0 \
         tar=1.32-r0 \
-        yarn=1.16.0-r0 \
     \
     && apk add --no-cache \
         bash=5.0.0-r0 \
+        jq=1.6-r0 \
         nginx=1.16.1-r0 \
         nodejs-current=12.4.0-r0 \
         tzdata=2019b-r0 \
+        yarn=1.16.0-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
