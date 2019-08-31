@@ -6,6 +6,7 @@ import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
@@ -51,8 +52,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   drawerHeader: {
     ...theme.mixins.toolbar,
     display: 'flex',
-    alignContent: 'center',
     justifyContent: 'space-between',
+    alignContent: 'center',
+    alignItems: 'center',
     padding: theme.spacing(1, 1.5, 1, 1.5)
   },
   heading: {
@@ -81,12 +83,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ResponsiveDrawerProps extends RouteComponentProps {
-  currentPage: string;
+  back: boolean;
   config: ConfigurationProps;
+  currentPage: string;
   editing: number;
   hassConnected: boolean;
   mouseMoved: boolean;
-  back: boolean;
+  userInitials: string;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
   handleBack: () => void;
@@ -106,6 +109,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         <Typography variant="h6" noWrap>
           Home Panel
         </Typography>
+        <Avatar className={classes.avatar}>
+          {props.userInitials && props.userInitials}
+        </Avatar>
       </div>
       <Divider />
       <div className={classes.drawerInner}>

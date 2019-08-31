@@ -1,6 +1,7 @@
 import * as authentication from '@feathersjs/authentication';
 import processConfig from '../../hooks/process-config';
 import processConfigUpdate from '../../hooks/process-config-update';
+import populateUser from '../../hooks/populate-user';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = authentication.hooks;
@@ -17,7 +18,7 @@ export default {
   },
 
   after: {
-    all: [],
+    all: [populateUser()],
     find: [],
     get: [],
     create: [],

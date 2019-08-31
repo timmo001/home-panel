@@ -33,7 +33,7 @@ client.configure(authentication());
 
 function Onboarding(props: OnboardingProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loginCredentials, setLoggedIn] = React.useState();
   const [config, setConfig] = React.useState();
   const [configId, setConfigId] = React.useState();
   const [theme, setTheme] = React.useState(
@@ -64,7 +64,7 @@ function Onboarding(props: OnboardingProps) {
   }, [props.location]);
 
   useEffect(() => {
-    if (!loggedIn) handleLogin();
+    if (!loginCredentials) handleLogin();
   });
 
   function handleSetTheme(palette: ThemesProps) {
@@ -92,13 +92,15 @@ function Onboarding(props: OnboardingProps) {
     try {
       process.env.NODE_ENV === 'development' &&
         console.log('login:', client.path, data);
+      let something;
       if (!client) {
         console.warn('Feathers app is undefined');
-      } else if (!data) await client.reAuthenticate();
-      else await client.authenticate(data, callback);
-      setLoggedIn(true);
+      } else if (!data) something = await client.reAuthenticate();
+      else something = await client.authenticate(data, callback);
+      console.log(something.user);
+      setLoggedIn(something.user);
       setLoginAttempted(true);
-      getConfig();
+      getConfig(something.user._id);
     } catch (error) {
       console.error('Error in handleLogin:', error);
       setLoginAttempted(true);
@@ -115,13 +117,13 @@ function Onboarding(props: OnboardingProps) {
     });
   }
 
-  async function getConfig() {
+  async function getConfig(userId: string) {
     const configService = await client.service('config');
-    let getter = await configService.find();
+    let getter = await configService.find({ userId });
 
     if (!getter.data[0]) {
       await configService.create({ createNew: true });
-      getConfig();
+      getConfig(userId);
       return;
     }
 
@@ -165,7 +167,7 @@ function Onboarding(props: OnboardingProps) {
           render={(props: RouteComponentProps) => (
             <Login
               {...props}
-              loggedIn={loggedIn}
+              loggedIn={loginCredentials ? true : false}
               handleCreateAccount={handleCreateAccount}
               handleLogin={handleLogin}
             />
@@ -179,7 +181,8 @@ function Onboarding(props: OnboardingProps) {
               {...props}
               config={config}
               editing={0}
-              loggedIn={loggedIn}
+              loggedIn={loginCredentials ? true : false}
+              loginCredentials={loginCredentials}
               handleConfigChange={handleConfigChange}
               handleLogout={handleLogout}
               handleSetTheme={handleSetTheme}
