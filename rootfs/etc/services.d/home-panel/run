@@ -7,12 +7,10 @@ echo 'Run Home Panel..'
 # shellcheck disable=SC2164
 cd /opt/panel
 
-DB_PATH=/data/home-panel.db
 SSL_PATH_CERT=/ssl/%SSL_CERTFILE%
 SSL_PATH_KEY=/ssl/%SSL_KEYFILE%
 
-export DB_PATH
 export SSL_PATH_CERT
 export SSL_PATH_KEY
 
-exec node src/
+exec yarn run compile && node lib/

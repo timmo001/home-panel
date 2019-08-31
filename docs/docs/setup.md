@@ -56,9 +56,6 @@ services:
     image: timmo001/home-panel
     ports:
       - 8234:8234
-    volumes:
-      - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
-      - ~/ssl/privkey.pem:/data/ssl/privkey.pem
 ```
 
 ## Docker
