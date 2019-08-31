@@ -86,7 +86,7 @@ function Climate(props: ClimateProps) {
           <Typography
             className={classes.text}
             color="textPrimary"
-            variant="body1"
+
             component="h5">
             {state}
           </Typography>

@@ -88,7 +88,6 @@ function Main(props: MainProps) {
 
   function handleHassLogin(url: string) {
     console.log('handleHassLogin', url);
-    setHassUrl(null);
     setHassUrl(url);
   }
 

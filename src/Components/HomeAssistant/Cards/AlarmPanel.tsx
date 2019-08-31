@@ -64,7 +64,7 @@ function AlarmPanel(props: AlarmPanelProps) {
           <Typography
             className={classes.text}
             color="textPrimary"
-            variant="body1"
+
             component="h5">
             {state}
           </Typography>
@@ -104,7 +104,7 @@ function AlarmPanel(props: AlarmPanelProps) {
       <Typography
         className={classes.text}
         color="textPrimary"
-        variant="body1"
+
         component="h5">
         {properCase(entity.state)}
       </Typography>
