@@ -79,7 +79,7 @@ function Onboarding(props: OnboardingProps) {
       socket = io(url);
       client.configure(socketio(socket));
       client.configure(authentication());
-      client.path = `${path}/socket.io`;
+      client.path = `${path}/socket.io`.replace('//', '/');
       // TODO: Remove
       console.log('client.path:', clone(client.path));
     }
