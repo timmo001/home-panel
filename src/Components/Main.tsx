@@ -1,6 +1,6 @@
 // @flow
 import React, { useEffect } from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
@@ -18,7 +18,6 @@ import HomeAssistant, {
 import isObject from './Utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
-import properCase from './Utils/properCase';
 import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -28,9 +27,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   content: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: theme.spacing(2, 2, 1)
   },
   noHeight: {
@@ -58,14 +54,9 @@ function Main(props: MainProps) {
   const [mouseMoved, setMouseMoved] = React.useState(false);
   const [back, setBack] = React.useState(false);
 
-  // TODO: Remove
-  console.log('-----------');
-  console.log('MAIN - route history:', clone(props.history));
-  console.log('MAIN - route match:', clone(props.match));
-  console.log('MAIN - route props:', clone(props.location));
-  console.log('MAIN - window.location:', clone(window.location));
-
   useEffect(() => {
+    // TODO: Remove
+    console.log('MAIN - route location.state:', clone(props.location.state));
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
       if (haUrl) setHassUrl(haUrl);
@@ -74,7 +65,12 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.push({ search: '' });
     }
-  }, [hassConnected, props.history, props.location.search]);
+  }, [
+    hassConnected,
+    props.history,
+    props.location.state,
+    props.location.search
+  ]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -97,13 +93,13 @@ function Main(props: MainProps) {
   }
 
   function handleHassLogin(url: string) {
-    console.log('handleHassLogin', url);
+    console.log('handleHassLogin:', url);
     setHassUrl(url);
   }
 
   function handleMouseMove() {
     clearTimeout(moveTimeout);
-    if (props.location.pathname !== '/configuration') {
+    if (!props.location.state.configuration) {
       setMouseMoved(true);
       moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
@@ -114,11 +110,6 @@ function Main(props: MainProps) {
   }
 
   const classes = useStyles();
-
-  // if (!props.loggedIn) {
-  //   // props.history.push('/login');
-  //   return null;
-  // }
 
   if (!props.location.state)
     props.history.replace(props.location.pathname, { overview: true });
@@ -144,14 +135,14 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.pathname === '/configuration' ||
+    props.location.state.configuration ||
     mouseMoved;
 
   return (
     <div
       className={classnames(
         classes.root,
-        props.location.pathname.includes('overview') && classes.noHeight
+        props.location.state.overview && classes.noHeight
       )}
       onClick={handleMouseMove}
       onMouseMove={handleMouseMove}>
@@ -180,7 +171,7 @@ function Main(props: MainProps) {
         <main
           className={classnames(
             classes.content,
-            props.location.pathname.includes('overview') && classes.noHeight
+            props.location.state.overview && classes.noHeight
           )}>
           {hassUrl && (
             <HomeAssistant

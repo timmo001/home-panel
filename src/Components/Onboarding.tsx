@@ -1,6 +1,6 @@
 // @flow
 import React, { useEffect } from 'react';
-import { Route, Switch, RouteComponentProps, Redirect } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import authentication from '@feathersjs/authentication-client';
@@ -20,9 +20,7 @@ import parseTheme from './Utils/parseTheme';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
-interface OnboardingProps extends RouteComponentProps {
-  originLocation: any;
-}
+interface OnboardingProps extends RouteComponentProps {}
 
 let socket: SocketIOClient.Socket, client: any;
 
@@ -48,32 +46,21 @@ function Onboarding(props: OnboardingProps) {
   );
 
   useEffect(() => {
-    // // TODO: Remove
-    // console.log('-------------------------');
-    // console.log('ONBOARDING - route props:', clone(props.location));
-    // console.log('ONBOARDING - route history:', clone(props.history));
-    // console.log('ONBOARDING - route match:', clone(props.match));
-    // console.log('ONBOARDING - window.location:', clone(window.location));
-    // console.log(
-    //   'ONBOARDING - window.location.pathname:',
-    //   clone(window.location.pathname)
-    // );
-    // console.log(
-    //   'ONBOARDING - props.originLocation:',
-    //   clone(props.originLocation)
-    // );
+    // TODO: Remove
+    console.log('ONBOARDING - route location:', clone(props.location));
+    console.log('ONBOARDING - window location:', clone(window.location));
 
     if (!client) {
       client = feathers();
-      let path: string = clone(props.originLocation.pathname);
+      let path: string = clone(props.location.pathname);
       // TODO: Remove
       console.log('path:', clone(path));
       let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
-        props.originLocation.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
-        props.originLocation.hostname}:${
+        window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
+        window.location.hostname}:${
         process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
           ? '8234'
-          : props.originLocation.port
+          : window.location.port
       }${path}`;
       // TODO: Remove
       console.log('url:', clone(url));
@@ -134,8 +121,7 @@ function Onboarding(props: OnboardingProps) {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
     await client.logout();
-    // props.history.push('login');
-    // window.location.reload(true);
+    props.history.replace(props.location.pathname, { state: undefined });
   }
 
   async function getConfig(userId: string) {

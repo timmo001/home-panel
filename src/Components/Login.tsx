@@ -73,7 +73,6 @@ function Login(props: LoginProps) {
   useEffect(() => {
     firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
     handleValidation();
-    // if (props.loggedIn) props.history.push('/');
   });
 
   const [createAccount, setCreateAccount] = React.useState(firstTime);

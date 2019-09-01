@@ -119,9 +119,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
           {Items.map((item: ItemsProps, key: number) => {
             return (
               <Link
-                className={classes.link}
-                to={item.link}
                 key={key}
+                className={classes.link}
+                to={{ state: { [item.link]: true } }}
                 onClick={handleDrawerToggle}>
                 <ListItem
                   selected={props.currentPage === item.name ? true : false}
@@ -209,7 +209,12 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                   return (
                     <Link
                       className={classes.linkToolbar}
-                      to={edit ? '?edit=false' : item.link}
+                      to={{
+                        state: {
+                          ...props.location.state,
+                          edit: edit ? false : true
+                        }
+                      }}
                       key={key}>
                       <IconButton
                         color="inherit"
