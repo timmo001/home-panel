@@ -41,7 +41,7 @@ function Onboarding(props: OnboardingProps) {
   );
 
   useEffect(() => {
-    // TODO Remove
+    // TODO: Remove
     console.log('route props:', props.location);
     console.log('window.location:', window.location);
     console.log('window.location.pathname:', window.location.pathname);
@@ -58,7 +58,7 @@ function Onboarding(props: OnboardingProps) {
         /overview|login|configuration/gi,
         ''
       )}`;
-      // TODO Remove
+      // TODO: Remove
       console.log('url:', url);
       socket = io(url);
       client.configure(socketio(socket));
@@ -67,7 +67,7 @@ function Onboarding(props: OnboardingProps) {
         /overview|login|configuration/gi,
         ''
       )}socket.io`;
-      // TODO Remove
+      // TODO: Remove
       console.log('client.path:', client.path);
     }
 
