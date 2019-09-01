@@ -10,6 +10,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
 
 import { ThemesProps } from '../Configuration/Config';
+import clone from '../Utils/clone';
 import Loading from '../Utils/Loading';
 import Login from '../Login/Login';
 import Main from '../Main/Main';
@@ -42,33 +43,33 @@ function Onboarding(props: OnboardingProps) {
 
   useEffect(() => {
     // TODO: Remove
-    console.log('route props:', props.location);
-    console.log('window.location:', window.location);
-    console.log('window.location.pathname:', window.location.pathname);
+    console.log('route props:', clone(props.location));
+    console.log('window.location:', clone(window.location));
+    console.log('window.location.pathname:', clone(window.location.pathname));
 
     if (!client) {
       client = feathers();
+      let path: string = clone(window.location.pathname).replace(
+        props.location.pathname,
+        ''
+      );
+      // TODO: Remove
+      console.log('path:', clone(path));
       let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
         window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
         window.location.hostname}:${
         process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
           ? '8234'
           : window.location.port
-      }${window.location.pathname.replace(
-        /overview|login|configuration/gi,
-        ''
-      )}`;
+      }${path}`;
       // TODO: Remove
-      console.log('url:', url);
+      console.log('url:', clone(url));
       socket = io(url);
       client.configure(socketio(socket));
       client.configure(authentication());
-      client.path = `${window.location.pathname.replace(
-        /overview|login|configuration/gi,
-        ''
-      )}socket.io`;
+      client.path = `${path}/socket.io`;
       // TODO: Remove
-      console.log('client.path:', client.path);
+      console.log('client.path:', clone(client.path));
     }
 
     if (!loginCredentials) handleLogin();
@@ -120,7 +121,7 @@ function Onboarding(props: OnboardingProps) {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
     client.logout().then(() => {
-      props.history.replace('/login');
+      props.history.push('/login');
     });
   }
 

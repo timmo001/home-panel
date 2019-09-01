@@ -62,7 +62,7 @@ function Main(props: MainProps) {
     } else {
       // Clear url if we have been able to establish a connection
       if (props.location.search.includes('auth_callback=1'))
-        props.history.replace({ search: '' });
+        props.history.push({ search: '' });
     }
   }, [hassConnected, props.history, props.location.search, props.loggedIn]);
 
@@ -106,7 +106,7 @@ function Main(props: MainProps) {
   const classes = useStyles();
 
   if (!props.loggedIn) {
-    props.history.replace('/login');
+    props.history.push('/login');
     return null;
   }
 
