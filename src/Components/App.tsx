@@ -4,13 +4,20 @@ import {
   BrowserRouter as Router,
   Route,
   Redirect,
-  Switch
+  Switch,
+  RouteComponentProps
 } from 'react-router-dom';
 
+import clone from './Utils/clone';
 import Onboarding from './Onboarding/Onboarding';
 
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
+
+// TODO: Remove
+console.log('APP - window.location:', clone(window.location));
+
+const originLocation = clone(window.location);
 
 function App() {
   return (
@@ -19,7 +26,9 @@ function App() {
         <Route
           exact
           path="/(login|overview|configuration)/"
-          component={Onboarding}
+          render={(rProps: RouteComponentProps) => (
+            <Onboarding {...rProps} originLocation={originLocation} />
+          )}
         />
         <Redirect to="/overview" />
       </Switch>

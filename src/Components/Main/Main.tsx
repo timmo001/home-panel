@@ -55,6 +55,12 @@ function Main(props: MainProps) {
   const [mouseMoved, setMouseMoved] = React.useState(false);
   const [back, setBack] = React.useState(false);
 
+  // TODO: Remove
+  console.log('MAIN - route history:', clone(props.history));
+  console.log('MAIN - route match:', clone(props.match));
+  console.log('MAIN - route props:', clone(props.location));
+  console.log('MAIN - window.location:', clone(window.location));
+
   useEffect(() => {
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
