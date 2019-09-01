@@ -209,7 +209,7 @@ function Onboarding(props: OnboardingProps) {
             />
           )}
         />
-        <Redirect to="/overview" />
+        <Redirect to="overview" />
       </Switch>
     </ThemeProvider>
   );

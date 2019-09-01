@@ -30,7 +30,7 @@ function App() {
             <Onboarding {...rProps} originLocation={originLocation} />
           )}
         />
-        <Redirect to="/overview" />
+        <Redirect to="overview" />
       </Switch>
     </Router>
   );
