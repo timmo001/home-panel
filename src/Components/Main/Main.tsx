@@ -181,8 +181,7 @@ function Main(props: MainProps) {
             />
           )}
           <Route
-            exact
-            path="/overview"
+            path="/(overview)/"
             render={(rrProps: RouteComponentProps) => (
               <Overview
                 {...props}
@@ -197,8 +196,7 @@ function Main(props: MainProps) {
             )}
           />
           <Route
-            exact
-            path="/configuration"
+            path="/(configuration)/"
             render={(rrProps: RouteComponentProps) => (
               <Configuration
                 {...props}
