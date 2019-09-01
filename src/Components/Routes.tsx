@@ -13,26 +13,18 @@ const originLocation = clone(window.location);
 interface RoutesProps extends RouteComponentProps {}
 
 function Routes(props: RoutesProps) {
-  useEffect(() => {
-    // TODO: Remove
-    console.log('ROUTES - route props:', clone(props.location));
-    console.log('ROUTES - route history:', clone(props.history));
-    console.log('ROUTES - route match:', clone(props.match));
-    console.log('ROUTES - window.location:', clone(window.location));
-  });
+  // useEffect(() => {
+  //   // TODO: Remove
+  //   console.log('--------------------------------------------');
+  console.log('ROUTES - route props:', clone(props.location));
+  //   console.log('ROUTES - route history:', clone(props.history));
+  //   console.log('ROUTES - route match:', clone(props.match));
+  //   console.log('ROUTES - window.location:', clone(window.location));
+  // });
 
-  return (
-    <Switch>
-      <Route
-        exact
-        path="/login|overview|configuration/"
-        render={(rProps: RouteComponentProps) => (
-          <Onboarding {...rProps} originLocation={originLocation} />
-        )}
-      />
-      <Redirect to="overview" />
-    </Switch>
-  );
+  console.log('ROUTES - route location.state:', clone(props.location.state));
+
+  return <Onboarding {...props} originLocation={originLocation} />;
 }
 
 export default Routes;

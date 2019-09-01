@@ -19,6 +19,7 @@ import isObject from './Utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
 import properCase from './Utils/properCase';
+import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   content: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     padding: theme.spacing(2, 2, 1)
   },
   noHeight: {
@@ -41,7 +45,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface MainProps extends RouteComponentProps, ConfigProps {
-  loggedIn: boolean;
   loginCredentials: any;
   handleLogout(): any;
 }
@@ -56,6 +59,7 @@ function Main(props: MainProps) {
   const [back, setBack] = React.useState(false);
 
   // TODO: Remove
+  console.log('-----------');
   console.log('MAIN - route history:', clone(props.history));
   console.log('MAIN - route match:', clone(props.match));
   console.log('MAIN - route props:', clone(props.location));
@@ -70,7 +74,7 @@ function Main(props: MainProps) {
       if (props.location.search.includes('auth_callback=1'))
         props.history.push({ search: '' });
     }
-  }, [hassConnected, props.history, props.location.search, props.loggedIn]);
+  }, [hassConnected, props.history, props.location.search]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -99,7 +103,7 @@ function Main(props: MainProps) {
 
   function handleMouseMove() {
     clearTimeout(moveTimeout);
-    if (props.location!.pathname !== '/configuration') {
+    if (props.location.pathname !== '/configuration') {
       setMouseMoved(true);
       moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
@@ -111,22 +115,28 @@ function Main(props: MainProps) {
 
   const classes = useStyles();
 
-  if (!props.loggedIn) {
-    props.history.push('/login');
-    return null;
-  }
+  // if (!props.loggedIn) {
+  //   // props.history.push('/login');
+  //   return null;
+  // }
+
+  if (!props.location.state)
+    props.history.replace(props.location.pathname, { overview: true });
 
   if (!props.config) {
     return <Loading text="Loading Config. Please Wait.." />;
   }
 
   const search =
-    props.location!.search && queryString.parse(props.location!.search);
+    props.location.search && queryString.parse(props.location.search);
   const editing = search && search.edit && search.edit === 'true' ? 1 : 0;
-  const currentPage =
-    props.location!.pathname !== '/'
-      ? properCase(props.location!.pathname.substring(1))
-      : 'Overview';
+  const currentPage = !props.location.state
+    ? '404'
+    : props.location.state.overview
+    ? 'Overview'
+    : props.location.state.configuration
+    ? 'Configuration'
+    : '404';
 
   const userInitials =
     props.loginCredentials &&
@@ -134,7 +144,7 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!.pathname === '/configuration' ||
+    props.location.pathname === '/configuration' ||
     mouseMoved;
 
   return (
@@ -180,36 +190,31 @@ function Main(props: MainProps) {
               setEntities={setHassEntities}
             />
           )}
-          <Route
-            path="/(overview)/"
-            render={(rrProps: RouteComponentProps) => (
-              <Overview
-                {...props}
-                {...rrProps}
-                editing={editing}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                mouseMoved={mouseMoved}
-                handleHassChange={handleHassChange}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )}
-          />
-          <Route
-            path="/(configuration)/"
-            render={(rrProps: RouteComponentProps) => (
-              <Configuration
-                {...props}
-                {...rrProps}
-                back={back}
-                editing={editing}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                handleSetBack={setBack}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )}
-          />
+          {props.location.state.overview ? (
+            <Overview
+              {...props}
+              editing={editing}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
+          ) : props.location.state.configuration ? (
+            <Configuration
+              {...props}
+              back={back}
+              editing={editing}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              handleSetBack={setBack}
+              handleUpdateConfig={handleUpdateConfig}
+            />
+          ) : (
+            <Typography component="h1" variant="h2">
+              404 - Page Not Found
+            </Typography>
+          )}
         </main>
       )}
     </div>
@@ -217,7 +222,6 @@ function Main(props: MainProps) {
 }
 
 Main.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   loginCredentials: PropTypes.any,
   config: PropTypes.object,
   handleConfigChange: PropTypes.func.isRequired,

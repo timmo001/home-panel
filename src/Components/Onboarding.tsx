@@ -48,26 +48,24 @@ function Onboarding(props: OnboardingProps) {
   );
 
   useEffect(() => {
-    // TODO: Remove
-    console.log('ONBOARDING - route props:', clone(props.location));
-    console.log('ONBOARDING - route history:', clone(props.history));
-    console.log('ONBOARDING - route match:', clone(props.match));
-    console.log('ONBOARDING - window.location:', clone(window.location));
-    console.log(
-      'ONBOARDING - window.location.pathname:',
-      clone(window.location.pathname)
-    );
-    console.log(
-      'ONBOARDING - props.originLocation:',
-      clone(props.originLocation)
-    );
+    // // TODO: Remove
+    // console.log('-------------------------');
+    // console.log('ONBOARDING - route props:', clone(props.location));
+    // console.log('ONBOARDING - route history:', clone(props.history));
+    // console.log('ONBOARDING - route match:', clone(props.match));
+    // console.log('ONBOARDING - window.location:', clone(window.location));
+    // console.log(
+    //   'ONBOARDING - window.location.pathname:',
+    //   clone(window.location.pathname)
+    // );
+    // console.log(
+    //   'ONBOARDING - props.originLocation:',
+    //   clone(props.originLocation)
+    // );
 
     if (!client) {
       client = feathers();
-      let path: string = clone(props.originLocation.pathname).replace(
-        /overview|login|configuration/gi,
-        ''
-      );
+      let path: string = clone(props.originLocation.pathname);
       // TODO: Remove
       console.log('path:', clone(path));
       let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
@@ -136,8 +134,8 @@ function Onboarding(props: OnboardingProps) {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
     await client.logout();
-    props.history.push('login');
-    window.location.reload(true);
+    // props.history.push('login');
+    // window.location.reload(true);
   }
 
   async function getConfig(userId: string) {
@@ -183,13 +181,11 @@ function Onboarding(props: OnboardingProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      {props.location.pathname.includes('overview') ||
-      props.location.pathname.includes('configuration') ? (
+      {loginCredentials ? (
         <Main
           {...props}
           config={config}
           editing={0}
-          loggedIn={loginCredentials ? true : false}
           loginCredentials={loginCredentials}
           handleConfigChange={handleConfigChange}
           handleLogout={handleLogout}
@@ -198,7 +194,6 @@ function Onboarding(props: OnboardingProps) {
       ) : (
         <Login
           {...props}
-          loggedIn={loginCredentials ? true : false}
           handleCreateAccount={handleCreateAccount}
           handleLogin={handleLogin}
         />
