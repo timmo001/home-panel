@@ -8,17 +8,17 @@ import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
-import { ConfigProps } from '../Configuration/Config';
-import clone from '../Utils/clone';
-import Configuration from '../Configuration/Configuration';
-import Drawer from '../Drawer/Drawer';
+import { ConfigProps } from './Configuration/Config';
+import clone from './Utils/clone';
+import Configuration from './Configuration/Configuration';
+import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange
-} from '../HomeAssistant/HomeAssistant';
-import isObject from '../Utils/isObject';
-import Loading from '../Utils/Loading';
-import Overview from '../Overview/Overview';
-import properCase from '../Utils/properCase';
+} from './HomeAssistant/HomeAssistant';
+import isObject from './Utils/isObject';
+import Loading from './Utils/Loading';
+import Overview from './Overview/Overview';
+import properCase from './Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

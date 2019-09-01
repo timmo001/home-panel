@@ -10,12 +10,15 @@ import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import pink from '@material-ui/core/colors/pink';
 
-import { ThemesProps } from '../Configuration/Config';
-import clone from '../Utils/clone';
-import Loading from '../Utils/Loading';
-import Login from '../Login/Login';
-import Main from '../Main/Main';
-import parseTheme from '../Utils/parseTheme';
+import { ThemesProps } from './Configuration/Config';
+import clone from './Utils/clone';
+import Loading from './Utils/Loading';
+import Login from './Login';
+import Main from './Main';
+import parseTheme from './Utils/parseTheme';
+
+import 'typeface-roboto';
+import '@mdi/font/css/materialdesignicons.min.css';
 
 interface OnboardingProps extends RouteComponentProps {
   originLocation: any;
@@ -129,12 +132,12 @@ function Onboarding(props: OnboardingProps) {
     }
   }
 
-  function handleLogout() {
+  async function handleLogout() {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
-    client.logout().then(() => {
-      props.history.push('/login');
-    });
+    await client.logout();
+    props.history.push('login');
+    window.location.reload(true);
   }
 
   async function getConfig(userId: string) {
@@ -180,35 +183,26 @@ function Onboarding(props: OnboardingProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Switch>
-        <Route
-          path="/(login)/"
-          render={(props: RouteComponentProps) => (
-            <Login
-              {...props}
-              loggedIn={loginCredentials ? true : false}
-              handleCreateAccount={handleCreateAccount}
-              handleLogin={handleLogin}
-            />
-          )}
+      {props.location.pathname.includes('overview') ||
+      props.location.pathname.includes('configuration') ? (
+        <Main
+          {...props}
+          config={config}
+          editing={0}
+          loggedIn={loginCredentials ? true : false}
+          loginCredentials={loginCredentials}
+          handleConfigChange={handleConfigChange}
+          handleLogout={handleLogout}
+          handleSetTheme={handleSetTheme}
         />
-        <Route
-          path="/(overview|configuration)/"
-          render={(props: RouteComponentProps) => (
-            <Main
-              {...props}
-              config={config}
-              editing={0}
-              loggedIn={loginCredentials ? true : false}
-              loginCredentials={loginCredentials}
-              handleConfigChange={handleConfigChange}
-              handleLogout={handleLogout}
-              handleSetTheme={handleSetTheme}
-            />
-          )}
+      ) : (
+        <Login
+          {...props}
+          loggedIn={loginCredentials ? true : false}
+          handleCreateAccount={handleCreateAccount}
+          handleLogin={handleLogin}
         />
-        <Redirect to="overview" />
-      </Switch>
+      )}
     </ThemeProvider>
   );
 }
