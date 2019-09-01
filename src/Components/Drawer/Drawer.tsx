@@ -205,14 +205,13 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
               currentPageItem.menuItems &&
               currentPageItem.menuItems.map(
                 (item: MenuItemsProps, key: number) => {
-                  const edit = item.icon === 'mdi-pencil' && props.editing;
                   return (
                     <Link
                       className={classes.linkToolbar}
                       to={{
                         state: {
                           ...props.location.state,
-                          edit: edit ? false : true
+                          edit: props.editing ? false : true
                         }
                       }}
                       key={key}>
@@ -223,7 +222,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                         <span
                           className={classnames(
                             'mdi',
-                            edit ? 'mdi-check' : item.icon,
+                            props.editing ? 'mdi-check' : item.icon,
                             classes.icon
                           )}
                         />

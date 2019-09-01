@@ -112,7 +112,7 @@ function Onboarding(props: OnboardingProps) {
     } catch (error) {
       console.error('Error in handleLogin:', error);
       setLoginAttempted(true);
-      setLoggedIn(false);
+      setLoggedIn(undefined);
       if (callback) callback(`Login error: ${error.message}`);
     }
   }
@@ -120,8 +120,9 @@ function Onboarding(props: OnboardingProps) {
   async function handleLogout() {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
+    props.history.replace(props.location.pathname, undefined);
     await client.logout();
-    props.history.replace(props.location.pathname, { state: undefined });
+    window.location.reload();
   }
 
   async function getConfig(userId: string) {

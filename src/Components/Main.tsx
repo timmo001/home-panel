@@ -4,7 +4,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
@@ -18,7 +17,6 @@ import HomeAssistant, {
 import isObject from './Utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
-import { Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -118,16 +116,12 @@ function Main(props: MainProps) {
     return <Loading text="Loading Config. Please Wait.." />;
   }
 
-  const search =
-    props.location.search && queryString.parse(props.location.search);
-  const editing = search && search.edit && search.edit === 'true' ? 1 : 0;
+  const editing = props.location.state && props.location.state.edit ? 1 : 0;
   const currentPage = !props.location.state
-    ? '404'
-    : props.location.state.overview
     ? 'Overview'
     : props.location.state.configuration
     ? 'Configuration'
-    : '404';
+    : 'Overview';
 
   const userInitials =
     props.loginCredentials &&
@@ -181,17 +175,7 @@ function Main(props: MainProps) {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state.overview ? (
-            <Overview
-              {...props}
-              editing={editing}
-              hassConfig={hassConfig}
-              hassEntities={hassEntities}
-              mouseMoved={mouseMoved}
-              handleHassChange={handleHassChange}
-              handleUpdateConfig={handleUpdateConfig}
-            />
-          ) : props.location.state.configuration ? (
+          {props.location.state.configuration ? (
             <Configuration
               {...props}
               back={back}
@@ -202,9 +186,15 @@ function Main(props: MainProps) {
               handleUpdateConfig={handleUpdateConfig}
             />
           ) : (
-            <Typography component="h1" variant="h2">
-              404 - Page Not Found
-            </Typography>
+            <Overview
+              {...props}
+              editing={editing}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
           )}
         </main>
       )}
