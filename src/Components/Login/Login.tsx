@@ -266,6 +266,12 @@ function Login(props: LoginProps) {
               disabled={loading || invalidText ? true : false}
               onClick={handleCreateAccount}>
               Sign Up
+              {loading && (
+                <CircularProgress
+                  size={18}
+                  className={classes.buttonProgress}
+                />
+              )}
             </Button>
           ) : (
             <Button
