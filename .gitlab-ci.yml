@@ -24,6 +24,8 @@ variables:
   PREFLIGHT_TSLINT: "true"
   PREFLIGHT_YAMLLINT: "true"
 
+  TEST: "true"
+
   PAGES_MKDOCS: "true"
 
   PUBLISH_RELEASE_FILE: "true"
