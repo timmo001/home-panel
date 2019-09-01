@@ -97,12 +97,12 @@ function Onboarding(props: OnboardingProps) {
     process.env.NODE_ENV === 'development' && console.log('account:', data);
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
-        process.env.NODE_ENV === 'development' &&
-          console.error('Error creating account:', error);
+        // process.env.NODE_ENV === 'development' &&
+        console.error('Error creating account:', error);
         if (callback) callback(`Error creating account: ${error.message}`);
       } else {
-        process.env.NODE_ENV === 'development' &&
-          console.log('Created new account.');
+        // process.env.NODE_ENV === 'development' &&
+        console.log('Created new account.');
         handleLogin({ strategy: 'local', ...data }, callback);
       }
     });
@@ -110,17 +110,17 @@ function Onboarding(props: OnboardingProps) {
 
   async function handleLogin(data?: any, callback?: (error?: string) => void) {
     try {
-      process.env.NODE_ENV === 'development' &&
-        console.log('login:', client.path, data);
-      let something;
+      // process.env.NODE_ENV === 'development' &&
+      console.log('login:', client.path, data);
+      let clientData;
       if (!client) {
         console.warn('Feathers app is undefined');
-      } else if (!data) something = await client.reAuthenticate();
-      else something = await client.authenticate(data, callback);
-      console.log(something.user);
-      setLoggedIn(something.user);
+      } else if (!data) clientData = await client.reAuthenticate();
+      else clientData = await client.authenticate(data, callback);
+      console.log(clientData.user);
+      setLoggedIn(clientData.user);
       setLoginAttempted(true);
-      getConfig(something.user._id);
+      getConfig(clientData.user._id);
     } catch (error) {
       console.error('Error in handleLogin:', error);
       setLoginAttempted(true);
