@@ -62,7 +62,7 @@ function Onboarding(props: OnboardingProps) {
     if (!client) {
       client = feathers();
       let path: string = clone(props.originLocation.pathname).replace(
-        props.location.pathname,
+        /overview|login|configuration/gi,
         ''
       );
       // TODO: Remove
