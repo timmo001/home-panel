@@ -182,8 +182,7 @@ function Onboarding(props: OnboardingProps) {
     <ThemeProvider theme={theme}>
       <Switch>
         <Route
-          exact
-          path="/login"
+          path="/(login)/"
           render={(props: RouteComponentProps) => (
             <Login
               {...props}
@@ -194,7 +193,6 @@ function Onboarding(props: OnboardingProps) {
           )}
         />
         <Route
-          exact
           path="/(overview|configuration)/"
           render={(props: RouteComponentProps) => (
             <Main
