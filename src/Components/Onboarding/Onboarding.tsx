@@ -19,18 +19,6 @@ interface OnboardingProps extends RouteComponentProps {}
 
 let socket: SocketIOClient.Socket, client: any;
 
-client = feathers();
-let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
-  window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
-  window.location.hostname}:${
-  process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
-    ? '8234'
-    : window.location.port
-}`;
-socket = io(url);
-client.configure(socketio(socket));
-client.configure(authentication());
-
 function Onboarding(props: OnboardingProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
@@ -53,17 +41,36 @@ function Onboarding(props: OnboardingProps) {
   );
 
   useEffect(() => {
+    // TODO Remove
     console.log('route props:', props.location);
     console.log('window.location:', window.location);
     console.log('window.location.pathname:', window.location.pathname);
 
-    client.path = `${window.location.pathname.replace(
-      /overview|login|configuration/gi,
-      ''
-    )}socket.io`;
-  });
+    if (!client) {
+      client = feathers();
+      let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
+        window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
+        window.location.hostname}:${
+        process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
+          ? '8234'
+          : window.location.port
+      }${window.location.pathname.replace(
+        /overview|login|configuration/gi,
+        ''
+      )}`;
+      // TODO Remove
+      console.log('url:', url);
+      socket = io(url);
+      client.configure(socketio(socket));
+      client.configure(authentication());
+      client.path = `${window.location.pathname.replace(
+        /overview|login|configuration/gi,
+        ''
+      )}socket.io`;
+      // TODO Remove
+      console.log('client.path:', client.path);
+    }
 
-  useEffect(() => {
     if (!loginCredentials) handleLogin();
   });
 
