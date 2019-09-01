@@ -74,7 +74,7 @@ function Login(props: LoginProps) {
   useEffect(() => {
     firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
     handleValidation();
-    if (props.loggedIn) props.history.replace('/');
+    if (props.loggedIn) props.history.push('/');
   });
 
   const [createAccount, setCreateAccount] = React.useState(firstTime);
@@ -120,7 +120,7 @@ function Login(props: LoginProps) {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.history.replace('/'), 500);
+          setTimeout(() => props.history.push('/'), 500);
         }
       }
     );
@@ -141,7 +141,7 @@ function Login(props: LoginProps) {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.history.replace('/'), 500);
+          setTimeout(() => props.history.push('/'), 500);
         }
       }
     );
