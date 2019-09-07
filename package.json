@@ -17,7 +17,7 @@
     "@mdi/font": "4.2.95",
     "array-move": "2.1.0",
     "classnames": "2.2.6",
-    "flow-bin": "0.106.3",
+    "flow-bin": "0.107.0",
     "home-assistant-js-websocket": "4.3.1",
     "markdown-it": "9.1.0",
     "markdown-it-emoji": "1.4.0",
