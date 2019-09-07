@@ -22,6 +22,7 @@ export declare type HassConfigExt = HassConfig & {
 
 interface HomeAssistantProps {
   url: string;
+  login: boolean;
   setConnected: (connected: boolean) => void;
   setConfig: (config: HassConfigExt) => void;
   setEntities: (entities: HassEntities) => void;
@@ -85,8 +86,9 @@ export function handleChange(
 
 function HomeAssistant(props: HomeAssistantProps) {
   useEffect(() => {
-    if (!connected) connectToHASS();
-  });
+    if (connected || !props.url || (!props.login && !loadTokens())) return;
+    connectToHASS();
+  }, [props.url, props.login, connectToHASS]);
 
   function eventHandler() {
     console.log('Home Assistant connection has been established again.');
@@ -156,6 +158,7 @@ function HomeAssistant(props: HomeAssistantProps) {
 
 HomeAssistant.propTypes = {
   url: PropTypes.string.isRequired,
+  login: PropTypes.bool.isRequired,
   setConnected: PropTypes.func.isRequired,
   setConfig: PropTypes.func.isRequired,
   setEntities: PropTypes.func.isRequired

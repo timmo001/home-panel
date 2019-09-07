@@ -8,6 +8,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from './Configuration/Config';
+import { parseTokens } from './HomeAssistant/Utils/auth';
 import clone from './Utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
@@ -46,6 +47,7 @@ interface MainProps extends RouteComponentProps, ConfigProps {
 let moveTimeout: NodeJS.Timeout;
 function Main(props: MainProps) {
   const [hassUrl, setHassUrl] = React.useState();
+  const [hassLogin, setHassLogin] = React.useState(false);
   const [hassConnected, setHassConnected] = React.useState(false);
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
@@ -53,22 +55,16 @@ function Main(props: MainProps) {
   const [back, setBack] = React.useState(false);
 
   useEffect(() => {
-    // TODO: Remove
-    console.log('MAIN - route location.state:', clone(props.location.state));
+    if (parseTokens())
+      props.history.push({ ...props.location, search: undefined });
+  }, []);
+
+  useEffect(() => {
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
       if (haUrl) setHassUrl(haUrl);
-    } else {
-      // Clear url if we have been able to establish a connection
-      if (props.location.search.includes('auth_callback=1'))
-        props.history.push({ search: '' });
     }
-  }, [
-    hassConnected,
-    props.history,
-    props.location.state,
-    props.location.search
-  ]);
+  }, [hassConnected]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -90,9 +86,10 @@ function Main(props: MainProps) {
     props.handleConfigChange!(config);
   }
 
-  function handleHassLogin(url: string) {
+  async function handleHassLogin(url: string) {
     console.log('handleHassLogin:', url);
     setHassUrl(url);
+    setHassLogin(true);
   }
 
   function handleMouseMove() {
@@ -110,7 +107,7 @@ function Main(props: MainProps) {
   const classes = useStyles();
 
   if (!props.location.state)
-    props.history.replace(props.location.pathname, { overview: true });
+    props.history.replace({ ...props.location, state: { overview: true } });
 
   if (!props.config) {
     return <Loading text="Loading Config. Please Wait.." />;
@@ -170,6 +167,7 @@ function Main(props: MainProps) {
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
+              login={hassLogin}
               setConfig={setHassConfig}
               setConnected={setHassConnected}
               setEntities={setHassEntities}

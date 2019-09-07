@@ -67,7 +67,6 @@ function Onboarding(props: OnboardingProps) {
       socket = io(url, { path: `${path}/socket.io`.replace('//', '/') });
       client.configure(socketio(socket));
       client.configure(authentication());
-      // client.path = `${path}/socket.io`.replace('//', '/');
       // TODO: Remove
       console.log('client.path:', clone(client.path));
     }
@@ -120,7 +119,7 @@ function Onboarding(props: OnboardingProps) {
   async function handleLogout() {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
-    props.history.replace(props.location.pathname, undefined);
+    props.history.replace({ ...props.location, state: undefined });
     await client.logout();
     window.location.reload();
   }

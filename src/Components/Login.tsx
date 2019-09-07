@@ -120,8 +120,9 @@ function Login(props: LoginProps) {
           setLoginSuccess(true);
           setTimeout(
             () =>
-              props.history.replace(props.location.pathname, {
-                overview: true
+              props.history.replace({
+                ...props.location,
+                state: { overview: true }
               }),
             500
           );
@@ -147,8 +148,9 @@ function Login(props: LoginProps) {
           setLoginSuccess(true);
           setTimeout(
             () =>
-              props.history.replace(props.location.pathname, {
-                overview: true
+              props.history.replace({
+                ...props.location,
+                state: { overview: true }
               }),
             500
           );
