@@ -24,7 +24,7 @@ variables:
   PREFLIGHT_TSLINT: "true"
   PREFLIGHT_YAMLLINT: "true"
 
-  TEST: "true"
+  TEST: "false"
 
   PAGES_MKDOCS: "true"
 
