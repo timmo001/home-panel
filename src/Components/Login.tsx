@@ -68,7 +68,8 @@ interface State {
   password: string;
 }
 
-let firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
+let firstTime =
+  localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
 function Login(props: LoginProps) {
   const [createAccount, setCreateAccount] = React.useState(firstTime);
   const [showPassword, setShowPassword] = React.useState(false);

@@ -138,7 +138,6 @@ function HomeAssistant(props: HomeAssistantProps) {
           throw err;
         }
       }
-      localStorage.removeItem('auth_triggered');
       props.setConnected(true);
       connected = true;
       conn.removeEventListener('ready', eventHandler);
