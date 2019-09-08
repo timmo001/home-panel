@@ -43,22 +43,19 @@ export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   ) => void;
 }
 
-let connection: Connection,
-  connected: boolean = false;
+let connection: Connection;
 
 export function loadTokens() {
   let hassTokens;
   try {
     hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
   } catch (err) {}
-  process.env.NODE_ENV === 'development' &&
-    console.log('loadTokens:', hassTokens);
   return hassTokens;
 }
 
 export async function saveTokens(tokens?: AuthData | null) {
   try {
-    await localStorage.setItem('hass_tokens', JSON.stringify(tokens));
+    localStorage.setItem('hass_tokens', JSON.stringify(tokens));
   } catch (err) {}
 }
 
@@ -106,53 +103,51 @@ function HomeAssistant(props: HomeAssistantProps) {
   );
 
   const connectToHASS = useCallback(() => {
-    (async () => {
-      process.env.NODE_ENV === 'development' && console.log('connectToHASS');
-      localStorage.setItem('hass_url', props.url);
-      let conn: Connection;
-      let auth: Auth = await getAuth({
-        hassUrl: props.url,
-        saveTokens: saveTokens,
-        loadTokens: () => Promise.resolve(loadTokens())
-      });
-      try {
-        conn = await createConnection({ auth });
-      } catch (err) {
+    if (!connection)
+      (async () => {
+        process.env.NODE_ENV === 'development' && console.log('connectToHASS');
+        localStorage.setItem('hass_url', props.url);
+        let auth: Auth = await getAuth({
+          hassUrl: props.url,
+          saveTokens: saveTokens,
+          loadTokens: () => Promise.resolve(loadTokens())
+        });
         try {
-          if (err !== ERR_HASS_HOST_REQUIRED) {
-            throw err;
-          }
-          if (err !== ERR_INVALID_AUTH) {
-            throw err;
-          }
-          // We can get invalid auth if auth tokens were stored that are no longer valid
-          // Clear stored tokens.
-          saveTokens();
-          auth = await getAuth({
-            hassUrl: props.url,
-            saveTokens: saveTokens,
-            loadTokens: () => Promise.resolve(loadTokens())
-          });
-          conn = await createConnection({ auth });
+          connection = await createConnection({ auth });
         } catch (err) {
-          throw err;
+          try {
+            if (err !== ERR_HASS_HOST_REQUIRED) {
+              throw err;
+            }
+            if (err !== ERR_INVALID_AUTH) {
+              throw err;
+            }
+            // We can get invalid auth if auth tokens were stored that are no longer valid
+            // Clear stored tokens.
+            saveTokens();
+            auth = await getAuth({
+              hassUrl: props.url,
+              saveTokens: saveTokens,
+              loadTokens: () => Promise.resolve(loadTokens())
+            });
+            connection = await createConnection({ auth });
+          } catch (err) {
+            throw err;
+          }
         }
-      }
-      props.setConnected(true);
-      connected = true;
-      conn.removeEventListener('ready', eventHandler);
-      conn.addEventListener('ready', eventHandler);
-      subscribeConfig(conn, updateConfig);
-      subscribeEntities(conn, updateEntites);
-      getUser(conn).then((user: HassUser) => {
-        console.log('Logged into Home Assistant as', user.name);
-      });
-      connection = conn;
-    })();
+        props.setConnected(true);
+        connection.removeEventListener('ready', eventHandler);
+        connection.addEventListener('ready', eventHandler);
+        subscribeConfig(connection, updateConfig);
+        subscribeEntities(connection, updateEntites);
+        getUser(connection).then((user: HassUser) => {
+          console.log('Logged into Home Assistant as', user.name);
+        });
+      })();
   }, [props, updateConfig, updateEntites]);
 
   useEffect(() => {
-    if (connected || !props.url || (!props.login && !loadTokens())) return;
+    if (connection || !props.url || (!props.login && !loadTokens())) return;
     connectToHASS();
   }, [props.login, props.url, connectToHASS]);
 
