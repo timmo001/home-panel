@@ -2,12 +2,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import Routes from './Routes';
+import 'typeface-roboto';
+import '@mdi/font/css/materialdesignicons.min.css';
+
+import Onboarding from './Onboarding';
 
 function App() {
   return (
     <Router>
-      <Route component={Routes} />
+      <Route component={Onboarding} />
     </Router>
   );
 }

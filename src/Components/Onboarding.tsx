@@ -196,8 +196,6 @@ function Onboarding(props: OnboardingProps) {
   );
 }
 
-Onboarding.propTypes = {
-  originLocation: PropTypes.any.isRequired
-};
+Onboarding.propTypes = {};
 
 export default Onboarding;
