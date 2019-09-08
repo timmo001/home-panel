@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { RouteComponentProps } from 'react-router-dom';
@@ -70,11 +70,6 @@ interface State {
 
 let firstTime = false;
 function Login(props: LoginProps) {
-  useEffect(() => {
-    firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
-    handleValidation();
-  });
-
   const [createAccount, setCreateAccount] = React.useState(firstTime);
   const [showPassword, setShowPassword] = React.useState(false);
   const [invalidText, setInvalidText] = React.useState();
@@ -86,11 +81,7 @@ function Login(props: LoginProps) {
     password: ''
   });
 
-  function toggleCreateAccount() {
-    setCreateAccount(!createAccount);
-  }
-
-  function handleValidation() {
+  const handleValidation = useCallback(() => {
     if (!values.username) {
       setInvalidText('No username!');
       return;
@@ -100,6 +91,15 @@ function Login(props: LoginProps) {
       return;
     }
     setInvalidText(null);
+  }, [values.username, values.password]);
+
+  useEffect(() => {
+    firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
+    handleValidation();
+  }, [handleValidation]);
+
+  function toggleCreateAccount() {
+    setCreateAccount(!createAccount);
   }
 
   function handleCreateAccount() {

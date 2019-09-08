@@ -80,9 +80,8 @@ function fetchToken(hassUrl: string, clientId: string, code: string) {
 }
 export async function parseTokens() {
   let data: AuthData | null | undefined;
-  console.log('parseTokens - window.location:', window.location);
-  console.log('parseTokens - window.location.search:', window.location.search);
   const query = queryString.parse(window.location.search);
+  // TODO: Remove
   console.log('parseTokens - QUERY:', query);
   // Check if we got redirected here from authorize page
   if ('auth_callback' in query) {
@@ -90,12 +89,14 @@ export async function parseTokens() {
     if (typeof query.state === 'string' && typeof query.code === 'string') {
       const state = decodeOAuthState(query.state);
       data = await fetchToken(state.hassUrl, state.clientId, query.code);
+      // TODO: Remove
       console.log('parseTokens - DATA:', data);
       if (data) {
-        saveTokens(data);
-        return true;
+        await saveTokens(data);
+        window.location.replace(
+          window.location.href.replace(window.location.search, '')
+        );
       }
     }
   }
-  return false;
 }

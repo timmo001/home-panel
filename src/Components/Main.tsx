@@ -55,9 +55,8 @@ function Main(props: MainProps) {
   const [back, setBack] = React.useState(false);
 
   useEffect(() => {
-    if (parseTokens())
-      props.history.push({ ...props.location, search: undefined });
-  }, []);
+    if (props.location.search) parseTokens();
+  }, [props.location.search]);
 
   useEffect(() => {
     if (!hassConnected) {

@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import io from 'socket.io-client';
@@ -70,15 +70,70 @@ function Onboarding(props: OnboardingProps) {
       // TODO: Remove
       console.log('client.path:', clone(client.path));
     }
-
-    if (!loginCredentials) handleLogin();
-  });
+  }, [props.location]);
 
   function handleSetTheme(palette: ThemesProps) {
     setTheme(
       responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
     );
   }
+
+  const getConfig = useCallback((userId: string) => {
+    (async () => {
+      const configService = await client.service('config');
+      let getter = await configService.find({ userId });
+
+      if (!getter.data[0]) {
+        await configService.create({ createNew: true });
+        getConfig(userId);
+        return;
+      }
+
+      process.env.NODE_ENV === 'development' &&
+        console.log('Config:', getter.data[0]);
+
+      const configLcl = getter.data[0].config;
+      setConfig(configLcl);
+      setConfigId(getter.data[0]._id);
+
+      if (configLcl.theme.themes && configLcl.theme.current) {
+        let theme = configLcl.theme.themes.find(
+          (theme: ThemesProps) => theme.key === configLcl.theme.current
+        );
+        if (theme) handleSetTheme(theme);
+      }
+    })();
+  }, []);
+
+  const handleLogin = useCallback(
+    (data?: any, callback?: (error?: string) => void) => {
+      (async () => {
+        try {
+          // process.env.NODE_ENV === 'development' &&
+          console.log('login:', client.path, data);
+          let clientData;
+          if (!client) {
+            console.warn('Feathers app is undefined');
+          } else if (!data) clientData = await client.reAuthenticate();
+          else clientData = await client.authenticate(data, callback);
+          console.log(clientData.user);
+          setLoggedIn(clientData.user);
+          setLoginAttempted(true);
+          getConfig(clientData.user._id);
+        } catch (error) {
+          console.error('Error in handleLogin:', error);
+          setLoginAttempted(true);
+          setLoggedIn(undefined);
+          if (callback) callback(`Login error: ${error.message}`);
+        }
+      })();
+    },
+    [getConfig]
+  );
+
+  useEffect(() => {
+    if (!loginCredentials) handleLogin();
+  }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(data: any, callback?: (error?: string) => void) {
     process.env.NODE_ENV === 'development' && console.log('account:', data);
@@ -95,58 +150,11 @@ function Onboarding(props: OnboardingProps) {
     });
   }
 
-  async function handleLogin(data?: any, callback?: (error?: string) => void) {
-    try {
-      // process.env.NODE_ENV === 'development' &&
-      console.log('login:', client.path, data);
-      let clientData;
-      if (!client) {
-        console.warn('Feathers app is undefined');
-      } else if (!data) clientData = await client.reAuthenticate();
-      else clientData = await client.authenticate(data, callback);
-      console.log(clientData.user);
-      setLoggedIn(clientData.user);
-      setLoginAttempted(true);
-      getConfig(clientData.user._id);
-    } catch (error) {
-      console.error('Error in handleLogin:', error);
-      setLoginAttempted(true);
-      setLoggedIn(undefined);
-      if (callback) callback(`Login error: ${error.message}`);
-    }
-  }
-
   async function handleLogout() {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
-    props.history.replace({ ...props.location, state: undefined });
     await client.logout();
-    window.location.reload();
-  }
-
-  async function getConfig(userId: string) {
-    const configService = await client.service('config');
-    let getter = await configService.find({ userId });
-
-    if (!getter.data[0]) {
-      await configService.create({ createNew: true });
-      getConfig(userId);
-      return;
-    }
-
-    process.env.NODE_ENV === 'development' &&
-      console.log('Config:', getter.data[0]);
-
-    const configLcl = getter.data[0].config;
-    setConfig(configLcl);
-    setConfigId(getter.data[0]._id);
-
-    if (configLcl.theme.themes && configLcl.theme.current) {
-      let theme = configLcl.theme.themes.find(
-        (theme: ThemesProps) => theme.key === configLcl.theme.current
-      );
-      if (theme) handleSetTheme(theme);
-    }
+    window.location.replace(window.location.href);
   }
 
   function handleConfigChange(config: any) {
