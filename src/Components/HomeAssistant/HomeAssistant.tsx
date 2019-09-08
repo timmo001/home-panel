@@ -147,7 +147,6 @@ function HomeAssistant(props: HomeAssistantProps) {
       subscribeEntities(conn, updateEntites);
       getUser(conn).then((user: HassUser) => {
         console.log('Logged into Home Assistant as', user.name);
-        sessionStorage.setItem('hass_id', user.id);
       });
       connection = conn;
     })();

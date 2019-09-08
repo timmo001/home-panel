@@ -68,7 +68,7 @@ interface State {
   password: string;
 }
 
-let firstTime = false;
+let firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
 function Login(props: LoginProps) {
   const [createAccount, setCreateAccount] = React.useState(firstTime);
   const [showPassword, setShowPassword] = React.useState(false);
@@ -94,7 +94,6 @@ function Login(props: LoginProps) {
   }, [values.username, values.password]);
 
   useEffect(() => {
-    firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
     handleValidation();
   }, [handleValidation]);
 

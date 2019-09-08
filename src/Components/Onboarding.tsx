@@ -153,6 +153,7 @@ function Onboarding(props: OnboardingProps) {
   async function handleLogout() {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
+    localStorage.removeItem('auth_triggered');
     await client.logout();
     window.location.replace(window.location.href);
   }
