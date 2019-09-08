@@ -66,6 +66,7 @@ function Onboarding(props: OnboardingProps) {
       socket = io(url, { path: `${path}/socket.io`.replace('//', '/') });
       client.configure(socketio(socket));
       client.configure(authentication());
+      client.path = path;
       // TODO: Remove
       console.log('client.path:', clone(client.path));
     }
@@ -109,7 +110,7 @@ function Onboarding(props: OnboardingProps) {
       (async () => {
         try {
           // process.env.NODE_ENV === 'development' &&
-          console.log('login:', client.path, data);
+          console.log('handleLogin:', clone(client.path), clone(data));
           let clientData;
           if (!client) {
             console.warn('Feathers app is undefined');
@@ -135,7 +136,8 @@ function Onboarding(props: OnboardingProps) {
   }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(data: any, callback?: (error?: string) => void) {
-    process.env.NODE_ENV === 'development' && console.log('account:', data);
+    // process.env.NODE_ENV === 'development' &&
+    console.log('handleCreateAccount:', clone(client.path), clone(data));
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
         // process.env.NODE_ENV === 'development' &&
