@@ -1,7 +1,6 @@
 // @flow
 import React, { useEffect, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import io from 'socket.io-client';
 import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
@@ -195,7 +194,5 @@ function Onboarding(props: OnboardingProps) {
     </ThemeProvider>
   );
 }
-
-Onboarding.propTypes = {};
 
 export default Onboarding;
