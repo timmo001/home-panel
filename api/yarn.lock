@@ -148,12 +148,12 @@
     "@feathersjs/errors" "^4.3.0"
     "@feathersjs/feathers" "^4.3.0"
 
-"@feathersjs/authentication-local@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.0.tgz#bce4564b8b929b9298f0ec7b82fb08e34c7b426a"
-  integrity sha512-zmI21nohmQdsJi87nPec0wD/2U6Hxo4bpasVjbT1PMrXd1z95N8w/eL5kesfXxBMArFeZ1PBYA+AMgf0evSbHw==
+"@feathersjs/authentication-local@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.1.tgz#afb1c31ff34ffded22ddf0699c656518a8bb52f2"
+  integrity sha512-3oxy5y+jDSU3yUHE9qeQjDsyh7olBaJgyLqCGZSbi7pG7lnSyiirKy2S8zc7VGuu3uO2gC6Uh/TuO//O/SAfyQ==
   dependencies:
-    "@feathersjs/errors" "^4.3.0"
+    "@feathersjs/errors" "^4.3.1"
     bcryptjs "^2.4.3"
     debug "^4.1.1"
     lodash "^4.17.15"
@@ -201,6 +201,13 @@
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.0.tgz#7ac89396ef868061b6a1d9b0f9005f6403cafbf6"
   integrity sha512-tOwBpJmLYy0Fq/Dp8Y3dO2/B6ojfqSrTFXixTYH2qBR3aFS/U0VzhoyEa1O+/FcJRDqgW54HNCyy520zqYB/pw==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.1.tgz#2ce9004c447803b05aa85bc33f0189373c31163b"
+  integrity sha512-1egwUeloAGEp61lE50SRM9Hlkz0W5l/afEO5YOMF49rNzY4b8SEOcGsxb056M+lMRaWlH8bD4nZ0B4PD/09NoQ==
   dependencies:
     debug "^4.1.1"
 
