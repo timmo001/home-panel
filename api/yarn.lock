@@ -189,10 +189,10 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
   integrity sha512-N3CDavCNRp+usgyfDSFXCwETnp4nIEevl5v1nqULGhPYco0SjF15zu4hYyd3GCn0aAwzaIehYyaMcdee9Eo1KQ==
 
-"@feathersjs/configuration@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.3.0.tgz#df3715fb74939f8d9939a5df2632350612160351"
-  integrity sha512-RGtTwF2gnhzHSeFAa9a+Ri11ZDJlUQgsiaWykdSt8clEEuZ7gXB/mpMmLM/vqOoinoFdRiE47oMZiCPsEQZxNw==
+"@feathersjs/configuration@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.3.1.tgz#6eeecbae5027300e3e67a9e1ff96e8049786997c"
+  integrity sha512-VBagsw3YZeHcoC4BWr6U0QreknmzQkGfvpHCf3S5mgxASRTYj4wueAXjJdxb/DUbabIEFQpJ1+YWsnJWev7kYg==
   dependencies:
     config "^3.2.2"
     debug "^4.1.1"
