@@ -891,13 +891,13 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.3.tgz#dfa0c92efe44a1d1a7974fb49ffeb40ef2da5a27"
   integrity sha512-zVgvPwGK7c1aVdUVc9Qv7SqepOGRDrqCw7KZPSZziWGxSlbII3gmvGLPzLX4d0n0BMbamBacUrN22zOMyFFEkQ==
 
-"@feathersjs/authentication-client@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-client/-/authentication-client-4.3.0.tgz#387656c8045d9997643b958a63ab88b2ef4d2179"
-  integrity sha512-VWs0NR5uAy+SpVdjUGb7sn+cqeUw9Kb/mNcMabq1SyTv/by4+URZX5rPMeCvvZFMhTICUmY3L7kNoN2U7vLQtg==
+"@feathersjs/authentication-client@4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-client/-/authentication-client-4.3.1.tgz#0a1da1c29185991aab4888d23ad3415e39d5b6dc"
+  integrity sha512-wafFYDzNsznnIvt70uL8Ncy1nMPHHZm46C9t1ExQeDn+6vLUdMOw7ZqLq0H4GiK/T19QedcZtGhS9vfm8QZ28Q==
   dependencies:
     "@feathersjs/commons" "^4.3.0"
-    "@feathersjs/errors" "^4.3.0"
+    "@feathersjs/errors" "^4.3.1"
     debug "^4.1.1"
 
 "@feathersjs/commons@^4.3.0":
@@ -909,6 +909,13 @@
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.0.tgz#7ac89396ef868061b6a1d9b0f9005f6403cafbf6"
   integrity sha512-tOwBpJmLYy0Fq/Dp8Y3dO2/B6ojfqSrTFXixTYH2qBR3aFS/U0VzhoyEa1O+/FcJRDqgW54HNCyy520zqYB/pw==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.3.1":
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.1.tgz#2ce9004c447803b05aa85bc33f0189373c31163b"
+  integrity sha512-1egwUeloAGEp61lE50SRM9Hlkz0W5l/afEO5YOMF49rNzY4b8SEOcGsxb056M+lMRaWlH8bD4nZ0B4PD/09NoQ==
   dependencies:
     debug "^4.1.1"
 
