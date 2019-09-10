@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { RouteComponentProps } from 'react-router-dom';
@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import Logo from '../../Resources/logo.svg';
+import Logo from '../Resources/logo.svg';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface LoginProps extends RouteComponentProps {
-  loggedIn: boolean;
   handleCreateAccount(data: any, callback?: (error?: string) => void): any;
   handleLogin(data: any, callback?: (error?: string) => void): any;
 }
@@ -69,14 +68,9 @@ interface State {
   password: string;
 }
 
-let firstTime = false;
+let firstTime =
+  localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
 function Login(props: LoginProps) {
-  useEffect(() => {
-    firstTime = localStorage.getItem('not_my_first_rodeo') !== 'true';
-    handleValidation();
-    if (props.loggedIn) props.history.push('/');
-  });
-
   const [createAccount, setCreateAccount] = React.useState(firstTime);
   const [showPassword, setShowPassword] = React.useState(false);
   const [invalidText, setInvalidText] = React.useState();
@@ -88,11 +82,7 @@ function Login(props: LoginProps) {
     password: ''
   });
 
-  function toggleCreateAccount() {
-    setCreateAccount(!createAccount);
-  }
-
-  function handleValidation() {
+  const handleValidation = useCallback(() => {
     if (!values.username) {
       setInvalidText('No username!');
       return;
@@ -102,6 +92,14 @@ function Login(props: LoginProps) {
       return;
     }
     setInvalidText(null);
+  }, [values.username, values.password]);
+
+  useEffect(() => {
+    handleValidation();
+  }, [handleValidation]);
+
+  function toggleCreateAccount() {
+    setCreateAccount(!createAccount);
   }
 
   function handleCreateAccount() {
@@ -120,7 +118,14 @@ function Login(props: LoginProps) {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.history.push('/'), 500);
+          setTimeout(
+            () =>
+              props.history.replace({
+                ...props.location,
+                state: { overview: true }
+              }),
+            500
+          );
         }
       }
     );
@@ -141,7 +146,14 @@ function Login(props: LoginProps) {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.history.push('/'), 500);
+          setTimeout(
+            () =>
+              props.history.replace({
+                ...props.location,
+                state: { overview: true }
+              }),
+            500
+          );
         }
       }
     );
@@ -297,7 +309,6 @@ function Login(props: LoginProps) {
 }
 
 Login.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   handleCreateAccount: PropTypes.func.isRequired,
   handleLogin: PropTypes.func.isRequired
 };

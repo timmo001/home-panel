@@ -1,24 +1,23 @@
 // @flow
 import React, { useEffect } from 'react';
-import { Route, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
-import { ConfigProps } from '../Configuration/Config';
-import clone from '../Utils/clone';
-import Configuration from '../Configuration/Configuration';
-import Drawer from '../Drawer/Drawer';
+import { ConfigProps } from './Configuration/Config';
+import { parseTokens } from './HomeAssistant/Utils/auth';
+import clone from './Utils/clone';
+import Configuration from './Configuration/Configuration';
+import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange
-} from '../HomeAssistant/HomeAssistant';
-import isObject from '../Utils/isObject';
-import Loading from '../Utils/Loading';
-import Overview from '../Overview/Overview';
-import properCase from '../Utils/properCase';
+} from './HomeAssistant/HomeAssistant';
+import isObject from './Utils/isObject';
+import Loading from './Utils/Loading';
+import Overview from './Overview/Overview';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -41,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface MainProps extends RouteComponentProps, ConfigProps {
-  loggedIn: boolean;
   loginCredentials: any;
   handleLogout(): any;
 }
@@ -49,28 +47,23 @@ interface MainProps extends RouteComponentProps, ConfigProps {
 let moveTimeout: NodeJS.Timeout;
 function Main(props: MainProps) {
   const [hassUrl, setHassUrl] = React.useState();
+  const [hassLogin, setHassLogin] = React.useState(false);
   const [hassConnected, setHassConnected] = React.useState(false);
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
   const [mouseMoved, setMouseMoved] = React.useState(false);
   const [back, setBack] = React.useState(false);
 
-  // TODO: Remove
-  console.log('MAIN - route history:', clone(props.history));
-  console.log('MAIN - route match:', clone(props.match));
-  console.log('MAIN - route props:', clone(props.location));
-  console.log('MAIN - window.location:', clone(window.location));
+  useEffect(() => {
+    if (props.location.search) parseTokens();
+  }, [props.location.search]);
 
   useEffect(() => {
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
       if (haUrl) setHassUrl(haUrl);
-    } else {
-      // Clear url if we have been able to establish a connection
-      if (props.location.search.includes('auth_callback=1'))
-        props.history.push({ search: '' });
     }
-  }, [hassConnected, props.history, props.location.search, props.loggedIn]);
+  }, [hassConnected]);
 
   function handleUpdateConfig(path: any[], data: any) {
     let config = clone(props.config);
@@ -92,14 +85,15 @@ function Main(props: MainProps) {
     props.handleConfigChange!(config);
   }
 
-  function handleHassLogin(url: string) {
-    console.log('handleHassLogin', url);
+  async function handleHassLogin(url: string) {
+    console.log('handleHassLogin:', url);
     setHassUrl(url);
+    setHassLogin(true);
   }
 
   function handleMouseMove() {
     clearTimeout(moveTimeout);
-    if (props.location!.pathname !== '/configuration') {
+    if (!props.location.state.configuration) {
       setMouseMoved(true);
       moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
@@ -111,22 +105,19 @@ function Main(props: MainProps) {
 
   const classes = useStyles();
 
-  if (!props.loggedIn) {
-    props.history.push('/login');
-    return null;
-  }
+  if (!props.location.state)
+    props.history.replace({ ...props.location, state: { overview: true } });
 
   if (!props.config) {
     return <Loading text="Loading Config. Please Wait.." />;
   }
 
-  const search =
-    props.location!.search && queryString.parse(props.location!.search);
-  const editing = search && search.edit && search.edit === 'true' ? 1 : 0;
-  const currentPage =
-    props.location!.pathname !== '/'
-      ? properCase(props.location!.pathname.substring(1))
-      : 'Overview';
+  const editing = props.location.state && props.location.state.edit ? 1 : 0;
+  const currentPage = !props.location.state
+    ? 'Overview'
+    : props.location.state.configuration
+    ? 'Configuration'
+    : 'Overview';
 
   const userInitials =
     props.loginCredentials &&
@@ -134,14 +125,14 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!.pathname === '/configuration' ||
+    props.location.state.configuration ||
     mouseMoved;
 
   return (
     <div
       className={classnames(
         classes.root,
-        props.location.pathname.includes('overview') && classes.noHeight
+        props.location.state.overview && classes.noHeight
       )}
       onClick={handleMouseMove}
       onMouseMove={handleMouseMove}>
@@ -170,46 +161,38 @@ function Main(props: MainProps) {
         <main
           className={classnames(
             classes.content,
-            props.location.pathname.includes('overview') && classes.noHeight
+            props.location.state.overview && classes.noHeight
           )}>
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
+              login={hassLogin}
               setConfig={setHassConfig}
               setConnected={setHassConnected}
               setEntities={setHassEntities}
             />
           )}
-          <Route
-            path="/(overview)/"
-            render={(rrProps: RouteComponentProps) => (
-              <Overview
-                {...props}
-                {...rrProps}
-                editing={editing}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                mouseMoved={mouseMoved}
-                handleHassChange={handleHassChange}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )}
-          />
-          <Route
-            path="/(configuration)/"
-            render={(rrProps: RouteComponentProps) => (
-              <Configuration
-                {...props}
-                {...rrProps}
-                back={back}
-                editing={editing}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                handleSetBack={setBack}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )}
-          />
+          {props.location.state.configuration ? (
+            <Configuration
+              {...props}
+              back={back}
+              editing={editing}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              handleSetBack={setBack}
+              handleUpdateConfig={handleUpdateConfig}
+            />
+          ) : (
+            <Overview
+              {...props}
+              editing={editing}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
+          )}
         </main>
       )}
     </div>
@@ -217,7 +200,6 @@ function Main(props: MainProps) {
 }
 
 Main.propTypes = {
-  loggedIn: PropTypes.bool.isRequired,
   loginCredentials: PropTypes.any,
   config: PropTypes.object,
   handleConfigChange: PropTypes.func.isRequired,

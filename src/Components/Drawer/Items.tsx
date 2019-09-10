@@ -15,13 +15,13 @@ export interface MenuItemsProps {
 export default [
   {
     name: 'Overview',
-    link: '/',
+    link: 'overview',
     icon: 'mdi-view-dashboard',
-    menuItems: [{ name: 'Edit', link: '?edit=true', icon: 'mdi-pencil' }]
+    menuItems: [{ name: 'Edit', link: 'edit', icon: 'mdi-pencil' }]
   },
   {
     name: 'Configuration',
-    link: '/configuration',
+    link: 'configuration',
     icon: 'mdi-settings'
   }
 ];

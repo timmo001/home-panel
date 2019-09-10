@@ -1,3 +1,4 @@
+// @flow
 import { HassEntity } from 'home-assistant-js-websocket';
 
 export const supportsFeature = (
