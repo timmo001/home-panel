@@ -80,7 +80,7 @@
     "@types/socket.io-client": "1.4.32",
     "awesome-typescript-loader": "5.2.1",
     "source-map-loader": "0.2.4",
-    "tslint": "5.19.0"
+    "tslint": "5.20.0"
   },
   "snyk": true
 }
