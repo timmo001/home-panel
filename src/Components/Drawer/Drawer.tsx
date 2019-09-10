@@ -119,9 +119,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
           {Items.map((item: ItemsProps, key: number) => {
             return (
               <Link
-                className={classes.link}
-                to={item.link}
                 key={key}
+                className={classes.link}
+                to={{ state: { [item.link]: true } }}
                 onClick={handleDrawerToggle}>
                 <ListItem
                   selected={props.currentPage === item.name ? true : false}
@@ -205,11 +205,15 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
               currentPageItem.menuItems &&
               currentPageItem.menuItems.map(
                 (item: MenuItemsProps, key: number) => {
-                  const edit = item.icon === 'mdi-pencil' && props.editing;
                   return (
                     <Link
                       className={classes.linkToolbar}
-                      to={edit ? '?edit=false' : item.link}
+                      to={{
+                        state: {
+                          ...props.location.state,
+                          edit: props.editing ? false : true
+                        }
+                      }}
                       key={key}>
                       <IconButton
                         color="inherit"
@@ -218,7 +222,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                         <span
                           className={classnames(
                             'mdi',
-                            edit ? 'mdi-check' : item.icon,
+                            props.editing ? 'mdi-check' : item.icon,
                             classes.icon
                           )}
                         />

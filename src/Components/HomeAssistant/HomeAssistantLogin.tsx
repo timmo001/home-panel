@@ -1,5 +1,5 @@
 // @flow
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -39,20 +39,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
   );
   const [invalidText, setInvalidText] = React.useState();
 
-  useEffect(() => {
-    handleValidation();
-  });
-
-  function handleToggleDialog() {
-    setShowDialog(!showDialog);
-  }
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setUrl(event.target.value);
-    handleValidation();
-  }
-
-  function handleValidation() {
+  const handleValidation = useCallback(() => {
     if (!url) {
       setInvalidText('No Home Assistant URL.');
       return;
@@ -68,6 +55,19 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
       }
     }
     setInvalidText(undefined);
+  }, [url]);
+
+  useEffect(() => {
+    handleValidation();
+  }, [handleValidation]);
+
+  function handleToggleDialog() {
+    setShowDialog(!showDialog);
+  }
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setUrl(event.target.value);
+    handleValidation();
   }
 
   function handleLogin() {

@@ -1,11 +1,13 @@
 // @flow
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {
   Auth,
   AuthData,
   callService,
+  Connection,
   createConnection,
+  ERR_HASS_HOST_REQUIRED,
   ERR_INVALID_AUTH,
   getAuth,
   getUser,
@@ -22,6 +24,7 @@ export declare type HassConfigExt = HassConfig & {
 
 interface HomeAssistantProps {
   url: string;
+  login: boolean;
   setConnected: (connected: boolean) => void;
   setConfig: (config: HassConfigExt) => void;
   setEntities: (entities: HassEntities) => void;
@@ -40,20 +43,17 @@ export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   ) => void;
 }
 
-let connection: any,
-  connected: boolean = false;
+let connection: Connection;
 
 export function loadTokens() {
   let hassTokens;
   try {
     hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
   } catch (err) {}
-  process.env.NODE_ENV === 'development' &&
-    console.log('loadTokens:', hassTokens);
   return hassTokens;
 }
 
-export function saveTokens(tokens?: AuthData | null) {
+export async function saveTokens(tokens?: AuthData | null) {
   try {
     localStorage.setItem('hass_tokens', JSON.stringify(tokens));
   } catch (err) {}
@@ -84,78 +84,79 @@ export function handleChange(
 }
 
 function HomeAssistant(props: HomeAssistantProps) {
-  useEffect(() => {
-    if (!connected) connectToHASS();
-  });
-
   function eventHandler() {
     console.log('Home Assistant connection has been established again.');
   }
 
-  function authProm() {
-    return getAuth({
-      hassUrl: props.url,
-      saveTokens: saveTokens,
-      loadTokens: () => Promise.resolve(loadTokens())
-    });
-  }
+  const updateConfig = useCallback(
+    (config: HassConfig) => {
+      props.setConfig({ ...config, url: props.url });
+    },
+    [props]
+  );
 
-  async function connProm(auth: Auth) {
-    try {
-      const conn = await createConnection({ auth });
-      return { auth, conn };
-    } catch (err) {
-      try {
-        if (err !== ERR_INVALID_AUTH) {
-          throw err;
-        }
-        // We can get invalid auth if auth tokens were stored that are no longer valid
-        // Clear stored tokens.
-        saveTokens();
-        auth = await authProm();
-        const conn = await createConnection({ auth });
-        return { auth, conn };
-      } catch (err) {
-        throw err;
-      }
-    }
-  }
+  const updateEntites = useCallback(
+    (entities: HassEntities) => {
+      props.setEntities(entities);
+    },
+    [props]
+  );
 
-  function connectToHASS() {
-    process.env.NODE_ENV === 'development' && console.log('connectToHASS');
-    (async () => {
-      localStorage.setItem('hass_url', props.url);
-      const conn = authProm().then(connProm);
-      conn.then(({ conn }) => {
-        localStorage.removeItem('auth_triggered');
-        props.setConnected(true);
-        connected = true;
-        conn.removeEventListener('ready', eventHandler);
-        conn.addEventListener('ready', eventHandler);
-        subscribeConfig(conn, updateConfig);
-        subscribeEntities(conn, updateEntites);
-        getUser(conn).then((user: HassUser) => {
-          console.log('Logged into Home Assistant as', user.name);
-          sessionStorage.setItem('hass_id', user.id);
+  const connectToHASS = useCallback(() => {
+    if (!connection)
+      (async () => {
+        process.env.NODE_ENV === 'development' && console.log('connectToHASS');
+        localStorage.setItem('hass_url', props.url);
+        let auth: Auth = await getAuth({
+          hassUrl: props.url,
+          saveTokens: saveTokens,
+          loadTokens: () => Promise.resolve(loadTokens())
         });
-        connection = conn;
-      });
-    })();
-  }
+        try {
+          connection = await createConnection({ auth });
+        } catch (err) {
+          try {
+            if (err !== ERR_HASS_HOST_REQUIRED) {
+              throw err;
+            }
+            if (err !== ERR_INVALID_AUTH) {
+              throw err;
+            }
+            // We can get invalid auth if auth tokens were stored that are no longer valid
+            // Clear stored tokens.
+            saveTokens();
+            auth = await getAuth({
+              hassUrl: props.url,
+              saveTokens: saveTokens,
+              loadTokens: () => Promise.resolve(loadTokens())
+            });
+            connection = await createConnection({ auth });
+          } catch (err) {
+            throw err;
+          }
+        }
+        props.setConnected(true);
+        connection.removeEventListener('ready', eventHandler);
+        connection.addEventListener('ready', eventHandler);
+        subscribeConfig(connection, updateConfig);
+        subscribeEntities(connection, updateEntites);
+        getUser(connection).then((user: HassUser) => {
+          console.log('Logged into Home Assistant as', user.name);
+        });
+      })();
+  }, [props, updateConfig, updateEntites]);
 
-  function updateConfig(config: HassConfig) {
-    props.setConfig({ ...config, url: props.url });
-  }
-
-  function updateEntites(entities: HassEntities) {
-    props.setEntities(entities);
-  }
+  useEffect(() => {
+    if (connection || !props.url || (!props.login && !loadTokens())) return;
+    connectToHASS();
+  }, [props.login, props.url, connectToHASS]);
 
   return null;
 }
 
 HomeAssistant.propTypes = {
   url: PropTypes.string.isRequired,
+  login: PropTypes.bool.isRequired,
   setConnected: PropTypes.func.isRequired,
   setConfig: PropTypes.func.isRequired,
   setEntities: PropTypes.func.isRequired

@@ -256,26 +256,22 @@ function EntitySelect(props: EntitySelectProps) {
   const [suggestions, setSuggestions]: OptionType[] | any[] = useState([]);
   const [value, setValue] = useState();
 
-  useEffect(
-    () =>
-      setSuggestions(
-        Object.values(props.hassEntities).map((entity: HassEntity) => ({
-          label: entity.attributes.friendly_name
-            ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
-            : entity.entity_id,
-          value: entity.entity_id
-        }))
-      ),
-    [props.hassEntities]
-  );
+  useEffect(() => {
+    setSuggestions(
+      Object.values(props.hassEntities).map((entity: HassEntity) => ({
+        label: entity.attributes.friendly_name
+          ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
+          : entity.entity_id,
+        value: entity.entity_id
+      }))
+    );
+  }, [props.hassEntities]);
 
-  useEffect(
-    () =>
-      setValue(
-        suggestions.find((entity: OptionType) => entity.value === props.entity)
-      ),
-    [props.entity, suggestions]
-  );
+  useEffect(() => {
+    setValue(
+      suggestions.find((entity: OptionType) => entity.value === props.entity)
+    );
+  }, [props.entity, suggestions]);
 
   const resultLimit = 20;
   let i = 0;
