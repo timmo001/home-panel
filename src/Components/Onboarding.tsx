@@ -109,14 +109,20 @@ function Onboarding(props: OnboardingProps) {
     (data?: any, callback?: (error?: string) => void) => {
       // TODO: process.env.NODE_ENV === 'development' &&
       console.log('handleLogin:', client, clone(data));
+      let surl = prompt('socket url?');
+      if (surl) {
+        socket = io(surl, { path: `${path}/socket.io`.replace('//', '/') });
+        client.configure(socketio(socket));
+        client.configure(authentication());
+      }
+      let spath = prompt('socket path?');
+      if (spath && typeof spath === 'string') {
+        socket = io(String(surl), { path: spath });
+        client.configure(socketio(socket));
+        client.configure(authentication());
+      }
       let path = prompt('path?', client.path);
       if (path) client.path = path;
-      let surl = prompt('socket url?');
-      if (surl)
-        socket = io(surl, { path: `${path}/socket.io`.replace('//', '/') });
-      let spath = prompt('socket path?');
-      if (spath && typeof spath === 'string')
-        socket = io(String(surl), { path: spath });
       (async () => {
         try {
           // TODO: process.env.NODE_ENV === 'development' &&
