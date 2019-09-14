@@ -162,7 +162,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!.pathname === '/configuration' ||
+    props.location.state.configuration ||
     mobileOpen ||
     props.mouseMoved;
 
