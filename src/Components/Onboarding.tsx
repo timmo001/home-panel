@@ -111,7 +111,9 @@ function Onboarding(props: OnboardingProps) {
       console.log('handleLogin:', client, clone(data));
       let surl = prompt('socket url?');
       if (surl) {
-        socket = io(surl, { path: `${path}/socket.io`.replace('//', '/') });
+        socket = io(surl, {
+          path: `${props.location.pathname}/socket.io`.replace('//', '/')
+        });
         client.configure(socketio(socket));
         client.configure(authentication());
       }
