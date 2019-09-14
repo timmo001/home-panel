@@ -2,11 +2,18 @@
 # ==============================================================================
 # This updates the internal auth secret for the API
 # ==============================================================================
-if [ "$(grep -i 'API_AUTH_SECRET' /opt/panel/config/default.json)" = 0 ]; then
-    sed -i -e "s/API_AUTH_SECRET/$(openssl rand -base64 32)/g" /opt/panel/config/default.json
+declare key
+
+if ! bashio::fs.file_exists "/data/secret.txt"; then
+    bashio::log.info "Generating secret"
+    newkey=$(openssl rand -base64 32)
+    echo "${newkey}" > /data/secret.txt
 fi
 
-if [ "$(grep -i '../db' /opt/panel/config/default.json)" = 0 ]; then
-    # Force database to use /data
-    sed -i "s#../db#/data#g" /opt/panel/config/default.json
-fi
+key=$(cat /data/secret.txt)
+
+# Set secret to persistent secret file
+sed -i "s/API_AUTH_SECRET/${key}/g" /opt/panel/config/default.json
+
+# Set database to /data
+sed -i "s#../db#/data#g" /opt/panel/config/default.json
