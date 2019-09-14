@@ -111,7 +111,7 @@ function Onboarding(props: OnboardingProps) {
       console.log('handleLogin:', clone(client.path), clone(data));
       let path = prompt('path?', client.path);
       if (path) client.path = path;
-      let url = prompt('path?', client.url);
+      let url = prompt('url?', client.url);
       if (url) client.url = url;
       (async () => {
         try {
