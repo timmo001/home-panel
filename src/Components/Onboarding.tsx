@@ -45,15 +45,9 @@ function Onboarding(props: OnboardingProps) {
   );
 
   useEffect(() => {
-    // TODO: Remove
-    console.log('ONBOARDING - route location:', clone(props.location));
-    console.log('ONBOARDING - window location:', clone(window.location));
-
     if (!client) {
       client = feathers();
       let path: string = clone(props.location.pathname);
-      // TODO: Remove
-      console.log('path:', clone(path));
       let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
         window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
         window.location.hostname}:${
@@ -61,18 +55,10 @@ function Onboarding(props: OnboardingProps) {
           ? '8234'
           : window.location.port
       }`;
-      // TODO: Remove
-      console.log('url:', clone(url));
-      // TODO: Remove
-      console.log('path:', clone(path));
       socket = io(url, { path: `${path}/socket.io`.replace('//', '/') });
       client.configure(socketio(socket));
       client.configure(authentication());
-      // TODO: Remove
-      console.log('path:', clone(path));
       client.path = path;
-      // TODO: Remove
-      console.log('client.path:', clone(client.path));
     }
   }, [props.location]);
 
@@ -113,8 +99,6 @@ function Onboarding(props: OnboardingProps) {
     (data?: any, callback?: (error?: string) => void) => {
       (async () => {
         try {
-          // process.env.NODE_ENV === 'development' &&
-          console.log('handleLogin:', clone(client.path), clone(data));
           let clientData;
           if (!client) {
             console.warn('Feathers app is undefined');
@@ -140,16 +124,11 @@ function Onboarding(props: OnboardingProps) {
   }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(data: any, callback?: (error?: string) => void) {
-    // process.env.NODE_ENV === 'development' &&
-    console.log('handleCreateAccount:', clone(client.path), clone(data));
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
-        // process.env.NODE_ENV === 'development' &&
         console.error('Error creating account:', error);
         if (callback) callback(`Error creating account: ${error.message}`);
       } else {
-        // process.env.NODE_ENV === 'development' &&
-        console.log('Created new account.');
         handleLogin({ strategy: 'local', ...data }, callback);
       }
     });
@@ -164,9 +143,7 @@ function Onboarding(props: OnboardingProps) {
 
   function handleConfigChange(config: any) {
     socket.emit('patch', 'config', configId, { config }, (error: any) => {
-      if (error)
-        process.env.NODE_ENV === 'development' &&
-          console.error('Error updating', configId, ':', error);
+      if (error) console.error('Error updating', configId, ':', error);
       else {
         setConfig(config);
         process.env.NODE_ENV === 'development' &&
