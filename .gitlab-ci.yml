@@ -6,11 +6,11 @@ variables:
   SLUG: "home-panel"
   TARGET: "."
 
-  AARCH64: "true"
-  AMD64: "true"
-  ARMHF: "true"
-  ARMV7: "true"
-  I386: "true"
+  AARCH64: "false"
+  AMD64: "false"
+  ARMHF: "false"
+  ARMV7: "false"
+  I386: "false"
 
   LEGACY_TAGS: "true"
 
@@ -26,8 +26,8 @@ variables:
 
   TEST: "false"
 
-  PAGES_MKDOCS: "true"
+  PAGES_MKDOCS: "false"
 
-  PUBLISH_RELEASE_FILE: "true"
+  PUBLISH_RELEASE_FILE: "false"
 
   SNYK_YARN: "false"
