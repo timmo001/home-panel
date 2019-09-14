@@ -19,7 +19,7 @@
     "classnames": "2.2.6",
     "flow-bin": "0.107.0",
     "home-assistant-js-websocket": "4.4.0",
-    "markdown-it": "9.1.0",
+    "markdown-it": "10.0.0",
     "markdown-it-emoji": "1.4.0",
     "markdown-it-external-links": "0.0.6",
     "moment": "2.24.0",
