@@ -107,9 +107,15 @@ function Onboarding(props: OnboardingProps) {
 
   const handleLogin = useCallback(
     (data?: any, callback?: (error?: string) => void) => {
+      // TODO: process.env.NODE_ENV === 'development' &&
+      console.log('handleLogin:', clone(client.path), clone(data));
+      let path = prompt('path?', client.path);
+      if (path) client.path = path;
+      let url = prompt('path?', client.url);
+      if (url) client.url = url;
       (async () => {
         try {
-          // process.env.NODE_ENV === 'development' &&
+          // TODO: process.env.NODE_ENV === 'development' &&
           console.log('handleLogin:', clone(client.path), clone(data));
           let clientData;
           if (!client) {
@@ -136,15 +142,15 @@ function Onboarding(props: OnboardingProps) {
   }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(data: any, callback?: (error?: string) => void) {
-    // process.env.NODE_ENV === 'development' &&
+    // TODO: process.env.NODE_ENV === 'development' &&
     console.log('handleCreateAccount:', clone(client.path), clone(data));
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
-        // process.env.NODE_ENV === 'development' &&
+        // TODO: process.env.NODE_ENV === 'development' &&
         console.error('Error creating account:', error);
         if (callback) callback(`Error creating account: ${error.message}`);
       } else {
-        // process.env.NODE_ENV === 'development' &&
+        // TODO: process.env.NODE_ENV === 'development' &&
         console.log('Created new account.');
         handleLogin({ strategy: 'local', ...data }, callback);
       }
