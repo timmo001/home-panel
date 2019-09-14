@@ -108,15 +108,19 @@ function Onboarding(props: OnboardingProps) {
   const handleLogin = useCallback(
     (data?: any, callback?: (error?: string) => void) => {
       // TODO: process.env.NODE_ENV === 'development' &&
-      console.log('handleLogin:', clone(client.path), clone(data));
+      console.log('handleLogin:', client, clone(data));
       let path = prompt('path?', client.path);
       if (path) client.path = path;
-      let url = prompt('url?', client.url);
-      if (url) client.url = url;
+      let surl = prompt('socket url?');
+      if (surl)
+        socket = io(surl, { path: `${path}/socket.io`.replace('//', '/') });
+      let spath = prompt('socket path?');
+      if (spath && typeof spath === 'string')
+        socket = io(String(surl), { path: spath });
       (async () => {
         try {
           // TODO: process.env.NODE_ENV === 'development' &&
-          console.log('handleLogin:', clone(client.path), clone(data));
+          console.log('handleLogin:', client, clone(data));
           let clientData;
           if (!client) {
             console.warn('Feathers app is undefined');
