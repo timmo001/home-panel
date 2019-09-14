@@ -109,22 +109,18 @@ function Onboarding(props: OnboardingProps) {
     (data?: any, callback?: (error?: string) => void) => {
       // TODO: process.env.NODE_ENV === 'development' &&
       console.log('handleLogin:', client, clone(data));
-      let surl = prompt('socket url?');
-      if (surl) {
-        socket = io(surl, {
-          path: `${props.location.pathname}/socket.io`.replace('//', '/')
-        });
-        client = feathers();
-        client.configure(socketio(socket));
-        client.configure(authentication());
-      }
-      let spath = prompt('socket path?');
+      let surl = prompt('socket url?', props.location.pathname);
+      let spath = prompt(
+        'socket path?',
+        `${props.location.pathname}/socket.io`.replace('//', '/')
+      );
       if (spath && typeof spath === 'string') {
         socket = io(String(surl), { path: spath });
         client = feathers();
         client.configure(socketio(socket));
         client.configure(authentication());
       }
+
       let path = prompt('path?', client.path);
       if (path) client.path = path;
       (async () => {
