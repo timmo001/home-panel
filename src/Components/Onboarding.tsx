@@ -146,7 +146,7 @@ function Onboarding(props: OnboardingProps) {
         }
       })();
     },
-    [getConfig]
+    [getConfig, props.location.pathname]
   );
 
   useEffect(() => {
