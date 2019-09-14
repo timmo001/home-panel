@@ -31,3 +31,4 @@ variables:
   PUBLISH_RELEASE_FILE: "false"
 
   SNYK_YARN: "false"
+  SNYK_DOCKER: "false"
