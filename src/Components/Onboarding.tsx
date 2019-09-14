@@ -60,12 +60,16 @@ function Onboarding(props: OnboardingProps) {
         process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
           ? '8234'
           : window.location.port
-      }${path}`;
+      }`;
       // TODO: Remove
       console.log('url:', clone(url));
+      // TODO: Remove
+      console.log('path:', clone(path));
       socket = io(url, { path: `${path}/socket.io`.replace('//', '/') });
       client.configure(socketio(socket));
       client.configure(authentication());
+      // TODO: Remove
+      console.log('path:', clone(path));
       client.path = path;
       // TODO: Remove
       console.log('client.path:', clone(client.path));
