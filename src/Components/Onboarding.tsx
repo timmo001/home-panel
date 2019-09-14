@@ -114,12 +114,14 @@ function Onboarding(props: OnboardingProps) {
         socket = io(surl, {
           path: `${props.location.pathname}/socket.io`.replace('//', '/')
         });
+        client = feathers();
         client.configure(socketio(socket));
         client.configure(authentication());
       }
       let spath = prompt('socket path?');
       if (spath && typeof spath === 'string') {
         socket = io(String(surl), { path: spath });
+        client = feathers();
         client.configure(socketio(socket));
         client.configure(authentication());
       }
