@@ -93,8 +93,6 @@ function Header(props: HeaderProps) {
           key={key}
           item
           xs
-          justify={key === 2 ? 'flex-end' : key === 1 ? 'center' : 'flex-start'}
-          alignItems="center"
           style={{
             textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start'
           }}>
