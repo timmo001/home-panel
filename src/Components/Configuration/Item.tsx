@@ -73,21 +73,18 @@ function Item(props: ItemProps) {
   const handleChange = (path: any[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setValue(event.target.value);
-    props.handleUpdateConfig!(
-      path,
-      type === 'number' ? Number(event.target.value) : event.target.value
-    );
+    const val =
+      type === 'number' ? Number(event.target.value) : event.target.value;
+    setValue(val);
+    props.handleUpdateConfig!(path, val);
   };
 
   const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
   ) => {
-    setValue((event.target as HTMLInputElement).value);
-    props.handleUpdateConfig!(
-      path,
-      Number((event.target as HTMLInputElement).value)
-    );
+    const val = Number((event.target as HTMLInputElement).value);
+    setValue(val);
+    props.handleUpdateConfig!(path, val);
   };
 
   const handleSwitchChange = (path: any[]) => (
@@ -129,10 +126,7 @@ function Item(props: ItemProps) {
         <IconButton
           color="inherit"
           aria-label="Edit"
-          onClick={props.handleSetSections!(
-            [...props.path!, props.item.name],
-            items
-          )}>
+          onClick={props.handleSetSections!(props.path!, items)}>
           <span
             className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
           />
@@ -146,19 +140,13 @@ function Item(props: ItemProps) {
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
           value={value}
           onChange={handleChange(
-            [...props.path!, props.item.name],
+            props.path!,
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
         />
       );
     case 'object':
-      return (
-        <Section
-          {...props}
-          path={[...props.path!, props.item.name]}
-          section={props.item}
-        />
-      );
+      return <Section {...props} path={props.path!} section={props.item} />;
     case 'radio':
       return (
         <FormControl component="fieldset">
@@ -167,11 +155,11 @@ function Item(props: ItemProps) {
             aria-label={props.item.title}
             name={props.item.name}
             value={value}
-            onChange={handleRadioChange([...props.path!, props.item.name])}>
+            onChange={handleRadioChange(props.path!)}>
             {props.item.items.map((rItem: any, key: number) => (
               <FormControlLabel
                 key={key}
-                value={key}
+                value={Number(key)}
                 label={rItem}
                 control={<Radio color="primary" />}
               />
@@ -184,7 +172,7 @@ function Item(props: ItemProps) {
         <Switch
           color="primary"
           checked={value}
-          onChange={handleSwitchChange([...props.path!, props.item.name])}
+          onChange={handleSwitchChange(props.path!)}
         />
       );
     case 'theme':
@@ -193,7 +181,7 @@ function Item(props: ItemProps) {
           <InputLabel htmlFor="theme">Theme</InputLabel>
           <Select
             value={value}
-            onChange={handleSelectChange([...props.path!, props.item.name])}
+            onChange={handleSelectChange(props.path!)}
             inputProps={{
               name: 'theme',
               id: 'theme'
