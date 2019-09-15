@@ -44,8 +44,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     maxHeight: '100%',
     overflow: 'hidden',
-    paddingLeft: theme.spacing(1),
-    paddingBottom: theme.spacing(4)
+    padding: theme.spacing(0, 1),
+    [theme.breakpoints.down('md')]: {
+      padding: theme.spacing(0, 0.5)
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(0)
+    }
   },
   containerNavShown: {
     paddingBottom: theme.spacing(10)

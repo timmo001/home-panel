@@ -11,17 +11,21 @@ import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginBottom: theme.spacing(2)
-  },
-  icon: {},
-  text: {},
-  date: {
-    fontSize: '2.8rem',
+    marginBottom: theme.spacing(1.5),
     [theme.breakpoints.down('md')]: {
-      fontSize: '2.4rem'
+      marginBottom: theme.spacing(1)
     },
     [theme.breakpoints.down('sm')]: {
+      marginBottom: theme.spacing(0.5)
+    }
+  },
+  date: {
+    fontSize: '2.4rem',
+    [theme.breakpoints.down('md')]: {
       fontSize: '2.0rem'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.6rem'
     }
   },
   timePeriod: {
@@ -54,11 +58,7 @@ function Header(props: HeaderProps) {
     .map((timeColumn: string) => timeColumn.split('_-_'));
 
   const time = props.config.header.time_show && (
-    <Typography
-      className={classes.text}
-      color="textPrimary"
-      variant="h2"
-      component="h2">
+    <Typography color="textPrimary" variant="h2" component="h2" noWrap>
       {timeRows[0][0]}
       {timeRows[0][1] && (
         <span className={classes.timePeriod}>{timeRows[0][1]}</span>
@@ -69,11 +69,7 @@ function Header(props: HeaderProps) {
   );
 
   const date = props.config.header.date_show && (
-    <Typography
-      className={classes.text}
-      color="textPrimary"
-      variant="h2"
-      component="h1">
+    <Typography color="textPrimary" variant="h2" component="h2" noWrap>
       {moment().format(props.config.header.date_format)}
     </Typography>
   );
@@ -89,16 +85,16 @@ function Header(props: HeaderProps) {
       item
       container
       direction="row"
-      justify="flex-start"
-      alignContent="center">
+      justify="space-between"
+      alignItems="center"
+      spacing={2}>
       {columns.map((columnData: any, key: number) => (
         <Grid
           key={key}
           item
           xs
-          container
           justify={key === 2 ? 'flex-end' : key === 1 ? 'center' : 'flex-start'}
-          alignContent="flex-start"
+          alignItems="center"
           style={{
             textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start'
           }}>
