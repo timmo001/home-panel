@@ -13,7 +13,7 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { items, ConfigProps, ThemesProps } from './Config';
+import { items, ConfigProps } from './Config';
 import clone from '../Utils/clone';
 import makeKey from '../Utils/makeKey';
 import Section from './Section';
@@ -45,19 +45,6 @@ export interface ConfigurationProps
   section?: any;
   handleAdd?: (path: any[], defaultItem: any) => () => void;
   handleDelete?: (path: any[]) => () => void;
-  handleChange?: (
-    path: any[],
-    type: string
-  ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRadioChange?: (
-    path: any[]
-  ) => (event: React.ChangeEvent<unknown>) => void;
-  handleSwitchChange?: (
-    path: any[]
-  ) => (_event: React.ChangeEvent<{}>, checked: boolean) => void;
-  handleSelectChange?: (
-    path: any[]
-  ) => (event: React.ChangeEvent<{ name?: string; value: unknown }>) => void;
   handleSetSections?: (
     path: any[],
     section: any | any[]
@@ -99,43 +86,6 @@ function Configuration(props: ConfigurationProps) {
       const newSections = clone(sections);
       newSections.splice(id, 1);
       setSections(newSections);
-    }
-  };
-
-  const handleChange = (path: any[], type: string) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    props.handleUpdateConfig!(
-      path,
-      type === 'number' ? Number(event.target.value) : event.target.value
-    );
-  };
-
-  const handleRadioChange = (path: any[]) => (
-    event: React.ChangeEvent<unknown>
-  ) => {
-    props.handleUpdateConfig!(
-      path,
-      Number((event.target as HTMLInputElement).value)
-    );
-  };
-
-  const handleSwitchChange = (path: any[]) => (
-    _event: React.ChangeEvent<{}>,
-    checked: boolean
-  ) => {
-    props.handleUpdateConfig!(path, checked);
-  };
-
-  const handleSelectChange = (path: any[]) => (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
-    props.handleUpdateConfig!(path, event.target.value);
-    if (path.pop() === 'theme') {
-      const theme = props.config.theme.themes.find(
-        (theme: ThemesProps) => theme.key === event.target.value
-      );
-      if (theme) props.handleSetTheme!(theme);
     }
   };
 
@@ -193,11 +143,7 @@ function Configuration(props: ConfigurationProps) {
                   path={[...path, item.name]}
                   section={item}
                   handleAdd={handleAdd}
-                  handleChange={handleChange}
-                  handleRadioChange={handleRadioChange}
-                  handleSelectChange={handleSelectChange}
                   handleSetSections={handleSetSections}
-                  handleSwitchChange={handleSwitchChange}
                 />
               </CardContent>
             </Card>

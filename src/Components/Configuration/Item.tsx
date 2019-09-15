@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -52,20 +52,70 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Item(props: ItemProps) {
+  const [value, setValue] = React.useState();
+
+  useEffect(() => {
+    if (!value) {
+      const lastItem = props.path!.pop();
+      let secondLastItem = props.path!.reduce(
+        (o, k) => (o[k] = o[k] || {}),
+        props.config
+      );
+      setValue(
+        !secondLastItem[lastItem]
+          ? props.item.default
+          : secondLastItem[lastItem]
+      );
+    }
+  }, [props.config, props.item.default, props.path, value]);
+
+  const handleChange = (path: any[], type: string) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setValue(event.target.value);
+    props.handleUpdateConfig!(
+      path,
+      type === 'number' ? Number(event.target.value) : event.target.value
+    );
+  };
+
+  const handleRadioChange = (path: any[]) => (
+    event: React.ChangeEvent<unknown>
+  ) => {
+    setValue((event.target as HTMLInputElement).value);
+    props.handleUpdateConfig!(
+      path,
+      Number((event.target as HTMLInputElement).value)
+    );
+  };
+
+  const handleSwitchChange = (path: any[]) => (
+    _event: React.ChangeEvent<{}>,
+    checked: boolean
+  ) => {
+    setValue(checked);
+    props.handleUpdateConfig!(path, checked);
+  };
+
+  const handleSelectChange = (path: any[]) => (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    setValue(event.target.value);
+    props.handleUpdateConfig!(path, event.target.value);
+    if (path.pop() === 'theme') {
+      const theme = props.config.theme.themes.find(
+        (theme: ThemesProps) => theme.key === event.target.value
+      );
+      if (theme) props.handleSetTheme!(theme);
+    }
+  };
+
   const classes = useStyles();
 
-  const lastItem = props.path!.pop();
-  let secondLastItem = props.path!.reduce(
-    (o, k) => (o[k] = o[k] || {}),
-    props.config
-  );
-  let value: any = !secondLastItem[lastItem]
-    ? props.item.default
-    : secondLastItem[lastItem];
-
+  if (!value) return <div />;
   switch (props.item.type) {
     default:
-      return null;
+      return <div />;
     case 'array':
       const items = value.map((item: any, key: number) => ({
         name: key,
@@ -94,7 +144,7 @@ function Item(props: ItemProps) {
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
           value={value}
-          onChange={props.handleChange!(
+          onChange={handleChange(
             [...props.path!, props.item.name],
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
@@ -116,10 +166,7 @@ function Item(props: ItemProps) {
             aria-label={props.item.title}
             name={props.item.name}
             defaultValue={String(value)}
-            onChange={props.handleRadioChange!([
-              ...props.path!,
-              props.item.name
-            ])}>
+            onChange={handleRadioChange([...props.path!, props.item.name])}>
             {props.item.items.map((rItem: any) => (
               <FormControlLabel
                 key={rItem.name}
@@ -136,10 +183,7 @@ function Item(props: ItemProps) {
         <Switch
           color="primary"
           defaultChecked={value}
-          onChange={props.handleSwitchChange!([
-            ...props.path!,
-            props.item.name
-          ])}
+          onChange={handleSwitchChange([...props.path!, props.item.name])}
         />
       );
     case 'theme':
@@ -148,10 +192,7 @@ function Item(props: ItemProps) {
           <InputLabel htmlFor="theme">Theme</InputLabel>
           <Select
             value={value}
-            onChange={props.handleSelectChange!([
-              ...props.path!,
-              props.item.name
-            ])}
+            onChange={handleSelectChange([...props.path!, props.item.name])}
             inputProps={{
               name: 'theme',
               id: 'theme'
@@ -178,10 +219,7 @@ Item.propTypes = {
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
   section: PropTypes.any.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired,
-  handleSelectChange: PropTypes.func.isRequired
+  handleUpdateConfig: PropTypes.func.isRequired
 };
 
 export default Item;

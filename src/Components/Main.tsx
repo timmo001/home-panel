@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   content: {
-    padding: theme.spacing(2, 2, 1)
+    padding: theme.spacing(2)
   },
   noHeight: {
     height: `calc(100% - ${theme.spacing(1.5)}px)`,
