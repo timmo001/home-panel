@@ -55,17 +55,18 @@ function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
 
   useEffect(() => {
-    if (!value) {
+    if (value === undefined) {
       const lastItem = props.path!.pop();
       let secondLastItem = props.path!.reduce(
         (o, k) => (o[k] = o[k] || {}),
         props.config
       );
-      setValue(
-        !secondLastItem[lastItem]
+      const val =
+        secondLastItem[lastItem] === undefined
           ? props.item.default
-          : secondLastItem[lastItem]
-      );
+          : secondLastItem[lastItem];
+      console.log(props.item.default, lastItem, val);
+      setValue(val);
     }
   }, [props.config, props.item.default, props.path, value]);
 
@@ -165,13 +166,13 @@ function Item(props: ItemProps) {
             className={classes.radioGroup}
             aria-label={props.item.title}
             name={props.item.name}
-            defaultValue={String(value)}
+            value={String(value)}
             onChange={handleRadioChange([...props.path!, props.item.name])}>
-            {props.item.items.map((rItem: any) => (
+            {props.item.items.map((rItem: any, key: number) => (
               <FormControlLabel
-                key={rItem.name}
-                value={String(rItem.name)}
-                label={rItem.title}
+                key={key}
+                value={key}
+                label={rItem}
                 control={<Radio color="primary" />}
               />
             ))}
@@ -182,7 +183,7 @@ function Item(props: ItemProps) {
       return (
         <Switch
           color="primary"
-          defaultChecked={value}
+          checked={value}
           onChange={handleSwitchChange([...props.path!, props.item.name])}
         />
       );
