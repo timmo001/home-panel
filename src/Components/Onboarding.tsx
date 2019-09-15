@@ -142,10 +142,10 @@ function Onboarding(props: OnboardingProps) {
   }
 
   function handleConfigChange(config: any) {
+    setConfig(config);
     socket.emit('patch', 'config', configId, { config }, (error: any) => {
       if (error) console.error('Error updating', configId, ':', error);
       else {
-        setConfig(config);
         process.env.NODE_ENV === 'development' &&
           console.log('Updated config:', configId, config);
       }
