@@ -113,7 +113,7 @@ function Item(props: ItemProps) {
 
   const classes = useStyles();
 
-  if (!value) return <div />;
+  if (value === undefined) return <div />;
   switch (props.item.type) {
     default:
       return <div />;
@@ -166,7 +166,7 @@ function Item(props: ItemProps) {
             className={classes.radioGroup}
             aria-label={props.item.title}
             name={props.item.name}
-            value={String(value)}
+            value={value}
             onChange={handleRadioChange([...props.path!, props.item.name])}>
             {props.item.items.map((rItem: any, key: number) => (
               <FormControlLabel
