@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -52,21 +52,74 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 function Item(props: ItemProps) {
+  const [value, setValue] = React.useState();
+
+  useEffect(() => {
+    setValue(undefined);
+  }, [props.section]);
+
+  useEffect(() => {
+    if (value === undefined) {
+      const lastItem = props.path!.pop();
+      let secondLastItem = props.path!.reduce(
+        (o, k) => (o[k] = o[k] || {}),
+        props.config
+      );
+      const val =
+        secondLastItem[lastItem] === undefined
+          ? props.item.default
+          : secondLastItem[lastItem];
+      console.log(props.item.default, lastItem, val);
+      setValue(val);
+    }
+  }, [props.config, props.item.default, props.path, value]);
+
+  const handleChange = (path: any[], type: string) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const val =
+      type === 'number' ? Number(event.target.value) : event.target.value;
+    setValue(val);
+    props.handleUpdateConfig!(path, val);
+  };
+
+  const handleRadioChange = (path: any[]) => (
+    event: React.ChangeEvent<unknown>
+  ) => {
+    const val = Number((event.target as HTMLInputElement).value);
+    setValue(val);
+    props.handleUpdateConfig!(path, val);
+  };
+
+  const handleSwitchChange = (path: any[]) => (
+    _event: React.ChangeEvent<{}>,
+    checked: boolean
+  ) => {
+    setValue(checked);
+    props.handleUpdateConfig!(path, checked);
+  };
+
+  const handleSelectChange = (path: any[]) => (
+    event: React.ChangeEvent<{ name?: string; value: unknown }>
+  ) => {
+    setValue(event.target.value);
+    props.handleUpdateConfig!(path, event.target.value);
+    if (path.pop() === 'theme') {
+      const theme = props.config.theme.themes.find(
+        (theme: ThemesProps) => theme.key === event.target.value
+      );
+      if (theme) props.handleSetTheme!(theme);
+    }
+  };
+
   const classes = useStyles();
 
-  const lastItem = props.path!.pop();
-  let secondLastItem = props.path!.reduce(
-    (o, k) => (o[k] = o[k] || {}),
-    props.config
-  );
-  let value: any = !secondLastItem[lastItem]
-    ? props.item.default
-    : secondLastItem[lastItem];
-
+  if (value === undefined) return <div />;
   switch (props.item.type) {
     default:
-      return null;
+      return <div />;
     case 'array':
+      if (!Array.isArray(value)) return <div />;
       const items = value.map((item: any, key: number) => ({
         name: key,
         title: item.name,
@@ -78,10 +131,7 @@ function Item(props: ItemProps) {
         <IconButton
           color="inherit"
           aria-label="Edit"
-          onClick={props.handleSetSections!(
-            [...props.path!, props.item.name],
-            items
-          )}>
+          onClick={props.handleSetSections!(props.path!, items)}>
           <span
             className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
           />
@@ -94,20 +144,14 @@ function Item(props: ItemProps) {
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
           value={value}
-          onChange={props.handleChange!(
-            [...props.path!, props.item.name],
+          onChange={handleChange(
+            props.path!,
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
         />
       );
     case 'object':
-      return (
-        <Section
-          {...props}
-          path={[...props.path!, props.item.name]}
-          section={props.item}
-        />
-      );
+      return <Section {...props} path={props.path!} section={props.item} />;
     case 'radio':
       return (
         <FormControl component="fieldset">
@@ -115,16 +159,13 @@ function Item(props: ItemProps) {
             className={classes.radioGroup}
             aria-label={props.item.title}
             name={props.item.name}
-            defaultValue={String(value)}
-            onChange={props.handleRadioChange!([
-              ...props.path!,
-              props.item.name
-            ])}>
-            {props.item.items.map((rItem: any) => (
+            value={value}
+            onChange={handleRadioChange(props.path!)}>
+            {props.item.items.map((rItem: any, key: number) => (
               <FormControlLabel
-                key={rItem.name}
-                value={String(rItem.name)}
-                label={rItem.title}
+                key={key}
+                value={Number(key)}
+                label={rItem}
                 control={<Radio color="primary" />}
               />
             ))}
@@ -132,14 +173,12 @@ function Item(props: ItemProps) {
         </FormControl>
       );
     case 'switch':
+      if (typeof value !== 'boolean') return <div />;
       return (
         <Switch
           color="primary"
-          defaultChecked={value}
-          onChange={props.handleSwitchChange!([
-            ...props.path!,
-            props.item.name
-          ])}
+          checked={value}
+          onChange={handleSwitchChange(props.path!)}
         />
       );
     case 'theme':
@@ -148,10 +187,7 @@ function Item(props: ItemProps) {
           <InputLabel htmlFor="theme">Theme</InputLabel>
           <Select
             value={value}
-            onChange={props.handleSelectChange!([
-              ...props.path!,
-              props.item.name
-            ])}
+            onChange={handleSelectChange(props.path!)}
             inputProps={{
               name: 'theme',
               id: 'theme'
@@ -178,10 +214,7 @@ Item.propTypes = {
   item: PropTypes.any.isRequired,
   path: PropTypes.array.isRequired,
   section: PropTypes.any.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleRadioChange: PropTypes.func.isRequired,
-  handleSwitchChange: PropTypes.func.isRequired,
-  handleSelectChange: PropTypes.func.isRequired
+  handleUpdateConfig: PropTypes.func.isRequired
 };
 
 export default Item;
