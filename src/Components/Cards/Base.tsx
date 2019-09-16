@@ -131,10 +131,12 @@ function Base(props: BaseProps) {
   const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
   let height =
-    props.editing === 2 || props.card.type === 'frame'
+    props.editing === 2 || !props.card.height
       ? 'initial'
+      : isNaN(props.card.height)
+      ? props.card.height
       : props.card.height! * cardSize || cardSize;
-  if (props.card.type !== 'entity') height = -1;
+  if (props.card.title === 'test') console.log('height:', height);
   let width =
     props.editing === 2 ? -1 : props.card.width! * cardSize || cardSize;
   if (width !== cardSize) {
