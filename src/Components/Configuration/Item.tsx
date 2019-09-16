@@ -69,7 +69,6 @@ function Item(props: ItemProps) {
         secondLastItem[lastItem] === undefined
           ? props.item.default
           : secondLastItem[lastItem];
-      console.log(props.item.default, lastItem, val);
       setValue(val);
     }
   }, [props.config, props.item.default, props.path, value]);
