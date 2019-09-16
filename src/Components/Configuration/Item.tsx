@@ -55,6 +55,10 @@ function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
 
   useEffect(() => {
+    setValue(undefined);
+  }, [props.section]);
+
+  useEffect(() => {
     if (value === undefined) {
       const lastItem = props.path!.pop();
       let secondLastItem = props.path!.reduce(
@@ -115,6 +119,7 @@ function Item(props: ItemProps) {
     default:
       return <div />;
     case 'array':
+      if (!Array.isArray(value)) return <div />;
       const items = value.map((item: any, key: number) => ({
         name: key,
         title: item.name,
@@ -168,6 +173,7 @@ function Item(props: ItemProps) {
         </FormControl>
       );
     case 'switch':
+      if (typeof value !== 'boolean') return <div />;
       return (
         <Switch
           color="primary"
