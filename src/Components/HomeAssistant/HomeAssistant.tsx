@@ -105,7 +105,6 @@ function HomeAssistant(props: HomeAssistantProps) {
   const connectToHASS = useCallback(() => {
     if (!connection)
       (async () => {
-        process.env.NODE_ENV === 'development' && console.log('connectToHASS');
         localStorage.setItem('hass_url', props.url);
         let auth: Auth = await getAuth({
           hassUrl: props.url,
