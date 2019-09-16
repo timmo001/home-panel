@@ -32,6 +32,16 @@ function Markdown(props: MarkdownProps) {
           onChange={props.handleChange!('content')}
         />
       </Grid>
+      <Grid item xs>
+        <TextField
+          className={classes.textField}
+          InputLabelProps={{ shrink: true }}
+          label="Height"
+          placeholder="auto"
+          value={props.card.height}
+          onChange={props.handleChange!('height')}
+        />
+      </Grid>
     </Grid>
   );
 }

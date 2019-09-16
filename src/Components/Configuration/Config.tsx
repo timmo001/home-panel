@@ -106,7 +106,8 @@ export const defaultCard = (groupKey: string) => ({
   group: groupKey,
   title: 'Card',
   type: 'entity',
-  width: 1
+  width: 1,
+  height: 1
 });
 
 export const defaultTheme = () => ({
