@@ -64,7 +64,7 @@ export type CardProps = {
   width: number;
   height?: number;
   square?: boolean;
-  padding?: number;
+  padding?: number | string;
   elevation?: number;
   background?: string;
   icon?: string;
@@ -106,6 +106,7 @@ export const defaultCard = (groupKey: string) => ({
   group: groupKey,
   title: 'Card',
   type: 'entity',
+  elevation: 1,
   width: 1,
   height: 1
 });
@@ -119,6 +120,61 @@ export const defaultTheme = () => ({
   background_default: '#303030',
   background_paper: '#383c45'
 });
+
+export const cardTypes: { [type: string]: CardProps } = {
+  entity: {
+    key: '',
+    group: '',
+    title: 'Card',
+    type: 'entity',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 1,
+    height: 1,
+    icon: '',
+    entity: ''
+  },
+  iframe: {
+    key: '',
+    group: '',
+    title: 'Card',
+    type: 'iframe',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 1,
+    height: 1,
+    url: ''
+  },
+  image: {
+    key: '',
+    group: '',
+    title: 'Card',
+    type: 'image',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 1,
+    url: ''
+  },
+  markdown: {
+    key: '',
+    group: '',
+    title: 'Card',
+    type: 'markdown',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 1,
+    height: 1,
+    content: ''
+  }
+};
 
 export const items = [
   {
