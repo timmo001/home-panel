@@ -919,10 +919,10 @@
   dependencies:
     debug "^4.1.1"
 
-"@feathersjs/feathers@4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.1.tgz#6f490c24dd93925c7827e9885452ed061f71e28a"
-  integrity sha512-jDeMwSaVH8BkejFknFTqFYdC5oH6b8QAgI0hHSRW58B/unLbXNYvmwif6XP8N8DVlW3WZWZSSeKFsGXmyfkeKQ==
+"@feathersjs/feathers@4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.2.tgz#191fdae84b79a23c610ea56a65b83957c46e403f"
+  integrity sha512-hrj8nzdJk0qd7sz5ObmHGoYAdh57sGpD+scHeggPmIXY3LlkJNq4riyYitKeGSYs2cU4CMsq4JHfCb1Qq6Rdeg==
   dependencies:
     "@feathersjs/commons" "^4.3.0"
     debug "^4.1.1"
