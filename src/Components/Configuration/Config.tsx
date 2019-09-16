@@ -152,7 +152,7 @@ export const items = [
         description: 'Current theme?',
         icon: 'mdi-compare',
         type: 'theme',
-        default: 0
+        default: 'qwertyuiop123456'
       },
       {
         name: 'themes',
@@ -252,21 +252,8 @@ export const items = [
         description: 'Where should the time be shown?',
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
-        default: '0',
-        items: [
-          {
-            name: '0',
-            title: 'Left'
-          },
-          {
-            name: '1',
-            title: 'Center'
-          },
-          {
-            name: '2',
-            title: 'Right'
-          }
-        ]
+        default: 0,
+        items: ['Left', 'Center', 'Right']
       },
       {
         name: 'date_show',
@@ -291,21 +278,8 @@ export const items = [
         description: 'Where should the date be shown?',
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
-        default: '1',
-        items: [
-          {
-            name: '0',
-            title: 'Left'
-          },
-          {
-            name: '1',
-            title: 'Center'
-          },
-          {
-            name: '2',
-            title: 'Right'
-          }
-        ]
+        default: 1,
+        items: ['Left', 'Center', 'Right']
       }
     ]
   }
