@@ -172,20 +172,7 @@
     grant-profile "^0.0.5"
     lodash "^4.17.15"
 
-"@feathersjs/authentication@4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.1.tgz#24a6417624f1ce801e36af9ab849679ecfc3af9a"
-  integrity sha512-CnHZfPjfqHMyzQQFwZ2yKSrx5BXdH5p0kHSUieMdNoh2T4uWCFMbL08ORL73pTIuMjmXyvHn6nBdCBxtP2BbnA==
-  dependencies:
-    "@feathersjs/errors" "^4.3.1"
-    "@feathersjs/transport-commons" "^4.3.1"
-    debug "^4.1.1"
-    jsonwebtoken "^8.5.1"
-    lodash "^4.17.15"
-    long-timeout "^0.1.1"
-    uuid "^3.3.2"
-
-"@feathersjs/authentication@^4.3.2":
+"@feathersjs/authentication@4.3.2", "@feathersjs/authentication@^4.3.2":
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.2.tgz#9a07f28eeecb85efa1612bed6aeedf2911347ee7"
   integrity sha512-c87AtOD09SO7LitbxYwRezrrEOJDzKTjoLcR5770YbgJMBdOPJ/PdO49Ti0Ux6lef41klhhgAUS9ShlxcsWXkQ==
