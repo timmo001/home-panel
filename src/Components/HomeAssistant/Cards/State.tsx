@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 import properCase from '../../Utils/properCase';
+import Graph from './Graph';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -81,6 +82,7 @@ function State(props: StateProps) {
           {state}
         </Typography>
       </Grid>
+      {props.card.graph && <Graph series={[0, 20, 30, 42, 54, 62, 76, 82]} />}
     </Grid>
   );
 }

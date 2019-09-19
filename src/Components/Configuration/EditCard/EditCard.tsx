@@ -10,7 +10,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { CardProps, cardTypes } from '../Config';
+import { CardProps, cardTypeDefaults } from '../Config';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
@@ -81,7 +81,7 @@ function EditCard(props: EditCardProps) {
     if (event.target.name === 'type') {
       // Cleanup types
       setCard({
-        ...cardTypes[event.target.value as string],
+        ...cardTypeDefaults[event.target.value as string],
         key: card.key,
         group: card.group
       });

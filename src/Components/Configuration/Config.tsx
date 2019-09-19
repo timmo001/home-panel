@@ -76,6 +76,12 @@ export type CardProps = {
   state?: string | boolean;
   disabled?: boolean;
   toggleable?: boolean;
+  graph?: boolean;
+};
+
+export type CardType = {
+  name: string;
+  title: string;
 };
 
 export type ThemesProps = {
@@ -121,7 +127,14 @@ export const defaultTheme = () => ({
   background_paper: '#383c45'
 });
 
-export const cardTypes: { [type: string]: CardProps } = {
+export const cardTypes: CardType[] = [
+  { name: 'entity', title: 'Entity' },
+  { name: 'iframe', title: 'iFrame' },
+  { name: 'image', title: 'Image' },
+  { name: 'markdown', title: 'Markdown' }
+];
+
+export const cardTypeDefaults: { [type: string]: CardProps } = {
   entity: {
     key: '',
     group: '',
