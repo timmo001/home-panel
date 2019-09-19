@@ -82,7 +82,11 @@ function State(props: StateProps) {
           {state}
         </Typography>
       </Grid>
-      {props.card.graph && <Graph series={[0, 20, 30, 42, 54, 62, 76, 82]} />}
+      {props.card.graph && (
+        <Graph
+          series={[{ name: 'test', data: [0, 20, 30, 42, 54, 62, 76, 82] }]}
+        />
+      )}
     </Grid>
   );
 }
