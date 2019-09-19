@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
+import Image from '../../Cards/Image';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -77,14 +78,7 @@ function Camera(props: CameraProps) {
       </Grid>
     );
 
-  return (
-    <img
-      className={classes.frame}
-      style={{ height: props.card.height ? props.card.height : 'auto' }}
-      src={url}
-      alt={state}
-    />
-  );
+  return <Image {...props} card={{ ...props.card, url }} />;
 }
 
 Camera.propTypes = {
