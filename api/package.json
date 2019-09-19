@@ -57,7 +57,7 @@
     "nodemon": "1.19.2",
     "shx": "0.3.2",
     "ts-jest": "24.1.0",
-    "ts-node-dev": "1.0.0-pre.42",
+    "ts-node-dev": "1.0.0-pre.43",
     "tslint": "5.20.0",
     "typescript": "3.6.3"
   }
