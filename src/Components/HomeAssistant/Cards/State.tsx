@@ -3,27 +3,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 import properCase from '../../Utils/properCase';
-import Graph from './Graph';
+import Chart from '../../Visualisations/Chart';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
     flex: 1
   },
+  textContainer: {
+    zIndex: 100
+  },
   text: {
     overflow: 'hidden',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
+    zIndex: 100
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 100
   },
   icon: {
     textAlign: 'center'
@@ -34,6 +39,7 @@ interface StateProps extends EntityProps {}
 
 function State(props: StateProps) {
   const classes = useStyles();
+  const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;
 
   if (!props.hassEntities) {
@@ -59,6 +65,12 @@ function State(props: StateProps) {
       direction="row"
       alignContent="center"
       justify="center">
+      {props.card.graph && (
+        <Chart
+          color={theme.palette.secondary.dark}
+          series={[{ data: [0, 20, 23, 45, 67, 96] }]}
+        />
+      )}
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
@@ -73,7 +85,7 @@ function State(props: StateProps) {
           />
         )}
       </Grid>
-      <Grid item xs>
+      <Grid item xs className={classes.textContainer}>
         <Typography
           className={classes.text}
           color="textPrimary"
@@ -82,11 +94,6 @@ function State(props: StateProps) {
           {state}
         </Typography>
       </Grid>
-      {props.card.graph && (
-        <Graph
-          series={[{ name: 'test', data: [0, 20, 30, 42, 54, 62, 76, 82] }]}
-        />
-      )}
     </Grid>
   );
 }
