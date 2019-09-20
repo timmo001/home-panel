@@ -2,17 +2,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import Chart from 'react-apexcharts';
+import ApexChart from 'react-apexcharts';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
-    top: 0,
+    top: theme.spacing(2),
     bottom: -38,
     left: theme.spacing(-1),
     right: theme.spacing(-1)
   }
 }));
+
+export const chartTypes: { [type: string]: string } = {
+  line: 'Line',
+  area: 'Area',
+  bar: 'Bar',
+  histogram: 'Histogram',
+  radialBar: 'Gauge'
+};
 
 interface ChartProps {
   color?: string;
@@ -21,6 +29,7 @@ interface ChartProps {
       data: number[];
     }
   ];
+  type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
 }
 
 function Chart(props: ChartProps) {
@@ -52,6 +61,15 @@ function Chart(props: ChartProps) {
     },
     legend: {
       show: false
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: -90,
+        endAngle: 90,
+        dataLabels: {
+          show: false
+        }
+      }
     },
     stroke: {
       curve: 'smooth',
@@ -95,11 +113,15 @@ function Chart(props: ChartProps) {
 
   return (
     <div className={classes.root}>
-      <Chart
+      <ApexChart
         height="100%"
         options={options}
-        series={props.series}
-        type="line"
+        series={
+          props.type === 'radialBar'
+            ? [props.series[0].data[props.series[0].data.length - 1]]
+            : props.series
+        }
+        type={props.type}
       />
     </div>
   );

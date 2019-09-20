@@ -65,10 +65,11 @@ function State(props: StateProps) {
       direction="row"
       alignContent="center"
       justify="center">
-      {props.card.graph && (
+      {props.card.chart && (
         <Chart
           color={theme.palette.secondary.dark}
           series={[{ data: [0, 20, 23, 45, 67, 96] }]}
+          type={props.card.chart}
         />
       )}
       <Grid className={classes.iconContainer} item xs={12}>

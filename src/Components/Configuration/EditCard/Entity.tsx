@@ -3,12 +3,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
-import Switch from '@material-ui/core/Switch';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
+import { chartTypes } from '../../Visualisations/Chart';
 import EntitySelect from '../../HomeAssistant/EntitySelect';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -77,16 +80,23 @@ function Entity(props: EntityProps) {
         item
         xs>
         {graphAllowed && props.card.entity && (
-          <Grid item xs container justify="flex-start" alignContent="center">
-            <FormControlLabel
-              className={classes.switch}
-              label="Graph?"
-              labelPlacement="start"
-              control={
-                <Switch color="primary" defaultChecked={props.card.graph} />
-              }
-              onChange={props.handleSwitchChange!('graph')}
-            />
+          <Grid item container alignContent="center">
+            <FormControl className={classes.textField}>
+              <InputLabel htmlFor="chart">Chart</InputLabel>
+              <Select
+                value={props.card.chart}
+                onChange={props.handleSelectChange}
+                inputProps={{
+                  name: 'chart',
+                  id: 'chart'
+                }}>
+                {Object.keys(chartTypes).map((chart: string, key: number) => (
+                  <MenuItem key={key} value={chart}>
+                    {chartTypes[chart]}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
         )}
         {iconAllowed && (
