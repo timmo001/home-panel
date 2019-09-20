@@ -84,12 +84,13 @@ function Entity(props: EntityProps) {
             <FormControl className={classes.textField}>
               <InputLabel htmlFor="chart">Chart</InputLabel>
               <Select
-                value={props.card.chart}
+                value={props.card.chart ? props.card.chart : ''}
                 onChange={props.handleSelectChange}
                 inputProps={{
                   name: 'chart',
                   id: 'chart'
                 }}>
+                <MenuItem value="">None</MenuItem>
                 {Object.keys(chartTypes).map((chart: string, key: number) => (
                   <MenuItem key={key} value={chart}>
                     {chartTypes[chart]}
