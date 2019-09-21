@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import { CardProps } from '../Config';
+import { CardProps, cardTypes, CardType } from '../Config';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import Entity from './Entity';
 import Frame from './Frame';
@@ -63,6 +63,7 @@ function Base(props: BaseProps) {
 
   const classes = useStyles();
 
+  if (!props.card) return null;
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="center" alignContent="stretch">
@@ -70,6 +71,7 @@ function Base(props: BaseProps) {
           container
           direction="row"
           justify="center"
+          alignItems="flex-end"
           alignContent="flex-end"
           item
           xs>
@@ -99,10 +101,11 @@ function Base(props: BaseProps) {
                 name: 'type',
                 id: 'type'
               }}>
-              <MenuItem value="entity">Entity</MenuItem>
-              <MenuItem value="iframe">iFrame</MenuItem>
-              <MenuItem value="image">Image</MenuItem>
-              <MenuItem value="markdown">Markdown</MenuItem>
+              {cardTypes.map((type: CardType, key: number) => (
+                <MenuItem key={key} value={type.name}>
+                  {type.title}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Grid>

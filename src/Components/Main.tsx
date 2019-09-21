@@ -49,6 +49,7 @@ function Main(props: MainProps) {
   const [hassUrl, setHassUrl] = React.useState();
   const [hassLogin, setHassLogin] = React.useState(false);
   const [hassConnected, setHassConnected] = React.useState(false);
+  const [hassAuth, setHassAuth] = React.useState();
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
   const [mouseMoved, setMouseMoved] = React.useState(false);
@@ -167,6 +168,7 @@ function Main(props: MainProps) {
             <HomeAssistant
               url={hassUrl}
               login={hassLogin}
+              setAuth={setHassAuth}
               setConfig={setHassConfig}
               setConnected={setHassConnected}
               setEntities={setHassEntities}
@@ -177,6 +179,7 @@ function Main(props: MainProps) {
               {...props}
               back={back}
               editing={editing}
+              hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
               handleSetBack={setBack}
@@ -186,6 +189,7 @@ function Main(props: MainProps) {
             <Overview
               {...props}
               editing={editing}
+              hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
               mouseMoved={mouseMoved}

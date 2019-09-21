@@ -20,7 +20,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField, { BaseTextFieldProps } from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import { HomeAssistantEntityProps } from './HomeAssistant';
+import { HomeAssistantEntityProps } from '../HomeAssistant';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

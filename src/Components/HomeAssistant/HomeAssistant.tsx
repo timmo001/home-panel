@@ -18,20 +18,18 @@ import {
   subscribeEntities
 } from 'home-assistant-js-websocket';
 
-export declare type HassConfigExt = HassConfig & {
-  url: string;
-};
-
 interface HomeAssistantProps {
   url: string;
   login: boolean;
   setConnected: (connected: boolean) => void;
-  setConfig: (config: HassConfigExt) => void;
+  setAuth: (auth: Auth) => void;
+  setConfig: (config: HassConfig) => void;
   setEntities: (entities: HassEntities) => void;
 }
 
 export interface HomeAssistantEntityProps {
-  hassConfig: HassConfigExt;
+  hassAuth: Auth;
+  hassConfig: HassConfig;
   hassEntities: HassEntities;
 }
 
@@ -43,7 +41,7 @@ export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   ) => void;
 }
 
-let connection: Connection;
+let connection: Connection, auth: Auth;
 
 export function loadTokens() {
   let hassTokens;
@@ -90,7 +88,7 @@ function HomeAssistant(props: HomeAssistantProps) {
 
   const updateConfig = useCallback(
     (config: HassConfig) => {
-      props.setConfig({ ...config, url: props.url });
+      props.setConfig(config);
     },
     [props]
   );
@@ -106,7 +104,7 @@ function HomeAssistant(props: HomeAssistantProps) {
     if (!connection)
       (async () => {
         localStorage.setItem('hass_url', props.url);
-        let auth: Auth = await getAuth({
+        auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
           loadTokens: () => Promise.resolve(loadTokens())
@@ -137,6 +135,7 @@ function HomeAssistant(props: HomeAssistantProps) {
         props.setConnected(true);
         connection.removeEventListener('ready', eventHandler);
         connection.addEventListener('ready', eventHandler);
+        props.setAuth(auth);
         subscribeConfig(connection, updateConfig);
         subscribeEntities(connection, updateEntites);
         getUser(connection).then((user: HassUser) => {
