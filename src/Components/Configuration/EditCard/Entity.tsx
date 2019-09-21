@@ -80,24 +80,69 @@ function Entity(props: EntityProps) {
         item
         xs>
         {graphAllowed && props.card.entity && (
-          <Grid item container alignContent="center">
-            <FormControl className={classes.textField}>
-              <InputLabel htmlFor="chart">Chart</InputLabel>
-              <Select
-                value={props.card.chart ? props.card.chart : ''}
-                onChange={props.handleSelectChange}
-                inputProps={{
-                  name: 'chart',
-                  id: 'chart'
-                }}>
-                <MenuItem value="">None</MenuItem>
-                {Object.keys(chartTypes).map((chart: string, key: number) => (
-                  <MenuItem key={key} value={chart}>
-                    {chartTypes[chart]}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+          <Grid
+            item
+            container
+            direction="row"
+            justify="center"
+            alignContent="stretch">
+            <Grid item xs>
+              <FormControl className={classes.textField}>
+                <InputLabel htmlFor="chart">Chart</InputLabel>
+                <Select
+                  value={props.card.chart ? props.card.chart : ''}
+                  onChange={props.handleSelectChange}
+                  inputProps={{
+                    name: 'chart',
+                    id: 'chart'
+                  }}>
+                  <MenuItem value="">None</MenuItem>
+                  {Object.keys(chartTypes).map((chart: string, key: number) => (
+                    <MenuItem key={key} value={chart}>
+                      {chartTypes[chart]}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            {props.card.chart && (
+              <Grid item xs>
+                <FormControl className={classes.textField}>
+                  <InputLabel htmlFor="chart_detail">Chart Detail</InputLabel>
+                  <Select
+                    value={
+                      props.card.chart_detail ? props.card.chart_detail : 3
+                    }
+                    onChange={props.handleSelectChange}
+                    inputProps={{
+                      name: 'chart_detail',
+                      id: 'chart_detail'
+                    }}>
+                    <MenuItem value={5}>Low</MenuItem>
+                    <MenuItem value={4}>Medium</MenuItem>
+                    <MenuItem value={3}>High</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            )}
+            {props.card.chart && (
+              <Grid item xs>
+                <TextField
+                  className={classes.textField}
+                  InputLabelProps={{ shrink: true }}
+                  type="number"
+                  label="Chart Hours From"
+                  placeholder="6"
+                  inputProps={{
+                    autoComplete: 'off',
+                    min: 1,
+                    max: 48
+                  }}
+                  value={props.card.chart_from}
+                  onChange={props.handleChange!('chart_from')}
+                />
+              </Grid>
+            )}
           </Grid>
         )}
         {iconAllowed && (

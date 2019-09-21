@@ -77,6 +77,8 @@ export type CardProps = {
   disabled?: boolean;
   toggleable?: boolean;
   chart?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
+  chart_detail?: 3 | 4 | 5;
+  chart_from?: number;
 };
 
 export type CardType = {

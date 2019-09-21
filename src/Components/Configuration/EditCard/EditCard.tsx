@@ -78,15 +78,27 @@ function EditCard(props: EditCardProps) {
   function handleSelectChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {
-    if (event.target.name === 'type') {
-      // Cleanup types
-      setCard({
-        ...cardTypeDefaults[event.target.value as string],
-        key: card.key,
-        group: card.group
-      });
-    } else
-      setCard({ ...card, [event.target.name as string]: event.target.value });
+    switch (event.target.name) {
+      default:
+        return setCard({
+          ...card,
+          [event.target.name as string]: event.target.value
+        });
+      case 'type':
+        // Cleanup types
+        return setCard({
+          ...cardTypeDefaults[event.target.value as string],
+          key: card.key,
+          group: card.group
+        });
+      case 'chart':
+        return setCard({
+          ...card,
+          [event.target.name as string]: event.target.value,
+          chart_detail: 4,
+          chart_from: 6
+        });
+    }
   }
 
   const classes = useStyles();

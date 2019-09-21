@@ -39,6 +39,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
 
 interface StateProps extends EntityProps {}
 
+let historyInterval: NodeJS.Timeout;
 function State(props: StateProps) {
   const [historyData, setHistoryData] = React.useState();
 
@@ -68,22 +69,35 @@ function State(props: StateProps) {
       props.hassAuth,
       props.card.entity!,
       moment()
-        .subtract(3, 'hours')
+        .subtract(props.card.chart_from, 'hours')
         .toDate(),
       moment().toDate()
     );
-    if (Array.isArray(data))
+    if (Array.isArray(data)) {
       setHistoryData(
         data[0]
           .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
+          .filter((_e: HassEntity, i: number) => {
+            return (i + 1) % props.card.chart_detail! === 0;
+          })
           .map((entity: HassEntity) => Number(entity.state))
       );
-  }, [props.card.entity, props.hassAuth]);
+    }
+  }, [
+    props.card.entity,
+    props.hassAuth,
+    props.card.chart_detail,
+    props.card.chart_from
+  ]);
 
   useEffect(() => {
     if (props.card.chart && props.hassAuth && !historyData) {
       getHistory();
-      setInterval(getHistory, 60000);
+      if (historyInterval) clearInterval(historyInterval);
+      historyInterval = setInterval(getHistory, 60000);
+      return () => {
+        if (historyInterval) clearInterval(historyInterval);
+      };
     }
   }, [props.card.chart, props.hassAuth, historyData, getHistory]);
 
@@ -97,6 +111,7 @@ function State(props: StateProps) {
       {props.card.chart && historyData && (
         <Chart
           color={theme.palette.secondary.dark}
+          lowerGauge={props.card.icon ? false : true}
           series={[{ data: historyData }]}
           type={props.card.chart}
         />
