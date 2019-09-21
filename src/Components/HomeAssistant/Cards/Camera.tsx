@@ -52,11 +52,11 @@ function Camera(props: CameraProps) {
   useEffect(() => {
     if (attributes)
       setUrl(
-        `${props.hassConfig.url}${
+        `${props.hassAuth.data.hassUrl}${
           attributes.entity_picture
         }&${new Date().toISOString().slice(-13, -5)}`
       );
-  }, [attributes, props.hassConfig]);
+  }, [attributes, props.hassAuth]);
 
   if (!entity)
     return (
