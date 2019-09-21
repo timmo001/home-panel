@@ -10,18 +10,15 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { CardProps, cardTypes } from '../Config';
+import { CardProps, cardTypeDefaults } from '../Config';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  dialog: {
-    overflow: 'visible'
-  },
   dialogContent: {
     paddingLeft: 0,
     paddingRight: 0,
-    overflow: 'visible'
+    overflow: 'hidden'
   },
   container: {},
   background: {
@@ -29,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   editView: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    overflow: 'auto'
   }
 }));
 
@@ -78,15 +76,27 @@ function EditCard(props: EditCardProps) {
   function handleSelectChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) {
-    if (event.target.name === 'type') {
-      // Cleanup types
-      setCard({
-        ...cardTypes[event.target.value as string],
-        key: card.key,
-        group: card.group
-      });
-    } else
-      setCard({ ...card, [event.target.name as string]: event.target.value });
+    switch (event.target.name) {
+      default:
+        return setCard({
+          ...card,
+          [event.target.name as string]: event.target.value
+        });
+      case 'type':
+        // Cleanup types
+        return setCard({
+          ...cardTypeDefaults[event.target.value as string],
+          key: card.key,
+          group: card.group
+        });
+      case 'chart':
+        return setCard({
+          ...card,
+          [event.target.name as string]: event.target.value,
+          chart_detail: 4,
+          chart_from: 3
+        });
+    }
   }
 
   const classes = useStyles();
@@ -98,7 +108,6 @@ function EditCard(props: EditCardProps) {
       open
       fullScreen={fullScreen}
       fullWidth={true}
-      PaperProps={{ className: classes.dialog }}
       maxWidth="lg"
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>

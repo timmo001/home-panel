@@ -149,7 +149,7 @@ function Media(props: MediaProps) {
             height: props.card.height ? props.card.height * 78 : 78
           }}
           title={`${attributes.media_title} - ${attributes.media_artist}`}
-          image={props.hassConfig.url + attributes.entity_picture}
+          image={props.hassAuth.data.hassUrl + attributes.entity_picture}
         />
       )}
       <div className={classes.controls}>
