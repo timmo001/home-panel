@@ -70,6 +70,7 @@ nav:
       - Login: login.md
       - Home Assistant: home-assistant.md
   - Configuration UI: configui.md
+  - Frequently Asked Questions: faq.md
   - Troubleshooting: troubleshooting.md
   - Posting an Issue: issue-posting.md
   - Contributing: contributing.md
