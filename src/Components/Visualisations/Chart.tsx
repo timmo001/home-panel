@@ -78,21 +78,24 @@ function Chart(props: ChartProps) {
         show: false
       },
       plotOptions: {
-        radialBar: {
-          size: theme.breakpoints.down('sm') ? 70 : 80,
-          dataLabels: {
-            show: false
-          },
-          offsetY: props.lowerGauge
-            ? theme.breakpoints.down('sm')
-              ? theme.spacing(3.7)
-              : theme.spacing(4.7)
-            : theme.breakpoints.down('sm')
-            ? theme.spacing(2.7)
-            : theme.spacing(3.7),
-          startAngle: -90,
-          endAngle: 90
-        }
+        radialBar:
+          props.type && props.type !== 'radialBar'
+            ? {}
+            : {
+                size: theme.breakpoints.down('sm') ? 70 : 80,
+                dataLabels: {
+                  show: false
+                },
+                offsetY: props.lowerGauge
+                  ? theme.breakpoints.down('sm')
+                    ? theme.spacing(3.7)
+                    : theme.spacing(4.7)
+                  : theme.breakpoints.down('sm')
+                  ? theme.spacing(2.7)
+                  : theme.spacing(3.7),
+                startAngle: -90,
+                endAngle: 90
+              }
       },
       stroke: {
         curve: 'smooth',
@@ -132,7 +135,7 @@ function Chart(props: ChartProps) {
     });
   }, [props.color, props.series, props.type, props.lowerGauge, theme]);
 
-  if (!options || !series) return null;
+  if (!options || !series || !props.type) return <div />;
   return (
     <div className={classes.root}>
       <ApexChart

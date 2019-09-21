@@ -63,6 +63,7 @@ function Base(props: BaseProps) {
 
   const classes = useStyles();
 
+  if (!props.card) return null;
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="center" alignContent="stretch">

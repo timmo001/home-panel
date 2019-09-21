@@ -94,7 +94,7 @@ function EditCard(props: EditCardProps) {
           ...card,
           [event.target.name as string]: event.target.value,
           chart_detail: 4,
-          chart_from: 6
+          chart_from: 3
         });
     }
   }

@@ -105,7 +105,7 @@ function Entity(props: EntityProps) {
                 </Select>
               </FormControl>
             </Grid>
-            {props.card.chart && (
+            {props.card.chart && props.card.chart !== 'radialBar' && (
               <Grid item xs>
                 <FormControl className={classes.textField}>
                   <InputLabel htmlFor="chart_detail">Chart Detail</InputLabel>
@@ -125,7 +125,7 @@ function Entity(props: EntityProps) {
                 </FormControl>
               </Grid>
             )}
-            {props.card.chart && (
+            {props.card.chart && props.card.chart !== 'radialBar' && (
               <Grid item xs>
                 <TextField
                   className={classes.textField}
