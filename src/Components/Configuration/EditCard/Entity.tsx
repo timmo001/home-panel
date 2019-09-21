@@ -12,7 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 import { chartTypes } from '../../Visualisations/Chart';
-import EntitySelect from '../../HomeAssistant/EntitySelect';
+import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
 
 const useStyles = makeStyles((theme: Theme) => ({
   textField: {
