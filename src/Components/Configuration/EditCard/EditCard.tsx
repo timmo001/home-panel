@@ -15,13 +15,10 @@ import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  dialog: {
-    overflow: 'visible'
-  },
   dialogContent: {
     paddingLeft: 0,
     paddingRight: 0,
-    overflow: 'visible'
+    overflow: 'hidden'
   },
   container: {},
   background: {
@@ -29,7 +26,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   editView: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    overflow: 'auto'
   }
 }));
 
@@ -110,7 +108,6 @@ function EditCard(props: EditCardProps) {
       open
       fullScreen={fullScreen}
       fullWidth={true}
-      PaperProps={{ className: classes.dialog }}
       maxWidth="lg"
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
