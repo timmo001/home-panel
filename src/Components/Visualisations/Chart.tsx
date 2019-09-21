@@ -39,7 +39,7 @@ function Chart(props: ChartProps) {
   useEffect(() => {
     setSeries(
       props.type === 'radialBar'
-        ? [{ data: props.series[0].data[props.series[0].data.length - 1] }]
+        ? [props.series[0].data[props.series[0].data.length - 1]]
         : props.series
     );
 
