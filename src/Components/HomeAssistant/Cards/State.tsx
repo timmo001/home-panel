@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
@@ -10,6 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import properCase from '../../Utils/properCase';
 import Chart from '../../Visualisations/Chart';
+import { fetchHistory } from '../Utils/api';
+import moment from 'moment';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -38,6 +40,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
 interface StateProps extends EntityProps {}
 
 function State(props: StateProps) {
+  const [historyData, setHistoryData] = React.useState();
+
   const classes = useStyles();
   const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -58,6 +62,31 @@ function State(props: StateProps) {
         state += ` ${entity!.attributes.unit_of_measurement}`;
     }
   }
+
+  const getHistory = useCallback(async () => {
+    const data = await fetchHistory(
+      props.hassAuth,
+      props.card.entity!,
+      moment()
+        .subtract(3, 'hours')
+        .toDate(),
+      moment().toDate()
+    );
+    if (Array.isArray(data))
+      setHistoryData(
+        data[0]
+          .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
+          .map((entity: HassEntity) => Number(entity.state))
+      );
+  }, [props.card.entity, props.hassAuth]);
+
+  useEffect(() => {
+    if (props.card.chart && props.hassAuth && !historyData) {
+      getHistory();
+      setInterval(getHistory, 60000);
+    }
+  }, [props.card.chart, props.hassAuth, historyData, getHistory]);
+
   return (
     <Grid
       className={classes.root}
@@ -65,10 +94,10 @@ function State(props: StateProps) {
       direction="row"
       alignContent="center"
       justify="center">
-      {props.card.chart && (
+      {props.card.chart && historyData && (
         <Chart
           color={theme.palette.secondary.dark}
-          series={[{ data: [0, 20, 23, 45, 67, 96] }]}
+          series={[{ data: historyData }]}
           type={props.card.chart}
         />
       )}
