@@ -42,6 +42,7 @@ export async function handleFetchPromise<T>(
   try {
     response = await fetchPromise;
   } catch (err) {
+    // eslint-disable-next-line
     throw {
       error: 'Request error',
       status_code: undefined,
@@ -57,6 +58,7 @@ export async function handleFetchPromise<T>(
     try {
       body = await response.json();
     } catch (err) {
+      // eslint-disable-next-line
       throw {
         error: 'Unable to parse JSON response',
         status_code: err.status,
@@ -68,6 +70,7 @@ export async function handleFetchPromise<T>(
   }
 
   if (!response.ok) {
+    // eslint-disable-next-line
     throw {
       error: `Response error: ${response.status}`,
       status_code: response.status,
