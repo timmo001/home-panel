@@ -2,9 +2,24 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Start All",
+      "type": "shell",
+      "command": "echo 'Running all..'",
+      "dependsOn": ["Start API", "Start Webapp"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "Start Webapp",
       "type": "shell",
-      "command": "yarn start",
+      "command": "yarn install && yarn start",
       "group": {
         "kind": "test",
         "isDefault": true
@@ -18,7 +33,7 @@
     {
       "label": "Start API",
       "type": "shell",
-      "command": "cd api && yarn dev",
+      "command": "cd api && yarn install && yarn dev",
       "group": {
         "kind": "test",
         "isDefault": true
