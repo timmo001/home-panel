@@ -36,8 +36,12 @@ services:
     ports:
       - 8234:8234
     volumes:
+      - home_panel_data:/data
       - ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
       - ~/ssl/privkey.pem:/data/ssl/privkey.pem
+
+volumes:
+  home_panel_data: {}
 ```
 
 ### Non-SSL
@@ -56,6 +60,11 @@ services:
     image: timmo001/home-panel
     ports:
       - 8234:8234
+    volumes:
+      - home_panel_data:/data
+
+volumes:
+  home_panel_data: {}
 ```
 
 ## Docker
@@ -63,6 +72,12 @@ services:
 ---
 
 - Install [Docker](https://www.docker.com/community-edition)
+- Create volume
+
+```bash
+docker volume create home_panel_data
+```
+
 - Run image
 
 ### SSL
@@ -76,6 +91,7 @@ services:
 ```bash
 docker run -d \
   -p 8234:8234 \
+  -v home_panel_data:/data
   -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
   -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
   -e SSL_CERTFILE=fullchain.pem \
@@ -92,6 +108,7 @@ docker run -d \
 
 ```bash
 docker run -d \
+  -v home_panel_data:/data
   -p 8234:8234 \
   timmo001/home-panel
 ```

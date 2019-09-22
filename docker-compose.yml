@@ -1,8 +1,13 @@
 ---
 version: "3"
 
+volumes:
+  home_panel_data: {}
+
 services:
   home-panel:
     build: .
+    volumes:
+      - home_panel_data:/data
     ports:
       - 8234:8234
