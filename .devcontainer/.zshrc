@@ -1,4 +1,4 @@
-export ZSH="/home/aidan/.oh-my-zsh"
+export ZSH="/root/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
