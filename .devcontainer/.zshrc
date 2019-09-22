@@ -7,12 +7,6 @@ ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
 plugins=(
-  git,
-  git-extras,
-  node,
-  npm,
-  yarn,
-  debian,
   zsh-autosuggestions
 )
 

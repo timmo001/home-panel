@@ -90,12 +90,18 @@ function EditCard(props: EditCardProps) {
           group: card.group
         });
       case 'chart':
-        return setCard({
-          ...card,
-          [event.target.name as string]: event.target.value,
-          chart_detail: 4,
-          chart_from: 3
-        });
+        if (!card.chart)
+          return setCard({
+            ...card,
+            [event.target.name as string]: event.target.value,
+            chart_detail: 4,
+            chart_from: 3
+          });
+        else
+          return setCard({
+            ...card,
+            [event.target.name as string]: event.target.value
+          });
     }
   }
 

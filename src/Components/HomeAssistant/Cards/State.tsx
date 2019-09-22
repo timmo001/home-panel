@@ -91,7 +91,7 @@ function State(props: StateProps) {
   ]);
 
   useEffect(() => {
-    if (props.card.chart && props.hassAuth && !historyData) {
+    if (props.card.chart && props.hassAuth) {
       getHistory();
       if (historyInterval) clearInterval(historyInterval);
       historyInterval = setInterval(getHistory, 60000);
@@ -99,7 +99,13 @@ function State(props: StateProps) {
         if (historyInterval) clearInterval(historyInterval);
       };
     }
-  }, [props.card.chart, props.hassAuth, historyData, getHistory]);
+  }, [
+    props.card.chart,
+    props.hassAuth,
+    props.card.chart_detail,
+    props.card.chart_from,
+    getHistory
+  ]);
 
   return (
     <Grid
@@ -112,7 +118,11 @@ function State(props: StateProps) {
         <Chart
           color={theme.palette.secondary.dark}
           lowerGauge={props.card.icon ? false : true}
-          series={[{ data: historyData }]}
+          series={
+            props.card.chart === 'radialBar'
+              ? [historyData[historyData.length - 1]]
+              : [{ data: historyData }]
+          }
           type={props.card.chart}
         />
       )}
