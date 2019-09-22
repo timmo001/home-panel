@@ -46,7 +46,7 @@ function Chart(props: ChartProps) {
   }, [type, props.type, props.series]);
 
   useEffect(() => {
-    if (!series) {
+    if (!series || props.series !== series) {
       setSeries(props.series);
     }
   }, [props.series, props.type, series]);
