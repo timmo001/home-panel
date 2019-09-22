@@ -79,6 +79,54 @@ function Entity(props: EntityProps) {
         alignContent="flex-end"
         item
         xs>
+        <Grid item xs>
+          {props.hassEntities ? (
+            <EntitySelect
+              {...props}
+              entity={props.card.entity!}
+              handleChange={props.handleChange!('entity')}
+            />
+          ) : (
+            <TextField
+              className={classes.textField}
+              InputLabelProps={{ shrink: true }}
+              label="Entity"
+              placeholder="sensor.myamazingsensor"
+              value={props.card.entity}
+              onChange={props.handleChange!('entity')}
+            />
+          )}
+        </Grid>
+        {iconAllowed && (
+          <Grid
+            item
+            container
+            direction="row"
+            justify="center"
+            alignItems="flex-end"
+            alignContent="flex-end">
+            <Grid item xs>
+              <TextField
+                className={classes.textField}
+                InputLabelProps={{ shrink: true }}
+                label="Icon"
+                placeholder="thermometer"
+                value={props.card.icon}
+                onChange={props.handleChange!('icon')}
+              />
+            </Grid>
+            {props.card.entity && (
+              <Grid item>
+                <Button
+                  variant="text"
+                  color="primary"
+                  onClick={handleGetEntityIcon}>
+                  Get from HA
+                </Button>
+              </Grid>
+            )}
+          </Grid>
+        )}
         {graphAllowed && props.card.entity && (
           <Grid
             item
@@ -144,41 +192,6 @@ function Entity(props: EntityProps) {
               </Grid>
             )}
           </Grid>
-        )}
-        {iconAllowed && (
-          <Grid item xs>
-            <TextField
-              className={classes.textField}
-              InputLabelProps={{ shrink: true }}
-              label="Icon"
-              placeholder="thermometer"
-              value={props.card.icon}
-              onChange={props.handleChange!('icon')}
-            />
-          </Grid>
-        )}
-        {iconAllowed && props.card.entity && (
-          <Grid item>
-            <Button onClick={handleGetEntityIcon}>Get from HA</Button>
-          </Grid>
-        )}
-      </Grid>
-      <Grid item xs>
-        {props.hassEntities ? (
-          <EntitySelect
-            {...props}
-            entity={props.card.entity!}
-            handleChange={props.handleChange!('entity')}
-          />
-        ) : (
-          <TextField
-            className={classes.textField}
-            InputLabelProps={{ shrink: true }}
-            label="Entity"
-            placeholder="sensor.myamazingsensor"
-            value={props.card.entity}
-            onChange={props.handleChange!('entity')}
-          />
         )}
       </Grid>
     </Grid>

@@ -87,7 +87,12 @@ function Base(props: BaseProps) {
           </Grid>
           {props.card.type === 'entity' && props.card.entity && (
             <Grid item>
-              <Button onClick={handleGetEntityTitle}>Get from HA</Button>
+              <Button
+                variant="text"
+                color="primary"
+                onClick={handleGetEntityTitle}>
+                Get from HA
+              </Button>
             </Grid>
           )}
         </Grid>
