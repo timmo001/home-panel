@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
     overflow: 'hidden',
-    top: theme.spacing(2),
-    bottom: -38,
-    left: theme.spacing(-1),
-    right: theme.spacing(-1)
+    top: theme.spacing(1),
+    bottom: -32,
+    left: theme.spacing(-1.5),
+    right: theme.spacing(-1.25)
   }
 }));
 
