@@ -1,0 +1,16 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+  "name": "Home Panel Dev",
+  "context": "..",
+  "dockerFile": "../Dockerfile.dev",
+  "appPort": [3000, 8234],
+  "runArgs": ["-e", "GIT_EDITOR=\"code --wait\""],
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "redhat.vscode-yaml"
+  ],
+  "settings": {}
+}
