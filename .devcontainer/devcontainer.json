@@ -9,6 +9,7 @@
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
+    "ms-azuretools.vscode-docker",
     "ms-vscode.vscode-typescript-tslint-plugin",
     "redhat.vscode-yaml"
   ],
