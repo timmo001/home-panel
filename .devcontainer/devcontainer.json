@@ -1,10 +1,15 @@
-// See https://aka.ms/vscode-remote/devcontainer.json for format details.
 {
   "name": "Home Panel Dev",
   "context": "..",
   "dockerFile": "../Dockerfile.dev",
   "appPort": [3000, 8234],
-  "runArgs": ["-e", "GIT_EDITOR=\"code --wait\""],
+  "runArgs": [
+    "-e",
+    "GIT_EDITOR=\"code --wait\"",
+    "-v",
+    "${env:HOME}${env:USERPROFILE}/.ssh:/root/.ssh-localhost:ro"
+  ],
+  "postCreateCommand": "mkdir -p ~/.ssh && cp -r ~/.ssh-localhost/* ~/.ssh && chmod 700 ~/.ssh && chmod 600 ~/.ssh/*",
   "extensions": [
     "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
