@@ -26,114 +26,117 @@ export const chartTypes: { [type: string]: string } = {
 interface ChartProps {
   color?: string;
   lowerGauge?: boolean;
-  series: [
-    {
-      data: number[];
-    }
-  ];
+  series: [{ data: number[] }] | number[];
   type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
 }
 
 function Chart(props: ChartProps) {
   const [options, setOptions] = React.useState();
   const [series, setSeries] = React.useState();
+  const [type, setType] = React.useState();
 
   const classes = useStyles();
   const theme = useTheme();
 
   useEffect(() => {
-    setSeries(
-      props.type === 'radialBar'
-        ? [props.series[0].data[props.series[0].data.length - 1]]
-        : props.series
-    );
+    if (!type || props.type !== type) {
+      setType(props.type);
+      setSeries(undefined);
+    }
+  }, [type, props.type, props.series]);
 
-    setOptions({
-      chart: {
-        toolbar: {
+  useEffect(() => {
+    if (!series) {
+      setSeries(props.series);
+    }
+  }, [props.series, props.type, series]);
+
+  useEffect(() => {
+    if (!options || props.color !== options.colors[0]) {
+      setOptions({
+        chart: {
+          toolbar: {
+            show: false
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        colors: [props.color],
+        dataLabels: {
+          enabled: false
+        },
+        grid: {
+          show: false,
+          xaxis: {
+            lines: {
+              show: false
+            }
+          },
+          yaxis: {
+            lines: {
+              show: false
+            }
+          }
+        },
+        legend: {
           show: false
         },
-        zoom: {
+        plotOptions: {
+          radialBar: {
+            size: theme.breakpoints.down('sm') ? 70 : 80,
+            dataLabels: {
+              show: false
+            },
+            offsetY: props.lowerGauge
+              ? theme.breakpoints.down('sm')
+                ? theme.spacing(3.7)
+                : theme.spacing(4.7)
+              : theme.breakpoints.down('sm')
+              ? theme.spacing(2.7)
+              : theme.spacing(3.7),
+            startAngle: -90,
+            endAngle: 90
+          }
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 3
+        },
+        tooltip: {
           enabled: false
-        }
-      },
-      colors: [props.color || '#607D8B'],
-      dataLabels: {
-        enabled: false
-      },
-      grid: {
-        show: false,
+        },
         xaxis: {
-          lines: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            show: false
+          },
+          labels: {
             show: false
           }
         },
         yaxis: {
-          lines: {
+          axisBorder: {
+            show: false
+          },
+          axisTicks: {
+            show: false
+          },
+          crosshairs: {
+            show: false
+          },
+          labels: {
             show: false
           }
         }
-      },
-      legend: {
-        show: false
-      },
-      plotOptions: {
-        radialBar:
-          props.type && props.type !== 'radialBar'
-            ? {}
-            : {
-                size: theme.breakpoints.down('sm') ? 70 : 80,
-                dataLabels: {
-                  show: false
-                },
-                offsetY: props.lowerGauge
-                  ? theme.breakpoints.down('sm')
-                    ? theme.spacing(3.7)
-                    : theme.spacing(4.7)
-                  : theme.breakpoints.down('sm')
-                  ? theme.spacing(2.7)
-                  : theme.spacing(3.7),
-                startAngle: -90,
-                endAngle: 90
-              }
-      },
-      stroke: {
-        curve: 'smooth',
-        width: 3
-      },
-      tooltip: {
-        enabled: false
-      },
-      xaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        crosshairs: {
-          show: false
-        },
-        labels: {
-          show: false
-        }
-      },
-      yaxis: {
-        axisBorder: {
-          show: false
-        },
-        axisTicks: {
-          show: false
-        },
-        crosshairs: {
-          show: false
-        },
-        labels: {
-          show: false
-        }
-      }
-    });
-  }, [props.color, props.series, props.type, props.lowerGauge, theme]);
+      });
+    }
+  }, [options, props.color, props.lowerGauge, theme]);
 
   if (!options || !series || !props.type) return <div />;
   return (
@@ -143,7 +146,7 @@ function Chart(props: ChartProps) {
         width="100%"
         options={options}
         series={series}
-        type={props.type}
+        type={type}
       />
     </div>
   );

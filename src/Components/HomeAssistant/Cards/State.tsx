@@ -112,7 +112,11 @@ function State(props: StateProps) {
         <Chart
           color={theme.palette.secondary.dark}
           lowerGauge={props.card.icon ? false : true}
-          series={[{ data: historyData }]}
+          series={
+            props.card.chart === 'radialBar'
+              ? [historyData[historyData.length - 1]]
+              : [{ data: historyData }]
+          }
           type={props.card.chart}
         />
       )}
