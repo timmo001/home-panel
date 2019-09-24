@@ -25,11 +25,6 @@ name and icon. You can also delete the page here.
 
 Head to the configuration section where you can set and create new themes.
 
-## Editing the header
-
-Enter the Config UI and click the icon in the header. This will then give you
-access to edit the header to your liking and even disable individual elements.
-
 ## Adding a card
 
 Enter the Config UI and click the card with the + that appears.
