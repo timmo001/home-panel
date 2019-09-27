@@ -138,7 +138,7 @@ function Chart(props: ChartProps) {
     }
   }, [options, props.color, props.lowerGauge, theme]);
 
-  if (!options || !series || !props.type) return <div />;
+  if (!options || !series || !type) return <div />;
   return (
     <div className={classes.root}>
       <ApexChart
