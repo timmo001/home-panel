@@ -137,7 +137,7 @@ function Cover(props: CoverProps) {
           </IconButton>
         </Grid>
         {attributes.current_tilt_position !== undefined &&
-        props.card.width > 1 ? (
+        (!props.card.width || props.card.width > 1) ? (
           <Grid item>
             <IconButton
               className={classes.iconContainer}

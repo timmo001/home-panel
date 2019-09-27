@@ -234,7 +234,7 @@ function Overview(props: OverviewProps) {
                 justify="flex-start"
                 alignContent="flex-start"
                 style={{
-                  width: groupWidth * group.width + theme.spacing(6.5)
+                  width: group.width * (groupWidth + theme.spacing(2))
                 }}>
                 <Grid
                   item
@@ -303,6 +303,7 @@ function Overview(props: OverviewProps) {
                         key={key}
                         card={card}
                         editing={props.editing}
+                        expandable={true}
                         handleDelete={handleDelete(group, card)}
                         handleMoveUp={handleMoveUp(group, card)}
                         handleMoveDown={handleMoveDown(group, card)}

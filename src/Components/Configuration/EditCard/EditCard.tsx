@@ -148,7 +148,7 @@ function EditCard(props: EditCardProps) {
             container
             alignContent="center"
             justify="space-around">
-            <CardBase {...props} card={card} editing={0} />
+            <CardBase {...props} card={card} editing={0} expandable={true} />
           </Grid>
         </Grid>
       </DialogContent>

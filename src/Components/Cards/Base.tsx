@@ -1,21 +1,27 @@
 // @flow
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { CardProps } from '../Configuration/Config';
-import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
+import {
+  HomeAssistantChangeProps,
+  entitySizes
+} from '../HomeAssistant/HomeAssistant';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
@@ -26,6 +32,11 @@ import Markdown from './Markdown';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     overflow: 'visible'
+  },
+  buttonExpand: {
+    position: 'absolute',
+    top: theme.spacing(1.2),
+    right: theme.spacing(0.8)
   },
   card: {
     flex: 1
@@ -61,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 4
   },
   title: {
-    minHeight: 20,
+    minHeight: theme.spacing(3),
     fontWeight: 400,
     lineHeight: 1.2
   },
@@ -75,15 +86,116 @@ export interface BaseProps
     HomeAssistantChangeProps {
   card: CardProps;
   editing: number;
+  expandable: boolean;
+  handleCloseExpand?: () => void;
   handleDelete?: () => void;
   handleMoveDown?: () => void;
   handleMoveUp?: () => void;
   handleUpdate: (data: CardProps) => void;
 }
 
+let holdTimeout: NodeJS.Timeout;
 function Base(props: BaseProps) {
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
   const [editCard, setEditCard] = React.useState(false);
+  const [expandable, setExpandable] = React.useState(false);
+  const [expandCard, setExpandCard] = React.useState(false);
+  const [height, setHeight] = React.useState();
+  const [width, setWidth] = React.useState();
+  const [toggleable, setToggleable] = React.useState();
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
+
+  const handleSetHeight = useCallback(
+    (cardSize: number, entitySizeKey?: string) => {
+      let h =
+        !props.expandable && entitySizeKey
+          ? entitySizes[entitySizeKey].height * cardSize
+          : props.editing === 2 || !props.card.height
+          ? 'initial'
+          : isNaN(props.card.height)
+          ? props.card.height
+          : props.card.height * cardSize || cardSize;
+      if (h) setHeight(h);
+    },
+    [props.card.height, props.editing, props.expandable]
+  );
+
+  const handleSetWidth = useCallback(
+    (cardSize: number, entitySizeKey?: string) => {
+      let w =
+        !props.expandable && entitySizeKey
+          ? entitySizes[entitySizeKey].width * cardSize
+          : props.editing === 2 || !props.card.width
+          ? -1
+          : props.card.width * cardSize || cardSize;
+      if (w !== cardSize) {
+        // Adjust for margins
+        w = props.card.width
+          ? w + (props.card.width - 1) * theme.spacing(1)
+          : w;
+      }
+      if (w) setWidth(w);
+    },
+    [props.card.width, props.editing, props.expandable, theme]
+  );
+
+  const handleSetToggleable = useCallback(() => {
+    setToggleable(
+      props.editing === 1
+        ? false
+        : !props.card.disabled && props.card.toggleable
+    );
+  }, [props.card.disabled, props.card.toggleable, props.editing]);
+
+  const handleSetExpandable = useCallback(
+    (entitySizeKey: string) => {
+      if (entitySizeKey)
+        if (props.card.height && props.card.width)
+          setExpandable(
+            props.card.height < entitySizes[entitySizeKey].height ||
+              props.card.width < entitySizes[entitySizeKey].width
+          );
+        else if (props.card.width)
+          setExpandable(props.card.width < entitySizes[entitySizeKey].width);
+    },
+    [props.card.height, props.card.width]
+  );
+
+  useEffect(() => {
+    const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
+
+    const entitySizeKey =
+      props.card.entity &&
+      Object.keys(entitySizes).find(
+        (domain: string) => domain === props.card.entity!.split('.')[0]
+      );
+    handleSetHeight(cardSize, entitySizeKey);
+    handleSetWidth(cardSize, entitySizeKey);
+
+    handleSetToggleable();
+
+    if (
+      props.expandable &&
+      props.card.type === 'entity' &&
+      props.card.entity &&
+      entitySizeKey
+    )
+      handleSetExpandable(entitySizeKey);
+  }, [
+    props.card.entity,
+    props.card.type,
+    props.expandable,
+    handleSetExpandable,
+    handleSetHeight,
+    handleSetToggleable,
+    handleSetWidth,
+    height,
+    theme.breakpoints,
+    width
+  ]);
 
   function handleDeleteConfirm() {
     setDeleteConfirm(true);
@@ -125,27 +237,26 @@ function Base(props: BaseProps) {
     setEditCard(false);
   }
 
-  const classes = useStyles();
-  const theme = useTheme();
-
-  const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
-
-  let height =
-    props.editing === 2 || !props.card.height
-      ? 'initial'
-      : isNaN(props.card.height)
-      ? props.card.height
-      : props.card.height! * cardSize || cardSize;
-  if (props.card.title === 'test') console.log('height:', height);
-  let width =
-    props.editing === 2 ? -1 : props.card.width! * cardSize || cardSize;
-  if (width !== cardSize) {
-    // Adjust for margins
-    width = props.card.width! * theme.spacing(1) + width;
+  function handleExpand() {
+    setExpandCard(true);
   }
 
-  const toggleable =
-    props.editing === 1 ? false : !props.card.disabled && props.card.toggleable;
+  function handleCloseExpand() {
+    setExpandCard(false);
+  }
+
+  function handleHold() {
+    if (expandable) {
+      handleHoldCancel();
+      holdTimeout = setTimeout(() => {
+        handleExpand();
+      }, 1000);
+    }
+  }
+
+  function handleHoldCancel() {
+    if (holdTimeout) clearTimeout(holdTimeout);
+  }
 
   return (
     <Grid className={classes.root} item>
@@ -157,7 +268,10 @@ function Base(props: BaseProps) {
           cursor: !toggleable ? 'unset' : 'pointer',
           userSelect: !toggleable ? 'text' : 'none'
         }}
-        onClick={toggleable ? handleHassToggle : undefined}>
+        onClick={toggleable ? handleHassToggle : undefined}
+        onMouseDown={handleHold}
+        onMouseUp={handleHoldCancel}
+        onMouseLeave={handleHoldCancel}>
         <Card
           className={classes.card}
           square={props.card.square}
@@ -186,17 +300,31 @@ function Base(props: BaseProps) {
               maxWidth: width,
               padding: props.card.padding ? props.card.padding : 12
             }}>
-            {props.card.title && (
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                variant="h6"
-                component="h3"
-                gutterBottom
-                noWrap>
-                {props.card.title}
-              </Typography>
-            )}
+            <Grid container direction="row">
+              <Grid item xs>
+                {props.card.title && (
+                  <Typography
+                    className={classes.title}
+                    color="textPrimary"
+                    variant="h6"
+                    component="h3"
+                    gutterBottom
+                    noWrap>
+                    {props.card.title}
+                  </Typography>
+                )}
+              </Grid>
+              <Grid item>
+                {!props.expandable && (
+                  <IconButton
+                    aria-label="close"
+                    size="small"
+                    onClick={props.handleCloseExpand}>
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
             {props.card.type === 'entity' && (
               <Entity
                 {...props}
@@ -248,6 +376,21 @@ function Base(props: BaseProps) {
           )}
         </Card>
       </ButtonBase>
+      {expandCard && (
+        <Dialog
+          open={expandCard}
+          fullScreen={fullScreen}
+          onClose={handleCloseExpand}>
+          <Grid container justify="center">
+            <Base
+              {...props}
+              expandable={false}
+              card={{ ...props.card, height: undefined, width: undefined }}
+              handleCloseExpand={handleCloseExpand}
+            />
+          </Grid>
+        </Dialog>
+      )}
     </Grid>
   );
 }

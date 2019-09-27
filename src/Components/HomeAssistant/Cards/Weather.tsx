@@ -192,7 +192,7 @@ function Weather(props: WeatherProps) {
           justify="space-between">
           <Grid
             item
-            xs={props.card.width > 1 ? 4 : 12}
+            xs={!props.card.width || props.card.width > 1 ? 4 : 12}
             container
             direction="column"
             alignContent="center"
@@ -211,7 +211,9 @@ function Weather(props: WeatherProps) {
               </Typography>
             </Grid>
           </Grid>
-          {props.card.width > 1 || props.card.height! > 1 ? (
+          {!props.card.width ||
+          props.card.width > 1 ||
+          (!props.card.height || props.card.height > 1) ? (
             <Grid item xs>
               {Object.keys(attributes)
                 .filter(i => typeof attributes[i] == 'number')
@@ -232,52 +234,53 @@ function Weather(props: WeatherProps) {
           ) : null}
         </Grid>
       </Grid>
-      {props.card.width > 1 && props.card.height! > 1 && (
-        <Grid item className={classes.forecast}>
-          {attributes.forecast.map((w: object | any, key: number) => {
-            const datetime = moment(w.datetime);
-            const icon = weatherMap[w.condition];
-            return (
-              <div key={key} className={classes.forecastItem}>
-                <Typography
-                  noWrap
-                  className={classes.forecastText}
-                  variant="body2">
-                  {datetime.format('ddd')}
-                  <br />
-                  {datetime.format('h a')}
-                </Typography>
+      {(!props.card.width || props.card.width > 1) &&
+        (!props.card.height || props.card.height > 1) && (
+          <Grid item className={classes.forecast}>
+            {attributes.forecast.map((w: object | any, key: number) => {
+              const datetime = moment(w.datetime);
+              const icon = weatherMap[w.condition];
+              return (
+                <div key={key} className={classes.forecastItem}>
+                  <Typography
+                    noWrap
+                    className={classes.forecastText}
+                    variant="body2">
+                    {datetime.format('ddd')}
+                    <br />
+                    {datetime.format('h a')}
+                  </Typography>
 
-                <Typography
-                  className={classes.forecastTextIcon}
-                  variant="body2">
-                  <span
-                    className={classnames(
-                      'mdi',
-                      `mdi-${icon}`,
-                      classes.forecastIcon
-                    )}
-                  />
-                </Typography>
+                  <Typography
+                    className={classes.forecastTextIcon}
+                    variant="body2">
+                    <span
+                      className={classnames(
+                        'mdi',
+                        `mdi-${icon}`,
+                        classes.forecastIcon
+                      )}
+                    />
+                  </Typography>
 
-                <Typography
-                  noWrap
-                  className={classes.forecastText}
-                  variant="body2">
-                  {w.temperature}
-                  {getUnit('temperature')}
-                </Typography>
-                <Typography
-                  noWrap
-                  className={classes.forecastText}
-                  variant="body2">
-                  {w.precipitation}
-                </Typography>
-              </div>
-            );
-          })}
-        </Grid>
-      )}
+                  <Typography
+                    noWrap
+                    className={classes.forecastText}
+                    variant="body2">
+                    {w.temperature}
+                    {getUnit('temperature')}
+                  </Typography>
+                  <Typography
+                    noWrap
+                    className={classes.forecastText}
+                    variant="body2">
+                    {w.precipitation}
+                  </Typography>
+                </div>
+              );
+            })}
+          </Grid>
+        )}
     </Grid>
   );
 }
