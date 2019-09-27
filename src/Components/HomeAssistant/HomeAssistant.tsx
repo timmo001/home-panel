@@ -55,7 +55,7 @@ export const entitySizes: {
   geo_location: { height: 1, width: 1 },
   input_boolean: { height: 1, width: 1 },
   input_select: { height: 1, width: 1 },
-  light: { height: 4, width: 2 },
+  light: { height: 3, width: 2 },
   lock: { height: 1, width: 1 },
   media_player: { height: 2, width: 2 },
   remote: { height: 1, width: 1 },
