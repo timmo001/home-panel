@@ -104,74 +104,76 @@ function AlarmPanel(props: AlarmPanelProps) {
       <Typography className={classes.text} color="textPrimary" component="h5">
         {properCase(entity.state)}
       </Typography>
-      {props.card.width > 1 && (
-        <Grid
-          item
-          container
-          spacing={1}
-          alignContent="center"
-          justify="center"
-          direction="row">
-          {!armed && (
-            <Grid item>
-              <Button
-                color="primary"
-                onClick={handleUpdate('alarm_arm_away')}
-                disabled={
-                  (attributes.code_arm_required && !code) ||
-                  entity.state === 'pending'
-                }>
-                Arm Away
-              </Button>
-            </Grid>
-          )}
-          {!armed && (
-            <Grid item>
-              <Button
-                color="primary"
-                onClick={handleUpdate('alarm_arm_home')}
-                disabled={
-                  (attributes.code_arm_required && !code) ||
-                  entity.state === 'pending'
-                }>
-                Arm Home
-              </Button>
-            </Grid>
-          )}
-          {armed && (
-            <Grid item>
-              <Button
-                color="primary"
-                onClick={handleUpdate('alarm_disarm')}
-                disabled={
-                  (attributes.code_arm_required && !code) ||
-                  entity.state === 'pending'
-                }>
-                Disarm
-              </Button>
-            </Grid>
-          )}
-        </Grid>
-      )}
-      {attributes.code_arm_required && props.card.width > 1 && (
-        <Grid item>
-          <Input
-            className={classes.input}
-            inputProps={{
-              'aria-label': 'code',
-              style: { textAlign: 'center' }
-            }}
-            disabled={entity.state === 'pending'}
-            placeholder="1234"
-            type="number"
-            value={code}
-            onChange={handleCodeChange}
-          />
-        </Grid>
-      )}
+      {!props.card.width ||
+        (props.card.width > 1 && (
+          <Grid
+            item
+            container
+            spacing={1}
+            alignContent="center"
+            justify="center"
+            direction="row">
+            {!armed && (
+              <Grid item>
+                <Button
+                  color="primary"
+                  onClick={handleUpdate('alarm_arm_away')}
+                  disabled={
+                    (attributes.code_arm_required && !code) ||
+                    entity.state === 'pending'
+                  }>
+                  Arm Away
+                </Button>
+              </Grid>
+            )}
+            {!armed && (
+              <Grid item>
+                <Button
+                  color="primary"
+                  onClick={handleUpdate('alarm_arm_home')}
+                  disabled={
+                    (attributes.code_arm_required && !code) ||
+                    entity.state === 'pending'
+                  }>
+                  Arm Home
+                </Button>
+              </Grid>
+            )}
+            {armed && (
+              <Grid item>
+                <Button
+                  color="primary"
+                  onClick={handleUpdate('alarm_disarm')}
+                  disabled={
+                    (attributes.code_arm_required && !code) ||
+                    entity.state === 'pending'
+                  }>
+                  Disarm
+                </Button>
+              </Grid>
+            )}
+          </Grid>
+        ))}
       {attributes.code_arm_required &&
-        props.card.width > 1 &&
-        props.card.height! > 1 && (
+        (!props.card.width || props.card.width > 1) && (
+          <Grid item>
+            <Input
+              className={classes.input}
+              inputProps={{
+                'aria-label': 'code',
+                style: { textAlign: 'center' }
+              }}
+              disabled={entity.state === 'pending'}
+              placeholder="1234"
+              type="number"
+              value={code}
+              onChange={handleCodeChange}
+            />
+          </Grid>
+        )}
+      {attributes.code_arm_required &&
+        (!props.card.width || props.card.width > 1) &&
+        (!props.card.height || props.card.height > 1) && (
           <Grid
             className={classes.codes}
             item

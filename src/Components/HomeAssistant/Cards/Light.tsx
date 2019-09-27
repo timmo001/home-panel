@@ -239,7 +239,8 @@ function Light(props: LightProps) {
       container
       direction="row"
       alignContent="center"
-      justify="center">
+      justify="center"
+      spacing={1}>
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton onClick={props.handleHassToggle}>
           <Typography
@@ -265,9 +266,11 @@ function Light(props: LightProps) {
           </Typography>
         </Grid>
       )}
-      {controls
-        .splice(0, props.card.height! > 1 ? props.card.height! : 0)
-        .map(control => control)}
+      {!props.card.height
+        ? controls
+        : controls
+            .splice(0, props.card.height > 1 ? props.card.height : 0)
+            .map(control => control)}
     </Grid>
   );
 }

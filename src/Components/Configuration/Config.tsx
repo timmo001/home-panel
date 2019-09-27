@@ -61,7 +61,7 @@ export type CardProps = {
   key: string;
   group: string;
   type: string;
-  width: number;
+  width?: number;
   height?: number;
   square?: boolean;
   padding?: number | string;

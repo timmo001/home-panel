@@ -22,7 +22,7 @@ export interface EntityProps extends BaseProps {
 function Entity(props: EntityProps) {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
   props.card.domain = domain;
-  if (!props.card.entity) props.card.entity = '';
+  if (!props.card.entity) return null;
 
   if (
     domain === 'air_quality' ||

@@ -148,7 +148,7 @@ function Climate(props: ClimateProps) {
             </Typography>
           </div>
         </Grid>
-        {props.card.width > 1 && (
+        {(!props.card.width || props.card.width > 1) && (
           <Grid item>
             {attributes.temperature ? (
               <Grid
@@ -283,85 +283,86 @@ function Climate(props: ClimateProps) {
           </Grid>
         )}
       </Grid>
-      {props.card.width > 1 && props.card.height! > 1 && (
-        <Grid
-          item
-          container
-          spacing={1}
-          alignContent="center"
-          justify="center"
-          direction="row">
-          {attributes.hvac_modes.map((mode: string, key: number) => {
-            let icon: string | undefined =
-              mode === 'off'
-                ? 'mdi-power'
-                : mode === 'heat'
-                ? 'mdi-fire'
-                : mode === 'cool'
-                ? 'mdi-snowflake'
-                : mode === 'heat_cool'
-                ? 'mdi-autorenew'
-                : mode === 'auto'
-                ? 'mdi-calendar-repeat'
-                : mode === 'dry'
-                ? 'mdi-water-percent'
-                : mode === 'fan_only'
-                ? 'mdi-fan'
-                : undefined;
-            if (icon)
+      {(!props.card.width || props.card.width > 1) &&
+        (!props.card.height || props.card.height > 1) && (
+          <Grid
+            item
+            container
+            spacing={1}
+            alignContent="center"
+            justify="center"
+            direction="row">
+            {attributes.hvac_modes.map((mode: string, key: number) => {
+              let icon: string | undefined =
+                mode === 'off'
+                  ? 'mdi-power'
+                  : mode === 'heat'
+                  ? 'mdi-fire'
+                  : mode === 'cool'
+                  ? 'mdi-snowflake'
+                  : mode === 'heat_cool'
+                  ? 'mdi-autorenew'
+                  : mode === 'auto'
+                  ? 'mdi-calendar-repeat'
+                  : mode === 'dry'
+                  ? 'mdi-water-percent'
+                  : mode === 'fan_only'
+                  ? 'mdi-fan'
+                  : undefined;
+              if (icon)
+                return (
+                  <Grid key={key} item>
+                    <IconButton
+                      className={classes.iconContainer}
+                      onClick={() => handleHvacChange(mode)}>
+                      <span
+                        className={classnames(
+                          'mdi',
+                          icon,
+                          classes.icon,
+                          attributes.hvac_action === mode && classes.iconActive
+                        )}
+                      />
+                    </IconButton>
+                  </Grid>
+                );
               return (
                 <Grid key={key} item>
-                  <IconButton
-                    className={classes.iconContainer}
+                  <Button
+                    className={classnames(
+                      attributes.hvac_action === mode && classes.iconActive
+                    )}
                     onClick={() => handleHvacChange(mode)}>
+                    {mode}
+                  </Button>
+                </Grid>
+              );
+            })}
+            {attributes.away_mode && (
+              <Grid
+                item
+                xs={4}
+                container
+                spacing={1}
+                alignContent="center"
+                justify="space-around"
+                direction="row">
+                <Grid item>
+                  <IconButton onClick={() => handleAwayToggle()}>
                     <span
                       className={classnames(
                         'mdi',
-                        icon,
+                        'mdi-walk',
                         classes.icon,
-                        attributes.hvac_action === mode && classes.iconActive
+                        attributes.away_mode === 'on' && classes.iconActive
                       )}
                     />
                   </IconButton>
                 </Grid>
-              );
-            return (
-              <Grid key={key} item>
-                <Button
-                  className={classnames(
-                    attributes.hvac_action === mode && classes.iconActive
-                  )}
-                  onClick={() => handleHvacChange(mode)}>
-                  {mode}
-                </Button>
               </Grid>
-            );
-          })}
-          {attributes.away_mode && (
-            <Grid
-              item
-              xs={4}
-              container
-              spacing={1}
-              alignContent="center"
-              justify="space-around"
-              direction="row">
-              <Grid item>
-                <IconButton onClick={() => handleAwayToggle()}>
-                  <span
-                    className={classnames(
-                      'mdi',
-                      'mdi-walk',
-                      classes.icon,
-                      attributes.away_mode === 'on' && classes.iconActive
-                    )}
-                  />
-                </IconButton>
-              </Grid>
-            </Grid>
-          )}
-        </Grid>
-      )}
+            )}
+          </Grid>
+        )}
     </Grid>
   );
 }

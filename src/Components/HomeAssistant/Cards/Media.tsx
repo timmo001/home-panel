@@ -130,7 +130,7 @@ function Media(props: MediaProps) {
 
   return (
     <div className={classes.root}>
-      {props.card.height! > 1 && (
+      {(!props.card.height || props.card.height > 1) && (
         <div className={classes.info}>
           {attributes.media_title && (
             <Typography variant="body1" noWrap>
@@ -142,7 +142,7 @@ function Media(props: MediaProps) {
           )}
         </div>
       )}
-      {props.card.height! > 1 && (
+      {(!props.card.height || props.card.height > 1) && (
         <CardMedia
           className={classes.media}
           style={{
@@ -154,7 +154,7 @@ function Media(props: MediaProps) {
       )}
       <div className={classes.controls}>
         <div className={classes.controlsMain}>
-          {props.card.width > 1 && state !== 'off' && (
+          {(!props.card.width || props.card.width > 1) && state !== 'off' && (
             <IconButton
               className={classes.button}
               aria-label="Volume Down"
@@ -197,7 +197,7 @@ function Media(props: MediaProps) {
             onClick={() => handleChange('next')}>
             <SkipNextIcon fontSize="small" />
           </IconButton>
-          {props.card.width > 1 && state !== 'off' && (
+          {(!props.card.width || props.card.width > 1) && state !== 'off' && (
             <IconButton
               className={classes.button}
               aria-label="Volume Up"

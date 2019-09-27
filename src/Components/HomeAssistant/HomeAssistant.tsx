@@ -41,6 +41,32 @@ export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   ) => void;
 }
 
+export const entitySizes: {
+  [key: string]: { height: number; width: number };
+} = {
+  air_quality: { height: 1, width: 1 },
+  alarm_control_panel: { height: 2, width: 2 },
+  binary_sensor: { height: 1, width: 1 },
+  camera: { height: 1, width: 1 },
+  climate: { height: 2, width: 2 },
+  cover: { height: 1, width: 2 },
+  device_tracker: { height: 1, width: 1 },
+  fan: { height: 1, width: 2 },
+  geo_location: { height: 1, width: 1 },
+  input_boolean: { height: 1, width: 1 },
+  input_select: { height: 1, width: 1 },
+  light: { height: 4, width: 2 },
+  lock: { height: 1, width: 1 },
+  media_player: { height: 2, width: 2 },
+  remote: { height: 1, width: 1 },
+  scene: { height: 1, width: 1 },
+  script: { height: 1, width: 1 },
+  sensor: { height: 1, width: 1 },
+  sun: { height: 1, width: 1 },
+  switch: { height: 1, width: 1 },
+  weather: { height: 2, width: 3 }
+};
+
 let connection: Connection, auth: Auth;
 
 export function loadTokens() {
