@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -86,6 +87,7 @@ export interface BaseProps
   card: CardProps;
   editing: number;
   expandable: boolean;
+  handleCloseExpand?: () => void;
   handleDelete?: () => void;
   handleMoveDown?: () => void;
   handleMoveUp?: () => void;
@@ -298,17 +300,31 @@ function Base(props: BaseProps) {
               maxWidth: width,
               padding: props.card.padding ? props.card.padding : 12
             }}>
-            {props.card.title && (
-              <Typography
-                className={classes.title}
-                color="textPrimary"
-                variant="h6"
-                component="h3"
-                gutterBottom
-                noWrap>
-                {props.card.title}
-              </Typography>
-            )}
+            <Grid container direction="row">
+              <Grid item xs>
+                {props.card.title && (
+                  <Typography
+                    className={classes.title}
+                    color="textPrimary"
+                    variant="h6"
+                    component="h3"
+                    gutterBottom
+                    noWrap>
+                    {props.card.title}
+                  </Typography>
+                )}
+              </Grid>
+              <Grid item>
+                {!props.expandable && (
+                  <IconButton
+                    aria-label="close"
+                    size="small"
+                    onClick={props.handleCloseExpand}>
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
             {props.card.type === 'entity' && (
               <Entity
                 {...props}
@@ -361,12 +377,18 @@ function Base(props: BaseProps) {
         </Card>
       </ButtonBase>
       {expandCard && (
-        <Dialog open fullScreen={fullScreen} onClose={handleCloseExpand}>
-          <Base
-            {...props}
-            expandable={false}
-            card={{ ...props.card, height: undefined, width: undefined }}
-          />
+        <Dialog
+          open={expandCard}
+          fullScreen={fullScreen}
+          onClose={handleCloseExpand}>
+          <Grid container justify="center">
+            <Base
+              {...props}
+              expandable={false}
+              card={{ ...props.card, height: undefined, width: undefined }}
+              handleCloseExpand={handleCloseExpand}
+            />
+          </Grid>
         </Dialog>
       )}
     </Grid>

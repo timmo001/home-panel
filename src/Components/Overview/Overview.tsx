@@ -234,7 +234,7 @@ function Overview(props: OverviewProps) {
                 justify="flex-start"
                 alignContent="flex-start"
                 style={{
-                  width: groupWidth * group.width + theme.spacing(8)
+                  width: group.width * (groupWidth + theme.spacing(2))
                 }}>
                 <Grid
                   item
