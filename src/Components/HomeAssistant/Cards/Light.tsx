@@ -13,9 +13,9 @@ import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
-import { CirclePicker, ColorResult } from 'react-color';
 
 import { EntityProps } from './Entity';
+import ColorWheel, { Color } from '../../Utils/ColorWheel';
 import featureClassNames from '../Utils/featureClassNames';
 
 const useStyles = makeStyles((_theme: Theme) => ({
@@ -112,7 +112,7 @@ function Light(props: LightProps) {
     });
   };
 
-  function handleColorChange(color: ColorResult) {
+  function handleColorChange(color: Color) {
     setAttributes({
       ...attributes,
       rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
@@ -204,7 +204,7 @@ function Light(props: LightProps) {
   if (attrClasses.includes('has-color') && state === 'on')
     controls.push(
       <Grid key={3} item xs={10}>
-        <CirclePicker circleSpacing={6} onChangeComplete={handleColorChange} />
+        <ColorWheel color={color} handleColorChange={handleColorChange} />
       </Grid>
     );
   if (attrClasses.includes('has-effect_list') && state === 'on')
@@ -266,7 +266,7 @@ function Light(props: LightProps) {
           </Typography>
         </Grid>
       )}
-      {!props.card.height
+      {!props.card.height || props.card.height > 3
         ? controls
         : controls
             .splice(0, props.card.height > 1 ? props.card.height : 0)
