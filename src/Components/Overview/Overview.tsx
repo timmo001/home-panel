@@ -118,12 +118,19 @@ function Overview(props: OverviewProps) {
 
   const handleMoveUp = (group: GroupProps, card?: CardProps) => () => {
     console.log('handleMoveUp:', group, card);
-    if (card)
-      props.handleUpdateConfig!(
-        ['cards', findCardIdByCard(props.config, card)],
-        [-1]
-      );
-    else {
+    if (card) {
+      const cardId = findCardIdByCard(props.config, card);
+      let pos = 0;
+      for (let i = cardId - 1; i < props.config.cards.length; i++) {
+        pos--;
+        if (props.config.cards[i].group === props.config.cards[cardId].group)
+          break;
+      }
+      process.env.NODE_ENV === 'development' &&
+        console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
+
+      props.handleUpdateConfig!(['cards', cardId], [pos]);
+    } else {
       const groupId = findGroupIdByGroup(props.config, group);
       let pos = 0;
       for (let i = groupId - 1; i < props.config.groups.length; i++) {
@@ -139,12 +146,24 @@ function Overview(props: OverviewProps) {
 
   const handleMoveDown = (group: GroupProps, card?: CardProps) => () => {
     console.log('handleMoveDown:', group, card);
-    if (card)
+    if (card) {
+      const cardId = findCardIdByCard(props.config, card);
+      let pos = 0;
+      for (let i = cardId + 1; i < props.config.cards.length; i++) {
+        pos--;
+        if (props.config.cards[i].group === props.config.cards[cardId].group)
+          break;
+      }
+      process.env.NODE_ENV === 'development' &&
+        console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
+
+      props.handleUpdateConfig!(['cards', cardId], [pos]);
+
       props.handleUpdateConfig!(
         ['cards', findCardIdByCard(props.config, card)],
         [+1]
       );
-    else {
+    } else {
       const groupId = findGroupIdByGroup(props.config, group);
       let pos = 0;
       for (let i = groupId + 1; i < props.config.groups.length; i++) {
