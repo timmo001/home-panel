@@ -10,7 +10,6 @@ import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CloseIcon from '@material-ui/icons/Close';
@@ -104,7 +103,6 @@ function Base(props: BaseProps) {
 
   const classes = useStyles();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('xs'));
 
   const handleSetHeight = useCallback(
     (cardSize: number, entitySizeKey?: string) => {
@@ -377,8 +375,8 @@ function Base(props: BaseProps) {
       </Card>
       {expandCard && (
         <Dialog
+          PaperProps={{ style: { background: 'transparent' } }}
           open={expandCard}
-          fullScreen={fullScreen}
           onClose={handleCloseExpand}>
           <Grid container justify="center">
             <Base
