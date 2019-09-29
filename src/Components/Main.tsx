@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noHeight: {
     height: `calc(100% - ${theme.spacing(1.5)}px)`,
+    minHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
     maxHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
     overflow: 'hidden'
   },

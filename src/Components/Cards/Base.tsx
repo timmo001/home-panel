@@ -30,9 +30,6 @@ import Image from './Image';
 import Markdown from './Markdown';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    overflow: 'visible'
-  },
   buttonExpand: {
     position: 'absolute',
     top: theme.spacing(1.2),
@@ -73,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   title: {
     minHeight: theme.spacing(3),
+    userSelect: 'none',
     fontWeight: 400,
     lineHeight: 1.2
   },
@@ -259,123 +257,121 @@ function Base(props: BaseProps) {
   }
 
   return (
-    <Grid className={classes.root} item>
-      <ButtonBase
-        component="div"
-        disableRipple={!toggleable}
-        focusRipple={toggleable}
+    <ButtonBase
+      component="div"
+      disableRipple={!toggleable}
+      focusRipple={toggleable}
+      style={{
+        cursor: !toggleable ? 'unset' : 'pointer',
+        userSelect: !toggleable ? 'text' : 'none'
+      }}
+      onClick={toggleable ? handleHassToggle : undefined}
+      onMouseDown={handleHold}
+      onMouseUp={handleHoldCancel}
+      onMouseLeave={handleHoldCancel}>
+      <Card
+        className={classes.card}
+        square={props.card.square}
+        elevation={
+          props.editing === 2
+            ? 0
+            : props.card.elevation
+            ? Number(props.card.elevation)
+            : 1
+        }
         style={{
-          cursor: !toggleable ? 'unset' : 'pointer',
-          userSelect: !toggleable ? 'text' : 'none'
-        }}
-        onClick={toggleable ? handleHassToggle : undefined}
-        onMouseDown={handleHold}
-        onMouseUp={handleHoldCancel}
-        onMouseLeave={handleHoldCancel}>
-        <Card
-          className={classes.card}
-          square={props.card.square}
-          elevation={
-            props.editing === 2
-              ? 0
-              : props.card.elevation
-              ? Number(props.card.elevation)
-              : 1
-          }
+          background: props.card.disabled
+            ? theme.palette.error.main
+            : props.editing !== 2 && props.card.background
+            ? props.card.background
+            : ''
+        }}>
+        <CardContent
+          className={classes.cardContent}
           style={{
-            background: props.card.disabled
-              ? theme.palette.error.main
-              : props.editing !== 2 && props.card.background
-              ? props.card.background
-              : ''
+            height,
+            width,
+            minHeight: height,
+            minWidth: width,
+            maxHeight: height,
+            maxWidth: width,
+            padding: props.card.padding ? props.card.padding : 12
           }}>
-          <CardContent
-            className={classes.cardContent}
-            style={{
-              height,
-              width,
-              minHeight: height,
-              minWidth: width,
-              maxHeight: height,
-              maxWidth: width,
-              padding: props.card.padding ? props.card.padding : 12
-            }}>
-            <Grid container direction="row">
-              <Grid item xs>
-                {props.card.title && (
-                  <Typography
-                    className={classes.title}
-                    color="textPrimary"
-                    variant="h6"
-                    component="h3"
-                    gutterBottom
-                    noWrap>
-                    {props.card.title}
-                  </Typography>
-                )}
-              </Grid>
-              <Grid item>
-                {!props.expandable && (
-                  <IconButton
-                    aria-label="close"
-                    size="small"
-                    onClick={props.handleCloseExpand}>
-                    <CloseIcon fontSize="small" />
-                  </IconButton>
-                )}
-              </Grid>
+          <Grid container direction="row">
+            <Grid item xs>
+              {props.card.title && (
+                <Typography
+                  className={classes.title}
+                  color="textPrimary"
+                  variant="h6"
+                  component="h3"
+                  gutterBottom
+                  noWrap>
+                  {props.card.title}
+                </Typography>
+              )}
             </Grid>
-            {props.card.type === 'entity' && (
-              <Entity
-                {...props}
-                card={props.card}
-                editing={props.editing}
-                hassConfig={props.hassConfig}
-                hassEntities={props.hassEntities}
-                handleHassToggle={handleHassToggle}
-              />
-            )}
-            {props.card.type === 'iframe' && <Frame {...props} />}
-            {props.card.type === 'image' && <Image {...props} />}
-            {props.card.type === 'markdown' && <Markdown {...props} />}
-            {props.editing === 1 && (
-              <Grid
-                className={classes.cardActions}
-                container
-                alignContent="center"
-                justify="center">
-                <IconButton color="primary" onClick={handleEdit}>
-                  <EditIcon fontSize="small" />
+            <Grid item>
+              {!props.expandable && (
+                <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={props.handleCloseExpand}>
+                  <CloseIcon fontSize="small" />
                 </IconButton>
-                <IconButton color="primary" onClick={handleDeleteConfirm}>
-                  <DeleteIcon fontSize="small" />
-                </IconButton>
-                <IconButton color="primary" onClick={props.handleMoveUp}>
-                  <ArrowUpwardIcon fontSize="small" />
-                </IconButton>
-                <IconButton color="primary" onClick={props.handleMoveDown}>
-                  <ArrowDownwardsIcon fontSize="small" />
-                </IconButton>
-                {deleteConfirm && (
-                  <ConfirmDialog
-                    text="Are you sure you want to delete this card?"
-                    handleClose={handleConfirmClose}
-                    handleConfirm={props.handleDelete}
-                  />
-                )}
-              </Grid>
-            )}
-          </CardContent>
-          {editCard && (
-            <EditCard
+              )}
+            </Grid>
+          </Grid>
+          {props.card.type === 'entity' && (
+            <Entity
               {...props}
               card={props.card}
-              handleClose={handleEditClose}
-              handleUpdate={props.handleUpdate}
+              editing={props.editing}
+              hassConfig={props.hassConfig}
+              hassEntities={props.hassEntities}
+              handleHassToggle={handleHassToggle}
             />
           )}
-        </Card>
-      </ButtonBase>
+          {props.card.type === 'iframe' && <Frame {...props} />}
+          {props.card.type === 'image' && <Image {...props} />}
+          {props.card.type === 'markdown' && <Markdown {...props} />}
+          {props.editing === 1 && (
+            <Grid
+              className={classes.cardActions}
+              container
+              alignContent="center"
+              justify="center">
+              <IconButton color="primary" onClick={handleEdit}>
+                <EditIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={handleDeleteConfirm}>
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={props.handleMoveUp}>
+                <ArrowUpwardIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={props.handleMoveDown}>
+                <ArrowDownwardsIcon fontSize="small" />
+              </IconButton>
+              {deleteConfirm && (
+                <ConfirmDialog
+                  text="Are you sure you want to delete this card?"
+                  handleClose={handleConfirmClose}
+                  handleConfirm={props.handleDelete}
+                />
+              )}
+            </Grid>
+          )}
+        </CardContent>
+        {editCard && (
+          <EditCard
+            {...props}
+            card={props.card}
+            handleClose={handleEditClose}
+            handleUpdate={props.handleUpdate}
+          />
+        )}
+      </Card>
       {expandCard && (
         <Dialog
           open={expandCard}
@@ -391,7 +387,7 @@ function Base(props: BaseProps) {
           </Grid>
         </Dialog>
       )}
-    </Grid>
+    </ButtonBase>
   );
 }
 

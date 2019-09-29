@@ -30,16 +30,6 @@ import Header from './Header/Header';
 import Pages from './Pages';
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    height: '100%',
-    maxHeight: '100%',
-    overflow: 'hidden'
-  },
-  title: {
-    width: '100%',
-    fontWeight: 300,
-    lineHeight: 1.2
-  },
   container: {
     height: '100%',
     maxHeight: '100%',
@@ -55,15 +45,31 @@ const useStyles = makeStyles((theme: Theme) => ({
   containerNavShown: {
     paddingBottom: theme.spacing(10)
   },
-  groupContainer: {
+  title: {
+    width: '100%',
+    userSelect: 'none',
+    fontWeight: 300,
+    lineHeight: 1.2
+  },
+  groupsContainer: {
+    height: `calc(100% - ${theme.spacing(12)}px)`,
     overflowX: 'auto',
     overflowY: 'hidden'
   },
-  group: {
+  groupsContainerNavShown: {
+    height: `calc(100% - ${theme.spacing(8)}px)`
+  },
+  groupContainer: {
     height: '100%',
-    maxHeight: '100%',
+    width: 'fit-content',
+    minWidth: theme.breakpoints.down('sm') ? 140 : 120,
+    overflowX: 'hidden',
+    overflowY: 'hidden'
+  },
+  group: {
     marginBottom: theme.spacing(0.5),
-    overflowX: 'auto'
+    overflowX: 'hidden',
+    overflowY: 'auto'
   }
 }));
 
@@ -218,143 +224,161 @@ function Overview(props: OverviewProps) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const groupWidth = theme.breakpoints.down('sm') ? 140 : 120;
-
   return (
-    <div className={classes.root}>
+    <div
+      className={classnames(
+        classes.container,
+        props.mouseMoved && classes.containerNavShown
+      )}>
+      <Header {...props} />
       <Grid
         className={classnames(
-          classes.container,
-          props.mouseMoved && classes.containerNavShown
+          classes.groupsContainer,
+          props.mouseMoved && classes.groupsContainerNavShown
         )}
+        item
         container
         direction="column"
         justify="flex-start"
-        alignContent="flex-start">
-        <Header {...props} />
-        <Grid
-          className={classes.groupContainer}
-          item
-          xs
-          container
-          direction="column"
-          justify="flex-start"
-          alignContent="flex-start"
-          spacing={1}>
-          {groups.map((group: GroupProps, groupId: number) => {
-            if (!group.width) group.width = 2;
-            return (
+        alignContent="flex-start"
+        spacing={1}>
+        {groups.map((group: GroupProps, groupKey: number) => {
+          if (!group.width) group.width = 2;
+          const cards = props.config.cards.filter(
+            (card: CardProps) => card.group === group.key
+          );
+          const groupWidth =
+            (theme.breakpoints.down('sm') ? 140 : 120) * group.width +
+            group.width * theme.spacing(1.5);
+          return (
+            <Grid
+              className={classes.groupContainer}
+              key={groupKey}
+              component="section"
+              item
+              container
+              direction="row"
+              justify="flex-start"
+              alignContent="flex-start"
+              style={{
+                width: groupWidth
+              }}>
               <Grid
-                key={groupId}
                 item
-                xs={12}
                 container
-                direction="column"
+                direction="row"
+                justify="flex-start"
+                alignContent="flex-start">
+                <Grid item>
+                  <Typography
+                    className={classes.title}
+                    variant="h4"
+                    component="h2"
+                    gutterBottom>
+                    {group.name}
+                  </Typography>
+                </Grid>
+                {props.editing === 1 && (
+                  <Grid
+                    item
+                    style={{ width: 'fit-content' }}
+                    container
+                    alignContent="center"
+                    justify="flex-end">
+                    <IconButton
+                      color="primary"
+                      onClick={handleEditingGroup(group)}>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      color="primary"
+                      onClick={handleDeleteConfirm(group)}>
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton color="primary" onClick={handleMoveUp(group)}>
+                      <ArrowLeftIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton color="primary" onClick={handleMoveDown(group)}>
+                      <ArrowRightIcon fontSize="small" />
+                    </IconButton>
+                    {deleteConfirm && (
+                      <ConfirmDialog
+                        text="Are you sure you want to delete this group?"
+                        handleClose={handleConfirmClose}
+                        handleConfirm={handleDelete(deleteConfirm)}
+                      />
+                    )}
+                  </Grid>
+                )}
+              </Grid>
+              <Grid
+                className={classes.group}
+                item
+                container
+                direction="row"
                 justify="flex-start"
                 alignContent="flex-start"
-                style={{
-                  width: group.width * (groupWidth + theme.spacing(2))
-                }}>
-                <Grid
-                  item
-                  container
-                  direction="row"
-                  justify="flex-start"
-                  alignContent="flex-start">
-                  <Grid item xs>
-                    <Typography
-                      className={classes.title}
-                      variant="h4"
-                      component="h2"
-                      gutterBottom>
-                      {group.name}
-                    </Typography>
-                  </Grid>
-                  {props.editing === 1 && (
+                spacing={1}>
+                {cards.map((card: CardProps, cardKey: number) => {
+                  // if (cardCounter >= Number(group.width)) cardCounter = 0;
+                  // cardCounter +=
+                  //   card.width && !isNaN(Number(card.width))
+                  //     ? Number(card.width)
+                  //     : 1;
+                  // if (group.name === 'Living Room')
+                  //   console.log(Number(card.width), card.title, cardCounter);
+                  return (
                     <Grid
-                      item
-                      style={{ width: 'fit-content' }}
-                      container
-                      alignContent="center"
-                      justify="flex-end">
-                      <IconButton
-                        color="primary"
-                        onClick={handleEditingGroup(group)}>
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        color="primary"
-                        onClick={handleDeleteConfirm(group)}>
-                        <DeleteIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton color="primary" onClick={handleMoveUp(group)}>
-                        <ArrowLeftIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        color="primary"
-                        onClick={handleMoveDown(group)}>
-                        <ArrowRightIcon fontSize="small" />
-                      </IconButton>
-                      {deleteConfirm && (
-                        <ConfirmDialog
-                          text="Are you sure you want to delete this group?"
-                          handleClose={handleConfirmClose}
-                          handleConfirm={handleDelete(deleteConfirm)}
-                        />
-                      )}
-                    </Grid>
-                  )}
-                </Grid>
-                <Grid
-                  className={classes.group}
-                  item
-                  xs
-                  container
-                  direction="row"
-                  justify="flex-start"
-                  alignContent="flex-start"
-                  spacing={1}>
-                  {props.config.cards
-                    .filter((card: CardProps) => card.group === group.key)
-                    .map((card: CardProps, key: number) => (
+                      // className={classnames(
+                      //   cardCounter >= Number(group.width) && classes.groupBreak
+                      // )}
+                      key={cardKey}
+                      item>
                       <Base
                         {...props}
-                        key={key}
                         card={card}
                         editing={props.editing}
-                        expandable={true}
+                        expandable
                         handleDelete={handleDelete(group, card)}
                         handleMoveUp={handleMoveUp(group, card)}
                         handleMoveDown={handleMoveDown(group, card)}
                         handleUpdate={handleUpdateCard(card)}
                       />
-                    ))}
-                  {props.editing === 1 && (
+                    </Grid>
+                  );
+                })}
+                {props.editing === 1 && (
+                  <Grid item>
                     <AddCard handleAdd={handleAddCard(group.key)} />
-                  )}
-                </Grid>
+                  </Grid>
+                )}
               </Grid>
-            );
-          })}
+            </Grid>
+          );
+        })}
+        {props.editing === 1 && (
           <Grid
+            className={classes.groupContainer}
+            component="section"
             item
             container
-            direction="column"
-            justify="center"
+            direction="row"
+            justify="flex-start"
             alignContent="flex-start"
-            spacing={1}
-            style={{ width: groupWidth * 2 + theme.spacing(1) }}>
-            {props.editing === 1 && <AddGroup handleAdd={handleAddGroup} />}
+            style={{
+              width: theme.breakpoints.down('sm') ? 140 : 120
+            }}>
+            <AddGroup handleAdd={handleAddGroup} />
           </Grid>
-        </Grid>
-        {editingGroup && (
-          <EditGroup
-            group={editingGroup}
-            handleClose={handleDoneEditingGroup}
-            handleUpdate={handleUpdateGroup(editingGroup)}
-          />
         )}
       </Grid>
+      {editingGroup && (
+        <EditGroup
+          group={editingGroup}
+          handleClose={handleDoneEditingGroup}
+          handleUpdate={handleUpdateGroup(editingGroup)}
+        />
+      )}
       <Pages {...props} currentPage={currentPage} setPage={setCurrentPage} />
     </div>
   );
