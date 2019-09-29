@@ -61,12 +61,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   groupContainer: {
     height: '100%',
-    width: 'fit-content',
     minWidth: theme.breakpoints.down('sm') ? 140 : 120,
     overflowX: 'hidden',
     overflowY: 'hidden'
   },
   group: {
+    height: `calc(100% - ${theme.spacing(6)}px)`,
     marginBottom: theme.spacing(0.5),
     overflowX: 'hidden',
     overflowY: 'auto'
@@ -112,13 +112,15 @@ function Overview(props: OverviewProps) {
       );
     else if (group) {
       const groupId = findGroupIdByGroup(props.config, group);
-      const groupKey = props.config.groups[groupId].key;
-      props.config.cards.map((card: CardProps, id: number) => {
-        if (card.group === groupKey)
-          props.handleUpdateConfig!(['cards', id], undefined);
-        return card;
-      });
-      props.handleUpdateConfig!(['groups', groupId], undefined);
+      if (groupId) {
+        const groupKey = props.config.groups[groupId].key;
+        props.config.cards.map((card: CardProps, id: number) => {
+          if (card.group === groupKey)
+            props.handleUpdateConfig!(['cards', id], undefined);
+          return card;
+        });
+        props.handleUpdateConfig!(['groups', groupId], undefined);
+      }
     }
   };
 
