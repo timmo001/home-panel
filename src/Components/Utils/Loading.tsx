@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.default
   },
   text: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
+    userSelect: 'none'
   }
 }));
 

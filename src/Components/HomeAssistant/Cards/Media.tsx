@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     overflow: 'hidden',
+    userSelect: 'none',
     textAlign: 'center',
     textOverflow: 'ellipsis'
   },

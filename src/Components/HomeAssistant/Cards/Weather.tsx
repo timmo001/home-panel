@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     overflow: 'hidden',
+    userSelect: 'none',
     textAlign: 'center',
     textOverflow: 'ellipsis'
   },
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   forecastText: {
     lineHeight: '1.24em',
+    userSelect: 'none',
     textAlign: 'center'
   },
   forecastTextIcon: {

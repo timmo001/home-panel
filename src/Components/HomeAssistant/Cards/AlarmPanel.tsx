@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     marginBottom: theme.spacing(0.2),
+    userSelect: 'none',
     overflow: 'hidden',
     textAlign: 'center',
     textOverflow: 'ellipsis'
