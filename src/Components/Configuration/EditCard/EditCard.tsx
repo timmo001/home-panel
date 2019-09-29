@@ -18,14 +18,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   dialogContent: {
     paddingLeft: 0,
     paddingRight: 0,
-    overflow: 'hidden'
+    overflowX: 'hidden',
+    overflowY: 'auto'
   },
-  container: {},
   background: {
     padding: theme.spacing(2),
-    background: theme.palette.background.default
+    background: theme.palette.background.default,
+    overflow: 'hidden'
   },
   editView: {
+    minWidth: 200,
+    [theme.breakpoints.down('sm')]: {
+      minWidth: '100%'
+    },
     padding: theme.spacing(2),
     overflow: 'auto'
   }
@@ -118,12 +123,7 @@ function EditCard(props: EditCardProps) {
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Grid
-          className={classes.container}
-          container
-          direction="row"
-          alignContent="center"
-          justify="center">
+        <Grid container direction="row" alignContent="center" justify="center">
           <Grid
             className={classes.editView}
             item
