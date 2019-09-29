@@ -139,14 +139,14 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@feathersjs/adapter-commons@^4.0.0-pre.4":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/adapter-commons/-/adapter-commons-4.3.0.tgz#c8bad620e946018d2e42240be7fdce045de77dba"
-  integrity sha512-eQ7N55cHZh0p0D4WI0qbulUi+nkRc3qshGAxqRU2oG+fPzuKXaeW2CANzuaJfU1rkJEn7gWruFCxh7mCz+QBVQ==
+"@feathersjs/adapter-commons@^4.3.3":
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/@feathersjs/adapter-commons/-/adapter-commons-4.3.3.tgz#04abe5f7b796e20110b02f5f127b83ada0687381"
+  integrity sha512-p5jEwcMZVqtu4eBjWP4cR9KE+gCL54nvPGN74Xmv3XPa8u8dKu85XqbyWr/Keqn7bg2wQN7G8tOqdK1pTkfhyQ==
   dependencies:
     "@feathersjs/commons" "^4.3.0"
-    "@feathersjs/errors" "^4.3.0"
-    "@feathersjs/feathers" "^4.3.0"
+    "@feathersjs/errors" "^4.3.3"
+    "@feathersjs/feathers" "^4.3.3"
 
 "@feathersjs/authentication-local@4.3.3":
   version "4.3.3"
@@ -189,7 +189,7 @@
     long-timeout "^0.1.1"
     uuid "^3.3.2"
 
-"@feathersjs/commons@^4.0.0", "@feathersjs/commons@^4.3.0":
+"@feathersjs/commons@^4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
   integrity sha512-N3CDavCNRp+usgyfDSFXCwETnp4nIEevl5v1nqULGhPYco0SjF15zu4hYyd3GCn0aAwzaIehYyaMcdee9Eo1KQ==
@@ -210,13 +210,6 @@
   dependencies:
     debug "^4.1.1"
 
-"@feathersjs/errors@^4.0.0-pre.4", "@feathersjs/errors@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.0.tgz#7ac89396ef868061b6a1d9b0f9005f6403cafbf6"
-  integrity sha512-tOwBpJmLYy0Fq/Dp8Y3dO2/B6ojfqSrTFXixTYH2qBR3aFS/U0VzhoyEa1O+/FcJRDqgW54HNCyy520zqYB/pw==
-  dependencies:
-    debug "^4.1.1"
-
 "@feathersjs/express@4.3.3", "@feathersjs/express@^4.3.3":
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.3.3.tgz#c8e57ed7a900d2ba4f43c08fe642eab2c53af5e4"
@@ -234,16 +227,6 @@
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.3.tgz#6870a6400e3ccaf8d8611168b28eff6631c2ef5d"
   integrity sha512-FHbKn9XdUjZlXUvszn1sVamPWk2X/UBEpPHD6XyGq9kXa66fm9rqbEFueZ3MXc6Jsva+uW1m+CLQBYUvaTJhLQ==
-  dependencies:
-    "@feathersjs/commons" "^4.3.0"
-    debug "^4.1.1"
-    events "^3.0.0"
-    uberproto "^2.0.4"
-
-"@feathersjs/feathers@^4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.0.tgz#aa9a8b491f7bfabce10919f0c6b753466b8e065c"
-  integrity sha512-iH/T8UGvv5gbDqHnU2Rlf5NZxqBmFvrl9BdNPNl2EYPGBvkfi/Dxp3+xJLyw8MZFbtgG+4fxP1KyFG1uGivGrA==
   dependencies:
     "@feathersjs/commons" "^4.3.0"
     debug "^4.1.1"
@@ -2024,14 +2007,14 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-feathers-nedb@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/feathers-nedb/-/feathers-nedb-5.0.1.tgz#7051739edebee33d78fb7dae0733b1ec42fe990b"
-  integrity sha512-AZiaxC0045vQC9n0aIbVbJwGXh2dXY48XyZp/s0KNKdo9kNvmyTt0MpfEiHIPVrO6yR26PKDUUeKty7t6uLpsw==
+feathers-nedb@5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/feathers-nedb/-/feathers-nedb-5.0.2.tgz#f313f189545b3e481b1f2c746df23c7fc850865d"
+  integrity sha512-f6Hh4S+MRER/sPKwbgb6Lu+UqY2G112AXnFvTi8NHsTXJlpVGpr/G1ac+V5XlZUbE3LrEYiStNfXfczpZNchpA==
   dependencies:
-    "@feathersjs/adapter-commons" "^4.0.0-pre.4"
-    "@feathersjs/commons" "^4.0.0"
-    "@feathersjs/errors" "^4.0.0-pre.4"
+    "@feathersjs/adapter-commons" "^4.3.3"
+    "@feathersjs/commons" "^4.3.0"
+    "@feathersjs/errors" "^4.3.3"
 
 feathers-swagger@1.1.0:
   version "1.1.0"
