@@ -99,7 +99,10 @@ function Pages(props: PagesProps) {
                 key={key}
                 value={page.key}
                 label={page.name}
+                onTouchStart={handleEditingPage(page)}
                 onMouseDown={handleEditingPage(page)}
+                onTouchCancel={handleCancelEdit}
+                onTouchEnd={handleCancelEdit}
                 onMouseUp={handleCancelEdit}
                 onMouseLeave={handleCancelEdit}
                 icon={

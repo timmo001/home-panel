@@ -266,7 +266,10 @@ function Base(props: BaseProps) {
         userSelect: !toggleable ? 'text' : 'none'
       }}
       onClick={toggleable ? handleHassToggle : undefined}
+      onTouchStart={handleHold}
       onMouseDown={handleHold}
+      onTouchCancel={handleHoldCancel}
+      onTouchEnd={handleHoldCancel}
       onMouseUp={handleHoldCancel}
       onMouseLeave={handleHoldCancel}>
       <Card
