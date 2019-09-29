@@ -216,10 +216,10 @@ function Climate(props: ClimateProps) {
                     <KeyboardArrowUp fontSize="small" />
                   </IconButton>
                   <div className={classes.temperature}>
-                    <Typography variant="h5">
+                    <Typography className={classes.text} variant="h5">
                       {attributes.target_temp_low}
                     </Typography>
-                    <Typography variant="body1">
+                    <Typography className={classes.text} variant="body1">
                       {props.hassConfig.unit_system.temperature}
                     </Typography>
                   </div>
@@ -238,7 +238,9 @@ function Climate(props: ClimateProps) {
                   </IconButton>
                 </Grid>
                 <Grid item xs className={classes.hyphen}>
-                  <Typography variant="h5">-</Typography>
+                  <Typography className={classes.text} variant="h5">
+                    -
+                  </Typography>
                 </Grid>
                 <Grid
                   item
@@ -259,10 +261,10 @@ function Climate(props: ClimateProps) {
                     />
                   </IconButton>
                   <div className={classes.temperature}>
-                    <Typography variant="h5">
+                    <Typography className={classes.text} variant="h5">
                       {attributes.target_temp_high}
                     </Typography>
-                    <Typography variant="body1">
+                    <Typography className={classes.text} variant="body1">
                       {props.hassConfig.unit_system.temperature}
                     </Typography>
                   </div>
