@@ -319,34 +319,20 @@ function Overview(props: OverviewProps) {
                 justify="flex-start"
                 alignContent="flex-start"
                 spacing={1}>
-                {cards.map((card: CardProps, cardKey: number) => {
-                  // if (cardCounter >= Number(group.width)) cardCounter = 0;
-                  // cardCounter +=
-                  //   card.width && !isNaN(Number(card.width))
-                  //     ? Number(card.width)
-                  //     : 1;
-                  // if (group.name === 'Living Room')
-                  //   console.log(Number(card.width), card.title, cardCounter);
-                  return (
-                    <Grid
-                      // className={classnames(
-                      //   cardCounter >= Number(group.width) && classes.groupBreak
-                      // )}
-                      key={cardKey}
-                      item>
-                      <Base
-                        {...props}
-                        card={card}
-                        editing={props.editing}
-                        expandable
-                        handleDelete={handleDelete(group, card)}
-                        handleMoveUp={handleMoveUp(group, card)}
-                        handleMoveDown={handleMoveDown(group, card)}
-                        handleUpdate={handleUpdateCard(card)}
-                      />
-                    </Grid>
-                  );
-                })}
+                {cards.map((card: CardProps, cardKey: number) => (
+                  <Grid key={cardKey} item>
+                    <Base
+                      {...props}
+                      card={card}
+                      editing={props.editing}
+                      expandable
+                      handleDelete={handleDelete(group, card)}
+                      handleMoveUp={handleMoveUp(group, card)}
+                      handleMoveDown={handleMoveDown(group, card)}
+                      handleUpdate={handleUpdateCard(card)}
+                    />
+                  </Grid>
+                ))}
                 {props.editing === 1 && (
                   <Grid item>
                     <AddCard handleAdd={handleAddCard(group.key)} />
