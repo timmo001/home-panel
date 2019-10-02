@@ -49,12 +49,12 @@ function Toggle(props: ToggleProps) {
     state = entity!.state;
     props.card.state = state;
     props.card.toggleable = state === 'unavailable' ? false : true;
-    props.card.background =
+    props.card.backgroundTemp =
       state === 'unavailable'
         ? grey[600]
         : state === 'on' || state === 'locked'
         ? theme.palette.primary.main
-        : theme.palette.background.paper;
+        : props.card.background;
   }
   return (
     <Grid

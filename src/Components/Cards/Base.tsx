@@ -283,7 +283,9 @@ function Base(props: BaseProps) {
         style={{
           background: props.card.disabled
             ? theme.palette.error.main
-            : props.editing !== 2 && props.card.background
+            : props.editing !== 2 && props.card.backgroundTemp
+            ? props.card.backgroundTemp
+            : props.card.background
             ? props.card.background
             : ''
         }}>

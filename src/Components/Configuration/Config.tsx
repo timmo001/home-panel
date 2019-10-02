@@ -67,6 +67,7 @@ export type CardProps = {
   padding?: number | string;
   elevation?: number;
   background?: string;
+  backgroundTemp?: string;
   icon?: string;
   title?: string;
   content?: string;
