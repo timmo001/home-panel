@@ -6,16 +6,21 @@ import Dialog from '@material-ui/core/Dialog';
 
 import { BaseProps } from './Base';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%'
+  },
+  dialogPaper: {
+    background: theme.palette.background.default
   },
   dialog: {
     height: '100%',
     width: '100%'
   },
   image: {
+    height: '100%',
     width: '100%',
+    objectFit: 'scale-down',
     marginBottom: -6,
     cursor: 'pointer'
   }
@@ -40,7 +45,7 @@ function Image(props: ImageProps) {
         alt={props.card.title}
       />
       {dialogOpen && (
-        <Dialog open fullScreen>
+        <Dialog PaperProps={{ className: classes.dialogPaper }} open fullScreen>
           <div className={classes.dialog}>
             <img
               className={classes.image}
