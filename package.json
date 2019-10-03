@@ -11,7 +11,7 @@
   "dependencies": {
     "@feathersjs/authentication-client": "4.3.3",
     "@feathersjs/feathers": "4.3.3",
-    "@feathersjs/socketio-client": "4.3.3",
+    "@feathersjs/socketio-client": "4.3.4",
     "@jaames/iro": "4.5.1",
     "@material-ui/core": "4.5.0",
     "@material-ui/icons": "4.4.3",

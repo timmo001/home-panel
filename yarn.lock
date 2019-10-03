@@ -1041,6 +1041,13 @@
   dependencies:
     debug "^4.1.1"
 
+"@feathersjs/errors@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.4.tgz#8c2a9a64b9ae8e1bf8c173497258979dad1c4e6d"
+  integrity sha512-x4QfpBbMHrsY7ktMxYDVfYsJf7YVjVOFWThwJ3LgKFC6WNu9YojRJmxRDGftWTQA2MalaJPmOAYCapdp50mwKw==
+  dependencies:
+    debug "^4.1.1"
+
 "@feathersjs/feathers@4.3.3", "@feathersjs/feathers@^4.3.3":
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.3.tgz#6870a6400e3ccaf8d8611168b28eff6631c2ef5d"
@@ -1051,12 +1058,12 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio-client@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.3.3.tgz#a47966f0f7aad89b036cd06308ab417b1412da90"
-  integrity sha512-msW6Zizmg6q8rPP8qDVrhx8IDfaOS8lWVGRd4A/Vlddx6CZANhaB1o1s6/H5y5gBA2rgW9bxNZoPV5EBrMYFpw==
+"@feathersjs/socketio-client@4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.3.4.tgz#9dc0c8b9f2f34d493e2c1c119e3d899aba3b0fb6"
+  integrity sha512-1u3mC9oEe+pqeGA88IzHhA1JICVfOlb0JwTmUBzqzfn0upxOppD5CgJp8U3JA/qVgMkkeE51/ZgCE1GbvYhuOQ==
   dependencies:
-    "@feathersjs/transport-commons" "^4.3.3"
+    "@feathersjs/transport-commons" "^4.3.4"
     "@types/socket.io-client" "^1.4.32"
 
 "@feathersjs/transport-commons@^4.3.3":
@@ -1066,6 +1073,17 @@
   dependencies:
     "@feathersjs/commons" "^4.3.0"
     "@feathersjs/errors" "^4.3.3"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
+
+"@feathersjs/transport-commons@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.3.4.tgz#fa60262665d54575ef2cd0272c55e0115adbec9f"
+  integrity sha512-94ijldtdPm0s4ZlOutk2mLGiUj4QWOIaj/g3XFQRIe8GM+MzKLrpY4ldLiHMAEleVOjyo2qH5Ar8qN4QLUcF5g==
+  dependencies:
+    "@feathersjs/commons" "^4.3.0"
+    "@feathersjs/errors" "^4.3.4"
     debug "^4.1.1"
     lodash "^4.17.15"
     radix-router "^3.0.1"
