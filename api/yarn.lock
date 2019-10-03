@@ -148,14 +148,14 @@
     "@feathersjs/errors" "^4.3.3"
     "@feathersjs/feathers" "^4.3.3"
 
-"@feathersjs/authentication-local@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.3.tgz#a8ebeeaa3ec0308570a9949fbca0ea1ea0489382"
-  integrity sha512-MqCFmtPeFOzpok7suToiO8aRtfENHgL45/HxTGI6+EXwifDO1wAEPl98YqPm7DUCL+ww/atopohBhoTA6R6Jdw==
+"@feathersjs/authentication-local@4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.4.tgz#5c081d226fdb81b8250ed0b8b4231df6464d71f5"
+  integrity sha512-PYeO0bTyCXu6Dg2gOaYzHNlbMClV26ex9tu0F+fbx53bB8ACof1apURiPvnL2wHqbp5dX9PflwMM6tJdZbqYpg==
   dependencies:
-    "@feathersjs/authentication" "^4.3.3"
-    "@feathersjs/errors" "^4.3.3"
-    "@feathersjs/feathers" "^4.3.3"
+    "@feathersjs/authentication" "^4.3.4"
+    "@feathersjs/errors" "^4.3.4"
+    "@feathersjs/feathers" "^4.3.4"
     bcryptjs "^2.4.3"
     debug "^4.1.1"
     lodash "^4.17.15"
@@ -189,6 +189,20 @@
     long-timeout "^0.1.1"
     uuid "^3.3.2"
 
+"@feathersjs/authentication@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.4.tgz#6810da5f41b82c84bbea0f16a85030ad893878fd"
+  integrity sha512-RtJeLAAoPu+bWxH7zNvAkYQzPmbvKFHjLSmmdhi9Yjtf7udDqBlg2uhtsUeK4v64xRpS+6tsOmXZOfdWqSrW5w==
+  dependencies:
+    "@feathersjs/errors" "^4.3.4"
+    "@feathersjs/feathers" "^4.3.4"
+    "@feathersjs/transport-commons" "^4.3.4"
+    debug "^4.1.1"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.15"
+    long-timeout "^0.1.1"
+    uuid "^3.3.2"
+
 "@feathersjs/commons@^4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
@@ -207,6 +221,13 @@
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.3.tgz#4fc2956013e3599999fd8a14d5b61deb61a21476"
   integrity sha512-vqW6TDZIj7x77qenghGrWVhURN/SRYg9DjnE9aWoR4TPv9z+w3UzDl5luUW/KhHa7+2wh/TDGIdfUF5PTv8Mpg==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.4.tgz#8c2a9a64b9ae8e1bf8c173497258979dad1c4e6d"
+  integrity sha512-x4QfpBbMHrsY7ktMxYDVfYsJf7YVjVOFWThwJ3LgKFC6WNu9YojRJmxRDGftWTQA2MalaJPmOAYCapdp50mwKw==
   dependencies:
     debug "^4.1.1"
 
@@ -233,6 +254,16 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
+"@feathersjs/feathers@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.4.tgz#06791dd39408d8dd7948d54c5596f2f91aa8eb09"
+  integrity sha512-2qe8+rkTn7YGFKv7vU0uh367F7SfyYUJuQh+BBmWjupCSH3xsCD5U+sACMZ16442fugWhcIo+41aUnj7e1IQAA==
+  dependencies:
+    "@feathersjs/commons" "^4.3.0"
+    debug "^4.1.1"
+    events "^3.0.0"
+    uberproto "^2.0.4"
+
 "@feathersjs/socketio@4.3.3":
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.3.tgz#44dead08e536d14b4f4ed22e9ac1b869c960a46a"
@@ -251,6 +282,17 @@
   dependencies:
     "@feathersjs/commons" "^4.3.0"
     "@feathersjs/errors" "^4.3.3"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
+
+"@feathersjs/transport-commons@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.3.4.tgz#fa60262665d54575ef2cd0272c55e0115adbec9f"
+  integrity sha512-94ijldtdPm0s4ZlOutk2mLGiUj4QWOIaj/g3XFQRIe8GM+MzKLrpY4ldLiHMAEleVOjyo2qH5Ar8qN4QLUcF5g==
+  dependencies:
+    "@feathersjs/commons" "^4.3.0"
+    "@feathersjs/errors" "^4.3.4"
     debug "^4.1.1"
     lodash "^4.17.15"
     radix-router "^3.0.1"
