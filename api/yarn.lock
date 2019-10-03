@@ -210,6 +210,13 @@
   dependencies:
     debug "^4.1.1"
 
+"@feathersjs/errors@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.4.tgz#8c2a9a64b9ae8e1bf8c173497258979dad1c4e6d"
+  integrity sha512-x4QfpBbMHrsY7ktMxYDVfYsJf7YVjVOFWThwJ3LgKFC6WNu9YojRJmxRDGftWTQA2MalaJPmOAYCapdp50mwKw==
+  dependencies:
+    debug "^4.1.1"
+
 "@feathersjs/express@4.3.3", "@feathersjs/express@^4.3.3":
   version "4.3.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.3.3.tgz#c8e57ed7a900d2ba4f43c08fe642eab2c53af5e4"
@@ -233,12 +240,12 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio@4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.3.tgz#44dead08e536d14b4f4ed22e9ac1b869c960a46a"
-  integrity sha512-hAYU7rg5SYG2wKjrDEb7O7C65yRxAFceFaB8i2u7jnuzlfQBEFktuX2K5u/Q8bChpoP6mvysVutFC1K/9rVIhw==
+"@feathersjs/socketio@4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.4.tgz#33a926b374dcf5408a0c326354901bcfa151fbcc"
+  integrity sha512-1zr9mceQOidyA9JUjhuaq++sYlzM7s2bidyTT3k09WM6lr2BExu0Ih8m4F3LCrnx+wD37VWX832/UtTppvLx2Q==
   dependencies:
-    "@feathersjs/transport-commons" "^4.3.3"
+    "@feathersjs/transport-commons" "^4.3.4"
     "@types/socket.io" "^2.1.2"
     debug "^4.1.1"
     socket.io "^2.2.0"
@@ -251,6 +258,17 @@
   dependencies:
     "@feathersjs/commons" "^4.3.0"
     "@feathersjs/errors" "^4.3.3"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
+
+"@feathersjs/transport-commons@^4.3.4":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.3.4.tgz#fa60262665d54575ef2cd0272c55e0115adbec9f"
+  integrity sha512-94ijldtdPm0s4ZlOutk2mLGiUj4QWOIaj/g3XFQRIe8GM+MzKLrpY4ldLiHMAEleVOjyo2qH5Ar8qN4QLUcF5g==
+  dependencies:
+    "@feathersjs/commons" "^4.3.0"
+    "@feathersjs/errors" "^4.3.4"
     debug "^4.1.1"
     lodash "^4.17.15"
     radix-router "^3.0.1"
