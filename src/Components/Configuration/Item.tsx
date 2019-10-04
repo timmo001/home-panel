@@ -6,34 +6,25 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Popover from '@material-ui/core/Popover';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
-import PaletteIcon from '@material-ui/icons/Palette';
 
+import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import clone from '../Utils/clone';
-import ColorWheel, { Color } from '../Utils/ColorWheel';
+import ColorAdornment from './ColorAdornment';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: 130,
     maxWidth: 130
-  },
-  menu: {
-    zIndex: 2000
-  },
-  menuContent: {
-    padding: theme.spacing(2)
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -62,11 +53,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
-let PopoverNode: HTMLButtonElement | null | undefined;
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
-  const [showColorPicker, setShowColorPicker] = React.useState(false);
 
   useEffect(() => {
     setValue(undefined);
@@ -125,10 +114,6 @@ function Item(props: ItemProps) {
     handleUpdate(path, event.target.value);
   };
 
-  function handleToggleColorPicker() {
-    setShowColorPicker(!showColorPicker);
-  }
-
   const handleColorChange = (path: any[]) => (color: Color) => {
     handleUpdate(path, color.hexString);
   };
@@ -166,31 +151,10 @@ function Item(props: ItemProps) {
           type="text"
           InputProps={{
             endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  size="small"
-                  aria-label="Pick Color"
-                  onClick={handleToggleColorPicker}
-                  ref={node => {
-                    PopoverNode = node;
-                  }}>
-                  <PaletteIcon fontSize="small" />
-                </IconButton>
-                <Popover
-                  className={classes.menu}
-                  id="options"
-                  anchorEl={PopoverNode}
-                  open={showColorPicker}
-                  onClose={handleToggleColorPicker}>
-                  <Paper className={classes.menuContent}>
-                    <ColorWheel
-                      color={value}
-                      lighting={true}
-                      handleColorChange={handleColorChange(props.path!)}
-                    />
-                  </Paper>
-                </Popover>
-              </InputAdornment>
+              <ColorAdornment
+                color={value}
+                handleColorChange={handleColorChange(props.path!)}
+              />
             )
           }}
           value={value}
