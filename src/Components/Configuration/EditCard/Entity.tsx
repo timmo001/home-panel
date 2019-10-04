@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
@@ -154,6 +156,16 @@ function Entity(props: EntityProps) {
                 </Select>
               </FormControl>
             </Grid>
+          </Grid>
+        )}
+        {graphAllowed && props.card.entity && (
+          <Grid
+            item
+            container
+            direction="row"
+            justify="center"
+            alignContent="stretch"
+            alignItems="flex-end">
             {props.card.chart && props.card.chart !== 'radialBar' && (
               <Grid item xs>
                 <FormControl className={classes.textField}>
@@ -189,6 +201,22 @@ function Entity(props: EntityProps) {
                   }}
                   value={props.card.chart_from}
                   onChange={props.handleChange!('chart_from')}
+                />
+              </Grid>
+            )}
+            {props.card.chart && props.card.chart !== 'radialBar' && (
+              <Grid item xs>
+                <FormControlLabel
+                  className={classes.switch}
+                  label="Chart Labels?"
+                  labelPlacement="start"
+                  control={
+                    <Switch
+                      color="primary"
+                      defaultChecked={props.card.chart_labels}
+                    />
+                  }
+                  onChange={props.handleSwitchChange!('chart_labels')}
                 />
               </Grid>
             )}
