@@ -76,6 +76,7 @@ export type CardProps = {
   backgroundTemp?: string;
   icon?: string;
   title?: string;
+  title_size?: string;
   content?: string;
   url?: string;
   domain?: string;

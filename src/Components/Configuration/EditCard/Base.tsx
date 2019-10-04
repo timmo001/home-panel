@@ -216,6 +216,26 @@ function Base(props: BaseProps) {
           </Grid>
         )}
       </Grid>
+      <Grid
+        item
+        container
+        direction="row"
+        justify="center"
+        alignContent="stretch">
+        {props.card.title && (
+          <Grid item xs container justify="flex-start" alignContent="center">
+            <TextField
+              className={classes.textField}
+              InputLabelProps={{ shrink: true }}
+              type="text"
+              label="Title Font Size"
+              placeholder="initial"
+              value={props.card.title_size}
+              onChange={props.handleChange!('title_size')}
+            />
+          </Grid>
+        )}
+      </Grid>
       {props.card.type === 'entity' && <Entity {...props} />}
       {props.card.type === 'iframe' && <Frame {...props} />}
       {props.card.type === 'image' && <Image {...props} />}
