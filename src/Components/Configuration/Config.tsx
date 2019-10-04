@@ -86,6 +86,7 @@ export type CardProps = {
   chart?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
   chart_detail?: 3 | 4 | 5;
   chart_from?: number;
+  chart_labels?: boolean;
 };
 
 export type CardType = {
