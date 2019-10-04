@@ -81,5 +81,10 @@ export default function parseTheme(theme: ThemeProps) {
       ? theme.background_paper
       : defaultPalette.background!.paper
   };
+  palette.text = {
+    primary: theme.text_primary
+      ? theme.text_primary
+      : defaultPalette.text!.primary
+  };
   return palette;
 }

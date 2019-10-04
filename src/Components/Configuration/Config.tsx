@@ -37,6 +37,7 @@ export type ThemeProps = {
   secondary: string | Color | CommonColors;
   background_default: string;
   background_paper: string;
+  text_primary: string;
 };
 
 export type HeaderProps = {
@@ -120,7 +121,8 @@ export const defaultTheme: ThemeProps = {
   primary: 'pink',
   secondary: 'pink',
   background_default: '#303030',
-  background_paper: '#383c45'
+  background_paper: '#383c45',
+  text_primary: '#ffffff'
 };
 
 export const defaultPalette: PaletteOptions = {
@@ -130,6 +132,9 @@ export const defaultPalette: PaletteOptions = {
   background: {
     default: '#303030',
     paper: '#383c45'
+  },
+  text: {
+    primary: '#ffffff'
   }
 };
 
@@ -287,6 +292,14 @@ export const items = [
         icon: 'mdi-card-bulleted',
         type: 'color',
         default: '#383c45'
+      },
+      {
+        name: 'text_primary',
+        title: 'Text',
+        description: 'Text color.',
+        icon: 'mdi-text',
+        type: 'color',
+        default: '#ffffff'
       }
     ]
   },
