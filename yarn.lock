@@ -9725,10 +9725,10 @@ react-json-editor-ajrm@2.5.9:
   dependencies:
     "@babel/runtime" "^7.0.0-rc.0"
 
-react-moment@0.9.4:
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.4.tgz#ef96ffca7027c831fb7955853bc5310e8feda548"
-  integrity sha512-gvgI6Jyb2rxc1wiQ3kfEg7EvveKRZLuLGNntXsvFO3T47ZT2ti7HcAq0iq3BKDrpiJn2ivXWodkU9B7PCmK22Q==
+react-moment@0.9.5:
+  version "0.9.5"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.5.tgz#6242447f279e3bcfd1dbf52277be4226598fd6c4"
+  integrity sha512-lUTAjYgtxdBn27bcTkgtzJRQJ6h2/oo7w+asGRTqeoaVU3630H0hO9S2zR8OJ5uHuAKFOF++7GMPlivNk1Lm9g==
 
 react-router-dom@5.1.2:
   version "5.1.2"
