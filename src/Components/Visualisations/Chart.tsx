@@ -25,6 +25,7 @@ export const chartTypes: { [type: string]: string } = {
 
 interface ChartProps {
   color?: string;
+  labels?: boolean;
   lowerGauge?: boolean;
   series: [{ data: number[] }] | number[];
   type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
@@ -52,7 +53,11 @@ function Chart(props: ChartProps) {
   }, [props.series, props.type, series]);
 
   useEffect(() => {
-    if (!options || props.color !== options.colors[0]) {
+    if (
+      !options ||
+      props.color !== options.colors[0] ||
+      props.labels !== options.dataLabels.enabled
+    ) {
       setOptions({
         chart: {
           toolbar: {
@@ -64,7 +69,13 @@ function Chart(props: ChartProps) {
         },
         colors: [props.color],
         dataLabels: {
-          enabled: false
+          enabled: props.labels,
+          offsetY: theme.spacing(0.8),
+          style: {
+            colors: [theme.palette.text.primary],
+            fontFamily:
+              "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
+          }
         },
         grid: {
           show: false,
@@ -81,6 +92,9 @@ function Chart(props: ChartProps) {
         },
         legend: {
           show: false
+        },
+        markers: {
+          size: props.labels ? 0.4 : 0
         },
         plotOptions: {
           radialBar: {
@@ -136,7 +150,7 @@ function Chart(props: ChartProps) {
         }
       });
     }
-  }, [options, props.color, props.lowerGauge, theme]);
+  }, [options, props.color, props.labels, props.lowerGauge, theme]);
 
   if (!options || !series || !type) return <div />;
   return (
