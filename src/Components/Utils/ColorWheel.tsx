@@ -35,7 +35,7 @@ function ColorWheel(props: ColorWheelProps) {
   }, [props.color, color, handleSetColor]);
 
   useEffect(() => {
-    if (!pickerSetup && color) {
+    if (!pickerSetup) {
       let colorPicker;
       try {
         colorPicker = new iro.ColorPicker(pickerNode, {

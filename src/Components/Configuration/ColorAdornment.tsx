@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ColorAdornmentProps {
-  color: string;
+  color?: string;
   handleColorChange: (color: Color) => void;
 }
 
