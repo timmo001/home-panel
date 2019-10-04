@@ -85,6 +85,8 @@ function Main(props: MainProps) {
       } else secondLastItem[lastItem] = data;
     } else config = data;
     props.handleConfigChange!(config);
+    if (path.find((i: any) => i === 'theme'))
+      props.handleSetTheme!(config.theme);
   }
 
   async function handleHassLogin(url: string) {

@@ -7,9 +7,8 @@ import feathers from '@feathersjs/feathers';
 import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import pink from '@material-ui/core/colors/pink';
 
-import { ThemesProps } from './Configuration/Config';
+import { ThemeProps, defaultPalette } from './Configuration/Config';
 import clone from './Utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
@@ -31,15 +30,7 @@ function Onboarding(props: OnboardingProps) {
   const [theme, setTheme] = React.useState(
     responsiveFontSizes(
       createMuiTheme({
-        palette: {
-          type: 'dark',
-          primary: pink,
-          secondary: pink,
-          background: {
-            default: '#303030',
-            paper: '#383c45'
-          }
-        }
+        palette: defaultPalette
       })
     )
   );
@@ -62,7 +53,7 @@ function Onboarding(props: OnboardingProps) {
     }
   }, [props.location]);
 
-  function handleSetTheme(palette: ThemesProps) {
+  function handleSetTheme(palette: ThemeProps) {
     setTheme(
       responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
     );
@@ -86,12 +77,7 @@ function Onboarding(props: OnboardingProps) {
       setConfig(configLcl);
       setConfigId(getter.data[0]._id);
 
-      if (configLcl.theme.themes && configLcl.theme.current) {
-        let theme = configLcl.theme.themes.find(
-          (theme: ThemesProps) => theme.key === configLcl.theme.current
-        );
-        if (theme) handleSetTheme(theme);
-      }
+      if (configLcl.theme) handleSetTheme(configLcl.theme);
     })();
   }, []);
 
