@@ -20,6 +20,7 @@ import PaletteIcon from '@material-ui/icons/Palette';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import clone from '../Utils/clone';
 import ColorWheel, { Color } from '../Utils/ColorWheel';
 import Section from './Section';
 
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 let PopoverNode: HTMLButtonElement | null | undefined;
+let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
   const [showColorPicker, setShowColorPicker] = React.useState(false);
@@ -85,36 +87,42 @@ function Item(props: ItemProps) {
     }
   }, [props.config, props.item.default, props.path, value]);
 
+  function handleUpdate(p: any[], v: any) {
+    const path = clone(p),
+      value = clone(v);
+    setValue(value);
+    if (updateTimeout) clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(() => {
+      props.handleUpdateConfig!(path, value);
+    }, 500);
+  }
+
   const handleChange = (path: any[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const val =
       type === 'number' ? Number(event.target.value) : event.target.value;
-    setValue(val);
-    props.handleUpdateConfig!(path, val);
+    handleUpdate(path, val);
   };
 
   const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
   ) => {
     const val = Number((event.target as HTMLInputElement).value);
-    setValue(val);
-    props.handleUpdateConfig!(path, val);
+    handleUpdate(path, val);
   };
 
   const handleSwitchChange = (path: any[]) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
   ) => {
-    setValue(checked);
-    props.handleUpdateConfig!(path, checked);
+    handleUpdate(path, checked);
   };
 
   const handleSelectChange = (path: any[]) => (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
-    setValue(event.target.value);
-    props.handleUpdateConfig!(path, event.target.value);
+    handleUpdate(path, event.target.value);
   };
 
   function handleToggleColorPicker() {
@@ -122,8 +130,7 @@ function Item(props: ItemProps) {
   }
 
   const handleColorChange = (path: any[]) => (color: Color) => {
-    setValue(color.hexString);
-    props.handleUpdateConfig!(path, color.hexString);
+    handleUpdate(path, color.hexString);
   };
 
   const classes = useStyles();

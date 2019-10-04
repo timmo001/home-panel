@@ -6,7 +6,7 @@ import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Popover from '@material-ui/core/Popover';
+import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant';
@@ -28,11 +28,11 @@ interface SuggestionType {
 }
 
 interface EntitySelectProps extends HomeAssistantEntityProps {
-  entity: string;
+  entity?: string;
   handleChange: (value: any) => void;
 }
 
-let PopoverNode: HTMLDivElement | null | undefined;
+let PopperNode: HTMLDivElement | null | undefined;
 
 function EntitySelect(props: EntitySelectProps) {
   const classes = useStyles();
@@ -63,10 +63,6 @@ function EntitySelect(props: EntitySelectProps) {
     props.handleChange(item.value);
     setOpen(false);
   };
-
-  function handleToggle() {
-    setOpen(!open);
-  }
 
   useEffect(() => {
     setOptions(
@@ -110,23 +106,22 @@ function EntitySelect(props: EntitySelectProps) {
         aria-controls="options"
         aria-haspopup="true"
         ref={node => {
-          PopoverNode = node;
+          PopperNode = node;
         }}
         value={search}
         onChange={handleChange}
         onFocus={handleFocus}
       />
-      <Popover
+      <Popper
         className={classes.menu}
         id="options"
-        anchorEl={PopoverNode}
-        open={open}
-        onClose={handleToggle}>
+        anchorEl={PopperNode}
+        open={open}>
         <Paper
           square
           style={{
             maxHeight: 250,
-            width: PopoverNode ? PopoverNode.clientWidth : undefined,
+            width: PopperNode ? PopperNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
             overflow: 'auto'
           }}>
@@ -139,13 +134,13 @@ function EntitySelect(props: EntitySelectProps) {
             </MenuItem>
           ))}
         </Paper>
-      </Popover>
+      </Popper>
     </div>
   );
 }
 
 EntitySelect.propTypes = {
-  entity: PropTypes.string.isRequired,
+  entity: PropTypes.string,
   hassEntities: PropTypes.any.isRequired,
   handleChange: PropTypes.func
 };
