@@ -53,11 +53,23 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   groupsContainer: {
     height: `calc(100% - ${theme.spacing(12)}px)`,
+    [theme.breakpoints.down('md')]: {
+      height: `calc(100% - ${theme.spacing(11)}px)`
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - ${theme.spacing(10)}px)`
+    },
     overflowX: 'auto',
     overflowY: 'hidden'
   },
   groupsContainerNavShown: {
-    height: `calc(100% - ${theme.spacing(8)}px)`
+    height: `calc(100% - ${theme.spacing(8)}px)`,
+    [theme.breakpoints.down('md')]: {
+      height: `calc(100% - ${theme.spacing(7)}px)`
+    },
+    [theme.breakpoints.down('sm')]: {
+      height: `calc(100% - ${theme.spacing(6)}px)`
+    }
   },
   groupContainer: {
     height: '100%',
