@@ -3156,3 +3156,8 @@ patch:
         patched: '2019-08-17T17:39:16.004Z'
     - react-color > lodash:
         patched: '2019-08-26T21:24:09.593Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T16:55:05.532Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-04T16:55:05.532Z'
