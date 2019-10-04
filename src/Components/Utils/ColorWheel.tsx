@@ -14,6 +14,7 @@ export type Color = {
 
 interface ColorWheelProps {
   color?: string;
+  lighting?: boolean;
   handleColorChange: (color: Color) => void;
 }
 
@@ -35,9 +36,9 @@ function ColorWheel(props: ColorWheelProps) {
       const colorPicker = new iro.ColorPicker(pickerNode, {
         width: 200,
         padding: 0,
-        borderWidth: 0,
+        // borderWidth: 0,
         color: color ? color : props.color ? props.color : '#ffffff',
-        layout: [
+        layout: !props.lighting && [
           {
             component: iro.ui.Wheel,
             options: {}

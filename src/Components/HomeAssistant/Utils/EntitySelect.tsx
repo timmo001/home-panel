@@ -6,7 +6,7 @@ import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import Popover from '@material-ui/core/Popover';
 import TextField from '@material-ui/core/TextField';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant';
@@ -32,7 +32,7 @@ interface EntitySelectProps extends HomeAssistantEntityProps {
   handleChange: (value: any) => void;
 }
 
-let popperNode: HTMLDivElement | null | undefined;
+let PopoverNode: HTMLDivElement | null | undefined;
 
 function EntitySelect(props: EntitySelectProps) {
   const classes = useStyles();
@@ -63,6 +63,10 @@ function EntitySelect(props: EntitySelectProps) {
     props.handleChange(item.value);
     setOpen(false);
   };
+
+  function handleToggle() {
+    setOpen(!open);
+  }
 
   useEffect(() => {
     setOptions(
@@ -106,22 +110,23 @@ function EntitySelect(props: EntitySelectProps) {
         aria-controls="options"
         aria-haspopup="true"
         ref={node => {
-          popperNode = node;
+          PopoverNode = node;
         }}
         value={search}
         onChange={handleChange}
         onFocus={handleFocus}
       />
-      <Popper
+      <Popover
         className={classes.menu}
         id="options"
-        anchorEl={popperNode}
-        open={open}>
+        anchorEl={PopoverNode}
+        open={open}
+        onClose={handleToggle}>
         <Paper
           square
           style={{
             maxHeight: 250,
-            width: popperNode ? popperNode.clientWidth : undefined,
+            width: PopoverNode ? PopoverNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
             overflow: 'auto'
           }}>
@@ -134,7 +139,7 @@ function EntitySelect(props: EntitySelectProps) {
             </MenuItem>
           ))}
         </Paper>
-      </Popper>
+      </Popover>
     </div>
   );
 }

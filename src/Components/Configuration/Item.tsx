@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { SketchPicker, ColorResult } from 'react-color';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -10,7 +9,8 @@ import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import Popover from '@material-ui/core/Popover';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Select from '@material-ui/core/Select';
@@ -20,12 +20,19 @@ import PaletteIcon from '@material-ui/icons/Palette';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import ColorWheel, { Color } from '../Utils/ColorWheel';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: 130,
     maxWidth: 130
+  },
+  menu: {
+    zIndex: 2000
+  },
+  menuContent: {
+    padding: theme.spacing(2)
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -54,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
-let popperNode: HTMLButtonElement | null | undefined;
+let PopoverNode: HTMLButtonElement | null | undefined;
 function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
   const [showColorPicker, setShowColorPicker] = React.useState(false);
@@ -114,9 +121,9 @@ function Item(props: ItemProps) {
     setShowColorPicker(!showColorPicker);
   }
 
-  const handleColorChange = (path: any[]) => (color: ColorResult) => {
-    setValue(color.hex);
-    props.handleUpdateConfig!(path, color.hex);
+  const handleColorChange = (path: any[]) => (color: Color) => {
+    setValue(color.hexString);
+    props.handleUpdateConfig!(path, color.hexString);
   };
 
   const classes = useStyles();
@@ -158,26 +165,30 @@ function Item(props: ItemProps) {
                   aria-label="Pick Color"
                   onClick={handleToggleColorPicker}
                   ref={node => {
-                    popperNode = node;
+                    PopoverNode = node;
                   }}>
                   <PaletteIcon fontSize="small" />
                 </IconButton>
+                <Popover
+                  className={classes.menu}
+                  id="options"
+                  anchorEl={PopoverNode}
+                  open={showColorPicker}
+                  onClose={handleToggleColorPicker}>
+                  <Paper className={classes.menuContent}>
+                    <ColorWheel
+                      color={value}
+                      lighting={true}
+                      handleColorChange={handleColorChange(props.path!)}
+                    />
+                  </Paper>
+                </Popover>
               </InputAdornment>
             )
           }}
           value={value}
-          onChange={handleChange(props.path!, 'string')}>
-          <Popper
-            // className={classes.colorPicker}
-            id="options"
-            anchorEl={popperNode}
-            open={showColorPicker}>
-            <SketchPicker
-              color={value}
-              onChangeComplete={handleColorChange(props.path!)}
-            />
-          </Popper>
-        </TextField>
+          onChange={handleChange(props.path!, 'string')}
+        />
       );
     case 'input':
       return (
