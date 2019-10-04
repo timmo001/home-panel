@@ -1783,10 +1783,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@16.9.4":
-  version "16.9.4"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.4.tgz#de8cf5e5e2838659fb78fa93181078469eeb19fc"
-  integrity sha512-ItGNmJvQ0IvWt8rbk5PLdpdQhvBVxAaXI9hDlx7UMd8Ie1iMIuwMNiKeTfmVN517CdplpyXvA22X4zm4jGGZnw==
+"@types/react@16.9.5":
+  version "16.9.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.5.tgz#079dabd918b19b32118c25fd00a786bb6d0d5e51"
+  integrity sha512-jQ12VMiFOWYlp+j66dghOWcmDDwhca0bnlcTxS4Qz/fh5gi6wpaZDthPEu/Gc/YlAuO87vbiUXL8qKstFvuOaA==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -9729,10 +9729,10 @@ react-json-editor-ajrm@2.5.9:
   dependencies:
     "@babel/runtime" "^7.0.0-rc.0"
 
-react-moment@0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.2.tgz#1cdc6ed02f1735282282129edf0f607f420df039"
-  integrity sha512-jpKIEvcEOTSa4RXWTjDlvja7sN+ee5Gyk5ZKa704FZxE01OxmKIpq9GUliqTrAgdDYJJUQsnqQamczn0TN+DTg==
+react-moment@0.9.3:
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/react-moment/-/react-moment-0.9.3.tgz#88548e2cb96dc2b37ea7ceecf28955a646eafdd3"
+  integrity sha512-NW+0azYvHP6nKH8SN6Zbm38QVe/v+Bgm5UoosWFtFuC8tUkHAG+VWdLivXj8NMrzHeNqt9OYy4ikVM1ZQaB+3w==
 
 react-router-dom@5.1.2:
   version "5.1.2"
