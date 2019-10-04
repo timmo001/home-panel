@@ -1,10 +1,12 @@
 // @flow
-import { Color } from '@material-ui/core';
+import {
+  PaletteOptions,
+  PaletteColorOptions
+} from '@material-ui/core/styles/createPalette';
 import amber from '@material-ui/core/colors/amber';
 import blue from '@material-ui/core/colors/blue';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import brown from '@material-ui/core/colors/brown';
-import common, { CommonColors } from '@material-ui/core/colors/common';
 import cyan from '@material-ui/core/colors/cyan';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import deepPurple from '@material-ui/core/colors/deepPurple';
@@ -21,10 +23,9 @@ import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 
-import { ThemesProps, defaultTheme } from 'Components/Configuration/Config';
-import clone from './clone';
+import { ThemeProps, defaultPalette } from '../Configuration/Config';
 
-const mapColor = (color: string): Color | CommonColors =>
+const mapColor = (color: string): PaletteColorOptions =>
   color === 'amber'
     ? amber
     : color === 'blue'
@@ -33,8 +34,6 @@ const mapColor = (color: string): Color | CommonColors =>
     ? blueGrey
     : color === 'brown'
     ? brown
-    : color === 'common'
-    ? common
     : color === 'cyan'
     ? cyan
     : color === 'deepOrange'
@@ -67,20 +66,20 @@ const mapColor = (color: string): Color | CommonColors =>
     ? yellow
     : grey;
 
-const parseTheme = (palette: ThemesProps) => {
-  let paletteNew = clone(palette);
-  paletteNew.primary = mapColor(String(paletteNew.primary));
-  paletteNew.secondary = mapColor(String(paletteNew.secondary));
-  paletteNew.background = {
-    default: paletteNew.background_default,
-    paper: paletteNew.background_paper
-  };
-  delete paletteNew.background_default;
-  delete paletteNew.background_paper;
-  // Handle bad config
-  if (!paletteNew.type.match(/light|dark/gi))
-    paletteNew.type = defaultTheme().type;
-  return paletteNew;
-};
+export default function parseTheme(theme: ThemeProps) {
+  let palette: PaletteOptions = defaultPalette;
 
-export default parseTheme;
+  if (theme.type && theme.type.match(/light|dark/gi)) palette.type = theme.type;
+
+  if (theme.primary) palette.primary = mapColor(String(theme.primary));
+  if (theme.secondary) palette.secondary = mapColor(String(theme.secondary));
+  palette.background = {
+    default: theme.background_default
+      ? theme.background_default
+      : defaultPalette.background!.default,
+    paper: theme.background_paper
+      ? theme.background_paper
+      : defaultPalette.background!.paper
+  };
+  return palette;
+}

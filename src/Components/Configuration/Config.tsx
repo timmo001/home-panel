@@ -1,6 +1,8 @@
 // @flow
 import { Color } from '@material-ui/core';
+import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 import { CommonColors } from '@material-ui/core/colors/common';
+import pink from '@material-ui/core/colors/pink';
 
 import { BaseProps } from '../Cards/Base';
 import makeKey from '../Utils/makeKey';
@@ -12,7 +14,7 @@ export interface ConfigProps {
   handleUpdateConfig?: (path: any[], data?: any) => void;
   handleConfigChange?: (config: ConfigurationProps) => void;
   handleSetBack?: (back: boolean) => void;
-  handleSetTheme?: (palette: ThemesProps) => void;
+  handleSetTheme?: (palette: ThemeProps) => void;
 }
 
 export type ConfigurationProps = {
@@ -30,8 +32,11 @@ export type GeneralProps = {
 };
 
 export type ThemeProps = {
-  current: string;
-  themes: [ThemesProps];
+  type: 'light' | 'dark';
+  primary: string | Color | CommonColors;
+  secondary: string | Color | CommonColors;
+  background_default: string;
+  background_paper: string;
 };
 
 export type HeaderProps = {
@@ -87,16 +92,6 @@ export type CardType = {
   title: string;
 };
 
-export type ThemesProps = {
-  key: string;
-  name: string;
-  type: string;
-  primary: string | Color | CommonColors;
-  secondary: string | Color | CommonColors;
-  background_default: string;
-  background_paper: string;
-};
-
 export const defaultPage = () => ({
   key: makeKey(16),
   name: 'Page',
@@ -120,15 +115,23 @@ export const defaultCard = (groupKey: string) => ({
   height: 1
 });
 
-export const defaultTheme = () => ({
-  key: makeKey(16),
-  name: 'Theme',
+export const defaultTheme: ThemeProps = {
   type: 'dark',
   primary: 'pink',
-  secondary: 'purple',
+  secondary: 'pink',
   background_default: '#303030',
   background_paper: '#383c45'
-});
+};
+
+export const defaultPalette: PaletteOptions = {
+  type: 'dark',
+  primary: pink,
+  secondary: pink,
+  background: {
+    default: '#303030',
+    paper: '#383c45'
+  }
+};
 
 export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
@@ -192,6 +195,27 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
   }
 };
 
+export const colorItems = [
+  'blue',
+  'blueGrey',
+  'brown',
+  'cyan',
+  'deepOrange',
+  'deepPurple',
+  'green',
+  'grey',
+  'indigo',
+  'lightBlue',
+  'lightGreen',
+  'lime',
+  'orange',
+  'pink',
+  'purple',
+  'red',
+  'teal',
+  'yellow'
+];
+
 export const items = [
   {
     name: 'general',
@@ -220,82 +244,49 @@ export const items = [
     title: 'Theme',
     items: [
       {
-        name: 'current',
-        title: 'Current Theme',
-        description: 'Current theme?',
-        icon: 'mdi-compare',
-        type: 'theme',
-        default: 'qwertyuiop123456'
+        name: 'type',
+        title: 'Type',
+        description: 'Light or dark base?',
+        icon: 'mdi-theme-light-dark',
+        type: 'select',
+        default: 'dark',
+        items: ['dark', 'light']
       },
       {
-        name: 'themes',
-        title: 'Themes',
-        description: 'Configured themes.',
-        icon: 'mdi-format-list-bulleted-type',
-        type: 'array',
-        default: [
-          {
-            key: 'abcdefghijklmnop',
-            name: 'Theme',
-            type: 'dark',
-            primary: 'pink',
-            secondary: 'pink',
-            background_default: '#303030',
-            background_paper: '#383c45'
-          }
-        ],
-        items: [
-          {
-            name: 'name',
-            title: 'Name',
-            description: 'Theme name.',
-            icon: 'mdi-rename-box',
-            type: 'input',
-            default: 'Midnight'
-          },
-          {
-            name: 'type',
-            title: 'Type',
-            description: 'Light or dark? (`light` or `dark`)',
-            icon: 'mdi-theme-light-dark',
-            type: 'input',
-            default: 'dark'
-          },
-          {
-            name: 'primary',
-            title: 'Primary',
-            description:
-              'Primary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
-            icon: 'mdi-palette',
-            type: 'input',
-            default: 'pink'
-          },
-          {
-            name: 'secondary',
-            title: 'Secondary',
-            description:
-              'Secondary palette. See [here](https://material-ui.com/customization/color/#color-palette) for available names.',
-            icon: 'mdi-palette',
-            type: 'input',
-            default: 'pink'
-          },
-          {
-            name: 'background_default',
-            title: 'Background',
-            description: 'Background color.',
-            icon: 'mdi-format-color-fill',
-            type: 'input',
-            default: '#303030'
-          },
-          {
-            name: 'background_paper',
-            title: 'Paper',
-            description: 'Card color.',
-            icon: 'mdi-card-bulleted',
-            type: 'input',
-            default: '#383c45'
-          }
-        ]
+        name: 'primary',
+        title: 'Primary',
+        description:
+          'Primary palette. See [here](https://material-ui.com/customization/color/#color-palette) for color palette.',
+        icon: 'mdi-palette',
+        type: 'select',
+        default: 'pink',
+        items: colorItems
+      },
+      {
+        name: 'secondary',
+        title: 'Secondary',
+        description:
+          'Secondary palette. See [here](https://material-ui.com/customization/color/#color-palette) for color palette.',
+        icon: 'mdi-palette',
+        type: 'select',
+        default: 'pink',
+        items: colorItems
+      },
+      {
+        name: 'background_default',
+        title: 'Background',
+        description: 'Background color.',
+        icon: 'mdi-format-color-fill',
+        type: 'color',
+        default: '#303030'
+      },
+      {
+        name: 'background_paper',
+        title: 'Paper',
+        description: 'Card color.',
+        icon: 'mdi-card-bulleted',
+        type: 'color',
+        default: '#383c45'
       }
     ]
   },

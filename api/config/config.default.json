@@ -4,18 +4,11 @@
     "dense_toolbar": false
   },
   "theme": {
-    "current": "qwertyuiop123456",
-    "themes": [
-      {
-        "key": "qwertyuiop123456",
-        "name": "Midnight",
-        "type": "dark",
-        "primary": "pink",
-        "secondary": "pink",
-        "background_default": "#303030",
-        "background_paper": "#383c45"
-      }
-    ]
+    "type": "dark",
+    "primary": "pink",
+    "secondary": "pink",
+    "background_default": "#303030",
+    "background_paper": "#383c45"
   },
   "header": {
     "time_show": true,

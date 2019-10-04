@@ -6,20 +6,35 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Paper from '@material-ui/core/Paper';
+import Popover from '@material-ui/core/Popover';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import PaletteIcon from '@material-ui/icons/Palette';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
+import clone from '../Utils/clone';
+import ColorWheel, { Color } from '../Utils/ColorWheel';
 import Section from './Section';
-import { ThemesProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    minWidth: 130,
+    maxWidth: 130
+  },
+  menu: {
+    zIndex: 2000
+  },
+  menuContent: {
+    padding: theme.spacing(2)
+  },
   icon: {
     marginRight: theme.spacing(2),
     fontSize: 24
@@ -42,17 +57,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   radioGroup: {
     display: 'flex',
     flexDirection: 'row'
-  },
-  textField: {
-    minWidth: 100,
-    maxWidth: 130
   }
 }));
 
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
+let PopoverNode: HTMLButtonElement | null | undefined;
+let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
+  const [showColorPicker, setShowColorPicker] = React.useState(false);
 
   useEffect(() => {
     setValue(undefined);
@@ -73,42 +87,50 @@ function Item(props: ItemProps) {
     }
   }, [props.config, props.item.default, props.path, value]);
 
+  function handleUpdate(p: any[], v: any) {
+    const path = clone(p),
+      value = clone(v);
+    setValue(value);
+    if (updateTimeout) clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(() => {
+      props.handleUpdateConfig!(path, value);
+    }, 500);
+  }
+
   const handleChange = (path: any[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const val =
       type === 'number' ? Number(event.target.value) : event.target.value;
-    setValue(val);
-    props.handleUpdateConfig!(path, val);
+    handleUpdate(path, val);
   };
 
   const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
   ) => {
     const val = Number((event.target as HTMLInputElement).value);
-    setValue(val);
-    props.handleUpdateConfig!(path, val);
+    handleUpdate(path, val);
   };
 
   const handleSwitchChange = (path: any[]) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
   ) => {
-    setValue(checked);
-    props.handleUpdateConfig!(path, checked);
+    handleUpdate(path, checked);
   };
 
   const handleSelectChange = (path: any[]) => (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => {
-    setValue(event.target.value);
-    props.handleUpdateConfig!(path, event.target.value);
-    if (path.pop() === 'theme') {
-      const theme = props.config.theme.themes.find(
-        (theme: ThemesProps) => theme.key === event.target.value
-      );
-      if (theme) props.handleSetTheme!(theme);
-    }
+    handleUpdate(path, event.target.value);
+  };
+
+  function handleToggleColorPicker() {
+    setShowColorPicker(!showColorPicker);
+  }
+
+  const handleColorChange = (path: any[]) => (color: Color) => {
+    handleUpdate(path, color.hexString);
   };
 
   const classes = useStyles();
@@ -136,10 +158,49 @@ function Item(props: ItemProps) {
           />
         </IconButton>
       );
+    case 'color':
+      return (
+        <TextField
+          className={classes.root}
+          placeholder={String(props.item.default)}
+          type="text"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  size="small"
+                  aria-label="Pick Color"
+                  onClick={handleToggleColorPicker}
+                  ref={node => {
+                    PopoverNode = node;
+                  }}>
+                  <PaletteIcon fontSize="small" />
+                </IconButton>
+                <Popover
+                  className={classes.menu}
+                  id="options"
+                  anchorEl={PopoverNode}
+                  open={showColorPicker}
+                  onClose={handleToggleColorPicker}>
+                  <Paper className={classes.menuContent}>
+                    <ColorWheel
+                      color={value}
+                      lighting={true}
+                      handleColorChange={handleColorChange(props.path!)}
+                    />
+                  </Paper>
+                </Popover>
+              </InputAdornment>
+            )
+          }}
+          value={value}
+          onChange={handleChange(props.path!, 'string')}
+        />
+      );
     case 'input':
       return (
         <TextField
-          className={classes.textField}
+          className={classes.root}
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
           value={value}
@@ -171,6 +232,23 @@ function Item(props: ItemProps) {
           </RadioGroup>
         </FormControl>
       );
+    case 'select':
+      return (
+        <FormControl>
+          <InputLabel htmlFor="theme"></InputLabel>
+          <Select
+            className={classes.root}
+            value={value}
+            onChange={handleSelectChange(props.path!)}>
+            {props.item.items &&
+              props.item.items.map((sItem: string, key: number) => (
+                <MenuItem key={key} value={sItem}>
+                  {sItem}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+      );
     case 'switch':
       if (typeof value !== 'boolean') return <div />;
       return (
@@ -179,31 +257,6 @@ function Item(props: ItemProps) {
           checked={value}
           onChange={handleSwitchChange(props.path!)}
         />
-      );
-    case 'theme':
-      return (
-        <FormControl>
-          <InputLabel htmlFor="theme">Theme</InputLabel>
-          <Select
-            value={value}
-            onChange={handleSelectChange(props.path!)}
-            inputProps={{
-              name: 'theme',
-              id: 'theme'
-            }}>
-            {props.config.theme.themes ? (
-              props.config.theme.themes.map(
-                (theme: ThemesProps, key: number) => (
-                  <MenuItem key={key} value={theme.key}>
-                    {theme.name}
-                  </MenuItem>
-                )
-              )
-            ) : (
-              <MenuItem>No themes found</MenuItem>
-            )}
-          </Select>
-        </FormControl>
       );
   }
 }

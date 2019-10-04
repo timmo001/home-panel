@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
@@ -44,7 +44,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
 
 interface SelectProps extends EntityProps {}
 
-let popperNode: HTMLButtonElement | null | undefined;
+let PopoverNode: HTMLButtonElement | null | undefined;
 function Select(props: SelectProps) {
   const [open, setOpen] = useState(false);
 
@@ -70,7 +70,7 @@ function Select(props: SelectProps) {
     }
   }
 
-  function handleShow() {
+  function handleToggle() {
     setOpen(!open);
   }
 
@@ -87,9 +87,9 @@ function Select(props: SelectProps) {
   return (
     <IconButton
       className={classes.root}
-      onClick={handleShow}
+      onClick={handleToggle}
       ref={node => {
-        popperNode = node;
+        PopoverNode = node;
       }}>
       <Grid
         className={classes.root}
@@ -121,16 +121,17 @@ function Select(props: SelectProps) {
           </Typography>
         </Grid>
       </Grid>
-      <Popper
+      <Popover
         className={classes.menu}
         id="options"
-        anchorEl={popperNode}
-        open={open}>
+        anchorEl={PopoverNode}
+        open={open}
+        onClose={handleToggle}>
         <Paper
           square
           style={{
             maxHeight: 250,
-            width: popperNode ? popperNode.clientWidth : undefined,
+            width: PopoverNode ? PopoverNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
             overflow: 'auto'
           }}>
@@ -141,7 +142,7 @@ function Select(props: SelectProps) {
               </MenuItem>
             ))}
         </Paper>
-      </Popper>
+      </Popover>
     </IconButton>
   );
 }

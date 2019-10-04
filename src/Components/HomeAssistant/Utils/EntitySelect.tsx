@@ -28,11 +28,11 @@ interface SuggestionType {
 }
 
 interface EntitySelectProps extends HomeAssistantEntityProps {
-  entity: string;
+  entity?: string;
   handleChange: (value: any) => void;
 }
 
-let popperNode: HTMLDivElement | null | undefined;
+let PopperNode: HTMLDivElement | null | undefined;
 
 function EntitySelect(props: EntitySelectProps) {
   const classes = useStyles();
@@ -106,7 +106,7 @@ function EntitySelect(props: EntitySelectProps) {
         aria-controls="options"
         aria-haspopup="true"
         ref={node => {
-          popperNode = node;
+          PopperNode = node;
         }}
         value={search}
         onChange={handleChange}
@@ -115,13 +115,13 @@ function EntitySelect(props: EntitySelectProps) {
       <Popper
         className={classes.menu}
         id="options"
-        anchorEl={popperNode}
+        anchorEl={PopperNode}
         open={open}>
         <Paper
           square
           style={{
             maxHeight: 250,
-            width: popperNode ? popperNode.clientWidth : undefined,
+            width: PopperNode ? PopperNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
             overflow: 'auto'
           }}>
@@ -140,7 +140,7 @@ function EntitySelect(props: EntitySelectProps) {
 }
 
 EntitySelect.propTypes = {
-  entity: PropTypes.string.isRequired,
+  entity: PropTypes.string,
   hassEntities: PropTypes.any.isRequired,
   handleChange: PropTypes.func
 };
