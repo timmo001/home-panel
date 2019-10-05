@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     textOverflow: 'ellipsis'
   },
   input: {
-    marginTop: theme.spacing(0.5),
     width: 60
   },
   codes: {
@@ -92,21 +91,21 @@ function AlarmPanel(props: AlarmPanelProps) {
 
   const armed = entity.state === 'armed_away' || entity.state === 'armed_home';
 
-  console.log(armed);
-
   return (
     <Grid
       className={classes.root}
       container
-      justify="space-between"
+      justify="center"
       alignContent="center"
       alignItems="center"
       direction="column">
-      <Typography className={classes.text} color="textPrimary" component="h5">
-        {properCase(entity.state)}
-      </Typography>
-      {!props.card.width ||
-        (props.card.width > 1 && (
+      <Grid item>
+        <Typography className={classes.text} color="textPrimary" component="h5">
+          {properCase(entity.state)}
+        </Typography>
+      </Grid>
+      {(!props.card.width || props.card.width > 1) &&
+        (!props.card.height || props.card.height > 1) && (
           <Grid
             item
             container
@@ -154,9 +153,10 @@ function AlarmPanel(props: AlarmPanelProps) {
               </Grid>
             )}
           </Grid>
-        ))}
+        )}
       {attributes.code_arm_required &&
-        (!props.card.width || props.card.width > 1) && (
+        (!props.card.width || props.card.width > 1) &&
+        (!props.card.height || props.card.height > 2) && (
           <Grid item>
             <Input
               className={classes.input}
@@ -184,6 +184,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
                 <Button
+                  size="large"
                   disabled={entity!.state === 'pending'}
                   onClick={handleCodePressed(String(value))}>
                   {value}

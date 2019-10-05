@@ -46,7 +46,7 @@ export const entitySizes: {
   [key: string]: { height: number; width: number };
 } = {
   air_quality: { height: 1, width: 1 },
-  alarm_control_panel: { height: 2, width: 2 },
+  alarm_control_panel: { height: 3, width: 2 },
   binary_sensor: { height: 1, width: 1 },
   camera: { height: 1, width: 1 },
   climate: { height: 2, width: 2 },
