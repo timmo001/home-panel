@@ -32,7 +32,7 @@ RUN \
     set -o pipefail \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.66.0-r0 \
+        curl=7.64.0-r3 \
         git=2.22.0-r0 \
         tar=1.32-r0 \
         yarn=1.16.0-r0 \
