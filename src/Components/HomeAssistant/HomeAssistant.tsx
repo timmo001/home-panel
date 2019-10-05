@@ -37,7 +37,8 @@ export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
   handleHassChange?: (
     domain: string,
     state: string | boolean,
-    data?: any
+    data?: any,
+    entities?: HassEntities
   ) => void;
 }
 
@@ -86,7 +87,8 @@ export async function saveTokens(tokens?: AuthData | null) {
 export function handleChange(
   domain: string,
   state: string | boolean,
-  data?: any
+  data?: any,
+  entities?: HassEntities
 ) {
   process.env.NODE_ENV === 'development' &&
     console.log('handleChange:', domain, state, data);
@@ -98,12 +100,32 @@ export function handleChange(
       }
     );
   } else {
-    callService(connection, domain, state ? 'turn_on' : 'turn_off', data).then(
-      () => {},
-      err => {
-        console.error('Error calling service:', err);
-      }
-    );
+    if (domain === 'group' && entities) {
+      entities[data.entity_id].attributes.entity_id.map((entity: string) =>
+        callService(
+          connection,
+          entity.split('.')[0],
+          state ? 'turn_on' : 'turn_off',
+          { entity_id: entity }
+        ).then(
+          () => {},
+          err => {
+            console.error('Error calling service:', err);
+          }
+        )
+      );
+    } else
+      callService(
+        connection,
+        domain,
+        state ? 'turn_on' : 'turn_off',
+        data
+      ).then(
+        () => {},
+        err => {
+          console.error('Error calling service:', err);
+        }
+      );
   }
 }
 

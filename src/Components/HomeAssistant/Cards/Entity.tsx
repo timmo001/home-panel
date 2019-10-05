@@ -36,6 +36,7 @@ function Entity(props: EntityProps) {
     return <State {...props} />;
 
   if (
+    domain === 'group' ||
     domain === 'input_boolean' ||
     domain === 'lock' ||
     domain === 'remote' ||
