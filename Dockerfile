@@ -40,7 +40,7 @@ RUN \
     && apk add --no-cache \
         bash=5.0.0-r0 \
         nginx=1.16.1-r0 \
-        nodejs-current=12.4.0-r0 \
+        nodejs-current=11.3.0-r0 \
         openssl=1.1.1d-r0 \
         tzdata=2019b-r0 \
     \
