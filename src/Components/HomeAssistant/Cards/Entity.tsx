@@ -10,6 +10,7 @@ import Cover from './Cover';
 import Fan from './Fan';
 import Light from './Light';
 import Media from './Media';
+import Number from './Number';
 import Select from './Select';
 import State from './State';
 import Toggle from './Toggle';
@@ -48,6 +49,7 @@ function Entity(props: EntityProps) {
   if (domain === 'climate') return <Climate {...props} />;
   if (domain === 'cover') return <Cover {...props} />;
   if (domain === 'fan') return <Fan {...props} />;
+  if (domain === 'input_number') return <Number {...props} />;
   if (domain === 'input_select') return <Select {...props} />;
   if (domain === 'light') return <Light {...props} />;
   if (domain === 'media_player') return <Media {...props} />;
