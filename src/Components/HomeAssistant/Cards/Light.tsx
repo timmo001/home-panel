@@ -270,7 +270,10 @@ function Light(props: LightProps) {
       {!props.card.height || props.card.height > 3
         ? controls
         : controls
-            .splice(0, props.card.height > 1 ? props.card.height : 0)
+            .splice(
+              0,
+              Number(props.card.height) > 1 ? Number(props.card.height) : 0
+            )
             .map(control => control)}
     </Grid>
   );

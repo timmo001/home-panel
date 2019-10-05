@@ -71,7 +71,7 @@ export type CardProps = {
   group: string;
   type: string;
   width?: number;
-  height?: number;
+  height?: number | string;
   square?: boolean;
   padding?: number | string;
   elevation?: number;
@@ -147,6 +147,7 @@ export const defaultPalette: PaletteOptions = {
 
 export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
+  { name: 'feed', title: 'News/RSS Feed' },
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
   { name: 'markdown', title: 'Markdown' }
@@ -156,7 +157,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
   entity: {
     key: '',
     group: '',
-    title: 'Card',
+    title: cardTypes[0].title,
     type: 'entity',
     elevation: 1,
     background: '',
@@ -167,41 +168,54 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     icon: '',
     entity: ''
   },
-  iframe: {
+  feed: {
     key: '',
     group: '',
-    title: 'Card',
-    type: 'iframe',
+    title: cardTypes[1].title,
+    type: 'feed',
     elevation: 1,
     background: '',
     padding: '',
     square: false,
-    width: 1,
-    height: 1,
+    width: 2,
+    height: 3,
     url: ''
+  },
+  iframe: {
+    key: '',
+    group: '',
+    title: '',
+    type: 'iframe',
+    elevation: 1,
+    background: '',
+    padding: '0px',
+    square: false,
+    width: 2,
+    height: 'auto',
+    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   image: {
     key: '',
     group: '',
-    title: 'Card',
+    title: '',
     type: 'image',
     elevation: 1,
     background: '',
-    padding: '',
+    padding: '0px',
     square: false,
-    width: 1,
-    url: ''
+    width: 2,
+    url: 'https://source.unsplash.com/daily'
   },
   markdown: {
     key: '',
     group: '',
-    title: 'Card',
+    title: cardTypes[4].title,
     type: 'markdown',
     elevation: 1,
     background: '',
     padding: '',
     square: false,
-    width: 1,
+    width: 2,
     height: 1,
     content: ''
   }

@@ -111,9 +111,9 @@ function Base(props: BaseProps) {
           ? entitySizes[entitySizeKey].height * cardSize
           : props.editing === 2 || !props.card.height
           ? 'initial'
-          : isNaN(props.card.height)
-          ? props.card.height
-          : props.card.height * cardSize || cardSize;
+          : !isNaN(Number(props.card.height))
+          ? Number(props.card.height) * cardSize || cardSize
+          : props.card.height;
       if (h) setHeight(h);
     },
     [props.card.height, props.editing, props.expandable]
