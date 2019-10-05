@@ -13,6 +13,7 @@ import Media from './Media';
 import Number from './Number';
 import Select from './Select';
 import State from './State';
+import Text from './Text';
 import Toggle from './Toggle';
 import Weather from './Weather';
 
@@ -52,6 +53,7 @@ function Entity(props: EntityProps) {
   if (domain === 'fan') return <Fan {...props} />;
   if (domain === 'input_number') return <Number {...props} />;
   if (domain === 'input_select') return <Select {...props} />;
+  if (domain === 'input_text') return <Text {...props} />;
   if (domain === 'light') return <Light {...props} />;
   if (domain === 'media_player') return <Media {...props} />;
   if (domain === 'weather') return <Weather {...props} />;

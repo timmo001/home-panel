@@ -51,6 +51,7 @@ function Entity(props: EntityProps) {
     domain === 'geo_location' ||
     domain === 'group' ||
     domain === 'input_boolean' ||
+    domain === 'input_text' ||
     domain === 'input_number' ||
     domain === 'input_select' ||
     domain === 'light' ||
