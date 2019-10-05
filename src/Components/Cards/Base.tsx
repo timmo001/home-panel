@@ -220,7 +220,8 @@ function Base(props: BaseProps) {
         props.card.state === 'on' ? false : true,
         {
           entity_id: props.card.entity
-        }
+        },
+        props.hassEntities
       );
     }
   }

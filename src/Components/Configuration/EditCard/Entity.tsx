@@ -49,7 +49,9 @@ function Entity(props: EntityProps) {
     domain === 'binary_sensor' ||
     domain === 'device_tracker' ||
     domain === 'geo_location' ||
+    domain === 'group' ||
     domain === 'input_boolean' ||
+    domain === 'input_number' ||
     domain === 'input_select' ||
     domain === 'light' ||
     domain === 'lock' ||
