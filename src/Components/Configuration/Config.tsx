@@ -75,6 +75,7 @@ export type CardProps = {
   background?: string;
   backgroundTemp?: string;
   icon?: string;
+  icon_size?: string;
   title?: string;
   title_size?: string;
   content?: string;

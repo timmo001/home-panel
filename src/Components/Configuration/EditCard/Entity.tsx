@@ -130,6 +130,27 @@ function Entity(props: EntityProps) {
             )}
           </Grid>
         )}
+        <Grid
+          item
+          container
+          direction="row"
+          justify="center"
+          alignItems="flex-end"
+          alignContent="flex-end">
+          {iconAllowed && props.card.icon && (
+            <Grid item xs container justify="flex-start" alignContent="center">
+              <TextField
+                className={classes.textField}
+                InputLabelProps={{ shrink: true }}
+                type="text"
+                label="Icon Size"
+                placeholder="initial"
+                value={props.card.icon_size}
+                onChange={props.handleChange!('icon_size')}
+              />
+            </Grid>
+          )}
+        </Grid>
         {graphAllowed && props.card.entity && (
           <Grid
             item
