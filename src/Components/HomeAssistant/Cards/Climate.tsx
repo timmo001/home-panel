@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   temperature: {
     display: 'inline-flex',
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(0.4)
   },
   iconContainer: {
     height: 32,
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 1.0
   },
   hyphen: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(0.4)
   }
 }));
 
@@ -122,6 +122,8 @@ function Climate(props: ClimateProps) {
       away_mode: attributes.away_mode === 'on' ? 'off' : 'on'
     });
   }
+
+  console.log(props.card.entity, attributes);
 
   return (
     <Grid
@@ -200,6 +202,7 @@ function Climate(props: ClimateProps) {
                 spacing={1}
                 justify="center"
                 alignContent="center"
+                alignItems="center"
                 direction="row">
                 <Grid
                   item
@@ -215,7 +218,10 @@ function Climate(props: ClimateProps) {
                         attributes.target_temp_low + 0.5
                       )
                     }>
-                    <KeyboardArrowUp fontSize="small" />
+                    <KeyboardArrowUp
+                      className={classnames(classes.icon, classes.iconNormal)}
+                      fontSize="small"
+                    />
                   </IconButton>
                   <div className={classes.temperature}>
                     <Typography className={classes.text} variant="h5">
@@ -251,6 +257,7 @@ function Climate(props: ClimateProps) {
                   alignContent="center"
                   direction="column">
                   <IconButton
+                    className={classes.iconContainer}
                     onClick={() =>
                       handleTempChange(
                         'target_temp_high',
@@ -271,6 +278,7 @@ function Climate(props: ClimateProps) {
                     </Typography>
                   </div>
                   <IconButton
+                    className={classes.iconContainer}
                     onClick={() =>
                       handleTempChange(
                         'target_temp_high',
@@ -325,7 +333,9 @@ function Climate(props: ClimateProps) {
                           'mdi',
                           icon,
                           classes.icon,
-                          attributes.hvac_action === mode && classes.iconActive
+                          attributes.hvac_action === mode ||
+                            (attributes.hvac_action === `${mode}ing` &&
+                              classes.iconActive)
                         )}
                       />
                     </IconButton>
@@ -335,7 +345,9 @@ function Climate(props: ClimateProps) {
                 <Grid key={key} item>
                   <Button
                     className={classnames(
-                      attributes.hvac_action === mode && classes.iconActive
+                      attributes.hvac_action === mode ||
+                        (attributes.hvac_action === `${mode}ing` &&
+                          classes.iconActive)
                     )}
                     onClick={() => handleHvacChange(mode)}>
                     {mode}
