@@ -123,8 +123,6 @@ function Climate(props: ClimateProps) {
     });
   }
 
-  console.log(props.card.entity, attributes);
-
   return (
     <Grid
       className={classes.root}
