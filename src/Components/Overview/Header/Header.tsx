@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontSize: '1.6rem'
     }
   },
+  time: {
+    lineHeight: 0.8
+  },
   timePeriod: {
     marginLeft: theme.spacing(1),
     fontSize: '2.4rem',
@@ -58,10 +61,20 @@ function Header(props: HeaderProps) {
     .map((timeColumn: string) => timeColumn.split('_-_'));
 
   const time = props.config.header.time_show && (
-    <Typography color="textPrimary" variant="h2" component="h2" noWrap>
+    <Typography
+      className={classes.time}
+      color="textPrimary"
+      variant="h2"
+      component="h2"
+      noWrap
+      style={{ fontSize: props.config.header.time_font_size }}>
       {timeRows[0][0]}
       {timeRows[0][1] && (
-        <span className={classes.timePeriod}>{timeRows[0][1]}</span>
+        <span
+          className={classes.timePeriod}
+          style={{ fontSize: props.config.header.time_period_font_size }}>
+          {timeRows[0][1]}
+        </span>
       )}
       <br />
       {timeRows[1] && <span className={classes.date}>{timeRows[1][0]}</span>}
@@ -69,7 +82,12 @@ function Header(props: HeaderProps) {
   );
 
   const date = props.config.header.date_show && (
-    <Typography color="textPrimary" variant="h2" component="h2" noWrap>
+    <Typography
+      color="textPrimary"
+      variant="h2"
+      component="h2"
+      noWrap
+      style={{ fontSize: props.config.header.date_font_size }}>
       {moment().format(props.config.header.date_format)}
     </Typography>
   );

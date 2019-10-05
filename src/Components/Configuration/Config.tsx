@@ -44,9 +44,12 @@ export type HeaderProps = {
   time_show: boolean;
   time_military: boolean;
   time_location: number;
+  time_font_size: string;
+  time_period_font_size: string;
   date_show: boolean;
   date_format: string;
   date_location: number;
+  date_font_size: string;
 };
 
 export type PageProps = {
@@ -75,11 +78,14 @@ export type CardProps = {
   background?: string;
   backgroundTemp?: string;
   icon?: string;
+  icon_size?: string;
   title?: string;
+  title_size?: string;
   content?: string;
   url?: string;
   domain?: string;
   entity?: string;
+  state_size?: string;
   state?: string | boolean;
   disabled?: boolean;
   toggleable?: boolean;
@@ -334,6 +340,22 @@ export const items = [
         items: ['Left', 'Center', 'Right']
       },
       {
+        name: 'time_font_size',
+        title: 'Time Font Size',
+        description: 'Custom font size for Time.',
+        icon: 'mdi-text',
+        type: 'input',
+        default: ''
+      },
+      {
+        name: 'time_period_font_size',
+        title: 'Time Period Font Size',
+        description: 'Custom font size for Time period (non-military time).',
+        icon: 'mdi-text',
+        type: 'input',
+        default: ''
+      },
+      {
         name: 'date_show',
         title: 'Show Date',
         description: 'Show the date?',
@@ -358,6 +380,14 @@ export const items = [
         type: 'radio',
         default: 1,
         items: ['Left', 'Center', 'Right']
+      },
+      {
+        name: 'date_font_size',
+        title: 'Date Font Size',
+        description: 'Custom font size for Date.',
+        icon: 'mdi-text',
+        type: 'input',
+        default: ''
       }
     ]
   }

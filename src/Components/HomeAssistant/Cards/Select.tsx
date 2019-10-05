@@ -108,6 +108,7 @@ function Select(props: SelectProps) {
               color="textPrimary"
               variant="h3"
               component="h5"
+              style={{ fontSize: props.card.icon_size }}
             />
           )}
         </Grid>

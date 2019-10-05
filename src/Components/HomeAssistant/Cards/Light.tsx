@@ -250,7 +250,7 @@ function Light(props: LightProps) {
               `mdi-${props.card.icon || 'lightbulb'}`,
               classes.icon
             )}
-            style={{ color }}
+            style={{ color, fontSize: props.card.icon_size }}
             variant="h3"
             component="h5"
           />

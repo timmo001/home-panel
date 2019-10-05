@@ -309,7 +309,8 @@ function Base(props: BaseProps) {
                   variant="h6"
                   component="h3"
                   gutterBottom
-                  noWrap>
+                  noWrap
+                  style={{ fontSize: props.card.title_size }}>
                   {props.card.title}
                 </Typography>
               )}
