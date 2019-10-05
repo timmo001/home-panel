@@ -283,7 +283,7 @@ function Overview(props: OverviewProps) {
                 direction="row"
                 justify="flex-start"
                 alignContent="flex-start">
-                <Grid item>
+                <Grid item xs>
                   <Typography
                     className={classes.title}
                     variant="h4"
