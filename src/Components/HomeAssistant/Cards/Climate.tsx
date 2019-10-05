@@ -123,6 +123,8 @@ function Climate(props: ClimateProps) {
     });
   }
 
+  console.log(state, attributes);
+
   return (
     <Grid
       className={classes.root}
@@ -320,6 +322,7 @@ function Climate(props: ClimateProps) {
                   : mode === 'fan_only'
                   ? 'mdi-fan'
                   : undefined;
+
               if (icon)
                 return (
                   <Grid key={key} item>
@@ -331,9 +334,7 @@ function Climate(props: ClimateProps) {
                           'mdi',
                           icon,
                           classes.icon,
-                          attributes.hvac_action === mode ||
-                            (attributes.hvac_action === `${mode}ing` &&
-                              classes.iconActive)
+                          state === mode && classes.iconActive
                         )}
                       />
                     </IconButton>
@@ -342,11 +343,7 @@ function Climate(props: ClimateProps) {
               return (
                 <Grid key={key} item>
                   <Button
-                    className={classnames(
-                      attributes.hvac_action === mode ||
-                        (attributes.hvac_action === `${mode}ing` &&
-                          classes.iconActive)
-                    )}
+                    className={classnames(state === mode && classes.iconActive)}
                     onClick={() => handleHvacChange(mode)}>
                     {mode}
                   </Button>
