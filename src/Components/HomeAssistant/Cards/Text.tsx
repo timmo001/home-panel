@@ -6,7 +6,6 @@ import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
-import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
@@ -80,8 +79,6 @@ function TextEntity(props: NumberProps) {
         </Grid>
       </Grid>
     );
-
-  const getText = (value: number) => `${value}`;
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const val = event.target.value;
