@@ -150,6 +150,19 @@ function Entity(props: EntityProps) {
               />
             </Grid>
           )}
+          {graphAllowed && props.card.entity && (
+            <Grid item xs container justify="flex-start" alignContent="center">
+              <TextField
+                className={classes.textField}
+                InputLabelProps={{ shrink: true }}
+                type="text"
+                label="State Font Size"
+                placeholder="initial"
+                value={props.card.state_size}
+                onChange={props.handleChange!('state_size')}
+              />
+            </Grid>
+          )}
         </Grid>
         {graphAllowed && props.card.entity && (
           <Grid

@@ -82,6 +82,7 @@ export type CardProps = {
   url?: string;
   domain?: string;
   entity?: string;
+  state_size?: string;
   state?: string | boolean;
   disabled?: boolean;
   toggleable?: boolean;

@@ -162,7 +162,8 @@ function State(props: StateProps) {
           className={classes.text}
           color="textPrimary"
           variant={props.card.disabled ? 'body2' : 'body1'}
-          component="h5">
+          component="h5"
+          style={{ fontSize: props.card.state_size }}>
           {state}
         </Typography>
       </Grid>
