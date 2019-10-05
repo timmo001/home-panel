@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   time: {
-    lineHeight: 0.8
+    lineHeight: 1
   },
   timePeriod: {
     marginLeft: theme.spacing(1),
