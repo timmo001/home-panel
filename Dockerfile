@@ -38,7 +38,7 @@ RUN \
         yarn=1.16.0-r0 \
     \
     && apk add --no-cache \
-        bash=5.0.0-r0 \
+        bash=4.4.19-r1 \
         nginx=1.16.1-r0 \
         nodejs-current=12.4.0-r0 \
         openssl=1.1.1d-r0 \
