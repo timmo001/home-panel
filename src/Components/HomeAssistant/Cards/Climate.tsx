@@ -141,10 +141,10 @@ function Climate(props: ClimateProps) {
         direction="row">
         <Grid item>
           <div className={classes.temperature}>
-            <Typography variant="h4">
+            <Typography className={classes.text} variant="h4">
               {attributes.current_temperature}
             </Typography>
-            <Typography variant="subtitle1">
+            <Typography className={classes.text} variant="subtitle1">
               {props.hassConfig.unit_system.temperature}
             </Typography>
           </div>
@@ -172,8 +172,10 @@ function Climate(props: ClimateProps) {
                   />
                 </IconButton>
                 <div className={classes.temperature}>
-                  <Typography variant="h5">{attributes.temperature}</Typography>
-                  <Typography variant="body1">
+                  <Typography className={classes.text} variant="h5">
+                    {attributes.temperature}
+                  </Typography>
+                  <Typography className={classes.text} variant="body1">
                     {props.hassConfig.unit_system.temperature}
                   </Typography>
                 </div>
