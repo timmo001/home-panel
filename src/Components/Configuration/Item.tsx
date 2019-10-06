@@ -6,6 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconButton from '@material-ui/core/IconButton';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Radio from '@material-ui/core/Radio';
@@ -13,6 +14,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
@@ -56,6 +59,7 @@ interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
   const [value, setValue] = React.useState();
+  const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
     setValue(undefined);
@@ -75,6 +79,14 @@ function Item(props: ItemProps) {
       setValue(val);
     }
   }, [props.config, props.item.default, props.path, value]);
+
+  function handleClickShowPassword() {
+    setShowPassword(!showPassword);
+  }
+
+  function handleMouseDownPassword(event: any) {
+    event.preventDefault();
+  }
 
   function handleUpdate(p: any[], v: any) {
     const path = clone(p),
@@ -172,6 +184,31 @@ function Item(props: ItemProps) {
             props.path!,
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
+        />
+      );
+    case 'input_password':
+      return (
+        <TextField
+          className={classes.root}
+          type={showPassword ? 'text' : 'password'}
+          placeholder={String(props.item.default)}
+          value={value}
+          onChange={handleChange(
+            props.path!,
+            typeof props.item.default === 'number' ? 'number' : 'string'
+          )}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="Toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}>
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
         />
       );
     case 'object':

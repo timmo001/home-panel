@@ -13,7 +13,7 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import { CardProps, cardTypes, CardType } from '../Config';
+import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
 import { Color } from '../../Utils/ColorWheel';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import ColorAdornment from '../ColorAdornment';
@@ -45,6 +45,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
+  config: ConfigurationProps;
   handleManualChange?: (name: string, value: string) => void;
   handleChange?: (
     name: string

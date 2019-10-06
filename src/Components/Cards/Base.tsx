@@ -16,7 +16,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
-import { CardProps } from '../Configuration/Config';
+import { CardProps, ConfigurationProps } from '../Configuration/Config';
 import {
   HomeAssistantChangeProps,
   entitySizes
@@ -24,6 +24,7 @@ import {
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
+import Feed from './Feed';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
@@ -82,6 +83,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
+  config: ConfigurationProps;
   editing: number;
   expandable: boolean;
   handleCloseExpand?: () => void;
@@ -337,6 +339,7 @@ function Base(props: BaseProps) {
               handleHassToggle={handleHassToggle}
             />
           )}
+          {props.card.type === 'feed' && <Feed {...props} />}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}

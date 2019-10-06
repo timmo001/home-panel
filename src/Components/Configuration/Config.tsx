@@ -19,6 +19,7 @@ export interface ConfigProps {
 
 export type ConfigurationProps = {
   general: GeneralProps;
+  feed: FeedProps;
   theme: ThemeProps;
   header: HeaderProps;
   pages: [PageProps];
@@ -29,6 +30,10 @@ export type ConfigurationProps = {
 export type GeneralProps = {
   autohide_toolbar: boolean;
   dense_toolbar: boolean;
+};
+
+export type FeedProps = {
+  news_api_key: string;
 };
 
 export type ThemeProps = {
@@ -147,7 +152,7 @@ export const defaultPalette: PaletteOptions = {
 
 export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
-  { name: 'feed', title: 'News/RSS Feed' },
+  { name: 'feed', title: 'News Feed' },
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
   { name: 'markdown', title: 'Markdown' }
@@ -262,6 +267,20 @@ export const items = [
         icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
+      }
+    ]
+  },
+  {
+    name: 'feed',
+    title: 'News Feed',
+    items: [
+      {
+        name: 'news_api_key',
+        title: 'News API Key',
+        description: 'Your [News API](https://newsapi.org) key.',
+        icon: 'mdi-page-layout-header',
+        type: 'input_password',
+        default: ''
       }
     ]
   },
