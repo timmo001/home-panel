@@ -43,6 +43,8 @@ export interface ConfigurationProps
   path?: any[];
   item?: any;
   section?: any;
+  handleBackupConfig: () => void;
+  handleRestoreConfig: () => void;
   handleAdd?: (path: any[], defaultItem: any) => () => void;
   handleDelete?: (path: any[]) => () => void;
   handleSetSections?: (

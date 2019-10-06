@@ -107,6 +107,10 @@ function Main(props: MainProps) {
     setBack(false);
   }
 
+  function handleBackupConfig() {}
+
+  function handleRestoreConfig() {}
+
   const classes = useStyles();
 
   if (!props.location.state)
@@ -185,6 +189,8 @@ function Main(props: MainProps) {
               hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
+              handleBackupConfig={handleBackupConfig}
+              handleRestoreConfig={handleRestoreConfig}
               handleSetBack={setBack}
               handleUpdateConfig={handleUpdateConfig}
             />

@@ -3,8 +3,10 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -28,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: 130,
     maxWidth: 130
+  },
+  backupButton: {
+    marginRight: theme.spacing(1)
   },
   icon: {
     marginRight: theme.spacing(2),
@@ -132,7 +137,8 @@ function Item(props: ItemProps) {
 
   const classes = useStyles();
 
-  if (value === undefined) return <div />;
+  if (value === undefined && props.item.type !== 'backup_restore')
+    return <div />;
   switch (props.item.type) {
     default:
       return <div />;
@@ -154,6 +160,24 @@ function Item(props: ItemProps) {
             className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
           />
         </IconButton>
+      );
+    case 'backup_restore':
+      return (
+        <Grid container direction="row">
+          <Button
+            className={classes.backupButton}
+            color="primary"
+            variant="contained"
+            onClick={props.handleBackupConfig}>
+            Backup
+          </Button>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={props.handleRestoreConfig}>
+            Restore
+          </Button>
+        </Grid>
       );
     case 'color':
       return (
