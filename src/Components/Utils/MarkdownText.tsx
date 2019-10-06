@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import emoji from 'markdown-it-emoji';
 import externalLinks from 'markdown-it-external-links';
@@ -11,21 +11,29 @@ interface MarkdownTextProps {
 }
 
 function MarkdownText(props: MarkdownTextProps) {
-  const text = !props.text
-    ? ''
-    : new markdownIt({
-        html: true,
-        xhtmlOut: true,
-        breaks: false,
-        langPrefix: 'language-',
-        linkify: true,
-        typographer: true
-      })
-        .use(emoji)
-        .use(externalLinks, { externalTarget: '_blank' })
-        .render(props.text);
+  const [text, setText] = useState();
 
-  return <span>{ReactHtmlParser(text)}</span>;
+  useEffect(() => {
+    setText(
+      ReactHtmlParser(
+        !props.text
+          ? ''
+          : new markdownIt({
+              html: true,
+              xhtmlOut: true,
+              breaks: false,
+              langPrefix: 'language-',
+              linkify: true,
+              typographer: true
+            })
+              .use(emoji)
+              .use(externalLinks, { externalTarget: '_blank' })
+              .render(props.text)
+      )
+    );
+  }, [props.text]);
+
+  return <span>{text}</span>;
 }
 
 MarkdownText.propTypes = {
