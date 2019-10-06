@@ -147,7 +147,7 @@ function Media(props: MediaProps) {
         <CardMedia
           className={classes.media}
           style={{
-            height: props.card.height ? props.card.height * 78 : 78
+            height: props.card.height ? Number(props.card.height) * 78 : 78
           }}
           title={`${attributes.media_title} - ${attributes.media_artist}`}
           image={props.hassAuth.data.hassUrl + attributes.entity_picture}

@@ -21,9 +21,10 @@ export type ConfigurationProps = {
   general: GeneralProps;
   theme: ThemeProps;
   header: HeaderProps;
-  pages: [PageProps];
-  groups: [GroupProps];
-  cards: [CardProps];
+  pages: PageProps[];
+  groups: GroupProps[];
+  cards: CardProps[];
+  news: NewsProps;
 };
 
 export type GeneralProps = {
@@ -71,7 +72,7 @@ export type CardProps = {
   group: string;
   type: string;
   width?: number;
-  height?: number;
+  height?: number | string;
   square?: boolean;
   padding?: number | string;
   elevation?: number;
@@ -93,6 +94,10 @@ export type CardProps = {
   chart_detail?: 3 | 4 | 5;
   chart_from?: number;
   chart_labels?: boolean;
+};
+
+export type NewsProps = {
+  news_api_key: string;
 };
 
 export type CardType = {
@@ -149,14 +154,15 @@ export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
-  { name: 'markdown', title: 'Markdown' }
+  { name: 'markdown', title: 'Markdown' },
+  { name: 'news', title: 'News Feed' }
 ];
 
 export const cardTypeDefaults: { [type: string]: CardProps } = {
   entity: {
     key: '',
     group: '',
-    title: 'Card',
+    title: cardTypes[0].title,
     type: 'entity',
     elevation: 1,
     background: '',
@@ -170,40 +176,53 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
   iframe: {
     key: '',
     group: '',
-    title: 'Card',
+    title: '',
     type: 'iframe',
     elevation: 1,
     background: '',
-    padding: '',
+    padding: '0px',
     square: false,
-    width: 1,
-    height: 1,
-    url: ''
+    width: 2,
+    height: 'auto',
+    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
   },
   image: {
     key: '',
     group: '',
-    title: 'Card',
+    title: '',
     type: 'image',
     elevation: 1,
     background: '',
-    padding: '',
+    padding: '0px',
     square: false,
-    width: 1,
-    url: ''
+    width: 2,
+    url: 'https://source.unsplash.com/daily'
   },
   markdown: {
     key: '',
     group: '',
-    title: 'Card',
+    title: cardTypes[3].title,
     type: 'markdown',
     elevation: 1,
     background: '',
     padding: '',
     square: false,
-    width: 1,
+    width: 2,
     height: 1,
     content: ''
+  },
+  news: {
+    key: '',
+    group: '',
+    title: cardTypes[4].title,
+    type: 'news',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 2,
+    height: 3,
+    url: ''
   }
 };
 
@@ -248,6 +267,20 @@ export const items = [
         icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
+      }
+    ]
+  },
+  {
+    name: 'news',
+    title: 'News Feed',
+    items: [
+      {
+        name: 'news_api_key',
+        title: 'News API Key',
+        description: 'Your [News API](https://newsapi.org) key.',
+        icon: 'mdi-page-layout-header',
+        type: 'input_password',
+        default: ''
       }
     ]
   },

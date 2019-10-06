@@ -13,11 +13,12 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
-import { CardProps, cardTypes, CardType } from '../Config';
+import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
 import { Color } from '../../Utils/ColorWheel';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import ColorAdornment from '../ColorAdornment';
 import Entity from './Entity';
+import News from './News';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
@@ -44,6 +45,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
+  config: ConfigurationProps;
   handleManualChange?: (name: string, value: string) => void;
   handleChange?: (
     name: string
@@ -237,6 +239,7 @@ function Base(props: BaseProps) {
         )}
       </Grid>
       {props.card.type === 'entity' && <Entity {...props} />}
+      {props.card.type === 'news' && <News {...props} />}
       {props.card.type === 'iframe' && <Frame {...props} />}
       {props.card.type === 'image' && <Image {...props} />}
       {props.card.type === 'markdown' && <Markdown {...props} />}
