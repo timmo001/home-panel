@@ -19,21 +19,17 @@ export interface ConfigProps {
 
 export type ConfigurationProps = {
   general: GeneralProps;
-  news: NewsProps;
   theme: ThemeProps;
   header: HeaderProps;
-  pages: [PageProps];
-  groups: [GroupProps];
-  cards: [CardProps];
+  pages: PageProps[];
+  groups: GroupProps[];
+  cards: CardProps[];
+  news: NewsProps;
 };
 
 export type GeneralProps = {
   autohide_toolbar: boolean;
   dense_toolbar: boolean;
-};
-
-export type NewsProps = {
-  news_api_key: string;
 };
 
 export type ThemeProps = {
@@ -100,6 +96,10 @@ export type CardProps = {
   chart_labels?: boolean;
 };
 
+export type NewsProps = {
+  news_api_key: string;
+};
+
 export type CardType = {
   name: string;
   title: string;
@@ -152,10 +152,10 @@ export const defaultPalette: PaletteOptions = {
 
 export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
-  { name: 'news', title: 'News Feed' },
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
-  { name: 'markdown', title: 'Markdown' }
+  { name: 'markdown', title: 'Markdown' },
+  { name: 'news', title: 'News Feed' }
 ];
 
 export const cardTypeDefaults: { [type: string]: CardProps } = {
@@ -172,19 +172,6 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     height: 1,
     icon: '',
     entity: ''
-  },
-  news: {
-    key: '',
-    group: '',
-    title: cardTypes[1].title,
-    type: 'feed',
-    elevation: 1,
-    background: '',
-    padding: '',
-    square: false,
-    width: 2,
-    height: 3,
-    url: ''
   },
   iframe: {
     key: '',
@@ -214,7 +201,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
   markdown: {
     key: '',
     group: '',
-    title: cardTypes[4].title,
+    title: cardTypes[3].title,
     type: 'markdown',
     elevation: 1,
     background: '',
@@ -223,6 +210,19 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     width: 2,
     height: 1,
     content: ''
+  },
+  news: {
+    key: '',
+    group: '',
+    title: cardTypes[4].title,
+    type: 'news',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 2,
+    height: 3,
+    url: ''
   }
 };
 
@@ -271,7 +271,7 @@ export const items = [
     ]
   },
   {
-    name: 'feed',
+    name: 'news',
     title: 'News Feed',
     items: [
       {

@@ -36,7 +36,8 @@ function News(props: NewsProps) {
   const classes = useStyles();
 
   useEffect(() => {
-    if (props.config.news.news_api_key)
+    if (props.config.news && props.config.news.news_api_key) {
+      setError(undefined);
       request
         .get(
           `https://newsapi.org/v2/sources?apiKey=${props.config.news.news_api_key}`
@@ -56,8 +57,11 @@ function News(props: NewsProps) {
           console.error(err);
           setError('An error occured when getting the sources for News API.');
         });
-    else setError('You do not have a News API key set in your config.');
-  }, [props.config.news.news_api_key]);
+    } else
+      setError(
+        'Invalid config or you do not have a News API key set in your config.'
+      );
+  }, [props.config.news]);
 
   return (
     <Grid container direction="row" justify="center" alignContent="stretch">

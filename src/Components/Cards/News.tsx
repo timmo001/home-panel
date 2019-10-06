@@ -58,8 +58,10 @@ function News(props: NewsProps) {
 
   const classes = useStyles();
 
-  const handleGetData = useCallback(
-    () =>
+  const handleGetData = useCallback(() => {
+    if (props.config.news && props.config.news.news_api_key && props.card.url) {
+      setError(undefined);
+      console.log('Update News Feed for', props.card.url);
       request
         .get(
           `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.news.news_api_key}`
@@ -86,29 +88,27 @@ function News(props: NewsProps) {
           console.error(err);
           setError('An error occured when getting the sources for News API.');
           props.card.disabled = true;
-        }),
-    [
-      props.config.news.news_api_key,
-      props.card.disabled,
-      props.card.url,
-      props.config.header.date_format,
-      props.config.header.time_military
-    ]
-  );
-
-  useEffect(() => {
-    if (props.config.news.news_api_key) {
-      handleGetData();
-      if (feedInterval) clearInterval(feedInterval);
-      feedInterval = setInterval(() => handleGetData, 120000);
+        });
     } else {
       setError('You do not have a News API key set in your config.');
       props.card.disabled = true;
     }
+  }, [
+    props.config.news,
+    props.card.disabled,
+    props.card.url,
+    props.config.header.date_format,
+    props.config.header.time_military
+  ]);
+
+  useEffect(() => {
+    handleGetData();
+    if (feedInterval) clearInterval(feedInterval);
+    feedInterval = setInterval(() => handleGetData, 120000);
     return () => {
       if (feedInterval) clearInterval(feedInterval);
     };
-  }, [props.config.news.news_api_key, props.card.disabled, handleGetData]);
+  }, [props.card.disabled, handleGetData]);
 
   return (
     <div className={classes.root}>
@@ -157,7 +157,7 @@ function News(props: NewsProps) {
                 )}
               </Grid>
             </Grid>
-            {key !== data.length && (
+            {key !== data.length - 1 && (
               <Divider className={classes.divider} light variant="middle" />
             )}
           </article>
