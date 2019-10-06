@@ -8,7 +8,11 @@ import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import { ThemeProps, defaultPalette, defaultTheme } from './Configuration/Config';
+import {
+  ThemeProps,
+  defaultPalette,
+  defaultTheme
+} from './Configuration/Config';
 import clone from './Utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
@@ -142,7 +146,8 @@ function Onboarding(props: OnboardingProps) {
     return <Loading text="Attempting Login. Please Wait.." />;
 
   const cssOverrides = `
-    a {color: ${(config && config.theme && config.theme.link_color) || defaultTheme.link_color};}
+    a {color: ${(config && config.theme && config.theme.link_color) ||
+      defaultTheme.link_color};}
   `;
 
   return (
