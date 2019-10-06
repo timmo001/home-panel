@@ -3,13 +3,15 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
   LabelList,
   Line,
   LineChart,
   ResponsiveContainer,
-  Tooltip,
-  BarChart,
-  Bar
+  Tooltip
 } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
@@ -24,6 +26,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
 }));
 
 export const chartTypes: { [type: string]: string } = {
+  area: 'Area',
   line: 'Line',
   bar: 'Bar'
 };
@@ -103,6 +106,47 @@ function Chart(props: ChartProps) {
 
   if (!data || !type) return null;
   switch (type) {
+    case 'area':
+      return (
+        <ResponsiveContainer className={classes.root}>
+          <AreaChart data={data} margin={{ top: theme.spacing(5) }}>
+            <Tooltip content={<TooltipCustom {...props} />} />
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor={theme.palette.secondary.main}
+                  stopOpacity={0.7}
+                />
+                <stop
+                  offset="100%"
+                  stopColor={theme.palette.secondary.dark}
+                  stopOpacity={0}
+                />
+              </linearGradient>
+            </defs>
+            <Area
+              type="natural"
+              dataKey="value"
+              dot={false}
+              activeDot={{
+                stroke: theme.palette.secondary.main,
+                strokeWidth: 2,
+                r: 4
+              }}
+              fillOpacity={1}
+              fill="url(#colorUv)"
+              stroke={theme.palette.secondary.main}>
+              {props.labels && (
+                <LabelList
+                  dataKey="value"
+                  content={<LabelCustom {...props} />}
+                />
+              )}
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      );
     case 'line':
       return (
         <ResponsiveContainer className={classes.root}>
