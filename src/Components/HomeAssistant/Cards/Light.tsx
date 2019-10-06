@@ -16,7 +16,7 @@ import grey from '@material-ui/core/colors/grey';
 
 import { EntityProps } from './Entity';
 import ColorWheel, { Color } from '../../Utils/ColorWheel';
-import featureClassNames from '../Utils/featureClassNames';
+import featureClassNames from '../Utils/FeatureClassNames';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {

@@ -21,7 +21,7 @@ import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import clone from '../../Utils/clone';
-import ColorAdornment from './ColorAdornment';
+import ColorAdornment from '../Utils/ColorAdornment';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({

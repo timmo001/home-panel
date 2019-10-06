@@ -16,7 +16,7 @@ import TextField from '@material-ui/core/TextField';
 import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
 import { Color } from '../../Utils/ColorWheel';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
-import ColorAdornment from '../ColorAdornment';
+import ColorAdornment from '../../Utils/ColorAdornment';
 import Entity from './Entity';
 import Frame from './Frame';
 import Image from './Image';

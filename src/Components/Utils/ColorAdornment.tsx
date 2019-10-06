@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Popover from '@material-ui/core/Popover';
 import PaletteIcon from '@material-ui/icons/Palette';
 
-import ColorWheel, { Color } from '../Utils/ColorWheel';
+import ColorWheel, { Color } from './ColorWheel';
 
 const useStyles = makeStyles((theme: Theme) => ({
   menu: {

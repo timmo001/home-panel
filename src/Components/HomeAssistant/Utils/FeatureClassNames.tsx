@@ -1,6 +1,6 @@
 // @flow
 import { HassEntity } from 'home-assistant-js-websocket';
-import { supportsFeature } from './supportsFeature';
+import { supportsFeature } from './SupportsFeature';
 
 // Expects classNames to be an object mapping feature-bit -> className
 export default function featureClassNames(
