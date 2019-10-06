@@ -8,7 +8,8 @@
     "primary": "pink",
     "secondary": "pink",
     "background_default": "#303030",
-    "background_paper": "#383c45"
+    "background_paper": "#383c45",
+    "link_color": "#00ccff"
   },
   "header": {
     "time_show": true,

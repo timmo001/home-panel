@@ -39,6 +39,7 @@ export type ThemeProps = {
   background_default: string;
   background_paper: string;
   text_primary: string;
+  link_color: string;
 };
 
 export type HeaderProps = {
@@ -134,7 +135,8 @@ export const defaultTheme: ThemeProps = {
   secondary: 'pink',
   background_default: '#303030',
   background_paper: '#383c45',
-  text_primary: '#ffffff'
+  text_primary: '#ffffff',
+  link_color: '#e0e0e0'
 };
 
 export const defaultPalette: PaletteOptions = {
@@ -340,6 +342,14 @@ export const items = [
         icon: 'mdi-text',
         type: 'color',
         default: '#ffffff'
+      },
+      {
+        name: 'link_color',
+        title: 'Link',
+        description: '[Link](https://timmo.dev/home-panel/configui/) color.',
+        icon: 'mdi-link',
+        type: 'color',
+        default: '#00ccff'
       }
     ]
   },

@@ -27,22 +27,12 @@ code {
 }
 
 a {
-  transition: color 0.4s;
-  color: #e0e0e0;
   text-decoration: none;
 }
 
-a:visited {
-  color: #bdbdbd;
-}
-
 a:hover {
-  color: #bdbdbd;
-}
-
-a:active {
-  transition: color 0.3s;
-  color: #bdbdbd;
+  transition: 0.2s;
+  font-weight: bolder;
 }
 
 ::-webkit-scrollbar {
