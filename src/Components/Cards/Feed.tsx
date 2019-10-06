@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import request from 'superagent';
 import moment from 'moment';
@@ -51,14 +51,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface FeedProps extends BaseProps {}
 
+let feedInterval: NodeJS.Timeout;
 function Feed(props: FeedProps) {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
   const classes = useStyles();
 
-  useEffect(() => {
-    if (props.config.feed.news_api_key)
+  const handleGetData = useCallback(
+    () =>
       request
         .get(
           `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.feed.news_api_key}`
@@ -85,18 +86,29 @@ function Feed(props: FeedProps) {
           console.error(err);
           setError('An error occured when getting the sources for News API.');
           props.card.disabled = true;
-        });
-    else {
+        }),
+    [
+      props.config.feed.news_api_key,
+      props.card.disabled,
+      props.card.url,
+      props.config.header.date_format,
+      props.config.header.time_military
+    ]
+  );
+
+  useEffect(() => {
+    if (props.config.feed.news_api_key) {
+      handleGetData();
+      if (feedInterval) clearInterval(feedInterval);
+      feedInterval = setInterval(() => handleGetData, 120000);
+    } else {
       setError('You do not have a News API key set in your config.');
       props.card.disabled = true;
     }
-  }, [
-    props.config.feed.news_api_key,
-    props.card.disabled,
-    props.card.url,
-    props.config.header.date_format,
-    props.config.header.time_military
-  ]);
+    return () => {
+      if (feedInterval) clearInterval(feedInterval);
+    };
+  }, [props.config.feed.news_api_key, handleGetData]);
 
   return (
     <div className={classes.root}>
