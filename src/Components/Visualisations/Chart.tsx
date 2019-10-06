@@ -2,24 +2,18 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend
-} from 'recharts';
+import { LineChart, Line, Tooltip } from 'recharts';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
-    // overflow: 'hidden',
-    top: theme.spacing(1),
-    bottom: theme.spacing(1),
-    left: theme.spacing(-1.5),
-    right: theme.spacing(-1.25)
+    overflow: 'hidden',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    marginTop: theme.spacing(4)
   }
 }));
 
@@ -36,15 +30,35 @@ export type ChartData = {
 };
 
 interface ChartProps {
-  color?: string;
   labels?: boolean;
   lowerGauge?: boolean;
   data: ChartData[];
   type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
 }
 
+interface TooltipProps extends ChartProps {
+  active?: boolean;
+  payload?: any[];
+  label?: string;
+}
+
+function CustomTooltip(props: TooltipProps) {
+  const theme = useTheme();
+
+  if (props.active && props.payload)
+    return (
+      <Typography
+        variant="body1"
+        component="span"
+        style={{ color: theme.palette.secondary.main }}>
+        {props.payload[0].value}
+      </Typography>
+    );
+  return null;
+}
+
+let ChartNode: HTMLDivElement | null;
 function Chart(props: ChartProps) {
-  const [options, setOptions] = React.useState();
   const [data, setData] = React.useState();
   const [type, setType] = React.useState();
 
@@ -64,37 +78,39 @@ function Chart(props: ChartProps) {
     }
   }, [props.data, props.type, data]);
 
-  // useEffect(() => {
-  //   if (
-  //     !options ||
-  //     props.color !== options.colors[0] ||
-  //     props.labels !== options.dataLabels.enabled
-  //   ) {
-  //   }
-  // }, [options, props.color, props.labels, props.lowerGauge, theme]);
-
-  if (!options || !data || !type) return <div />;
-  return (
-    <div className={classes.root}>
-      <LineChart
-        height={140}
-        width={240}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-      </LineChart>
-    </div>
-  );
+  if (!data || !type) return null;
+  switch (type) {
+    case 'line':
+      return (
+        <div
+          className={classes.root}
+          ref={node => {
+            ChartNode = node;
+          }}>
+          <LineChart
+            height={
+              ChartNode ? ChartNode.parentElement!.clientHeight + 42 : 100
+            }
+            width={ChartNode ? ChartNode.parentElement!.clientWidth + 24 : 100}
+            margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
+            data={data}>
+            <Tooltip content={<CustomTooltip {...props} />} />
+            <Line
+              type="natural"
+              dataKey="value"
+              dot={false}
+              activeDot={{
+                stroke: theme.palette.secondary.main,
+                strokeWidth: 2,
+                r: 4
+              }}
+              stroke={theme.palette.secondary.main}
+            />
+          </LineChart>
+        </div>
+      );
+  }
+  return null;
 }
 
 Chart.propTypes = {

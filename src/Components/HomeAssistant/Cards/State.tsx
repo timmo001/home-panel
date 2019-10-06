@@ -120,7 +120,7 @@ function State(props: StateProps) {
     <Grid
       className={classes.root}
       container
-      direction="row"
+      direction="column"
       alignContent="center"
       justify="center"
       onMouseEnter={handleHovering}
@@ -131,14 +131,13 @@ function State(props: StateProps) {
         historyData &&
         historyData.length > 0 && (
           <Chart
-            color={theme.palette.secondary.dark}
             labels={props.card.chart_labels && hovering ? true : false}
             lowerGauge={props.card.icon ? false : true}
             data={historyData}
             type={props.card.chart}
           />
         )}
-      <Grid className={classes.iconContainer} item xs={12}>
+      <Grid className={classes.iconContainer} item>
         {props.card.icon && (
           <Typography
             className={classnames(
@@ -153,7 +152,7 @@ function State(props: StateProps) {
           />
         )}
       </Grid>
-      <Grid item xs className={classes.textContainer}>
+      <Grid className={classes.textContainer} item>
         <Typography
           className={classes.text}
           color="textPrimary"
