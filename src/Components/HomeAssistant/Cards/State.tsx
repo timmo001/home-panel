@@ -81,7 +81,7 @@ function State(props: StateProps) {
         .filter((_e: HassEntity, i: number) => {
           return (i + 1) % props.card.chart_detail! === 0;
         })
-        .map((entity: HassEntity) => Number(entity.state));
+        .map((entity: HassEntity) => ({ value: Number(entity.state) }));
       if (hData) setHistoryData(hData);
     }
   }, [
@@ -134,11 +134,7 @@ function State(props: StateProps) {
             color={theme.palette.secondary.dark}
             labels={props.card.chart_labels && hovering ? true : false}
             lowerGauge={props.card.icon ? false : true}
-            series={
-              props.card.chart === 'radialBar'
-                ? [historyData[historyData.length - 1]]
-                : [{ data: historyData }]
-            }
+            data={historyData}
             type={props.card.chart}
           />
         )}

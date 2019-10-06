@@ -2,14 +2,22 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import ApexChart from 'react-apexcharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend
+} from 'recharts';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
-    overflow: 'hidden',
+    // overflow: 'hidden',
     top: theme.spacing(1),
-    bottom: -32,
+    bottom: theme.spacing(1),
     left: theme.spacing(-1.5),
     right: theme.spacing(-1.25)
   }
@@ -23,17 +31,21 @@ export const chartTypes: { [type: string]: string } = {
   radialBar: 'Gauge'
 };
 
+export type ChartData = {
+  value: number;
+};
+
 interface ChartProps {
   color?: string;
   labels?: boolean;
   lowerGauge?: boolean;
-  series: [{ data: number[] }] | number[];
+  data: ChartData[];
   type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
 }
 
 function Chart(props: ChartProps) {
   const [options, setOptions] = React.useState();
-  const [series, setSeries] = React.useState();
+  const [data, setData] = React.useState();
   const [type, setType] = React.useState();
 
   const classes = useStyles();
@@ -42,133 +54,51 @@ function Chart(props: ChartProps) {
   useEffect(() => {
     if (!type || props.type !== type) {
       setType(props.type);
-      setSeries(undefined);
+      setData(undefined);
     }
-  }, [type, props.type, props.series]);
+  }, [type, props.type, props.data]);
 
   useEffect(() => {
-    if (!series || props.series !== series) {
-      setSeries(props.series);
+    if (!data || props.data !== data) {
+      setData(props.data);
     }
-  }, [props.series, props.type, series]);
+  }, [props.data, props.type, data]);
 
-  useEffect(() => {
-    if (
-      !options ||
-      props.color !== options.colors[0] ||
-      props.labels !== options.dataLabels.enabled
-    ) {
-      setOptions({
-        chart: {
-          toolbar: {
-            show: false
-          },
-          zoom: {
-            enabled: false
-          }
-        },
-        colors: [props.color],
-        dataLabels: {
-          enabled: props.labels,
-          offsetY: theme.spacing(0.8),
-          style: {
-            colors: [theme.palette.text.primary],
-            fontFamily:
-              "'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
-          }
-        },
-        grid: {
-          show: false,
-          xaxis: {
-            lines: {
-              show: false
-            }
-          },
-          yaxis: {
-            lines: {
-              show: false
-            }
-          }
-        },
-        legend: {
-          show: false
-        },
-        markers: {
-          size: props.labels ? 0.4 : 0
-        },
-        plotOptions: {
-          radialBar: {
-            size: theme.breakpoints.down('sm') ? 70 : 80,
-            dataLabels: {
-              show: false
-            },
-            offsetY: props.lowerGauge
-              ? theme.breakpoints.down('sm')
-                ? theme.spacing(3.7)
-                : theme.spacing(4.7)
-              : theme.breakpoints.down('sm')
-              ? theme.spacing(2.7)
-              : theme.spacing(3.7),
-            startAngle: -90,
-            endAngle: 90
-          }
-        },
-        stroke: {
-          curve: 'smooth',
-          width: 3
-        },
-        tooltip: {
-          enabled: false
-        },
-        xaxis: {
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            show: false
-          },
-          labels: {
-            show: false
-          }
-        },
-        yaxis: {
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            show: false
-          },
-          labels: {
-            show: false
-          }
-        }
-      });
-    }
-  }, [options, props.color, props.labels, props.lowerGauge, theme]);
+  // useEffect(() => {
+  //   if (
+  //     !options ||
+  //     props.color !== options.colors[0] ||
+  //     props.labels !== options.dataLabels.enabled
+  //   ) {
+  //   }
+  // }, [options, props.color, props.labels, props.lowerGauge, theme]);
 
-  if (!options || !series || !type) return <div />;
+  if (!options || !data || !type) return <div />;
   return (
     <div className={classes.root}>
-      <ApexChart
-        height="100%"
-        width="100%"
-        options={options}
-        series={series}
-        type={type}
-      />
+      <LineChart
+        height={140}
+        width={240}
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" stroke="#82ca9d" />
+      </LineChart>
     </div>
   );
 }
 
 Chart.propTypes = {
-  color: PropTypes.string.isRequired,
-  series: PropTypes.array.isRequired
+  data: PropTypes.array.isRequired
 };
 
 export default Chart;
