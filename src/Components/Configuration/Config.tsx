@@ -269,6 +269,14 @@ export const items = [
     title: 'General',
     items: [
       {
+        name: 'backup_restore',
+        title: 'Backup and Restore Configuration',
+        description:
+          'Backup and Restore. Restoring will wipe your current config.',
+        icon: 'mdi-hammer',
+        type: 'backup_restore'
+      },
+      {
         name: 'autohide_toolbar',
         title: 'Auto Hide Toolbar',
         description: 'Should the toolbar hide after a given time?',
