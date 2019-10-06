@@ -136,7 +136,7 @@ export const defaultTheme: ThemeProps = {
   background_default: '#303030',
   background_paper: '#383c45',
   text_primary: '#ffffff',
-  link_color: '#e0e0e0'
+  link_color: '#00ccff'
 };
 
 export const defaultPalette: PaletteOptions = {
