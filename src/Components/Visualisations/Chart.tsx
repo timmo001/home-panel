@@ -47,7 +47,6 @@ interface TooltipProps extends ChartProps {
 
 function CustomTooltip(props: TooltipProps) {
   const classes = useStyles();
-  const theme = useTheme();
 
   if (props.active && props.payload)
     return (

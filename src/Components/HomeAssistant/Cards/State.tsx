@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -46,7 +46,6 @@ function State(props: StateProps) {
   const [hovering, setHovering] = React.useState(false);
 
   const classes = useStyles();
-  const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;
 
   if (!props.hassEntities) {
