@@ -7,11 +7,13 @@ import {
   Line,
   LineChart,
   ResponsiveContainer,
-  Tooltip
+  Tooltip,
+  BarChart,
+  Bar
 } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles((_theme: Theme) => ({
   root: {
     position: 'absolute',
     top: 0,
@@ -23,10 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export const chartTypes: { [type: string]: string } = {
   line: 'Line',
-  area: 'Area',
-  bar: 'Bar',
-  histogram: 'Histogram',
-  radialBar: 'Gauge'
+  bar: 'Bar'
 };
 
 export type ChartData = {
@@ -37,7 +36,7 @@ interface ChartProps {
   labels?: boolean;
   lowerGauge?: boolean;
   data: ChartData[];
-  type?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
+  type?: string;
 }
 
 interface TooltipProps extends ChartProps {
@@ -72,8 +71,8 @@ function LabelCustom(props: LabelProps) {
     return (
       <text
         fill={theme.palette.text.secondary}
-        x={props.x}
-        y={props.y + theme.spacing(-1.5)}
+        x={props.x + theme.spacing(1.8)}
+        y={props.y - theme.spacing(1)}
         textAnchor="middle"
         dominantBaseline="middle">
         {props.value}
@@ -107,7 +106,7 @@ function Chart(props: ChartProps) {
     case 'line':
       return (
         <ResponsiveContainer className={classes.root}>
-          <LineChart data={data} margin={{ top: theme.spacing(4.4) }}>
+          <LineChart data={data} margin={{ top: theme.spacing(5) }}>
             <Tooltip content={<TooltipCustom {...props} />} />
             <Line
               type="natural"
@@ -127,6 +126,22 @@ function Chart(props: ChartProps) {
               )}
             </Line>
           </LineChart>
+        </ResponsiveContainer>
+      );
+    case 'bar':
+      return (
+        <ResponsiveContainer className={classes.root}>
+          <BarChart data={data} margin={{ top: theme.spacing(6) }}>
+            <Tooltip content={<TooltipCustom {...props} />} />
+            <Bar dataKey="value" fill={theme.palette.secondary.main}>
+              {props.labels && (
+                <LabelList
+                  dataKey="value"
+                  content={<LabelCustom {...props} />}
+                />
+              )}
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       );
   }
