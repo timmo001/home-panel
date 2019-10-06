@@ -226,6 +226,7 @@ function Chart(props: ChartProps) {
             <RadialBar dataKey="value">
               {data.map((_entry: ChartData, key: number) => (
                 <Cell
+                  key={key}
                   fill={
                     key !== 0 ? 'transparent' : theme.palette.secondary.main
                   }
