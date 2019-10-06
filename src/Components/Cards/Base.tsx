@@ -24,7 +24,7 @@ import {
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
-import Feed from './Feed';
+import News from './News';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
@@ -339,7 +339,7 @@ function Base(props: BaseProps) {
               handleHassToggle={handleHassToggle}
             />
           )}
-          {props.card.type === 'feed' && <Feed {...props} />}
+          {props.card.type === 'news' && <News {...props} />}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}

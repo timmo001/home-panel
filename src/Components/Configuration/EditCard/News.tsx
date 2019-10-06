@@ -28,18 +28,18 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface FeedProps extends BaseProps {}
+interface NewsProps extends BaseProps {}
 
-function Feed(props: FeedProps) {
+function News(props: NewsProps) {
   const [sources, setSources] = useState();
   const [error, setError] = useState();
   const classes = useStyles();
 
   useEffect(() => {
-    if (props.config.feed.news_api_key)
+    if (props.config.news.news_api_key)
       request
         .get(
-          `https://newsapi.org/v2/sources?apiKey=${props.config.feed.news_api_key}`
+          `https://newsapi.org/v2/sources?apiKey=${props.config.news.news_api_key}`
         )
         .then(res => {
           const options: SuggestionType = res.body.sources.map(
@@ -57,7 +57,7 @@ function Feed(props: FeedProps) {
           setError('An error occured when getting the sources for News API.');
         });
     else setError('You do not have a News API key set in your config.');
-  }, [props.config.feed.news_api_key]);
+  }, [props.config.news.news_api_key]);
 
   return (
     <Grid container direction="row" justify="center" alignContent="stretch">
@@ -94,10 +94,10 @@ function Feed(props: FeedProps) {
   );
 }
 
-Feed.propTypes = {
+News.propTypes = {
   card: PropTypes.any.isRequired,
   editing: PropTypes.number,
   handleChange: PropTypes.func
 };
 
-export default Feed;
+export default News;

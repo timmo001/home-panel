@@ -19,7 +19,7 @@ export interface ConfigProps {
 
 export type ConfigurationProps = {
   general: GeneralProps;
-  feed: FeedProps;
+  news: NewsProps;
   theme: ThemeProps;
   header: HeaderProps;
   pages: [PageProps];
@@ -32,7 +32,7 @@ export type GeneralProps = {
   dense_toolbar: boolean;
 };
 
-export type FeedProps = {
+export type NewsProps = {
   news_api_key: string;
 };
 
@@ -152,7 +152,7 @@ export const defaultPalette: PaletteOptions = {
 
 export const cardTypes: CardType[] = [
   { name: 'entity', title: 'Entity' },
-  { name: 'feed', title: 'News Feed' },
+  { name: 'news', title: 'News Feed' },
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
   { name: 'markdown', title: 'Markdown' }
@@ -173,7 +173,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     icon: '',
     entity: ''
   },
-  feed: {
+  news: {
     key: '',
     group: '',
     title: cardTypes[1].title,

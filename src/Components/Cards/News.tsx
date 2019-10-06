@@ -49,10 +49,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface FeedProps extends BaseProps {}
+interface NewsProps extends BaseProps {}
 
 let feedInterval: NodeJS.Timeout;
-function Feed(props: FeedProps) {
+function News(props: NewsProps) {
   const [data, setData] = useState();
   const [error, setError] = useState();
 
@@ -62,7 +62,7 @@ function Feed(props: FeedProps) {
     () =>
       request
         .get(
-          `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.feed.news_api_key}`
+          `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.news.news_api_key}`
         )
         .then(res => {
           const feed: ArticleData = res.body.articles.map(
@@ -88,7 +88,7 @@ function Feed(props: FeedProps) {
           props.card.disabled = true;
         }),
     [
-      props.config.feed.news_api_key,
+      props.config.news.news_api_key,
       props.card.disabled,
       props.card.url,
       props.config.header.date_format,
@@ -97,7 +97,7 @@ function Feed(props: FeedProps) {
   );
 
   useEffect(() => {
-    if (props.config.feed.news_api_key) {
+    if (props.config.news.news_api_key) {
       handleGetData();
       if (feedInterval) clearInterval(feedInterval);
       feedInterval = setInterval(() => handleGetData, 120000);
@@ -108,7 +108,7 @@ function Feed(props: FeedProps) {
     return () => {
       if (feedInterval) clearInterval(feedInterval);
     };
-  }, [props.config.feed.news_api_key, handleGetData]);
+  }, [props.config.news.news_api_key, props.card.disabled, handleGetData]);
 
   return (
     <div className={classes.root}>
@@ -167,10 +167,10 @@ function Feed(props: FeedProps) {
   );
 }
 
-Feed.propTypes = {
+News.propTypes = {
   card: PropTypes.any.isRequired,
   editing: PropTypes.number,
   handleChange: PropTypes.func
 };
 
-export default Feed;
+export default News;
