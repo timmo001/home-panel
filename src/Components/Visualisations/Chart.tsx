@@ -7,6 +7,7 @@ import {
   AreaChart,
   Bar,
   BarChart,
+  Cell,
   LabelList,
   Line,
   LineChart,
@@ -111,7 +112,7 @@ function Chart(props: ChartProps) {
     if (!data || dataIn !== props.data) {
       setDataIn(props.data);
       if (props.type === 'radialBar')
-        setData([props.data[props.data.length - 1]]);
+        setData([props.data[props.data.length - 1], { value: 100 }]);
       else if (props.type === 'scatter')
         setData(
           props.data.map((item: ChartData, key: number) => ({
@@ -156,7 +157,8 @@ function Chart(props: ChartProps) {
               }}
               fillOpacity={1}
               fill="url(#colorUv)"
-              stroke={theme.palette.secondary.main}>
+              stroke={theme.palette.secondary.main}
+              strokeWidth={2}>
               {props.labels && (
                 <LabelList
                   dataKey="value"
@@ -197,7 +199,8 @@ function Chart(props: ChartProps) {
                 strokeWidth: 2,
                 r: 4
               }}
-              stroke={theme.palette.secondary.main}>
+              stroke={theme.palette.secondary.main}
+              strokeWidth={2}>
               {props.labels && (
                 <LabelList
                   dataKey="value"
@@ -216,11 +219,19 @@ function Chart(props: ChartProps) {
             cy={110}
             startAngle={180}
             endAngle={0}
-            barSize={15}
-            innerRadius={60}
+            barSize={14}
+            innerRadius={55}
             outerRadius={100}>
             <Tooltip content={<TooltipCustom {...props} />} />
-            <RadialBar dataKey="value" fill={theme.palette.secondary.main} />
+            <RadialBar dataKey="value">
+              {data.map((_entry: ChartData, key: number) => (
+                <Cell
+                  fill={
+                    key !== 0 ? 'transparent' : theme.palette.secondary.main
+                  }
+                />
+              ))}
+            </RadialBar>
           </RadialBarChart>
         </ResponsiveContainer>
       );
