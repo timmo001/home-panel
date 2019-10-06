@@ -16,7 +16,7 @@ import grey from '@material-ui/core/colors/grey';
 
 import { EntityProps } from './Entity';
 import ColorWheel, { Color } from '../../Utils/ColorWheel';
-import featureClassNames from '../Utils/FeatureClassNames';
+import FeatureClassNames from '../Utils/FeatureClassNames';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -76,7 +76,7 @@ function Light(props: LightProps) {
     props.card.disabled = false;
     state = entity!.state;
     props.card.state = state;
-    attrClasses = featureClassNames(entity!, FEATURE_CLASS_NAMES);
+    attrClasses = FeatureClassNames(entity!, FEATURE_CLASS_NAMES);
   }
 
   useEffect(() => {
