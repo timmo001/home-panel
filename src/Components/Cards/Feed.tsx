@@ -5,11 +5,11 @@ import request from 'superagent';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { BaseProps } from './Base';
 import MarkdownText from 'Components/Utils/MarkdownText';
-import { CardMedia } from '@material-ui/core';
 
 type ArticleData = {
   source: string;
@@ -24,6 +24,8 @@ type ArticleData = {
 
 type FeedData = {
   heading: string;
+  title: string;
+  url: string;
   meta?: string;
   imageURL?: string;
   content?: string;
@@ -37,6 +39,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   divider: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1)
+  },
+  mediaContainer: {
+    marginRight: theme.spacing(1)
+  },
+  media: {
+    height: `calc(100% - ${theme.spacing(2)}px)`,
+    width: '100%'
   }
 }));
 
@@ -58,6 +67,8 @@ function Feed(props: FeedProps) {
           const feed: ArticleData = res.body.articles.map(
             (article: ArticleData) => ({
               heading: `[${article.title}](${article.url})`,
+              title: article.title,
+              url: article.url,
               meta: `${moment(article.publishedAt).format(
                 `${props.config.header.time_military ? 'HH:mm' : 'hh:mm a'} ${
                   props.config.header.date_format
@@ -97,26 +108,43 @@ function Feed(props: FeedProps) {
         data &&
         data.map((item: FeedData, key: number) => (
           <article key={key}>
-            {item.imageURL && <CardMedia image={item.imageURL} />}
-            <div>
-              <Typography variant="subtitle1" component="h3">
-                <MarkdownText text={item.heading} />
-              </Typography>
-              {item.meta && (
-                <Typography
-                  variant="caption"
-                  component="h5"
-                  gutterBottom
-                  noWrap>
-                  <MarkdownText text={item.meta} />
-                </Typography>
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignContent="center"
+              alignItems="center">
+              {props.card.width! > 2 && item.imageURL && (
+                <Grid className={classes.mediaContainer} item xs={3}>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer">
+                    <img
+                      className={classes.media}
+                      alt={item.title}
+                      src={item.imageURL}
+                    />
+                  </a>
+                </Grid>
               )}
-              {item.content && (
-                <Typography variant="body2" component="span">
-                  <MarkdownText text={item.content} />
+              <Grid item xs>
+                <Typography variant="subtitle1" component="h3">
+                  <MarkdownText text={item.heading} />
                 </Typography>
-              )}
-            </div>
+                {item.meta && (
+                  <Typography
+                    variant="caption"
+                    component="h5"
+                    gutterBottom
+                    noWrap>
+                    <MarkdownText text={item.meta} />
+                  </Typography>
+                )}
+                {item.content && (
+                  <Typography variant="body2" component="span">
+                    <MarkdownText text={item.content} />
+                  </Typography>
+                )}
+              </Grid>
+            </Grid>
             {key !== data.length && (
               <Divider className={classes.divider} light variant="middle" />
             )}
