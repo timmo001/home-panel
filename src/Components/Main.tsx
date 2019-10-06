@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
@@ -107,9 +108,42 @@ function Main(props: MainProps) {
     setBack(false);
   }
 
-  function handleBackupConfig() {}
+  function handleBackupConfig() {
+    let a = document.createElement('a');
+    let file = new Blob([JSON.stringify(props.config)], { type: 'json' });
+    a.href = URL.createObjectURL(file);
+    a.download = `home-panel-config-backup-${moment().format(
+      'YYYYMMDDHHmmss'
+    )}.json'`;
+    a.click();
+  }
 
-  function handleRestoreConfig() {}
+  function handleRestoreConfig() {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = (e: any) => {
+      if (e && e.target) {
+        let file = e.target.files[0];
+
+        var reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
+
+        reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+          if (readerEvent && readerEvent.target) {
+            const content = readerEvent.target.result;
+            if (typeof content === 'string') {
+              const json = JSON.parse(content);
+              if (json) {
+                handleUpdateConfig([], json);
+                window.location.reload();
+              }
+            }
+          }
+        };
+      }
+    };
+    input.click();
+  }
 
   const classes = useStyles();
 
