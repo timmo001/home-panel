@@ -157,7 +157,8 @@ export const cardTypes: CardType[] = [
   { name: 'iframe', title: 'iFrame' },
   { name: 'image', title: 'Image' },
   { name: 'markdown', title: 'Markdown' },
-  { name: 'news', title: 'News Feed' }
+  { name: 'news', title: 'News Feed' },
+  { name: 'rss', title: 'RSS Feed' }
 ];
 
 export const cardTypeDefaults: { [type: string]: CardProps } = {
@@ -218,6 +219,19 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     group: '',
     title: cardTypes[4].title,
     type: 'news',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 2,
+    height: 3,
+    url: ''
+  },
+  rss: {
+    key: '',
+    group: '',
+    title: cardTypes[5].title,
+    type: 'rss',
     elevation: 1,
     background: '',
     padding: '',

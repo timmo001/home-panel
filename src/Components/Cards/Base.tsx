@@ -24,10 +24,11 @@ import {
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
-import News from './News';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
+import News from './News';
+import RSS from './RSS';
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
@@ -339,10 +340,11 @@ function Base(props: BaseProps) {
               handleHassToggle={handleHassToggle}
             />
           )}
-          {props.card.type === 'news' && <News {...props} />}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}
+          {props.card.type === 'news' && <News {...props} />}
+          {props.card.type === 'rss' && <RSS {...props} />}
           {props.editing === 1 && (
             <Grid
               className={classes.cardActions}
