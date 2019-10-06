@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/api';
 import Chart from '../../Visualisations/Chart';
-import properCase from '../../Utils/properCase';
+import properCase from '../../../Utils/properCase';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {

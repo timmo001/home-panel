@@ -9,7 +9,7 @@ import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../Utils/properCase';
+import properCase from '../../../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

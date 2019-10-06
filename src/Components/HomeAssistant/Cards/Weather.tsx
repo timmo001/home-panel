@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../Utils/properCase';
+import properCase from '../../../Utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

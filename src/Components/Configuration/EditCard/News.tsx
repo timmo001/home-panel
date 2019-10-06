@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 import { SuggestionType } from '../../Utils/Select';
-import properCase from '../../Utils/properCase';
+import properCase from '../../../Utils/properCase';
 import Select from '../../Utils/Select';
 
 type FeedSource = {

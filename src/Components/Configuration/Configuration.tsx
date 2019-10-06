@@ -14,8 +14,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { items, ConfigProps } from './Config';
-import clone from '../Utils/clone';
-import makeKey from '../Utils/makeKey';
+import clone from '../../Utils/clone';
+import makeKey from '../../Utils/makeKey';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({

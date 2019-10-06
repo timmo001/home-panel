@@ -19,7 +19,7 @@ import {
   GroupProps,
   CardProps
 } from '../Configuration/Config';
-import { findGroupIdByGroup, findCardIdByCard } from '../Utils/find';
+import { findGroupIdByGroup, findCardIdByCard } from '../../Utils/find';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';

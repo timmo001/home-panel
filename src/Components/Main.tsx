@@ -9,13 +9,13 @@ import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/auth';
-import clone from './Utils/clone';
+import clone from '../Utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange
 } from './HomeAssistant/HomeAssistant';
-import isObject from './Utils/isObject';
+import isObject from '../Utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
 

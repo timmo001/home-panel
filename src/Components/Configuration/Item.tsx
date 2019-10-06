@@ -20,7 +20,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import clone from '../Utils/clone';
+import clone from '../../Utils/clone';
 import ColorAdornment from './ColorAdornment';
 import Section from './Section';
 

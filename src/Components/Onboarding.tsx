@@ -13,11 +13,11 @@ import {
   defaultPalette,
   defaultTheme
 } from './Configuration/Config';
-import clone from './Utils/clone';
+import clone from '../Utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
 import Main from './Main';
-import parseTheme from './Utils/parseTheme';
+import parseTheme from '../Utils/parseTheme';
 
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';

@@ -12,7 +12,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../Utils/properCase';
+import properCase from '../../../Utils/properCase';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {

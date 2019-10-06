@@ -23,7 +23,7 @@ import red from '@material-ui/core/colors/red';
 import teal from '@material-ui/core/colors/teal';
 import yellow from '@material-ui/core/colors/yellow';
 
-import { ThemeProps, defaultPalette } from '../Configuration/Config';
+import { ThemeProps, defaultPalette } from '../Components/Configuration/Config';
 
 const mapColor = (color: string): PaletteColorOptions =>
   color === 'amber'

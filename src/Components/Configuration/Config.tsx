@@ -5,7 +5,7 @@ import { CommonColors } from '@material-ui/core/colors/common';
 import pink from '@material-ui/core/colors/pink';
 
 import { BaseProps } from '../Cards/Base';
-import makeKey from '../Utils/makeKey';
+import makeKey from '../../Utils/makeKey';
 
 export interface ConfigProps {
   config: ConfigurationProps;

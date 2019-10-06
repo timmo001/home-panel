@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
-import { findPageIdByPage } from '../Utils/find';
+import { findPageIdByPage } from '../../Utils/find';
 import EditPage from '../Configuration/EditPage';
 
 const useStyles = makeStyles((theme: Theme) => ({
