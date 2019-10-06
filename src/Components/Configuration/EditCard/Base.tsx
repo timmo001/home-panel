@@ -18,10 +18,11 @@ import { Color } from '../../Utils/ColorWheel';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import ColorAdornment from '../ColorAdornment';
 import Entity from './Entity';
-import News from './News';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
+import News from './News';
+import RSS from './RSS';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -239,10 +240,11 @@ function Base(props: BaseProps) {
         )}
       </Grid>
       {props.card.type === 'entity' && <Entity {...props} />}
-      {props.card.type === 'news' && <News {...props} />}
       {props.card.type === 'iframe' && <Frame {...props} />}
       {props.card.type === 'image' && <Image {...props} />}
       {props.card.type === 'markdown' && <Markdown {...props} />}
+      {props.card.type === 'news' && <News {...props} />}
+      {props.card.type === 'rss' && <RSS {...props} />}
     </div>
   );
 }
