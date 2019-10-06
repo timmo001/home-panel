@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, Tooltip } from 'recharts';
+import { LineChart, Line, Tooltip, Label, ResponsiveContainer } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0,
-    marginTop: theme.spacing(4)
+    right: 0
+  },
+  tooltip: {
+    zIndex: 2000,
+    color: theme.palette.secondary.main
   }
 }));
 
@@ -43,21 +46,18 @@ interface TooltipProps extends ChartProps {
 }
 
 function CustomTooltip(props: TooltipProps) {
+  const classes = useStyles();
   const theme = useTheme();
 
   if (props.active && props.payload)
     return (
-      <Typography
-        variant="body1"
-        component="span"
-        style={{ color: theme.palette.secondary.main }}>
+      <Typography className={classes.tooltip} variant="body1" component="span">
         {props.payload[0].value}
       </Typography>
     );
   return null;
 }
 
-let ChartNode: HTMLDivElement | null;
 function Chart(props: ChartProps) {
   const [data, setData] = React.useState();
   const [type, setType] = React.useState();
@@ -82,18 +82,9 @@ function Chart(props: ChartProps) {
   switch (type) {
     case 'line':
       return (
-        <div
-          className={classes.root}
-          ref={node => {
-            ChartNode = node;
-          }}>
-          <LineChart
-            height={
-              ChartNode ? ChartNode.parentElement!.clientHeight + 42 : 100
-            }
-            width={ChartNode ? ChartNode.parentElement!.clientWidth + 24 : 100}
-            margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
-            data={data}>
+        <ResponsiveContainer className={classes.root}>
+          <LineChart data={data} margin={{ top: theme.spacing(4.4) }}>
+            <Label />
             <Tooltip content={<CustomTooltip {...props} />} />
             <Line
               type="natural"
@@ -107,7 +98,7 @@ function Chart(props: ChartProps) {
               stroke={theme.palette.secondary.main}
             />
           </LineChart>
-        </div>
+        </ResponsiveContainer>
       );
   }
   return null;
