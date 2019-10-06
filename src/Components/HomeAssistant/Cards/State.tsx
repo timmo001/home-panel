@@ -43,7 +43,6 @@ interface StateProps extends EntityProps {}
 let historyInterval: NodeJS.Timeout;
 function State(props: StateProps) {
   const [historyData, setHistoryData] = React.useState();
-  const [hovering, setHovering] = React.useState(false);
 
   const classes = useStyles();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -107,30 +106,19 @@ function State(props: StateProps) {
     getHistory
   ]);
 
-  function handleHovering() {
-    setHovering(true);
-  }
-
-  function handleNotHovering() {
-    setHovering(false);
-  }
-
   return (
     <Grid
       className={classes.root}
       container
       direction="column"
       alignContent="center"
-      justify="center"
-      onMouseEnter={handleHovering}
-      onMouseOver={handleHovering}
-      onMouseLeave={handleNotHovering}>
+      justify="center">
       {props.card &&
         props.card.chart &&
         historyData &&
         historyData.length > 0 && (
           <Chart
-            labels={props.card.chart_labels && hovering ? true : false}
+            labels={props.card.chart_labels}
             lowerGauge={props.card.icon ? false : true}
             data={historyData}
             type={props.card.chart}

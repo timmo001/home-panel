@@ -2,21 +2,22 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { LineChart, Line, Tooltip, Label, ResponsiveContainer } from 'recharts';
+import {
+  LabelList,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip
+} from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     position: 'absolute',
-    overflow: 'hidden',
     top: 0,
     bottom: 0,
     left: 0,
     right: 0
-  },
-  tooltip: {
-    zIndex: 2000,
-    color: theme.palette.secondary.main
   }
 }));
 
@@ -45,14 +46,38 @@ interface TooltipProps extends ChartProps {
   label?: string;
 }
 
-function CustomTooltip(props: TooltipProps) {
-  const classes = useStyles();
-
+function TooltipCustom(props: TooltipProps) {
   if (props.active && props.payload)
     return (
-      <Typography className={classes.tooltip} variant="body1" component="span">
+      <Typography color="textPrimary" variant="body2" component="span">
         {props.payload[0].value}
       </Typography>
+    );
+  return null;
+}
+
+interface LabelProps extends ChartProps {
+  index?: number;
+  offset?: number;
+  position?: string;
+  value?: number;
+  x?: number;
+  y?: number;
+}
+
+function LabelCustom(props: LabelProps) {
+  const theme = useTheme();
+
+  if (props.x && props.y && props.value)
+    return (
+      <text
+        fill={theme.palette.text.secondary}
+        x={props.x}
+        y={props.y + theme.spacing(-1.5)}
+        textAnchor="middle"
+        dominantBaseline="middle">
+        {props.value}
+      </text>
     );
   return null;
 }
@@ -83,8 +108,7 @@ function Chart(props: ChartProps) {
       return (
         <ResponsiveContainer className={classes.root}>
           <LineChart data={data} margin={{ top: theme.spacing(4.4) }}>
-            <Label />
-            <Tooltip content={<CustomTooltip {...props} />} />
+            <Tooltip content={<TooltipCustom {...props} />} />
             <Line
               type="natural"
               dataKey="value"
@@ -94,8 +118,14 @@ function Chart(props: ChartProps) {
                 strokeWidth: 2,
                 r: 4
               }}
-              stroke={theme.palette.secondary.main}
-            />
+              stroke={theme.palette.secondary.main}>
+              {props.labels && (
+                <LabelList
+                  dataKey="value"
+                  content={<LabelCustom {...props} />}
+                />
+              )}
+            </Line>
           </LineChart>
         </ResponsiveContainer>
       );
