@@ -13,7 +13,10 @@ import {
   RadialBar,
   RadialBarChart,
   ResponsiveContainer,
-  Tooltip
+  Scatter,
+  ScatterChart,
+  Tooltip,
+  YAxis
 } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
@@ -29,9 +32,10 @@ const useStyles = makeStyles((_theme: Theme) => ({
 
 export const chartTypes: { [type: string]: string } = {
   area: 'Area',
-  line: 'Line',
   bar: 'Bar',
-  radialBar: 'Gauge'
+  line: 'Line',
+  radialBar: 'Gauge',
+  scatter: 'Scatter'
 };
 
 export type ChartData = {
@@ -88,6 +92,7 @@ function LabelCustom(props: LabelProps) {
 }
 
 function Chart(props: ChartProps) {
+  const [dataIn, setDataIn] = React.useState();
   const [data, setData] = React.useState();
   const [type, setType] = React.useState();
 
@@ -97,15 +102,27 @@ function Chart(props: ChartProps) {
   useEffect(() => {
     if (!type || props.type !== type) {
       setType(props.type);
+      setDataIn(undefined);
       setData(undefined);
     }
   }, [type, props.type, props.data]);
 
   useEffect(() => {
-    if (!data || props.data !== data) {
-      setData(props.data);
+    if (!data || dataIn !== props.data) {
+      setDataIn(props.data);
+      if (props.type === 'radialBar')
+        setData([props.data[props.data.length - 1]]);
+      else if (props.type === 'scatter')
+        setData(
+          props.data.map((item: ChartData, key: number) => ({
+            x: key,
+            y: item.value,
+            z: item.value
+          }))
+        );
+      else setData(props.data);
     }
-  }, [props.data, props.type, data]);
+  }, [props.data, props.type, data, dataIn]);
 
   if (!data || !type) return null;
   switch (type) {
@@ -150,6 +167,22 @@ function Chart(props: ChartProps) {
           </AreaChart>
         </ResponsiveContainer>
       );
+    case 'bar':
+      return (
+        <ResponsiveContainer className={classes.root}>
+          <BarChart data={data} margin={{ top: theme.spacing(6) }}>
+            <Tooltip content={<TooltipCustom {...props} />} />
+            <Bar dataKey="value" fill={theme.palette.secondary.main}>
+              {props.labels && (
+                <LabelList
+                  dataKey="value"
+                  content={<LabelCustom {...props} />}
+                />
+              )}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      );
     case 'line':
       return (
         <ResponsiveContainer className={classes.root}>
@@ -175,27 +208,11 @@ function Chart(props: ChartProps) {
           </LineChart>
         </ResponsiveContainer>
       );
-    case 'bar':
-      return (
-        <ResponsiveContainer className={classes.root}>
-          <BarChart data={data} margin={{ top: theme.spacing(6) }}>
-            <Tooltip content={<TooltipCustom {...props} />} />
-            <Bar dataKey="value" fill={theme.palette.secondary.main}>
-              {props.labels && (
-                <LabelList
-                  dataKey="value"
-                  content={<LabelCustom {...props} />}
-                />
-              )}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      );
     case 'radialBar':
       return (
         <ResponsiveContainer className={classes.root}>
           <RadialBarChart
-            data={[data[data.length - 1]]}
+            data={data}
             cy={110}
             startAngle={180}
             endAngle={0}
@@ -205,6 +222,20 @@ function Chart(props: ChartProps) {
             <Tooltip content={<TooltipCustom {...props} />} />
             <RadialBar dataKey="value" fill={theme.palette.secondary.main} />
           </RadialBarChart>
+        </ResponsiveContainer>
+      );
+    case 'scatter':
+      return (
+        <ResponsiveContainer className={classes.root}>
+          <ScatterChart margin={{ top: theme.spacing(5) }}>
+            <YAxis hide dataKey="y" />
+            <Tooltip content={<TooltipCustom {...props} />} />
+            <Scatter fill={theme.palette.secondary.main} data={data}>
+              {props.labels && (
+                <LabelList dataKey="y" content={<LabelCustom {...props} />} />
+              )}
+            </Scatter>
+          </ScatterChart>
         </ResponsiveContainer>
       );
   }
