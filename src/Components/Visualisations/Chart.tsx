@@ -10,6 +10,8 @@ import {
   LabelList,
   Line,
   LineChart,
+  RadialBar,
+  RadialBarChart,
   ResponsiveContainer,
   Tooltip
 } from 'recharts';
@@ -28,7 +30,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
 export const chartTypes: { [type: string]: string } = {
   area: 'Area',
   line: 'Line',
-  bar: 'Bar'
+  bar: 'Bar',
+  radialBar: 'Gauge'
 };
 
 export type ChartData = {
@@ -186,6 +189,22 @@ function Chart(props: ChartProps) {
               )}
             </Bar>
           </BarChart>
+        </ResponsiveContainer>
+      );
+    case 'radialBar':
+      return (
+        <ResponsiveContainer className={classes.root}>
+          <RadialBarChart
+            data={[data[data.length - 1]]}
+            cy={110}
+            startAngle={180}
+            endAngle={0}
+            barSize={15}
+            innerRadius={60}
+            outerRadius={100}>
+            <Tooltip content={<TooltipCustom {...props} />} />
+            <RadialBar dataKey="value" fill={theme.palette.secondary.main} />
+          </RadialBarChart>
         </ResponsiveContainer>
       );
   }
