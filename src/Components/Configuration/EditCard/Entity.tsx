@@ -216,9 +216,12 @@ function Entity(props: EntityProps) {
                       name: 'chart_detail',
                       id: 'chart_detail'
                     }}>
-                    <MenuItem value={5}>Low</MenuItem>
-                    <MenuItem value={4}>Medium</MenuItem>
-                    <MenuItem value={3}>High</MenuItem>
+                    <MenuItem value={18}>Lower</MenuItem>
+                    <MenuItem value={12}>Low</MenuItem>
+                    <MenuItem value={6}>Medium</MenuItem>
+                    <MenuItem value={4}>High</MenuItem>
+                    <MenuItem value={2}>Higher</MenuItem>
+                    <MenuItem value={1}>Everything</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -43,10 +43,8 @@ interface StateProps extends EntityProps {}
 let historyInterval: NodeJS.Timeout;
 function State(props: StateProps) {
   const [historyData, setHistoryData] = React.useState();
-  const [hovering, setHovering] = React.useState(false);
 
   const classes = useStyles();
-  const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;
 
   if (!props.hassEntities) {
@@ -81,7 +79,7 @@ function State(props: StateProps) {
         .filter((_e: HassEntity, i: number) => {
           return (i + 1) % props.card.chart_detail! === 0;
         })
-        .map((entity: HassEntity) => Number(entity.state));
+        .map((entity: HassEntity) => ({ value: Number(entity.state) }));
       if (hData) setHistoryData(hData);
     }
   }, [
@@ -108,41 +106,25 @@ function State(props: StateProps) {
     getHistory
   ]);
 
-  function handleHovering() {
-    setHovering(true);
-  }
-
-  function handleNotHovering() {
-    setHovering(false);
-  }
-
   return (
     <Grid
       className={classes.root}
       container
-      direction="row"
+      direction="column"
       alignContent="center"
-      justify="center"
-      onMouseEnter={handleHovering}
-      onMouseOver={handleHovering}
-      onMouseLeave={handleNotHovering}>
+      justify="center">
       {props.card &&
         props.card.chart &&
         historyData &&
         historyData.length > 0 && (
           <Chart
-            color={theme.palette.secondary.dark}
-            labels={props.card.chart_labels && hovering ? true : false}
+            labels={props.card.chart_labels}
             lowerGauge={props.card.icon ? false : true}
-            series={
-              props.card.chart === 'radialBar'
-                ? [historyData[historyData.length - 1]]
-                : [{ data: historyData }]
-            }
+            data={historyData}
             type={props.card.chart}
           />
         )}
-      <Grid className={classes.iconContainer} item xs={12}>
+      <Grid className={classes.iconContainer} item>
         {props.card.icon && (
           <Typography
             className={classnames(
@@ -157,7 +139,7 @@ function State(props: StateProps) {
           />
         )}
       </Grid>
-      <Grid item xs className={classes.textContainer}>
+      <Grid className={classes.textContainer} item>
         <Typography
           className={classes.text}
           color="textPrimary"

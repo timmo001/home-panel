@@ -91,8 +91,8 @@ export type CardProps = {
   state?: string | boolean;
   disabled?: boolean;
   toggleable?: boolean;
-  chart?: 'line' | 'area' | 'bar' | 'histogram' | 'radialBar';
-  chart_detail?: 3 | 4 | 5;
+  chart?: string;
+  chart_detail?: number;
   chart_from?: number;
   chart_labels?: boolean;
 };
