@@ -8,7 +8,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from './Configuration/Config';
-import { parseTokens } from './HomeAssistant/Utils/auth';
+import { parseTokens } from './HomeAssistant/Utils/Auth';
 import clone from '../Utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';

@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import { fetchHistory } from '../Utils/api';
+import { fetchHistory } from '../Utils/API';
 import Chart from '../../Visualisations/Chart';
 import properCase from '../../../Utils/properCase';
 
