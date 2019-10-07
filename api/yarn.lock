@@ -263,10 +263,10 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio@4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.4.tgz#33a926b374dcf5408a0c326354901bcfa151fbcc"
-  integrity sha512-1zr9mceQOidyA9JUjhuaq++sYlzM7s2bidyTT3k09WM6lr2BExu0Ih8m4F3LCrnx+wD37VWX832/UtTppvLx2Q==
+"@feathersjs/socketio@4.3.5":
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.5.tgz#5f68011bdcfe55d125bb46e393ed2cd2b633b37f"
+  integrity sha512-jyqyokD74iTxOWzkUXE8mkgnmBWRbeXU+iJuaWiKV7YZN12Cxk0AjC7VYgUf1tOrsnm4PfSQVzlZfC0WwmYqSA==
   dependencies:
     "@feathersjs/transport-commons" "^4.3.4"
     "@types/socket.io" "^2.1.2"
