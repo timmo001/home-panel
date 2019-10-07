@@ -67,7 +67,7 @@ function Base(props: BaseProps) {
   }
 
   const handleColorChange = (name: string) => (color: Color) => {
-    props.handleManualChange!(name, color.hexString);
+    props.handleManualChange!(name, color.rgbaString);
   };
 
   const classes = useStyles();

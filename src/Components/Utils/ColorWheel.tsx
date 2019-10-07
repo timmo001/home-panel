@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import iro from '@jaames/iro';
+import iroTransparencyPlugin from 'iro-transparency-plugin';
 import useTheme from '@material-ui/core/styles/useTheme';
 
 export type Color = {
@@ -10,7 +11,15 @@ export type Color = {
     g: any;
     b: any;
   };
+  rgba: {
+    r: any;
+    g: any;
+    b: any;
+    a: any;
+  };
   hexString: string;
+  hex8String: string;
+  rgbaString: string;
 };
 
 interface ColorWheelProps {
@@ -36,6 +45,7 @@ function ColorWheel(props: ColorWheelProps) {
 
   useEffect(() => {
     if (!pickerSetup) {
+      iro.use(iroTransparencyPlugin);
       let colorPicker;
       try {
         colorPicker = new iro.ColorPicker(pickerNode, {
@@ -43,7 +53,8 @@ function ColorWheel(props: ColorWheelProps) {
           padding: 0,
           borderWidth: 1,
           borderColor: theme.palette.background.paper,
-          color: color ? color : props.color ? props.color : '#ffffff',
+          color: color ? color : props.color ? props.color : '#ffffffff',
+          transparency: props.lighting ? true : false,
           layout: !props.lighting && [
             {
               component: iro.ui.Wheel,
@@ -57,7 +68,8 @@ function ColorWheel(props: ColorWheelProps) {
           padding: 0,
           borderWidth: 1,
           borderColor: theme.palette.background.paper,
-          color: '#ffffff',
+          color: '#ffffffff',
+          transparency: props.lighting ? true : false,
           layout: !props.lighting && [
             {
               component: iro.ui.Wheel,
@@ -68,7 +80,9 @@ function ColorWheel(props: ColorWheelProps) {
       }
 
       colorPicker.on('input:end', (c: Color) => {
-        handleSetColor(`rgb(${c.rgb.r}, ${c.rgb.g}, ${c.rgb.b})`);
+        handleSetColor(
+          `rgba(${c.rgba.r}, ${c.rgba.g}, ${c.rgba.b}, ${c.rgba.a})`
+        );
         props.handleColorChange(c);
       });
 

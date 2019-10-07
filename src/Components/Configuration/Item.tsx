@@ -132,7 +132,7 @@ function Item(props: ItemProps) {
   };
 
   const handleColorChange = (path: any[]) => (color: Color) => {
-    handleUpdate(path, color.hexString);
+    handleUpdate(path, color.rgbaString);
   };
 
   const classes = useStyles();

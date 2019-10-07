@@ -22,6 +22,7 @@
     "flow-bin": "0.109.0",
     "fuse.js": "3.4.5",
     "home-assistant-js-websocket": "4.4.0",
+    "iro-transparency-plugin": "1.0.2",
     "markdown-it": "10.0.0",
     "markdown-it-emoji": "1.4.0",
     "markdown-it-external-links": "0.0.6",
