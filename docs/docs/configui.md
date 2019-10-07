@@ -1,6 +1,7 @@
 # Configuration UI
 
 Everything that you can edit in the configuration file, can be edited in the UI.
+*Hint:*  It's also possible to use Emojis from: https://emojipedia.org
 
 ## Switching to Config UI
 
