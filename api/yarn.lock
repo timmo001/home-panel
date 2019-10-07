@@ -217,20 +217,7 @@
   dependencies:
     debug "^4.1.1"
 
-"@feathersjs/express@4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.3.4.tgz#27ce1f9dba15b39a66353d409678ddfcce266b5c"
-  integrity sha512-t30iklJsgXqiOpzDGJ0UjcLHQlJC7YBqOdrx/qyYDS496urlsg4jY5gXU8JZZhnZig2m67cKDL3sbWeSpfhhJA==
-  dependencies:
-    "@feathersjs/commons" "^4.3.0"
-    "@feathersjs/errors" "^4.3.4"
-    "@types/express" "^4.17.1"
-    debug "^4.1.1"
-    express "^4.17.1"
-    lodash "^4.17.15"
-    uberproto "^2.0.4"
-
-"@feathersjs/express@^4.3.5":
+"@feathersjs/express@4.3.5", "@feathersjs/express@^4.3.5":
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.3.5.tgz#f945e4329767ec116b43092960658e5e91c19200"
   integrity sha512-uN5/Ycj6lC00iGF7kaCZOVlEA37I9j5mDMT+FVkgqeFxvQn80dFHzT7SGSmLp+w8CAiFjd2p5ejQLeadH++pfA==
