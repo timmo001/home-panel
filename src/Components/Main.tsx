@@ -22,17 +22,25 @@ import Overview from './Overview/Overview';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    height: '100%',
     maxHeight: '100%',
     overflowX: 'hidden',
     background: theme.palette.background.default
   },
   content: {
-    padding: theme.spacing(2)
+    height: `calc(100% - ${theme.spacing(8)}px)`,
+    maxHeight: `calc(100% - ${theme.spacing(8)}px)`,
+    padding: theme.spacing(1.5, 2, 0.5, 2)
   },
-  noHeight: {
-    height: `calc(100% - ${theme.spacing(1.5)}px)`,
-    minHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
-    maxHeight: `calc(100% - ${theme.spacing(1.5)}px)`,
+  contentDenseToolbar: {
+    height: `calc(100% - ${theme.spacing(6)}px)`,
+    maxHeight: `calc(100% - ${theme.spacing(6)}px)`
+  },
+  contentNoToolbar: {
+    height: '100%',
+    maxHeight: '100%'
+  },
+  overview: {
     overflow: 'hidden'
   },
   toolbar: theme.mixins.toolbar,
@@ -174,7 +182,7 @@ function Main(props: MainProps) {
     <div
       className={classnames(
         classes.root,
-        props.location.state.overview && classes.noHeight
+        props.location.state.overview && classes.overview
       )}
       onClick={handleMouseMove}
       onMouseMove={handleMouseMove}>
@@ -203,7 +211,11 @@ function Main(props: MainProps) {
         <main
           className={classnames(
             classes.content,
-            props.location.state.overview && classes.noHeight
+            props.config.general &&
+              props.config.general.dense_toolbar &&
+              classes.contentDenseToolbar,
+            !showToolbar && classes.contentNoToolbar,
+            props.location.state.overview && classes.overview
           )}>
           {hassUrl && (
             <HomeAssistant

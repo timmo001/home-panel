@@ -11,10 +11,7 @@ import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    marginBottom: theme.spacing(1.5),
-    [theme.breakpoints.down('md')]: {
-      marginBottom: theme.spacing(1)
-    },
+    marginBottom: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(0.5)
     }
@@ -92,7 +89,10 @@ function Header(props: HeaderProps) {
     </Typography>
   );
 
-  let columns: any = ['', '', ''];
+  if (!props.config.header.time_show && !props.config.header.date_show)
+    return null;
+
+  let columns: any[] = ['', '', ''];
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation || !props.config.header.time_show)
     columns[dateLocation] = date;

@@ -32,18 +32,12 @@ import Pages from './Pages';
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     height: '100%',
+    minHeight: '100%',
     maxHeight: '100%',
-    overflow: 'hidden',
-    padding: theme.spacing(0, 1),
-    [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(0, 0.5)
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0)
-    }
+    overflow: 'hidden'
   },
   containerNavShown: {
-    paddingBottom: theme.spacing(10)
+    paddingBottom: theme.spacing(6.5)
   },
   title: {
     width: '100%',
@@ -52,24 +46,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     lineHeight: 1.2
   },
   groupsContainer: {
-    height: `calc(100% - ${theme.spacing(12)}px)`,
-    [theme.breakpoints.down('md')]: {
-      height: `calc(100% - ${theme.spacing(11)}px)`
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: `calc(100% - ${theme.spacing(10)}px)`
-    },
+    marginBottom: theme.spacing(0.5),
     overflowX: 'auto',
     overflowY: 'hidden'
-  },
-  groupsContainerNavShown: {
-    height: `calc(100% - ${theme.spacing(8)}px)`,
-    [theme.breakpoints.down('md')]: {
-      height: `calc(100% - ${theme.spacing(7)}px)`
-    },
-    [theme.breakpoints.down('sm')]: {
-      height: `calc(100% - ${theme.spacing(6)}px)`
-    }
   },
   groupContainer: {
     height: '100%',
@@ -239,18 +218,20 @@ function Overview(props: OverviewProps) {
   const theme = useTheme();
 
   return (
-    <div
+    <Grid
       className={classnames(
         classes.container,
         props.mouseMoved && classes.containerNavShown
-      )}>
+      )}
+      container
+      direction="column"
+      justify="flex-start"
+      alignContent="flex-start">
       <Header {...props} />
       <Grid
-        className={classnames(
-          classes.groupsContainer,
-          props.mouseMoved && classes.groupsContainerNavShown
-        )}
+        className={classes.groupsContainer}
         item
+        xs
         container
         direction="column"
         justify="flex-start"
@@ -380,7 +361,7 @@ function Overview(props: OverviewProps) {
         />
       )}
       <Pages {...props} currentPage={currentPage} setPage={setCurrentPage} />
-    </div>
+    </Grid>
   );
 }
 

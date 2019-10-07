@@ -170,7 +170,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     <div className={classes.root}>
       <CssBaseline />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
-        <AppBar position="fixed">
+        <AppBar>
           <Toolbar
             variant={
               props.config &&
