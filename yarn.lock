@@ -1051,10 +1051,10 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio-client@4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.3.4.tgz#9dc0c8b9f2f34d493e2c1c119e3d899aba3b0fb6"
-  integrity sha512-1u3mC9oEe+pqeGA88IzHhA1JICVfOlb0JwTmUBzqzfn0upxOppD5CgJp8U3JA/qVgMkkeE51/ZgCE1GbvYhuOQ==
+"@feathersjs/socketio-client@4.3.5":
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.3.5.tgz#6c0411806f20937f3ffbe45af612c375c048ed4f"
+  integrity sha512-Cgzh86VBRcn2Gz/rZtrht52bKI9sEf4rEPXC+w9NCdZzdYPCwQPDIWVlIYN4Fgt7+g2iWin+8CW+FkkVLeM1Hg==
   dependencies:
     "@feathersjs/transport-commons" "^4.3.4"
     "@types/socket.io-client" "^1.4.32"
@@ -11030,7 +11030,6 @@ snyk@1.232.0:
     needle "^2.2.4"
     opn "^5.5.0"
     os-name "^3.0.0"
-    proxy-agent "*"
     proxy-from-env "^1.0.0"
     semver "^6.0.0"
     snyk-config "^2.2.1"
