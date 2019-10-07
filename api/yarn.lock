@@ -148,12 +148,12 @@
     "@feathersjs/errors" "^4.3.3"
     "@feathersjs/feathers" "^4.3.3"
 
-"@feathersjs/authentication-local@4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.4.tgz#5c081d226fdb81b8250ed0b8b4231df6464d71f5"
-  integrity sha512-PYeO0bTyCXu6Dg2gOaYzHNlbMClV26ex9tu0F+fbx53bB8ACof1apURiPvnL2wHqbp5dX9PflwMM6tJdZbqYpg==
+"@feathersjs/authentication-local@4.3.5":
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.5.tgz#858d995709fe26f340b39888f012d6a508a2edde"
+  integrity sha512-QnGlkQHW+8ArGc5/qo3znf3mwwqz8Wk+q0tAQASlP1R+FRTzcQmaTlXWnKbsnrIm/Po+TKWgv2FxA5mX3GA/ig==
   dependencies:
-    "@feathersjs/authentication" "^4.3.4"
+    "@feathersjs/authentication" "^4.3.5"
     "@feathersjs/errors" "^4.3.4"
     "@feathersjs/feathers" "^4.3.4"
     bcryptjs "^2.4.3"
@@ -179,20 +179,6 @@
   version "4.3.5"
   resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.5.tgz#09f8206730c4e2e7cd23ec3ea5228ff0ddf75a0b"
   integrity sha512-m60ciWMRRT/8Bhpz0JR41zWDztt2vZRaKJua6aGd7OVCn8kDVNVEOKc1cuxxz7YXnh5DSeSz/Lgo+Qt2x8LGQQ==
-  dependencies:
-    "@feathersjs/errors" "^4.3.4"
-    "@feathersjs/feathers" "^4.3.4"
-    "@feathersjs/transport-commons" "^4.3.4"
-    debug "^4.1.1"
-    jsonwebtoken "^8.5.1"
-    lodash "^4.17.15"
-    long-timeout "^0.1.1"
-    uuid "^3.3.2"
-
-"@feathersjs/authentication@^4.3.4":
-  version "4.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.4.tgz#6810da5f41b82c84bbea0f16a85030ad893878fd"
-  integrity sha512-RtJeLAAoPu+bWxH7zNvAkYQzPmbvKFHjLSmmdhi9Yjtf7udDqBlg2uhtsUeK4v64xRpS+6tsOmXZOfdWqSrW5w==
   dependencies:
     "@feathersjs/errors" "^4.3.4"
     "@feathersjs/feathers" "^4.3.4"
