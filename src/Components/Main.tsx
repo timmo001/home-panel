@@ -114,7 +114,7 @@ function Main(props: MainProps) {
     a.href = URL.createObjectURL(file);
     a.download = `home-panel-config-backup-${moment().format(
       'YYYYMMDDHHmmss'
-    )}.json'`;
+    )}.json`;
     a.click();
   }
 
