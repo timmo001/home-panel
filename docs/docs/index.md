@@ -77,5 +77,5 @@ A web frontend for controlling the home. Integrates with
 [screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-main.png
 [screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-main.png
 [setup-docs]: https://timmo.dev/home-panel/setup/
-[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/showcase/timmo/purple-space.png
+[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/docs/showcase/timmo/purple-space.png
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
