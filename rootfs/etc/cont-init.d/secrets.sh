@@ -4,7 +4,7 @@
 # ==============================================================================
 declare key
 
-if  [! -f /data/secret.txt ]; then
+if [ ! -f /data/secret.txt ]; then
     echo "Generating secret"
     newkey=$(openssl rand -base64 32)
     echo "${newkey}" > /data/secret.txt
