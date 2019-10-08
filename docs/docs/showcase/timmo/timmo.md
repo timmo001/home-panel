@@ -14,7 +14,6 @@ See below for how I configured this theme.
 - For the card color, I used the picker to find a purple-ish color and changed
  the transparency.
 
-
 ![Configuration][showcase-timmo-config-theme]
 
 [contributing.md]: ../contributing.md
