@@ -4,8 +4,8 @@
 # ==============================================================================
 declare key
 
-if ! bashio::fs.file_exists "/data/secret.txt"; then
-    bashio::log.info "Generating secret"
+if  [! -f /data/secret.txt ]; then
+    echo "Generating secret"
     newkey=$(openssl rand -base64 32)
     echo "${newkey}" > /data/secret.txt
 fi
