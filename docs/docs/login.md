@@ -12,6 +12,8 @@ the users you have setup on Home Assistant.
 
 On your first run of the app, you will be presented with an account creation screen.
 
+![Account Creation Screen Screenshot][screen-account-creation]
+
 If you already have a user setup, click the `Already have an account?` button.
 
 Once you have entered all this information, click `Create Account` and you
@@ -36,3 +38,8 @@ If you need to create a new account or your credentials have changed,
 Click the `Create New Account` button.
 
 Enter your username and password you used previously and click `Log In`.
+
+![Account Login Screen Screenshot][screen-account-login]
+
+[screen-account-creation]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-account-creation.png
+[screen-account-login]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-account-login.png

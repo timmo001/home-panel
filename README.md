@@ -4,12 +4,11 @@
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
 
-[![GitLab CI][gitlabci-shield]][gitlabci]
-![Project Maintenance][maintenance-shield]
 [![GitHub Activity][commits-shield]][commits]
+![Project Maintenance][maintenance-shield]
 
+[![GitLab CI][gitlabci-shield]][gitlabci]
 [![Docker Version][version-shield]][microbadger]
-[![Docker Layers][layers-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
 
 ![Supports armhf Architecture][armhf-shield]
@@ -26,7 +25,8 @@ A web frontend for controlling the home. Integrates with
 
 ## Features
 
-- Supports [Home Assistant][hass] entities, Camera feeds, iFrames, and more.
+- Supports [Home Assistant][hass] entities, cameras, news feeds, iframes and
+ more.
 - Made for touch screens and desktops with a sideways scrolling Material Design
  interface.
 - Fully customizable interface.
@@ -41,15 +41,17 @@ Setup and configuration for the app is available [here][setup-docs]
 
 [Support / Discussion][forum]
 
-[Contribution Guidelines][CONTRIBUTING]
+[Contribution Guidelines][contributing]
 
-[Code of Conduct][CODE_OF_CONDUCT]
+[Code of Conduct][code_of_conduct]
 
 ## Screenshots
 
-![Midnight Theme Screenshot][midnight-theme]
+![Main Screen Screenshot][screen-main]
 
-![Settings Screenshot][settings-screen]
+![Configuration Screenshot][screen-configuration-main]
+
+![Showcase Purple Space][showcase-purple-space]
 
 ## License
 
@@ -81,10 +83,10 @@ SOFTWARE.
 [banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
-[CODE_OF_CONDUCT]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
+[code_of_conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
 [commits]: https://github.com/timmo001/home-panel/commits/master
-[CONTRIBUTING]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
 [demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
@@ -93,15 +95,15 @@ SOFTWARE.
 [gitlabci]: https://gitlab.com/timmo/home-panel/pipelines
 [hass]: https://www.home-assistant.io/
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
-[settings-screen]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/settings-main.png
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
-[midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
 [releases]: https://github.com/timmo001/home-panel/releases
+[screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-main.png
+[screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-main.png
 [setup-docs]: https://timmo.dev/home-panel/setup/
+[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/showcase/timmo/purple-space.png
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg

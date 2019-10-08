@@ -2,14 +2,13 @@
 
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
-[![License][license-shield]](LICENSE.md)
+[![License][license-shield]](license.md)
+
+[![GitHub Activity][commits-shield]][commits]
+![Project Maintenance][maintenance-shield]
 
 [![GitLab CI][gitlabci-shield]][gitlabci]
-![Project Maintenance][maintenance-shield]
-[![GitHub Activity][commits-shield]][commits]
-
 [![Docker Version][version-shield]][microbadger]
-[![Docker Layers][layers-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
 
 ![Supports armhf Architecture][armhf-shield]
@@ -19,14 +18,15 @@
 
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
-A touch-compatible web frontend for controlling the home. Integrates with
+A web frontend for controlling the home. Integrates with
 [Home Assistant][hass] as an additional frontend.
 
 ![banner][banner]
 
 ## Features
 
-- Supports [Home Assistant][hass] entities, Camera feeds, iFrames, and more.
+- Supports [Home Assistant][hass] entities, cameras, news feeds, iframes and
+ more.
 - Made for touch screens and desktops with a sideways scrolling Material Design
  interface.
 - Fully customizable interface.
@@ -43,9 +43,11 @@ A touch-compatible web frontend for controlling the home. Integrates with
 
 ## Screenshots
 
-![Midnight Theme Screenshot][midnight-theme]
+![Main Screen Screenshot][screen-main]
 
-![Settings Screenshot][settings-screen]
+![Configuration Screenshot][screen-configuration-main]
+
+![Showcase Purple Space][showcase-purple-space]
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
@@ -65,15 +67,15 @@ A touch-compatible web frontend for controlling the home. Integrates with
 [gitlabci]: https://gitlab.com/timmo/home-panel/pipelines
 [hass]: https://www.home-assistant.io/
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[layers-shield]: https://images.microbadger.com/badges/image/timmo001/home-panel.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2019.svg
-[settings-screen]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/settings-main.png
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
-[midnight-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/midnight-theme.png
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
 [releases]: https://github.com/timmo001/home-panel/releases
+[screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-main.png
+[screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-main.png
 [setup-docs]: https://timmo.dev/home-panel/setup/
+[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/showcase/timmo/purple-space.png
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg

@@ -66,10 +66,15 @@ markdown_extensions:
 nav:
   - Overview: index.md
   - Getting Started:
-      - Setup: setup.md
-      - Login: login.md
-      - Home Assistant: home-assistant.md
-  - Configuration UI: configui.md
+    - Setup: setup.md
+    - Login: login.md
+    - Home Assistant: home-assistant.md
+  - Configuration:
+    - Configuration UI: configui.md
+    - Configuration Screen: configuration.md
+  - Showcase:
+    - Contributing: showcase/contributing.md
+    - Timmo's Example Theme: showcase/timmo/timmo.md
   - Frequently Asked Questions: faq.md
   - Troubleshooting: troubleshooting.md
   - Posting an Issue: issue-posting.md
