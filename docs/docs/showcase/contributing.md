@@ -1,7 +1,8 @@
 # Showcase - Contributing
 
 If you would like to showcase your own setup, submit a PR to the repository
- following the main [contribution guidelines][contributing], [code of conduct][code_of_conduct] and these guidelines:
+ following the main [contribution guidelines][contributing],
+ [code of conduct][code_of_conduct] and these guidelines:
 
 1. Create a new directory with your handle in [this directory][directory] with
  a new markdown file. For example:
@@ -22,7 +23,7 @@ If you would like to showcase your own setup, submit a PR to the repository
     Any bad / dead links will be removed.
 
 [code_of_conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
-[contributing]: https://github.com/timmo001/home-panel/tree/master/docs/docs/showcase
-[directory]:
+[contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[directory]: https://github.com/timmo001/home-panel/tree/master/docs/docs/showcase
 [mkdocs]: https://www.mkdocs.org
 [timmo.md]: timmo/timmo.md
