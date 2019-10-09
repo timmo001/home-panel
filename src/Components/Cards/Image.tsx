@@ -40,11 +40,7 @@ function Image(props: ImageProps) {
   }, []);
 
   useEffect(() => {
-    if (
-      props.command &&
-      props.command.card &&
-      props.command.card === props.card.key
-    ) {
+    if (props.command && props.command.card === props.card.key) {
       if (props.command.command === 'expand') handleSetDialogOpen(true);
       else if (props.command.command === 'unexpand') handleSetDialogOpen(false);
     }

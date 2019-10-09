@@ -211,9 +211,12 @@ function Overview(props: OverviewProps) {
     setDeleteConfirm(undefined);
   }
 
-  const handleSetCurrentPage = useCallback((page: string) => {
-    setCurrentPage(page);
-  }, []);
+  const handleSetCurrentPage = useCallback(
+    (page: string) => {
+      if (page !== currentPage) setCurrentPage(page);
+    },
+    [currentPage]
+  );
 
   useEffect(() => {
     if (props.command)
