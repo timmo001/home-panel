@@ -22,6 +22,12 @@ import parseTheme from '../Utils/parseTheme';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
+type MessageType = {
+  page: string;
+  card: string;
+  command: string;
+};
+
 interface OnboardingProps extends RouteComponentProps {}
 
 let socket: SocketIOClient.Socket, client: any;
@@ -85,6 +91,10 @@ function Onboarding(props: OnboardingProps) {
     })();
   }, []);
 
+  function handleControl(message: MessageType) {
+    console.log(message);
+  }
+
   const handleLogin = useCallback(
     (data?: any, callback?: (error?: string) => void) => {
       (async () => {
@@ -98,6 +108,8 @@ function Onboarding(props: OnboardingProps) {
           setLoggedIn(clientData.user);
           setLoginAttempted(true);
           getConfig(clientData.user._id);
+          const controllerService = await client.service('controller');
+          controllerService.on('created', handleControl);
         } catch (error) {
           console.error('Error in handleLogin:', error);
           setLoginAttempted(true);
