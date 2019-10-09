@@ -156,7 +156,7 @@ function Main(props: MainProps) {
   }
 
   useEffect(() => {
-    if (props.command)
+    if (props.command && !props.location.state.overview)
       props.history.replace({ ...props.location, state: { overview: true } });
   }, [props.command, props.history, props.location]);
 

@@ -80,6 +80,35 @@ function Overview(props: OverviewProps) {
   const [editingGroup, setEditingGroup] = React.useState();
   const [deleteConfirm, setDeleteConfirm] = React.useState();
 
+  const handleSetCurrentPage = useCallback(
+    (page: string) => {
+      console.log('handleSetCurrentPage:', page);
+      if (page !== currentPage) setCurrentPage(page);
+    },
+    [currentPage]
+  );
+
+  useEffect(() => {
+    if (props.command)
+      if (props.command.page) handleSetCurrentPage(props.command.page);
+      else if (props.command.card) {
+        const foundCard: CardProps | undefined = props.config.cards.find(
+          (card: CardProps) => card.key === props.command.card
+        );
+        if (foundCard) {
+          const foundGroup: GroupProps | undefined = props.config.groups.find(
+            (group: GroupProps) => group.key === foundCard.group
+          );
+          if (foundGroup) handleSetCurrentPage(foundGroup.page);
+        }
+      }
+  }, [
+    props.command,
+    props.config.cards,
+    props.config.groups,
+    handleSetCurrentPage
+  ]);
+
   function handleAddGroup() {
     console.log('handleAddGroup:', currentPage);
     props.handleUpdateConfig!(
@@ -210,34 +239,6 @@ function Overview(props: OverviewProps) {
   function handleConfirmClose() {
     setDeleteConfirm(undefined);
   }
-
-  const handleSetCurrentPage = useCallback(
-    (page: string) => {
-      if (page !== currentPage) setCurrentPage(page);
-    },
-    [currentPage]
-  );
-
-  useEffect(() => {
-    if (props.command)
-      if (props.command.page) handleSetCurrentPage(props.command.page);
-      else if (props.command.card) {
-        const foundCard: CardProps | undefined = props.config.cards.find(
-          (card: CardProps) => card.key === props.command.card
-        );
-        if (foundCard) {
-          const foundGroup: GroupProps | undefined = props.config.groups.find(
-            (group: GroupProps) => group.key === foundCard.group
-          );
-          if (foundGroup) handleSetCurrentPage(foundGroup.page);
-        }
-      }
-  }, [
-    props.command,
-    props.config.cards,
-    props.config.groups,
-    handleSetCurrentPage
-  ]);
 
   const groups =
     props.config.groups.filter(
