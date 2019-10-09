@@ -90,6 +90,7 @@ function Onboarding(props: OnboardingProps) {
   function handleCommand(message: CommandType) {
     console.log('Command Received:', message);
     setCommand(message);
+    setTimeout(() => setCommand(undefined), 200);
   }
 
   const handleLogin = useCallback(
