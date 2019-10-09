@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
@@ -19,6 +19,7 @@ import {
   GroupProps,
   CardProps
 } from '../Configuration/Config';
+import { CommandType } from '../Utils/Command';
 import { findGroupIdByGroup, findCardIdByCard } from '../../Utils/find';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
@@ -68,6 +69,7 @@ interface OverviewProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantChangeProps {
+  command: CommandType;
   mouseMoved: boolean;
 }
 
@@ -208,6 +210,31 @@ function Overview(props: OverviewProps) {
   function handleConfirmClose() {
     setDeleteConfirm(undefined);
   }
+
+  const handleSetCurrentPage = useCallback((page: string) => {
+    setCurrentPage(page);
+  }, []);
+
+  useEffect(() => {
+    if (props.command)
+      if (props.command.page) handleSetCurrentPage(props.command.page);
+      else if (props.command.card) {
+        const foundCard: CardProps | undefined = props.config.cards.find(
+          (card: CardProps) => card.key === props.command.card
+        );
+        if (foundCard) {
+          const foundGroup: GroupProps | undefined = props.config.groups.find(
+            (group: GroupProps) => group.key === foundCard.group
+          );
+          if (foundGroup) handleSetCurrentPage(foundGroup.page);
+        }
+      }
+  }, [
+    props.command,
+    props.config.cards,
+    props.config.groups,
+    handleSetCurrentPage
+  ]);
 
   const groups =
     props.config.groups.filter(
@@ -360,7 +387,11 @@ function Overview(props: OverviewProps) {
           handleUpdate={handleUpdateGroup(editingGroup)}
         />
       )}
-      <Pages {...props} currentPage={currentPage} setPage={setCurrentPage} />
+      <Pages
+        {...props}
+        currentPage={currentPage}
+        setPage={handleSetCurrentPage}
+      />
     </Grid>
   );
 }

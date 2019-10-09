@@ -13,6 +13,7 @@ import {
   defaultPalette,
   defaultTheme
 } from './Configuration/Config';
+import { CommandType } from './Utils/Command';
 import clone from '../Utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
@@ -21,12 +22,6 @@ import parseTheme from '../Utils/parseTheme';
 
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
-
-type MessageType = {
-  page: string;
-  card: string;
-  command: string;
-};
 
 interface OnboardingProps extends RouteComponentProps {}
 
@@ -37,6 +32,7 @@ function Onboarding(props: OnboardingProps) {
   const [loginCredentials, setLoggedIn] = React.useState();
   const [config, setConfig] = React.useState();
   const [configId, setConfigId] = React.useState();
+  const [command, setCommand] = React.useState();
   const [theme, setTheme] = React.useState(
     responsiveFontSizes(
       createMuiTheme({
@@ -91,8 +87,9 @@ function Onboarding(props: OnboardingProps) {
     })();
   }, []);
 
-  function handleControl(message: MessageType) {
-    console.log(message);
+  function handleCommand(message: CommandType) {
+    console.log('Command Received:', message);
+    setCommand(message);
   }
 
   const handleLogin = useCallback(
@@ -109,7 +106,7 @@ function Onboarding(props: OnboardingProps) {
           setLoginAttempted(true);
           getConfig(clientData.user._id);
           const controllerService = await client.service('controller');
-          controllerService.on('created', handleControl);
+          controllerService.on('created', handleCommand);
         } catch (error) {
           console.error('Error in handleLogin:', error);
           setLoginAttempted(true);
@@ -169,6 +166,7 @@ function Onboarding(props: OnboardingProps) {
         <Main
           {...props}
           config={config}
+          command={command}
           editing={0}
           loginCredentials={loginCredentials}
           handleConfigChange={handleConfigChange}
