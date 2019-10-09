@@ -82,7 +82,6 @@ function Overview(props: OverviewProps) {
 
   const handleSetCurrentPage = useCallback(
     (page: string) => {
-      console.log('handleSetCurrentPage:', page);
       if (page !== currentPage) setCurrentPage(page);
     },
     [currentPage]
