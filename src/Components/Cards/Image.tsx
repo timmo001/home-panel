@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -32,8 +32,19 @@ function Image(props: ImageProps) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   function handleToggleDialog() {
-    setDialogOpen(!dialogOpen);
+    handleSetDialogOpen(!dialogOpen);
   }
+
+  const handleSetDialogOpen = useCallback((open: boolean) => {
+    setDialogOpen(open);
+  }, []);
+
+  useEffect(() => {
+    if (props.command && props.command.card === props.card.key) {
+      if (props.command.command === 'expand') handleSetDialogOpen(true);
+      else if (props.command.command === 'unexpand') handleSetDialogOpen(false);
+    }
+  }, [props.command, props.card.key, handleSetDialogOpen]);
 
   const classes = useStyles();
 

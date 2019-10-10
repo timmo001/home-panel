@@ -21,6 +21,7 @@ import {
   HomeAssistantChangeProps,
   entitySizes
 } from '../HomeAssistant/HomeAssistant';
+import { CommandType } from '../Utils/Command';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
@@ -84,6 +85,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
+  command: CommandType;
   config: ConfigurationProps;
   editing: number;
   expandable: boolean;

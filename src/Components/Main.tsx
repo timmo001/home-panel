@@ -10,6 +10,7 @@ import Slide from '@material-ui/core/Slide';
 
 import { ConfigProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
+import { CommandType } from './Utils/Command';
 import clone from '../Utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
@@ -50,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface MainProps extends RouteComponentProps, ConfigProps {
+  command: CommandType;
   loginCredentials: any;
   handleLogout(): any;
 }
@@ -152,6 +154,11 @@ function Main(props: MainProps) {
     };
     input.click();
   }
+
+  useEffect(() => {
+    if (props.command && !props.location.state.overview)
+      props.history.replace({ ...props.location, state: { overview: true } });
+  }, [props.command, props.history, props.location]);
 
   const classes = useStyles();
 

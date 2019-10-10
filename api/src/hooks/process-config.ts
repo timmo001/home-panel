@@ -2,7 +2,7 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 
-export default (options = {}): Hook => {
+export default (_options = {}): Hook => {
   return async (context: HookContext) => {
     const { data } = context;
     let { createNew, config } = data;

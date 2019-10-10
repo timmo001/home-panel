@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { CardProps, cardTypeDefaults } from '../Config';
+import { CommandType } from '../../Utils/Command';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EditCardProps extends BaseProps {
+  command: CommandType;
   handleClose: () => void;
   handleUpdate: (data: CardProps) => void;
 }
