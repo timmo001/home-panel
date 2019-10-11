@@ -33,10 +33,6 @@ app.use(favicon(path.join(app.get('public'), 'favicon.ico')));
 // Host the public folder
 app.use(express.static(app.get('public')));
 
-app.get('/*', (_req, res) =>
-  res.sendFile(path.join(app.get('public'), 'index.html'))
-);
-
 // Set up Plugins and providers
 app.configure(express.rest());
 app.configure(socketio());
@@ -67,6 +63,10 @@ app.use(express.notFound());
 app.use(express.errorHandler({ logger } as any));
 
 app.hooks(appHooks);
+
+app.get('/*', (_req, res) =>
+  res.sendFile(path.join(app.get('public'), 'index.html'))
+);
 
 app.set('trust proxy', true);
 
