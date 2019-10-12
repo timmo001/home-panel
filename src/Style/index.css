@@ -32,7 +32,7 @@ a {
 
 a:hover {
   transition: 0.2s;
-  font-weight: bolder;
+  font-weight: 500;
 }
 
 ::-webkit-scrollbar {
