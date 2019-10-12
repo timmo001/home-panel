@@ -53,7 +53,11 @@ function ColorWheel(props: ColorWheelProps) {
           padding: 0,
           borderWidth: 1,
           borderColor: theme.palette.background.paper,
-          color: color ? color : props.color ? props.color : '#ffffffff',
+          color: color
+            ? color
+            : props.color
+            ? props.color
+            : theme.palette.background.paper,
           transparency: props.lighting ? true : false,
           layout: !props.lighting && [
             {
@@ -68,7 +72,7 @@ function ColorWheel(props: ColorWheelProps) {
           padding: 0,
           borderWidth: 1,
           borderColor: theme.palette.background.paper,
-          color: '#ffffffff',
+          color: theme.palette.background.paper,
           transparency: props.lighting ? true : false,
           layout: !props.lighting && [
             {
