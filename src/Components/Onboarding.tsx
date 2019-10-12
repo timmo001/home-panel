@@ -163,18 +163,19 @@ function Onboarding(props: OnboardingProps) {
     });
   }
 
-  if (!loginAttempted)
-    return <Loading text="Attempting Login. Please Wait.." />;
-
   const cssOverrides = `
-    a {color: ${(config && config.theme && config.theme.link_color) ||
-      defaultTheme.link_color};}
+    a {
+      color: ${(config && config.theme && config.theme.link_color) ||
+        defaultTheme.link_color};
+    }
   `;
 
   return (
     <ThemeProvider theme={theme}>
       <style>{cssOverrides}</style>
-      {loginCredentials ? (
+      {!loginAttempted ? (
+        <Loading text="Attempting Login. Please Wait.." />
+      ) : loginCredentials ? (
         <Main
           {...props}
           config={config}
