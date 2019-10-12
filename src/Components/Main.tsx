@@ -53,10 +53,11 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface MainProps extends RouteComponentProps, ConfigProps {
   command: CommandType;
   loginCredentials: any;
-  handleLogout(): any;
+  mouseMoved: boolean;
+  handleLogout: () => any;
+  handleMouseMove: () => void;
 }
 
-let moveTimeout: NodeJS.Timeout;
 function Main(props: MainProps) {
   const [hassUrl, setHassUrl] = React.useState();
   const [hassLogin, setHassLogin] = React.useState(false);
@@ -64,7 +65,6 @@ function Main(props: MainProps) {
   const [hassAuth, setHassAuth] = React.useState();
   const [hassConfig, setHassConfig] = React.useState();
   const [hassEntities, setHassEntities] = React.useState();
-  const [mouseMoved, setMouseMoved] = React.useState(false);
   const [back, setBack] = React.useState(false);
 
   useEffect(() => {
@@ -104,14 +104,6 @@ function Main(props: MainProps) {
     console.log('handleHassLogin:', url);
     setHassUrl(url);
     setHassLogin(true);
-  }
-
-  function handleMouseMove() {
-    clearTimeout(moveTimeout);
-    if (!props.location.state.configuration) {
-      setMouseMoved(true);
-      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
-    }
   }
 
   function handleBack() {
@@ -183,7 +175,7 @@ function Main(props: MainProps) {
   const showToolbar =
     !props.config.general.autohide_toolbar ||
     props.location.state.configuration ||
-    mouseMoved;
+    props.mouseMoved;
 
   return (
     <div
@@ -191,15 +183,16 @@ function Main(props: MainProps) {
         classes.root,
         props.location.state.overview && classes.overview
       )}
-      onClick={handleMouseMove}
-      onMouseMove={handleMouseMove}>
+      onClick={props.handleMouseMove}
+      onTouchMove={props.handleMouseMove}
+      onMouseMove={props.handleMouseMove}>
       <Drawer
         {...props}
         back={back}
         currentPage={currentPage}
         editing={editing}
         hassConnected={hassConnected}
-        mouseMoved={mouseMoved}
+        mouseMoved={props.mouseMoved}
         userInitials={userInitials}
         handleBack={handleBack}
         handleHassLogin={handleHassLogin}
@@ -254,7 +247,7 @@ function Main(props: MainProps) {
               hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
-              mouseMoved={mouseMoved}
+              mouseMoved={props.mouseMoved}
               handleHassChange={handleHassChange}
               handleUpdateConfig={handleUpdateConfig}
             />

@@ -25,14 +25,15 @@ import '@mdi/font/css/materialdesignicons.min.css';
 
 interface OnboardingProps extends RouteComponentProps {}
 
+let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: any;
-
 function Onboarding(props: OnboardingProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
   const [config, setConfig] = React.useState();
   const [configId, setConfigId] = React.useState();
   const [command, setCommand] = React.useState();
+  const [mouseMoved, setMouseMoved] = React.useState(false);
   const [theme, setTheme] = React.useState(
     responsiveFontSizes(
       createMuiTheme({
@@ -163,10 +164,21 @@ function Onboarding(props: OnboardingProps) {
     });
   }
 
+  function handleMouseMove() {
+    if (moveTimeout) clearTimeout(moveTimeout);
+    if (!props.location.state.configuration) {
+      setMouseMoved(true);
+      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
+    }
+  }
+
   const cssOverrides = `
     a {
       color: ${(config && config.theme && config.theme.link_color) ||
         defaultTheme.link_color};
+    }
+    ::-webkit-scrollbar-thumb {
+      visibility: ${mouseMoved ? 'visible' : 'hidden'};
     }
   `;
 
@@ -182,8 +194,10 @@ function Onboarding(props: OnboardingProps) {
           command={command}
           editing={0}
           loginCredentials={loginCredentials}
+          mouseMoved={mouseMoved}
           handleConfigChange={handleConfigChange}
           handleLogout={handleLogout}
+          handleMouseMove={handleMouseMove}
           handleSetTheme={handleSetTheme}
         />
       ) : (
