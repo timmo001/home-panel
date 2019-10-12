@@ -61,7 +61,18 @@ function Onboarding(props: OnboardingProps) {
 
   function handleSetTheme(palette: ThemeProps) {
     setTheme(
-      responsiveFontSizes(createMuiTheme({ palette: parseTheme(palette) }))
+      responsiveFontSizes(
+        createMuiTheme({
+          palette: parseTheme(palette),
+          overrides: {
+            MuiTypography: {
+              subtitle1: {
+                lineHeight: 1.4
+              }
+            }
+          }
+        })
+      )
     );
   }
 
