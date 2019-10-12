@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CloseIcon from '@material-ui/icons/Close';
+import CopyIcon from '@material-ui/icons/FileCopy';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -90,6 +91,7 @@ export interface BaseProps
   editing: number;
   expandable: boolean;
   handleCloseExpand?: () => void;
+  handleCopy?: () => void;
   handleDelete?: () => void;
   handleMoveDown?: () => void;
   handleMoveUp?: () => void;
@@ -364,6 +366,9 @@ function Base(props: BaseProps) {
               </IconButton>
               <IconButton color="primary" onClick={props.handleMoveDown}>
                 <ArrowDownwardsIcon fontSize="small" />
+              </IconButton>
+              <IconButton color="primary" onClick={props.handleCopy}>
+                <CopyIcon fontSize="small" />
               </IconButton>
               {deleteConfirm && (
                 <ConfirmDialog

@@ -28,6 +28,7 @@ import Base from '../Cards/Base';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditGroup from '../Configuration/EditGroup';
 import Header from './Header/Header';
+import makeKey from '../../Utils/makeKey';
 import Pages from './Pages';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -122,6 +123,14 @@ function Overview(props: OverviewProps) {
       ['cards', props.config.cards.length],
       defaultCard(groupKey)
     );
+  };
+
+  const handleCopy = (card: CardProps) => () => {
+    console.log('handleCopy:', card);
+    props.handleUpdateConfig!(['cards', props.config.cards.length], {
+      ...card,
+      key: makeKey(16)
+    });
   };
 
   const handleDelete = (group?: GroupProps, card?: CardProps) => () => {
@@ -351,6 +360,7 @@ function Overview(props: OverviewProps) {
                       card={card}
                       editing={props.editing}
                       expandable
+                      handleCopy={handleCopy(card)}
                       handleDelete={handleDelete(group, card)}
                       handleMoveUp={handleMoveUp(group, card)}
                       handleMoveDown={handleMoveDown(group, card)}
