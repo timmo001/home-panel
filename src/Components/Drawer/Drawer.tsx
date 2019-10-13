@@ -193,9 +193,13 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
         <Divider />
         <List>
           {!props.hassConnected && (
-            <ListItem>
-              <HomeAssistantLogin handleHassLogin={props.handleHassLogin} />
-            </ListItem>
+            <HomeAssistantLogin
+              iconOnly={
+                props.config.general.drawer_type === 'persistent_icons_only' ||
+                props.config.general.drawer_type === 'permanent_icons_only'
+              }
+              handleHassLogin={props.handleHassLogin}
+            />
           )}
           <ListItem button onClick={props.handleLogout}>
             <ListItemIcon>

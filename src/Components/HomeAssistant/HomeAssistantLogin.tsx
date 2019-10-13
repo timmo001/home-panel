@@ -1,6 +1,7 @@
 // @flow
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -10,6 +11,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 
 import HALogin from '../../Resources/ha-login.svg';
@@ -24,10 +27,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   media: {
     width: '100%',
     height: 48
+  },
+  icon: {
+    fontSize: 22
   }
 }));
 
 interface HomeAssistantLoginProps {
+  iconOnly?: boolean;
   handleHassLogin: (url: string) => void;
 }
 
@@ -78,13 +85,21 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <ButtonBase className={classes.root} onClick={handleToggleDialog}>
-        <CardMedia
-          className={classes.media}
-          image={HALogin}
-          title="Log in to Home Assistant"
-        />
-      </ButtonBase>
+      <ListItem button onClick={handleToggleDialog}>
+        {props.iconOnly ? (
+          <ListItemIcon>
+            <span
+              className={classnames('mdi', 'mdi-home-assistant', classes.icon)}
+            />
+          </ListItemIcon>
+        ) : (
+          <CardMedia
+            className={classes.media}
+            image={HALogin}
+            title="Log in to Home Assistant"
+          />
+        )}
+      </ListItem>
       {showDialog && (
         <Dialog open>
           <DialogTitle>Log in to Home Assistant</DialogTitle>
