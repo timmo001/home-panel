@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: 50
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(1)
   }
 }));
 
@@ -110,9 +110,10 @@ interface ResponsiveDrawerProps extends RouteComponentProps {
   hassConnected: boolean;
   mouseMoved: boolean;
   userInitials: string;
+  handleBack: () => void;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
-  handleBack: () => void;
+  handleSpaceTaken: (space: number) => void;
 }
 
 function ResponsiveDrawer(props: ResponsiveDrawerProps) {
@@ -123,6 +124,19 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       ? true
       : false
   );
+
+  useEffect(() => {
+    props.handleSpaceTaken(
+      props.config.general.drawer_type === 'persistent' && drawerOpen
+        ? drawerWidth
+        : props.config.general.drawer_type === 'persistent_icons_only' &&
+          drawerOpen
+        ? drawerWidthIcons
+        : props.config.general.drawer_type === 'permanent_icons_only'
+        ? drawerWidthIcons
+        : 0
+    );
+  }, [props, drawerOpen]);
 
   function handleDrawerToggle() {
     setDrawerOpen(!drawerOpen);
@@ -218,7 +232,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <AppBar
           className={classnames(
-            props.config.general.drawer_type === 'permanent_icons_only'
+            (props.config.general.drawer_type === 'persistent_icons_only' &&
+              drawerOpen) ||
+              props.config.general.drawer_type === 'permanent_icons_only'
               ? classes.permanentIconsRoot
               : null
           )}>
@@ -226,9 +242,6 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             className={classnames(
               props.config.general.drawer_type === 'persistent' && drawerOpen
                 ? classes.persistentToolbar
-                : props.config.general.drawer_type ===
-                    'persistent_icons_only' && drawerOpen
-                ? classes.persistentToolbarIcons
                 : null
             )}
             variant={
