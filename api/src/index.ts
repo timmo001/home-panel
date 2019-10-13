@@ -7,9 +7,7 @@ import app from './app';
 const port = app.get('port');
 
 let server;
-const isSsl = fs.existsSync(
-  process.env.SSL_PATH_CERT || 'fullchain.pem'
-);
+const isSsl = fs.existsSync(process.env.SSL_PATH_CERT || 'fullchain.pem');
 if (isSsl) {
   server = https
     .createServer(
@@ -35,10 +33,12 @@ process.on('unhandledRejection', (reason, p) =>
 );
 
 server.on('listening', () =>
-  logger.info(
-    'API started on %s://%s:%d',
-    isSsl ? 'https' : 'http',
-    app.get('host'),
-    port
-  )
+  process.env.SUPPRESS_URL
+    ? logger.info('API started')
+    : logger.info(
+        'API started on %s://%s:%d',
+        isSsl ? 'https' : 'http',
+        app.get('host'),
+        port
+      )
 );
