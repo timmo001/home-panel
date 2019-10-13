@@ -7,8 +7,17 @@ echo 'Run Home Panel..'
 # shellcheck disable=SC2164
 cd /opt/panel
 
-SSL_PATH_CERT=/ssl/%SSL_CERTFILE%
-SSL_PATH_KEY=/ssl/%SSL_KEYFILE%
+if [ -z "$SSL_CERTFILE" ]; then
+  SSL_PATH_CERT="/data/ssl/fullchain.pem"
+else
+  SSL_PATH_CERT="/data/ssl/$SSL_CERTFILE"
+fi
+
+if [ -z "$SSL_KEYFILE" ]; then
+  SSL_PATH_KEY="/data/ssl/privkey.pem"
+else
+  SSL_PATH_KEY="/data/ssl/$SSL_KEYFILE"
+fi
 
 export SSL_PATH_CERT
 export SSL_PATH_KEY
