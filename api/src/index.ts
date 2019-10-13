@@ -33,7 +33,7 @@ process.on('unhandledRejection', (reason, p) =>
 );
 
 server.on('listening', () =>
-  process.env.SUPPRESS_URL
+  process.env.SUPPRESS_URL === 'true'
     ? logger.info('API started')
     : logger.info(
         'API started on %s://%s:%d',
