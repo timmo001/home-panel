@@ -57,6 +57,7 @@ function Section(props: SectionProps) {
               container
               direction="row"
               alignContent="center"
+              alignItems="center"
               justify="space-between">
               {item.icon && (
                 <Grid item>
