@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: theme.spacing(1),
     zIndex: 1000,
     transition: '.4s ease',
-    background: `${theme.palette.background.default}dd`,
+    background: theme.palette.background.paper,
     opacity: 0,
     '&:hover': {
       opacity: 1
