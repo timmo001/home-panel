@@ -30,6 +30,7 @@ export type ConfigurationProps = {
 export type GeneralProps = {
   autohide_toolbar: boolean;
   dense_toolbar: boolean;
+  drawer_type: string;
 };
 
 export type ThemeProps = {
@@ -291,6 +292,20 @@ export const items = [
         icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
+      },
+      {
+        name: 'drawer_type',
+        title: 'Drawer Type',
+        description: 'Type of drawer',
+        icon: 'mdi-page-layout-sidebar-left',
+        type: 'select',
+        default: 'default',
+        items: [
+          'default',
+          'persistent',
+          'persistent_icons_only',
+          'permanent_icons_only'
+        ]
       }
     ]
   },

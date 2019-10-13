@@ -59,13 +59,14 @@ interface MainProps extends RouteComponentProps, ConfigProps {
 }
 
 function Main(props: MainProps) {
-  const [hassUrl, setHassUrl] = React.useState();
-  const [hassLogin, setHassLogin] = React.useState(false);
-  const [hassConnected, setHassConnected] = React.useState(false);
+  const [back, setBack] = React.useState(false);
   const [hassAuth, setHassAuth] = React.useState();
   const [hassConfig, setHassConfig] = React.useState();
+  const [hassConnected, setHassConnected] = React.useState(false);
   const [hassEntities, setHassEntities] = React.useState();
-  const [back, setBack] = React.useState(false);
+  const [hassLogin, setHassLogin] = React.useState(false);
+  const [hassUrl, setHassUrl] = React.useState();
+  const [spaceTaken, setSpaceTaken] = React.useState(0);
 
   useEffect(() => {
     if (props.location.search) parseTokens();
@@ -196,6 +197,7 @@ function Main(props: MainProps) {
         userInitials={userInitials}
         handleBack={handleBack}
         handleHassLogin={handleHassLogin}
+        handleSpaceTaken={setSpaceTaken}
       />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
@@ -216,7 +218,8 @@ function Main(props: MainProps) {
               classes.contentDenseToolbar,
             !showToolbar && classes.contentNoToolbar,
             props.location.state.overview && classes.overview
-          )}>
+          )}
+          style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
             <HomeAssistant
               url={hassUrl}
