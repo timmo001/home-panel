@@ -354,6 +354,7 @@ function Base(props: BaseProps) {
               className={classes.cardActions}
               container
               alignContent="center"
+              alignItems="center"
               justify="center">
               <IconButton color="primary" onClick={handleEdit}>
                 <EditIcon fontSize="small" />
