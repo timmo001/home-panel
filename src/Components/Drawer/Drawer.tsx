@@ -171,6 +171,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
               className={classes.link}
               to={{ state: { [item.link]: true } }}
               onClick={
+                props.config.general.drawer_type &&
                 props.config.general.drawer_type.includes('persistent')
                   ? () => null
                   : handleDrawerClose
