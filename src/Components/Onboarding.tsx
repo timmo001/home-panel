@@ -1,9 +1,10 @@
 // @flow
 import React, { useEffect, useCallback } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import io from 'socket.io-client';
+import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
+import io from 'socket.io-client';
 import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -26,7 +27,7 @@ import '@mdi/font/css/materialdesignicons.min.css';
 interface OnboardingProps extends RouteComponentProps {}
 
 let moveTimeout: NodeJS.Timeout;
-let socket: SocketIOClient.Socket, client: any;
+let socket: SocketIOClient.Socket, client: feathers.Application<any>;
 function Onboarding(props: OnboardingProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
@@ -56,7 +57,6 @@ function Onboarding(props: OnboardingProps) {
       socket = io(url, { path: `${path}/socket.io`.replace('//', '/') });
       client.configure(socketio(socket));
       client.configure(authentication());
-      client.path = path;
     }
   }, [props.location]);
 
@@ -77,27 +77,51 @@ function Onboarding(props: OnboardingProps) {
     );
   }
 
-  const getConfig = useCallback((userId: string) => {
-    (async () => {
-      const configService = await client.service('config');
-      let getter = await configService.find({ userId });
+  // const handleUpdateConfig = useCallback((message: any) => {
+  //   console.log();
+  //   // if (
+  //   //   message.config.userId === loginCredentials._id &&
+  //   //   config !== message.config
+  //   // ) {
+  //   //   console.log('Update Config:', message.config);
+  //   //   setConfig(message.config);
+  //   // }
+  // }, []);
 
-      if (!getter.data[0]) {
-        await configService.create({ createNew: true });
-        getConfig(userId);
-        return;
-      }
+  const getConfig = useCallback(
+    (userId: string) => {
+      (async () => {
+        const configService = await client.service('config');
+        let getter = await configService.find({ userId });
 
-      process.env.NODE_ENV === 'development' &&
-        console.log('Config:', getter.data[0]);
+        if (!getter.data[0]) {
+          await configService.create({ createNew: true });
+          getConfig(userId);
+          return;
+        }
 
-      const configLcl = getter.data[0].config;
-      setConfig(configLcl);
-      setConfigId(getter.data[0]._id);
+        process.env.NODE_ENV === 'development' &&
+          console.log('Config:', getter.data[0]);
 
-      if (configLcl.theme) handleSetTheme(configLcl.theme);
-    })();
-  }, []);
+        const configLcl = getter.data[0].config;
+        setConfig(configLcl);
+        setConfigId(getter.data[0]._id);
+
+        if (configLcl.theme) handleSetTheme(configLcl.theme);
+
+        configService.on('patched', (message: { userId: any; config: any }) => {
+          if (
+            message.userId === getter.data[0].userId &&
+            config !== message.config
+          ) {
+            console.log('Update Config:', message.config);
+            setConfig(message.config);
+          }
+        });
+      })();
+    },
+    [config]
+  );
 
   function handleCommand(message: CommandType) {
     console.log('Command Received:', message);
@@ -109,12 +133,13 @@ function Onboarding(props: OnboardingProps) {
     (data?: any, callback?: (error?: string) => void) => {
       (async () => {
         try {
-          let clientData;
+          let clientData: AuthenticationResult;
           if (!client) {
             console.warn('Feathers app is undefined');
+            return;
           } else if (!data) clientData = await client.reAuthenticate();
           else clientData = await client.authenticate(data, callback);
-          console.log(clientData.user);
+          console.log('User:', clientData.user);
           setLoggedIn(clientData.user);
           setLoginAttempted(true);
           getConfig(clientData.user._id);
