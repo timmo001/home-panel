@@ -60,11 +60,12 @@ function State(props: StateProps) {
     props.card.disabled = false;
     state = properCase(entity!.state);
     if (entity!.attributes) {
-      if (entity!.attributes.device_class)
-        state =
-          strings.state[entity!.entity_id.split('.')[0]][
-            entity!.attributes.device_class
-          ][entity!.state];
+      const domain = entity!.entity_id.split('.')[0];
+      if (entity!.attributes.device_class) {
+        let deviceClass =
+          strings.state[domain][entity!.attributes.device_class];
+        if (deviceClass) state = deviceClass[entity!.state];
+      }
       if (entity!.attributes.unit_of_measurement)
         state += ` ${entity!.attributes.unit_of_measurement}`;
     }
