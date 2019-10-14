@@ -12,6 +12,7 @@ import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
 import Chart from '../../Visualisations/Chart';
 import properCase from '../../../Utils/properCase';
+import strings from '../Utils/Strings';
 
 const useStyles = makeStyles((_theme: Theme) => ({
   root: {
@@ -59,6 +60,11 @@ function State(props: StateProps) {
     props.card.disabled = false;
     state = properCase(entity!.state);
     if (entity!.attributes) {
+      if (entity!.attributes.device_class)
+        state =
+          strings.state[entity!.entity_id.split('.')[0]][
+            entity!.attributes.device_class
+          ][entity!.state];
       if (entity!.attributes.unit_of_measurement)
         state += ` ${entity!.attributes.unit_of_measurement}`;
     }
