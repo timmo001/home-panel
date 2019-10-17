@@ -28,8 +28,7 @@ import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minWidth: 130,
-    maxWidth: 130
+    minWidth: 80
   },
   backupButton: {
     marginRight: theme.spacing(1)
