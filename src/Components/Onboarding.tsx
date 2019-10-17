@@ -77,17 +77,6 @@ function Onboarding(props: OnboardingProps) {
     );
   }
 
-  // const handleUpdateConfig = useCallback((message: any) => {
-  //   console.log();
-  //   // if (
-  //   //   message.config.userId === loginCredentials._id &&
-  //   //   config !== message.config
-  //   // ) {
-  //   //   console.log('Update Config:', message.config);
-  //   //   setConfig(message.config);
-  //   // }
-  // }, []);
-
   const getConfig = useCallback(
     (userId: string) => {
       (async () => {
