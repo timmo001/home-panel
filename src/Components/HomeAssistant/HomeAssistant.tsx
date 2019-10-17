@@ -58,7 +58,7 @@ export const entitySizes: {
   input_select: { height: 1, width: 1 },
   light: { height: 4, width: 2 },
   lock: { height: 1, width: 1 },
-  media_player: { height: 2, width: 2 },
+  media_player: { height: 2, width: 3 },
   remote: { height: 1, width: 1 },
   scene: { height: 1, width: 1 },
   script: { height: 1, width: 1 },
