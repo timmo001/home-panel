@@ -30,7 +30,7 @@ interface ColorWheelProps {
   handleColorChange: (color: Color) => void;
 }
 
-export function validateColor(color: string, sixHex?: boolean): boolean {
+function validateColor(color: string, sixHex?: boolean): boolean {
   const c = clone(color);
   const isString = typeof c === 'string';
   if (isString && sixHex && /^(?:#?|0x?)[0-9a-fA-F]{3,6}$/.test(c)) {

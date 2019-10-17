@@ -19,7 +19,7 @@ import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import { Color, validateColor } from '../Utils/ColorWheel';
+import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import clone from '../../Utils/clone';
