@@ -377,7 +377,7 @@ export const items = [
         title: 'Text',
         description: 'Text color.',
         icon: 'mdi-text',
-        type: 'color',
+        type: 'color_only',
         default: '#ffffff'
       },
       {
@@ -385,7 +385,7 @@ export const items = [
         title: 'Link',
         description: '[Link](https://timmo.dev/home-panel/configui/) color.',
         icon: 'mdi-link',
-        type: 'color',
+        type: 'color_only',
         default: '#00ccff'
       }
     ]

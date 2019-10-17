@@ -197,6 +197,13 @@ function Item(props: ItemProps) {
           onChange={handleChange(props.path!, 'color')}
         />
       );
+    case 'color_only':
+      return (
+        <ColorAdornment
+          color={value}
+          handleColorChange={handleColorChange(props.path!)}
+        />
+      );
     case 'input':
       return (
         <TextField
