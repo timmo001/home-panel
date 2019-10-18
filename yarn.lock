@@ -1102,10 +1102,10 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@jaames/iro@4.5.1":
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-4.5.1.tgz#07ee4e55bd2f0f52701fd98a4b9bf49936fd0549"
-  integrity sha512-k5xVmnp2EI2lm8XyCUWGO+t4mlzda8lrrtnsJiVymIAHgS9ZuTNnIE1Qx7WYsUhUXxUh7ApkQh5bOhviyJdOQA==
+"@jaames/iro@4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-4.5.2.tgz#6b2cf3b7b04cd44ab33f8070378d8f947293a260"
+  integrity sha512-5CXYj7QbrzhOls5R6XLRCnpBpwCx6gL/wHQDa/YrS387lXeybX17Z3zPIYL1Gkb65E89QaiiOGu7HABMJzCDYg==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
