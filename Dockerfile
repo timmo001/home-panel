@@ -42,7 +42,7 @@ RUN \
         nginx=1.16.1-r0 \
         nodejs-current=12.4.0-r0 \
         openssl=1.1.1d-r0 \
-        tzdata=2019b-r0 \
+        tzdata=2019c-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
