@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%'
   },
   media: {
-    height: 'calc(100% - 72px)',
+    height: 'calc(100% - 62px)',
     width: '100%',
     objectFit: 'scale-down',
     marginBottom: theme.spacing(0.5)
@@ -160,13 +160,14 @@ function Media(props: MediaProps) {
           )}
         </div>
       )}
-      {(!props.card.height || props.card.height > 1) && (
-        <img
-          className={classes.media}
-          src={props.hassAuth.data.hassUrl + attributes.entity_picture}
-          alt={attributes.media_title}
-        />
-      )}
+      {(!props.card.height || props.card.height > 1) &&
+        attributes.entity_picture && (
+          <img
+            className={classes.media}
+            src={props.hassAuth.data.hassUrl + attributes.entity_picture}
+            alt={attributes.media_title}
+          />
+        )}
       <Grid
         item
         container
@@ -248,20 +249,23 @@ function Media(props: MediaProps) {
             </IconButton>
           )}
         </Grid>
-        {(!props.card.width || props.card.width > 2) && state !== 'off' && (
+        {(!props.card.width || props.card.width > 2) && (
           <Grid item>
             <Select
               value={attributes.source}
+              disabled={!attributes.source_list || state === 'off'}
               onChange={handleSelectChange}
               inputProps={{
                 name: 'source',
                 id: 'source'
               }}>
-              {attributes.source_list.map((source: string, key: number) => (
-                <MenuItem key={key} value={source}>
-                  {source}
-                </MenuItem>
-              ))}
+              {attributes.source_list &&
+                state !== 'off' &&
+                attributes.source_list.map((source: string, key: number) => (
+                  <MenuItem key={key} value={source}>
+                    {source}
+                  </MenuItem>
+                ))}
             </Select>
           </Grid>
         )}
