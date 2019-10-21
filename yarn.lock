@@ -1102,10 +1102,10 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@jaames/iro@4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-4.5.2.tgz#6b2cf3b7b04cd44ab33f8070378d8f947293a260"
-  integrity sha512-5CXYj7QbrzhOls5R6XLRCnpBpwCx6gL/wHQDa/YrS387lXeybX17Z3zPIYL1Gkb65E89QaiiOGu7HABMJzCDYg==
+"@jaames/iro@4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-4.5.3.tgz#4fbeabaf119b9f53ef5b88e262dbfc3477fa9e9a"
+  integrity sha512-knBqezLEprrpHCb9hHZbQLApzCZyI/AuWg3mqQVkgTtQX3MNX3W2uVkX1hFwS6pmEUHbA022rid9fRqV0IshMA==
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -1712,10 +1712,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.2.tgz#c4e63af5e8823ce9cc3f0b34f7b998c2171f0c44"
   integrity sha512-dyYO+f6ihZEtNPDcWNR1fkoTDf3zAK3lAABDze3mz6POyIercH0lEUawUFXlG8xaQZmm1yEBON/4TsYv/laDYg==
 
-"@types/node@12.11.1":
-  version "12.11.1"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.1.tgz#1fd7b821f798b7fa29f667a1be8f3442bb8922a3"
-  integrity sha512-TJtwsqZ39pqcljJpajeoofYRfeZ7/I/OMUQ5pR4q5wOKf2ocrUvBAZUMhWsOvKx3dVc/aaV5GluBivt0sWqA5A==
+"@types/node@12.11.2":
+  version "12.11.2"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.11.2.tgz#75ba3beda30d690b89a5089ca1c6e8e386150b76"
+  integrity sha512-dsfE4BHJkLQW+reOS6b17xhZ/6FB1rB8eRRvO08nn5o+voxf3i74tuyFWNH6djdfgX7Sm5s6LD8t6mJug4dpDw==
 
 "@types/node@^6.14.4":
   version "6.14.7"
@@ -5158,10 +5158,10 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
   integrity sha1-2uRqnXj74lKSJYzB54CkHZXAN4I=
 
-flow-bin@0.109.0:
-  version "0.109.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.109.0.tgz#dcdcb7402dd85b58200392d8716ccf14e5a8c24c"
-  integrity sha512-tpcMTpAGIRivYhFV3KJq+zHI2HzcXo8MoGe9pXS4G/UZuey2Faq/e8/gdph2WF0erRlML5hmwfwiq7v9c25c7w==
+flow-bin@0.110.0:
+  version "0.110.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.110.0.tgz#c6c140e239f662839d8f61b64b7b911f12d3306c"
+  integrity sha512-mmdEPEMoTuX+mguy/tjRlOlCtPfVdXZQeMgCAsEDVDgWMA5vwWhM2y653OcJiKX38t4gtZ2e/MNVo0qzyYeZDQ==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
