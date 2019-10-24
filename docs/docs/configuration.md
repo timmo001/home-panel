@@ -25,5 +25,5 @@ From here you can change things like the base, primary color palette,
 
 [screen-configuration-header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-header.png
 [screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-main.png
-[screen-configuration-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-header.gif
+[screen-configuration-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-theme.gif
 [css-background-property]: https://www.w3schools.com/cssref/css3_pr_background.asp
