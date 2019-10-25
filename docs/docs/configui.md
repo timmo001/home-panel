@@ -13,6 +13,10 @@ To start editing your UI, click the edit config button in the app bar.
 Enter the Config UI and click on a card's edit button. You can then edit the
 type, name etc. as you like. You can also delete the card if you want.
 
+!!! warning ""
+    If you are running Safari, the editing page might not load correctly.
+     We recommend you use another browser such as Chrome or Fierfox.
+     
 ## Editing a group
 
 Enter the Config UI and click on a group's edit icon. You can then edit the name,
