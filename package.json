@@ -71,7 +71,7 @@
   },
   "devDependencies": {
     "@types/classnames": "2.2.9",
-    "@types/jest": "24.0.19",
+    "@types/jest": "24.0.20",
     "@types/markdown-it": "0.0.9",
     "@types/node": "12.11.7",
     "@types/react": "16.9.11",
