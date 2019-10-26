@@ -9,7 +9,7 @@
   "license": "MIT",
   "homepage": ".",
   "dependencies": {
-    "@feathersjs/authentication-client": "4.3.7",
+    "@feathersjs/authentication-client": "4.3.10",
     "@feathersjs/feathers": "4.3.7",
     "@feathersjs/socketio-client": "4.3.7",
     "@jaames/iro": "4.5.3",
