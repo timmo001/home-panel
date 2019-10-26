@@ -148,14 +148,14 @@
     "@feathersjs/errors" "^4.3.4"
     "@feathersjs/feathers" "^4.3.4"
 
-"@feathersjs/authentication-local@4.3.7":
-  version "4.3.7"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.7.tgz#082b0ea46438aa50af8f006ed33c7534b9480938"
-  integrity sha512-T51Lh5O5Rfp17KXQyuk85ecpokYusC02bWkjwkH0luLDbV/8OFGPgPUPPlVa2aYR81zUFHVrc36vnLsI2sFH6A==
+"@feathersjs/authentication-local@4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-local/-/authentication-local-4.3.10.tgz#aab015119e8c373cff663013ec0a93e9199047ad"
+  integrity sha512-2E2ky8WZt9BWpi4zAy+3YYgCOloBU3VjezkeOC4Hqfb5ZJyt4grIT+BbhM/Q7Yoz/X5TgsNGUmG3W3rmnZrwEA==
   dependencies:
-    "@feathersjs/authentication" "^4.3.7"
-    "@feathersjs/errors" "^4.3.7"
-    "@feathersjs/feathers" "^4.3.7"
+    "@feathersjs/authentication" "^4.3.10"
+    "@feathersjs/errors" "^4.3.10"
+    "@feathersjs/feathers" "^4.3.10"
     bcryptjs "^2.4.3"
     debug "^4.1.1"
     lodash "^4.17.15"
@@ -189,6 +189,21 @@
     long-timeout "^0.1.1"
     uuid "^3.3.3"
 
+"@feathersjs/authentication@^4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication/-/authentication-4.3.10.tgz#509a2c565dc2bd3fec7dbe4f27ff97154812fffc"
+  integrity sha512-Ucqy4uAnNQ6zueP3gqrNcCw5/BMsNj0gMbCsTLZMvjZ2ua+oxF6ibX7CLiFYCxJoTqTPwo9e5ykmQxlsrv2Orw==
+  dependencies:
+    "@feathersjs/errors" "^4.3.10"
+    "@feathersjs/feathers" "^4.3.10"
+    "@feathersjs/transport-commons" "^4.3.10"
+    "@types/jsonwebtoken" "8.3.4"
+    debug "^4.1.1"
+    jsonwebtoken "^8.5.1"
+    lodash "^4.17.15"
+    long-timeout "^0.1.1"
+    uuid "^3.3.3"
+
 "@feathersjs/commons@^4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.3.0.tgz#6b0993ac790382aa28ec8a138f3e91501973b418"
@@ -212,6 +227,13 @@
   version "4.3.7"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.7.tgz#ee576d06f5dfc502aa2ed1a0ee13380fa30d71e5"
   integrity sha512-OGyPZpq5qkr6TjG5aqFBNgpsK3pwhMRxHPjHkGXBKfseRACTS//ma3kJhRiGxhFetu5IsIsAYBpLRhyTbiBi8w==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.10.tgz#f109633a593515849e040123b5992adaad479aaf"
+  integrity sha512-OWPCfXcife8DRkdP4u1aC4ZZgaov5vfowEtacFX+/l91YsMlvIeI6mEmhK/tcVyF5TK/kuzkai5KJtZlp+R4KQ==
   dependencies:
     debug "^4.1.1"
 
@@ -245,6 +267,16 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
+"@feathersjs/feathers@^4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.10.tgz#13d4d6e0a23bbd8c559789f017e0c019dd2d1e36"
+  integrity sha512-KswXZsl0e9XDy/RS4NkSSqXoKWYuP5X5+38LOtGIYAKnPnGSa+tI99YDzJyZtGDOQ3t+77hYjGwBrqST62aALA==
+  dependencies:
+    "@feathersjs/commons" "^4.3.7"
+    debug "^4.1.1"
+    events "^3.0.0"
+    uberproto "^2.0.4"
+
 "@feathersjs/feathers@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.3.4.tgz#06791dd39408d8dd7948d54c5596f2f91aa8eb09"
@@ -265,6 +297,17 @@
     debug "^4.1.1"
     socket.io "^2.3.0"
     uberproto "^2.0.4"
+
+"@feathersjs/transport-commons@^4.3.10":
+  version "4.3.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.3.10.tgz#cff3bcc26cb70a6121c831fa7b63a1b816e429f6"
+  integrity sha512-6/nJUk1+NtJVHe5+jI5JM86WMUEbV2JCgegbxk9wqsKvlzsA1gWpEz2qFCnFAVlq+z2JgrbZRPanbmB2UrSvLA==
+  dependencies:
+    "@feathersjs/commons" "^4.3.7"
+    "@feathersjs/errors" "^4.3.10"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
 
 "@feathersjs/transport-commons@^4.3.7":
   version "4.3.7"
@@ -542,6 +585,13 @@
   integrity sha512-YYiqfSjocv7lk5H/T+v5MjATYjaTMsUkbDnjGqSMoO88jWdtJXJV4ST/7DKZcoMHMBvB2SeSfyOzZfkxXHR5xg==
   dependencies:
     "@types/jest-diff" "*"
+
+"@types/jsonwebtoken@8.3.4":
+  version "8.3.4"
+  resolved "https://registry.yarnpkg.com/@types/jsonwebtoken/-/jsonwebtoken-8.3.4.tgz#93c10c3d0a04bf31a507f89803e7df90a7a90889"
+  integrity sha512-R0eiYPpbo6Jl/XtGwpg7vQlapd7D38gp0g9WMKOSFr/e2NUTN9Udd3ty7n+2yUpmHr2Fti+/BSc+KSQ8zPN+vg==
+  dependencies:
+    "@types/node" "*"
 
 "@types/jsonwebtoken@8.3.5":
   version "8.3.5"
