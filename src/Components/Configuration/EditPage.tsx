@@ -12,6 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import ArrowDownIcon from '@material-ui/icons/ArrowDownward';
+import ArrowUpIcon from '@material-ui/icons/ArrowUpward';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { ConfigProps, PageProps, GroupProps } from './Config';
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface EditPageProps extends ConfigProps {
   page: PageProps;
   handleClose: () => void;
+  handleMove: (position: number) => void;
   handleUpdate: (data?: PageProps) => void;
 }
 
@@ -59,13 +62,13 @@ function EditPage(props: EditPageProps) {
   }
 
   function handleConfirm() {
-    handleClose();
     props.handleUpdate(page);
+    handleClose();
   }
 
   function handleDelete() {
-    handleClose();
     props.handleUpdate(undefined);
+    handleClose();
   }
 
   const handleChange = (name: string) => (
@@ -82,6 +85,18 @@ function EditPage(props: EditPageProps) {
   )
     ? true
     : false;
+
+  function handleMoveUp() {
+    props.handleUpdate(page);
+    props.handleMove(-1);
+    handleClose();
+  }
+
+  function handleMoveDown() {
+    props.handleUpdate(page);
+    props.handleMove(+1);
+    handleClose();
+  }
 
   const classes = useStyles();
   const theme = useTheme();
@@ -137,6 +152,12 @@ function EditPage(props: EditPageProps) {
           </Typography>
         )}
         <div className={classes.fill} />
+        <IconButton color="primary" onClick={handleMoveUp}>
+          <ArrowUpIcon fontSize="small" />
+        </IconButton>
+        <IconButton color="primary" onClick={handleMoveDown}>
+          <ArrowDownIcon fontSize="small" />
+        </IconButton>
         <Button onClick={handleClose}>Cancel</Button>
         <Button onClick={handleConfirm}>Save</Button>
       </DialogActions>
@@ -154,6 +175,7 @@ function EditPage(props: EditPageProps) {
 EditPage.propTypes = {
   page: PropTypes.object.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleMove: PropTypes.func.isRequired,
   handleUpdate: PropTypes.func.isRequired
 };
 

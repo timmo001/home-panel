@@ -84,6 +84,14 @@ function Pages(props: PagesProps) {
     props.setPage(props.config.pages[0].key);
   };
 
+  const handleMovePage = (page: PageProps) => (position: number) => {
+    props.handleUpdateConfig!(
+      ['pages', findPageIdByPage(props.config, page)],
+      [position]
+    );
+    props.setPage(props.config.pages[findPageIdByPage(props.config, page)].key);
+  };
+
   const classes = useStyles();
   return (
     <div>
@@ -137,6 +145,7 @@ function Pages(props: PagesProps) {
           {...props}
           page={editingPage}
           handleClose={handleDoneEditingPage}
+          handleMove={handleMovePage(editingPage)}
           handleUpdate={handleUpdatePage(editingPage)}
         />
       )}
