@@ -47,8 +47,8 @@
   "devDependencies": {
     "@types/compression": "1.0.1",
     "@types/cors": "2.8.6",
-    "@types/helmet": "0.0.44",
-    "@types/jest": "24.0.20",
+    "@types/helmet": "0.0.45",
+    "@types/jest": "24.0.21",
     "@types/jsonwebtoken": "8.3.5",
     "@types/nedb": "1.8.9",
     "@types/serve-favicon": "2.2.31",
@@ -57,7 +57,7 @@
     "nodemon": "1.19.4",
     "shx": "0.3.2",
     "ts-jest": "24.1.0",
-    "ts-node-dev": "1.0.0-pre.43",
+    "ts-node-dev": "1.0.0-pre.44",
     "tslint": "5.20.0",
     "typescript": "3.6.4"
   }
