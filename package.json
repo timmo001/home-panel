@@ -84,7 +84,7 @@
     "@types/superagent": "4.1.4",
     "awesome-typescript-loader": "5.2.1",
     "source-map-loader": "0.2.4",
-    "tslint": "5.20.0"
+    "tslint": "5.20.1"
   },
   "snyk": true
 }
