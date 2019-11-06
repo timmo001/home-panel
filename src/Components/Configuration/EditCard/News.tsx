@@ -72,7 +72,6 @@ function News(props: NewsProps) {
             disabled
             InputLabelProps={{ shrink: true }}
             label="Source"
-            color="error"
             value={error}
           />
         ) : (
