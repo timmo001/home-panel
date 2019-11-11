@@ -216,6 +216,13 @@
   dependencies:
     debug "^4.1.1"
 
+"@feathersjs/errors@^4.3.11":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.11.tgz#3aff48fc54ca47ca3873c42f043dd69f4c4f6894"
+  integrity sha512-bnfFUUCykgF4ZgjFhDOL4rS9YT9N1GxYgNGwWs6otKCnj0jr9/iXTnda/cjqryTr9fqB/62qkDG/G/FtYqPxvA==
+  dependencies:
+    debug "^4.1.1"
+
 "@feathersjs/errors@^4.3.4":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.3.4.tgz#8c2a9a64b9ae8e1bf8c173497258979dad1c4e6d"
@@ -256,12 +263,12 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio@4.3.10":
-  version "4.3.10"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.10.tgz#8d664c2f8e89b4b9ca9717cd8baee64e8f855b39"
-  integrity sha512-sxsdYWqmqJ+YRzTsVbPvBf9jMAvCY/OLX3SFMPmxpiT1x95GwdlIdWxpXZbqC8MeiqpV36wLzBR64i33rsMEcg==
+"@feathersjs/socketio@4.3.11":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.3.11.tgz#56564606f15441052af8ae6d22b6c3a2e21ec093"
+  integrity sha512-O+3oEXjqGWN+Jzb78jBOt76xHiVoOTPwBuzhxEXvx7YcAgj3z0oUPC/YSk7Kf/mmQeU/+DneVCJOEp/cdkxS3Q==
   dependencies:
-    "@feathersjs/transport-commons" "^4.3.10"
+    "@feathersjs/transport-commons" "^4.3.11"
     "@types/socket.io" "^2.1.4"
     debug "^4.1.1"
     socket.io "^2.3.0"
@@ -274,6 +281,17 @@
   dependencies:
     "@feathersjs/commons" "^4.3.7"
     "@feathersjs/errors" "^4.3.10"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
+
+"@feathersjs/transport-commons@^4.3.11":
+  version "4.3.11"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.3.11.tgz#627cd409c3400e78b4395da5c9e67c59ae2287eb"
+  integrity sha512-lDoMO9GZbf5+shGMyAcP7HOaftVjQ4twsHHEzXAYOYiqS6nTosfCivTtNbNr5m0KQfTkREquiDBcV8moVKSKmQ==
+  dependencies:
+    "@feathersjs/commons" "^4.3.7"
+    "@feathersjs/errors" "^4.3.11"
     debug "^4.1.1"
     lodash "^4.17.15"
     radix-router "^3.0.1"
