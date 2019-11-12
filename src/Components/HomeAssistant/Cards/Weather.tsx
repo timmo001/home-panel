@@ -215,7 +215,8 @@ function Weather(props: WeatherProps) {
           </Grid>
           {!props.card.width ||
           props.card.width > 1 ||
-          (!props.card.height || props.card.height > 1) ? (
+          !props.card.height ||
+          props.card.height > 1 ? (
             <Grid item xs>
               {Object.keys(attributes)
                 .filter(i => typeof attributes[i] == 'number')
