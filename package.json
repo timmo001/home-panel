@@ -18,7 +18,7 @@
     "@mdi/font": "4.5.95",
     "array-move": "2.2.0",
     "classnames": "2.2.6",
-    "flow-bin": "0.111.3",
+    "flow-bin": "0.112.0",
     "fuse.js": "3.4.5",
     "home-assistant-js-websocket": "4.4.0",
     "iro-transparency-plugin": "1.0.2",
@@ -70,7 +70,7 @@
   },
   "devDependencies": {
     "@types/classnames": "2.2.9",
-    "@types/jest": "24.0.22",
+    "@types/jest": "24.0.23",
     "@types/markdown-it": "0.0.9",
     "@types/node": "12.12.7",
     "@types/react": "16.9.11",
