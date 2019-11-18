@@ -164,7 +164,9 @@ function Media(props: MediaProps) {
         attributes.entity_picture && (
           <img
             className={classes.media}
-            src={props.hassAuth.data.hassUrl + attributes.entity_picture}
+            src={(attributes.entity_picture.indexOf("http") === 0)
+                    ? attributes.entity_picture
+                    : (props.hassAuth.data.hassUrl + attributes.entity_picture)}
             alt={attributes.media_title}
           />
         )}
