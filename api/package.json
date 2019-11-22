@@ -51,7 +51,7 @@
     "@types/jest": "24.0.23",
     "@types/jsonwebtoken": "8.3.5",
     "@types/nedb": "1.8.9",
-    "@types/serve-favicon": "2.2.31",
+    "@types/serve-favicon": "2.5.0",
     "axios": "0.19.0",
     "jest": "24.9.0",
     "nodemon": "1.19.4",

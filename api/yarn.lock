@@ -575,10 +575,10 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.3.tgz#7ee330ba7caafb98090bece86a5ee44115904c2c"
   integrity sha512-ewFXqrQHlFsgc09MK5jP5iR7vumV/BYayNC6PgJO2LPe8vrnNFyjQjSppfEngITi0qvfKtzFvgKymGheFM9UOA==
 
-"@types/serve-favicon@2.2.31":
-  version "2.2.31"
-  resolved "https://registry.yarnpkg.com/@types/serve-favicon/-/serve-favicon-2.2.31.tgz#1e62e3f57036f5ff15017765b012b3d8b4d94aa8"
-  integrity sha512-BfGO//1n649yo2ooH0wDemWLwElgGT1tq6y1l4orwtYXjCNhHJf3LWAe6VBpxq8RGaqiM7AXYAHWIOP52y0gtA==
+"@types/serve-favicon@2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@types/serve-favicon/-/serve-favicon-2.5.0.tgz#21164e61290d577d75e22de1b3119fad70bf52b6"
+  integrity sha512-APK6i1tJp8XBYCZyU4HqtNZBiwipIBQvpQVLYZezTm4TaKKl0KrsGokQK9k3Ll2CaEGNuehppKhXp/Ki9oWT/w==
   dependencies:
     "@types/express" "*"
 
