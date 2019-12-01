@@ -85,13 +85,12 @@ function EntitySelect(props: EntitySelectProps) {
   }, [search, options, props.entity]);
 
   const filterSuggestions = useCallback(() => {
-    const opts: Fuse.FuseOptions<SuggestionType> = {
+    const fuse = new Fuse(options, {
       keys: ['label', 'value'],
       caseSensitive: false,
       minMatchCharLength: 2,
       threshold: 0.2
-    };
-    const fuse = new Fuse(options, opts);
+    });
     const results = fuse.search(search);
     setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
   }, [options, search]);
