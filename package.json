@@ -18,7 +18,7 @@
     "@mdi/font": "4.6.95",
     "array-move": "2.2.1",
     "classnames": "2.2.6",
-    "flow-bin": "0.112.0",
+    "flow-bin": "0.113.0",
     "fuse.js": "3.4.6",
     "home-assistant-js-websocket": "4.4.0",
     "iro-transparency-plugin": "1.0.2",
