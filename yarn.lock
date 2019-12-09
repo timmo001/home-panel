@@ -1599,7 +1599,17 @@
   dependencies:
     debug "^4.1.1"
 
-"@feathersjs/feathers@4.4.1", "@feathersjs/feathers@^4.4.1":
+"@feathersjs/feathers@4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.4.3.tgz#d103fb3fa33699ba0d5ab79abd69deb94b7ebbd9"
+  integrity sha512-TI8WrOmfoxXHK9S4pjl6oCCQQHIrPstTy7Dj9iYXlTMy+LBlV/z+FTD//4pta2eDHe4BUUoA225hLyV0s0sAqw==
+  dependencies:
+    "@feathersjs/commons" "^4.4.3"
+    debug "^4.1.1"
+    events "^3.0.0"
+    uberproto "^2.0.4"
+
+"@feathersjs/feathers@^4.4.1":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.4.1.tgz#5cc8b0e41f1d7d2f0b9a9ca18f9ddb47ca09d02e"
   integrity sha512-nly0g7UxrWizwECqc8c3vrk/x+B+cgxaJu66mV+5OJI8qSpc72EnGR4MhUhsT+lPKOyCFlRRoq7om93QxFBDWw==
