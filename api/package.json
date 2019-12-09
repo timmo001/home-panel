@@ -30,7 +30,7 @@
     "@feathersjs/authentication": "4.4.1",
     "@feathersjs/authentication-local": "4.4.1",
     "@feathersjs/authentication-oauth": "4.4.1",
-    "@feathersjs/configuration": "4.4.1",
+    "@feathersjs/configuration": "4.4.3",
     "@feathersjs/errors": "4.4.3",
     "@feathersjs/express": "4.4.1",
     "@feathersjs/feathers": "4.4.1",
