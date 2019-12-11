@@ -1,0 +1,44 @@
+---
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+pr:
+  - master
+schedules:
+  - cron: "0 1 * * *"
+    displayName: "nightly builds"
+    branches:
+      include:
+        - dev
+    always: true
+variables:
+  - name: githubRepository
+    value: 'timmo001/home-panel'
+  - name: dockerSlug
+    value: 'home-panel'
+  - name: dockerTarget
+    value: '.'
+resources:
+  repositories:
+    - repository: azure
+      type: github
+      name: 'home-assistant/ci-azure'
+      endpoint: 'home-assistant'
+
+stages:
+  - stage: 'Build'
+    jobs:
+      - job: 'Build_App'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '13.x'
+            displayName: 'Install Node.js'
+          - script: |
+              yarn install
+              yarn run build
+            displayName: 'Install and Build'
