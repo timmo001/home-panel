@@ -67,6 +67,29 @@ stages:
         condition: succeeded()
         pool:
           vmImage: 'ubuntu-latest'
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: 'aarch64'
+              buildMachine: 'qemuarm-64,raspberrypi3-64,raspberrypi4-64,odroid-c2,orangepi-prime'
+              buildBase: $(aarch64Base)
+            amd64:
+              buildArch: 'amd64'
+              buildMachine: 'qemux86-64,intel-nuc'
+              buildBase: $(amd64Base)
+            armhf:
+              buildArch: 'armhf'
+              buildMachine: 'qemuarm,raspberrypi'
+              buildBase: $(armhf64Base)
+            armv7:
+              buildArch: 'armv7'
+              buildMachine: 'raspberrypi2,raspberrypi3,raspberrypi4,odroid-xu,tinker'
+              buildBase: $(armv7Base)
+            i386:
+              buildArch: 'i386'
+              buildMachine: 'qemux86'
+              buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Build Artifacts'
@@ -79,4 +102,16 @@ stages:
               repository: $(dockerSlug)
               command: 'build'
               Dockerfile: 'Dockerfile'
+              arguments: 'BUILD_FROM=$(buildBase),BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ"),BUILD_ARCH=$(buildArch)'
             displayName: 'Docker Build'
+      - job: 'Push_Docker'
+        dependsOn: 'Build_Docker'
+        condition: succeeded()
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Docker Login'
