@@ -63,8 +63,8 @@ stages:
               publishLocation: 'Container'
             displayName: 'Publish Build'
       - job: 'Build_Docker'
-        dependsOn:
-          - 'Build_App'
+        dependsOn: 'Build_App'
+        condition: succeeded()
         pool:
           vmImage: 'ubuntu-latest'
         steps:
@@ -76,7 +76,7 @@ stages:
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
-              repository: 'home-panel'
+              repository: $(dockerSlug)
               command: 'build'
-              Dockerfile: '**/Dockerfile'
+              Dockerfile: 'Dockerfile'
             displayName: 'Docker Build'
