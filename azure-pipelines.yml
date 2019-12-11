@@ -36,3 +36,8 @@ stages:
               yarn install
               yarn run build
             displayName: 'Install and Build'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: 'build'
+              ArtifactName: 'app'
+              publishLocation: 'Container'
