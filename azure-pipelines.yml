@@ -56,28 +56,27 @@ stages:
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
               yarn run build --production
             displayName: 'Install and Build'
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: 'build'
+              ArtifactName: 'app'
+              publishLocation: 'Container'
+            displayName: 'Publish Build'
       - job: 'Build_Docker'
         dependsOn:
           - 'Build_App'
         pool:
           vmImage: 'ubuntu-latest'
         steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Build Artifacts'
+            inputs:
+              artifactName: 'app'
+              downloadPath: $(System.DefaultWorkingDirectory)
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
               repository: 'home-panel'
-              command: 'buildAndPush'
+              command: 'build'
               Dockerfile: '**/Dockerfile'
-            displayName: 'Docker Build and Push'
-      - job: 'Publish'
-        dependsOn:
-          - 'Build_App'
-        pool:
-          vmImage: 'ubuntu-latest'
-        steps:
-          - task: PublishBuildArtifacts@1
-            inputs:
-              PathtoPublish: 'build'
-              ArtifactName: 'app'
-              publishLocation: 'Container'
-            displayName: 'Publish App'
+            displayName: 'Docker Build'
