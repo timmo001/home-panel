@@ -43,7 +43,7 @@ stages:
               versionSpec: '13.x'
             displayName: 'Install Node.js'
           - script: |
-              yarn install --frozen-lockfile
+              yarn install  --pure-lockfile --cache-folder .yarn
               yarn run build
             displayName: 'Install and Build'
           - task: PublishBuildArtifacts@1
