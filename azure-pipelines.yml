@@ -22,6 +22,16 @@ variables:
     value: 'home-panel'
   - name: dockerTarget
     value: '.'
+  - name: aarch64Base
+    value: 'arm64v8/alpine:3.10.3'
+  - name: amd64Base
+    value: 'amd64/alpine:3.10.3'
+  - name: armhfBase
+    value: 'arm32v6/alpine:3.10.3'
+  - name: armv7Base
+    value: 'arm32v7/alpine:3.10.3'
+  - name: i386Base
+    value: 'i386/alpine:3.10.3'
 
 stages:
   - stage: 'Build'
@@ -43,12 +53,27 @@ stages:
               versionSpec: '13.x'
             displayName: 'Install Node.js'
           - script: |
-              yarn install  --pure-lockfile --cache-folder .yarn
-              yarn run build
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+              yarn run build --production
             displayName: 'Install and Build'
+      - job: 'Build_Docker'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              repository: 'home-panel'
+              command: 'buildAndPush'
+              Dockerfile: '**/Dockerfile'
+            displayName: 'Docker Build and Push'
+      - job: 'Publish'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: 'build'
               ArtifactName: 'app'
               publishLocation: 'Container'
-            displayName: 'Publish Build'
+            displayName: 'Publish App'
