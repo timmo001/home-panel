@@ -20,12 +20,6 @@ variables:
     value: 'home-panel'
   - name: dockerTarget
     value: '.'
-resources:
-  repositories:
-    - repository: azure
-      type: github
-      name: 'home-assistant/ci-azure'
-      endpoint: 'home-assistant'
 
 stages:
   - stage: 'Build'
