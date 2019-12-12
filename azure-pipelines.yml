@@ -103,8 +103,8 @@ stages:
               command: 'build'
               Dockerfile: 'Dockerfile'
               arguments: |
-                --build-arg "BUILD_ARCH=$(buildArch)" \
-                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+                --build-arg "BUILD_ARCH=$(buildArch)"
+                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")"
                 --build-arg "BUILD_FROM=$(buildBase)"
             displayName: 'Docker Build'
       - job: 'Push_Docker'
