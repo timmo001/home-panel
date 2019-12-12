@@ -95,7 +95,7 @@ stages:
             displayName: 'Download Build Artifacts'
             inputs:
               artifactName: 'app'
-              downloadPath: $(System.DefaultWorkingDirectory)
+              downloadPath: $(Pipeline.Workspace)
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
