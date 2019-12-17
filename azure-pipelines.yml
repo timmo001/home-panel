@@ -81,7 +81,7 @@ stages:
             armhf:
               buildArch: 'armhf'
               buildMachine: 'qemuarm,raspberrypi'
-              buildBase: $(armhf64Base)
+              buildBase: $(armhfBase)
             armv7:
               buildArch: 'armv7'
               buildMachine: 'raspberrypi2,raspberrypi3,raspberrypi4,odroid-xu,tinker'
