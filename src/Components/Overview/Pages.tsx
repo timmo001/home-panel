@@ -92,10 +92,14 @@ function Pages(props: PagesProps) {
     props.setPage(props.config.pages[findPageIdByPage(props.config, page)].key);
   };
 
+  const showNavigation =
+    !props.config.general.autohide_navigation ||
+    (props.config.general.autohide_navigation && props.mouseMoved);
+
   const classes = useStyles();
   return (
     <div>
-      <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
+      <Slide direction="up" in={showNavigation} mountOnEnter unmountOnExit>
         <BottomNavigation
           className={classes.root}
           value={props.currentPage}

@@ -28,6 +28,7 @@ export type ConfigurationProps = {
 };
 
 export type GeneralProps = {
+  autohide_navigation: boolean;
   autohide_toolbar: boolean;
   dense_toolbar: boolean;
   drawer_type: string;
@@ -278,9 +279,17 @@ export const items = [
         type: 'backup_restore'
       },
       {
+        name: 'autohide_navigation',
+        title: 'Auto Hide Navigation',
+        description: 'Should the toolbar hide after a few seconds?',
+        icon: 'mdi-page-layout-header',
+        type: 'switch',
+        default: true
+      },
+      {
         name: 'autohide_toolbar',
         title: 'Auto Hide Toolbar',
-        description: 'Should the toolbar hide after a given time?',
+        description: 'Should the toolbar hide after a few seconds?',
         icon: 'mdi-page-layout-header',
         type: 'switch',
         default: false
