@@ -31,6 +31,7 @@ function Entity(props: EntityProps) {
     domain === 'binary_sensor' ||
     domain === 'device_tracker' ||
     domain === 'geo_location' ||
+    domain === 'person' ||
     domain === 'sensor' ||
     domain === 'sun'
   )
