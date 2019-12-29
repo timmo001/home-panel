@@ -54,7 +54,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: drawerWidth
   },
   drawerPaperIcons: {
-    width: drawerWidthIcons
+    width: drawerWidthIcons,
+    overflowX: 'hidden'
   },
   drawerHeader: {
     ...theme.mixins.toolbar,
@@ -146,6 +147,11 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     setDrawerOpen(false);
   }
 
+  const hideText = !(
+    props.config.general.drawer_type !== 'persistent_icons_only' &&
+    props.config.general.drawer_type !== 'permanent_icons_only'
+  );
+
   const drawer = (
     <div>
       <div
@@ -184,7 +190,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                     className={classnames('mdi', item.icon, classes.icon)}
                   />
                 </ListItemIcon>
-                <ListItemText primary={item.name} />
+                {!hideText && <ListItemText primary={item.name} />}
               </ListItem>
             </Link>
           ))}
@@ -205,7 +211,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
             <ListItemIcon>
               <span className={classnames('mdi', 'mdi-logout', classes.icon)} />
             </ListItemIcon>
-            <ListItemText primary="Log Out" />
+            {!hideText && <ListItemText primary="Log Out" />}
           </ListItem>
         </List>
       </div>
