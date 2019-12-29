@@ -4,9 +4,9 @@
   "major": {
     "automerge": false
   },
-  "commitMessagePrefix": ":arrow_up:",
+  "commitMessagePrefix": "⬆",
   "pin": {
-    "commitMessagePrefix": ":pushpin:"
+    "commitMessagePrefix": "📌"
   },
   "rangeStrategy": "pin",
   "labels": ["Type: Maintenance"]
