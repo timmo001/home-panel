@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     bottom: 0,
     height: '100%',
     width: '100%',
-    padding: theme.spacing(1),
+    padding: theme.spacing(0.5),
     zIndex: 1000,
     transition: '.4s ease',
     background: theme.palette.background.paper,
@@ -362,14 +362,14 @@ function Base(props: BaseProps) {
               <IconButton color="primary" onClick={handleDeleteConfirm}>
                 <DeleteIcon fontSize="small" />
               </IconButton>
+              <IconButton color="primary" onClick={props.handleCopy}>
+                <CopyIcon fontSize="small" />
+              </IconButton>
               <IconButton color="primary" onClick={props.handleMoveUp}>
                 <ArrowUpwardIcon fontSize="small" />
               </IconButton>
               <IconButton color="primary" onClick={props.handleMoveDown}>
                 <ArrowDownwardsIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleCopy}>
-                <CopyIcon fontSize="small" />
               </IconButton>
               {deleteConfirm && (
                 <ConfirmDialog
