@@ -2341,10 +2341,10 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-select@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/react-select/-/react-select-3.0.8.tgz#b824a12d438dd493c30ffff49a805f797602a837"
-  integrity sha512-0763TXYZc8bTiHM+DUnWoy9Rg5mk6PxYWBrEe6Fkjgc0Kv0r1RqjZk9/BrK4wdM0RNjYjixlFPnUhOJb76sMGg==
+"@types/react-select@3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@types/react-select/-/react-select-3.0.9.tgz#fa41ad0a20acf832f10d344fe36c0f4232734097"
+  integrity sha512-AlSk7oP69BjmS3CwizIjKmsQNJ/cB65JUGN8DFXJ7R22oC2L/QmWncfyawN1W0K7V+LchGEwAo9mowx/vzf4ww==
   dependencies:
     "@types/react" "*"
     "@types/react-dom" "*"
