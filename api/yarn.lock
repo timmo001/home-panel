@@ -200,13 +200,18 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.4.3.tgz#5c76109128f1c90fb3dad7e961dc3e54667688d8"
   integrity sha512-hPIvq9V3iEYvvml3fz8HN+rP26cWX+REOdf23ZfW8S213SEmH9sYIzx1TvZ7c/t2/mj5nPJkWk+vF3IoHUadng==
 
-"@feathersjs/configuration@4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.4.3.tgz#1db7af2ea7f55e069cf5b648fb7d9ec35a68e43e"
-  integrity sha512-OrWRffsM+GenVrlZJSYtxp+e7LZHCp3ihl2ITPzvsSTAZ4AZCgWKdCylrTQ2fBkeU5xHC4VjArQcLD6Kyx8EYg==
+"@feathersjs/commons@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.0.tgz#955c3aa234559cf4c9e172c131032b7f8d48830f"
+  integrity sha512-B3wyBath21RozzC9jmUXJjgt4kSdfzmcdNFsKoL+0W6sv6dIBPzOddIb+NI97CEBSRVpJmv4NUjh32OzkPIrGw==
+
+"@feathersjs/configuration@4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.5.0.tgz#ab90e985f4dfa2d6f2ee18ed9fcced636384671d"
+  integrity sha512-WXSPvkyWB9A5nvgwjIWLf3fcL3XbpxMpPxSs0PNi5I7e7NH8fHl2zQkNneK/ill/0GkHnzXT/6pSJrWxP89rBg==
   dependencies:
-    "@feathersjs/feathers" "^4.4.3"
-    config "^3.2.3"
+    "@feathersjs/feathers" "^4.5.0"
+    config "^3.2.4"
     debug "^4.1.1"
 
 "@feathersjs/errors@4.4.3", "@feathersjs/errors@^4.4.3":
@@ -252,6 +257,16 @@
   integrity sha512-2qe8+rkTn7YGFKv7vU0uh367F7SfyYUJuQh+BBmWjupCSH3xsCD5U+sACMZ16442fugWhcIo+41aUnj7e1IQAA==
   dependencies:
     "@feathersjs/commons" "^4.3.0"
+    debug "^4.1.1"
+    events "^3.0.0"
+    uberproto "^2.0.4"
+
+"@feathersjs/feathers@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.5.0.tgz#19b7c4b3ea69b84874c4970cd8aa27480ded70ef"
+  integrity sha512-pUfyJjauP7JHY6741fQKz5OAbAJpdG9BcObrOgCL6ZqtN2SataCHyBpJtHsftQJO2SF1XGZMeoz5CeIsjRIVEA==
+  dependencies:
+    "@feathersjs/commons" "^4.5.0"
     debug "^4.1.1"
     events "^3.0.0"
     uberproto "^2.0.4"
@@ -1348,10 +1363,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-config@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/config/-/config-3.2.3.tgz#147a30f9eb235ecc46516f767e211335dbcbf3cc"
-  integrity sha512-pditxQzO+SkKX/2gs99YnUGEjmBVkTj2o/hGOgC0oYEU7QgLnVVDYmcSL6HiGels/8QtFJpFzi5iKYv4D0dalg==
+config@^3.2.4:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/config/-/config-3.2.5.tgz#ab10ab88b61a873fbf9a5f0c6b4a22750422f243"
+  integrity sha512-8itpjyR01lAJanhAlPncBngYRZez/LoRLW8wnGi+6SEcsUyA1wvHvbpIrAJYDJT+W9BScnj4mYoUgbtp9I+0+Q==
   dependencies:
     json5 "^1.0.1"
 
