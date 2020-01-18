@@ -1580,10 +1580,22 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.4.3.tgz#5c76109128f1c90fb3dad7e961dc3e54667688d8"
   integrity sha512-hPIvq9V3iEYvvml3fz8HN+rP26cWX+REOdf23ZfW8S213SEmH9sYIzx1TvZ7c/t2/mj5nPJkWk+vF3IoHUadng==
 
+"@feathersjs/commons@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.0.tgz#955c3aa234559cf4c9e172c131032b7f8d48830f"
+  integrity sha512-B3wyBath21RozzC9jmUXJjgt4kSdfzmcdNFsKoL+0W6sv6dIBPzOddIb+NI97CEBSRVpJmv4NUjh32OzkPIrGw==
+
 "@feathersjs/errors@^4.4.3":
   version "4.4.3"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.4.3.tgz#9e24945649d0ebb6ea5ec8a729b381896381a3e3"
   integrity sha512-EZHJ0zu3GyMlAviI94syL7TMmtjGx9npQMawv6N1c83dtBdum/pBePVuFFz0bJr3JpYJ60hHwYnFYv7K9+pH9w==
+  dependencies:
+    debug "^4.1.1"
+
+"@feathersjs/errors@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.5.0.tgz#215c5d4b3934c71ce17e991af158666028c053b9"
+  integrity sha512-//aFWsTNCn0hThgnsjlD/k544U5qHKJ4DY/pXlCGAZ0NjUdrQUitDSRgYH+aA5FiGibG8Xv8NRjLBz6ToBAf0A==
   dependencies:
     debug "^4.1.1"
 
@@ -1597,12 +1609,12 @@
     events "^3.0.0"
     uberproto "^2.0.4"
 
-"@feathersjs/socketio-client@4.4.3":
-  version "4.4.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.4.3.tgz#84323f9d7df61324fb208d73c6470da781066323"
-  integrity sha512-515pN17OgjwLmq7FtoiNp6ytexl7SX35lv8iJa0C0qtyTqJ89WaoKwqbfQzWpgWKjOmqps1+KWgmRHrc5tXydg==
+"@feathersjs/socketio-client@4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.5.0.tgz#8bc42cc07b104bedec7b212fc31f6c0ab0d5d0e2"
+  integrity sha512-GoCnlrlwmEKyPIKKaHsSWDW0xydiy3x+X4AQuVwUpvIdXZHt4+YnktW63wfi6xyTJemd/GB4ERAUe2iACAqkVQ==
   dependencies:
-    "@feathersjs/transport-commons" "^4.4.3"
+    "@feathersjs/transport-commons" "^4.5.0"
     "@types/socket.io-client" "^1.4.32"
 
 "@feathersjs/transport-commons@^4.4.3":
@@ -1612,6 +1624,17 @@
   dependencies:
     "@feathersjs/commons" "^4.4.3"
     "@feathersjs/errors" "^4.4.3"
+    debug "^4.1.1"
+    lodash "^4.17.15"
+    radix-router "^3.0.1"
+
+"@feathersjs/transport-commons@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/transport-commons/-/transport-commons-4.5.0.tgz#64d226ce569f41da2ae3bc0d77b8f9098df75702"
+  integrity sha512-GDwVFtlGCtuMRYPtir8QHOdMEpLnDvL1D0Swi774wwPCbVWse7iJKX65zre+eTymh47+kb3ZKoKZJTMTZeEbEw==
+  dependencies:
+    "@feathersjs/commons" "^4.5.0"
+    "@feathersjs/errors" "^4.5.0"
     debug "^4.1.1"
     lodash "^4.17.15"
     radix-router "^3.0.1"
