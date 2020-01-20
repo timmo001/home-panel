@@ -1648,10 +1648,18 @@
   dependencies:
     "@hapi/hoek" "8.x.x"
 
-"@jaames/iro@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-4.5.3.tgz#4fbeabaf119b9f53ef5b88e262dbfc3477fa9e9a"
-  integrity sha512-knBqezLEprrpHCb9hHZbQLApzCZyI/AuWg3mqQVkgTtQX3MNX3W2uVkX1hFwS6pmEUHbA022rid9fRqV0IshMA==
+"@irojs/iro-core@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@irojs/iro-core/-/iro-core-0.0.4.tgz#57a1d5457249e348075d9ca955002a90453bc08d"
+  integrity sha512-AisHA2eBPIMC08rGbKv/mqbsM/Z0Khg0HxNK1/dc+YPRv57BIcZ6/qqHwrhURTBJLHOVkmlmv7PU5eA1+QBQ9w==
+
+"@jaames/iro@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@jaames/iro/-/iro-5.0.0.tgz#df5d1a901ec0898f0e01633343b1273cda71409d"
+  integrity sha512-4LCzPHPetpKyDsc/LXeY5xQWTjt4S27NyZSjoZtP3FnakuZOKVPdhRKxP9UDoHfrLqUzb30lBAZtX6Xm39fU8Q==
+  dependencies:
+    "@irojs/iro-core" "0.0.4"
+    preact "^10.0.0"
 
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
@@ -3902,16 +3910,6 @@ clone-deep@^0.2.4:
     lazy-cache "^1.0.3"
     shallow-clone "^0.1.2"
 
-clone-deep@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/clone-deep/-/clone-deep-0.3.0.tgz#348c61ae9cdbe0edfe053d91ff4cc521d790ede8"
-  integrity sha1-NIxhrpzb4O3+BT2R/0zFIdeQ7eg=
-  dependencies:
-    for-own "^1.0.0"
-    is-plain-object "^2.0.1"
-    kind-of "^3.2.2"
-    shallow-clone "^0.1.2"
-
 clone-deep@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/clone-deep/-/clone-deep-4.0.1.tgz#c19fd9bdbbf85942b4fd979c84dcf7d5f07c2387"
@@ -5883,13 +5881,6 @@ for-own@^0.1.3:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/for-own/-/for-own-0.1.5.tgz#5265c681a4f294dabbf17c9509b6763aa84510ce"
   integrity sha1-UmXGgaTylNq78XyVCbZ2OqhFEM4=
-  dependencies:
-    for-in "^1.0.1"
-
-for-own@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/for-own/-/for-own-1.0.0.tgz#c63332f415cedc4b04dbfe70cf836494c53cb44b"
-  integrity sha1-xjMy9BXO3EsE2/5wz4NklMU8tEs=
   dependencies:
     for-in "^1.0.1"
 
@@ -8001,7 +7992,7 @@ kind-of@^2.0.1:
   dependencies:
     is-buffer "^1.0.2"
 
-kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0, kind-of@^3.2.2:
+kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
   integrity sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ=
@@ -10389,6 +10380,11 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
+preact@^10.0.0:
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.2.1.tgz#b30eb4cdc455499ee2ff82e0fa1a16fc8e20f3a4"
+  integrity sha512-BUNvmQcVtNElku7mYHexIiM5JlGNSW2BY9O2t9xk1NqA43O8wbE0cah6PAlvT7PBHvyDRJ5TAj5Fewdi9DqLoQ==
+
 prelude-ls@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
@@ -11832,15 +11828,14 @@ snyk-go-plugin@1.11.1:
     tmp "0.0.33"
     tslib "^1.10.0"
 
-snyk-gradle-plugin@3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-3.2.2.tgz#703484bec39390d8bd9ca89a408deb77fd63122a"
-  integrity sha512-ijIWsypbtpdTuRcYTFsnEWbaBnhCc7q0iIg0A4OcOW/xLyInPwyfBMnip4ubNfHAS/PrvzgfwwwJhttcQD0ZaQ==
+snyk-gradle-plugin@3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/snyk-gradle-plugin/-/snyk-gradle-plugin-3.2.4.tgz#c1ff1dfbbe3c1a254d0da54a91c3f59c1b5582ca"
+  integrity sha512-XmS1gl7uZNHP9HP5RaPuRXW3VjkbdWe+EgSOlvmspztkubIOIainqc87k7rIJ6u3tLBhqsZK8b5ru0/E9Q69hQ==
   dependencies:
-    "@snyk/cli-interface" "2.2.0"
+    "@snyk/cli-interface" "2.3.0"
     "@types/debug" "^4.1.4"
     chalk "^2.4.2"
-    clone-deep "^0.3.0"
     debug "^4.1.1"
     tmp "0.0.33"
     tslib "^1.9.3"
@@ -11989,10 +11984,10 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@1.278.1:
-  version "1.278.1"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.278.1.tgz#36fa4aeba05bc22887ec85602c27adba7734e068"
-  integrity sha512-fcmnsQQGEjwkzc472IIp+WesYp1HCg/victizONDOUlhB+864CCm4y5n8OaK21kuhihU7xnZb+Pon0JRrHmRXQ==
+snyk@1.279.0:
+  version "1.279.0"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.279.0.tgz#53ed4bc4b79b1d37b4753b46b9be5fcc3331e2a6"
+  integrity sha512-LUy3S5msS0+1XXyBqLVHUWhunnWVpD9ClujLA90wYH/WOdjSfqd9YwLI8qH9a1c7hWhizqKR/Kmzm2/KosfHYA==
   dependencies:
     "@snyk/cli-interface" "2.3.0"
     "@snyk/dep-graph" "1.13.1"
@@ -12020,7 +12015,7 @@ snyk@1.278.1:
     snyk-config "^2.2.1"
     snyk-docker-plugin "1.33.1"
     snyk-go-plugin "1.11.1"
-    snyk-gradle-plugin "3.2.2"
+    snyk-gradle-plugin "3.2.4"
     snyk-module "1.9.1"
     snyk-mvn-plugin "2.7.0"
     snyk-nodejs-lockfile-parser "1.17.0"
