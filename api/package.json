@@ -32,7 +32,7 @@
     "@feathersjs/authentication-oauth": "4.5.0",
     "@feathersjs/configuration": "4.5.0",
     "@feathersjs/errors": "4.5.0",
-    "@feathersjs/express": "4.5.0",
+    "@feathersjs/express": "4.5.1",
     "@feathersjs/feathers": "4.5.0",
     "@feathersjs/socketio": "4.5.0",
     "compression": "1.7.4",
