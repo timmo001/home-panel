@@ -200,13 +200,18 @@
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.0.tgz#955c3aa234559cf4c9e172c131032b7f8d48830f"
   integrity sha512-B3wyBath21RozzC9jmUXJjgt4kSdfzmcdNFsKoL+0W6sv6dIBPzOddIb+NI97CEBSRVpJmv4NUjh32OzkPIrGw==
 
-"@feathersjs/configuration@4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.5.0.tgz#ab90e985f4dfa2d6f2ee18ed9fcced636384671d"
-  integrity sha512-WXSPvkyWB9A5nvgwjIWLf3fcL3XbpxMpPxSs0PNi5I7e7NH8fHl2zQkNneK/ill/0GkHnzXT/6pSJrWxP89rBg==
+"@feathersjs/commons@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.1.tgz#cd18cd9c49f9b06994c285629d97bc0dc271b32a"
+  integrity sha512-wSanrV1Tvqf4U8PE4bx+gEdLT0cCuusuoVOvyK4uOlTIOgT85qJMw9MBa99jF7BFF022EzHrpo0CjzwqcMBMIA==
+
+"@feathersjs/configuration@4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.5.1.tgz#697001fbdf51aed2fd42187ff59eb28a7caf3e2f"
+  integrity sha512-EfPKiGztnZ+Y31XI5ENZkCz9GDxUT6F9SHaVXDzm7v7e+ZTNZreu7sP7215s5oJ9kWP+uSChPKhT/6WTlljFkg==
   dependencies:
-    "@feathersjs/feathers" "^4.5.0"
-    config "^3.2.4"
+    "@feathersjs/feathers" "^4.5.1"
+    config "^3.2.5"
     debug "^4.1.1"
 
 "@feathersjs/errors@4.5.0", "@feathersjs/errors@^4.5.0":
@@ -254,6 +259,16 @@
     "@feathersjs/commons" "^4.3.0"
     debug "^4.1.1"
     events "^3.0.0"
+    uberproto "^2.0.4"
+
+"@feathersjs/feathers@^4.5.1":
+  version "4.5.1"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.5.1.tgz#8b1e082606402d4208f400b6efba4c77ec96b80e"
+  integrity sha512-fR+JjdW6HN0LgZzlS0TatyYhtr0Hu7Zh5/uJWbDVQ1+3Eqe3IFeqQzXXIVWipnFUEZ0Pw9d2n7TFvtMCkgHu3Q==
+  dependencies:
+    "@feathersjs/commons" "^4.5.1"
+    debug "^4.1.1"
+    events "^3.1.0"
     uberproto "^2.0.4"
 
 "@feathersjs/socketio@4.5.0":
@@ -1350,7 +1365,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-config@^3.2.4:
+config@^3.2.5:
   version "3.2.5"
   resolved "https://registry.yarnpkg.com/config/-/config-3.2.5.tgz#ab10ab88b61a873fbf9a5f0c6b4a22750422f243"
   integrity sha512-8itpjyR01lAJanhAlPncBngYRZez/LoRLW8wnGi+6SEcsUyA1wvHvbpIrAJYDJT+W9BScnj4mYoUgbtp9I+0+Q==
@@ -1856,6 +1871,11 @@ events@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
   integrity sha512-Dc381HFWJzEOhQ+d8pkNon++bk9h6cdAoAj4iE6Q4y6xgTzySWXlKn05/TVNpjnfRqi/X0EpJEJohPjNI3zpVA==
+
+events@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.1.0.tgz#84279af1b34cb75aa88bf5ff291f6d0bd9b31a59"
+  integrity sha512-Rv+u8MLHNOdMjTAFeT3nCjHn2aGlx435FP/sDHNaRhDEMwyI/aB22Kj2qIN8R0cw3z28psEQLYwxVKLsKrMgWg==
 
 exec-sh@^0.3.2:
   version "0.3.2"
