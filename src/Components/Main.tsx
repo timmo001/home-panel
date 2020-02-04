@@ -1,6 +1,5 @@
 // @flow
 import React, { useEffect } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import moment from 'moment';
@@ -8,6 +7,7 @@ import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
+import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import { ConfigProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
 import { CommandType } from './Utils/Command';
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface MainProps extends RouteComponentProps, ConfigProps {
+interface MainProps extends RouteComponentExtendedProps, ConfigProps {
   command: CommandType;
   loginCredentials: any;
   mouseMoved: boolean;
@@ -149,7 +149,7 @@ function Main(props: MainProps) {
   }
 
   useEffect(() => {
-    if (props.command && !props.location.state.overview)
+    if (props.command && !props.location.state!!.overview)
       props.history.replace({ ...props.location, state: { overview: true } });
   }, [props.command, props.history, props.location]);
 
@@ -175,14 +175,15 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.state.configuration ||
-    props.mouseMoved;
+    props.location.state!!.configuration
+      ? true
+      : false || props.mouseMoved;
 
   return (
     <div
       className={classnames(
         classes.root,
-        props.location.state.overview && classes.overview
+        props.location.state!!.overview && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
@@ -217,7 +218,7 @@ function Main(props: MainProps) {
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
             !showToolbar && classes.contentNoToolbar,
-            props.location.state.overview && classes.overview
+            props.location.state!!.overview && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
@@ -230,7 +231,7 @@ function Main(props: MainProps) {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state.configuration ? (
+          {props.location.state!!.configuration ? (
             <Configuration
               {...props}
               back={back}

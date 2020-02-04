@@ -14,7 +14,6 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 
 import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
-import { Color } from '../../Utils/ColorWheel';
 import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
 import ColorAdornment from '../../Utils/ColorAdornment';
 import Entity from './Entity';
@@ -66,9 +65,9 @@ function Base(props: BaseProps) {
       props.handleManualChange!('title', entity.attributes.friendly_name);
   }
 
-  const handleColorChange = (name: string) => (color: Color) => {
-    props.handleManualChange!(name, color.rgbaString);
-  };
+  // const handleColorChange = (name: string) => (color: Color) => {
+  //   props.handleManualChange!(name, color.rgbaString);
+  // };
 
   const classes = useStyles();
 
@@ -148,12 +147,12 @@ function Base(props: BaseProps) {
             label="Background"
             placeholder="default"
             InputProps={{
-              endAdornment: (
-                <ColorAdornment
-                  color={props.card.background}
-                  handleColorChange={handleColorChange('background')}
-                />
-              )
+              // endAdornment: (
+              //   <ColorAdornment
+              //     color={props.card.background}
+              //     handleColorChange={handleColorChange('background')}
+              //   />
+              // )
             }}
             value={props.card.background}
             onChange={props.handleChange!('background')}

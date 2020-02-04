@@ -1,7 +1,6 @@
 // @flow
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -22,6 +21,7 @@ import Typography from '@material-ui/core/Typography';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 
+import { RouteComponentExtendedProps } from '../Types/ReactRouter';
 import { ConfigurationProps } from '../Configuration/Config';
 import Items, { ItemsProps, MenuItemsProps } from './Items';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ResponsiveDrawerProps extends RouteComponentProps {
+interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
   back: boolean;
   config: ConfigurationProps;
   currentPage: string;
@@ -224,9 +224,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.state.configuration ||
-    drawerOpen ||
-    props.mouseMoved;
+    props.location!!.state!!.configuration
+      ? true
+      : false || drawerOpen || props.mouseMoved;
 
   return (
     <div

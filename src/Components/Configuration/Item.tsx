@@ -19,7 +19,6 @@ import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-import { Color } from '../Utils/ColorWheel';
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import clone from '../../Utils/clone';
@@ -130,9 +129,9 @@ function Item(props: ItemProps) {
     handleUpdate(path, event.target.value);
   };
 
-  const handleColorChange = (path: any[]) => (color: Color) => {
-    handleUpdate(path, color.rgbaString);
-  };
+  // const handleColorChange = (path: any[]) => (color: Color) => {
+  //   handleUpdate(path, color.rgbaString);
+  // };
 
   const classes = useStyles();
 
@@ -184,14 +183,16 @@ function Item(props: ItemProps) {
           className={classes.root}
           placeholder={String(props.item.default)}
           type="text"
-          InputProps={{
-            endAdornment: (
-              <ColorAdornment
-                color={value}
-                handleColorChange={handleColorChange(props.path!)}
-              />
-            )
-          }}
+          InputProps={
+            {
+              // endAdornment: (
+              //   <ColorAdornment
+              //     color={value}
+              //     handleColorChange={handleColorChange(props.path!)}
+              //   />
+              // )
+            }
+          }
           value={value}
           onChange={handleChange(props.path!, 'color')}
         />
@@ -200,7 +201,10 @@ function Item(props: ItemProps) {
       return (
         <ColorAdornment
           color={value}
-          handleColorChange={handleColorChange(props.path!)}
+          handleColorChange={
+            () => null
+            // handleColorChange(props.path!)
+          }
         />
       );
     case 'input':

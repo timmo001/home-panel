@@ -1,6 +1,5 @@
 // @flow
 import React, { useEffect, useCallback } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
@@ -9,6 +8,7 @@ import socketio from '@feathersjs/socketio-client';
 import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
+import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import {
   ThemeProps,
   defaultPalette,
@@ -24,7 +24,7 @@ import parseTheme from '../Utils/parseTheme';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
-interface OnboardingProps extends RouteComponentProps {}
+interface OnboardingProps extends RouteComponentExtendedProps {}
 
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application<any>;
@@ -180,7 +180,7 @@ function Onboarding(props: OnboardingProps) {
 
   function handleMouseMove() {
     if (moveTimeout) clearTimeout(moveTimeout);
-    if (!props.location.state.configuration) {
+    if (!props.location.state!!.configuration) {
       setMouseMoved(true);
       moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }
