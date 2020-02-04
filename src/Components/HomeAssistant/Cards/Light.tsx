@@ -13,9 +13,9 @@ import Select from '@material-ui/core/Select';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
+import { HuePicker, ColorResult } from 'react-color';
 
 import { EntityProps } from './Entity';
-import ColorWheel, { Color } from '../../Utils/ColorWheel';
 import FeatureClassNames from '../Utils/FeatureClassNames';
 
 const useStyles = makeStyles((_theme: Theme) => ({
@@ -113,7 +113,7 @@ function Light(props: LightProps) {
     });
   };
 
-  function handleColorChange(color: Color) {
+  function handleColorChange(color: ColorResult) {
     setAttributes({
       ...attributes,
       rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
@@ -205,7 +205,11 @@ function Light(props: LightProps) {
   if (attrClasses.includes('has-color') && state === 'on')
     controls.push(
       <Grid key={3} item xs={10}>
-        <ColorWheel color={color} handleColorChange={handleColorChange} />
+        <HuePicker
+          color={color}
+          width="200"
+          onChangeComplete={handleColorChange}
+        />
       </Grid>
     );
   if (attrClasses.includes('has-effect_list') && state === 'on')

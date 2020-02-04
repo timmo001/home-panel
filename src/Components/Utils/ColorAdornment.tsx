@@ -6,8 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import Paper from '@material-ui/core/Paper';
 import Popover from '@material-ui/core/Popover';
 import PaletteIcon from '@material-ui/icons/Palette';
-
-import ColorWheel, { Color } from './ColorWheel';
+import { SketchPicker, ColorResult } from 'react-color';
 
 const useStyles = makeStyles((theme: Theme) => ({
   menu: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface ColorAdornmentProps {
   color?: string;
-  handleColorChange: (color: Color) => void;
+  handleColorChange: (color: ColorResult) => void;
 }
 
 let PopoverNode: HTMLButtonElement | null | undefined;
@@ -51,10 +50,9 @@ function ColorAdornment(props: ColorAdornmentProps) {
         open={showColorPicker}
         onClose={handleToggleColorPicker}>
         <Paper className={classes.menuContent}>
-          <ColorWheel
+          <SketchPicker
             color={props.color}
-            lighting={true}
-            handleColorChange={props.handleColorChange}
+            onChangeComplete={props.handleColorChange}
           />
         </Paper>
       </Popover>
