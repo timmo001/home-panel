@@ -45,10 +45,10 @@
     "winston": "3.2.1"
   },
   "devDependencies": {
-    "@types/compression": "1.0.1",
+    "@types/compression": "1.7.0",
     "@types/cors": "2.8.6",
     "@types/helmet": "0.0.45",
-    "@types/jest": "25.1.1",
+    "@types/jest": "25.1.2",
     "@types/jsonwebtoken": "8.3.7",
     "@types/nedb": "1.8.9",
     "@types/serve-favicon": "2.5.0",
