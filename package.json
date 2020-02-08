@@ -16,6 +16,7 @@
     "@material-ui/icons": "4.9.1",
     "@mdi/font": "4.9.95",
     "array-move": "2.2.1",
+    "babel-preset-react-app": "9.1.1",
     "classnames": "2.2.6",
     "flow-bin": "0.118.0",
     "fuse.js": "3.4.6",

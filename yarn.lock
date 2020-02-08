@@ -2619,7 +2619,7 @@ babel-preset-jest@^24.9.0:
     "@babel/plugin-syntax-object-rest-spread" "^7.0.0"
     babel-plugin-jest-hoist "^24.9.0"
 
-babel-preset-react-app@^9.1.1:
+babel-preset-react-app@9.1.1, babel-preset-react-app@^9.1.1:
   version "9.1.1"
   resolved "https://registry.yarnpkg.com/babel-preset-react-app/-/babel-preset-react-app-9.1.1.tgz#d1ceb47cbe48b285fdd5c562c54c432ed5a41e0e"
   integrity sha512-YkWP2UwY//TLltNlEBRngDOrYhvSLb+CA330G7T9M5UhGEMWe+JK/8IXJc5p2fDTSfSiETf+PY0+PYXFMix81Q==
