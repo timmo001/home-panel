@@ -55,8 +55,6 @@ stages:
           hadolintVersion: $(versionHadolint)
           path: 'Dockerfile'
   - stage: 'Build'
-    dependsOn: 'Lint'
-    condition: succeeded()
     jobs:
       - job: 'Build_App'
         displayName: 'App'
