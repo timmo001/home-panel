@@ -142,4 +142,24 @@ stages:
               containerRegistry: 'dockerHub'
               command: 'login'
             displayName: 'Docker Login'
+  - stage: 'Bots_Failed'
+    displayName: 'Bots Failed'
+    dependsOn:
+      - 'Lint'
+      - 'Build'
+      - 'Login'
+    condition: failed()
+    jobs:
+      - job: 'Bots_GitHub'
+        displayName: 'Build'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: GitHubComment@0
+            inputs:
+              gitHubConnection: 'timmo001'
+              repositoryName: '$(Build.Repository.Name)'
+              comment: |
+                The Azure Pipeline has failed. Check the logs to see what went wrong.
 
+                $(Build.BuildUri)
