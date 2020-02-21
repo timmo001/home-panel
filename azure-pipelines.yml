@@ -59,6 +59,9 @@ stages:
       - template: azure-ci/lint-shellcheck.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-yamllint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
   - stage: 'Build'
     jobs:
       - job: 'Build_App'
