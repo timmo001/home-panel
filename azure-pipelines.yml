@@ -4,15 +4,18 @@ trigger:
   branches:
     include:
       - master
+
 pr:
   - master
+
 schedules:
   - cron: "0 1 * * *"
     displayName: "nightly builds"
     branches:
       include:
-        - dev
+        - master
     always: true
+
 variables:
   - name: yarnCachePath
     value: $(Pipeline.Workspace)/.yarn
@@ -119,7 +122,8 @@ stages:
                 --build-arg "BUILD_ARCH=$(buildArch)" \
                 --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
                 --build-arg "BUILD_FROM=$(buildBase)" \
-                --tag "${DOCKER_HUB_ORG}/${SLUG}-${ARCH}:${TAG}" \
+                --build-arg "BUILD_REF=${Build.SourceVersion}" \
+                --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
                 $(dockerTarget)
             displayName: 'Build'
       - job: 'Docker_Login'
