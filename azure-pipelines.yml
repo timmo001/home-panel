@@ -38,6 +38,8 @@ variables:
     value: 'i386/alpine:3.11.3'
   - name: versionHadolint
     value: 'v1.17.2'
+  - name: versionNode
+    value: '13.x'
 resources:
   repositories:
     - repository: organization
@@ -71,7 +73,7 @@ stages:
             displayName: 'Cache Yarn Packages'
           - task: NodeTool@0
             inputs:
-              versionSpec: '13.x'
+              versionSpec: $(versionNode)
             displayName: 'Install Node.js'
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
