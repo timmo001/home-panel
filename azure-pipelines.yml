@@ -58,7 +58,7 @@ stages:
           version: $(versionHadolint)
       - template: azure-ci/lint-shellcheck.yml@organization
         parameters:
-          path: 'Dockerfile'
+          path: $(System.DefaultWorkingDirectory)
           version: $(versionShellcheck)
   - stage: 'Build'
     jobs:
