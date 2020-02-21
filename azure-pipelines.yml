@@ -76,6 +76,8 @@ stages:
               versionSpec: $(versionNode)
             displayName: 'Install Node.js'
           - script: |
+              node --version
+              yarn --version
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
               yarn run build --production
             displayName: 'Install and Build'
