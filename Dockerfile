@@ -3,7 +3,7 @@ ARG BUILD_FROM=alpine:3.11.3
 FROM ${BUILD_FROM}
 
 # Environment variables
-EV \
+ENV \
     HOME="/root" \
     LANG="C.UTF-8" \
     PS1="$(whoami)@$(hostname):$(pwd)$ " \
