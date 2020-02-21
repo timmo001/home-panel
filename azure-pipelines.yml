@@ -56,6 +56,9 @@ stages:
         parameters:
           path: 'Dockerfile'
           version: $(versionHadolint)
+      - template: azure-ci/lint-jsonlint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint-shellcheck.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
