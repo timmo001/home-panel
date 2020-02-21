@@ -27,15 +27,15 @@ variables:
   - name: dockerTarget
     value: '.'
   - name: aarch64Base
-    value: 'arm64v8/alpine:3.10.3'
+    value: 'arm64v8/alpine:3.11.3'
   - name: amd64Base
-    value: 'amd64/alpine:3.10.3'
+    value: 'amd64/alpine:3.11.3'
   - name: armhfBase
-    value: 'arm32v6/alpine:3.10.3'
+    value: 'arm32v6/alpine:3.11.3'
   - name: armv7Base
-    value: 'arm32v7/alpine:3.10.3'
+    value: 'arm32v7/alpine:3.11.3'
   - name: i386Base
-    value: 'i386/alpine:3.10.3'
+    value: 'i386/alpine:3.11.3'
   - name: versionHadolint
     value: 'v1.17.2'
 resources:
