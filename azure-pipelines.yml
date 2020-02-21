@@ -37,15 +37,19 @@ variables:
     value: 'v1.17.2'
 resources:
   repositories:
-    - repository: azure
+    - repository: organization
       type: github
       name: 'timmo001/organization'
+      endpoint: 'timmo001'
+    - repository: docker
+      type: github
+      name: 'timmo001/azure-pipelines-multiarch-docker'
       endpoint: 'timmo001'
 
 stages:
   - stage: 'Lint'
     jobs:
-      - template: azure-ci/lint-hadolint.yml@azure
+      - template: azure-ci/lint-hadolint.yml@organization
         parameters:
           hadolintVersion: $(versionHadolint)
           path: 'Dockerfile'
@@ -94,49 +98,22 @@ stages:
             aarch64:
               buildArch: 'aarch64'
               buildBase: $(aarch64Base)
-              buildMachine: 'qemuarm-64,raspberrypi3-64,raspberrypi4-64,odroid-c2,orangepi-prime'
             amd64:
               buildArch: 'amd64'
               buildBase: $(amd64Base)
-              buildMachine: 'qemux86-64,intel-nuc'
             armhf:
               buildArch: 'armhf'
               buildBase: $(armhfBase)
-              buildMachine: 'qemuarm,raspberrypi'
             armv7:
               buildArch: 'armv7'
               buildBase: $(armv7Base)
-              buildMachine: 'raspberrypi2,raspberrypi3,raspberrypi4,odroid-xu,tinker'
             i386:
               buildArch: 'i386'
               buildBase: $(i386Base)
-              buildMachine: 'qemux86'
         steps:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Build Artifacts'
             inputs:
               artifactName: 'app'
               downloadPath: $(System.DefaultWorkingDirectory)/build
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'dockerHub'
-              repository: $(dockerSlug)
-              command: 'build'
-              Dockerfile: 'Dockerfile'
-              arguments: |
-                --build-arg "BUILD_ARCH=$(buildArch)"
-                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")"
-                --build-arg "BUILD_FROM=$(buildBase)"
-            displayName: 'Docker Build'
-      - job: 'Docker_Login'
-        displayName: 'Login'
-        dependsOn: 'Docker_Build'
-        condition: succeeded()
-        pool:
-          vmImage: 'ubuntu-latest'
-        steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: 'dockerHub'
-              command: 'login'
-            displayName: 'Docker Login'
+          - template: .azure-pipelines.yml@docker
