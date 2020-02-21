@@ -47,6 +47,7 @@ stages:
       - template: azure-ci/lint-hadolint.yml@azure
         parameters:
           hadolintVersion: $(versionHadolint)
+          path: 'Dockerfile'
   - stage: 'Build'
     dependsOn: 'Lint'
     condition: succeeded()
