@@ -147,7 +147,7 @@ stages:
     dependsOn:
       - 'Lint'
       - 'Build'
-      - 'Login'
+      - 'Docker'
     condition: failed()
     jobs:
       - job: 'Bots_GitHub'
