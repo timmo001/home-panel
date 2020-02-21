@@ -142,15 +142,15 @@ stages:
               containerRegistry: 'dockerHub'
               command: 'login'
             displayName: 'Docker Login'
-  - stage: 'Bots_Failed'
-    displayName: 'Failed'
+  - stage: 'Pipeline_Passed'
+    displayName: 'Pipeline Passed'
     dependsOn:
       - 'Lint'
       - 'Build'
       - 'Docker'
-    condition: failed()
+    condition: succeeded()
     jobs:
-      - job: 'Bots_GitHub'
+      - job: 'Pipeline_Passed_GitHub'
         displayName: 'Build'
         pool:
           vmImage: 'ubuntu-latest'
@@ -160,6 +160,27 @@ stages:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
               comment: |
-                ⚠️ The Azure Pipeline has failed. Check the logs to see what went wrong.
+                ✔️ The Azure Pipeline has passed.
+
+                https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results
+  - stage: 'Pipeline_Failed'
+    displayName: 'Pipeline Failed'
+    dependsOn:
+      - 'Lint'
+      - 'Build'
+      - 'Docker'
+    condition: failed()
+    jobs:
+      - job: 'Pipeline_Failed_GitHub'
+        displayName: 'Build'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: GitHubComment@0
+            inputs:
+              gitHubConnection: 'timmo001'
+              repositoryName: '$(Build.Repository.Name)'
+              comment: |
+                ❌ The Azure Pipeline has failed. Check the logs to see what went wrong.
 
                 https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results
