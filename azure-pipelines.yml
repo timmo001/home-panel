@@ -143,7 +143,7 @@ stages:
               command: 'login'
             displayName: 'Docker Login'
   - stage: 'Bots_Failed'
-    displayName: 'Bots Failed'
+    displayName: 'Failed'
     dependsOn:
       - 'Lint'
       - 'Build'
@@ -160,6 +160,6 @@ stages:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
               comment: |
-                The Azure Pipeline has failed. Check the logs to see what went wrong.
+                ⚠️ The Azure Pipeline has failed. Check the logs to see what went wrong.
 
-                $(Build.BuildUri)
+                https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results
