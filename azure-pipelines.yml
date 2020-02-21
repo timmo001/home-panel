@@ -117,3 +117,6 @@ stages:
               artifactName: 'app'
               downloadPath: $(System.DefaultWorkingDirectory)/build
           - template: .azure-pipelines.yml@docker
+            parameters:
+              dockerLogin: $(dockerLogin)
+              dockerPassword: $(dockerPassword)
