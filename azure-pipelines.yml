@@ -44,6 +44,8 @@ stages:
     jobs:
       - template: azure-ci/lint-hadolint.yml@azure
   - stage: 'Build'
+    dependsOn: 'Lint'
+    condition: succeeded()
     jobs:
       - job: 'Build_App'
         pool:
