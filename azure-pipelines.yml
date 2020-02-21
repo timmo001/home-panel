@@ -41,10 +41,6 @@ resources:
       type: github
       name: 'timmo001/organization'
       endpoint: 'timmo001'
-    - repository: docker
-      type: github
-      name: 'timmo001/azure-pipelines-multiarch-docker'
-      endpoint: 'timmo001'
 
 stages:
   - stage: 'Lint'
@@ -116,9 +112,26 @@ stages:
             inputs:
               artifactName: 'app'
               downloadPath: $(System.DefaultWorkingDirectory)/build
-          - template: build.yml@docker
-            parameters:
-              arch: $(buildArch)
-              base: $(buildBase)
-              username: $(dockerLogin)
-              password: $(dockerPassword)
+          - script: |
+              docker info
+              docker run --rm --privileged hassioaddons/qemu-user-static:latest
+              docker build \
+                --build-arg "BUILD_ARCH=$(buildArch)" \
+                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+                --build-arg "BUILD_FROM=$(buildBase)" \
+                --tag "${DOCKER_HUB_ORG}/${SLUG}-${ARCH}:${TAG}" \
+                $(dockerTarget)
+            displayName: 'Build'
+      - job: 'Docker_Login'
+        displayName: 'Login'
+        dependsOn: 'Docker_Build'
+        condition: succeeded()
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Docker Login'
+
