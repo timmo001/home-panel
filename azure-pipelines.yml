@@ -37,7 +37,9 @@ variables:
   - name: i386Base
     value: 'i386/alpine:3.11.3'
   - name: versionHadolint
-    value: 'v1.17.2'
+    value: 'latest'
+  - name: versionShellcheck
+    value: 'latest'
   - name: versionNode
     value: '13.x'
 resources:
@@ -52,8 +54,12 @@ stages:
     jobs:
       - template: azure-ci/lint-hadolint.yml@organization
         parameters:
-          hadolintVersion: $(versionHadolint)
           path: 'Dockerfile'
+          version: $(versionHadolint)
+      - template: azure-ci/lint-shellcheck.yml@organization
+        parameters:
+          path: 'Dockerfile'
+          version: $(versionShellcheck)
   - stage: 'Build'
     jobs:
       - job: 'Build_App'
