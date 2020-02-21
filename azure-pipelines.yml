@@ -156,6 +156,7 @@ stages:
           vmImage: 'ubuntu-latest'
         steps:
           - task: GitHubComment@0
+            displayName: 'Send Comment'
             inputs:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
@@ -177,6 +178,7 @@ stages:
           vmImage: 'ubuntu-latest'
         steps:
           - task: GitHubComment@0
+            displayName: 'Send Comment'
             inputs:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
