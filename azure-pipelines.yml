@@ -48,6 +48,9 @@ resources:
 stages:
   - stage: 'Lint'
     jobs:
+      - template: azure-ci/lint-eslint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint-hadolint.yml@organization
         parameters:
           path: 'Dockerfile'
