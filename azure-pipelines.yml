@@ -122,7 +122,7 @@ stages:
                 --build-arg "BUILD_ARCH=$(buildArch)" \
                 --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
                 --build-arg "BUILD_FROM=$(buildBase)" \
-                --build-arg "BUILD_REF=${Build.SourceVersion}" \
+                --build-arg "BUILD_REF=$(Build.SourceVersion)" \
                 --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
                 $(dockerTarget)
             displayName: 'Build'
