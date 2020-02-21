@@ -32,6 +32,8 @@ variables:
     value: 'arm32v7/alpine:3.10.3'
   - name: i386Base
     value: 'i386/alpine:3.10.3'
+  - name: versionHadolint
+    value: 'v1.17.2'
 resources:
   repositories:
     - repository: azure
@@ -43,6 +45,8 @@ stages:
   - stage: 'Lint'
     jobs:
       - template: azure-ci/lint-hadolint.yml@azure
+        parameters:
+          hadolintVersion: $(versionHadolint)
   - stage: 'Build'
     dependsOn: 'Lint'
     condition: succeeded()
