@@ -161,7 +161,7 @@ stages:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
               comment: |
-                ✔️ The Azure Pipeline for commit [$(Build.SourceVersionMessage)](https://github.com/$(githubRepository)/pull/$(System.PullRequest.PullRequestId)/commits/$(Build.SourceVersion)) has passed.
+                ✔️ The Azure Pipeline for commit [$(Build.BuildNumber)](commits/$(Build.BuildNumber)) has passed.
 
                 https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results
   - stage: 'Pipeline_Failed'
@@ -183,6 +183,6 @@ stages:
               gitHubConnection: 'timmo001'
               repositoryName: '$(Build.Repository.Name)'
               comment: |
-                ❌ The Azure Pipeline for commit [$(Build.SourceVersionMessage)](https://github.com/$(githubRepository)/pull/$(System.PullRequest.PullRequestId)/commits/$(Build.SourceVersion)) has failed. Check the logs to see what went wrong.
+                ❌ The Azure Pipeline for commit [$(Build.BuildNumber)](commits/$(Build.BuildNumber)) has failed. Check the logs to see what went wrong.
 
                 https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results
