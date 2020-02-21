@@ -151,7 +151,7 @@ stages:
     condition: succeeded()
     jobs:
       - job: 'Pipeline_Passed_GitHub'
-        displayName: 'Build'
+        displayName: 'GitHub'
         pool:
           vmImage: 'ubuntu-latest'
         steps:
@@ -172,7 +172,7 @@ stages:
     condition: failed()
     jobs:
       - job: 'Pipeline_Failed_GitHub'
-        displayName: 'Build'
+        displayName: 'GitHub'
         pool:
           vmImage: 'ubuntu-latest'
         steps:
