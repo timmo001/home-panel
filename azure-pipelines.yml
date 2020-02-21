@@ -62,6 +62,8 @@ stages:
               ArtifactName: 'app'
               publishLocation: 'Container'
             displayName: 'Publish Build'
+  - stage: 'Docker'
+    jobs:
       - job: 'Build_Docker'
         dependsOn: 'Build_App'
         condition: succeeded()
