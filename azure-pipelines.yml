@@ -63,10 +63,10 @@ stages:
               publishLocation: 'Container'
             displayName: 'Publish Build'
   - stage: 'Docker'
+    dependsOn: 'Build'
+    condition: succeeded()
     jobs:
       - job: 'Build_Docker'
-        dependsOn: 'Build_App'
-        condition: succeeded()
         pool:
           vmImage: 'ubuntu-latest'
         strategy:
