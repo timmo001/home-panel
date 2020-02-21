@@ -122,6 +122,21 @@ stages:
           - script: |
               docker info
               docker run --rm --privileged hassioaddons/qemu-user-static:latest
+              if [ "$(buildArch)" = "aarch64" ]; then
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-aarch64-static.tar.gz" | \
+                  tar zxvf - -C "./rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armhf" ]; then
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "./rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armv7" ]; then
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "./rootfs/usr/bin/"
+              fi
               docker build \
                 --build-arg "BUILD_ARCH=$(buildArch)" \
                 --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
