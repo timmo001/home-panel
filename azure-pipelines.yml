@@ -133,6 +133,7 @@ stages:
           - script: |
               yarn test
             displayName: 'Test'
+            continueOnError: true
           - task: PublishTestResults@2
             displayName: 'Publish'
             inputs:
@@ -170,6 +171,7 @@ stages:
               cd api
               yarn test
             displayName: 'Test'
+            continueOnError: true
           - task: PublishTestResults@2
             displayName: 'Publish'
             inputs:
