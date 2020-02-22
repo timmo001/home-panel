@@ -44,6 +44,7 @@ variables:
     value: "v7"
   - name: versionNode
     value: "13.x"
+
 resources:
   repositories:
     - repository: organization
