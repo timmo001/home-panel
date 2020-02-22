@@ -67,9 +67,6 @@ stages:
       - template: azure-ci/lint-shellcheck.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
-      - template: azure-ci/lint-tslint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint-yamllint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
