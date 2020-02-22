@@ -47,7 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --reporters=default --reporters=jest-junit",
+    "test": "react-scripts test --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
     "eslint": "eslint -c .eslintrc.json --color src",
     "flow": "flow",
@@ -64,6 +64,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
+  },
+  "jest-junit": {
+    "output": "output/coverage/junit/junit.xml",
+    "usePathForSuiteName": "true"
   },
   "devDependencies": {
     "@types/classnames": "2.2.9",

@@ -125,6 +125,11 @@ stages:
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
               testRunTitle: 'App'
+          - task: PublishCodeCoverageResults@1
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '**/cobertura-coverage.xml'
+              pathToSources: 'src'
       - job: 'Test_API'
         displayName: 'API'
         pool:
@@ -157,6 +162,11 @@ stages:
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
               testRunTitle: 'API'
+          - task: PublishCodeCoverageResults@1
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '**/cobertura-coverage.xml'
+              pathToSources: 'src'
   - stage: 'Docker'
     dependsOn:
       - 'Lint'
