@@ -413,6 +413,7 @@ stages:
       - 'Build'
       - 'Docker'
       - 'Test'
+      - 'Docs'
     condition: failed()
     jobs:
       - job: 'Pipeline_Failed_GitHub'
