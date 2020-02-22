@@ -23,7 +23,7 @@
     "test": "yarn run compile && yarn run jest",
     "dev": "ts-node-dev --no-notify src/",
     "start": "yarn run compile && node lib/",
-    "jest": "jest --forceExit --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
+    "jest": "jest --ci --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
     "compile": "shx rm -rf lib/ && tsc"
   },
   "jest": {
