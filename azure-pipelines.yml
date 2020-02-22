@@ -185,95 +185,95 @@ stages:
               containerRegistry: 'dockerHub'
               command: 'login'
             displayName: 'Login'
-      # - job: 'Docker_Publish'
-      #   displayName: 'Publish'
-      #   dependsOn:
-      #     - 'Docker_Build'
-      #     - 'Docker_Login'
-      #   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/'))
-      #   pool:
-      #     vmImage: 'ubuntu-latest'
-      #   strategy:
-      #     maxParallel: 5
-      #     matrix:
-      #       aarch64:
-      #         buildArch: 'aarch64'
-      #       amd64:
-      #         buildArch: 'amd64'
-      #       armhf:
-      #         buildArch: 'armhf'
-      #       armv7:
-      #         buildArch: 'armv7'
-      #       i386:
-      #         buildArch: 'i386'
-      #   steps:
-      #     - script: |
-      #         TAG="$(Build.SourceVersion#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
-      #         docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
-      #         docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
-      #       displayName: 'Publish'
-      # - job: 'Docker_Manifest'
-      #   displayName: 'Manifest'
-      #   dependsOn:
-      #     - 'Docker_Build'
-      #     - 'Docker_Login'
-      #     - 'Docker_Publish'
-      #   condition: succeeded()
-      #   pool:
-      #     vmImage: 'ubuntu-latest'
-      #   steps:
-      #     - script: |
-      #         mkdir -p ~/.docker
-      #         echo '("experimental":"enabled")' > ~/.docker/config.json
-      #         TAG="$(sha#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         REF="$(Build.SourceVersion#v)"
-      #         REF="$(REF:-$(Build.SourceVersion:0:7))"
-      #         docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-      #       displayName: 'Sha'
-      #       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-      #     - script: |
-      #         mkdir -p ~/.docker
-      #         echo '("experimental":"enabled")' > ~/.docker/config.json
-      #         TAG="$(Build.SourceVersion#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         REF="$(Build.SourceVersion#v)"
-      #         REF="$(REF:-$(Build.SourceVersion:0:7))"
-      #         docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-      #       displayName: 'Version'
-      #       condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
-      #     - script: |
-      #         mkdir -p ~/.docker
-      #         echo '("experimental":"enabled")' > ~/.docker/config.json
-      #         TAG="$(stable#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         REF="$(Build.SourceVersion#v)"
-      #         REF="$(REF:-$(Build.SourceVersion:0:7))"
-      #         docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-      #       displayName: 'Stable'
-      #       condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
-      #     - script: |
-      #         mkdir -p ~/.docker
-      #         echo '("experimental":"enabled")' > ~/.docker/config.json
-      #         TAG="$(beta#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         REF="$(Build.SourceVersion#v)"
-      #         REF="$(REF:-$(Build.SourceVersion:0:7))"
-      #         docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-      #       displayName: 'Beta'
-      #       condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
-      #     - script: |
-      #         mkdir -p ~/.docker
-      #         echo '("experimental":"enabled")' > ~/.docker/config.json
-      #         TAG="$(edge#v)"
-      #         TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-      #         REF="$(Build.SourceVersion#v)"
-      #         REF="$(REF:-$(Build.SourceVersion:0:7))"
-      #         docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-      #       displayName: 'Edge'
-      #       condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+      - job: 'Docker_Publish'
+        displayName: 'Publish'
+        dependsOn:
+          - 'Docker_Build'
+          - 'Docker_Login'
+        condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')))
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: 'aarch64'
+            amd64:
+              buildArch: 'amd64'
+            armhf:
+              buildArch: 'armhf'
+            armv7:
+              buildArch: 'armv7'
+            i386:
+              buildArch: 'i386'
+        steps:
+          - script: |
+              TAG="$(Build.SourceVersion#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
+              docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+            displayName: 'Publish'
+      - job: 'Docker_Manifest'
+        displayName: 'Manifest'
+        dependsOn:
+          - 'Docker_Build'
+          - 'Docker_Login'
+          - 'Docker_Publish'
+        condition: succeeded()
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(sha#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: 'Sha'
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(Build.SourceVersion#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: 'Version'
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(stable#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: 'Stable'
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(beta#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: 'Beta'
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(edge#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: 'Edge'
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
   - stage: 'Test'
     dependsOn:
       - 'Lint'
