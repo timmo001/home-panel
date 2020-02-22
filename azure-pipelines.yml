@@ -107,7 +107,6 @@ stages:
   - stage: 'Test'
     dependsOn:
       - 'Lint'
-      - 'Build'
     condition: succeeded()
     jobs:
       - job: 'Test_App'
