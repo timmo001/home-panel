@@ -47,14 +47,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "CI=true react-scripts test --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
     "eslint": "eslint -c .eslintrc.json --color src",
     "flow": "flow",
     "snyk-protect": "snyk protect"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -67,6 +64,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ]
+  },
+  "jest-junit": {
+    "output": "output/coverage/junit/junit.xml",
+    "usePathForSuiteName": "true"
   },
   "devDependencies": {
     "@types/classnames": "2.2.9",
@@ -83,9 +90,15 @@
     "@types/socket.io": "2.1.4",
     "@types/socket.io-client": "1.4.32",
     "@types/superagent": "4.1.7",
+    "@typescript-eslint/eslint-plugin": "2.20.0",
+    "@typescript-eslint/parser": "2.20.0",
     "awesome-typescript-loader": "5.2.1",
-    "source-map-loader": "0.2.4",
-    "tslint": "6.0.0"
+    "eslint-config-prettier": "6.10.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "eslint-plugin-react": "7.18.3",
+    "jest-junit": "10.0.0",
+    "prettier": "1.19.1",
+    "source-map-loader": "0.2.4"
   },
   "snyk": true
 }

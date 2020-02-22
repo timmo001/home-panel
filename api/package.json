@@ -23,7 +23,7 @@
     "test": "yarn run compile && yarn run jest",
     "dev": "ts-node-dev --no-notify src/",
     "start": "yarn run compile && node lib/",
-    "jest": "jest  --forceExit",
+    "jest": "CI=true jest --forceExit --detectOpenHandles --reporters=default --reporters=jest-junit --coverage --coverageDirectory=output/coverage/jest --coverageReporters=cobertura",
     "compile": "shx rm -rf lib/ && tsc"
   },
   "dependencies": {
@@ -54,6 +54,7 @@
     "@types/serve-favicon": "2.5.0",
     "axios": "0.19.2",
     "jest": "25.1.0",
+    "jest-junit": "10.0.0",
     "nodemon": "2.0.2",
     "shx": "0.3.2",
     "ts-jest": "25.2.0",

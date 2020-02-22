@@ -1,0 +1,402 @@
+---
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+
+pr:
+  - master
+
+schedules:
+  - cron: "0 1 * * *"
+    displayName: "nightly builds"
+    branches:
+      include:
+        - master
+    always: true
+
+variables:
+  - name: yarnCachePath
+    value: $(Pipeline.Workspace)/.yarn
+  - name: githubRepository
+    value: "timmo001/home-panel"
+  - group: docker
+  - name: dockerSlug
+    value: "home-panel"
+  - name: dockerTarget
+    value: "."
+  - name: aarch64Base
+    value: "arm64v8/alpine:3.11.3"
+  - name: amd64Base
+    value: "amd64/alpine:3.11.3"
+  - name: armhfBase
+    value: "arm32v6/alpine:3.11.3"
+  - name: armv7Base
+    value: "arm32v7/alpine:3.11.3"
+  - name: i386Base
+    value: "i386/alpine:3.11.3"
+  - name: aarch64Variant
+    value: "v8"
+  - name: armhfVariant
+    value: "v6"
+  - name: armv7Variant
+    value: "v7"
+  - name: versionNode
+    value: "13.x"
+
+resources:
+  repositories:
+    - repository: organization
+      type: github
+      name: "timmo001/organization"
+      endpoint: "timmo001"
+
+stages:
+  - stage: "Lint"
+    dependsOn: []
+    jobs:
+      - template: azure-ci/lint-eslint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-hadolint.yml@organization
+        parameters:
+          path: "Dockerfile"
+      - template: azure-ci/lint-jsonlint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-markdownlint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-prettier.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-shellcheck.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-yamllint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+  - stage: "Build"
+    dependsOn: []
+    jobs:
+      - job: "Build_App"
+        displayName: "App"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: $(yarnCachePath)
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: "Cache Yarn Packages"
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(versionNode)
+            displayName: "Install Node.js"
+          - script: |
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: "Install"
+          - script: |
+              node --version
+              yarn --version
+              yarn run build --production
+            displayName: "Build"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: "build"
+              ArtifactName: "app"
+              publishLocation: "Container"
+            displayName: "Publish"
+  - stage: "Docker"
+    dependsOn:
+      - "Lint"
+      - "Build"
+    condition: succeeded()
+    jobs:
+      - job: "Docker_Build"
+        displayName: "Build"
+        pool:
+          vmImage: "ubuntu-latest"
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: "aarch64"
+              buildBase: $(aarch64Base)
+            amd64:
+              buildArch: "amd64"
+              buildBase: $(amd64Base)
+            armhf:
+              buildArch: "armhf"
+              buildBase: $(armhfBase)
+            armv7:
+              buildArch: "armv7"
+              buildBase: $(armv7Base)
+            i386:
+              buildArch: "i386"
+              buildBase: $(i386Base)
+        steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: "Download Build Artifacts"
+            inputs:
+              artifactName: "app"
+              downloadPath: $(System.DefaultWorkingDirectory)/build
+          - script: |
+              docker info
+              docker run --rm --privileged hassioaddons/qemu-user-static:latest
+              if [ "$(buildArch)" = "aarch64" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-aarch64-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armhf" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armv7" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              docker build \
+                --build-arg "BUILD_ARCH=$(buildArch)" \
+                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+                --build-arg "BUILD_FROM=$(buildBase)" \
+                --build-arg "BUILD_REF=$(Build.SourceVersion)" \
+                --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
+                $(dockerTarget)
+            displayName: "Build"
+      - job: "Docker_Login"
+        displayName: "Login"
+        dependsOn: "Docker_Build"
+        condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')))
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
+      - job: "Docker_Publish"
+        displayName: "Publish"
+        dependsOn:
+          - "Docker_Build"
+          - "Docker_Login"
+        condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')))
+        pool:
+          vmImage: "ubuntu-latest"
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: "aarch64"
+            amd64:
+              buildArch: "amd64"
+            armhf:
+              buildArch: "armhf"
+            armv7:
+              buildArch: "armv7"
+            i386:
+              buildArch: "i386"
+        steps:
+          - script: |
+              TAG="$(Build.SourceVersion#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
+              docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+            displayName: "Publish"
+      - job: "Docker_Manifest"
+        displayName: "Manifest"
+        dependsOn:
+          - "Docker_Build"
+          - "Docker_Login"
+          - "Docker_Publish"
+        condition: succeeded()
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(sha#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Sha"
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(Build.SourceVersion#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Version"
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(stable#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Stable"
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(beta#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Beta"
+            condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(edge#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Edge"
+            condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  - stage: "Test"
+    dependsOn:
+      - "Lint"
+    condition: succeeded()
+    jobs:
+      - job: "Test_App"
+        displayName: "App"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: $(yarnCachePath)
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: "Cache Yarn Packages"
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(versionNode)
+            displayName: "Install Node.js"
+          - script: |
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: "Install"
+          - script: |
+              yarn test
+            displayName: "Test"
+            continueOnError: true
+          - task: PublishTestResults@2
+            displayName: "Publish Tests"
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/junit.xml"
+              failTaskOnFailedTests: true
+              testRunTitle: "App"
+          - task: PublishCodeCoverageResults@1
+            displayName: "Publish Coverage"
+            inputs:
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "**/cobertura-coverage.xml"
+              pathToSources: "src"
+      - job: "Test_API"
+        displayName: "API"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: $(yarnCachePath)
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: "Cache Yarn Packages"
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(versionNode)
+            displayName: "Install Node.js"
+          - script: |
+              cd api
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: "Install"
+          - script: |
+              cd api
+              yarn test
+            displayName: "Test"
+            continueOnError: true
+          - task: PublishTestResults@2
+            displayName: "Publish Tests"
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/junit.xml"
+              failTaskOnFailedTests: true
+              testRunTitle: "API"
+          - task: PublishCodeCoverageResults@1
+            displayName: "Publish Coverage"
+            inputs:
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "**/cobertura-coverage.xml"
+              pathToSources: "src"
+  - stage: "Pipeline_Passed"
+    displayName: "Pipeline Passed"
+    dependsOn:
+      - "Lint"
+      - "Build"
+      - "Docker"
+      - "Test"
+    condition: succeeded()
+    jobs:
+      - job: "Pipeline_Passed_GitHub"
+        displayName: "GitHub"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: GitHubComment@0
+            displayName: "Send Comment"
+            inputs:
+              gitHubConnection: "timmo001"
+              repositoryName: "$(Build.Repository.Name)"
+              comment: |
+                ✔️ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has passed.
+  - stage: "Pipeline_Failed"
+    displayName: "Pipeline Failed"
+    dependsOn:
+      - "Lint"
+      - "Build"
+      - "Docker"
+      - "Test"
+    condition: failed()
+    jobs:
+      - job: "Pipeline_Failed_GitHub"
+        displayName: "GitHub"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: GitHubComment@0
+            displayName: "Send Comment"
+            inputs:
+              gitHubConnection: "timmo001"
+              repositoryName: "$(Build.Repository.Name)"
+              comment: |
+                ❌ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has failed.
+
+                Check the logs to see what went wrong.
