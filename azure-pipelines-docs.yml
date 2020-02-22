@@ -10,7 +10,6 @@ variables: []
 stages:
   - stage: "Docs"
     displayName: "Docs"
-    dependsOn: []
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
     jobs:
       - job: "Docs_MkDocs"
