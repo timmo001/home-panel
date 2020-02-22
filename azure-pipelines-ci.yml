@@ -356,35 +356,6 @@ stages:
               codeCoverageTool: "Cobertura"
               summaryFileLocation: "**/cobertura-coverage.xml"
               pathToSources: "src"
-  - stage: "Docs"
-    displayName: "Docs"
-    dependsOn:
-      - "Docker"
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-    jobs:
-      - job: "Docs_MkDocs"
-        displayName: "MkDocs"
-        condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-        pool:
-          vmImage: "ubuntu-latest"
-        steps:
-          - script: |
-              rm -f ~/.gitconfig && rm -Rf  ~/.ssh
-              apk add --no-cache git git-fast-import openssh-client bash
-              eval $(ssh-agent -s)
-              mkdir -p ~/.ssh
-              echo "$githubSSHPublicKey" > ~/.ssh/id_rsa.pub
-              echo "$githubSSHPrivateKey" | ssh-add -
-              ssh-keyscan github.com >> ~/.ssh/known_hosts
-              git config --global user.email "$githubEmail"
-              git config --global user.name "Git"
-              git clone $GITHUB_URL git-src/ && cd git-src/
-              git status
-              cd docs
-              python --version
-              pip --version
-              pip install mkdocs mkdocs-material
-              'mkdocs gh-deploy -v -c -m "📚 Update docs"'
   - stage: "Pipeline_Passed"
     displayName: "Pipeline Passed"
     dependsOn:

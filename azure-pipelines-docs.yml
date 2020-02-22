@@ -1,0 +1,38 @@
+---
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+
+variables: []
+
+stages:
+  - stage: "Docs"
+    displayName: "Docs"
+    dependsOn: []
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    jobs:
+      - job: "Docs_MkDocs"
+        displayName: "MkDocs"
+        condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - script: |
+              rm -f ~/.gitconfig && rm -Rf  ~/.ssh
+              sudo apt install -y git git-fast-import openssh-client
+              eval $(ssh-agent -s)
+              mkdir -p ~/.ssh
+              echo "$githubSSHPublicKey" > ~/.ssh/id_rsa.pub
+              echo "$githubSSHPrivateKey" | ssh-add -
+              ssh-keyscan github.com >> ~/.ssh/known_hosts
+              git config --global user.email "$githubEmail"
+              git config --global user.name "Git"
+              git clone $GITHUB_URL git-src/ && cd git-src/
+              git status
+              cd docs
+              python --version
+              pip --version
+              pip install mkdocs mkdocs-material
+              'mkdocs gh-deploy -v -c -m "📚 Update docs"'
