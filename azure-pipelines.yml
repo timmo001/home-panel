@@ -91,17 +91,19 @@ stages:
               versionSpec: $(versionNode)
             displayName: 'Install Node.js'
           - script: |
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: 'Install'
+          - script: |
               node --version
               yarn --version
-              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
               yarn run build --production
-            displayName: 'Install and Build'
+            displayName: 'Build'
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: 'build'
               ArtifactName: 'app'
               publishLocation: 'Container'
-            displayName: 'Publish Build'
+            displayName: 'Publish'
   - stage: 'Test'
     dependsOn:
       - 'Lint'
