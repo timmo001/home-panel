@@ -60,6 +60,9 @@ stages:
       - template: azure-ci/lint-markdownlint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-prettier.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint-shellcheck.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
