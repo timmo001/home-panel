@@ -1,3 +1,5 @@
 all
 rule 'MD013', :tables => false
-rules "~MD002", "~MD024", "~MD041"
+exclude_rule 'MD002'
+exclude_rule 'MD024'
+exclude_rule 'MD041'
