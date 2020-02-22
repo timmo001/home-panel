@@ -304,13 +304,14 @@ stages:
             displayName: 'Test'
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: 'Publish'
+            displayName: 'Publish Tests'
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
               testRunTitle: 'App'
           - task: PublishCodeCoverageResults@1
+            displayName: 'Publish Coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
               summaryFileLocation: '**/cobertura-coverage.xml'
@@ -342,13 +343,14 @@ stages:
             displayName: 'Test'
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: 'Publish'
+            displayName: 'Publish Tests'
             inputs:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
               testRunTitle: 'API'
           - task: PublishCodeCoverageResults@1
+            displayName: 'Publish Coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
               summaryFileLocation: '**/cobertura-coverage.xml'
