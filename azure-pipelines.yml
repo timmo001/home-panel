@@ -118,6 +118,13 @@ stages:
           - script: |
               yarn test
             displayName: 'Test'
+          - task: PublishTestResults@2
+            displayName: 'Publish'
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
+              failTaskOnFailedTests: true
+              testRunTitle: 'App'
       - job: 'Test_Api'
         displayName: 'Api'
         pool:
@@ -143,6 +150,13 @@ stages:
               cd api
               yarn test
             displayName: 'Test'
+          - task: PublishTestResults@2
+            displayName: 'Publish'
+            inputs:
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
+              failTaskOnFailedTests: true
+              testRunTitle: 'App'
   - stage: 'Docker'
     dependsOn:
       - 'Lint'
@@ -209,6 +223,18 @@ stages:
             displayName: 'Build'
       - job: 'Docker_Login'
         displayName: 'Login'
+        dependsOn: 'Docker_Build'
+        condition: succeeded()
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Docker Login'
+      - job: 'Docker_Manifest'
+        displayName: 'Manifest'
         dependsOn: 'Docker_Build'
         condition: succeeded()
         pool:

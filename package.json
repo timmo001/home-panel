@@ -47,7 +47,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
     "eslint": "eslint -c .eslintrc.json --color src",
     "flow": "flow",
@@ -86,6 +86,7 @@
     "eslint-config-prettier": "6.10.0",
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.3",
+    "jest-junit": "10.0.0",
     "prettier": "1.19.1",
     "source-map-loader": "0.2.4"
   },
