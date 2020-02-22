@@ -353,7 +353,7 @@ stages:
             displayName: 'Publish Coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '**/coverage-final.json'
+              summaryFileLocation: '**/cobertura-coverage.xml'
               pathToSources: 'src'
   - stage: 'Pipeline_Passed'
     displayName: 'Pipeline Passed'
