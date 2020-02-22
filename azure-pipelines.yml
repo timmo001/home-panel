@@ -102,10 +102,34 @@ stages:
               ArtifactName: 'app'
               publishLocation: 'Container'
             displayName: 'Publish Build'
+  - stage: 'Test'
+    dependsOn:
+      - 'Lint'
+      - 'Build'
+    condition: succeeded()
+    jobs:
+      - job: 'Test_App'
+        displayName: 'App'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              yarn test
+            displayName: 'Yarn Test'
+      - job: 'Test_Api'
+        displayName: 'Api'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - script: |
+              cd api
+              yarn test
+            displayName: 'Yarn Test'
   - stage: 'Docker'
     dependsOn:
       - 'Lint'
       - 'Build'
+      - 'Test'
     condition: succeeded()
     jobs:
       - job: 'Docker_Build'
