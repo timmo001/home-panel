@@ -26,16 +26,6 @@
     "jest": "CI=true jest --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
     "compile": "shx rm -rf lib/ && tsc"
   },
-  "jest": {
-    "coverageReporters": [
-      "text",
-      "cobertura"
-    ]
-  },
-  "jest-junit": {
-    "output": "output/coverage/junit/junit.xml",
-    "usePathForSuiteName": "true"
-  },
   "dependencies": {
     "@feathersjs/authentication": "4.5.1",
     "@feathersjs/authentication-local": "4.5.1",
