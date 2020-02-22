@@ -20,39 +20,39 @@ variables:
   - name: yarnCachePath
     value: $(Pipeline.Workspace)/.yarn
   - name: githubRepository
-    value: 'timmo001/home-panel'
+    value: "timmo001/home-panel"
   - group: docker
   - name: dockerSlug
-    value: 'home-panel'
+    value: "home-panel"
   - name: dockerTarget
-    value: '.'
+    value: "."
   - name: aarch64Base
-    value: 'arm64v8/alpine:3.11.3'
+    value: "arm64v8/alpine:3.11.3"
   - name: amd64Base
-    value: 'amd64/alpine:3.11.3'
+    value: "amd64/alpine:3.11.3"
   - name: armhfBase
-    value: 'arm32v6/alpine:3.11.3'
+    value: "arm32v6/alpine:3.11.3"
   - name: armv7Base
-    value: 'arm32v7/alpine:3.11.3'
+    value: "arm32v7/alpine:3.11.3"
   - name: i386Base
-    value: 'i386/alpine:3.11.3'
+    value: "i386/alpine:3.11.3"
   - name: aarch64Variant
-    value: 'v8'
+    value: "v8"
   - name: armhfVariant
-    value: 'v6'
+    value: "v6"
   - name: armv7Variant
-    value: 'v7'
+    value: "v7"
   - name: versionNode
-    value: '13.x'
+    value: "13.x"
 resources:
   repositories:
     - repository: organization
       type: github
-      name: 'timmo001/organization'
-      endpoint: 'timmo001'
+      name: "timmo001/organization"
+      endpoint: "timmo001"
 
 stages:
-  - stage: 'Lint'
+  - stage: "Lint"
     dependsOn: []
     jobs:
       - template: azure-ci/lint-eslint.yml@organization
@@ -60,7 +60,7 @@ stages:
           path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint-hadolint.yml@organization
         parameters:
-          path: 'Dockerfile'
+          path: "Dockerfile"
       - template: azure-ci/lint-jsonlint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
@@ -76,13 +76,13 @@ stages:
       - template: azure-ci/lint-yamllint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
-  - stage: 'Build'
+  - stage: "Build"
     dependsOn: []
     jobs:
-      - job: 'Build_App'
-        displayName: 'App'
+      - job: "Build_App"
+        displayName: "App"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
             inputs:
@@ -91,58 +91,58 @@ stages:
               restoreKeys: |
                 yarn | "$(Agent.OS)"
                 yarn
-            displayName: 'Cache Yarn Packages'
+            displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
               versionSpec: $(versionNode)
-            displayName: 'Install Node.js'
+            displayName: "Install Node.js"
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: 'Install'
+            displayName: "Install"
           - script: |
               node --version
               yarn --version
               yarn run build --production
-            displayName: 'Build'
+            displayName: "Build"
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: 'build'
-              ArtifactName: 'app'
-              publishLocation: 'Container'
-            displayName: 'Publish'
-  - stage: 'Docker'
+              PathtoPublish: "build"
+              ArtifactName: "app"
+              publishLocation: "Container"
+            displayName: "Publish"
+  - stage: "Docker"
     dependsOn:
-      - 'Lint'
-      - 'Build'
+      - "Lint"
+      - "Build"
     condition: succeeded()
     jobs:
-      - job: 'Docker_Build'
-        displayName: 'Build'
+      - job: "Docker_Build"
+        displayName: "Build"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         strategy:
           maxParallel: 5
           matrix:
             aarch64:
-              buildArch: 'aarch64'
+              buildArch: "aarch64"
               buildBase: $(aarch64Base)
             amd64:
-              buildArch: 'amd64'
+              buildArch: "amd64"
               buildBase: $(amd64Base)
             armhf:
-              buildArch: 'armhf'
+              buildArch: "armhf"
               buildBase: $(armhfBase)
             armv7:
-              buildArch: 'armv7'
+              buildArch: "armv7"
               buildBase: $(armv7Base)
             i386:
-              buildArch: 'i386'
+              buildArch: "i386"
               buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Build Artifacts'
+            displayName: "Download Build Artifacts"
             inputs:
-              artifactName: 'app'
+              artifactName: "app"
               downloadPath: $(System.DefaultWorkingDirectory)/build
           - script: |
               docker info
@@ -172,40 +172,40 @@ stages:
                 --build-arg "BUILD_REF=$(Build.SourceVersion)" \
                 --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
                 $(dockerTarget)
-            displayName: 'Build'
-      - job: 'Docker_Login'
-        displayName: 'Login'
-        dependsOn: 'Docker_Build'
+            displayName: "Build"
+      - job: "Docker_Login"
+        displayName: "Login"
+        dependsOn: "Docker_Build"
         condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')))
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: Docker@2
             inputs:
-              containerRegistry: 'dockerHub'
-              command: 'login'
-            displayName: 'Login'
-      - job: 'Docker_Publish'
-        displayName: 'Publish'
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
+      - job: "Docker_Publish"
+        displayName: "Publish"
         dependsOn:
-          - 'Docker_Build'
-          - 'Docker_Login'
+          - "Docker_Build"
+          - "Docker_Login"
         condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')))
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         strategy:
           maxParallel: 5
           matrix:
             aarch64:
-              buildArch: 'aarch64'
+              buildArch: "aarch64"
             amd64:
-              buildArch: 'amd64'
+              buildArch: "amd64"
             armhf:
-              buildArch: 'armhf'
+              buildArch: "armhf"
             armv7:
-              buildArch: 'armv7'
+              buildArch: "armv7"
             i386:
-              buildArch: 'i386'
+              buildArch: "i386"
         steps:
           - script: |
               TAG="$(Build.SourceVersion#v)"
@@ -213,16 +213,16 @@ stages:
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
               docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
               docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
-            displayName: 'Publish'
-      - job: 'Docker_Manifest'
-        displayName: 'Manifest'
+            displayName: "Publish"
+      - job: "Docker_Manifest"
+        displayName: "Manifest"
         dependsOn:
-          - 'Docker_Build'
-          - 'Docker_Login'
-          - 'Docker_Publish'
+          - "Docker_Build"
+          - "Docker_Login"
+          - "Docker_Publish"
         condition: succeeded()
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - script: |
               mkdir -p ~/.docker
@@ -232,7 +232,7 @@ stages:
               REF="$(Build.SourceVersion#v)"
               REF="$(REF:-$(Build.SourceVersion:0:7))"
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-            displayName: 'Sha'
+            displayName: "Sha"
             condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
           - script: |
               mkdir -p ~/.docker
@@ -242,7 +242,7 @@ stages:
               REF="$(Build.SourceVersion#v)"
               REF="$(REF:-$(Build.SourceVersion:0:7))"
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-            displayName: 'Version'
+            displayName: "Version"
             condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
           - script: |
               mkdir -p ~/.docker
@@ -252,7 +252,7 @@ stages:
               REF="$(Build.SourceVersion#v)"
               REF="$(REF:-$(Build.SourceVersion:0:7))"
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-            displayName: 'Stable'
+            displayName: "Stable"
             condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
           - script: |
               mkdir -p ~/.docker
@@ -262,7 +262,7 @@ stages:
               REF="$(Build.SourceVersion#v)"
               REF="$(REF:-$(Build.SourceVersion:0:7))"
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-            displayName: 'Beta'
+            displayName: "Beta"
             condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
           - script: |
               mkdir -p ~/.docker
@@ -272,17 +272,17 @@ stages:
               REF="$(Build.SourceVersion#v)"
               REF="$(REF:-$(Build.SourceVersion:0:7))"
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-            displayName: 'Edge'
+            displayName: "Edge"
             condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-  - stage: 'Test'
+  - stage: "Test"
     dependsOn:
-      - 'Lint'
+      - "Lint"
     condition: succeeded()
     jobs:
-      - job: 'Test_App'
-        displayName: 'App'
+      - job: "Test_App"
+        displayName: "App"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
             inputs:
@@ -291,35 +291,35 @@ stages:
               restoreKeys: |
                 yarn | "$(Agent.OS)"
                 yarn
-            displayName: 'Cache Yarn Packages'
+            displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
               versionSpec: $(versionNode)
-            displayName: 'Install Node.js'
+            displayName: "Install Node.js"
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: 'Install'
+            displayName: "Install"
           - script: |
               yarn test
-            displayName: 'Test'
+            displayName: "Test"
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: 'Publish Tests'
+            displayName: "Publish Tests"
             inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: '**/junit.xml'
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/junit.xml"
               failTaskOnFailedTests: true
-              testRunTitle: 'App'
+              testRunTitle: "App"
           - task: PublishCodeCoverageResults@1
-            displayName: 'Publish Coverage'
+            displayName: "Publish Coverage"
             inputs:
-              codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '**/cobertura-coverage.xml'
-              pathToSources: 'src'
-      - job: 'Test_API'
-        displayName: 'API'
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "**/cobertura-coverage.xml"
+              pathToSources: "src"
+      - job: "Test_API"
+        displayName: "API"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
             inputs:
@@ -328,44 +328,44 @@ stages:
               restoreKeys: |
                 yarn | "$(Agent.OS)"
                 yarn
-            displayName: 'Cache Yarn Packages'
+            displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
               versionSpec: $(versionNode)
-            displayName: 'Install Node.js'
+            displayName: "Install Node.js"
           - script: |
               cd api
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: 'Install'
+            displayName: "Install"
           - script: |
               cd api
               yarn test
-            displayName: 'Test'
+            displayName: "Test"
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: 'Publish Tests'
+            displayName: "Publish Tests"
             inputs:
-              testResultsFormat: 'JUnit'
-              testResultsFiles: '**/junit.xml'
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/junit.xml"
               failTaskOnFailedTests: true
-              testRunTitle: 'API'
+              testRunTitle: "API"
           - task: PublishCodeCoverageResults@1
-            displayName: 'Publish Coverage'
+            displayName: "Publish Coverage"
             inputs:
-              codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '**/cobertura-coverage.xml'
-              pathToSources: 'src'
-  - stage: 'Docs'
-    displayName: 'Docs'
+              codeCoverageTool: "Cobertura"
+              summaryFileLocation: "**/cobertura-coverage.xml"
+              pathToSources: "src"
+  - stage: "Docs"
+    displayName: "Docs"
     dependsOn:
-      - 'Docker'
+      - "Docker"
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
-      - job: 'Docs_MkDocs'
-        displayName: 'MkDocs'
+      - job: "Docs_MkDocs"
+        displayName: "MkDocs"
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - script: |
               rm -f ~/.gitconfig && rm -Rf  ~/.ssh
@@ -384,46 +384,46 @@ stages:
               pip --version
               pip install mkdocs mkdocs-material
               'mkdocs gh-deploy -v -c -m "📚 Update docs"'
-  - stage: 'Pipeline_Passed'
-    displayName: 'Pipeline Passed'
+  - stage: "Pipeline_Passed"
+    displayName: "Pipeline Passed"
     dependsOn:
-      - 'Lint'
-      - 'Build'
-      - 'Docker'
-      - 'Test'
+      - "Lint"
+      - "Build"
+      - "Docker"
+      - "Test"
     condition: succeeded()
     jobs:
-      - job: 'Pipeline_Passed_GitHub'
-        displayName: 'GitHub'
+      - job: "Pipeline_Passed_GitHub"
+        displayName: "GitHub"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
-            displayName: 'Send Comment'
+            displayName: "Send Comment"
             inputs:
-              gitHubConnection: 'timmo001'
-              repositoryName: '$(Build.Repository.Name)'
+              gitHubConnection: "timmo001"
+              repositoryName: "$(Build.Repository.Name)"
               comment: |
                 ✔️ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has passed.
-  - stage: 'Pipeline_Failed'
-    displayName: 'Pipeline Failed'
+  - stage: "Pipeline_Failed"
+    displayName: "Pipeline Failed"
     dependsOn:
-      - 'Lint'
-      - 'Build'
-      - 'Docker'
-      - 'Test'
+      - "Lint"
+      - "Build"
+      - "Docker"
+      - "Test"
     condition: failed()
     jobs:
-      - job: 'Pipeline_Failed_GitHub'
-        displayName: 'GitHub'
+      - job: "Pipeline_Failed_GitHub"
+        displayName: "GitHub"
         pool:
-          vmImage: 'ubuntu-latest'
+          vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
-            displayName: 'Send Comment'
+            displayName: "Send Comment"
             inputs:
-              gitHubConnection: 'timmo001'
-              repositoryName: '$(Build.Repository.Name)'
+              gitHubConnection: "timmo001"
+              repositoryName: "$(Build.Repository.Name)"
               comment: |
                 ❌ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has failed.
 
