@@ -106,7 +106,9 @@ stages:
               publishLocation: 'Container'
             displayName: 'Publish Build'
   - stage: 'Docker'
-    dependsOn: 'Build'
+    dependsOn:
+      - 'Lint'
+      - 'Build'
     condition: succeeded()
     jobs:
       - job: 'Docker_Build'
