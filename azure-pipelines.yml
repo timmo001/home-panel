@@ -359,6 +359,7 @@ stages:
       - 'Lint'
       - 'Build'
       - 'Docker'
+      - 'Test'
     condition: succeeded()
     jobs:
       - job: 'Pipeline_Passed_GitHub'
@@ -379,6 +380,7 @@ stages:
       - 'Lint'
       - 'Build'
       - 'Docker'
+      - 'Test'
     condition: failed()
     jobs:
       - job: 'Pipeline_Failed_GitHub'
