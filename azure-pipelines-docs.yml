@@ -35,3 +35,4 @@ stages:
               pip --version
               pip install mkdocs mkdocs-material
               'mkdocs gh-deploy -v -c -m "📚 Update docs"'
+            displayName: 'MkDocs'
