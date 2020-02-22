@@ -47,6 +47,7 @@ resources:
 
 stages:
   - stage: 'Lint'
+    dependsOn: []
     jobs:
       - template: azure-ci/lint-eslint.yml@organization
         parameters:
@@ -73,6 +74,7 @@ stages:
         parameters:
           path: $(System.DefaultWorkingDirectory)
   - stage: 'Build'
+    dependsOn: []
     jobs:
       - job: 'Build_App'
         displayName: 'App'
