@@ -125,8 +125,8 @@ stages:
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
               testRunTitle: 'App'
-      - job: 'Test_Api'
-        displayName: 'Api'
+      - job: 'Test_API'
+        displayName: 'API'
         pool:
           vmImage: 'ubuntu-latest'
         steps:
@@ -156,7 +156,7 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
-              testRunTitle: 'App'
+              testRunTitle: 'API'
   - stage: 'Docker'
     dependsOn:
       - 'Lint'
