@@ -115,6 +115,21 @@ stages:
         pool:
           vmImage: 'ubuntu-latest'
         steps:
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: $(yarnCachePath)
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: 'Cache Yarn Packages'
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(versionNode)
+            displayName: 'Install Node.js'
+          - script: |
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: 'Install'
           - script: |
               yarn test
             displayName: 'Test'
