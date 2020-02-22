@@ -7,7 +7,6 @@
 [![GitHub Activity][commits-shield]][commits]
 ![Project Maintenance][maintenance-shield]
 
-[![GitLab CI][gitlabci-shield]][gitlabci]
 [![Docker Version][version-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
 
@@ -63,8 +62,6 @@ A web frontend for controlling the home. Integrates with
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
-[gitlabci-shield]: https://gitlab.com/timmo/home-panel/badges/master/pipeline.svg
-[gitlabci]: https://gitlab.com/timmo/home-panel/pipelines
 [hass]: https://www.home-assistant.io/
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
