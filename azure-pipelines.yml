@@ -353,7 +353,7 @@ stages:
             displayName: 'Publish Coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
-              summaryFileLocation: '**/clover.xml'
+              summaryFileLocation: '**/coverage-final.json'
               pathToSources: 'src'
   - stage: 'Pipeline_Passed'
     displayName: 'Pipeline Passed'
