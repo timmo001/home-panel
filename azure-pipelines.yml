@@ -391,7 +391,6 @@ stages:
       - 'Build'
       - 'Docker'
       - 'Test'
-      - 'Docs'
     condition: succeeded()
     jobs:
       - job: 'Pipeline_Passed_GitHub'
@@ -413,7 +412,6 @@ stages:
       - 'Build'
       - 'Docker'
       - 'Test'
-      - 'Docs'
     condition: failed()
     jobs:
       - job: 'Pipeline_Failed_GitHub'
