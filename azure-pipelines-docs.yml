@@ -33,6 +33,6 @@ stages:
               cd docs
               python --version
               pip --version
-              sudo pip install mkdocs mkdocs-material
+              sudo pip install mkdocs mkdocs-material pymdown-extensions
               mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: 'MkDocs'
