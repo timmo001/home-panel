@@ -117,6 +117,8 @@ stages:
           - script: |
               sudo apt install jq
               jq '.experimental = true' /etc/docker/daemon.json
+              sudo systemctl restart docker
+              cat /etc/docker/daemon.json
               docker version -f '{{.Server.Experimental}}'
             displayName: 'Enable Experimental'
           - task: Docker@2
