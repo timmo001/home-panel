@@ -29,7 +29,7 @@ stages:
               python3 -m pip install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
-              git config --global user.email "$githubEmail"
+              git config --global user.email "$(githubEmail)"
               git config --global user.name "Git"
               git status
             displayName: "Setup Git"
