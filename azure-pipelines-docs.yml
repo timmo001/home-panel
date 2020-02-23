@@ -7,8 +7,7 @@ trigger:
 
 pr: none
 
-pool:
-  name: "Default"
+pool: "Default"
 
 variables:
   - group: github
