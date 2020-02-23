@@ -17,13 +17,14 @@ stages:
         displayName: "MkDocs"
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - script: |
               sudo apt install -y git git-fast-import openssh-client
               sudo pip install mkdocs
               pip install --user mkdocs-material pymdown-extensions
-            displayName: 'Install'
+            displayName: "Install"
           - script: |
               rm -f ~/.gitconfig && rm -Rf  ~/.ssh
               eval $(ssh-agent -s)
@@ -36,9 +37,9 @@ stages:
               git clone $GITHUB_URL git-src/ && cd git-src/
               python --version
               pip --version
-            displayName: 'Setup'
+            displayName: "Setup"
           - script: |
               git status
               cd docs
               mkdocs gh-deploy -v -c -m "📚 Update docs"
-            displayName: 'MkDocs'
+            displayName: "MkDocs"

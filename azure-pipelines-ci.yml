@@ -83,6 +83,7 @@ stages:
       - job: "Build_App"
         displayName: "App"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
@@ -120,6 +121,7 @@ stages:
       - job: "Docker_Build"
         displayName: "Build"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         strategy:
           maxParallel: 5
@@ -182,6 +184,7 @@ stages:
       - job: "Test_App"
         displayName: "App"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
@@ -219,6 +222,7 @@ stages:
       - job: "Test_API"
         displayName: "API"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
@@ -267,6 +271,7 @@ stages:
       - job: "Pipeline_Passed_GitHub"
         displayName: "GitHub"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
@@ -288,6 +293,7 @@ stages:
       - job: "Pipeline_Failed_GitHub"
         displayName: "GitHub"
         pool:
+          name: "Default"
           vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
