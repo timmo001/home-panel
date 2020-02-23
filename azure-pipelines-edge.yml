@@ -144,10 +144,8 @@ stages:
               buildArch: "i386"
         steps:
           - script: |
-              TAG="$(Build.SourceVersion#v)"
-              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
-              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
+              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(Build.SourceVersion)"
             displayName: "Publish"
       - job: "Docker_Manifest"
         displayName: "Manifest"
@@ -160,20 +158,12 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
-              TAG="$(sha#v)"
-              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-              REF="$(Build.SourceVersion#v)"
-              REF="$(REF:-$(Build.SourceVersion:0:7))"
-              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Sha"
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
-              TAG="$(edge#v)"
-              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-              REF="$(Build.SourceVersion#v)"
-              REF="$(REF:-$(Build.SourceVersion:0:7))"
-              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):edge:-$(Build.SourceVersion)"
             displayName: "Edge"
           # - script: |
           #     mkdir -p ~/.docker
