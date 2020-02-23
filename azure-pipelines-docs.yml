@@ -25,16 +25,8 @@ stages:
               pip install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
-              rm -f ~/.gitconfig && rm -Rf  ~/.ssh
-              eval $(ssh-agent -s)
-              mkdir -p ~/.ssh
-              echo "$githubSSHPublicKey" > ~/.ssh/id_rsa.pub
-              echo "$githubSSHPrivateKey" | ssh-add -
-              ssh-keyscan github.com >> ~/.ssh/known_hosts
-              git config --global user.email "$githubEmail"
-              git config --global user.name "Git"
-              git clone $githubUrl git-src/ && cd git-src/
-            displayName: "Setup"
+              git clone $githubUrl app/ && cd app/
+            displayName: "Clone"
           - script: |
               git status
               python --version
