@@ -23,12 +23,12 @@ stages:
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
         steps:
           - script: |
-              sudo apt install -y git openssh-client
-              pip install mkdocs mkdocs-material pymdown-extensions
+              sudo apt install -y git python3.7 python3-pip
+              python --version
+              pip3 --version
+              pip3 install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
               cd docs
-              python --version
-              pip --version
-              python -m mkdocs gh-deploy -v -c -m "📚 Update docs"
+              python3.7 -m mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: "MkDocs"
