@@ -83,19 +83,8 @@ stages:
       - "Build"
     condition: succeeded()
     jobs:
-      - job: "Docker_Login"
-        displayName: "Login"
-        steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: "dockerHub"
-              command: "login"
-            displayName: "Login"
       - job: "Docker_Build_Publish"
         displayName: "Build and Publish"
-        dependsOn:
-          - "Docker_Login"
-        condition: succeeded()
         strategy:
           maxParallel: 5
           matrix:
@@ -125,6 +114,11 @@ stages:
             inputs:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+          - task: Docker@2
+            inputs:
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: "$(buildArch)"
