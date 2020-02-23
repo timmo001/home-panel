@@ -145,8 +145,6 @@ stages:
               buildArch: "i386"
         steps:
           - script: |
-              docker tag "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch):sha256$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
       - job: "Docker_Manifest"
@@ -160,12 +158,14 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
-
-              docker manifest create yourrepo/nginx:latest yourrepo/nginx:amd64-latest yourrepo/nginx:arm32v6-latest yourrepo/nginx:arm64v8-latest
-              docker manifest annotate yourrepo/nginx:latest yourrepo/nginx:arm32v6-latest --os linux --arch arm
-              docker manifest annotate yourrepo/nginx:latest yourrepo/nginx:arm64v8-latest --os linux --arch arm64 --variant armv8
-              docker manifest push yourrepo/nginx:latest
-
+              docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)
+              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)" --os linux --arch arm
+              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)" --os linux --arch arm64 --variant armv8
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Sha"
           - script: |
