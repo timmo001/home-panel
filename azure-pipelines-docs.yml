@@ -22,8 +22,7 @@ stages:
         steps:
           - script: |
               sudo apt install -y git git-fast-import openssh-client
-              sudo pip install mkdocs
-              pip install --user mkdocs-material pymdown-extensions
+              pip install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
               rm -f ~/.gitconfig && rm -Rf  ~/.ssh
@@ -41,5 +40,5 @@ stages:
           - script: |
               git status
               cd docs
-              mkdocs gh-deploy -v -c -m "📚 Update docs"
+              python -m mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: "MkDocs"
