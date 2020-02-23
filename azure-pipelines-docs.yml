@@ -30,6 +30,7 @@ stages:
           - script: |
               git config --global user.email "$githubEmail"
               git config --global user.name "Git"
+              git status
             displayName: "Setup Git"
           - script: |
               cd docs
