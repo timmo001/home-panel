@@ -133,6 +133,8 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
+              cat ~/.docker/config.json
+              docker version -f '{{.Server.Experimental}}'
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
@@ -146,6 +148,8 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
+              cat ~/.docker/config.json
+              docker version -f '{{.Server.Experimental}}'
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
