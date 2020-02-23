@@ -58,7 +58,6 @@ A web frontend for controlling the home. Integrates with
 [commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
 [commits]: https://github.com/timmo001/home-panel/commits/master
 [contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
-[demo-app]: https://home-panel-demo.timmo.xyz/
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
