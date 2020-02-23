@@ -146,7 +146,7 @@ stages:
         steps:
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
+                "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
       - job: "Docker_Manifest"
