@@ -116,12 +116,12 @@ stages:
               buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Build Artifacts"
+            displayName: "Download App Artifacts"
             inputs:
               artifactName: "app"
               downloadPath: $(System.DefaultWorkingDirectory)/build
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Build Artifacts"
+            displayName: "Download Api Artifacts"
             inputs:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
