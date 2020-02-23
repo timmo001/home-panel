@@ -51,18 +51,6 @@ stages:
   - stage: "Lint"
     dependsOn: []
     jobs:
-      - job: 'Print_Variables'
-        steps:
-          - script: |
-              echo "Build.SourceBranch = $(Build.SourceBranch)"
-              echo "Build.SourceBranchName = $(Build.SourceBranchName)"
-              echo "Build.SourceVersion = $(Build.SourceVersion)"
-              echo "Build.SourceVersionMessage = $(Build.SourceVersionMessage)"
-              $tags = git tag --sort=-creatordate
-              $tag = $tags[0]
-              echo "git tag --sort=-creatordate = $(tags)"
-              echo "tags[0] = $(tags[0])"
-              echo "git describe --exact-match $(Build.SourceVersion) = $(git describe --exact-match $(Build.SourceVersion))"
       - template: azure-ci/lint/eslint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
