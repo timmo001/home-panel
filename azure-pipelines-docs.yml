@@ -5,6 +5,9 @@ trigger:
     include:
       - master
 
+pool:
+  vmImage: "ubuntu-latest"
+
 variables:
   - group: github
 
@@ -16,9 +19,6 @@ stages:
       - job: "Docs_MkDocs"
         displayName: "MkDocs"
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         steps:
           - script: |
               sudo apt install -y git git-fast-import openssh-client

@@ -16,6 +16,9 @@ schedules:
         - master
     always: true
 
+pool:
+  vmImage: "ubuntu-latest"
+
 variables:
   - name: yarnCachePath
     value: $(Pipeline.Workspace)/.yarn
@@ -120,9 +123,6 @@ stages:
     jobs:
       - job: "Docker_Build"
         displayName: "Build"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         strategy:
           maxParallel: 5
           matrix:
@@ -183,9 +183,6 @@ stages:
     jobs:
       - job: "Test_App"
         displayName: "App"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
             inputs:
@@ -221,9 +218,6 @@ stages:
               pathToSources: "src"
       - job: "Test_API"
         displayName: "API"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         steps:
           - task: Cache@2
             inputs:
@@ -270,9 +264,6 @@ stages:
     jobs:
       - job: "Pipeline_Passed_GitHub"
         displayName: "GitHub"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
             displayName: "Send Comment"
@@ -292,9 +283,6 @@ stages:
     jobs:
       - job: "Pipeline_Failed_GitHub"
         displayName: "GitHub"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
         steps:
           - task: GitHubComment@0
             displayName: "Send Comment"
