@@ -202,7 +202,6 @@ stages:
               TAG="$(Build.SourceVersion#v)"
               TAG="$(TAG:-$(Build.SourceVersion:0:7))"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
-              docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
               docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
             displayName: "Publish"
       - job: "Docker_Manifest"
