@@ -9,7 +9,6 @@ pr: none
 
 pool:
   name: "Default"
-  vmImage: "ubuntu-latest"
 
 variables:
   - group: github
