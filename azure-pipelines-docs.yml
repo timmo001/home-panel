@@ -27,12 +27,7 @@ stages:
               pip install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
-              git clone $(githubUrl)
-            displayName: "Clone"
-          - script: |
-              git status
               python --version
               pip --version
-              cd home-panel/docs/
               python -m mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: "MkDocs"
