@@ -14,6 +14,30 @@ variables:
   - group: "github"
 
 stages:
+  - stage: "Lint"
+    dependsOn: []
+    jobs:
+      - template: azure-ci/lint-eslint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-hadolint.yml@organization
+        parameters:
+          path: "Dockerfile"
+      - template: azure-ci/lint-jsonlint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-markdownlint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-prettier.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-shellcheck.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
+      - template: azure-ci/lint-yamllint.yml@organization
+        parameters:
+          path: $(System.DefaultWorkingDirectory)
   - stage: "Build"
     dependsOn: []
     jobs:
