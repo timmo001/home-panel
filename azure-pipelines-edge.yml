@@ -1,0 +1,205 @@
+---
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+
+pr: none
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - group: github
+
+stages:
+  - stage: "Build"
+    dependsOn: []
+    jobs:
+      - job: "Build_App"
+        displayName: "App"
+        pool:
+          name: "Default"
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: $(yarnCachePath)
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: "Cache Yarn Packages"
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(versionNode)
+            displayName: "Install Node.js"
+          - script: |
+              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+            displayName: "Install"
+          - script: |
+              node --version
+              yarn --version
+              yarn run build --production
+            displayName: "Build"
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: "build"
+              ArtifactName: "app"
+              publishLocation: "Container"
+            displayName: "Publish"
+  - stage: "Docker"
+    dependsOn:
+      - "Lint"
+      - "Build"
+    condition: succeeded()
+    jobs:
+      - job: "Docker_Build"
+        displayName: "Build"
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: "aarch64"
+              buildBase: $(aarch64Base)
+            amd64:
+              buildArch: "amd64"
+              buildBase: $(amd64Base)
+            armhf:
+              buildArch: "armhf"
+              buildBase: $(armhfBase)
+            armv7:
+              buildArch: "armv7"
+              buildBase: $(armv7Base)
+            i386:
+              buildArch: "i386"
+              buildBase: $(i386Base)
+        steps:
+          - task: DownloadBuildArtifacts@0
+            displayName: "Download Build Artifacts"
+            inputs:
+              artifactName: "app"
+              downloadPath: $(System.DefaultWorkingDirectory)/build
+          - script: |
+              docker info
+              docker run --rm --privileged hassioaddons/qemu-user-static:latest
+              if [ "$(buildArch)" = "aarch64" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-aarch64-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armhf" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              if [ "$(buildArch)" = "armv7" ]; then
+                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
+                curl -L -s \
+                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
+                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
+              fi
+              docker build \
+                --build-arg "BUILD_ARCH=$(buildArch)" \
+                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+                --build-arg "BUILD_FROM=$(buildBase)" \
+                --build-arg "BUILD_REF=$(Build.SourceVersion)" \
+                --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
+                $(dockerTarget)
+            displayName: "Build"
+      - job: "Docker_Login"
+        displayName: "Login"
+        dependsOn: "Docker_Build"
+        condition: succeeded()
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
+      - job: "Docker_Publish"
+        displayName: "Publish"
+        dependsOn:
+          - "Docker_Build"
+          - "Docker_Login"
+        condition: succeeded()
+        strategy:
+          maxParallel: 5
+          matrix:
+            aarch64:
+              buildArch: "aarch64"
+            amd64:
+              buildArch: "amd64"
+            armhf:
+              buildArch: "armhf"
+            armv7:
+              buildArch: "armv7"
+            i386:
+              buildArch: "i386"
+        steps:
+          - script: |
+              TAG="$(Build.SourceVersion#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(TAG)"
+              docker tag "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(TAG)"
+            displayName: "Publish"
+      - job: "Docker_Manifest"
+        displayName: "Manifest"
+        dependsOn:
+          - "Docker_Build"
+          - "Docker_Login"
+          - "Docker_Publish"
+        condition: succeeded()
+        steps:
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(sha#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Sha"
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              TAG="$(edge#v)"
+              TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+              REF="$(Build.SourceVersion#v)"
+              REF="$(REF:-$(Build.SourceVersion:0:7))"
+              docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+            displayName: "Edge"
+          # - script: |
+          #     mkdir -p ~/.docker
+          #     echo '("experimental":"enabled")' > ~/.docker/config.json
+          #     TAG="$(Build.SourceVersion#v)"
+          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+          #     REF="$(Build.SourceVersion#v)"
+          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
+          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+          #   displayName: "Version"
+          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+          # - script: |
+          #     mkdir -p ~/.docker
+          #     echo '("experimental":"enabled")' > ~/.docker/config.json
+          #     TAG="$(stable#v)"
+          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+          #     REF="$(Build.SourceVersion#v)"
+          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
+          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+          #   displayName: "Stable"
+          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
+          # - script: |
+          #     mkdir -p ~/.docker
+          #     echo '("experimental":"enabled")' > ~/.docker/config.json
+          #     TAG="$(beta#v)"
+          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
+          #     REF="$(Build.SourceVersion#v)"
+          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
+          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
+          #   displayName: "Beta"
+          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
