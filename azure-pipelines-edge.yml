@@ -114,6 +114,12 @@ stages:
             inputs:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+          - script: |
+              mkdir -p ~/.docker
+              echo '("experimental":"enabled")' > ~/.docker/config.json
+              cat ~/.docker/config.json
+              docker version -f '{{.Server.Experimental}}'
+            displayName: 'Enable Experimental'
           - task: Docker@2
             inputs:
               containerRegistry: "dockerHub"
@@ -131,9 +137,6 @@ stages:
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
           - script: |
-              mkdir -p ~/.docker
-              echo '("experimental":"enabled")' > ~/.docker/config.json
-              cat ~/.docker/config.json
               docker version -f '{{.Server.Experimental}}'
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
@@ -146,9 +149,6 @@ stages:
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Sha"
           - script: |
-              mkdir -p ~/.docker
-              echo '("experimental":"enabled")' > ~/.docker/config.json
-              cat ~/.docker/config.json
               docker version -f '{{.Server.Experimental}}'
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
