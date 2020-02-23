@@ -34,11 +34,11 @@ stages:
               git config --global user.email "$githubEmail"
               git config --global user.name "Git"
               git clone $GITHUB_URL git-src/ && cd git-src/
-              python --version
-              pip --version
             displayName: "Setup"
           - script: |
               git status
+              python --version
+              pip --version
               cd docs
               python -m mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: "MkDocs"
