@@ -29,5 +29,5 @@ stages:
             displayName: "Install"
           - script: |
               cd docs
-              python3 -m mkdocs gh-deploy -v -c -m "📚 Update docs"
+              python3 -m mkdocs gh-deploy -v -c -m ":books: Update docs"
             displayName: "MkDocs"
