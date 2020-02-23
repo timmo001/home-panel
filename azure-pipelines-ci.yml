@@ -71,6 +71,7 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
+      - template: azure-ci/build/node-ts.yml@organization
   - stage: "Docker"
     dependsOn:
       - "Lint"
@@ -103,6 +104,11 @@ stages:
             inputs:
               artifactName: "app"
               downloadPath: $(System.DefaultWorkingDirectory)/build
+          - task: DownloadBuildArtifacts@0
+            displayName: "Download Build Artifacts"
+            inputs:
+              artifactName: "api"
+              downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: "$(buildArch)"
