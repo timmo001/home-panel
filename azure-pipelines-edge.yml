@@ -83,8 +83,21 @@ stages:
       - "Build"
     condition: succeeded()
     jobs:
-      - job: "Docker_Build"
-        displayName: "Build"
+      - job: "Docker_Login"
+        displayName: "Login"
+        dependsOn:
+          - "Docker_Build"
+        condition: succeeded()
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
+      - job: "Docker_Build_Publish"
+        displayName: "Build and Publish"
+        dependsOn:
+          - "Docker_Login"
         strategy:
           maxParallel: 5
           matrix:
@@ -120,50 +133,11 @@ stages:
               buildBase: "$(buildBase)"
               dockerOrg: "$(dockerLogin)"
               dockerSlug: "$(dockerSlug)"
-      - job: "Docker_Login"
-        displayName: "Login"
-        dependsOn:
-          - "Docker_Build"
-        condition: succeeded()
-        steps:
-          - task: Docker@2
-            inputs:
-              containerRegistry: "dockerHub"
-              command: "login"
-            displayName: "Login"
-      - job: "Docker_Publish"
-        displayName: "Publish"
-        dependsOn:
-          - "Docker_Build"
-          - "Docker_Login"
-        condition: succeeded()
-        strategy:
-          maxParallel: 5
-          matrix:
-            aarch64:
-              buildArch: "aarch64"
-            amd64:
-              buildArch: "amd64"
-            armhf:
-              buildArch: "armhf"
-            armv7:
-              buildArch: "armv7"
-            i386:
-              buildArch: "i386"
-        steps:
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
-      - job: "Docker_Manifest"
-        displayName: "Manifest"
-        dependsOn:
-          - "Docker_Build"
-          - "Docker_Login"
-          - "Docker_Publish"
-        condition: succeeded()
-        steps:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
@@ -180,7 +154,15 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
-              docker manifest push "$(dockerLogin)/$(dockerSlug):edge:-$(Build.SourceVersion)"
+              docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
+                "$(dockerLogin)/$(dockerSlug):amd64-edge \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)
+              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-edge --os linux --arch arm
+              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-edge --os linux --arch arm64 --variant armv8
+              docker manifest push "$(dockerLogin)/$(dockerSlug):edge
             displayName: "Edge"
             # TBD in seperate yml
             # beta && version
