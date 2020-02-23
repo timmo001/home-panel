@@ -24,10 +24,10 @@ stages:
         steps:
           - script: |
               sudo apt install -y git python3-dev python3-pip
-              python3.7 -m pip --version
-              python3.7 -m pip install mkdocs mkdocs-material pymdown-extensions
+              python3 -m pip --version
+              python3 -m pip install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
           - script: |
               cd docs
-              python3.7 -m mkdocs gh-deploy -v -c -m "📚 Update docs"
+              python3 -m mkdocs gh-deploy -v -c -m "📚 Update docs"
             displayName: "MkDocs"
