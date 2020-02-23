@@ -78,38 +78,7 @@ stages:
   - stage: "Build"
     dependsOn: []
     jobs:
-      - job: "Build_App"
-        displayName: "App"
-        pool:
-          name: "Default"
-          vmImage: "ubuntu-latest"
-        steps:
-          - task: Cache@2
-            inputs:
-              key: 'yarn | "$(Agent.OS)" | yarn.lock'
-              path: $(yarnCachePath)
-              restoreKeys: |
-                yarn | "$(Agent.OS)"
-                yarn
-            displayName: "Cache Yarn Packages"
-          - task: NodeTool@0
-            inputs:
-              versionSpec: $(versionNode)
-            displayName: "Install Node.js"
-          - script: |
-              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: "Install"
-          - script: |
-              node --version
-              yarn --version
-              yarn run build --production
-            displayName: "Build"
-          - task: PublishBuildArtifacts@1
-            inputs:
-              PathtoPublish: "build"
-              ArtifactName: "app"
-              publishLocation: "Container"
-            displayName: "Publish"
+      - template: azure-ci/build/web-app.yml@organization
   - stage: "Docker"
     dependsOn:
       - "Lint"
@@ -142,35 +111,11 @@ stages:
             inputs:
               artifactName: "app"
               downloadPath: $(System.DefaultWorkingDirectory)/build
-          - script: |
-              docker info
-              docker run --rm --privileged hassioaddons/qemu-user-static:latest
-              if [ "$(buildArch)" = "aarch64" ]; then
-                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
-                curl -L -s \
-                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-aarch64-static.tar.gz" | \
-                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
-              fi
-              if [ "$(buildArch)" = "armhf" ]; then
-                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
-                curl -L -s \
-                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
-                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
-              fi
-              if [ "$(buildArch)" = "armv7" ]; then
-                mkdir -p $(System.DefaultWorkingDirectory)/rootfs/usr/bin
-                curl -L -s \
-                  "https://github.com/hassio-addons/qemu-user-static/releases/download/v4.2.0/qemu-arm-static.tar.gz" | \
-                  tar zxvf - -C "$(System.DefaultWorkingDirectory)/rootfs/usr/bin/"
-              fi
-              docker build \
-                --build-arg "BUILD_ARCH=$(buildArch)" \
-                --build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
-                --build-arg "BUILD_FROM=$(buildBase)" \
-                --build-arg "BUILD_REF=$(Build.SourceVersion)" \
-                --tag "$(githubRepository)-$(buildArch):$(Build.SourceVersion)" \
-                $(dockerTarget)
-            displayName: "Build"
+          - template: azure-ci/docker/qemu-build.yml@organization
+            parameters:
+              buildArch: "$(buildArch)"
+              buildBase: "$(buildBase)"
+              githubRepository: "$(githubRepository)"
   - stage: "Test"
     dependsOn:
       - "Lint"
