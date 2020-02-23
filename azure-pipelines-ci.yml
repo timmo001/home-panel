@@ -20,38 +20,33 @@ pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  - name: yarnCachePath
-    value: $(Pipeline.Workspace)/.yarn
-  - name: githubRepository
+  - name: "yarnCachePath"
+    value: "$(Pipeline.Workspace)/.yarn"
+  - group: "github"
+  - name: "githubRepository"
     value: "timmo001/home-panel"
-  - group: docker
-  - name: dockerSlug
+  - group: "docker"
+  - name: "dockerSlug"
     value: "home-panel"
-  - name: dockerTarget
+  - name: "dockerTarget"
     value: "."
-  - name: aarch64Base
+  - name: "aarch64Base"
     value: "arm64v8/alpine:3.11.3"
-  - name: amd64Base
+  - name: "amd64Base"
     value: "amd64/alpine:3.11.3"
-  - name: armhfBase
+  - name: "armhfBase"
     value: "arm32v6/alpine:3.11.3"
-  - name: armv7Base
+  - name: "armv7Base"
     value: "arm32v7/alpine:3.11.3"
-  - name: i386Base
+  - name: "i386Base"
     value: "i386/alpine:3.11.3"
-  - name: aarch64Variant
-    value: "v8"
-  - name: armhfVariant
-    value: "v6"
-  - name: armv7Variant
-    value: "v7"
-  - name: versionNode
+  - name: "versionNode"
     value: "13.x"
 
 resources:
   repositories:
-    - repository: organization
-      type: github
+    - repository: "organization"
+      type: "github"
       name: "timmo001/organization"
       endpoint: "timmo001"
 
