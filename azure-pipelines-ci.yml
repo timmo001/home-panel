@@ -78,7 +78,7 @@ stages:
   - stage: "Build"
     dependsOn: []
     jobs:
-      - template: azure-ci/build/web-app.yml@organization
+      - template: azure-ci/build/react-app.yml@organization
   - stage: "Docker"
     dependsOn:
       - "Lint"
