@@ -85,9 +85,6 @@ stages:
     jobs:
       - job: "Docker_Login"
         displayName: "Login"
-        dependsOn:
-          - "Docker_Build"
-        condition: succeeded()
         steps:
           - task: Docker@2
             inputs:
@@ -98,6 +95,7 @@ stages:
         displayName: "Build and Publish"
         dependsOn:
           - "Docker_Login"
+        condition: succeeded()
         strategy:
           maxParallel: 5
           matrix:
