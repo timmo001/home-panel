@@ -3,9 +3,9 @@ trigger:
   batch: true
   branches:
     include:
-      - master
+      - "master"
 
-pr: none
+pr: "none"
 
 pool: "Default"
 
@@ -15,7 +15,6 @@ variables:
 stages:
   - stage: "Docs"
     displayName: "Docs"
-    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
     jobs:
       - job: "Docs_MkDocs"
         displayName: "MkDocs"

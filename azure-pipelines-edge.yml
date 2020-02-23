@@ -3,15 +3,15 @@ trigger:
   batch: true
   branches:
     include:
-      - master
+      - "master"
 
-pr: none
+pr: "none"
 
 pool:
   vmImage: "ubuntu-latest"
 
 variables:
-  - group: github
+  - group: "github"
 
 stages:
   - stage: "Build"

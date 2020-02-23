@@ -2,18 +2,18 @@
 trigger:
   batch: true
   branches:
-    include:
-      - master
-
+    exclude:
+      - "master"
+      - "refs/tags/*"
 pr:
-  - master
+  - "master"
 
 schedules:
   - cron: "0 1 * * *"
     displayName: "nightly builds"
     branches:
       include:
-        - master
+        - "master"
     always: true
 
 pool:
