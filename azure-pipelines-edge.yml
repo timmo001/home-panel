@@ -112,7 +112,8 @@ stages:
             parameters:
               buildArch: "$(buildArch)"
               buildBase: "$(buildBase)"
-              githubRepository: "$(githubRepository)"
+              dockerOrg: "$(dockerLogin)"
+              dockerSlug: "$(dockerSlug)"
       - job: "Docker_Login"
         displayName: "Login"
         dependsOn: "Docker_Build"
@@ -145,9 +146,8 @@ stages:
         steps:
           - script: |
               docker tag "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch):$(Build.SourceVersion)"
+                "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch):sha256$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
-              docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(Build.SourceVersion)"
             displayName: "Publish"
       - job: "Docker_Manifest"
         displayName: "Manifest"
@@ -160,6 +160,12 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '("experimental":"enabled")' > ~/.docker/config.json
+
+              docker manifest create yourrepo/nginx:latest yourrepo/nginx:amd64-latest yourrepo/nginx:arm32v6-latest yourrepo/nginx:arm64v8-latest
+              docker manifest annotate yourrepo/nginx:latest yourrepo/nginx:arm32v6-latest --os linux --arch arm
+              docker manifest annotate yourrepo/nginx:latest yourrepo/nginx:arm64v8-latest --os linux --arch arm64 --variant armv8
+              docker manifest push yourrepo/nginx:latest
+
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Sha"
           - script: |
