@@ -24,7 +24,6 @@ stages:
         steps:
           - script: |
               sudo apt install -y git python3.7 python3-pip
-              python --version
               pip3 --version
               pip3 install mkdocs mkdocs-material pymdown-extensions
             displayName: "Install"
