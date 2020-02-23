@@ -116,7 +116,8 @@ stages:
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - script: |
               sudo apt install jq
-              jq '.experimental = true' /etc/docker/daemon.json
+              jq '.experimental = true' /etc/docker/daemon.json > /etc/docker/daemon.json
+              docker version -f '{{.Server.Experimental}}'
               sudo systemctl restart docker
               cat /etc/docker/daemon.json
               docker version -f '{{.Server.Experimental}}'
