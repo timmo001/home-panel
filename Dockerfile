@@ -53,9 +53,6 @@ RUN \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
-    && cd /opt/panel \
-    && yarn install \
-    && yarn compile \
     && mkdir -p /data/db \
     \
     && yarn cache clean \

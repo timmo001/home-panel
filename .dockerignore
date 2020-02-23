@@ -13,3 +13,5 @@ docs/
 .mdlrc
 .eslintrc.json
 hugo/
+src/
+test/
