@@ -33,7 +33,7 @@ variables:
   - name: "i386Base"
     value: "i386/alpine:3.11.3"
   - name: "versionNode"
-    value: "13.x"
+    value: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
 
 resources:
   repositories:
@@ -71,7 +71,11 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
+        parameters:
+          versionNode: $(versionNode)
       - template: azure-ci/build/node-ts.yml@organization
+        parameters:
+          versionNode: "$(versionNode)"
   - stage: "Docker"
     dependsOn:
       - "Lint"
