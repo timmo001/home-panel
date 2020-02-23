@@ -115,10 +115,9 @@ stages:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - script: |
-              sudo apt install jq
-              jq '.experimental = true' /etc/docker/daemon.json > /etc/docker/daemon.json
+              sudo sh -c 'echo "{ \"experimental\": true }" > /etc/docker/daemon.json'
               docker version -f '{{.Server.Experimental}}'
-              sudo systemctl restart docker
+              sudo systemctl restart docker.service
               cat /etc/docker/daemon.json
               docker version -f '{{.Server.Experimental}}'
             displayName: 'Enable Experimental'
