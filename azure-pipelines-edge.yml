@@ -165,33 +165,6 @@ stages:
               echo '("experimental":"enabled")' > ~/.docker/config.json
               docker manifest push "$(dockerLogin)/$(dockerSlug):edge:-$(Build.SourceVersion)"
             displayName: "Edge"
-          # - script: |
-          #     mkdir -p ~/.docker
-          #     echo '("experimental":"enabled")' > ~/.docker/config.json
-          #     TAG="$(Build.SourceVersion#v)"
-          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-          #     REF="$(Build.SourceVersion#v)"
-          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
-          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-          #   displayName: "Version"
-          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
-          # - script: |
-          #     mkdir -p ~/.docker
-          #     echo '("experimental":"enabled")' > ~/.docker/config.json
-          #     TAG="$(stable#v)"
-          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-          #     REF="$(Build.SourceVersion#v)"
-          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
-          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-          #   displayName: "Stable"
-          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?$/')
-          # - script: |
-          #     mkdir -p ~/.docker
-          #     echo '("experimental":"enabled")' > ~/.docker/config.json
-          #     TAG="$(beta#v)"
-          #     TAG="$(TAG:-$(Build.SourceVersion:0:7))"
-          #     REF="$(Build.SourceVersion#v)"
-          #     REF="$(REF:-$(Build.SourceVersion:0:7))"
-          #     docker manifest push "$(dockerLogin)/$(dockerSlug):$(TAG)"
-          #   displayName: "Beta"
-          #   condition: eq(variables['Build.SourceBranch'], '/^v\d+\.\d+\.\d+(?:-(?:beta|rc)(?:(?:(?:\+|\.)?[a-zA-Z0-9]+)*)?)?$/')
+            # TBD in seperate yml
+            # beta && version
+            # latest && version
