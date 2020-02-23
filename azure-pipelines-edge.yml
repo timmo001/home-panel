@@ -144,8 +144,8 @@ stages:
               buildArch: "i386"
         steps:
           - script: |
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):$(buildArch):$(Build.SourceVersion)"
+              docker tag "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
+                "docker.io/$(dockerLogin)/$(dockerSlug):$(buildArch):$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug)-$(buildArch):$(Build.SourceVersion)"
             displayName: "Publish"
