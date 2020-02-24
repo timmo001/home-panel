@@ -1,4 +1,3 @@
-// @flow
 import React, { useEffect, useCallback } from 'react';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import authentication from '@feathersjs/authentication-client';

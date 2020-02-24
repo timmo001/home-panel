@@ -1,4 +1,3 @@
-// @flow
 import { RouteComponentProps } from 'react-router-dom';
 import * as H from 'history';
 

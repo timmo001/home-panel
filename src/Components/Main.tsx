@@ -1,4 +1,3 @@
-// @flow
 import React, { useEffect } from 'react';
 import arrayMove from 'array-move';
 import classnames from 'classnames';

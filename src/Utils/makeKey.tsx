@@ -1,4 +1,3 @@
-// @flow
 function makeKey(length: number) {
   var result = '';
   var characters =

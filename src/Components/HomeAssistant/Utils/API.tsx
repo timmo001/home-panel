@@ -1,4 +1,3 @@
-// @flow
 import { Auth } from 'home-assistant-js-websocket';
 
 export async function fetchHistory(

@@ -1,4 +1,3 @@
-// @flow
 import React, { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';

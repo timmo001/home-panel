@@ -1,4 +1,3 @@
-// @flow
 const clone = (obj: any): any => {
   var copy: any;
   // Handle the 3 simple types, and null or undefined

@@ -1,4 +1,3 @@
-// @flow
 import { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import {

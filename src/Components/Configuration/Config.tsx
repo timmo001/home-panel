@@ -1,4 +1,3 @@
-// @flow
 import { Color } from '@material-ui/core';
 import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 import { CommonColors } from '@material-ui/core/colors/common';

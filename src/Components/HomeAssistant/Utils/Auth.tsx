@@ -1,4 +1,3 @@
-// @flow
 import {
   AuthData,
   ERR_INVALID_AUTH,

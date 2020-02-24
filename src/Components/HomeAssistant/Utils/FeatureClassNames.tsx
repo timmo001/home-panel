@@ -1,4 +1,3 @@
-// @flow
 import { HassEntity } from 'home-assistant-js-websocket';
 import { supportsFeature } from './SupportsFeature';
 

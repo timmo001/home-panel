@@ -9,7 +9,6 @@
   "license": "MIT",
   "homepage": ".",
   "dependencies": {
-    "@babel/runtime": "7.8.4",
     "@feathersjs/authentication-client": "4.5.1",
     "@feathersjs/feathers": "4.5.1",
     "@feathersjs/socketio-client": "4.5.1",
@@ -18,7 +17,6 @@
     "@mdi/font": "4.9.95",
     "array-move": "2.2.1",
     "classnames": "2.2.6",
-    "flow-bin": "0.119.0",
     "fuse.js": "3.4.6",
     "home-assistant-js-websocket": "4.4.1",
     "markdown-it": "10.0.0",
@@ -31,14 +29,10 @@
     "react-color": "2.18.0",
     "react-dom": "16.12.0",
     "react-html-parser": "2.0.2",
-    "react-json-editor-ajrm": "2.5.9",
-    "react-moment": "0.9.7",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.0",
-    "react-sound": "1.2.0",
     "recharts": "2.0.0-beta.1",
     "rss-parser": "3.7.5",
-    "snyk": "1.296.1",
     "socket.io-client": "2.3.0",
     "superagent": "5.2.2",
     "typeface-roboto": "0.0.75",
@@ -49,9 +43,7 @@
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
     "eject": "react-scripts eject",
-    "eslint": "eslint -c .eslintrc.json --color src",
-    "flow": "flow",
-    "snyk-protect": "snyk protect"
+    "eslint": "eslint -c .eslintrc.json --color src"
   },
   "browserslist": {
     "production": [
@@ -77,15 +69,12 @@
   },
   "devDependencies": {
     "@types/classnames": "2.2.9",
-    "@types/jest": "25.1.3",
     "@types/markdown-it": "0.0.9",
-    "@types/node": "13.7.4",
     "@types/react": "16.9.22",
     "@types/react-color": "3.0.1",
     "@types/react-dom": "16.9.5",
     "@types/react-html-parser": "2.0.1",
     "@types/react-router-dom": "5.1.3",
-    "@types/react-select": "3.0.10",
     "@types/recharts": "1.8.5",
     "@types/socket.io": "2.1.4",
     "@types/socket.io-client": "1.4.32",
@@ -96,8 +85,7 @@
     "eslint-plugin-prettier": "3.1.2",
     "eslint-plugin-react": "7.18.3",
     "jest-junit": "10.0.0",
-    "prettier": "1.19.1",
-    "source-map-loader": "0.2.4"
+    "prettier": "1.19.1"
   },
   "snyk": true
 }
