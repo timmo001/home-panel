@@ -74,11 +74,7 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
-        parameters:
-          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
       - template: azure-ci/build/node-ts.yml@organization
-        parameters:
-          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
   - stage: "Docker"
     dependsOn:
       - "Lint"

@@ -69,11 +69,7 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
-        parameters:
-          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
       - template: azure-ci/build/node-ts.yml@organization
-        parameters:
-          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
   - stage: "Docker"
     dependsOn:
       - "Lint"
@@ -134,7 +130,7 @@ stages:
             displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
-              versionSpec: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
+              versionSpec: "13.x"
             displayName: "Install Node.js"
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
@@ -169,7 +165,7 @@ stages:
             displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
-              versionSpec: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
+              versionSpec: "13.x"
             displayName: "Install Node.js"
           - script: |
               cd api
