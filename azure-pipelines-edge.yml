@@ -31,7 +31,7 @@ variables:
     value: "arm32v7/alpine:3.11.3"
   - name: "i386Base"
     value: "i386/alpine:3.11.3"
-  - name: "aarch64Variant"
+  - name: "arm64v8Variant"
     value: "v8"
   - name: "armhfVariant"
     value: "v6"
