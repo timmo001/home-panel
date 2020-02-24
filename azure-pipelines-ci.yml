@@ -30,8 +30,6 @@ variables:
     value: "arm32v6/alpine:3.11.3"
   - name: "armv7Base"
     value: "arm32v7/alpine:3.11.3"
-  - name: "i386Base"
-    value: "i386/alpine:3.11.3"
 
 resources:
   repositories:
@@ -93,9 +91,6 @@ stages:
             armv7:
               buildArch: "armv7"
               buildBase: $(armv7Base)
-            i386:
-              buildArch: "i386"
-              buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
             displayName: "Download Build Artifacts"

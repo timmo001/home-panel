@@ -29,8 +29,6 @@ variables:
     value: 'arm32v7/alpine:3.11.3'
   - name: 'arm64v8Base'
     value: 'arm64v8/alpine:3.11.3'
-  - name: 'i386Base'
-    value: 'i386/alpine:3.11.3'
 
 resources:
   repositories:
@@ -67,9 +65,6 @@ stages:
             arm64v8:
               buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
-            i386:
-              buildArch: 'i386'
-              buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download App Artifacts'
@@ -121,7 +116,6 @@ stages:
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
-              docker pull "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)"
             displayName: 'Pull Images'
           - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
@@ -129,8 +123,7 @@ stages:
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)"
+                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" --os linux --arch amd64
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
@@ -139,8 +132,6 @@ stages:
                 "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)" --os linux --arch arm --variant armv7
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)" --os linux --arch arm64 --variant armv8
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)" --os linux --arch 386
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: 'Sha'
           - script: |
@@ -149,8 +140,7 @@ stages:
                 "$(dockerLogin)/$(dockerSlug):amd64-edge" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-edge" \
                 "$(dockerLogin)/$(dockerSlug):arm32v7-edge" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-edge" \
-                "$(dockerLogin)/$(dockerSlug):i386-edge"
+                "$(dockerLogin)/$(dockerSlug):arm64v8-edge"
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge" --os linux --arch amd64
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
@@ -159,8 +149,6 @@ stages:
                 "$(dockerLogin)/$(dockerSlug):arm32v7-edge" --os linux --arch arm --variant armv7
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):arm64v8-edge" --os linux --arch arm64 --variant armv8
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):i386-edge" --os linux --arch i386
               docker manifest push "$(dockerLogin)/$(dockerSlug):edge"
             displayName: 'Edge'
             # TBD in seperate yml
