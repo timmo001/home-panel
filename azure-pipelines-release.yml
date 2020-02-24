@@ -105,20 +105,20 @@ stages:
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-beta" \
                 "$(dockerLogin)/$(dockerSlug):beta"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-beta"
-            condition: eq(variables['Build.BuildNumber'], '*beta*')
+            condition: eq(variables['Build.SourceVersion'], '*beta*')
             displayName: 'Publish Beta'
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.BuildNumber)"
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.BuildNumber)" \
-                "$(dockerLogin)/$(dockerSlug):$(Build.BuildNumber)"
-              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.BuildNumber)"
+                "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: 'Publish Version'
       - job: 'Docker_Manifest'
         displayName: 'Manifest'
         dependsOn:
           - 'Docker_Build_Publish'
-        condition: and(succeeded(), eq(variables['Build.BuildNumber'], '*beta*'))
+        condition: and(succeeded(), eq(variables['Build.SourceVersion'], '*beta*'))
         steps:
           - task: Docker@2
             inputs:
@@ -139,7 +139,7 @@ stages:
               name: 'Beta'
           - template: azure-ci/docker/qemu-manifest.yml@organization
             parameters:
-              buildId: '$(Build.BuildNumber)'
+              buildId: '$(Build.SourceVersion)'
               dockerOrg: '$(dockerLogin)'
               dockerSlug: '$(dockerSlug)'
               name: 'Version'
