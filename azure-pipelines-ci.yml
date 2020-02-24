@@ -124,7 +124,7 @@ stages:
                 yarn
             displayName: "Cache Yarn Packages"
           - script: |
-              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+              yarn install --pure-lockfile --cache-folder $(yarnCachePath)
             displayName: "Install"
           - script: |
               yarn test
@@ -156,7 +156,7 @@ stages:
             displayName: "Cache Yarn Packages"
           - script: |
               cd api
-              yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
+              yarn install --pure-lockfile --cache-folder $(yarnCachePath)
             displayName: "Install"
           - script: |
               cd api
