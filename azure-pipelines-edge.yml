@@ -31,12 +31,6 @@ variables:
     value: "arm32v7/alpine:3.11.3"
   - name: "i386Base"
     value: "i386/alpine:3.11.3"
-  - name: "arm64v8Variant"
-    value: "v8"
-  - name: "armhfVariant"
-    value: "v6"
-  - name: "armv7Variant"
-    value: "v7"
 
 resources:
   repositories:
@@ -61,7 +55,7 @@ stages:
         strategy:
           maxParallel: 5
           matrix:
-            aarch64:
+            arm64v8:
               buildArch: "arm64v8"
               buildBase: $(arm64v8Base)
             amd64:

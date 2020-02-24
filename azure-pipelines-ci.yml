@@ -22,7 +22,7 @@ variables:
     value: "home-panel"
   - name: "dockerTarget"
     value: "."
-  - name: "aarch64Base"
+  - name: "arm64v8Base"
     value: "arm64v8/alpine:3.11.3"
   - name: "amd64Base"
     value: "amd64/alpine:3.11.3"
@@ -81,9 +81,9 @@ stages:
         strategy:
           maxParallel: 5
           matrix:
-            aarch64:
-              buildArch: "aarch64"
-              buildBase: $(aarch64Base)
+            arm64v8:
+              buildArch: "arm64v8"
+              buildBase: $(arm64v8Base)
             amd64:
               buildArch: "amd64"
               buildBase: $(amd64Base)
