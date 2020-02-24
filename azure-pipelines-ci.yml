@@ -77,7 +77,7 @@ stages:
       - job: "Docker_Build"
         displayName: "Build"
         strategy:
-          maxParallel: 5
+          maxParallel: 4
           matrix:
             arm64v8:
               buildArch: "arm64v8"
