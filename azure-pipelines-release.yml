@@ -107,8 +107,6 @@ stages:
             condition: contains(variables['Build.SourceBranchName'], 'beta')
             displayName: 'Publish Beta'
           - script: |
-              echo $(Build.SourceBranch)
-              echo $(Build.SourceBranchName)
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
