@@ -3,89 +3,89 @@ trigger:
   batch: true
   branches:
     include:
-      - "master"
+      - 'master'
 
-pr: "none"
+pr: 'none'
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: 'ubuntu-latest'
 
 variables:
-  - name: "yarnCachePath"
-    value: "$(Pipeline.Workspace)/.yarn"
-  - group: "github"
-  - name: "githubRepository"
-    value: "timmo001/home-panel"
-  - group: "docker"
-  - name: "dockerSlug"
-    value: "home-panel"
-  - name: "dockerTarget"
-    value: "."
-  - name: "amd64Base"
-    value: "amd64/alpine:3.11.3"
-  - name: "arm32v6Base"
-    value: "arm32v6/alpine:3.11.3"
-  - name: "arm32v7Base"
-    value: "arm32v7/alpine:3.11.3"
-  - name: "arm64v8Base"
-    value: "arm64v8/alpine:3.11.3"
-  - name: "i386Base"
-    value: "i386/alpine:3.11.3"
+  - name: 'yarnCachePath'
+    value: '$(Pipeline.Workspace)/.yarn'
+  - group: 'github'
+  - name: 'githubRepository'
+    value: 'timmo001/home-panel'
+  - group: 'docker'
+  - name: 'dockerSlug'
+    value: 'home-panel'
+  - name: 'dockerTarget'
+    value: '.'
+  - name: 'amd64Base'
+    value: 'amd64/alpine:3.11.3'
+  - name: 'arm32v6Base'
+    value: 'arm32v6/alpine:3.11.3'
+  - name: 'arm32v7Base'
+    value: 'arm32v7/alpine:3.11.3'
+  - name: 'arm64v8Base'
+    value: 'arm64v8/alpine:3.11.3'
+  - name: 'i386Base'
+    value: 'i386/alpine:3.11.3'
 
 resources:
   repositories:
-    - repository: "organization"
-      type: "github"
-      name: "timmo001/organization"
-      endpoint: "timmo001"
+    - repository: 'organization'
+      type: 'github'
+      name: 'timmo001/organization'
+      endpoint: 'timmo001'
 
 stages:
-  - stage: "Build"
+  - stage: 'Build'
     dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
       - template: azure-ci/build/node-ts.yml@organization
-  - stage: "Docker"
+  - stage: 'Docker'
     dependsOn:
-      - "Build"
+      - 'Build'
     condition: succeeded()
     jobs:
-      - job: "Docker_Build_Publish"
-        displayName: "Build and Publish"
+      - job: 'Docker_Build_Publish'
+        displayName: 'Build and Publish'
         strategy:
           maxParallel: 5
           matrix:
             amd64:
-              buildArch: "amd64"
+              buildArch: 'amd64'
               buildBase: $(amd64Base)
             arm32v6:
-              buildArch: "arm32v6"
+              buildArch: 'arm32v6'
               buildBase: $(arm32v6Base)
             arm32v7:
-              buildArch: "arm32v7"
+              buildArch: 'arm32v7'
               buildBase: $(arm32v7Base)
             arm64v8:
-              buildArch: "arm64v8"
+              buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
             i386:
-              buildArch: "i386"
+              buildArch: 'i386'
               buildBase: $(i386Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: "Download App Artifacts"
+            displayName: 'Download App Artifacts'
             inputs:
-              artifactName: "app"
+              artifactName: 'app'
               downloadPath: $(System.DefaultWorkingDirectory)/build
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Api Artifacts"
+            displayName: 'Download Api Artifacts'
             inputs:
-              artifactName: "api"
+              artifactName: 'api'
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - task: Docker@2
             inputs:
-              containerRegistry: "dockerHub"
-              command: "login"
-            displayName: "Login"
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Login'
           - script: |
               sudo sh -c 'echo "{ \"experimental\": true }" > /etc/docker/daemon.json'
               docker version -f '{{.Server.Experimental}}'
@@ -93,22 +93,22 @@ stages:
               mkdir -p ~/.docker
               echo '{"experimental":"enabled"}' > ~/.docker/config.json
               docker info
-            displayName: "Enable Experimental"
+            displayName: 'Enable Experimental'
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
-              buildArch: "$(buildArch)"
-              buildBase: "$(buildBase)"
-              dockerOrg: "$(dockerLogin)"
-              dockerSlug: "$(dockerSlug)"
+              buildArch: '$(buildArch)'
+              buildBase: '$(buildBase)'
+              dockerOrg: '$(dockerLogin)'
+              dockerSlug: '$(dockerSlug)'
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
-            displayName: "Publish"
-      - job: "Docker_Manifest"
-        displayName: "Manifest"
+            displayName: 'Publish'
+      - job: 'Docker_Manifest'
+        displayName: 'Manifest'
         dependsOn:
-          - "Docker_Build_Publish"
+          - 'Docker_Build_Publish'
         condition: succeeded()
         steps:
           - script: |
@@ -117,14 +117,14 @@ stages:
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)"
-            displayName: "Pull Images"
+            displayName: 'Pull Images'
           - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion) \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion) \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)"
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" --os linux --arch amd64
@@ -137,14 +137,14 @@ stages:
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)" --os linux --arch i386
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
-            displayName: "Sha"
+            displayName: 'Sha'
           - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-edge \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-edge \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-edge \
+                "$(dockerLogin)/$(dockerSlug):arm32v6-edge" \
+                "$(dockerLogin)/$(dockerSlug):arm32v7-edge" \
+                "$(dockerLogin)/$(dockerSlug):arm64v8-edge" \
                 "$(dockerLogin)/$(dockerSlug):i386-edge"
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge" --os linux --arch amd64
@@ -157,7 +157,7 @@ stages:
               docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):i386-edge" --os linux --arch i386
               docker manifest push "$(dockerLogin)/$(dockerSlug):edge"
-            displayName: "Edge"
+            displayName: 'Edge'
             # TBD in seperate yml
             # beta && version
             # latest && version
