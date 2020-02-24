@@ -49,7 +49,7 @@ stages:
     condition: succeeded()
     variables:
       - name: 'tag'
-        value: ${ echo $(Build.SourceBranch) | grep -oP "^refs/tags/\K.*" }
+        value: ${Build.SourceBranch#refs/tags/}
     jobs:
       - job: 'Docker_Build_Publish'
         displayName: 'Build and Publish'
