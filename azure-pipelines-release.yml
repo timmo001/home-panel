@@ -108,16 +108,24 @@ stages:
             displayName: 'Publish Beta'
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):$(buildArch)-latest"
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-latest" \
+                "$(dockerLogin)/$(dockerSlug):latest"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-latest"
+            condition: not(contains(variables['Build.SourceBranchName'], 'beta'))
+            displayName: 'Publish Latest'
+          - script: |
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
                 "$(dockerLogin)/$(dockerSlug):$(Build.SourceBranchName)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
             displayName: 'Publish Version'
-      - job: 'Docker_Manifest'
-        displayName: 'Manifest'
+      - job: 'Docker_Manifest_Version'
+        displayName: 'Manifest Version'
         dependsOn:
           - 'Docker_Build_Publish'
-        condition: and(succeeded(), contains(variables['Build.SourceBranchName'], 'beta'))
+        condition: succeeded()
         steps:
           - task: Docker@2
             inputs:
@@ -132,13 +140,41 @@ stages:
               name: 'Sha'
           - template: azure-ci/docker/qemu-manifest.yml@organization
             parameters:
-              buildId: 'beta'
-              dockerOrg: '$(dockerLogin)'
-              dockerSlug: '$(dockerSlug)'
-              name: 'Beta'
-          - template: azure-ci/docker/qemu-manifest.yml@organization
-            parameters:
               buildId: '$(Build.SourceBranchName)'
               dockerOrg: '$(dockerLogin)'
               dockerSlug: '$(dockerSlug)'
               name: 'Version'
+      - job: 'Docker_Manifest_Beta'
+        displayName: 'Manifest Beta'
+        dependsOn:
+          - 'Docker_Build_Publish'
+        condition: and(succeeded(), contains(variables['Build.SourceBranchName'], 'beta'))
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Login'
+          - template: azure-ci/docker/qemu-manifest.yml@organization
+            parameters:
+              buildId: 'beta'
+              dockerOrg: '$(dockerLogin)'
+              dockerSlug: '$(dockerSlug)'
+              name: 'Beta'
+      - job: 'Docker_Manifest_Stable'
+        displayName: 'Manifest Stable'
+        dependsOn:
+          - 'Docker_Build_Publish'
+        condition: and(succeeded(), not(contains(variables['Build.SourceBranchName'], 'beta')))
+        steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Login'
+          - template: azure-ci/docker/qemu-manifest.yml@organization
+            parameters:
+              buildId: 'latest'
+              dockerOrg: '$(dockerLogin)'
+              dockerSlug: '$(dockerSlug)'
+              name: 'Latest'
