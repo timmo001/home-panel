@@ -13,9 +13,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface MarkdownProps extends BaseProps {}
-
-function Markdown(props: MarkdownProps) {
+function Markdown(props: BaseProps) {
   const classes = useStyles();
 
   return (

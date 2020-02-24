@@ -93,7 +93,9 @@ export function handleChange(
     console.log('handleChange:', domain, state, data);
   if (typeof state === 'string') {
     callService(connection, domain, state, data).then(
-      () => {},
+      () => {
+        console.log('Called service');
+      },
       err => {
         console.error('Error calling service:', err);
       }
@@ -107,7 +109,9 @@ export function handleChange(
           state ? 'turn_on' : 'turn_off',
           { entity_id: entity }
         ).then(
-          () => {},
+          () => {
+            console.log('Called service');
+          },
           err => {
             console.error('Error calling service:', err);
           }
@@ -120,7 +124,9 @@ export function handleChange(
         state ? 'turn_on' : 'turn_off',
         data
       ).then(
-        () => {},
+        () => {
+          console.log('Called service');
+        },
         err => {
           console.error('Error calling service:', err);
         }

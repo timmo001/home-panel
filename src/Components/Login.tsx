@@ -67,7 +67,7 @@ interface State {
   password: string;
 }
 
-let firstTime =
+const firstTime =
   localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
 function Login(props: LoginProps) {
   const [createAccount, setCreateAccount] = React.useState(firstTime);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -13,7 +13,7 @@ import Chart from '../../Visualisations/Chart';
 import properCase from '../../../Utils/properCase';
 import strings from '../Utils/Strings';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -38,10 +38,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface StateProps extends EntityProps {}
-
 let historyInterval: NodeJS.Timeout;
-function State(props: StateProps) {
+function State(props: EntityProps) {
   const [historyData, setHistoryData] = React.useState();
 
   const classes = useStyles();
@@ -61,7 +59,7 @@ function State(props: StateProps) {
     if (entity!.attributes) {
       const domain = entity!.entity_id.split('.')[0];
       if (entity!.attributes.device_class) {
-        let deviceClass =
+        const deviceClass =
           strings.state[domain][entity!.attributes.device_class];
         if (deviceClass) state = deviceClass[entity!.state];
       }

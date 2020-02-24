@@ -27,9 +27,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface NewsProps extends BaseProps {}
-
-function News(props: NewsProps) {
+function News(props: BaseProps) {
   const [sources, setSources] = useState<SuggestionType[]>();
   const [error, setError] = useState<string>();
   const classes = useStyles();

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import properCase from '../../../Utils/properCase';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -41,10 +41,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface SelectProps extends EntityProps {}
-
 let PopoverNode: HTMLButtonElement | null | undefined;
-function Select(props: SelectProps) {
+function Select(props: EntityProps) {
   const [open, setOpen] = useState(false);
 
   const classes = useStyles();

@@ -13,9 +13,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface RSSProps extends BaseProps {}
-
-function RSS(props: RSSProps) {
+function RSS(props: BaseProps) {
   const classes = useStyles();
 
   return (

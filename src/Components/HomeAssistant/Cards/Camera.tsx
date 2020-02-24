@@ -26,9 +26,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface CameraProps extends EntityProps {}
-
-function Camera(props: CameraProps) {
+function Camera(props: EntityProps) {
   const [url, setUrl] = React.useState();
 
   const classes = useStyles();

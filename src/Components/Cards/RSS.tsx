@@ -46,10 +46,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface RSSProps extends BaseProps {}
-
 let feedInterval: NodeJS.Timeout;
-function RSS(props: RSSProps) {
+function RSS(props: BaseProps) {
   const [data, setData] = useState<FeedData[]>();
   const [error, setError] = useState<string>();
 

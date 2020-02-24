@@ -36,9 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface CoverProps extends EntityProps {}
-
-function Cover(props: CoverProps) {
+function Cover(props: EntityProps) {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,

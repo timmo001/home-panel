@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import Slider from '@material-ui/core/Slider';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -35,9 +35,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface NumberProps extends EntityProps {}
-
-function NumberEntity(props: NumberProps) {
+function NumberEntity(props: EntityProps) {
   const [number, setNumber] = React.useState();
 
   const classes = useStyles();

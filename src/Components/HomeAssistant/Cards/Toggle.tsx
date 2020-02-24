@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import grey from '@material-ui/core/colors/grey';
 
 import { EntityProps } from './Entity';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -29,9 +29,7 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface ToggleProps extends EntityProps {}
-
-function Toggle(props: ToggleProps) {
+function Toggle(props: EntityProps) {
   const classes = useStyles();
   const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;

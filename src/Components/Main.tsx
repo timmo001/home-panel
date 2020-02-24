@@ -83,7 +83,7 @@ function Main(props: MainProps) {
     if (path.length > 0) {
       // Set the new value
       const lastItem = path.pop();
-      let secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
+      const secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
       if (Array.isArray(secondLastItem)) {
         if (data === undefined) secondLastItem.splice(lastItem, 1);
         else if (Array.isArray(data)) {
@@ -111,8 +111,8 @@ function Main(props: MainProps) {
   }
 
   function handleBackupConfig() {
-    let a = document.createElement('a');
-    let file = new Blob([JSON.stringify(props.config)], { type: 'json' });
+    const a = document.createElement('a');
+    const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
     a.href = URL.createObjectURL(file);
     a.download = `home-panel-config-backup-${moment().format(
       'YYYYMMDDHHmmss'
@@ -121,13 +121,13 @@ function Main(props: MainProps) {
   }
 
   function handleRestoreConfig() {
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'file';
     input.onchange = (e: any) => {
       if (e && e.target) {
-        let file = e.target.files[0];
+        const file = e.target.files[0];
 
-        var reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
 
         reader.onload = (readerEvent: ProgressEvent<FileReader>) => {

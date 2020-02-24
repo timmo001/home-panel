@@ -13,9 +13,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface ImageProps extends BaseProps {}
-
-function Image(props: ImageProps) {
+function Image(props: BaseProps) {
   const classes = useStyles();
 
   return (

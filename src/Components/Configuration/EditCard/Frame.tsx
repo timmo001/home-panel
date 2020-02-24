@@ -13,9 +13,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-interface FrameProps extends BaseProps {}
-
-function Frame(props: FrameProps) {
+function Frame(props: BaseProps) {
   const classes = useStyles();
 
   return (

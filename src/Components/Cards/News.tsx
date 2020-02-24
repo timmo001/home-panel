@@ -48,10 +48,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface NewsProps extends BaseProps {}
-
 let feedInterval: NodeJS.Timeout;
-function News(props: NewsProps) {
+function News(props: BaseProps) {
   const [data, setData] = useState<FeedData[]>();
   const [error, setError] = useState<string>();
 

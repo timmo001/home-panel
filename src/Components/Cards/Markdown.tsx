@@ -21,9 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface MarkdownProps extends BaseProps {}
-
-function Markdown(props: MarkdownProps) {
+function Markdown(props: BaseProps) {
   const classes = useStyles();
 
   if (!props.card.content) return null;

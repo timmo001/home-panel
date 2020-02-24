@@ -52,9 +52,7 @@ const FEATURE_CLASS_NAMES = {
   128: 'has-white_value'
 };
 
-interface LightProps extends EntityProps {}
-
-function Light(props: LightProps) {
+function Light(props: EntityProps) {
   const [attributes, setAttributes] = React.useState();
   const [color, setColor] = React.useState('');
 

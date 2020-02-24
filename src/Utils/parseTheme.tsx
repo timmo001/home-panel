@@ -66,7 +66,7 @@ const mapColor = (color: string): PaletteColorOptions =>
     : grey;
 
 export default function parseTheme(theme: ThemeProps) {
-  let palette: PaletteOptions = defaultPalette;
+  const palette: PaletteOptions = defaultPalette;
 
   if (theme.type && theme.type.match(/light|dark/gi)) palette.type = theme.type;
 

@@ -23,11 +23,9 @@ import parseTheme from '../Utils/parseTheme';
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
-interface OnboardingProps extends RouteComponentExtendedProps {}
-
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application<any>;
-function Onboarding(props: OnboardingProps) {
+function Onboarding(props: RouteComponentExtendedProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
   const [config, setConfig] = React.useState();
@@ -45,8 +43,8 @@ function Onboarding(props: OnboardingProps) {
   useEffect(() => {
     if (!client) {
       client = feathers();
-      let path: string = clone(props.location.pathname);
-      let url: string = `${process.env.REACT_APP_API_PROTOCOL ||
+      const path: string = clone(props.location.pathname);
+      const url = `${process.env.REACT_APP_API_PROTOCOL ||
         window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
         window.location.hostname}:${
         process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
@@ -80,7 +78,7 @@ function Onboarding(props: OnboardingProps) {
     (userId: string) => {
       (async () => {
         const configService = await client.service('config');
-        let getter = await configService.find({ userId });
+        const getter = await configService.find({ userId });
 
         if (!getter.data[0]) {
           await configService.create({ createNew: true });

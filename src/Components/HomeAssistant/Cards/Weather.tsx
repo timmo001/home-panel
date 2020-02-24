@@ -103,9 +103,7 @@ const weatherNameMap: any = {
   'windy-variant': 'Windy'
 };
 
-interface WeatherProps extends EntityProps {}
-
-function Weather(props: WeatherProps) {
+function Weather(props: EntityProps) {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
