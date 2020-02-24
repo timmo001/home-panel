@@ -99,7 +99,12 @@ stages:
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
-            displayName: 'Publish'
+            displayName: 'Publish Sha'
+          - script: |
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-edge" \
+                "$(dockerLogin)/$(dockerSlug):edge"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-edge"
+            displayName: 'Publish Edge'
       - job: 'Docker_Manifest'
         displayName: 'Manifest'
         dependsOn:
@@ -116,7 +121,13 @@ stages:
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
-            displayName: 'Pull Images'
+            displayName: 'Pull Sha Images'
+          - script: |
+              docker pull "$(dockerLogin)/$(dockerSlug):amd64-edge"
+              docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-edge"
+              docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-edge"
+              docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-edge"
+            displayName: 'Pull Edge Images'
           - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
@@ -135,6 +146,7 @@ stages:
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: 'Sha'
           - script: |
+
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge" \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge" \
