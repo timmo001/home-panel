@@ -115,6 +115,7 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '{"experimental":"enabled"}' > ~/.docker/config.json
+              docker info
             displayName: "Enable Experimental"
           - task: Docker@2
             inputs:
@@ -133,6 +134,7 @@ stages:
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
           - script: |
+              docker info
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
@@ -144,6 +146,7 @@ stages:
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Manifest Sha"
           - script: |
+              docker info
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
