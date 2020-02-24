@@ -106,8 +106,6 @@ stages:
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: "Publish"
           - script: |
-              docker info
-              cat ~/.docker/config.json
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
@@ -120,8 +118,6 @@ stages:
               docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
             displayName: "Manifest Sha"
           - script: |
-              docker info
-              cat ~/.docker/config.json
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
