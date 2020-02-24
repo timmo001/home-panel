@@ -109,7 +109,7 @@ stages:
           - script: |
               echo $(Build.SourceBranch)
               echo $(Build.SourceBranchName)
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
                 "$(dockerLogin)/$(dockerSlug):$(Build.SourceBranchName)"
