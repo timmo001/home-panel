@@ -137,22 +137,20 @@ function Item(props: ItemProps) {
 
   const classes = useStyles();
 
-  if (value === undefined || props.item.type !== 'backup_restore')
+  if (props.item.type !== 'backup_restore' && value === undefined)
     return <div />;
   switch (props.item.type) {
     default:
       return <div />;
     case 'array':
-      if (!value || !Array.isArray(value)) return <div />;
-      const items = value
-        ? value.map((item: any, key: number) => ({
-            name: key,
-            title: item.name,
-            type: 'object',
-            default: props.item.default,
-            items: props.item.items
-          }))
-        : [];
+      if (!Array.isArray(value)) return <div />;
+      const items = value.map((item: any, key: number) => ({
+        name: key,
+        title: item.name,
+        type: 'object',
+        default: props.item.default,
+        items: props.item.items
+      }));
       return (
         <IconButton
           color="inherit"
@@ -284,11 +282,12 @@ function Item(props: ItemProps) {
         </FormControl>
       );
     case 'switch':
-      if (typeof value !== 'boolean') return <div />;
+      if (typeof value !== 'boolean')
+        handleChange(props.path!, props.item.default);
       return (
         <Switch
           color="primary"
-          checked={value}
+          checked={value || props.item.default}
           onChange={handleSwitchChange(props.path!)}
         />
       );
