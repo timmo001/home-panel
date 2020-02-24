@@ -116,40 +116,18 @@ stages:
               containerRegistry: 'dockerHub'
               command: 'login'
             displayName: 'Login'
-          - script: |
-              export DOCKER_CLI_EXPERIMENTAL=enabled
-              docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" --os linux --arch amd64
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)" --os linux --arch arm --variant armv6
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)" --os linux --arch arm --variant armv7
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)" --os linux --arch arm64 --variant armv8
-              docker manifest push "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
-            displayName: 'Sha'
-          - script: |
-              export DOCKER_CLI_EXPERIMENTAL=enabled
-              docker manifest create "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):amd64-edge" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-edge" \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-edge" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-edge"
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):amd64-edge" --os linux --arch amd64
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):arm32v6-edge" --os linux --arch arm --variant armv6
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):arm32v7-edge" --os linux --arch arm --variant armv7
-              docker manifest annotate "$(dockerLogin)/$(dockerSlug):edge" \
-                "$(dockerLogin)/$(dockerSlug):arm64v8-edge" --os linux --arch arm64 --variant armv8
-              docker manifest push "$(dockerLogin)/$(dockerSlug):edge"
-            displayName: 'Edge'
+          - template: azure-ci/docker/qemu-manifest.yml@organization
+            parameters:
+              buildId: '$(Build.SourceVersion)'
+              dockerOrg: '$(dockerLogin)'
+              dockerSlug: '$(dockerSlug)'
+              name: 'Sha'
+          - template: azure-ci/docker/qemu-manifest.yml@organization
+            parameters:
+              buildId: 'edge'
+              dockerOrg: '$(dockerLogin)'
+              dockerSlug: '$(dockerSlug)'
+              name: 'Edge'
             # TBD in seperate yml
             # beta && version
             # latest && version
