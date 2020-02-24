@@ -103,8 +103,8 @@ function Base(props: BaseProps) {
   const [editCard, setEditCard] = React.useState(false);
   const [expandable, setExpandable] = React.useState(false);
   const [expandCard, setExpandCard] = React.useState(false);
-  const [height, setHeight] = React.useState();
-  const [width, setWidth] = React.useState();
+  const [height, setHeight] = React.useState<string | number>();
+  const [width, setWidth] = React.useState<string | number>();
   const [toggleable, setToggleable] = React.useState();
 
   const classes = useStyles();
@@ -112,7 +112,7 @@ function Base(props: BaseProps) {
 
   const handleSetHeight = useCallback(
     (cardSize: number, entitySizeKey?: string) => {
-      let h =
+      const h: string | number =
         !props.expandable && entitySizeKey
           ? entitySizes[entitySizeKey].height * cardSize
           : props.editing === 2 || !props.card.height
