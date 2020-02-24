@@ -112,6 +112,11 @@ stages:
             inputs:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+          - task: Docker@2
+            inputs:
+              containerRegistry: "dockerHub"
+              command: "login"
+            displayName: "Login"
           - script: |
               sudo sh -c 'echo "{ \"experimental\": true }" > /etc/docker/daemon.json'
               docker version -f '{{.Server.Experimental}}'
@@ -120,11 +125,6 @@ stages:
               echo '{"experimental":"enabled"}' > ~/.docker/config.json
               docker info
             displayName: "Enable Experimental"
-          - task: Docker@2
-            inputs:
-              containerRegistry: "dockerHub"
-              command: "login"
-            displayName: "Login"
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: "$(buildArch)"
@@ -138,6 +138,7 @@ stages:
             displayName: "Publish"
           - script: |
               docker info
+              cat ~/.docker/config.json
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
@@ -150,6 +151,7 @@ stages:
             displayName: "Manifest Sha"
           - script: |
               docker info
+              cat ~/.docker/config.json
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
