@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EditCardProps extends BaseProps {
-  command: CommandType;
+  command: CommandType | undefined;
   handleClose: () => void;
   handleUpdate: (data: CardProps) => void;
 }

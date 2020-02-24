@@ -11,7 +11,8 @@ import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import {
   ThemeProps,
   defaultPalette,
-  defaultTheme
+  defaultTheme,
+  ConfigurationProps
 } from './Configuration/Config';
 import { CommandType } from './Utils/Command';
 import clone from '../Utils/clone';
@@ -28,10 +29,10 @@ let socket: SocketIOClient.Socket, client: feathers.Application<any>;
 function Onboarding(props: RouteComponentExtendedProps) {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
-  const [config, setConfig] = React.useState();
+  const [config, setConfig] = React.useState<ConfigurationProps>();
   const [configId, setConfigId] = React.useState();
-  const [command, setCommand] = React.useState();
-  const [mouseMoved, setMouseMoved] = React.useState(false);
+  const [command, setCommand] = React.useState<CommandType>();
+  const [mouseMoved, setMouseMoved] = React.useState<boolean>(false);
   const [theme, setTheme] = React.useState(
     responsiveFontSizes(
       createMuiTheme({
@@ -198,7 +199,7 @@ function Onboarding(props: RouteComponentExtendedProps) {
       <style>{cssOverrides}</style>
       {!loginAttempted ? (
         <Loading text="Attempting Login. Please Wait.." />
-      ) : loginCredentials ? (
+      ) : loginCredentials && config ? (
         <Main
           {...props}
           config={config}

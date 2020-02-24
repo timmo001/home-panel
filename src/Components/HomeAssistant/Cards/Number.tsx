@@ -36,7 +36,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function NumberEntity(props: EntityProps) {
-  const [number, setNumber] = React.useState();
+  const [number, setNumber] = React.useState<number>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined,
@@ -87,7 +87,7 @@ function NumberEntity(props: EntityProps) {
     _event: React.ChangeEvent<{}>,
     value: number | number[]
   ) {
-    setNumber(value);
+    setNumber(Array.isArray(value) ? value[0] : value);
   }
 
   function handleSliderChangeComplete(
@@ -110,7 +110,7 @@ function NumberEntity(props: EntityProps) {
   }
 
   function handleBlur() {
-    if (attributes)
+    if (attributes && number)
       if (number < attributes.max) {
         setNumber(Number(attributes.min));
       } else if (number > attributes.max) {

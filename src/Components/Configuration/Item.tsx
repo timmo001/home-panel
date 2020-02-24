@@ -61,8 +61,8 @@ interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
-  const [value, setValue] = React.useState();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [value, setValue] = React.useState<string>();
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
   useEffect(() => {
     setValue(undefined);
@@ -70,16 +70,18 @@ function Item(props: ItemProps) {
 
   useEffect(() => {
     if (value === undefined) {
-      const lastItem = props.path!.pop();
-      const secondLastItem = props.path!.reduce(
-        (o, k) => (o[k] = o[k] || {}),
-        props.config
-      );
-      const val =
-        secondLastItem[lastItem] === undefined
-          ? props.item.default
-          : secondLastItem[lastItem];
-      setValue(val);
+      if (props.path) {
+        const lastItem = props.path.pop();
+        const secondLastItem = props.path.reduce(
+          (o, k) => (o[k] = o[k] || {}),
+          props.config
+        );
+        const val =
+          secondLastItem[lastItem] === undefined
+            ? props.item.default
+            : secondLastItem[lastItem];
+        setValue(val);
+      }
     }
   }, [props.config, props.item.default, props.path, value]);
 

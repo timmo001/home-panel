@@ -53,7 +53,7 @@ const FEATURE_CLASS_NAMES = {
 };
 
 function Light(props: EntityProps) {
-  const [attributes, setAttributes] = React.useState();
+  const [attributes, setAttributes] = React.useState<{ [key: string]: any }>();
   const [color, setColor] = React.useState('');
 
   const classes = useStyles();

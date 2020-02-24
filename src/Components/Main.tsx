@@ -19,6 +19,7 @@ import HomeAssistant, {
 import isObject from '../Utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
+import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface MainProps extends RouteComponentExtendedProps, ConfigProps {
-  command: CommandType;
+  command: CommandType | undefined;
   loginCredentials: any;
   mouseMoved: boolean;
   handleLogout: () => any;
@@ -58,14 +59,14 @@ interface MainProps extends RouteComponentExtendedProps, ConfigProps {
 }
 
 function Main(props: MainProps) {
-  const [back, setBack] = React.useState(false);
-  const [hassAuth, setHassAuth] = React.useState();
-  const [hassConfig, setHassConfig] = React.useState();
-  const [hassConnected, setHassConnected] = React.useState(false);
-  const [hassEntities, setHassEntities] = React.useState();
-  const [hassLogin, setHassLogin] = React.useState(false);
-  const [hassUrl, setHassUrl] = React.useState();
-  const [spaceTaken, setSpaceTaken] = React.useState(0);
+  const [back, setBack] = React.useState<boolean>(false);
+  const [hassAuth, setHassAuth] = React.useState<Auth>();
+  const [hassConfig, setHassConfig] = React.useState<HassConfig>();
+  const [hassConnected, setHassConnected] = React.useState<boolean>(false);
+  const [hassEntities, setHassEntities] = React.useState<HassEntities>();
+  const [hassLogin, setHassLogin] = React.useState<boolean>(false);
+  const [hassUrl, setHassUrl] = React.useState<string>();
+  const [spaceTaken, setSpaceTaken] = React.useState<number>(0);
 
   useEffect(() => {
     if (props.location.search) parseTokens();
@@ -230,7 +231,10 @@ function Main(props: MainProps) {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state!!.configuration ? (
+          {props.location.state!!.configuration &&
+          hassAuth &&
+          hassConfig &&
+          hassEntities ? (
             <Configuration
               {...props}
               back={back}
@@ -244,16 +248,20 @@ function Main(props: MainProps) {
               handleUpdateConfig={handleUpdateConfig}
             />
           ) : (
-            <Overview
-              {...props}
-              editing={editing}
-              hassAuth={hassAuth}
-              hassConfig={hassConfig}
-              hassEntities={hassEntities}
-              mouseMoved={props.mouseMoved}
-              handleHassChange={handleHassChange}
-              handleUpdateConfig={handleUpdateConfig}
-            />
+            hassAuth &&
+            hassConfig &&
+            hassEntities && (
+              <Overview
+                {...props}
+                editing={editing}
+                hassAuth={hassAuth}
+                hassConfig={hassConfig}
+                hassEntities={hassEntities}
+                mouseMoved={props.mouseMoved}
+                handleHassChange={handleHassChange}
+                handleUpdateConfig={handleUpdateConfig}
+              />
+            )
           )}
         </main>
       )}

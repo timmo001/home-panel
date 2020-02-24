@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function Camera(props: EntityProps) {
-  const [url, setUrl] = React.useState();
+  const [url, setUrl] = React.useState<string>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined,

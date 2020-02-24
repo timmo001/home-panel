@@ -85,7 +85,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
-  command: CommandType;
+  command: CommandType | undefined;
   config: ConfigurationProps;
   editing: number;
   expandable: boolean;

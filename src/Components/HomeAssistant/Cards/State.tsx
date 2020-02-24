@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
-import Chart from '../../Visualisations/Chart';
+import Chart, { ChartData } from '../../Visualisations/Chart';
 import properCase from '../../../Utils/properCase';
 import strings from '../Utils/Strings';
 
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
 
 let historyInterval: NodeJS.Timeout;
 function State(props: EntityProps) {
-  const [historyData, setHistoryData] = React.useState();
+  const [historyData, setHistoryData] = React.useState<ChartData[]>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -120,6 +120,7 @@ function State(props: EntityProps) {
       {props.card &&
         props.card.chart &&
         historyData &&
+        Array.isArray(historyData) &&
         historyData.length > 0 && (
           <Chart
             labels={props.card.chart_labels}

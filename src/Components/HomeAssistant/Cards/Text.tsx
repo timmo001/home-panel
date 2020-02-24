@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function TextEntity(props: EntityProps) {
-  const [text, setText] = React.useState();
+  const [text, setText] = React.useState<string>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -79,7 +79,7 @@ function TextEntity(props: EntityProps) {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const val = event.target.value;
-    setText(!val ? 0 : val);
+    setText(String(!val ? 0 : val));
     props.handleHassChange!('input_text', 'set_value', {
       entity_id: entity!.entity_id,
       value: val
