@@ -1,4 +1,3 @@
-// @flow
 type StringItem = {
   [item: string]: any;
 };

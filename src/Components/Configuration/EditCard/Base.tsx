@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import PropTypes from 'prop-types';

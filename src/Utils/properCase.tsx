@@ -1,4 +1,3 @@
-// @flow
 const properCase = (text: string) => {
   if (!text) return text;
   if (!text.includes('_')) return text.charAt(0).toUpperCase() + text.slice(1);

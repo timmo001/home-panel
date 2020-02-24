@@ -1,4 +1,3 @@
-// @flow
 export interface ItemsProps {
   name: string;
   link: string;
