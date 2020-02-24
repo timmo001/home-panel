@@ -114,6 +114,7 @@ stages:
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):i386-$(Build.SourceVersion)"
+            displayName: "Pull Images"
           - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
