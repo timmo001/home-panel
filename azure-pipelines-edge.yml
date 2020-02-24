@@ -139,6 +139,7 @@ stages:
           - script: |
               docker info
               cat ~/.docker/config.json
+              export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
@@ -152,6 +153,7 @@ stages:
           - script: |
               docker info
               cat ~/.docker/config.json
+              export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):edge \
                 "$(dockerLogin)/$(dockerSlug):amd64-edge \
                 "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion) \
