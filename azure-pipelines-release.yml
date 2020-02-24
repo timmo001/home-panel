@@ -95,11 +95,6 @@ stages:
               dockerSlug: "$(dockerSlug)"
           - script: |
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
-                "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)"
-              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
-            displayName: "Publish Sha"
-          - script: |
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):$(buildArch)-beta"
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-beta" \
                 "$(dockerLogin)/$(dockerSlug):beta"
@@ -132,12 +127,6 @@ stages:
               containerRegistry: "dockerHub"
               command: "login"
             displayName: "Login"
-          - template: azure-ci/docker/qemu-manifest.yml@organization
-            parameters:
-              buildId: "$(Build.SourceVersion)"
-              dockerOrg: "$(dockerLogin)"
-              dockerSlug: "$(dockerSlug)"
-              name: "Sha"
           - template: azure-ci/docker/qemu-manifest.yml@organization
             parameters:
               buildId: "$(Build.SourceBranchName)"
