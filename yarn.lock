@@ -5249,10 +5249,10 @@ flatten@^1.0.2:
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.3.tgz#c1283ac9f27b368abc1e36d1ff7b04501a30356b"
   integrity sha512-dVsPA/UwQ8+2uoFe5GHtiBMu48dWLTdsuEd7CKGlZlD78r1TTWBvDuFaFGKCo/ZfEr95Uk56vZoX86OsHkUeIg==
 
-flow-bin@0.118.0:
-  version "0.118.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.118.0.tgz#fb706364a58c682d67a2ca7df39396467dc397d1"
-  integrity sha512-jlbUu0XkbpXeXhan5xyTqVK1jmEKNxE8hpzznI3TThHTr76GiFwK0iRzhDo4KNy+S9h/KxHaqVhTP86vA6wHCg==
+flow-bin@0.119.0:
+  version "0.119.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.119.0.tgz#f72523b4843caf7302576f7ad3f63637070b69f1"
+  integrity sha512-fCVv++rjBsx/q6YVeB3F+A/owztjUO5PyBLwhGZdK5igVmiFQ8RKBTR9T2mb+SQRLZJJhl/xwPLhNzr3dBba6w==
 
 flush-write-stream@^1.0.0:
   version "1.1.1"
@@ -11320,10 +11320,10 @@ snyk-try-require@1.3.1, snyk-try-require@^1.1.1, snyk-try-require@^1.3.1:
     lru-cache "^4.0.0"
     then-fs "^2.0.0"
 
-snyk@1.296.0:
-  version "1.296.0"
-  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.296.0.tgz#6143bdbc0a7864151a0812a13f6d034f59287553"
-  integrity sha512-WJo2lkeBkH6ihL8hTewAdbxIJgdyH2j4nx8WDo3xu9lUqZO7coVndAnV86MAYGwdtXN7YYm0DeuRnngAbC7vYA==
+snyk@1.296.1:
+  version "1.296.1"
+  resolved "https://registry.yarnpkg.com/snyk/-/snyk-1.296.1.tgz#8d31d4090016e350ba53ce27981e68dbb7dc094e"
+  integrity sha512-Je0fww4Ak473uMli1Vzw4fkQ4I04H200hXkdVHVCK169seG/HOBZaese+AncYnzGpvMtH1hTZrDlpSNolrDvLw==
   dependencies:
     "@snyk/cli-interface" "2.3.2"
     "@snyk/configstore" "^3.2.0-rc1"
