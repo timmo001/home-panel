@@ -113,6 +113,9 @@ stages:
               artifactName: "api"
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - script: |
+              sudo sh -c 'echo "{ \"experimental\": true }" > /etc/docker/daemon.json'
+              docker version -f '{{.Server.Experimental}}'
+              sudo systemctl restart docker.service
               mkdir -p ~/.docker
               echo '{"experimental":"enabled"}' > ~/.docker/config.json
               docker info
