@@ -183,20 +183,18 @@ stages:
               downloadPath: $(System.DefaultWorkingDirectory)/build
           - script: |
               zip -r $(dockerSlug)-built.zip build
-              |
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/zip" \
                 --data-binary @$(dockerSlug)-built.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-built.zip"
               tar -czf $(dockerSlug)-built.tar.gz build
-              |
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/tar+gzip" \
                 --data-binary @$(dockerSlug)-built.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-built.tar.gz"
-            displayName: Publish
+            displayName: "Publish"
       - job: "Publish_Artifacts_Api"
         displayName: "Api"
         steps:
@@ -207,16 +205,15 @@ stages:
               downloadPath: $(System.DefaultWorkingDirectory)/api/lib
           - script: |
               zip -r $(dockerSlug)-api.zip api/lib
-              |
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/zip" \
                 --data-binary @$(dockerSlug)-api.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-api.zip"
               tar -czf $(dockerSlug)-api.tar.gz api/lib
-              |
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/tar+gzip" \
                 --data-binary @$(dockerSlug)-api.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-api.tar.gz"
+            displayName: "Publish"
