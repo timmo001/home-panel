@@ -3,8 +3,7 @@ trigger:
   batch: true
   branches:
     include:
-      - 'releases/*beta*'
-      - 'releases/*rc*'
+      - 'releases/*'
 
 pr: 'none'
 
@@ -131,6 +130,7 @@ stages:
               dockerSlug: '$(dockerSlug)'
               name: 'Sha'
           - template: azure-ci/docker/qemu-manifest.yml@organization
+            condition: eq(variables['Build.BuildNumber'], '*beta*')
             parameters:
               buildId: 'beta'
               dockerOrg: '$(dockerLogin)'
