@@ -140,7 +140,7 @@ stages:
               name: 'Beta'
           - template: azure-ci/docker/qemu-manifest.yml@organization
             parameters:
-              buildId: '$(tag)'
+              buildId: '$(Build.SourceBranchName)'
               dockerOrg: '$(dockerLogin)'
               dockerSlug: '$(dockerSlug)'
               name: 'Version'
