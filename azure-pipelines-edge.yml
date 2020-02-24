@@ -117,18 +117,6 @@ stages:
               command: 'login'
             displayName: 'Login'
           - script: |
-              docker pull "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-$(Build.SourceVersion)"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-$(Build.SourceVersion)"
-            displayName: 'Pull Sha Images'
-          - script: |
-              docker pull "$(dockerLogin)/$(dockerSlug):amd64-edge"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-edge"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm32v7-edge"
-              docker pull "$(dockerLogin)/$(dockerSlug):arm64v8-edge"
-            displayName: 'Pull Edge Images'
-          - script: |
               export DOCKER_CLI_EXPERIMENTAL=enabled
               docker manifest create "$(dockerLogin)/$(dockerSlug):$(Build.SourceVersion)" \
                 "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)" \
