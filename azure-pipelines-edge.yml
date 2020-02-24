@@ -99,6 +99,8 @@ stages:
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)"
             displayName: 'Publish Sha'
           - script: |
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceVersion)" \
+                "$(dockerLogin)/$(dockerSlug):$(buildArch)-edge"
               docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-edge" \
                 "$(dockerLogin)/$(dockerSlug):edge"
               docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-edge"
