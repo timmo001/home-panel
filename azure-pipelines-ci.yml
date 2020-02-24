@@ -128,10 +128,6 @@ stages:
                 yarn | "$(Agent.OS)"
                 yarn
             displayName: "Cache Yarn Packages"
-          - task: NodeTool@0
-            inputs:
-              versionSpec: "13.x"
-            displayName: "Install Node.js"
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
             displayName: "Install"
@@ -163,10 +159,6 @@ stages:
                 yarn | "$(Agent.OS)"
                 yarn
             displayName: "Cache Yarn Packages"
-          - task: NodeTool@0
-            inputs:
-              versionSpec: "13.x"
-            displayName: "Install Node.js"
           - script: |
               cd api
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
