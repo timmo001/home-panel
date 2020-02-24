@@ -71,7 +71,7 @@ function Item(props: ItemProps) {
   useEffect(() => {
     if (value === undefined) {
       const lastItem = props.path!.pop();
-      let secondLastItem = props.path!.reduce(
+      const secondLastItem = props.path!.reduce(
         (o, k) => (o[k] = o[k] || {}),
         props.config
       );
@@ -135,20 +135,22 @@ function Item(props: ItemProps) {
 
   const classes = useStyles();
 
-  if (value === undefined && props.item.type !== 'backup_restore')
+  if (value === undefined || props.item.type !== 'backup_restore')
     return <div />;
   switch (props.item.type) {
     default:
       return <div />;
     case 'array':
-      if (!Array.isArray(value)) return <div />;
-      const items = value.map((item: any, key: number) => ({
-        name: key,
-        title: item.name,
-        type: 'object',
-        default: props.item.default,
-        items: props.item.items
-      }));
+      if (!value || !Array.isArray(value)) return <div />;
+      const items = value
+        ? value.map((item: any, key: number) => ({
+            name: key,
+            title: item.name,
+            type: 'object',
+            default: props.item.default,
+            items: props.item.items
+          }))
+        : [];
       return (
         <IconButton
           color="inherit"

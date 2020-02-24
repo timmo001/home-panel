@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import request from 'superagent';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
@@ -20,7 +20,7 @@ type FeedSource = {
   url: string;
 };
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   textField: {
     width: 'calc(100% - 8px)',
     margin: 4
@@ -30,8 +30,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
 interface NewsProps extends BaseProps {}
 
 function News(props: NewsProps) {
-  const [sources, setSources] = useState();
-  const [error, setError] = useState();
+  const [sources, setSources] = useState<SuggestionType[]>();
+  const [error, setError] = useState<string>();
   const classes = useStyles();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ function News(props: NewsProps) {
           `https://newsapi.org/v2/sources?apiKey=${props.config.news.news_api_key}`
         )
         .then(res => {
-          const options: SuggestionType = res.body.sources.map(
+          const options: SuggestionType[] = res.body.sources.map(
             (source: FeedSource) => ({
               label: `${source.name} - ${properCase(source.category)} - ${
                 source.url
@@ -74,12 +74,14 @@ function News(props: NewsProps) {
             value={error}
           />
         ) : (
-          <Select
-            label="Source"
-            options={sources}
-            value={String(props.card.url)}
-            handleChange={props.handleChange!('url')}
-          />
+          sources && (
+            <Select
+              label="Source"
+              options={sources}
+              value={String(props.card.url)}
+              handleChange={props.handleChange!('url')}
+            />
+          )
         )}
       </Grid>
       <Grid item xs>

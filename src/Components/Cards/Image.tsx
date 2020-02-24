@@ -30,13 +30,13 @@ interface ImageProps extends BaseProps {}
 function Image(props: ImageProps) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
-  function handleToggleDialog() {
-    handleSetDialogOpen(!dialogOpen);
-  }
-
   const handleSetDialogOpen = useCallback((open: boolean) => {
     setDialogOpen(open);
   }, []);
+
+  function handleToggleDialog() {
+    handleSetDialogOpen(!dialogOpen);
+  }
 
   useEffect(() => {
     if (props.command && props.command.card === props.card.key) {

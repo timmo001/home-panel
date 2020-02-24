@@ -16,7 +16,8 @@
   },
   "rules": {
     "no-console": "off",
-    "explicit-function-return-type": "off"
+    "explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off"
   },
   "settings": {
     "react": {

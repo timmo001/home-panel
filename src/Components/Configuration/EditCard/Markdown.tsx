@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
 import { BaseProps } from './Base';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   textField: {
     width: 'calc(100% - 8px)',
     margin: 4

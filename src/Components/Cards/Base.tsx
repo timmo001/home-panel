@@ -99,13 +99,13 @@ export interface BaseProps
 
 let holdTimeout: NodeJS.Timeout;
 function Base(props: BaseProps) {
-  const [deleteConfirm, setDeleteConfirm] = React.useState(false);
-  const [editCard, setEditCard] = React.useState(false);
-  const [expandable, setExpandable] = React.useState(false);
-  const [expandCard, setExpandCard] = React.useState(false);
+  const [deleteConfirm, setDeleteConfirm] = React.useState<boolean>(false);
+  const [editCard, setEditCard] = React.useState<boolean>(false);
+  const [expandable, setExpandable] = React.useState<boolean>(false);
+  const [expandCard, setExpandCard] = React.useState<boolean>(false);
   const [height, setHeight] = React.useState<string | number>();
   const [width, setWidth] = React.useState<string | number>();
-  const [toggleable, setToggleable] = React.useState();
+  const [toggleable, setToggleable] = React.useState<boolean>();
 
   const classes = useStyles();
   const theme = useTheme();
@@ -248,6 +248,10 @@ function Base(props: BaseProps) {
     setExpandCard(false);
   }
 
+  function handleHoldCancel() {
+    if (holdTimeout) clearTimeout(holdTimeout);
+  }
+
   function handleHold() {
     if (expandable) {
       handleHoldCancel();
@@ -255,10 +259,6 @@ function Base(props: BaseProps) {
         handleExpand();
       }, 1000);
     }
-  }
-
-  function handleHoldCancel() {
-    if (holdTimeout) clearTimeout(holdTimeout);
   }
 
   return (
