@@ -15,7 +15,8 @@
     }
   },
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "explicit-function-return-type": "off"
   },
   "settings": {
     "react": {
