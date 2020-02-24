@@ -107,18 +107,19 @@ stages:
             condition: eq(variables['Build.SourceBranch'], '*beta*')
             displayName: 'Publish Beta'
           - script: |
-              $tag = ${Build.SourceBranch#refs/tags/}
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(tag)" \
-                "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(tag)"
-              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(tag)" \
-                "$(dockerLogin)/$(dockerSlug):$(tag)"
-              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(tag)"
+              echo $(Build.SourceBranch)
+              echo $(Build.SourceBranchName)
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
+                "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
+              docker tag "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)" \
+                "$(dockerLogin)/$(dockerSlug):$(Build.SourceBranchName)"
+              docker push "$(dockerLogin)/$(dockerSlug):$(buildArch)-$(Build.SourceBranchName)"
             displayName: 'Publish Version'
       - job: 'Docker_Manifest'
         displayName: 'Manifest'
         dependsOn:
           - 'Docker_Build_Publish'
-        condition: and(succeeded(), eq(${Build.SourceBranch#refs/tags/}, '*beta*'))
+        condition: and(succeeded(), contains(variables('Build.SourceBranchName'), 'beta'))
         steps:
           - task: Docker@2
             inputs:
