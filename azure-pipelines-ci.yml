@@ -32,8 +32,6 @@ variables:
     value: "arm32v7/alpine:3.11.3"
   - name: "i386Base"
     value: "i386/alpine:3.11.3"
-  - name: "versionNode"
-    value: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
 
 resources:
   repositories:
@@ -72,10 +70,10 @@ stages:
     jobs:
       - template: azure-ci/build/react-app.yml@organization
         parameters:
-          versionNode: $(versionNode)
+          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
       - template: azure-ci/build/node-ts.yml@organization
         parameters:
-          versionNode: "$(versionNode)"
+          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
   - stage: "Docker"
     dependsOn:
       - "Lint"
@@ -136,7 +134,7 @@ stages:
             displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
-              versionSpec: $(versionNode)
+              versionSpec: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
             displayName: "Install Node.js"
           - script: |
               yarn install  --pure-lockfile --cache-folder $(yarnCachePath)
@@ -171,7 +169,7 @@ stages:
             displayName: "Cache Yarn Packages"
           - task: NodeTool@0
             inputs:
-              versionSpec: $(versionNode)
+              versionSpec: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
             displayName: "Install Node.js"
           - script: |
               cd api

@@ -37,8 +37,6 @@ variables:
     value: "v6"
   - name: "armv7Variant"
     value: "v7"
-  - name: "versionNode"
-    value: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
 
 resources:
   repositories:
@@ -77,10 +75,10 @@ stages:
     jobs:
       - template: azure-ci/build/react-app.yml@organization
         parameters:
-          versionNode: $(versionNode)
+          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
       - template: azure-ci/build/node-ts.yml@organization
         parameters:
-          versionNode: "$(versionNode)"
+          versionNode: "$(cat $(System.DefaultWorkingDirectory)/.nvmrc)"
   - stage: "Docker"
     dependsOn:
       - "Lint"
@@ -121,7 +119,7 @@ stages:
           - script: |
               mkdir -p ~/.docker
               echo '{"experimental":"enabled"}' > ~/.docker/config.json
-            displayName: 'Enable Experimental'
+            displayName: "Enable Experimental"
           - task: Docker@2
             inputs:
               containerRegistry: "dockerHub"
