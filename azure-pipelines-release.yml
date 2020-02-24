@@ -119,7 +119,7 @@ stages:
         displayName: 'Manifest'
         dependsOn:
           - 'Docker_Build_Publish'
-        condition: and(succeeded(), contains(variables('Build.SourceBranchName'), 'beta'))
+        condition: and(succeeded(), contains(variables['Build.SourceBranchName'], 'beta'))
         steps:
           - task: Docker@2
             inputs:
