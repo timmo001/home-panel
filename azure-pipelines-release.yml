@@ -4,6 +4,7 @@ trigger:
   branches:
     include:
       - 'releases/*'
+      - 'refs/tags/*'
 
 pr: 'none'
 
