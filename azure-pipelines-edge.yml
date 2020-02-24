@@ -111,6 +111,11 @@ stages:
           - 'Docker_Build_Publish'
         condition: succeeded()
         steps:
+          - task: Docker@2
+            inputs:
+              containerRegistry: 'dockerHub'
+              command: 'login'
+            displayName: 'Login'
           - script: |
               docker pull "$(dockerLogin)/$(dockerSlug):amd64-$(Build.SourceVersion)"
               docker pull "$(dockerLogin)/$(dockerSlug):arm32v6-$(Build.SourceVersion)"
