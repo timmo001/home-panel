@@ -287,7 +287,7 @@ function Item(props: ItemProps) {
       return (
         <Switch
           color="primary"
-          checked={value || props.item.default}
+          checked={value !== undefined ? value : props.item.default}
           onChange={handleSwitchChange(props.path!)}
         />
       );
