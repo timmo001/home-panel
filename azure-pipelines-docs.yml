@@ -21,6 +21,12 @@ stages:
         displayName: "MkDocs"
         condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
         steps:
+          - task: InstallSSHKey@0
+            inputs:
+              knownHostsEntry: '$(githubKnownHosts)'
+              sshPublicKey: '$(githubPublicKey)'
+              sshKeySecureFile: 'ssh_key'
+            displayName: 'Install SSH Key'
           - script: |
               sudo apt install -y git python3-dev python3-pip python3-setuptools python3-wheel
               python3 -m pip --version
