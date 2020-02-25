@@ -1,4 +1,6 @@
 ---
+trigger: none
+
 pr:
   - "master"
 
