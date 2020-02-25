@@ -36,7 +36,7 @@ stages:
               eval $(ssh-agent -s)
               mkdir -p ~/.ssh
               echo "$(githubPublicKey)" > ~/.ssh/id_rsa.pub
-              echo "$(sshKey.secureFilePath)" | ssh-add -
+              echo $(sshKey.secureFilePath) | ssh-add -
               ssh-keyscan github.com >> ~/.ssh/known_hosts
               git config --global user.email "$(githubEmail)"
               git config --global user.name "Git"
