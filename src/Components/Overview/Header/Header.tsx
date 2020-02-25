@@ -44,8 +44,8 @@ interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 function Header(props: HeaderProps) {
   const classes = useStyles();
 
-  let timeLocation = props.config.header.time_location;
-  let dateLocation = props.config.header.date_location;
+  const timeLocation = props.config.header.time_location;
+  const dateLocation = props.config.header.date_location;
   let timeFormat = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
 
   if (timeLocation === dateLocation && props.config.header.date_show)
@@ -91,7 +91,7 @@ function Header(props: HeaderProps) {
   if (!props.config.header.time_show && !props.config.header.date_show)
     return null;
 
-  let columns: any[] = ['', '', ''];
+  const columns: any[] = ['', '', ''];
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation || !props.config.header.time_show)
     columns[dateLocation] = date;

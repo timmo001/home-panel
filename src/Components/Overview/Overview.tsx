@@ -69,7 +69,7 @@ interface OverviewProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantChangeProps {
-  command: CommandType;
+  command: CommandType | undefined;
   mouseMoved: boolean;
 }
 
@@ -77,8 +77,8 @@ function Overview(props: OverviewProps) {
   const [currentPage, setCurrentPage] = React.useState(
     props.config.pages[0].key
   );
-  const [editingGroup, setEditingGroup] = React.useState();
-  const [deleteConfirm, setDeleteConfirm] = React.useState();
+  const [editingGroup, setEditingGroup] = React.useState<GroupProps>();
+  const [deleteConfirm, setDeleteConfirm] = React.useState<GroupProps>();
 
   const handleSetCurrentPage = useCallback(
     (page: string) => {
@@ -88,11 +88,11 @@ function Overview(props: OverviewProps) {
   );
 
   useEffect(() => {
-    if (props.command)
+    if (props.command) {
       if (props.command.page) handleSetCurrentPage(props.command.page);
       else if (props.command.card) {
         const foundCard: CardProps | undefined = props.config.cards.find(
-          (card: CardProps) => card.key === props.command.card
+          (card: CardProps) => card.key === props.command!.card
         );
         if (foundCard) {
           const foundGroup: GroupProps | undefined = props.config.groups.find(
@@ -101,6 +101,7 @@ function Overview(props: OverviewProps) {
           if (foundGroup) handleSetCurrentPage(foundGroup.page);
         }
       }
+    }
   }, [
     props.command,
     props.config.cards,

@@ -61,8 +61,8 @@ interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps) {
-  const [value, setValue] = React.useState();
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [value, setValue] = React.useState<string>();
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
   useEffect(() => {
     setValue(undefined);
@@ -70,16 +70,18 @@ function Item(props: ItemProps) {
 
   useEffect(() => {
     if (value === undefined) {
-      const lastItem = props.path!.pop();
-      let secondLastItem = props.path!.reduce(
-        (o, k) => (o[k] = o[k] || {}),
-        props.config
-      );
-      const val =
-        secondLastItem[lastItem] === undefined
-          ? props.item.default
-          : secondLastItem[lastItem];
-      setValue(val);
+      if (props.path) {
+        const lastItem = props.path.pop();
+        const secondLastItem = props.path.reduce(
+          (o, k) => (o[k] = o[k] || {}),
+          props.config
+        );
+        const val =
+          secondLastItem[lastItem] === undefined
+            ? props.item.default
+            : secondLastItem[lastItem];
+        setValue(val);
+      }
     }
   }, [props.config, props.item.default, props.path, value]);
 
@@ -135,7 +137,7 @@ function Item(props: ItemProps) {
 
   const classes = useStyles();
 
-  if (value === undefined && props.item.type !== 'backup_restore')
+  if (props.item.type !== 'backup_restore' && value === undefined)
     return <div />;
   switch (props.item.type) {
     default:
@@ -280,11 +282,12 @@ function Item(props: ItemProps) {
         </FormControl>
       );
     case 'switch':
-      if (typeof value !== 'boolean') return <div />;
+      if (typeof value !== 'boolean')
+        handleChange(props.path!, props.item.default);
       return (
         <Switch
           color="primary"
-          checked={value}
+          checked={value !== undefined ? value : props.item.default}
           onChange={handleSwitchChange(props.path!)}
         />
       );

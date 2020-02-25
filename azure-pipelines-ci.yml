@@ -1,7 +1,4 @@
 ---
-trigger:
-  batch: true
-
 pr:
   - "master"
 

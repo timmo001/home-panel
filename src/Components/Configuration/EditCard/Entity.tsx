@@ -26,9 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface EntityProps extends BaseProps {}
-
-function Entity(props: EntityProps) {
+function Entity(props: BaseProps) {
   function handleGetEntityIcon() {
     const entity = props.hassEntities[props.card.entity!];
     if (entity && entity.attributes.icon)

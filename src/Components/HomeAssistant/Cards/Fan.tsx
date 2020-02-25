@@ -42,9 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface FanProps extends EntityProps {}
-
-function Fan(props: FanProps) {
+function Fan(props: EntityProps) {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
@@ -106,7 +104,7 @@ function Fan(props: FanProps) {
         justify="center"
         direction="row">
         {attributes.speed_list.map((speed: string, key: number) => {
-          let icon: string | undefined =
+          const icon: string | undefined =
             speed === 'off'
               ? 'mdi-numeric-0'
               : speed === 'low'

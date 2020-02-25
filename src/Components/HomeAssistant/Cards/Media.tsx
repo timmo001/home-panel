@@ -46,9 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface MediaProps extends EntityProps {}
-
-function Media(props: MediaProps) {
+function Media(props: EntityProps) {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,

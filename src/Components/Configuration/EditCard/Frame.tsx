@@ -1,21 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   textField: {
     width: 'calc(100% - 8px)',
     margin: 4
   }
 }));
 
-interface FrameProps extends BaseProps {}
-
-function Frame(props: FrameProps) {
+function Frame(props: BaseProps) {
   const classes = useStyles();
 
   return (

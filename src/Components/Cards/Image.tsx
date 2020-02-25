@@ -25,18 +25,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ImageProps extends BaseProps {}
-
-function Image(props: ImageProps) {
+function Image(props: BaseProps) {
   const [dialogOpen, setDialogOpen] = React.useState(false);
-
-  function handleToggleDialog() {
-    handleSetDialogOpen(!dialogOpen);
-  }
 
   const handleSetDialogOpen = useCallback((open: boolean) => {
     setDialogOpen(open);
   }, []);
+
+  function handleToggleDialog() {
+    handleSetDialogOpen(!dialogOpen);
+  }
 
   useEffect(() => {
     if (props.command && props.command.card === props.card.key) {

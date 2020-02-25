@@ -51,9 +51,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ClimateProps extends EntityProps {}
-
-function Climate(props: ClimateProps) {
+function Climate(props: EntityProps) {
   const classes = useStyles();
 
   let entity: HassEntity | undefined,
@@ -303,7 +301,7 @@ function Climate(props: ClimateProps) {
             justify="center"
             direction="row">
             {attributes.hvac_modes.map((mode: string, key: number) => {
-              let icon: string | undefined =
+              const icon: string | undefined =
                 mode === 'off'
                   ? 'mdi-power'
                   : mode === 'heat'

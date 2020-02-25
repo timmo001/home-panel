@@ -42,6 +42,17 @@ function EntitySelect(props: EntitySelectProps) {
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
 
+  const filterSuggestions = useCallback(() => {
+    const fuse = new Fuse(options, {
+      keys: ['label', 'value'],
+      caseSensitive: false,
+      minMatchCharLength: 2,
+      threshold: 0.2
+    });
+    const results = fuse.search(search);
+    setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
+  }, [options, search]);
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value);
     filterSuggestions();
@@ -82,17 +93,6 @@ function EntitySelect(props: EntitySelectProps) {
       if (val) setSearch(val.label);
     }
   }, [search, options, props.entity]);
-
-  const filterSuggestions = useCallback(() => {
-    const fuse = new Fuse(options, {
-      keys: ['label', 'value'],
-      caseSensitive: false,
-      minMatchCharLength: 2,
-      threshold: 0.2
-    });
-    const results = fuse.search(search);
-    setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
-  }, [options, search]);
 
   return (
     <div className={classes.root}>

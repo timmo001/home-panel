@@ -67,15 +67,15 @@ interface State {
   password: string;
 }
 
-let firstTime =
+const firstTime =
   localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
 function Login(props: LoginProps) {
-  const [createAccount, setCreateAccount] = React.useState(firstTime);
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [invalidText, setInvalidText] = React.useState();
-  const [errorText, setErrorText] = React.useState();
-  const [loginSuccess, setLoginSuccess] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [createAccount, setCreateAccount] = React.useState<boolean>(firstTime);
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  const [invalidText, setInvalidText] = React.useState<string>();
+  const [errorText, setErrorText] = React.useState<string>();
+  const [loginSuccess, setLoginSuccess] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [values, setValues] = React.useState<State>({
     username: '',
     password: ''
@@ -90,7 +90,7 @@ function Login(props: LoginProps) {
       setInvalidText('No password!');
       return;
     }
-    setInvalidText(null);
+    setInvalidText(undefined);
   }, [values.username, values.password]);
 
   useEffect(() => {

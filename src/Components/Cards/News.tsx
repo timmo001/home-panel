@@ -48,12 +48,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface NewsProps extends BaseProps {}
-
 let feedInterval: NodeJS.Timeout;
-function News(props: NewsProps) {
-  const [data, setData] = useState();
-  const [error, setError] = useState();
+function News(props: BaseProps) {
+  const [data, setData] = useState<FeedData[]>();
+  const [error, setError] = useState<string>();
 
   const classes = useStyles();
 
@@ -66,7 +64,7 @@ function News(props: NewsProps) {
           `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.news.news_api_key}`
         )
         .then(res => {
-          const feed: ArticleData = res.body.articles.map(
+          const feed: FeedData[] = res.body.articles.map(
             (article: ArticleData) => ({
               heading: `[${article.title}](${article.url})`,
               title: article.title,

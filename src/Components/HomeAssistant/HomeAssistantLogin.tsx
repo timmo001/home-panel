@@ -37,12 +37,12 @@ interface HomeAssistantLoginProps {
 }
 
 function HomeAssistantLogin(props: HomeAssistantLoginProps) {
-  const [showDialog, setShowDialog] = React.useState(false);
-  const [url, setUrl] = React.useState(
+  const [showDialog, setShowDialog] = React.useState<boolean>(false);
+  const [url, setUrl] = React.useState<string>(
     `${process.env.REACT_APP_API_PROTOCOL ||
       window.location.protocol}//hassio.local:8123`
   );
-  const [invalidText, setInvalidText] = React.useState();
+  const [invalidText, setInvalidText] = React.useState<string>();
 
   const handleValidation = useCallback(() => {
     if (!url) {

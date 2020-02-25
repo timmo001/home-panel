@@ -46,12 +46,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface RSSProps extends BaseProps {}
-
 let feedInterval: NodeJS.Timeout;
-function RSS(props: RSSProps) {
-  const [data, setData] = useState();
-  const [error, setError] = useState();
+function RSS(props: BaseProps) {
+  const [data, setData] = useState<FeedData[]>();
+  const [error, setError] = useState<string>();
 
   const classes = useStyles();
 
@@ -63,16 +61,16 @@ function RSS(props: RSSProps) {
       const rss = await parser.parseURL(props.card.url);
 
       if (rss && rss.items) {
-        const feed = rss.items.map((item: RSSData) => ({
+        const feed: FeedData[] = rss.items.map((item: RSSData) => ({
           heading: `[${item.title}](${item.link})`,
-          title: item.title,
-          url: item.link,
+          title: item.title || '',
+          url: item.link || '',
           meta: moment(item.pubDate).format(
             `${props.config.header.time_military ? 'HH:mm' : 'hh:mm a'} ${
               props.config.header.date_format
             }`
           ),
-          content: item.content
+          content: item.content || ''
         }));
         setData(feed);
         props.card.disabled = false;

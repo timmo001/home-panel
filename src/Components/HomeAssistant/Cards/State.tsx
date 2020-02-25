@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
-import Chart from '../../Visualisations/Chart';
+import Chart, { ChartData } from '../../Visualisations/Chart';
 import properCase from '../../../Utils/properCase';
 import strings from '../Utils/Strings';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -38,11 +38,9 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface StateProps extends EntityProps {}
-
 let historyInterval: NodeJS.Timeout;
-function State(props: StateProps) {
-  const [historyData, setHistoryData] = React.useState();
+function State(props: EntityProps) {
+  const [historyData, setHistoryData] = React.useState<ChartData[]>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -61,7 +59,7 @@ function State(props: StateProps) {
     if (entity!.attributes) {
       const domain = entity!.entity_id.split('.')[0];
       if (entity!.attributes.device_class) {
-        let deviceClass =
+        const deviceClass =
           strings.state[domain][entity!.attributes.device_class];
         if (deviceClass) state = deviceClass[entity!.state];
       }
@@ -122,6 +120,7 @@ function State(props: StateProps) {
       {props.card &&
         props.card.chart &&
         historyData &&
+        Array.isArray(historyData) &&
         historyData.length > 0 && (
           <Chart
             labels={props.card.chart_labels}

@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -34,10 +34,8 @@ const useStyles = makeStyles((_theme: Theme) => ({
   }
 }));
 
-interface NumberProps extends EntityProps {}
-
-function TextEntity(props: NumberProps) {
-  const [text, setText] = React.useState();
+function TextEntity(props: EntityProps) {
+  const [text, setText] = React.useState<string>();
 
   const classes = useStyles();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -81,7 +79,7 @@ function TextEntity(props: NumberProps) {
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const val = event.target.value;
-    setText(!val ? 0 : val);
+    setText(String(!val ? 0 : val));
     props.handleHassChange!('input_text', 'set_value', {
       entity_id: entity!.entity_id,
       value: val

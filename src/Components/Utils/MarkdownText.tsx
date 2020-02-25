@@ -10,7 +10,7 @@ interface MarkdownTextProps {
 }
 
 function MarkdownText(props: MarkdownTextProps) {
-  const [text, setText] = useState();
+  const [text, setText] = useState<any>();
 
   useEffect(() => {
     setText(

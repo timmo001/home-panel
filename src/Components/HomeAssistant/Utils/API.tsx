@@ -1,38 +1,5 @@
 import { Auth } from 'home-assistant-js-websocket';
 
-export async function fetchHistory(
-  auth: Auth,
-  entity: string,
-  start: Date,
-  end: Date
-) {
-  let url = 'history/period';
-  if (start) url += `/${start.toISOString()}`;
-  url += `?filter_entity_id=${entity}`;
-  if (end) url += `&end_time=${end.toISOString()}`;
-  return hassCallApi(auth, 'GET', url);
-}
-
-const fetchWithAuth = async (
-  auth: Auth,
-  input: RequestInfo,
-  init: RequestInit = {}
-) => {
-  if (auth.expired) {
-    await auth.refreshAccessToken();
-  }
-  init.credentials = 'same-origin';
-  if (!init.headers) {
-    init.headers = {};
-  }
-  if (!init.headers) {
-    init.headers = {};
-  }
-  // @ts-ignore
-  init.headers.authorization = `Bearer ${auth.accessToken}`;
-  return fetch(input, init);
-};
-
 export async function handleFetchPromise<T>(
   fetchPromise: Promise<Response>
 ): Promise<T> {
@@ -80,6 +47,27 @@ export async function handleFetchPromise<T>(
   return (body as unknown) as T;
 }
 
+const fetchWithAuth = async (
+  auth: Auth,
+  input: RequestInfo,
+  init: RequestInit = {}
+) => {
+  if (auth.expired) {
+    await auth.refreshAccessToken();
+  }
+  init.credentials = 'same-origin';
+  if (!init.headers) {
+    init.headers = {};
+  }
+  if (!init.headers) {
+    init.headers = {};
+  }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
+  init.headers.authorization = `Bearer ${auth.accessToken}`;
+  return fetch(input, init);
+};
+
 export default async function hassCallApi<T>(
   auth: Auth,
   method: string,
@@ -94,10 +82,24 @@ export default async function hassCallApi<T>(
   };
 
   if (parameters) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
     init.headers['Content-Type'] = 'application/json;charset=UTF-8';
     init.body = JSON.stringify(parameters);
   }
 
   return handleFetchPromise<T>(fetchWithAuth(auth, url, init));
+}
+
+export async function fetchHistory(
+  auth: Auth,
+  entity: string,
+  start: Date,
+  end: Date
+) {
+  let url = 'history/period';
+  if (start) url += `/${start.toISOString()}`;
+  url += `?filter_entity_id=${entity}`;
+  if (end) url += `&end_time=${end.toISOString()}`;
+  return hassCallApi(auth, 'GET', url);
 }

@@ -39,7 +39,10 @@ export const chartTypes: { [type: string]: string } = {
 };
 
 export type ChartData = {
-  value: number;
+  value?: number;
+  x?: number;
+  y?: number;
+  z?: number;
 };
 
 interface ChartProps {
@@ -92,9 +95,9 @@ function LabelCustom(props: LabelProps) {
 }
 
 function Chart(props: ChartProps) {
-  const [dataIn, setDataIn] = React.useState();
-  const [data, setData] = React.useState();
-  const [type, setType] = React.useState();
+  const [dataIn, setDataIn] = React.useState<ChartData[]>();
+  const [data, setData] = React.useState<ChartData[]>();
+  const [type, setType] = React.useState<string>();
 
   const classes = useStyles();
   const theme = useTheme();
