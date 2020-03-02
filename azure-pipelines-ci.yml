@@ -18,14 +18,14 @@ variables:
     value: "home-panel"
   - name: "dockerTarget"
     value: "."
-  - name: "arm64v8Base"
-    value: "arm64v8/alpine:3.11.3"
   - name: "amd64Base"
     value: "amd64/alpine:3.11.3"
-  - name: "armhfBase"
+  - name: "arm32v6Base"
     value: "arm32v6/alpine:3.11.3"
-  - name: "armv7Base"
+  - name: "arm32v7Base"
     value: "arm32v7/alpine:3.11.3"
+  - name: "arm64v8Base"
+    value: "arm64v8/alpine:3.11.3"
 
 resources:
   repositories:
@@ -75,18 +75,19 @@ stages:
         strategy:
           maxParallel: 4
           matrix:
-            arm64v8:
-              buildArch: "arm64v8"
-              buildBase: $(arm64v8Base)
+          matrix:
             amd64:
               buildArch: "amd64"
               buildBase: $(amd64Base)
-            armhf:
-              buildArch: "armhf"
-              buildBase: $(armhfBase)
-            armv7:
-              buildArch: "armv7"
-              buildBase: $(armv7Base)
+            arm32v6:
+              buildArch: "arm32v6"
+              buildBase: $(arm32v6Base)
+            arm32v7:
+              buildArch: "arm32v7"
+              buildBase: $(arm32v7Base)
+            arm64v8:
+              buildArch: "arm64v8"
+              buildBase: $(arm64v8Base)
         steps:
           - task: DownloadBuildArtifacts@0
             displayName: "Download Build Artifacts"
