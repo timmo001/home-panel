@@ -73,7 +73,7 @@
   "devDependencies": {
     "@types/classnames": "2.2.9",
     "@types/markdown-it": "0.0.9",
-    "@types/react": "16.9.22",
+    "@types/react": "16.9.23",
     "@types/react-color": "3.0.1",
     "@types/react-dom": "16.9.5",
     "@types/react-html-parser": "2.0.1",
