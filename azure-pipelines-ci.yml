@@ -75,7 +75,6 @@ stages:
         strategy:
           maxParallel: 4
           matrix:
-          matrix:
             amd64:
               buildArch: "amd64"
               buildBase: $(amd64Base)
