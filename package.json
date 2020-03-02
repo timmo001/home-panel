@@ -39,7 +39,7 @@
     "socket.io-client": "2.3.0",
     "superagent": "5.2.2",
     "typeface-roboto": "0.0.75",
-    "typescript": "3.8.2"
+    "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
