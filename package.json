@@ -21,7 +21,7 @@
     "classnames": "2.2.6",
     "fuse.js": "3.4.6",
     "history": "4.10.1",
-    "home-assistant-js-websocket": "4.4.1",
+    "home-assistant-js-websocket": "4.5.0",
     "markdown-it": "10.0.0",
     "markdown-it-emoji": "1.4.0",
     "markdown-it-external-links": "0.0.6",
