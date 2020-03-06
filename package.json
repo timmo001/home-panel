@@ -71,7 +71,7 @@
     "usePathForSuiteName": "true"
   },
   "devDependencies": {
-    "@types/classnames": "2.2.9",
+    "@types/classnames": "2.2.10",
     "@types/markdown-it": "0.0.9",
     "@types/react": "16.9.23",
     "@types/react-color": "3.0.1",
