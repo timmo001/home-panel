@@ -1,5 +1,4 @@
 import { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import {
   Auth,
   AuthData,
@@ -32,11 +31,14 @@ export interface HomeAssistantEntityProps {
   hassEntities: HassEntities;
 }
 
-export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
+export interface HomeAssistantChangeProps {
+  hassAuth?: Auth;
+  hassConfig?: HassConfig;
+  hassEntities?: HassEntities;
   handleHassChange?: (
     domain: string,
     state: string | boolean,
-    data?: any,
+    data?: unknown,
     entities?: HassEntities
   ) => void;
 }
@@ -134,8 +136,8 @@ export function handleChange(
   }
 }
 
-function HomeAssistant(props: HomeAssistantProps) {
-  function eventHandler() {
+function HomeAssistant(props: HomeAssistantProps): null {
+  function eventHandler(): void {
     console.log('Home Assistant connection has been established again.');
   }
 
@@ -204,13 +206,5 @@ function HomeAssistant(props: HomeAssistantProps) {
 
   return null;
 }
-
-HomeAssistant.propTypes = {
-  url: PropTypes.string.isRequired,
-  login: PropTypes.bool.isRequired,
-  setConnected: PropTypes.func.isRequired,
-  setConfig: PropTypes.func.isRequired,
-  setEntities: PropTypes.func.isRequired
-};
 
 export default HomeAssistant;

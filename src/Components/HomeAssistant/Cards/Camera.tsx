@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -26,7 +25,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Camera(props: EntityProps) {
+function Camera(props: EntityProps): ReactElement {
   const [url, setUrl] = React.useState<string>();
 
   const classes = useStyles();
@@ -78,11 +77,5 @@ function Camera(props: EntityProps) {
 
   return <Image {...props} card={{ ...props.card, url }} />;
 }
-
-Camera.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Camera;

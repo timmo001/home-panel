@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -116,7 +115,7 @@ interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
   handleSpaceTaken: (space: number) => void;
 }
 
-function ResponsiveDrawer(props: ResponsiveDrawerProps) {
+function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(
     props.config.general.drawer_type &&
@@ -352,17 +351,5 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     </div>
   );
 }
-
-ResponsiveDrawer.propTypes = {
-  currentPage: PropTypes.string.isRequired,
-  userInitials: PropTypes.string,
-  config: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConnected: PropTypes.bool,
-  back: PropTypes.bool.isRequired,
-  mouseMoved: PropTypes.bool.isRequired,
-  handleHassLogin: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired
-};
 
 export default ResponsiveDrawer;

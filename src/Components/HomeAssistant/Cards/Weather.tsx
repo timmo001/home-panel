@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
@@ -8,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -103,7 +102,7 @@ const weatherNameMap: any = {
   'windy-variant': 'Windy'
 };
 
-function Weather(props: EntityProps) {
+function Weather(props: EntityProps): ReactElement {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
@@ -284,11 +283,5 @@ function Weather(props: EntityProps) {
     </Grid>
   );
 }
-
-Weather.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Weather;

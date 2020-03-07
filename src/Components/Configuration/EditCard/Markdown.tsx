@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Markdown(props: BaseProps) {
+function Markdown(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -42,11 +41,5 @@ function Markdown(props: BaseProps) {
     </Grid>
   );
 }
-
-Markdown.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Markdown;

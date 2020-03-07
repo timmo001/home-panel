@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Image(props: BaseProps) {
+function Image(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -31,11 +30,5 @@ function Image(props: BaseProps) {
     </Grid>
   );
 }
-
-Image.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Image;

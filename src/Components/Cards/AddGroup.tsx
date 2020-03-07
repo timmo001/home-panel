@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CardContent from '@material-ui/core/CardContent';
@@ -51,9 +50,5 @@ function AddGroup(props: AddGroupProps) {
     </Grid>
   );
 }
-
-AddGroup.propTypes = {
-  handleAdd: PropTypes.func.isRequired
-};
 
 export default AddGroup;

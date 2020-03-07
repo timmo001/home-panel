@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, ReactElement } from 'react';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -11,7 +10,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -42,7 +41,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 let PopoverNode: HTMLButtonElement | null | undefined;
-function Select(props: EntityProps) {
+function Select(props: EntityProps): ReactElement {
   const [open, setOpen] = useState(false);
 
   const classes = useStyles();
@@ -144,11 +143,5 @@ function Select(props: EntityProps) {
     </IconButton>
   );
 }
-
-Select.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Select;

@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Media(props: EntityProps) {
+function Media(props: EntityProps): ReactElement {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
@@ -270,11 +269,5 @@ function Media(props: EntityProps) {
     </Grid>
   );
 }
-
-Media.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Media;

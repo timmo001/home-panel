@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 
 import { BaseProps } from '../../Cards/Base';
 import AlarmPanel from './AlarmPanel';
@@ -20,7 +19,7 @@ export interface EntityProps extends BaseProps {
   handleHassToggle: () => void;
 }
 
-function Entity(props: EntityProps) {
+function Entity(props: EntityProps): ReactElement | null {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
   props.card.domain = domain;
   if (!props.card.entity) return null;
@@ -60,13 +59,5 @@ function Entity(props: EntityProps) {
 
   return null;
 }
-
-Entity.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleChange: PropTypes.func
-};
 
 export default Entity;

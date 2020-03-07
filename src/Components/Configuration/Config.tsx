@@ -4,17 +4,38 @@ import { CommonColors } from '@material-ui/core/colors/common';
 import pink from '@material-ui/core/colors/pink';
 
 import { BaseProps } from '../Cards/Base';
-import makeKey from '../../Utils/makeKey';
+import makeKey from '../../utils/makeKey';
 
 export interface ConfigProps {
   config: ConfigurationProps;
   editing: number;
-  back?: boolean;
-  handleUpdateConfig?: (path: any[], data?: any) => void;
-  handleConfigChange?: (config: ConfigurationProps) => void;
-  handleSetBack?: (back: boolean) => void;
-  handleSetTheme?: (palette: ThemeProps) => void;
+  back: boolean;
+  handleUpdateConfig: (
+    path: (string | number)[],
+    data?: string | number
+  ) => void;
+  handleConfigChange: (config: ConfigurationProps) => void;
+  handleSetBack: (back: boolean) => void;
+  handleSetTheme: (palette: ThemeProps) => void;
 }
+
+export type SectionProps = {
+  name: string | number;
+  title: string | number;
+  type: string;
+  items: ItemProps[];
+};
+
+export type ItemProps = {
+  name: string | number;
+  title: string;
+  description: string;
+  icon: string;
+  type: string;
+  default?: string | number | boolean;
+  items?: string[] | number[];
+  sectionItems?: ItemProps[];
+};
 
 export type ConfigurationProps = {
   general: GeneralProps;
@@ -107,20 +128,20 @@ export type CardType = {
   title: string;
 };
 
-export const defaultPage = () => ({
+export const defaultPage = (): {} => ({
   key: makeKey(16),
   name: 'Page',
   icon: 'file'
 });
 
-export const defaultGroup = (pageKey: string) => ({
+export const defaultGroup = (pageKey: string): {} => ({
   key: makeKey(16),
   name: 'Group',
   page: pageKey,
   width: 2
 });
 
-export const defaultCard = (groupKey: string) => ({
+export const defaultCard = (groupKey: string): {} => ({
   key: makeKey(16),
   group: groupKey,
   title: 'Card',
@@ -243,7 +264,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
   }
 };
 
-export const colorItems = [
+export const colorItems: string[] = [
   'blue',
   'blueGrey',
   'brown',
@@ -264,10 +285,11 @@ export const colorItems = [
   'yellow'
 ];
 
-export const items = [
+export const items: SectionProps[] = [
   {
     name: 'general',
     title: 'General',
+    type: 'standard',
     items: [
       {
         name: 'backup_restore',
@@ -320,6 +342,7 @@ export const items = [
   {
     name: 'news',
     title: 'News Feed',
+    type: 'standard',
     items: [
       {
         name: 'news_api_key',
@@ -334,6 +357,7 @@ export const items = [
   {
     name: 'theme',
     title: 'Theme',
+    type: 'standard',
     items: [
       {
         name: 'type',
@@ -401,6 +425,7 @@ export const items = [
   {
     name: 'header',
     title: 'Header',
+    type: 'standard',
     items: [
       {
         name: 'time_show',

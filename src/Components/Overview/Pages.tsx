@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -9,7 +8,7 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
-import { findPageIdByPage } from '../../Utils/find';
+import { findPageIdByPage } from '../../utils/find';
 import EditPage from '../Configuration/EditPage';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -30,17 +29,13 @@ interface TabContainerProps {
   children?: React.ReactNode;
 }
 
-function TabContainer(props: TabContainerProps) {
+function TabContainer(props: TabContainerProps): ReactElement {
   return (
     <Typography component="div" style={{ padding: 8 * 3 }}>
       {props.children}
     </Typography>
   );
 }
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
-};
 
 let editTimeout: NodeJS.Timeout;
 interface PagesProps extends RouteComponentProps, ConfigProps {
@@ -49,7 +44,7 @@ interface PagesProps extends RouteComponentProps, ConfigProps {
   setPage: (pageKey: string) => void;
 }
 
-function Pages(props: PagesProps) {
+function Pages(props: PagesProps): ReactElement {
   const [editingPage, setEditingPage] = React.useState<PageProps>();
 
   function handlePageChange(_event: React.ChangeEvent<{}>, pageKey: string) {
@@ -155,14 +150,5 @@ function Pages(props: PagesProps) {
     </div>
   );
 }
-
-Pages.propTypes = {
-  config: PropTypes.any,
-  editing: PropTypes.number,
-  mouseMoved: PropTypes.bool,
-  currentPage: PropTypes.string.isRequired,
-  handleUpdateConfig: PropTypes.func,
-  setPage: PropTypes.func.isRequired
-};
 
 export default Pages;

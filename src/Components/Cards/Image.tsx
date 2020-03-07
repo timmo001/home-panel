@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 
@@ -25,14 +24,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Image(props: BaseProps) {
+function Image(props: BaseProps): ReactElement {
   const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const handleSetDialogOpen = useCallback((open: boolean) => {
     setDialogOpen(open);
   }, []);
 
-  function handleToggleDialog() {
+  function handleToggleDialog(): void {
     handleSetDialogOpen(!dialogOpen);
   }
 
@@ -66,11 +65,5 @@ function Image(props: BaseProps) {
     </div>
   );
 }
-
-Image.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Image;

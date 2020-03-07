@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function RSS(props: BaseProps) {
+function RSS(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -41,11 +40,5 @@ function RSS(props: BaseProps) {
     </Grid>
   );
 }
-
-RSS.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default RSS;

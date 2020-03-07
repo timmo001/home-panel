@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
@@ -15,18 +15,18 @@ import {
   ConfigurationProps
 } from './Configuration/Config';
 import { CommandType } from './Utils/Command';
-import clone from '../Utils/clone';
+import clone from '../utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
 import Main from './Main';
-import parseTheme from '../Utils/parseTheme';
+import parseTheme from '../utils/parseTheme';
 
 import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application<any>;
-function Onboarding(props: RouteComponentExtendedProps) {
+function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   const [loginAttempted, setLoginAttempted] = React.useState(false);
   const [loginCredentials, setLoggedIn] = React.useState();
   const [config, setConfig] = React.useState<ConfigurationProps>();

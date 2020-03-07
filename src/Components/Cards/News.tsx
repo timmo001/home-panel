@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useCallback, ReactElement } from 'react';
 import request from 'superagent';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 let feedInterval: NodeJS.Timeout;
-function News(props: BaseProps) {
+function News(props: BaseProps): ReactElement {
   const [data, setData] = useState<FeedData[]>();
   const [error, setError] = useState<string>();
 
@@ -163,11 +162,5 @@ function News(props: BaseProps) {
     </div>
   );
 }
-
-News.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default News;

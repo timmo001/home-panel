@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
@@ -10,13 +9,13 @@ import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import { ConfigProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
 import { CommandType } from './Utils/Command';
-import clone from '../Utils/clone';
+import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange
 } from './HomeAssistant/HomeAssistant';
-import isObject from '../Utils/isObject';
+import isObject from '../utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
 import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
@@ -58,7 +57,7 @@ interface MainProps extends RouteComponentExtendedProps, ConfigProps {
   handleMouseMove: () => void;
 }
 
-function Main(props: MainProps) {
+function Main(props: MainProps): ReactElement {
   const [back, setBack] = React.useState<boolean>(false);
   const [hassAuth, setHassAuth] = React.useState<Auth>();
   const [hassConfig, setHassConfig] = React.useState<HassConfig>();
@@ -248,33 +247,21 @@ function Main(props: MainProps) {
               handleUpdateConfig={handleUpdateConfig}
             />
           ) : (
-            hassAuth &&
-            hassConfig &&
-            hassEntities && (
-              <Overview
-                {...props}
-                editing={editing}
-                hassAuth={hassAuth}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                mouseMoved={props.mouseMoved}
-                handleHassChange={handleHassChange}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )
+            <Overview
+              {...props}
+              editing={editing}
+              hassAuth={hassAuth}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={props.mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
           )}
         </main>
       )}
     </div>
   );
 }
-
-Main.propTypes = {
-  loginCredentials: PropTypes.any,
-  config: PropTypes.object,
-  handleConfigChange: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-  handleSetTheme: PropTypes.func.isRequired
-};
 
 export default Main;

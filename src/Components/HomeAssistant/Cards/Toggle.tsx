@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -29,7 +28,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Toggle(props: EntityProps) {
+function Toggle(props: EntityProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
   let entity: HassEntity | undefined, state: string | undefined;
@@ -89,11 +88,5 @@ function Toggle(props: EntityProps) {
     </Grid>
   );
 }
-
-Toggle.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Toggle;

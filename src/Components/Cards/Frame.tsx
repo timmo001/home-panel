@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import { BaseProps } from './Base';
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Frame(props: BaseProps) {
+function Frame(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -29,11 +28,5 @@ function Frame(props: BaseProps) {
     />
   );
 }
-
-Frame.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Frame;

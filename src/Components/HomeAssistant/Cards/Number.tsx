@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +34,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function NumberEntity(props: EntityProps) {
+function NumberEntity(props: EntityProps): ReactElement {
   const [number, setNumber] = React.useState<number>();
 
   const classes = useStyles();
@@ -184,11 +183,5 @@ function NumberEntity(props: EntityProps) {
     </Grid>
   );
 }
-
-NumberEntity.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default NumberEntity;

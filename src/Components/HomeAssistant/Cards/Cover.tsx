@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Cover(props: EntityProps) {
+function Cover(props: EntityProps): ReactElement {
   const classes = useStyles();
   let entity: HassEntity | undefined,
     state: string | undefined,
@@ -186,11 +185,5 @@ function Cover(props: EntityProps) {
     </Grid>
   );
 }
-
-Cover.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Cover;

@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import Fuse from 'fuse.js';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -32,7 +31,7 @@ interface SelectProps {
 
 let PopperNode: HTMLDivElement | null | undefined;
 
-function Select(props: SelectProps) {
+function Select(props: SelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -126,12 +125,5 @@ function Select(props: SelectProps) {
     </div>
   );
 }
-
-Select.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  options: PropTypes.array,
-  handleChange: PropTypes.func
-};
 
 export default Select;

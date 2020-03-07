@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -12,9 +11,9 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { items, ConfigProps } from './Config';
-import clone from '../../Utils/clone';
-import makeKey from '../../Utils/makeKey';
+import { items, ConfigProps, SectionProps, ItemProps } from './Config';
+import clone from '../../utils/clone';
+import makeKey from '../../utils/makeKey';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,22 +38,22 @@ export interface ConfigurationProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantEntityProps {
-  path?: any[];
-  item?: any;
-  section?: any;
+  path: (string | number)[];
+  item: ItemProps;
+  section: SectionProps;
   handleBackupConfig: () => void;
   handleRestoreConfig: () => void;
-  handleAdd?: (path: any[], defaultItem: any) => () => void;
-  handleDelete?: (path: any[]) => () => void;
-  handleSetSections?: (
-    path: any[],
-    section: any | any[]
+  handleAdd: (path: (string | number)[], defaultItem: any) => () => void;
+  handleDelete: (path: (string | number)[]) => () => void;
+  handleSetSections: (
+    path: (string | number)[],
+    section: SectionProps | SectionProps[]
   ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-function Configuration(props: ConfigurationProps) {
-  const [path, setPath]: any[] = React.useState([]);
-  const [sections, setSections]: any[] = React.useState(items);
+function Configuration(props: ConfigurationProps): ReactElement {
+  const [path, setPath] = React.useState<(string | number)[]>([]);
+  const [sections, setSections] = React.useState<SectionProps[]>(items);
 
   useEffect(() => {
     if (!props.back) {
@@ -63,11 +62,14 @@ function Configuration(props: ConfigurationProps) {
     }
   }, [props.back]);
 
-  const handleAdd = (path: any[], defaultItem: any) => () => {
+  const handleAdd = (
+    path: (string | number)[],
+    defaultItem: any
+  ) => (): void => {
     if (defaultItem.key) defaultItem.key = makeKey(16);
-    props.handleUpdateConfig!(path, defaultItem);
+    props.handleUpdateConfig(path, defaultItem);
     if (path !== []) {
-      const newSections = [
+      const newSections: SectionProps[] = [
         ...sections,
         {
           ...sections[0],
@@ -75,14 +77,13 @@ function Configuration(props: ConfigurationProps) {
           title: defaultItem.name
         }
       ];
-
       setSections(newSections);
     }
   };
 
   const handleDelete = (path: any[]) => () => {
     const id = clone(path).pop();
-    props.handleUpdateConfig!(path, undefined);
+    props.handleUpdateConfig(path, undefined);
     if (path !== []) {
       const newSections = clone(sections);
       newSections.splice(id, 1);
@@ -90,12 +91,13 @@ function Configuration(props: ConfigurationProps) {
     }
   };
 
-  const handleSetSections = (path: any[], section: any | any[]) => (
-    _event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleSetSections = (
+    path: (string | number)[],
+    section: SectionProps | SectionProps[]
+  ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     setPath(path);
     setSections(Array.isArray(section) ? section : [section]);
-    if (path !== []) props.handleSetBack!(true);
+    if (path !== []) props.handleSetBack(true);
   };
 
   const classes = useStyles();
@@ -107,7 +109,7 @@ function Configuration(props: ConfigurationProps) {
       justify="center"
       alignContent="center"
       spacing={1}>
-      {sections.map((item: any, key: number) => (
+      {sections.map((section: SectionProps, key: number) => (
         <Grid
           className={classes.section}
           key={key}
@@ -119,18 +121,18 @@ function Configuration(props: ConfigurationProps) {
           sm={10}
           xs={12}>
           <Grid item xs container>
-            {item.title && (
+            {section.title && (
               <Grid item xs>
                 <Typography variant="h4" gutterBottom noWrap>
-                  {item.title}
+                  {section.title}
                 </Typography>
               </Grid>
             )}
-            {item.type === 'object' && (
+            {section.type === 'object' && (
               <Grid item>
                 <IconButton
                   color="secondary"
-                  onClick={handleDelete([...path, item.name])}>
+                  onClick={handleDelete([...path, section.name])}>
                   <DeleteIcon />
                 </IconButton>
               </Grid>
@@ -141,8 +143,8 @@ function Configuration(props: ConfigurationProps) {
               <CardContent className={classes.cardContent}>
                 <Section
                   {...props}
-                  path={[...path, item.name]}
-                  section={item}
+                  path={[...path, section.name]}
+                  section={section}
                   handleAdd={handleAdd}
                   handleSetSections={handleSetSections}
                 />
@@ -151,7 +153,7 @@ function Configuration(props: ConfigurationProps) {
           </Grid>
         </Grid>
       ))}
-      {sections[0].type === 'object' && (
+      {/* TODO {sections[0].type === 'object' && (
         <Fab
           className={classes.fab}
           color="primary"
@@ -162,16 +164,9 @@ function Configuration(props: ConfigurationProps) {
           )}>
           <AddIcon />
         </Fab>
-      )}
+      )} */}
     </Grid>
   );
 }
-
-Configuration.propTypes = {
-  config: PropTypes.any,
-  back: PropTypes.bool.isRequired,
-  handleUpdateConfig: PropTypes.func.isRequired,
-  handleSetBack: PropTypes.func.isRequired
-};
 
 export default Configuration;

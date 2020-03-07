@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -42,7 +41,7 @@ interface EditCardProps extends BaseProps {
   handleUpdate: (data: CardProps) => void;
 }
 
-function EditCard(props: EditCardProps) {
+function EditCard(props: EditCardProps): ReactElement {
   const [card, setCard] = React.useState(props.card);
 
   useEffect(() => setCard(props.card), [props.card]);
@@ -160,10 +159,5 @@ function EditCard(props: EditCardProps) {
     </Dialog>
   );
 }
-
-EditCard.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  handleUpdate: PropTypes.func.isRequired
-};
 
 export default EditCard;

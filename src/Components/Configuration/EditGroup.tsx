@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -33,7 +32,7 @@ interface EditGroupProps {
   handleUpdate: (data: GroupProps) => void;
 }
 
-function EditGroup(props: EditGroupProps) {
+function EditGroup(props: EditGroupProps): ReactElement {
   const [group, setGroup] = React.useState(props.group);
 
   useEffect(() => setGroup(props.group), [props.group]);
@@ -106,11 +105,5 @@ function EditGroup(props: EditGroupProps) {
     </Dialog>
   );
 }
-
-EditGroup.propTypes = {
-  group: PropTypes.object.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleUpdate: PropTypes.func.isRequired
-};
 
 export default EditGroup;

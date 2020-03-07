@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import {
   Area,
@@ -58,7 +57,7 @@ interface TooltipProps extends ChartProps {
   label?: string;
 }
 
-function TooltipCustom(props: TooltipProps) {
+function TooltipCustom(props: TooltipProps): ReactElement {
   if (props.active && props.payload)
     return (
       <Typography color="textPrimary" variant="body2" component="span">
@@ -77,7 +76,7 @@ interface LabelProps extends ChartProps {
   y?: number;
 }
 
-function LabelCustom(props: LabelProps) {
+function LabelCustom(props: LabelProps): ReactElement {
   const theme = useTheme();
 
   if (props.x && props.y && props.value)
@@ -94,7 +93,7 @@ function LabelCustom(props: LabelProps) {
   return null;
 }
 
-function Chart(props: ChartProps) {
+function Chart(props: ChartProps): ReactElement {
   const [dataIn, setDataIn] = React.useState<ChartData[]>();
   const [data, setData] = React.useState<ChartData[]>();
   const [type, setType] = React.useState<string>();
@@ -255,9 +254,5 @@ function Chart(props: ChartProps) {
   }
   return null;
 }
-
-Chart.propTypes = {
-  data: PropTypes.array.isRequired
-};
 
 export default Chart;

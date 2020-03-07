@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,16 +18,17 @@ import {
   CardProps
 } from '../Configuration/Config';
 import { CommandType } from '../Utils/Command';
-import { findGroupIdByGroup, findCardIdByCard } from '../../Utils/find';
+import { findGroupIdByGroup, findCardIdByCard } from '../../utils/find';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import Base from '../Cards/Base';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditGroup from '../Configuration/EditGroup';
-import Header from './Header/Header';
-import makeKey from '../../Utils/makeKey';
+import Header from './Header';
+import makeKey from '../../utils/makeKey';
 import Pages from './Pages';
+import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -73,7 +73,7 @@ interface OverviewProps
   mouseMoved: boolean;
 }
 
-function Overview(props: OverviewProps) {
+function Overview(props: OverviewProps): ReactElement {
   const [currentPage, setCurrentPage] = React.useState(
     props.config.pages[0].key
   );
@@ -408,15 +408,5 @@ function Overview(props: OverviewProps) {
     </Grid>
   );
 }
-
-Overview.propTypes = {
-  config: PropTypes.any,
-  editing: PropTypes.number,
-  mouseMoved: PropTypes.bool,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleHassChange: PropTypes.func.isRequired,
-  handleUpdateConfig: PropTypes.func.isRequired
-};
 
 export default Overview;

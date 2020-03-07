@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -8,7 +7,7 @@ import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -29,9 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface AlarmPanelProps extends EntityProps {}
-
-function AlarmPanel(props: AlarmPanelProps) {
+function AlarmPanel(props: EntityProps): ReactElement {
   const [code, setCode] = React.useState('');
   const classes = useStyles();
   let entity: HassEntity | undefined,
@@ -195,11 +192,5 @@ function AlarmPanel(props: AlarmPanelProps) {
     </Grid>
   );
 }
-
-AlarmPanel.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default AlarmPanel;

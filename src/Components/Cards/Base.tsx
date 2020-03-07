@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -30,6 +29,7 @@ import Image from './Image';
 import Markdown from './Markdown';
 import News from './News';
 import RSS from './RSS';
+import Message from 'Components/Utils/Message';
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
@@ -98,7 +98,7 @@ export interface BaseProps
 }
 
 let holdTimeout: NodeJS.Timeout;
-function Base(props: BaseProps) {
+function Base(props: BaseProps): ReactElement {
   const [deleteConfirm, setDeleteConfirm] = React.useState<boolean>(false);
   const [editCard, setEditCard] = React.useState<boolean>(false);
   const [expandable, setExpandable] = React.useState<boolean>(false);
@@ -333,16 +333,19 @@ function Base(props: BaseProps) {
               )}
             </Grid>
           </Grid>
-          {props.card.type === 'entity' && (
-            <Entity
-              {...props}
-              card={props.card}
-              editing={props.editing}
-              hassConfig={props.hassConfig}
-              hassEntities={props.hassEntities}
-              handleHassToggle={handleHassToggle}
-            />
-          )}
+          {props.card.type === 'entity' &&
+            (props.hassConfig && props.hassEntities ? (
+              <Entity
+                {...props}
+                card={props.card}
+                editing={props.editing}
+                hassConfig={props.hassConfig}
+                hassEntities={props.hassEntities}
+                handleHassToggle={handleHassToggle}
+              />
+            ) : (
+              <Message type="error" text="Home Assistant not configured" />
+            ))}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}
@@ -407,20 +410,5 @@ function Base(props: BaseProps) {
     </ButtonBase>
   );
 }
-
-Base.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func,
-  handleDelete: PropTypes.func,
-  handleHassChange: PropTypes.func.isRequired,
-  handleMoveDown: PropTypes.func,
-  handleMoveUp: PropTypes.func,
-  handleSelectChange: PropTypes.func,
-  handleSwitchChange: PropTypes.func,
-  handleUpdate: PropTypes.func.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Base;

@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
@@ -10,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
 import Chart, { ChartData } from '../../Visualisations/Chart';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 import strings from '../Utils/Strings';
 
 const useStyles = makeStyles(() => ({
@@ -39,7 +38,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 let historyInterval: NodeJS.Timeout;
-function State(props: EntityProps) {
+function State(props: EntityProps): ReactElement {
   const [historyData, setHistoryData] = React.useState<ChartData[]>();
 
   const classes = useStyles();
@@ -157,11 +156,5 @@ function State(props: EntityProps) {
     </Grid>
   );
 }
-
-State.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default State;

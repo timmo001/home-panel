@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -36,7 +35,7 @@ interface HomeAssistantLoginProps {
   handleHassLogin: (url: string) => void;
 }
 
-function HomeAssistantLogin(props: HomeAssistantLoginProps) {
+function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
   const [showDialog, setShowDialog] = React.useState<boolean>(false);
   const [url, setUrl] = React.useState<string>(
     `${process.env.REACT_APP_API_PROTOCOL ||
@@ -137,9 +136,5 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
     </div>
   );
 }
-
-HomeAssistantLogin.propTypes = {
-  handleHassLogin: PropTypes.func.isRequired
-};
 
 export default HomeAssistantLogin;

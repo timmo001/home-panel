@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback, ReactElement } from 'react';
 import Fuse from 'fuse.js';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -33,7 +32,7 @@ interface EntitySelectProps extends HomeAssistantEntityProps {
 
 let PopperNode: HTMLDivElement | null | undefined;
 
-function EntitySelect(props: EntitySelectProps) {
+function EntitySelect(props: EntitySelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -136,11 +135,5 @@ function EntitySelect(props: EntitySelectProps) {
     </div>
   );
 }
-
-EntitySelect.propTypes = {
-  entity: PropTypes.string,
-  hassEntities: PropTypes.any.isRequired,
-  handleChange: PropTypes.func
-};
 
 export default EntitySelect;

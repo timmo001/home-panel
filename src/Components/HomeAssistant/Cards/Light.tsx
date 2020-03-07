@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import classnames from 'classnames';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -52,7 +51,7 @@ const FEATURE_CLASS_NAMES = {
   128: 'has-white_value'
 };
 
-function Light(props: EntityProps) {
+function Light(props: EntityProps): ReactElement {
   const [attributes, setAttributes] = React.useState<{ [key: string]: any }>();
   const [color, setColor] = React.useState('');
 
@@ -279,12 +278,5 @@ function Light(props: EntityProps) {
     </Grid>
   );
 }
-
-Light.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleHassToggle: PropTypes.func.isRequired
-};
 
 export default Light;

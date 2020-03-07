@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +20,7 @@ interface LoadingProps {
   text: string;
 }
 
-function Loading(props: LoadingProps) {
+function Loading(props: LoadingProps): ReactElement {
   const classes = useStyles();
   return (
     <Grid
@@ -42,9 +41,5 @@ function Loading(props: LoadingProps) {
     </Grid>
   );
 }
-
-Loading.propTypes = {
-  text: PropTypes.string
-};
 
 export default Loading;

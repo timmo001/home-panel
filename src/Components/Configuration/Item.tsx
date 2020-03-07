@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -21,7 +20,8 @@ import { ColorResult } from 'react-color';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import clone from '../../Utils/clone';
+import { SectionProps, ItemProps as SectionItemProps } from './Config';
+import clone from '../../utils/clone';
 import ColorAdornment from '../Utils/ColorAdornment';
 import Section from './Section';
 
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
 let updateTimeout: NodeJS.Timeout;
-function Item(props: ItemProps) {
+function Item(props: ItemProps): ReactElement {
   const [value, setValue] = React.useState<string>();
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
 
@@ -73,11 +73,11 @@ function Item(props: ItemProps) {
       if (props.path) {
         const lastItem = props.path.pop();
         const secondLastItem = props.path.reduce(
-          (o, k) => (o[k] = o[k] || {}),
+          (o: any, k: any) => (o[k] = o[k] || {}),
           props.config
         );
         const val =
-          secondLastItem[lastItem] === undefined
+          lastItem === undefined || secondLastItem[lastItem] === undefined
             ? props.item.default
             : secondLastItem[lastItem];
         setValue(val);
@@ -85,27 +85,27 @@ function Item(props: ItemProps) {
     }
   }, [props.config, props.item.default, props.path, value]);
 
-  function handleClickShowPassword() {
+  function handleClickShowPassword(): void {
     setShowPassword(!showPassword);
   }
 
-  function handleMouseDownPassword(event: any) {
+  function handleMouseDownPassword(event: any): void {
     event.preventDefault();
   }
 
-  function handleUpdate(p: any[], v: any) {
+  function handleUpdate(p: any[], v: any): void {
     const path = clone(p),
       value = clone(v);
     setValue(value);
     if (updateTimeout) clearTimeout(updateTimeout);
     updateTimeout = setTimeout(() => {
-      props.handleUpdateConfig!(path, value);
+      props.handleUpdateConfig(path, value);
     }, 500);
   }
 
   const handleChange = (path: any[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     const val =
       type === 'number' ? Number(event.target.value) : event.target.value;
     handleUpdate(path, val);
@@ -113,7 +113,7 @@ function Item(props: ItemProps) {
 
   const handleRadioChange = (path: any[]) => (
     event: React.ChangeEvent<unknown>
-  ) => {
+  ): void => {
     const val = Number((event.target as HTMLInputElement).value);
     handleUpdate(path, val);
   };
@@ -121,17 +121,17 @@ function Item(props: ItemProps) {
   const handleSwitchChange = (path: any[]) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
-  ) => {
+  ): void => {
     handleUpdate(path, checked);
   };
 
   const handleSelectChange = (path: any[]) => (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) => {
+  ): void => {
     handleUpdate(path, event.target.value);
   };
 
-  const handleColorChange = (path: any[]) => (color: ColorResult) => {
+  const handleColorChange = (path: any[]) => (color: ColorResult): void => {
     handleUpdate(path, color.hex);
   };
 
@@ -144,18 +144,20 @@ function Item(props: ItemProps) {
       return <div />;
     case 'array':
       if (!Array.isArray(value)) return <div />;
-      const items = value.map((item: any, key: number) => ({
-        name: key,
-        title: item.name,
-        type: 'object',
-        default: props.item.default,
-        items: props.item.items
-      }));
+      const sections: SectionProps[] = value.map(
+        (item: SectionItemProps, key: number): SectionProps => ({
+          name: key,
+          title: item.name,
+          type: 'object',
+          // default: props.item.default,
+          items: props.item.sectionItems ? props.item.sectionItems : []
+        })
+      );
       return (
         <IconButton
           color="inherit"
           aria-label="Edit"
-          onClick={props.handleSetSections!(props.path!, items)}>
+          onClick={props.handleSetSections(props.path, sections)}>
           <span
             className={classnames('mdi', 'mdi-pencil', classes.iconButton)}
           />
@@ -189,19 +191,19 @@ function Item(props: ItemProps) {
             endAdornment: (
               <ColorAdornment
                 color={value}
-                handleColorChange={handleColorChange(props.path!)}
+                handleColorChange={handleColorChange(props.path)}
               />
             )
           }}
           value={value}
-          onChange={handleChange(props.path!, 'color')}
+          onChange={handleChange(props.path, 'color')}
         />
       );
     case 'color_only':
       return (
         <ColorAdornment
           color={value}
-          handleColorChange={handleColorChange(props.path!)}
+          handleColorChange={handleColorChange(props.path)}
         />
       );
     case 'input':
@@ -212,7 +214,7 @@ function Item(props: ItemProps) {
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
           value={value}
           onChange={handleChange(
-            props.path!,
+            props.path,
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
         />
@@ -225,7 +227,7 @@ function Item(props: ItemProps) {
           placeholder={String(props.item.default)}
           value={value}
           onChange={handleChange(
-            props.path!,
+            props.path,
             typeof props.item.default === 'number' ? 'number' : 'string'
           )}
           InputProps={{
@@ -243,7 +245,7 @@ function Item(props: ItemProps) {
         />
       );
     case 'object':
-      return <Section {...props} path={props.path!} section={props.item} />;
+      return <Section {...props} path={props.path} section={props.item} />;
     case 'radio':
       return (
         <FormControl component="fieldset">
@@ -252,11 +254,11 @@ function Item(props: ItemProps) {
             aria-label={props.item.title}
             name={props.item.name}
             value={value}
-            onChange={handleRadioChange(props.path!)}>
-            {props.item.items.map((rItem: any, key: number) => (
+            onChange={handleRadioChange(props.path)}>
+            {props.item.items.map((rItem: string, key: number) => (
               <FormControlLabel
                 key={key}
-                value={Number(key)}
+                value={key}
                 label={rItem}
                 control={<Radio color="primary" />}
               />
@@ -271,7 +273,7 @@ function Item(props: ItemProps) {
           <Select
             className={classes.root}
             value={value}
-            onChange={handleSelectChange(props.path!)}>
+            onChange={handleSelectChange(props.path)}>
             {props.item.items &&
               props.item.items.map((sItem: string, key: number) => (
                 <MenuItem key={key} value={sItem}>
@@ -282,24 +284,18 @@ function Item(props: ItemProps) {
         </FormControl>
       );
     case 'switch':
-      if (typeof value !== 'boolean')
-        handleChange(props.path!, props.item.default);
       return (
         <Switch
           color="primary"
-          checked={value !== undefined ? value : props.item.default}
-          onChange={handleSwitchChange(props.path!)}
+          checked={
+            value !== undefined && typeof value === 'boolean'
+              ? Boolean(value)
+              : Boolean(props.item.default)
+          }
+          onChange={handleSwitchChange(props.path)}
         />
       );
   }
 }
-
-Item.propTypes = {
-  config: PropTypes.any,
-  item: PropTypes.any.isRequired,
-  path: PropTypes.array.isRequired,
-  section: PropTypes.any.isRequired,
-  handleUpdateConfig: PropTypes.func.isRequired
-};
 
 export default Item;

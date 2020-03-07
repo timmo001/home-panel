@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 import { chartTypes } from '../../Visualisations/Chart';
+import { HomeAssistantEntityProps } from '../../HomeAssistant/HomeAssistant';
 import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,14 +26,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Entity(props: BaseProps) {
-  function handleGetEntityIcon() {
-    const entity = props.hassEntities[props.card.entity!];
-    if (entity && entity.attributes.icon)
-      props.handleManualChange!(
-        'icon',
-        entity.attributes.icon.replace('mdi:', '')
-      );
+interface EntityProps extends BaseProps, HomeAssistantEntityProps {}
+
+function Entity(props: EntityProps): ReactElement {
+  function handleGetEntityIcon(): void {
+    if (props.card.entity) {
+      const entity = props.hassEntities[props.card.entity];
+      if (entity && entity.attributes.icon)
+        props.handleManualChange(
+          'icon',
+          entity.attributes.icon.replace('mdi:', '')
+        );
+    }
   }
 
   const classes = useStyles();
@@ -263,13 +267,5 @@ function Entity(props: BaseProps) {
     </Grid>
   );
 }
-
-Entity.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleChange: PropTypes.func
-};
 
 export default Entity;
