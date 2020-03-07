@@ -57,7 +57,7 @@ interface TooltipProps extends ChartProps {
   label?: string;
 }
 
-function TooltipCustom(props: TooltipProps): ReactElement {
+function TooltipCustom(props: TooltipProps): ReactElement | null {
   if (props.active && props.payload)
     return (
       <Typography color="textPrimary" variant="body2" component="span">
@@ -76,7 +76,7 @@ interface LabelProps extends ChartProps {
   y?: number;
 }
 
-function LabelCustom(props: LabelProps): ReactElement {
+function LabelCustom(props: LabelProps): ReactElement | null {
   const theme = useTheme();
 
   if (props.x && props.y && props.value)
@@ -93,7 +93,7 @@ function LabelCustom(props: LabelProps): ReactElement {
   return null;
 }
 
-function Chart(props: ChartProps): ReactElement {
+function Chart(props: ChartProps): ReactElement | null {
   const [dataIn, setDataIn] = React.useState<ChartData[]>();
   const [data, setData] = React.useState<ChartData[]>();
   const [type, setType] = React.useState<string>();

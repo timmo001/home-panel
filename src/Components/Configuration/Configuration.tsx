@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { items, ConfigProps, SectionProps, ItemProps } from './Config';
+import { items, ConfigProps, SectionProps } from './Config';
 import clone from '../../utils/clone';
 import makeKey from '../../utils/makeKey';
 import Section from './Section';
@@ -34,24 +34,27 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface ConfigurationProps
+interface ConfigurationBaseProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantEntityProps {
-  path: (string | number)[];
-  item: ItemProps;
-  section: SectionProps;
+  back: boolean;
   handleBackupConfig: () => void;
   handleRestoreConfig: () => void;
+  handleSetBack: (back: boolean) => void;
+}
+
+export interface ConfigurationProps extends ConfigurationBaseProps {
+  path: (string | number)[];
+  section: SectionProps;
   handleAdd: (path: (string | number)[], defaultItem: any) => () => void;
-  handleDelete: (path: (string | number)[]) => () => void;
   handleSetSections: (
     path: (string | number)[],
     section: SectionProps | SectionProps[]
   ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
-function Configuration(props: ConfigurationProps): ReactElement {
+function Configuration(props: ConfigurationBaseProps): ReactElement {
   const [path, setPath] = React.useState<(string | number)[]>([]);
   const [sections, setSections] = React.useState<SectionProps[]>(items);
 
@@ -81,7 +84,7 @@ function Configuration(props: ConfigurationProps): ReactElement {
     }
   };
 
-  const handleDelete = (path: any[]) => () => {
+  const handleDelete = (path: (string | number)[]) => (): void => {
     const id = clone(path).pop();
     props.handleUpdateConfig(path, undefined);
     if (path !== []) {
@@ -94,6 +97,7 @@ function Configuration(props: ConfigurationProps): ReactElement {
   const handleSetSections = (
     path: (string | number)[],
     section: SectionProps | SectionProps[]
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     setPath(path);
     setSections(Array.isArray(section) ? section : [section]);
@@ -143,7 +147,7 @@ function Configuration(props: ConfigurationProps): ReactElement {
               <CardContent className={classes.cardContent}>
                 <Section
                   {...props}
-                  path={[...path, section.name]}
+                  path={[section.name]}
                   section={section}
                   handleAdd={handleAdd}
                   handleSetSections={handleSetSections}

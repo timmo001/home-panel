@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ReactElement } from 'react';
 import emoji from 'markdown-it-emoji';
 import externalLinks from 'markdown-it-external-links';
 import markdownIt from 'markdown-it';
@@ -9,7 +9,7 @@ interface MarkdownTextProps {
 }
 
 function MarkdownText(props: MarkdownTextProps): ReactElement {
-  const [text, setText] = useState<any>();
+  const [text, setText] = useState<ReactElement[]>();
 
   useEffect(() => {
     setText(

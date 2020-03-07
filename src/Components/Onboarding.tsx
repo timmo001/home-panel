@@ -167,14 +167,14 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     });
   }
 
-  async function handleLogout(): void {
+  async function handleLogout(): Promise<void> {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
     await client.logout();
     window.location.replace(window.location.href);
   }
 
-  function handleConfigChange(config: any): void {
+  function handleConfigChange(config: ConfigurationProps): void {
     socket.emit('patch', 'config', configId, { config }, (error: any) => {
       if (error) console.error('Error updating', configId, ':', error);
       else {
@@ -187,7 +187,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
   function handleMouseMove(): void {
     if (moveTimeout) clearTimeout(moveTimeout);
-    if (!props.location.state!!.configuration) {
+    if (!props.location.state?.configuration) {
       setMouseMoved(true);
       moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
     }

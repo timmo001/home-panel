@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {}
+interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
+  item: SectionItemProps;
+}
 
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps): ReactElement {

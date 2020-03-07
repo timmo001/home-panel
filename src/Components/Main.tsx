@@ -6,7 +6,7 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
 import { RouteComponentExtendedProps } from './Types/ReactRouter';
-import { ConfigProps } from './Configuration/Config';
+import { ConfigurationProps, ThemeProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
 import { CommandType } from './Utils/Command';
 import clone from '../utils/clone';
@@ -19,6 +19,7 @@ import isObject from '../utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
 import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
+import { AuthenticationResult } from '@feathersjs/authentication/lib';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -49,12 +50,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface MainProps extends RouteComponentExtendedProps, ConfigProps {
-  command: CommandType | undefined;
-  loginCredentials: any;
+interface MainProps extends RouteComponentExtendedProps {
+  command: CommandType;
+  config: ConfigurationProps;
+  editing: number;
+  loginCredentials: AuthenticationResult;
   mouseMoved: boolean;
-  handleLogout: () => any;
+  handleConfigChange: (config: ConfigurationProps) => void;
+  handleLogout: () => void;
   handleMouseMove: () => void;
+  handleSetTheme: (palette: ThemeProps) => void;
 }
 
 function Main(props: MainProps): ReactElement {
@@ -78,7 +83,7 @@ function Main(props: MainProps): ReactElement {
     }
   }, [hassConnected]);
 
-  function handleUpdateConfig(path: any[], data: any) {
+  function handleUpdateConfig(path: any[], data: any): void {
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value
@@ -95,22 +100,22 @@ function Main(props: MainProps): ReactElement {
         }
       } else secondLastItem[lastItem] = data;
     } else config = data;
-    props.handleConfigChange!(config);
+    props.handleConfigChange(config);
     if (path.find((i: any) => i === 'theme'))
-      props.handleSetTheme!(config.theme);
+      props.handleSetTheme(config.theme);
   }
 
-  async function handleHassLogin(url: string) {
+  async function handleHassLogin(url: string): Promise<void> {
     console.log('handleHassLogin:', url);
     setHassUrl(url);
     setHassLogin(true);
   }
 
-  function handleBack() {
+  function handleBack(): void {
     setBack(false);
   }
 
-  function handleBackupConfig() {
+  function handleBackupConfig(): void {
     const a = document.createElement('a');
     const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
     a.href = URL.createObjectURL(file);
@@ -148,7 +153,7 @@ function Main(props: MainProps): ReactElement {
   }
 
   useEffect(() => {
-    if (props.command && !props.location.state!!.overview)
+    if (props.command && !props.location.state?.overview)
       props.history.replace({ ...props.location, state: { overview: true } });
   }, [props.command, props.history, props.location]);
 
@@ -174,7 +179,7 @@ function Main(props: MainProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.state!!.configuration
+    props.location.state?.configuration
       ? true
       : false || props.mouseMoved;
 
@@ -182,7 +187,7 @@ function Main(props: MainProps): ReactElement {
     <div
       className={classnames(
         classes.root,
-        props.location.state!!.overview && classes.overview
+        props.location.state?.overview && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
@@ -217,7 +222,7 @@ function Main(props: MainProps): ReactElement {
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
             !showToolbar && classes.contentNoToolbar,
-            props.location.state!!.overview && classes.overview
+            props.location.state?.overview && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (

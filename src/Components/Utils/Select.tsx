@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, ReactElement } from 'react';
 import Fuse from 'fuse.js';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -39,36 +39,6 @@ function Select(props: SelectProps): ReactElement {
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearch(event.target.value);
-    filterSuggestions();
-    setOpen(true);
-    props.handleChange('');
-  }
-
-  function handleFocus(
-    _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setOpen(true);
-  }
-
-  const handleChosen = (item: SuggestionType) => (
-    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
-    setSearch(item.label);
-    props.handleChange(item.value);
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (!search && props.options && props.value) {
-      const val = props.options.find(
-        (option: SuggestionType) => option.value === props.value
-      );
-      if (val) setSearch(val.label);
-    }
-  }, [search, props.options, props.value]);
-
   const filterSuggestions = useCallback(() => {
     const opts: Fuse.FuseOptions<SuggestionType> = {
       keys: ['label', 'value'],
@@ -83,6 +53,38 @@ function Select(props: SelectProps): ReactElement {
     );
   }, [props.options, search]);
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSearch(event.target.value);
+    filterSuggestions();
+    setOpen(true);
+    props.handleChange('');
+  }
+
+  function handleFocus(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void {
+    setOpen(true);
+  }
+
+  const handleChosen = (item: SuggestionType) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ): void => {
+    setSearch(item.label);
+    props.handleChange(item.value);
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (!search && props.options && props.value) {
+      const val = props.options.find(
+        (option: SuggestionType) => option.value === props.value
+      );
+      if (val) setSearch(val.label);
+    }
+  }, [search, props.options, props.value]);
+
   return (
     <div className={classes.root}>
       <TextField
@@ -92,7 +94,7 @@ function Select(props: SelectProps): ReactElement {
         placeholder={`Search for ${props.label ? props.label : 'items'}`}
         aria-controls="options"
         aria-haspopup="true"
-        ref={node => {
+        ref={(node: HTMLDivElement): void => {
           PopperNode = node;
         }}
         value={search}

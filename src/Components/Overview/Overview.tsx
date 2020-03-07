@@ -91,7 +91,7 @@ function Overview(props: OverviewProps): ReactElement {
       if (props.command.page) handleSetCurrentPage(props.command.page);
       else if (props.command.card) {
         const foundCard: CardProps | undefined = props.config.cards.find(
-          (card: CardProps) => card.key === props.command.card
+          (card: CardProps) => card.key === props.command?.card
         );
         if (foundCard) {
           const foundGroup: GroupProps | undefined = props.config.groups.find(

@@ -12,10 +12,13 @@ function Message(props: MessageProps): ReactElement {
   switch (props.type) {
     case 'info':
       color = 'teal';
+      break;
     case 'warning':
       color = 'orange';
+      break;
     case 'error':
       color = 'red';
+      break;
   }
 
   return (

@@ -25,18 +25,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface TabContainerProps {
-  children?: React.ReactNode;
-}
-
-function TabContainer(props: TabContainerProps): ReactElement {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
 let editTimeout: NodeJS.Timeout;
 interface PagesProps extends RouteComponentProps, ConfigProps {
   currentPage: string;
@@ -53,33 +41,33 @@ function Pages(props: PagesProps): ReactElement {
 
   function handleAdd() {
     const newPage = defaultPage();
-    props.handleUpdateConfig!(['pages', props.config.pages.length], newPage);
+    props.handleUpdateConfig(['pages', props.config.pages.length], newPage);
     props.setPage(newPage.key);
   }
 
-  const handleEditingPage = (page: PageProps) => () => {
+  const handleEditingPage = (page: PageProps) => (): void => {
     if (props.editing === 1)
       editTimeout = setTimeout(() => setEditingPage(page), 1000);
   };
 
-  function handleCancelEdit() {
+  function handleCancelEdit(): void {
     clearTimeout(editTimeout);
   }
 
-  function handleDoneEditingPage() {
+  function handleDoneEditingPage(): void {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (page: PageProps) => (data?: PageProps) => {
-    props.handleUpdateConfig!(
+  const handleUpdatePage = (page: PageProps) => (data?: PageProps): void => {
+    props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       data
     );
     props.setPage(props.config.pages[0].key);
   };
 
-  const handleMovePage = (page: PageProps) => (position: number) => {
-    props.handleUpdateConfig!(
+  const handleMovePage = (page: PageProps) => (position: number): void => {
+    props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       [position]
     );

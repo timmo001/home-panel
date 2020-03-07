@@ -9,18 +9,17 @@ import makeKey from '../../utils/makeKey';
 export interface ConfigProps {
   config: ConfigurationProps;
   editing: number;
-  back: boolean;
   handleUpdateConfig: (
     path: (string | number)[],
     data?:
       | string
       | number
+      | PageProps
       | GroupProps
       | CardProps
       | (string | number | GroupProps | CardProps)[]
   ) => void;
   handleConfigChange: (config: ConfigurationProps) => void;
-  handleSetBack: (back: boolean) => void;
   handleSetTheme: (palette: ThemeProps) => void;
 }
 
