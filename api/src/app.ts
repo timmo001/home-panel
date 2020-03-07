@@ -60,13 +60,13 @@ app.configure(channels);
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound());
-app.use(express.errorHandler({ logger } as any));
+app.use(express.errorHandler({ logger }));
 
 app.hooks(appHooks);
 
-app.get('/*', (_req, res) =>
-  res.sendFile(path.join(app.get('public'), 'index.html'))
-);
+app.get('/*', (_req: Request, res: { sendFile: (arg0: string) => void }) => {
+  res.sendFile(path.join(app.get('public'), 'index.html'));
+});
 
 app.set('trust proxy', true);
 
