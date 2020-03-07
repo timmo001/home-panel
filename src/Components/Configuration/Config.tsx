@@ -12,7 +12,12 @@ export interface ConfigProps {
   back: boolean;
   handleUpdateConfig: (
     path: (string | number)[],
-    data?: string | number
+    data?:
+      | string
+      | number
+      | GroupProps
+      | CardProps
+      | (string | number | GroupProps | CardProps)[]
   ) => void;
   handleConfigChange: (config: ConfigurationProps) => void;
   handleSetBack: (back: boolean) => void;
@@ -128,20 +133,21 @@ export type CardType = {
   title: string;
 };
 
-export const defaultPage = (): {} => ({
+export const defaultPage = (): PageProps => ({
   key: makeKey(16),
   name: 'Page',
   icon: 'file'
 });
 
-export const defaultGroup = (pageKey: string): {} => ({
+export const defaultGroup = (pageKey: string): GroupProps => ({
   key: makeKey(16),
   name: 'Group',
   page: pageKey,
-  width: 2
+  width: 2,
+  cards: []
 });
 
-export const defaultCard = (groupKey: string): {} => ({
+export const defaultCard = (groupKey: string): CardProps => ({
   key: makeKey(16),
   group: groupKey,
   title: 'Card',

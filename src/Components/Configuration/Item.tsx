@@ -2,16 +2,16 @@ import React, { useEffect, ReactElement } from 'react';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControl from '@material-ui/core/FormControl';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Select from '@material-ui/core/Select';
+// import InputLabel from '@material-ui/core/InputLabel';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Radio from '@material-ui/core/Radio';
+// import RadioGroup from '@material-ui/core/RadioGroup';
+// import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
@@ -23,7 +23,7 @@ import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { SectionProps, ItemProps as SectionItemProps } from './Config';
 import clone from '../../utils/clone';
 import ColorAdornment from '../Utils/ColorAdornment';
-import Section from './Section';
+// import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -89,11 +89,13 @@ function Item(props: ItemProps): ReactElement {
     setShowPassword(!showPassword);
   }
 
-  function handleMouseDownPassword(event: any): void {
+  function handleMouseDownPassword(event: {
+    preventDefault: () => void;
+  }): void {
     event.preventDefault();
   }
 
-  function handleUpdate(p: any[], v: any): void {
+  function handleUpdate(p: (string | number)[], v: unknown): void {
     const path = clone(p),
       value = clone(v);
     setValue(value);
@@ -103,7 +105,7 @@ function Item(props: ItemProps): ReactElement {
     }, 500);
   }
 
-  const handleChange = (path: any[], type: string) => (
+  const handleChange = (path: (string | number)[], type: string) => (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const val =
@@ -111,27 +113,29 @@ function Item(props: ItemProps): ReactElement {
     handleUpdate(path, val);
   };
 
-  const handleRadioChange = (path: any[]) => (
-    event: React.ChangeEvent<unknown>
-  ): void => {
-    const val = Number((event.target as HTMLInputElement).value);
-    handleUpdate(path, val);
-  };
+  // const handleRadioChange = (path: (string | number)[]) => (
+  //   event: React.ChangeEvent<unknown>
+  // ): void => {
+  //   const val = Number((event.target as HTMLInputElement).value);
+  //   handleUpdate(path, val);
+  // };
 
-  const handleSwitchChange = (path: any[]) => (
+  const handleSwitchChange = (path: (string | number)[]) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
   ): void => {
     handleUpdate(path, checked);
   };
 
-  const handleSelectChange = (path: any[]) => (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ): void => {
-    handleUpdate(path, event.target.value);
-  };
+  // const handleSelectChange = (path: (string | number)[]) => (
+  //   event: React.ChangeEvent<{ name?: string; value: unknown }>
+  // ): void => {
+  //   handleUpdate(path, event.target.value);
+  // };
 
-  const handleColorChange = (path: any[]) => (color: ColorResult): void => {
+  const handleColorChange = (path: (string | number)[]) => (
+    color: ColorResult
+  ): void => {
     handleUpdate(path, color.hex);
   };
 
@@ -244,45 +248,46 @@ function Item(props: ItemProps): ReactElement {
           }}
         />
       );
-    case 'object':
-      return <Section {...props} path={props.path} section={props.item} />;
-    case 'radio':
-      return (
-        <FormControl component="fieldset">
-          <RadioGroup
-            className={classes.radioGroup}
-            aria-label={props.item.title}
-            name={props.item.name}
-            value={value}
-            onChange={handleRadioChange(props.path)}>
-            {props.item.items.map((rItem: string, key: number) => (
-              <FormControlLabel
-                key={key}
-                value={key}
-                label={rItem}
-                control={<Radio color="primary" />}
-              />
-            ))}
-          </RadioGroup>
-        </FormControl>
-      );
-    case 'select':
-      return (
-        <FormControl>
-          <InputLabel htmlFor="theme"></InputLabel>
-          <Select
-            className={classes.root}
-            value={value}
-            onChange={handleSelectChange(props.path)}>
-            {props.item.items &&
-              props.item.items.map((sItem: string, key: number) => (
-                <MenuItem key={key} value={sItem}>
-                  {sItem}
-                </MenuItem>
-              ))}
-          </Select>
-        </FormControl>
-      );
+    // case 'object':
+    //   return <Section {...props} path={props.path} section={props.item} />;
+    // case 'radio':
+    //   return (
+    //     <FormControl component="fieldset">
+    //       <RadioGroup
+    //         className={classes.radioGroup}
+    //         aria-label={props.item.title}
+    //         name={typeof props.item.name === 'string' ? props.item.name : ''}
+    //         value={value}
+    //         onChange={handleRadioChange(props.path)}>
+    //         {props.item.items &&
+    //           props.item.items.map((rItem: string, key: number) => (
+    //             <FormControlLabel
+    //               key={key}
+    //               value={key}
+    //               label={rItem}
+    //               control={<Radio color="primary" />}
+    //             />
+    //           ))}
+    //       </RadioGroup>
+    //     </FormControl>
+    //   );
+    // case 'select':
+    //   return (
+    //     <FormControl>
+    //       <InputLabel htmlFor="theme"></InputLabel>
+    //       <Select
+    //         className={classes.root}
+    //         value={value}
+    //         onChange={handleSelectChange(props.path)}>
+    //         {props.item.items &&
+    //           props.item.items.map((sItem: string, key: number) => (
+    //             <MenuItem key={key} value={sItem}>
+    //               {sItem}
+    //             </MenuItem>
+    //           ))}
+    //       </Select>
+    //     </FormControl>
+    //   );
     case 'switch':
       return (
         <Switch

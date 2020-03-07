@@ -22,6 +22,7 @@ import Markdown from './Markdown';
 import Message from '../../Utils/Message';
 import News from './News';
 import RSS from './RSS';
+import { CommandType } from 'Components/Utils/Command';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -43,9 +44,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 export interface BaseProps extends RouteComponentProps {
   card: CardProps;
+  command: CommandType;
   config: ConfigurationProps;
   handleManualChange?: (name: string, value: string) => void;
-  handleChange: (
+  handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSwitchChange?: (
@@ -92,7 +94,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               label="Title"
               placeholder={'Card Title'}
               value={props.card.title}
-              onChange={props.handleChange('title')}
+              onChange={props.handleChange && props.handleChange('title')}
             />
           </Grid>
           {props.card.type === 'entity' && props.card.entity && (
@@ -139,7 +141,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             label="Elevation"
             placeholder="1"
             value={props.card.elevation}
-            onChange={props.handleChange('elevation')}
+            onChange={props.handleChange && props.handleChange('elevation')}
           />
         </Grid>
         <Grid item xs container justify="flex-start" alignContent="center">
@@ -157,7 +159,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               )
             }}
             value={props.card.background}
-            onChange={props.handleChange('background')}
+            onChange={props.handleChange && props.handleChange('background')}
           />
         </Grid>
       </Grid>
@@ -174,7 +176,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             label="Padding"
             placeholder="12px"
             value={props.card.padding}
-            onChange={props.handleChange('padding')}
+            onChange={props.handleChange && props.handleChange('padding')}
           />
         </Grid>
         <Grid item xs container justify="flex-start" alignContent="center">
@@ -185,7 +187,9 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             control={
               <Switch color="primary" defaultChecked={props.card.square} />
             }
-            onChange={props.handleSwitchChange('square')}
+            onChange={
+              props.handleSwitchChange && props.handleSwitchChange('square')
+            }
           />
         </Grid>
       </Grid>
@@ -203,7 +207,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             label="Width"
             placeholder="1"
             value={props.card.width}
-            onChange={props.handleChange('width')}
+            onChange={props.handleChange && props.handleChange('width')}
           />
         </Grid>
         {props.card.type === 'entity' && (
@@ -215,7 +219,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               label="Height"
               placeholder="1"
               value={props.card.height}
-              onChange={props.handleChange('height')}
+              onChange={props.handleChange && props.handleChange('height')}
             />
           </Grid>
         )}
@@ -235,7 +239,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               label="Title Font Size"
               placeholder="initial"
               value={props.card.title_size}
-              onChange={props.handleChange('title_size')}
+              onChange={props.handleChange && props.handleChange('title_size')}
             />
           </Grid>
         )}

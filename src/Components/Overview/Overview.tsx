@@ -28,7 +28,6 @@ import EditGroup from '../Configuration/EditGroup';
 import Header from './Header';
 import makeKey from '../../utils/makeKey';
 import Pages from './Pages';
-import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -69,12 +68,12 @@ interface OverviewProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantChangeProps {
-  command: CommandType | undefined;
+  command: CommandType;
   mouseMoved: boolean;
 }
 
 function Overview(props: OverviewProps): ReactElement {
-  const [currentPage, setCurrentPage] = React.useState(
+  const [currentPage, setCurrentPage] = React.useState<string>(
     props.config.pages[0].key
   );
   const [editingGroup, setEditingGroup] = React.useState<GroupProps>();
@@ -92,7 +91,7 @@ function Overview(props: OverviewProps): ReactElement {
       if (props.command.page) handleSetCurrentPage(props.command.page);
       else if (props.command.card) {
         const foundCard: CardProps | undefined = props.config.cards.find(
-          (card: CardProps) => card.key === props.command!.card
+          (card: CardProps) => card.key === props.command.card
         );
         if (foundCard) {
           const foundGroup: GroupProps | undefined = props.config.groups.find(
@@ -109,34 +108,34 @@ function Overview(props: OverviewProps): ReactElement {
     handleSetCurrentPage
   ]);
 
-  function handleAddGroup() {
+  function handleAddGroup(): void {
     console.log('handleAddGroup:', currentPage);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['groups', props.config.groups.length],
       defaultGroup(currentPage)
     );
   }
 
-  const handleAddCard = (groupKey: string) => () => {
+  const handleAddCard = (groupKey: string) => (): void => {
     console.log('handleAddCard:', groupKey);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['cards', props.config.cards.length],
       defaultCard(groupKey)
     );
   };
 
-  const handleCopy = (card: CardProps) => () => {
+  const handleCopy = (card: CardProps) => (): void => {
     console.log('handleCopy:', card);
-    props.handleUpdateConfig!(['cards', props.config.cards.length], {
+    props.handleUpdateConfig(['cards', props.config.cards.length], {
       ...card,
       key: makeKey(16)
     });
   };
 
-  const handleDelete = (group?: GroupProps, card?: CardProps) => () => {
+  const handleDelete = (group?: GroupProps, card?: CardProps) => (): void => {
     console.log('handleDelete:', group, card);
     if (card)
-      props.handleUpdateConfig!(
+      props.handleUpdateConfig(
         ['cards', findCardIdByCard(props.config, card)],
         undefined
       );
@@ -146,15 +145,15 @@ function Overview(props: OverviewProps): ReactElement {
         const groupKey = props.config.groups[groupId].key;
         props.config.cards.map((card: CardProps, id: number) => {
           if (card.group === groupKey)
-            props.handleUpdateConfig!(['cards', id], undefined);
+            props.handleUpdateConfig(['cards', id], undefined);
           return card;
         });
-        props.handleUpdateConfig!(['groups', groupId], undefined);
+        props.handleUpdateConfig(['groups', groupId], undefined);
       }
     }
   };
 
-  const handleMoveUp = (group: GroupProps, card?: CardProps) => () => {
+  const handleMoveUp = (group: GroupProps, card?: CardProps) => (): void => {
     console.log('handleMoveUp:', group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
@@ -167,7 +166,7 @@ function Overview(props: OverviewProps): ReactElement {
       process.env.NODE_ENV === 'development' &&
         console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
 
-      props.handleUpdateConfig!(['cards', cardId], [pos]);
+      props.handleUpdateConfig(['cards', cardId], [pos]);
     } else {
       const groupId = findGroupIdByGroup(props.config, group);
       let pos = 0;
@@ -178,11 +177,11 @@ function Overview(props: OverviewProps): ReactElement {
       }
       process.env.NODE_ENV === 'development' &&
         console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig!(['groups', groupId], [pos]);
+      props.handleUpdateConfig(['groups', groupId], [pos]);
     }
   };
 
-  const handleMoveDown = (group: GroupProps, card?: CardProps) => () => {
+  const handleMoveDown = (group: GroupProps, card?: CardProps) => (): void => {
     console.log('handleMoveDown:', group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
@@ -195,9 +194,9 @@ function Overview(props: OverviewProps): ReactElement {
       process.env.NODE_ENV === 'development' &&
         console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
 
-      props.handleUpdateConfig!(['cards', cardId], [pos]);
+      props.handleUpdateConfig(['cards', cardId], [pos]);
 
-      props.handleUpdateConfig!(
+      props.handleUpdateConfig(
         ['cards', findCardIdByCard(props.config, card)],
         [+1]
       );
@@ -211,40 +210,40 @@ function Overview(props: OverviewProps): ReactElement {
       }
       process.env.NODE_ENV === 'development' &&
         console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig!(['groups', groupId], [pos]);
+      props.handleUpdateConfig(['groups', groupId], [pos]);
     }
   };
 
-  const handleUpdateCard = (card: CardProps) => (data: CardProps) => {
+  const handleUpdateCard = (card: CardProps) => (data: CardProps): void => {
     console.log('handleUpdateCard:', card, data);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['cards', findCardIdByCard(props.config, card)],
       data
     );
   };
 
-  const handleEditingGroup = (group: GroupProps) => () => {
+  const handleEditingGroup = (group: GroupProps) => (): void => {
     setEditingGroup(group);
   };
 
-  function handleDoneEditingGroup() {
+  function handleDoneEditingGroup(): void {
     setEditingGroup(undefined);
   }
 
-  const handleUpdateGroup = (group: GroupProps) => (data: GroupProps) => {
+  const handleUpdateGroup = (group: GroupProps) => (data: GroupProps): void => {
     console.log('handleUpdateGroup:', group, data);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['groups', findGroupIdByGroup(props.config, group)],
       data
     );
   };
 
-  const handleDeleteConfirm = (group: GroupProps) => () => {
+  const handleDeleteConfirm = (group: GroupProps) => (): void => {
     console.log('handleDeleteConfirm:', group);
     setDeleteConfirm(group);
   };
 
-  function handleConfirmClose() {
+  function handleConfirmClose(): void {
     setDeleteConfirm(undefined);
   }
 

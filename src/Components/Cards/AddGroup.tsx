@@ -27,7 +27,7 @@ export interface AddGroupProps {
   handleAdd: () => void;
 }
 
-function AddGroup(props: AddGroupProps) {
+function AddGroup(props: AddGroupProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 

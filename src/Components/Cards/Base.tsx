@@ -85,7 +85,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
-  command: CommandType | undefined;
+  command: CommandType;
   config: ConfigurationProps;
   editing: number;
   expandable: boolean;
@@ -167,92 +167,92 @@ function Base(props: BaseProps): ReactElement {
   );
 
   useEffect(() => {
-    const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
+    if (props.card.entity) {
+      const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
-    const entitySizeKey =
-      props.card.entity &&
-      Object.keys(entitySizes).find(
-        (domain: string) => domain === props.card.entity!.split('.')[0]
+      const entitySizeKey = Object.keys(entitySizes).find(
+        (domain: string) => domain === props.card.entity?.split('.')[0]
       );
-    handleSetHeight(cardSize, entitySizeKey);
-    handleSetWidth(cardSize, entitySizeKey);
+      handleSetHeight(cardSize, entitySizeKey);
+      handleSetWidth(cardSize, entitySizeKey);
 
-    handleSetToggleable();
+      handleSetToggleable();
 
-    if (
-      props.expandable &&
-      props.card.type === 'entity' &&
-      props.card.entity &&
-      entitySizeKey
-    )
-      handleSetExpandable(entitySizeKey);
+      if (props.expandable && props.card.type === 'entity' && entitySizeKey)
+        handleSetExpandable(entitySizeKey);
+    }
   }, [
     props.card.entity,
     props.card.type,
     props.expandable,
+    theme.breakpoints,
     handleSetExpandable,
     handleSetHeight,
     handleSetToggleable,
     handleSetWidth,
     height,
-    theme.breakpoints,
     width
   ]);
 
-  function handleDeleteConfirm() {
+  function handleDeleteConfirm(): void {
     setDeleteConfirm(true);
   }
 
-  function handleConfirmClose() {
+  function handleConfirmClose(): void {
     setDeleteConfirm(false);
   }
 
-  function handleHassToggle() {
-    if (props.card.domain === 'lock') {
-      console.log(props.card.state);
-      props.handleHassChange!(
-        props.card.domain!,
-        props.card.state === 'locked' ? 'unlock' : 'lock',
-        {
-          entity_id: props.card.entity
-        }
-      );
-    } else {
-      console.log(props.card.domain, props.card.state === 'on' ? false : true, {
-        entity_id: props.card.entity
-      });
-      props.handleHassChange!(
-        props.card.domain!,
-        props.card.state === 'on' ? false : true,
-        {
-          entity_id: props.card.entity
-        },
-        props.hassEntities
-      );
-    }
+  function handleHassToggle(): void {
+    if (props.card.domain && props.handleHassChange)
+      if (props.card.domain === 'lock') {
+        console.log(props.card.state);
+        props.handleHassChange(
+          props.card.domain,
+          props.card.state === 'locked' ? 'unlock' : 'lock',
+          {
+            entity_id: props.card.entity
+          }
+        );
+      } else {
+        console.log(
+          props.card.domain,
+          props.card.state === 'on' ? false : true,
+          {
+            entity_id: props.card.entity
+          }
+        );
+        props.handleHassChange(
+          props.card.domain,
+          props.card.state === 'on' ? false : true,
+          {
+            entity_id: props.card.entity
+          },
+          props.hassEntities
+        );
+      }
   }
 
-  function handleEdit() {
+  function handleEdit(): void {
     setEditCard(true);
   }
 
-  function handleEditClose() {
+  function handleEditClose(): void {
     setEditCard(false);
   }
 
-  function handleExpand() {
+  function handleExpand(): void {
     setExpandCard(true);
   }
 
-  function handleCloseExpand() {
+  function handleCloseExpand(): void {
     setExpandCard(false);
   }
 
-  function handleHoldCancel() {
+  function handleHoldCancel(): void {
     if (holdTimeout) clearTimeout(holdTimeout);
   }
 
-  function handleHold() {
+  function handleHold(): void {
     if (expandable) {
       handleHoldCancel();
       holdTimeout = setTimeout(() => {
@@ -334,15 +334,8 @@ function Base(props: BaseProps): ReactElement {
             </Grid>
           </Grid>
           {props.card.type === 'entity' &&
-            (props.hassConfig && props.hassEntities ? (
-              <Entity
-                {...props}
-                card={props.card}
-                editing={props.editing}
-                hassConfig={props.hassConfig}
-                hassEntities={props.hassEntities}
-                handleHassToggle={handleHassToggle}
-              />
+            (props.hassAuth && props.hassConfig && props.hassEntities ? (
+              <Entity {...props} handleHassToggle={handleHassToggle} />
             ) : (
               <Message type="error" text="Home Assistant not configured" />
             ))}
@@ -387,6 +380,7 @@ function Base(props: BaseProps): ReactElement {
           <EditCard
             {...props}
             card={props.card}
+            command={props.command}
             handleClose={handleEditClose}
             handleUpdate={props.handleUpdate}
           />

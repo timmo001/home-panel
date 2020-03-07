@@ -52,7 +52,7 @@ function RSS(props: BaseProps): ReactElement {
 
   const classes = useStyles();
 
-  const handleGetData = useCallback(async () => {
+  const handleGetData = useCallback(async (): Promise<void> => {
     if (props.card.url) {
       setError(undefined);
       console.log('Update RSS Feed for', props.card.url);

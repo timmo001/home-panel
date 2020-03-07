@@ -4,7 +4,11 @@ import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
 import io from 'socket.io-client';
 import socketio from '@feathersjs/socketio-client';
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import {
+  createMuiTheme,
+  responsiveFontSizes,
+  Theme
+} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
 import { RouteComponentExtendedProps } from './Types/ReactRouter';
@@ -25,15 +29,17 @@ import 'typeface-roboto';
 import '@mdi/font/css/materialdesignicons.min.css';
 
 let moveTimeout: NodeJS.Timeout;
-let socket: SocketIOClient.Socket, client: feathers.Application<any>;
+let socket: SocketIOClient.Socket, client: feathers.Application;
 function Onboarding(props: RouteComponentExtendedProps): ReactElement {
-  const [loginAttempted, setLoginAttempted] = React.useState(false);
-  const [loginCredentials, setLoggedIn] = React.useState();
+  const [loginAttempted, setLoginAttempted] = React.useState<boolean>(false);
+  const [loginCredentials, setLoginCredentials] = React.useState<
+    AuthenticationResult
+  >();
   const [config, setConfig] = React.useState<ConfigurationProps>();
-  const [configId, setConfigId] = React.useState();
+  const [configId, setConfigId] = React.useState<string>();
   const [command, setCommand] = React.useState<CommandType>();
   const [mouseMoved, setMouseMoved] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState(
+  const [theme, setTheme] = React.useState<Theme>(
     responsiveFontSizes(
       createMuiTheme({
         palette: defaultPalette
@@ -58,7 +64,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     }
   }, [props.location]);
 
-  function handleSetTheme(palette: ThemeProps) {
+  function handleSetTheme(palette: ThemeProps): void {
     setTheme(
       responsiveFontSizes(
         createMuiTheme({
@@ -77,7 +83,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
   const getConfig = useCallback(
     (userId: string) => {
-      (async () => {
+      (async (): Promise<void> => {
         const configService = await client.service('config');
         const getter = await configService.find({ userId });
 
@@ -110,7 +116,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     [config]
   );
 
-  function handleCommand(message: CommandType) {
+  function handleCommand(message: CommandType): void {
     console.log('Command Received:', message);
     setCommand(message);
     setTimeout(() => setCommand(undefined), 200);
@@ -118,7 +124,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
   const handleLogin = useCallback(
     (data?: any, callback?: (error?: string) => void) => {
-      (async () => {
+      (async (): Promise<void> => {
         try {
           let clientData: AuthenticationResult;
           if (!client) {
@@ -127,7 +133,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
           } else if (!data) clientData = await client.reAuthenticate();
           else clientData = await client.authenticate(data, callback);
           console.log('User:', clientData.user);
-          setLoggedIn(clientData.user);
+          setLoginCredentials(clientData.user);
           setLoginAttempted(true);
           getConfig(clientData.user._id);
           const controllerService = await client.service('controller');
@@ -135,7 +141,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
         } catch (error) {
           console.error('Error in handleLogin:', error);
           setLoginAttempted(true);
-          setLoggedIn(undefined);
+          setLoginCredentials(undefined);
           if (callback) callback(`Login error: ${error.message}`);
         }
       })();
@@ -147,7 +153,10 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     if (!loginCredentials) handleLogin();
   }, [loginCredentials, handleLogin]);
 
-  function handleCreateAccount(data: any, callback?: (error?: string) => void) {
+  function handleCreateAccount(
+    data: any,
+    callback?: (error?: string) => void
+  ): void {
     socket.emit('create', 'users', data, (error: any) => {
       if (error) {
         console.error('Error creating account:', error);
@@ -158,14 +167,14 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     });
   }
 
-  async function handleLogout() {
+  async function handleLogout(): void {
     localStorage.removeItem('hass_tokens');
     localStorage.removeItem('hass_url');
     await client.logout();
     window.location.replace(window.location.href);
   }
 
-  function handleConfigChange(config: any) {
+  function handleConfigChange(config: any): void {
     socket.emit('patch', 'config', configId, { config }, (error: any) => {
       if (error) console.error('Error updating', configId, ':', error);
       else {
@@ -176,7 +185,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     });
   }
 
-  function handleMouseMove() {
+  function handleMouseMove(): void {
     if (moveTimeout) clearTimeout(moveTimeout);
     if (!props.location.state!!.configuration) {
       setMouseMoved(true);

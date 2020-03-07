@@ -230,7 +230,7 @@ function Main(props: MainProps): ReactElement {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state!!.configuration &&
+          {props.location.state?.configuration &&
           hassAuth &&
           hassConfig &&
           hassEntities ? (

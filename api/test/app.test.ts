@@ -26,7 +26,7 @@ describe('Feathers application tests (with jest)', () => {
   });
 
   describe('404', () => {
-    it('shows a 404 HTML page', async () => {
+    it('shows a 404 HTML page', async (): Promise<void> => {
       expect.assertions(2);
 
       try {
@@ -43,7 +43,7 @@ describe('Feathers application tests (with jest)', () => {
       }
     });
 
-    it('shows a 404 JSON error without stack trace', async () => {
+    it('shows a 404 JSON error without stack trace', async (): Promise<void> => {
       expect.assertions(4);
 
       try {

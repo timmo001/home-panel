@@ -27,7 +27,7 @@ interface SuggestionType {
 
 interface EntitySelectProps extends HomeAssistantEntityProps {
   entity?: string;
-  handleChange: (value: any) => void;
+  handleChange: (value: string) => void;
 }
 
 let PopperNode: HTMLDivElement | null | undefined;

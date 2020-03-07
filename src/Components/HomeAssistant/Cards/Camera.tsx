@@ -47,13 +47,13 @@ function Camera(props: EntityProps): ReactElement {
   }
 
   useEffect(() => {
-    if (attributes)
+    if (props.hassAuth && attributes)
       setUrl(
         `${props.hassAuth.data.hassUrl}${
           attributes.entity_picture
         }&${new Date().toISOString().slice(-13, -5)}`
       );
-  }, [attributes, props.hassAuth]);
+  }, [props.hassAuth, attributes]);
 
   if (!entity)
     return (

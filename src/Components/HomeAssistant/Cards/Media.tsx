@@ -1,5 +1,8 @@
 import React, { ReactElement } from 'react';
-import { HassEntity } from 'home-assistant-js-websocket';
+import {
+  HassEntity,
+  HassEntityAttributeBase
+} from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
@@ -45,27 +48,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Media(props: EntityProps): ReactElement {
+function Media(props: EntityProps): ReactElement | null {
   const classes = useStyles();
+
   let entity: HassEntity | undefined,
     state: string | undefined,
-    attributes: any | undefined;
+    attributes:
+      | (HassEntityAttributeBase & {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          [key: string]: any;
+        })
+      | undefined;
 
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
+  if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
 
-  if (!entity && !state) {
+  if (props.card.entity) entity = props.hassEntities[props.card.entity];
+
+  if (!entity) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity!.state;
-    attributes = entity!.attributes;
+    state = entity.state;
+    attributes = entity.attributes;
+    props.card.state = state;
   }
 
-  if (!entity)
+  if (!entity || !attributes)
     return (
       <Grid
         className={classes.root}
@@ -85,55 +94,57 @@ function Media(props: EntityProps): ReactElement {
       </Grid>
     );
 
-  function handleChange(action: string) {
-    switch (action) {
-      default:
-        break;
-      case 'power':
-        props.handleHassChange!('media_player', 'toggle', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'play':
-        props.handleHassChange!('media_player', 'media_play', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'pause':
-        props.handleHassChange!('media_player', 'media_pause', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'next':
-        props.handleHassChange!('media_player', 'media_next_track', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'previous':
-        props.handleHassChange!('media_player', 'media_previous_track', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'vol_down':
-        props.handleHassChange!('media_player', 'volume_down', {
-          entity_id: entity!.entity_id
-        });
-        break;
-      case 'vol_up':
-        props.handleHassChange!('media_player', 'volume_up', {
-          entity_id: entity!.entity_id
-        });
-        break;
-    }
-  }
+  const handleChange = (action: string) => (): void => {
+    if (props.handleHassChange && entity)
+      switch (action) {
+        default:
+          break;
+        case 'power':
+          props.handleHassChange('media_player', 'toggle', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'play':
+          props.handleHassChange('media_player', 'media_play', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'pause':
+          props.handleHassChange('media_player', 'media_pause', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'next':
+          props.handleHassChange('media_player', 'media_next_track', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'previous':
+          props.handleHassChange('media_player', 'media_previous_track', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'vol_down':
+          props.handleHassChange('media_player', 'volume_down', {
+            entity_id: entity.entity_id
+          });
+          break;
+        case 'vol_up':
+          props.handleHassChange('media_player', 'volume_up', {
+            entity_id: entity.entity_id
+          });
+          break;
+      }
+  };
 
   function handleSelectChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) {
-    props.handleHassChange!('media_player', 'select_source', {
-      entity_id: entity!.entity_id,
-      source: event.target.value
-    });
+  ): void {
+    if (props.handleHassChange && entity)
+      props.handleHassChange('media_player', 'select_source', {
+        entity_id: entity.entity_id,
+        source: event.target.value
+      });
   }
 
   return (
@@ -176,7 +187,7 @@ function Media(props: EntityProps): ReactElement {
             <IconButton
               className={classes.button}
               aria-label="Power"
-              onClick={() => handleChange('power')}>
+              onClick={handleChange('power')}>
               <PowerSettingsNewIcon fontSize="small" />
             </IconButton>
           </Grid>
@@ -194,7 +205,7 @@ function Media(props: EntityProps): ReactElement {
               className={classes.button}
               aria-label="Volume Down"
               size="small"
-              onClick={() => handleChange('vol_down')}>
+              onClick={handleChange('vol_down')}>
               <VolumeDownIcon fontSize="small" />
             </IconButton>
           )}
@@ -203,7 +214,7 @@ function Media(props: EntityProps): ReactElement {
             aria-label="Previous"
             disabled={state !== 'playing' && state !== 'paused'}
             size="small"
-            onClick={() => handleChange('previous')}>
+            onClick={handleChange('previous')}>
             <SkipPreviousIcon fontSize="small" />
           </IconButton>
           {state === 'playing' ? (
@@ -211,7 +222,7 @@ function Media(props: EntityProps): ReactElement {
               color="primary"
               aria-label="Pause"
               size="small"
-              onClick={() => handleChange('pause')}>
+              onClick={handleChange('pause')}>
               <PauseIcon fontSize="small" />
             </Fab>
           ) : state === 'paused' ? (
@@ -219,7 +230,7 @@ function Media(props: EntityProps): ReactElement {
               color="primary"
               aria-label="Play"
               size="small"
-              onClick={() => handleChange('play')}>
+              onClick={handleChange('play')}>
               <PlayArrowIcon fontSize="small" />
             </Fab>
           ) : (
@@ -232,7 +243,7 @@ function Media(props: EntityProps): ReactElement {
             aria-label="Next"
             disabled={state !== 'playing' && state !== 'paused'}
             size="small"
-            onClick={() => handleChange('next')}>
+            onClick={handleChange('next')}>
             <SkipNextIcon fontSize="small" />
           </IconButton>
           {(!props.card.width || props.card.width > 1) && state !== 'off' && (
@@ -240,7 +251,7 @@ function Media(props: EntityProps): ReactElement {
               className={classes.button}
               aria-label="Volume Up"
               size="small"
-              onClick={() => handleChange('vol_up')}>
+              onClick={handleChange('vol_up')}>
               <VolumeUpIcon fontSize="small" />
             </IconButton>
           )}

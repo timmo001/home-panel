@@ -1,6 +1,9 @@
 import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
+import {
+  HassEntity,
+  HassEntityAttributeBase
+} from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -50,28 +53,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Climate(props: EntityProps): ReactElement {
+function Climate(props: EntityProps): ReactElement | null {
   const classes = useStyles();
 
   let entity: HassEntity | undefined,
     state: string | undefined,
-    attributes: any | undefined;
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
+    attributes:
+      | (HassEntityAttributeBase & {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          [key: string]: any;
+        })
+      | undefined;
 
-  if (!entity && !state) {
+  if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
+
+  if (props.card.entity) entity = props.hassEntities[props.card.entity];
+
+  if (!entity) {
     props.card.disabled = true;
     state = `${props.card.entity} not found`;
   } else if (!state) {
     props.card.disabled = false;
-    state = entity!.state;
-    attributes = entity!.attributes;
+    state = entity.state;
+    attributes = entity.attributes;
     props.card.state = state;
   }
 
-  if (!entity)
+  if (!entity || !attributes)
     return (
       <Grid
         className={classes.root}
@@ -91,32 +99,41 @@ function Climate(props: EntityProps): ReactElement {
       </Grid>
     );
 
-  function handleTempChange(type: string, newTemp: number) {
-    if (newTemp <= attributes.max_temp && newTemp >= attributes.min_temp) {
-      const data = {
-        entity_id: entity!.entity_id,
-        [type]: newTemp
-      };
-      if (type === 'target_temp_low')
-        data.target_temp_high = attributes.target_temp_high;
-      else if (type === 'target_temp_high')
-        data.target_temp_low = attributes.target_temp_low;
-      props.handleHassChange!('climate', 'set_temperature', data);
-    }
-  }
+  const handleTempChange = (type: string, newTemp: number) => (): void => {
+    if (
+      props.handleHassChange &&
+      entity &&
+      attributes &&
+      attributes.max_temp &&
+      attributes.min_temp
+    )
+      if (newTemp <= attributes.max_temp && newTemp >= attributes.min_temp) {
+        const data = {
+          entity_id: entity.entity_id,
+          [type]: newTemp
+        };
+        if (type === 'target_temp_low' && attributes.target_temp_high)
+          data.target_temp_high = attributes.target_temp_high;
+        else if (type === 'target_temp_high' && attributes.target_temp_low)
+          data.target_temp_low = attributes.target_temp_low;
+        props.handleHassChange('climate', 'set_temperature', data);
+      }
+  };
 
-  function handleHvacChange(hvac_mode: string) {
-    props.handleHassChange!('climate', 'set_hvac_mode', {
-      entity_id: entity!.entity_id,
-      hvac_mode
-    });
-  }
+  const handleHvacChange = (hvac_mode: string) => (): void => {
+    if (props.handleHassChange && entity)
+      props.handleHassChange('climate', 'set_hvac_mode', {
+        entity_id: entity.entity_id,
+        hvac_mode
+      });
+  };
 
-  function handleAwayToggle() {
-    props.handleHassChange!('climate', 'set_away_mode', {
-      entity_id: entity!.entity_id,
-      away_mode: attributes.away_mode === 'on' ? 'off' : 'on'
-    });
+  function handleAwayToggle(): void {
+    if (props.handleHassChange && entity && attributes && attributes.away_mode)
+      props.handleHassChange('climate', 'set_away_mode', {
+        entity_id: entity.entity_id,
+        away_mode: attributes.away_mode === 'on' ? 'off' : 'on'
+      });
   }
 
   return (
@@ -156,12 +173,10 @@ function Climate(props: EntityProps): ReactElement {
                 direction="column">
                 <IconButton
                   className={classes.iconContainer}
-                  onClick={() =>
-                    handleTempChange(
-                      'temperature',
-                      attributes.temperature + 0.5
-                    )
-                  }>
+                  onClick={handleTempChange(
+                    'temperature',
+                    attributes.temperature + 0.5
+                  )}>
                   <KeyboardArrowUp
                     className={classnames(classes.icon, classes.iconNormal)}
                     fontSize="small"
@@ -177,12 +192,10 @@ function Climate(props: EntityProps): ReactElement {
                 </div>
                 <IconButton
                   className={classes.iconContainer}
-                  onClick={() =>
-                    handleTempChange(
-                      'temperature',
-                      attributes.temperature - 0.5
-                    )
-                  }>
+                  onClick={handleTempChange(
+                    'temperature',
+                    attributes.temperature - 0.5
+                  )}>
                   <KeyboardArrowDown
                     className={classnames(classes.icon, classes.iconNormal)}
                     fontSize="small"
@@ -206,12 +219,10 @@ function Climate(props: EntityProps): ReactElement {
                   direction="column">
                   <IconButton
                     className={classes.iconContainer}
-                    onClick={() =>
-                      handleTempChange(
-                        'target_temp_low',
-                        attributes.target_temp_low + 0.5
-                      )
-                    }>
+                    onClick={handleTempChange(
+                      'target_temp_low',
+                      attributes.target_temp_low + 0.5
+                    )}>
                     <KeyboardArrowUp
                       className={classnames(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -227,12 +238,10 @@ function Climate(props: EntityProps): ReactElement {
                   </div>
                   <IconButton
                     className={classes.iconContainer}
-                    onClick={() =>
-                      handleTempChange(
-                        'target_temp_low',
-                        attributes.target_temp_low - 0.5
-                      )
-                    }>
+                    onClick={handleTempChange(
+                      'target_temp_low',
+                      attributes.target_temp_low - 0.5
+                    )}>
                     <KeyboardArrowDown
                       className={classnames(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -252,12 +261,10 @@ function Climate(props: EntityProps): ReactElement {
                   direction="column">
                   <IconButton
                     className={classes.iconContainer}
-                    onClick={() =>
-                      handleTempChange(
-                        'target_temp_high',
-                        attributes.target_temp_high + 0.5
-                      )
-                    }>
+                    onClick={handleTempChange(
+                      'target_temp_high',
+                      attributes.target_temp_high + 0.5
+                    )}>
                     <KeyboardArrowUp
                       className={classnames(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -273,12 +280,10 @@ function Climate(props: EntityProps): ReactElement {
                   </div>
                   <IconButton
                     className={classes.iconContainer}
-                    onClick={() =>
-                      handleTempChange(
-                        'target_temp_high',
-                        attributes.target_temp_high - 0.5
-                      )
-                    }>
+                    onClick={handleTempChange(
+                      'target_temp_high',
+                      attributes.target_temp_high - 0.5
+                    )}>
                     <KeyboardArrowDown
                       className={classnames(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -322,7 +327,7 @@ function Climate(props: EntityProps): ReactElement {
                   <Grid key={key} item>
                     <IconButton
                       className={classes.iconContainer}
-                      onClick={() => handleHvacChange(mode)}>
+                      onClick={handleHvacChange(mode)}>
                       <span
                         className={classnames(
                           'mdi',
@@ -338,7 +343,7 @@ function Climate(props: EntityProps): ReactElement {
                 <Grid key={key} item>
                   <Button
                     className={classnames(state === mode && classes.iconActive)}
-                    onClick={() => handleHvacChange(mode)}>
+                    onClick={handleHvacChange(mode)}>
                     {mode}
                   </Button>
                 </Grid>
@@ -354,7 +359,7 @@ function Climate(props: EntityProps): ReactElement {
                 justify="space-around"
                 direction="row">
                 <Grid item>
-                  <IconButton onClick={() => handleAwayToggle()}>
+                  <IconButton onClick={handleAwayToggle}>
                     <span
                       className={classnames(
                         'mdi',
