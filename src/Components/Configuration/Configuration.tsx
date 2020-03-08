@@ -3,16 +3,16 @@ import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-// import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-// import AddIcon from '@material-ui/icons/Add';
-import DeleteIcon from '@material-ui/icons/Delete';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { items, ConfigProps, SectionProps } from './Config';
-import clone from '../../utils/clone';
+import {
+  sections as defaultSections,
+  ConfigProps,
+  SectionProps,
+  SectionItemsProps
+} from './Config';
 import makeKey from '../../utils/makeKey';
 import Section from './Section';
 
@@ -47,7 +47,10 @@ interface ConfigurationBaseProps
 export interface ConfigurationProps extends ConfigurationBaseProps {
   path: (string | number)[];
   section: SectionProps;
-  handleAdd: (path: (string | number)[], defaultItem: any) => () => void;
+  handleAdd: (
+    path: (string | number)[],
+    defaultItem: SectionItemsProps
+  ) => () => void;
   handleSetSections: (
     path: (string | number)[],
     section: SectionProps | SectionProps[]
@@ -55,24 +58,26 @@ export interface ConfigurationProps extends ConfigurationBaseProps {
 }
 
 function Configuration(props: ConfigurationBaseProps): ReactElement {
-  const [path, setPath] = React.useState<(string | number)[]>([]);
-  const [sections, setSections] = React.useState<SectionProps[]>(items);
+  // const [path, setPath] = React.useState<(string | number)[]>([]);
+  const [sections, setSections] = React.useState<SectionProps[]>(
+    defaultSections
+  );
 
   useEffect(() => {
     if (!props.back) {
-      setPath([]);
-      setSections(items);
+      // setPath([]);
+      setSections(sections);
     }
   }, [props.back]);
 
   const handleAdd = (
     path: (string | number)[],
-    defaultItem: any
+    defaultItem: SectionItemsProps
   ) => (): void => {
     if (defaultItem.key) defaultItem.key = makeKey(16);
     props.handleUpdateConfig(path, defaultItem);
     if (path !== []) {
-      const newSections: SectionProps[] = [
+      const newItems: SectionProps[] = [
         ...sections,
         {
           ...sections[0],
@@ -80,17 +85,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
           title: defaultItem.name
         }
       ];
-      setSections(newSections);
-    }
-  };
-
-  const handleDelete = (path: (string | number)[]) => (): void => {
-    const id = clone(path).pop();
-    props.handleUpdateConfig(path, undefined);
-    if (path !== []) {
-      const newSections = clone(sections);
-      newSections.splice(id, 1);
-      setSections(newSections);
+      setSections(newItems);
     }
   };
 
@@ -99,7 +94,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
     section: SectionProps | SectionProps[]
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    setPath(path);
+    // setPath(path);
     setSections(Array.isArray(section) ? section : [section]);
     if (path !== []) props.handleSetBack(true);
   };
@@ -132,15 +127,6 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
                 </Typography>
               </Grid>
             )}
-            {section.type === 'object' && (
-              <Grid item>
-                <IconButton
-                  color="secondary"
-                  onClick={handleDelete([...path, section.name])}>
-                  <DeleteIcon />
-                </IconButton>
-              </Grid>
-            )}
           </Grid>
           <Grid item xs>
             <Card>
@@ -157,18 +143,6 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
           </Grid>
         </Grid>
       ))}
-      {/* TODO {sections[0].type === 'object' && (
-        <Fab
-          className={classes.fab}
-          color="primary"
-          aria-label="Add"
-          onClick={handleAdd(
-            [...path, sections.length],
-            sections[0].default[0]
-          )}>
-          <AddIcon />
-        </Fab>
-      )} */}
     </Grid>
   );
 }

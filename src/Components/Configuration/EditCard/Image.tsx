@@ -24,7 +24,7 @@ function Image(props: BaseProps): ReactElement {
           label="URL"
           placeholder="https://timmo.dev/home-panel"
           value={props.card.url}
-          onChange={props.handleChange!('url')}
+          onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
     </Grid>

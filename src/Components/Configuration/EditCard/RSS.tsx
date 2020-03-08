@@ -24,7 +24,7 @@ function RSS(props: BaseProps): ReactElement {
           label="URL"
           placeholder="https://status.home-assistant.io/history.rss"
           value={props.card.url}
-          onChange={props.handleChange!('url')}
+          onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
       <Grid item xs>
@@ -34,7 +34,7 @@ function RSS(props: BaseProps): ReactElement {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>

@@ -102,15 +102,18 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
         if (configLcl.theme) handleSetTheme(configLcl.theme);
 
-        configService.on('patched', (message: { userId: any; config: any }) => {
-          if (
-            message.userId === getter.data[0].userId &&
-            config !== message.config
-          ) {
-            console.log('Update Config:', message.config);
-            setConfig(message.config);
+        configService.on(
+          'patched',
+          (message: { userId: string; config: ConfigurationProps }) => {
+            if (
+              message.userId === getter.data[0].userId &&
+              config !== message.config
+            ) {
+              console.log('Update Config:', message.config);
+              setConfig(message.config);
+            }
           }
-        });
+        );
       })();
     },
     [config]
@@ -123,7 +126,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   }
 
   const handleLogin = useCallback(
-    (data?: any, callback?: (error?: string) => void) => {
+    (data?, callback?: (error?: string) => void) => {
       (async (): Promise<void> => {
         try {
           let clientData: AuthenticationResult;
@@ -154,10 +157,10 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(
-    data: any,
+    data: object,
     callback?: (error?: string) => void
   ): void {
-    socket.emit('create', 'users', data, (error: any) => {
+    socket.emit('create', 'users', data, (error: { message: string }) => {
       if (error) {
         console.error('Error creating account:', error);
         if (callback) callback(`Error creating account: ${error.message}`);
@@ -175,14 +178,20 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   }
 
   function handleConfigChange(config: ConfigurationProps): void {
-    socket.emit('patch', 'config', configId, { config }, (error: any) => {
-      if (error) console.error('Error updating', configId, ':', error);
-      else {
-        setConfig(config);
-        process.env.NODE_ENV === 'development' &&
-          console.log('Updated config:', configId, config);
+    socket.emit(
+      'patch',
+      'config',
+      configId,
+      { config },
+      (error: { message: string }) => {
+        if (error) console.error('Error updating', configId, ':', error);
+        else {
+          setConfig(config);
+          process.env.NODE_ENV === 'development' &&
+            console.log('Updated config:', configId, config);
+        }
       }
-    });
+    );
   }
 
   function handleMouseMove(): void {

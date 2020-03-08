@@ -26,7 +26,7 @@ interface SelectProps {
   label?: string;
   value: string;
   options: SuggestionType[];
-  handleChange: (value: any) => void;
+  handleChange: (value: string | number) => void;
 }
 
 let PopperNode: HTMLDivElement | null | undefined;
@@ -35,9 +35,10 @@ function Select(props: SelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
+  const [search, setSearch] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
   const filterSuggestions = useCallback(() => {
     const opts: Fuse.FuseOptions<SuggestionType> = {

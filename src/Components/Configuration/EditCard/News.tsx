@@ -76,7 +76,10 @@ function News(props: BaseProps): ReactElement {
               label="Source"
               options={sources}
               value={String(props.card.url)}
-              handleChange={props.handleChange!('url')}
+              handleChange={(value: string | number): void =>
+                props.handleManualChange &&
+                props.handleManualChange('url', value)
+              }
             />
           )
         )}
@@ -88,7 +91,7 @@ function News(props: BaseProps): ReactElement {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>

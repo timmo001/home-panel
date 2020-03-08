@@ -24,7 +24,7 @@ function Frame(props: BaseProps): ReactElement {
           label="URL"
           placeholder="https://timmo.dev/home-panel"
           value={props.card.url}
-          onChange={props.handleChange!('url')}
+          onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
       <Grid item xs>
@@ -34,7 +34,7 @@ function Frame(props: BaseProps): ReactElement {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>

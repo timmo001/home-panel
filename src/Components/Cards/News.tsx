@@ -101,7 +101,7 @@ function News(props: BaseProps): ReactElement {
     handleGetData();
     if (feedInterval) clearInterval(feedInterval);
     feedInterval = setInterval(() => handleGetData, 120000);
-    return () => {
+    return (): void => {
       if (feedInterval) clearInterval(feedInterval);
     };
   }, [props.card.disabled, handleGetData]);
@@ -122,7 +122,7 @@ function News(props: BaseProps): ReactElement {
               justify="center"
               alignContent="center"
               alignItems="center">
-              {props.card.width! > 2 && item.imageURL && (
+              {props.card.width && props.card.width > 2 && item.imageURL && (
                 <Grid className={classes.mediaContainer} item xs={3}>
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
                     <img

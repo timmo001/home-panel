@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -12,12 +11,6 @@ import properCase from '../../../utils/properCase';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1
-  },
-  text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis'
   },
   name: {
     margin: 'auto 0',
@@ -68,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const weatherMap: any = {
+const weatherMap: { [item: string]: string } = {
   'clear-night': 'weather-night',
   cloudy: 'weather-cloudy',
   fog: 'weather-fog',
@@ -85,7 +78,7 @@ const weatherMap: any = {
   'windy-variant': 'weather-windy-variant'
 };
 
-const weatherNameMap: any = {
+const weatherNameMap: { [item: string]: string } = {
   'clear-night': 'Clear',
   cloudy: 'Cloudy',
   fog: 'Fog',
@@ -103,48 +96,7 @@ const weatherNameMap: any = {
 };
 
 function Weather(props: EntityProps): ReactElement {
-  const classes = useStyles();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    attributes: any | undefined,
-    icon: string;
-
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
-
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = entity!.state;
-    icon = weatherMap[state!];
-    attributes = entity!.attributes;
-  }
-
-  if (!entity)
-    return (
-      <Grid
-        className={classes.root}
-        container
-        direction="row"
-        alignContent="center"
-        justify="center">
-        <Grid item xs>
-          <Typography
-            className={classes.text}
-            color="textPrimary"
-            variant="body2"
-            component="h5">
-            {state}
-          </Typography>
-        </Grid>
-      </Grid>
-    );
-
-  function getUnit(measure: string) {
+  function getUnit(measure: string): string | null {
     if (props.hassConfig) {
       const lengthUnit = props.hassConfig.unit_system.length || '';
       switch (measure) {
@@ -169,6 +121,8 @@ function Weather(props: EntityProps): ReactElement {
     } else return null;
   }
 
+  const classes = useStyles();
+
   return (
     <Grid className={classes.root} container direction="row">
       <Grid
@@ -179,7 +133,7 @@ function Weather(props: EntityProps): ReactElement {
         alignContent="center"
         justify="space-between">
         <Typography className={classes.name} variant="h5" noWrap>
-          {weatherNameMap[state!]}
+          {weatherNameMap[props.entity.state]}
         </Typography>
         <Grid
           item
@@ -197,12 +151,16 @@ function Weather(props: EntityProps): ReactElement {
             justify="center">
             <Grid item>
               <span
-                className={classnames('mdi', `mdi-${icon!}`, classes.icon)}
+                className={classnames(
+                  'mdi',
+                  `mdi-${props.entity.attributes.icon}`,
+                  classes.icon
+                )}
               />
             </Grid>
             <Grid item className={classes.temperature}>
               <Typography variant="subtitle1">
-                {attributes.temperature}
+                {props.entity.attributes.temperature}
               </Typography>
               <Typography variant="subtitle1">
                 {getUnit('temperature')}
@@ -214,8 +172,8 @@ function Weather(props: EntityProps): ReactElement {
           !props.card.height ||
           props.card.height > 1 ? (
             <Grid item xs>
-              {Object.keys(attributes)
-                .filter(i => typeof attributes[i] == 'number')
+              {Object.keys(props.entity.attributes)
+                .filter(i => typeof props.entity.attributes[i] == 'number')
                 .map(
                   (attribute, i) =>
                     attribute !== 'temperature' &&
@@ -224,7 +182,8 @@ function Weather(props: EntityProps): ReactElement {
                         key={i}
                         className={classes.attribute}
                         variant="body2">
-                        {properCase(attribute)}: {attributes[attribute]}
+                        {properCase(attribute)}:{' '}
+                        {props.entity.attributes[attribute]}
                         {getUnit(attribute)}
                       </Typography>
                     )
@@ -236,48 +195,66 @@ function Weather(props: EntityProps): ReactElement {
       {(!props.card.width || props.card.width > 1) &&
         (!props.card.height || props.card.height > 1) && (
           <Grid item className={classes.forecast}>
-            {attributes.forecast.map((w: object | any, key: number) => {
-              const datetime = moment(w.datetime);
-              const icon = weatherMap[w.condition];
-              return (
-                <div key={key} className={classes.forecastItem}>
-                  <Typography
-                    noWrap
-                    className={classes.forecastText}
-                    variant="body2">
-                    {datetime.format('ddd')}
-                    <br />
-                    {datetime.format('h a')}
-                  </Typography>
+            {props.entity.attributes.forecast.map(
+              (
+                w: {
+                  datetime:
+                    | string
+                    | number
+                    | void
+                    | moment.Moment
+                    | Date
+                    | (string | number)[]
+                    | moment.MomentInputObject
+                    | undefined;
+                  condition: string;
+                  temperature: React.ReactNode;
+                  precipitation: React.ReactNode;
+                },
+                key: number
+              ) => {
+                const datetime = moment(w.datetime);
+                const icon = weatherMap[w.condition];
+                return (
+                  <div key={key} className={classes.forecastItem}>
+                    <Typography
+                      noWrap
+                      className={classes.forecastText}
+                      variant="body2">
+                      {datetime.format('ddd')}
+                      <br />
+                      {datetime.format('h a')}
+                    </Typography>
 
-                  <Typography
-                    className={classes.forecastTextIcon}
-                    variant="body2">
-                    <span
-                      className={classnames(
-                        'mdi',
-                        `mdi-${icon}`,
-                        classes.forecastIcon
-                      )}
-                    />
-                  </Typography>
+                    <Typography
+                      className={classes.forecastTextIcon}
+                      variant="body2">
+                      <span
+                        className={classnames(
+                          'mdi',
+                          `mdi-${icon}`,
+                          classes.forecastIcon
+                        )}
+                      />
+                    </Typography>
 
-                  <Typography
-                    noWrap
-                    className={classes.forecastText}
-                    variant="body2">
-                    {w.temperature}
-                    {getUnit('temperature')}
-                  </Typography>
-                  <Typography
-                    noWrap
-                    className={classes.forecastText}
-                    variant="body2">
-                    {w.precipitation}
-                  </Typography>
-                </div>
-              );
-            })}
+                    <Typography
+                      noWrap
+                      className={classes.forecastText}
+                      variant="body2">
+                      {w.temperature}
+                      {getUnit('temperature')}
+                    </Typography>
+                    <Typography
+                      noWrap
+                      className={classes.forecastText}
+                      variant="body2">
+                      {w.precipitation}
+                    </Typography>
+                  </div>
+                );
+              }
+            )}
           </Grid>
         )}
     </Grid>

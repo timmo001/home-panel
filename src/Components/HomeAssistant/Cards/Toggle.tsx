@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -31,27 +30,15 @@ const useStyles = makeStyles(() => ({
 function Toggle(props: EntityProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
-  let entity: HassEntity | undefined, state: string | undefined;
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
 
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = entity!.state;
-    props.card.state = state;
-    props.card.toggleable = state === 'unavailable' ? false : true;
-    props.card.backgroundTemp =
-      state === 'unavailable'
-        ? grey[600]
-        : state === 'on' || state === 'locked'
-        ? theme.palette.primary.main
-        : props.card.background;
-  }
+  props.card.toggleable = props.entity.state === 'unavailable' ? false : true;
+  props.card.backgroundTemp =
+    props.entity.state === 'unavailable'
+      ? grey[600]
+      : props.entity.state === 'on' || props.entity.state === 'locked'
+      ? theme.palette.primary.main
+      : props.card.background;
+
   return (
     <Grid
       className={classes.root}
@@ -81,7 +68,7 @@ function Toggle(props: EntityProps): ReactElement {
             color="textPrimary"
             variant={props.card.disabled ? 'body2' : 'body1'}
             component="h5">
-            {state}
+            {props.entity.state}
           </Typography>
         </Grid>
       )}

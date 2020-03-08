@@ -14,10 +14,18 @@ export interface ConfigProps {
     data?:
       | string
       | number
+      | SectionItemsProps
       | PageProps
       | GroupProps
       | CardProps
-      | (string | number | GroupProps | CardProps)[]
+      | (
+          | string
+          | number
+          | SectionItemsProps
+          | PageProps
+          | GroupProps
+          | CardProps
+        )[]
   ) => void;
   handleConfigChange: (config: ConfigurationProps) => void;
   handleSetTheme: (palette: ThemeProps) => void;
@@ -27,18 +35,18 @@ export type SectionProps = {
   name: string | number;
   title: string | number;
   type: string;
-  items: ItemProps[];
+  items: SectionItemsProps[];
 };
 
-export type ItemProps = {
+export type SectionItemsProps = {
+  key?: string;
   name: string | number;
   title: string;
   description: string;
   icon: string;
   type: string;
   default?: string | number | boolean;
-  items?: string[] | number[];
-  sectionItems?: ItemProps[];
+  items?: (string | number | SectionItemsProps)[];
 };
 
 export type ConfigurationProps = {
@@ -113,8 +121,8 @@ export type CardProps = {
   url?: string;
   domain?: string;
   entity?: string;
+  state?: string | number;
   state_size?: string;
-  state?: string | boolean;
   disabled?: boolean;
   toggleable?: boolean;
   chart?: string;
@@ -290,7 +298,7 @@ export const colorItems: string[] = [
   'yellow'
 ];
 
-export const items: SectionProps[] = [
+export const sections: SectionProps[] = [
   {
     name: 'general',
     title: 'General',

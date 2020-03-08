@@ -46,7 +46,7 @@ export interface BaseProps extends RouteComponentProps {
   card: CardProps;
   command: CommandType;
   config: ConfigurationProps;
-  handleManualChange?: (name: string, value: string) => void;
+  handleManualChange?: (name: string, value: string | number) => void;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;

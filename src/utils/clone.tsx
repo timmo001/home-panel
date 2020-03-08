@@ -1,4 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const clone = (obj: any): any => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let copy: any;
   // Handle the 3 simple types, and null or undefined
   if (null === obj || 'object' !== typeof obj) return obj;

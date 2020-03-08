@@ -13,13 +13,13 @@ interface ConfirmDialogProps {
 }
 
 function ConfirmDialog(props: ConfirmDialogProps): ReactElement {
-  function handleClose() {
-    props.handleClose!();
+  function handleClose(): void {
+    if (props.handleClose) props.handleClose();
   }
 
-  function handleConfirm() {
+  function handleConfirm(): void {
     handleClose();
-    props.handleConfirm!();
+    if (props.handleConfirm) props.handleConfirm();
   }
 
   return (

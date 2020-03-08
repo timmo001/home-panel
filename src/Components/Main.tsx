@@ -83,13 +83,20 @@ function Main(props: MainProps): ReactElement {
     }
   }, [hassConnected]);
 
-  function handleUpdateConfig(path: any[], data: any): void {
+  function handleUpdateConfig(
+    path: (string | number)[],
+    data?: string | number | boolean | object
+  ): void {
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value
-      const lastItem = path.pop();
-      const secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-      if (Array.isArray(secondLastItem)) {
+      const lastItem = Number(path.pop());
+      const secondLastItem = path.reduce(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (o: any, k: any) => (o[k] = o[k] || {}),
+        config
+      );
+      if (lastItem && !isNaN(Number(lastItem)) && secondLastItem) {
         if (data === undefined) secondLastItem.splice(lastItem, 1);
         else if (Array.isArray(data)) {
           arrayMove.mutate(secondLastItem, lastItem, lastItem + data[0]);
@@ -101,8 +108,7 @@ function Main(props: MainProps): ReactElement {
       } else secondLastItem[lastItem] = data;
     } else config = data;
     props.handleConfigChange(config);
-    if (path.find((i: any) => i === 'theme'))
-      props.handleSetTheme(config.theme);
+    if (path.find(i => i === 'theme')) props.handleSetTheme(config.theme);
   }
 
   async function handleHassLogin(url: string): Promise<void> {
@@ -125,17 +131,18 @@ function Main(props: MainProps): ReactElement {
     a.click();
   }
 
-  function handleRestoreConfig() {
+  function handleRestoreConfig(): void {
     const input = document.createElement('input');
     input.type = 'file';
-    input.onchange = (e: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    input.onchange = (e: any): void => {
       if (e && e.target) {
         const file = e.target.files[0];
 
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
 
-        reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+        reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
           if (readerEvent && readerEvent.target) {
             const content = readerEvent.target.result;
             if (typeof content === 'string') {

@@ -49,7 +49,7 @@ function EditCard(props: EditCardProps): ReactElement {
     props.handleClose();
   }
 
-  function handleManualChange(name: string, value: string): void {
+  function handleManualChange(name: string, value: string | number): void {
     setCard({
       ...card,
       [name]: value

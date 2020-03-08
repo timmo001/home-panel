@@ -36,10 +36,10 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [options, setOptions]: SuggestionType[] | any[] = useState([]);
+  const [options, setOptions] = useState<SuggestionType[]>([]);
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
+  const [suggestions, setSuggestions] = useState<SuggestionType[]>([]);
 
   const filterSuggestions = useCallback(() => {
     const fuse = new Fuse(options, {
@@ -52,7 +52,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
     setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
   }, [options, search]);
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSearch(event.target.value);
     filterSuggestions();
     setOpen(true);
@@ -60,14 +60,16 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
   }
 
   function handleFocus(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
+  ): void {
     setOpen(true);
   }
 
   const handleChosen = (item: SuggestionType) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
+  ): void => {
     setSearch(item.label);
     props.handleChange(item.value);
     setOpen(false);
@@ -102,7 +104,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
         placeholder="Search for entities"
         aria-controls="options"
         aria-haspopup="true"
-        ref={node => {
+        ref={(node: HTMLDivElement): void => {
           PopperNode = node;
         }}
         value={search}

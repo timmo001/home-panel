@@ -38,7 +38,8 @@ export interface HomeAssistantChangeProps {
   handleHassChange?: (
     domain: string,
     state: string | boolean,
-    data?: unknown,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: { [key: string]: any },
     entities?: HassEntities
   ) => void;
 }
@@ -71,7 +72,7 @@ export const entitySizes: {
 
 let connection: Connection, auth: Auth;
 
-export function loadTokens() {
+export async function loadTokens(): Promise<AuthData | null | undefined> {
   let hassTokens;
   try {
     hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
@@ -79,18 +80,17 @@ export function loadTokens() {
   return hassTokens;
 }
 
-export async function saveTokens(tokens?: AuthData | null) {
-  try {
-    localStorage.setItem('hass_tokens', JSON.stringify(tokens));
-  } catch (err) {}
+export function saveTokens(tokens?: AuthData | null): void {
+  localStorage.setItem('hass_tokens', JSON.stringify(tokens));
 }
 
 export function handleChange(
   domain: string,
   state: string | boolean,
-  data?: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: { [key: string]: any },
   entities?: HassEntities
-) {
+): void {
   process.env.NODE_ENV === 'development' &&
     console.log('handleChange:', domain, state, data);
   if (typeof state === 'string') {
@@ -103,7 +103,7 @@ export function handleChange(
       }
     );
   } else {
-    if (domain === 'group' && entities) {
+    if (domain === 'group' && entities && data) {
       entities[data.entity_id].attributes.entity_id.map((entity: string) =>
         callService(
           connection,
@@ -162,7 +162,7 @@ function HomeAssistant(props: HomeAssistantProps): null {
         auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
-          loadTokens: () => Promise.resolve(loadTokens())
+          loadTokens: loadTokens
         });
         try {
           connection = await createConnection({ auth });
@@ -180,7 +180,7 @@ function HomeAssistant(props: HomeAssistantProps): null {
             auth = await getAuth({
               hassUrl: props.url,
               saveTokens: saveTokens,
-              loadTokens: () => Promise.resolve(loadTokens())
+              loadTokens: loadTokens
             });
             connection = await createConnection({ auth });
           } catch (err) {

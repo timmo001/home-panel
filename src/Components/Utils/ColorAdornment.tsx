@@ -27,7 +27,7 @@ function ColorAdornment(props: ColorAdornmentProps): ReactElement {
 
   const classes = useStyles();
 
-  function handleToggleColorPicker() {
+  function handleToggleColorPicker(): void {
     setShowColorPicker(!showColorPicker);
   }
 
@@ -37,7 +37,7 @@ function ColorAdornment(props: ColorAdornmentProps): ReactElement {
         size="small"
         aria-label="Pick Color"
         onClick={handleToggleColorPicker}
-        ref={node => {
+        ref={(node: HTMLButtonElement): void => {
           PopoverNode = node;
         }}>
         <PaletteIcon fontSize="small" />

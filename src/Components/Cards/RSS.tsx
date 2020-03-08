@@ -92,7 +92,7 @@ function RSS(props: BaseProps): ReactElement {
     handleGetData();
     if (feedInterval) clearInterval(feedInterval);
     feedInterval = setInterval(() => handleGetData, 120000);
-    return () => {
+    return (): void => {
       if (feedInterval) clearInterval(feedInterval);
     };
   }, [props.card.disabled, handleGetData]);

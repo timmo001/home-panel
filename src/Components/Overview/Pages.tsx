@@ -35,11 +35,14 @@ interface PagesProps extends RouteComponentProps, ConfigProps {
 function Pages(props: PagesProps): ReactElement {
   const [editingPage, setEditingPage] = React.useState<PageProps>();
 
-  function handlePageChange(_event: React.ChangeEvent<{}>, pageKey: string) {
+  function handlePageChange(
+    _event: React.ChangeEvent<{}>,
+    pageKey: string
+  ): void {
     props.setPage(pageKey);
   }
 
-  function handleAdd() {
+  function handleAdd(): void {
     const newPage = defaultPage();
     props.handleUpdateConfig(['pages', props.config.pages.length], newPage);
     props.setPage(newPage.key);

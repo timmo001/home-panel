@@ -90,7 +90,7 @@ function Header(props: HeaderProps): ReactElement | null {
   if (!props.config.header.time_show && !props.config.header.date_show)
     return null;
 
-  const columns: any[] = ['', '', ''];
+  const columns: (string | boolean | ReactElement)[] = ['', '', ''];
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation || !props.config.header.time_show)
     columns[dateLocation] = date;
@@ -104,7 +104,7 @@ function Header(props: HeaderProps): ReactElement | null {
       justify="space-between"
       alignItems="center"
       spacing={2}>
-      {columns.map((columnData: any, key: number) => (
+      {columns.map((columnData, key: number) => (
         <Grid
           key={key}
           item

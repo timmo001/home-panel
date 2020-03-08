@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Dialog from '@material-ui/core/Dialog';
@@ -16,7 +16,7 @@ import HALogin from '../../Resources/ha-login.svg';
 import FormControl from '@material-ui/core/FormControl';
 import { DialogTitle } from '@material-ui/core';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     width: '100%'
@@ -65,16 +65,16 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
     handleValidation();
   }, [handleValidation]);
 
-  function handleToggleDialog() {
+  function handleToggleDialog(): void {
     setShowDialog(!showDialog);
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setUrl(event.target.value);
     handleValidation();
   }
 
-  function handleLogin() {
+  function handleLogin(): void {
     props.handleHassLogin(url);
     setShowDialog(false);
   }

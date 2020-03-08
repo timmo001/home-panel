@@ -1,10 +1,7 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
-import {
-  HassEntity,
-  HassEntityAttributeBase
-} from 'home-assistant-js-websocket';
+import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -12,8 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
 import Chart, { ChartData } from '../../Visualisations/Chart';
-import properCase from '../../../utils/properCase';
-import strings from '../Utils/Strings';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -91,35 +86,6 @@ function State(props: EntityProps): ReactElement | null {
   ]);
 
   const classes = useStyles();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    attributes:
-      | (HassEntityAttributeBase & {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          [key: string]: any;
-        })
-      | undefined;
-
-  if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
-
-  if (props.card.entity) entity = props.hassEntities[props.card.entity];
-
-  if (!entity) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = properCase(entity.state);
-    if (attributes) {
-      const domain = entity.entity_id.split('.')[0];
-      if (attributes.device_class) {
-        const deviceClass = strings.state[domain][attributes.device_class];
-        if (deviceClass) state = deviceClass[entity.state];
-      }
-      if (attributes.unit_of_measurement)
-        state += ` ${attributes.unit_of_measurement}`;
-    }
-  }
 
   return (
     <Grid
@@ -162,7 +128,7 @@ function State(props: EntityProps): ReactElement | null {
           variant={props.card.disabled ? 'body2' : 'body1'}
           component="h5"
           style={{ fontSize: props.card.state_size }}>
-          {state}
+          {props.entity.state}
         </Typography>
       </Grid>
     </Grid>

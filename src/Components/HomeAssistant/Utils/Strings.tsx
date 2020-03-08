@@ -1,9 +1,5 @@
-type StringItem = {
-  [item: string]: any;
-};
-
 // Sourced from https://github.com/home-assistant/home-assistant-polymer/blob/master/translations/en.json
-const data: StringItem = {
+const data = {
   panel: {
     config: 'Configuration',
     states: 'Overview',

@@ -1,5 +1,5 @@
 import React, { useEffect, ReactElement } from 'react';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Area,
   AreaChart,
@@ -19,7 +19,7 @@ import {
 } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     position: 'absolute',
     top: 0,
@@ -53,7 +53,7 @@ interface ChartProps {
 
 interface TooltipProps extends ChartProps {
   active?: boolean;
-  payload?: any[];
+  payload?: { value: React.ReactNode }[];
   label?: string;
 }
 

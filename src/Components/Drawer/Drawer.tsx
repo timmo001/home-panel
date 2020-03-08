@@ -137,11 +137,11 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     );
   }, [props, drawerOpen]);
 
-  function handleDrawerToggle() {
+  function handleDrawerToggle(): void {
     setDrawerOpen(!drawerOpen);
   }
 
-  function handleDrawerClose() {
+  function handleDrawerClose(): void {
     setDrawerOpen(false);
   }
 
@@ -177,7 +177,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               onClick={
                 props.config.general.drawer_type &&
                 props.config.general.drawer_type.includes('persistent')
-                  ? () => null
+                  ? (): void | null => null
                   : handleDrawerClose
               }>
               <ListItem
@@ -222,7 +222,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!!.state!!.configuration
+    props.location?.state?.configuration
       ? true
       : false || drawerOpen || props.mouseMoved;
 

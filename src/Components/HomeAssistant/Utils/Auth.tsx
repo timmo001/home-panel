@@ -29,8 +29,9 @@ function decodeOAuthState(encoded: string): OAuthState {
 async function tokenRequest(
   hassUrl: string,
   clientId: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: AuthorizationCodeRequest | RefreshTokenRequest | any
-) {
+): Promise<AuthData> {
   // Browsers don't allow fetching tokens from https -> http.
   // Throw an error because it's a pain to debug this.
   // Guard against not working in node.
@@ -71,13 +72,17 @@ async function tokenRequest(
   return tokens;
 }
 
-function fetchToken(hassUrl: string, clientId: string, code: string) {
+async function fetchToken(
+  hassUrl: string,
+  clientId: string,
+  code: string
+): Promise<AuthData> {
   return tokenRequest(hassUrl, clientId, {
     code,
     grant_type: 'authorization_code'
   });
 }
-export async function parseTokens() {
+export async function parseTokens(): Promise<void> {
   let data: AuthData | null | undefined;
   const query = queryString.parse(window.location.search);
   // Check if we got redirected here from authorize page

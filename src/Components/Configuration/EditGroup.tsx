@@ -37,18 +37,18 @@ function EditGroup(props: EditGroupProps): ReactElement {
 
   useEffect(() => setGroup(props.group), [props.group]);
 
-  function handleClose() {
+  function handleClose(): void {
     props.handleClose();
   }
 
-  function handleConfirm() {
+  function handleConfirm(): void {
     handleClose();
     props.handleUpdate(group);
   }
 
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     setGroup({
       ...group,
       [name]: typeof event === 'string' ? event : event.target.value
@@ -93,7 +93,7 @@ function EditGroup(props: EditGroupProps): ReactElement {
               label="Width"
               placeholder="2"
               defaultValue={props.group.width}
-              onChange={handleChange!('width')}
+              onChange={handleChange('width')}
             />
           </Grid>
         </Grid>
