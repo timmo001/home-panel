@@ -68,7 +68,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
       // setPath([]);
       setSections(sections);
     }
-  }, [props.back]);
+  }, [props.back, sections]);
 
   const handleAdd = (
     path: (string | number)[],

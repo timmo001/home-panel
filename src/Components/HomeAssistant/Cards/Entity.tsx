@@ -44,11 +44,11 @@ function Entity(props: EntityBaseProps): ReactElement | null {
 
   let entity: HassEntity | undefined;
 
+  const classes = useStyles();
+
   if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
 
   if (props.card.entity) entity = props.hassEntities[props.card.entity];
-
-  const classes = useStyles();
 
   if (!entity) {
     props.card.disabled = true;
