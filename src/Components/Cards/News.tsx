@@ -86,7 +86,9 @@ function News(props: BaseProps): ReactElement {
           props.card.disabled = true;
         });
     } else {
-      setError('You do not have a News API key set in your config.');
+      setError(
+        'You have not selected a source or do not  a News API key set in your config.'
+      );
       props.card.disabled = true;
     }
   }, [
