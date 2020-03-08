@@ -86,25 +86,38 @@ function Main(props: MainProps): ReactElement {
     path: (string | number)[],
     data?: string | number | boolean | object
   ): void {
+    if (process.env.NODE_ENV === 'development')
+      console.log('handleUpdateConfig:', path, data);
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value
-      const lastItem = Number(path.pop());
+      const lastItem = path.pop();
       const secondLastItem = path.reduce(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (o: any, k: any) => (o[k] = o[k] || {}),
         config
       );
-      if (lastItem && !isNaN(Number(lastItem)) && secondLastItem) {
-        if (data === undefined) secondLastItem.splice(lastItem, 1);
-        else if (Array.isArray(data)) {
-          arrayMove.mutate(secondLastItem, lastItem, lastItem + data[0]);
-        } else if (isObject(data)) {
-          const newValue = JSON.parse(JSON.stringify(data));
-          if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
-          secondLastItem[lastItem] = newValue;
-        }
-      } else secondLastItem[lastItem] = data;
+      if (process.env.NODE_ENV === 'development') {
+        console.log('secondLastItem:', secondLastItem);
+        console.log('lastItem:', lastItem);
+      }
+      if (lastItem && secondLastItem) {
+        if (Array.isArray(secondLastItem)) {
+          if (data === undefined) secondLastItem.splice(Number(lastItem), 1);
+          else if (Array.isArray(data)) {
+            arrayMove.mutate(
+              secondLastItem,
+              Number(lastItem),
+              lastItem + data[0]
+            );
+          } else if (isObject(data)) {
+            const newValue = JSON.parse(JSON.stringify(data));
+            if (!secondLastItem[Number(lastItem)])
+              secondLastItem[Number(lastItem)] = [];
+            secondLastItem[Number(lastItem)] = newValue;
+          }
+        } else secondLastItem[lastItem] = data;
+      }
     } else config = data;
     props.handleConfigChange(config);
     if (path.find(i => i === 'theme')) props.handleSetTheme(config.theme);

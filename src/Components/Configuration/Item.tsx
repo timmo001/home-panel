@@ -97,7 +97,10 @@ function Item(props: ItemProps): ReactElement {
     event.preventDefault();
   }
 
-  function handleUpdate(p: (string | number)[], v: unknown): void {
+  async function handleUpdate(
+    p: (string | number)[],
+    v: unknown
+  ): Promise<void> {
     const path = clone(p),
       value = clone(v);
     setValue(value);
