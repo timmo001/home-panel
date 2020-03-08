@@ -101,5 +101,6 @@ export async function fetchHistory(
   if (start) url += `/${start.toISOString()}`;
   url += `?filter_entity_id=${entity}`;
   if (end) url += `&end_time=${end.toISOString()}`;
+  if (process.env.NODE_ENV === 'development') console.log('fetchHistory:', url);
   return hassCallApi(auth, 'GET', url);
 }

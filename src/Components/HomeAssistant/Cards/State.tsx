@@ -41,7 +41,7 @@ function State(props: EntityProps): ReactElement | null {
 
   const getHistory = useCallback(async (): Promise<void> => {
     let data;
-    if (props.hassAuth && props.card.entity)
+    if (props.hassAuth && props.card.entity) {
       data = await fetchHistory(
         props.hassAuth,
         props.card.entity,
@@ -50,16 +50,19 @@ function State(props: EntityProps): ReactElement | null {
           .toDate(),
         moment().toDate()
       );
-    if (props.card.chart_detail && data && Array.isArray(data)) {
-      const hData = data[0]
-        .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
-        .filter((_e: HassEntity, i: number) => {
-          if (props.card.chart_detail)
-            return (i + 1) % props.card.chart_detail === 0;
-          else return true;
-        })
-        .map((entity: HassEntity) => ({ value: Number(entity.state) }));
-      if (hData) setHistoryData(hData);
+      if (props.card.chart_detail && data && Array.isArray(data)) {
+        if (data.length > 0) {
+          const hData = data[0]
+            .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
+            .filter((_e: HassEntity, i: number) => {
+              if (props.card.chart_detail)
+                return (i + 1) % props.card.chart_detail === 0;
+              else return true;
+            })
+            .map((entity: HassEntity) => ({ value: Number(entity.state) }));
+          if (hData) setHistoryData(hData);
+        }
+      }
     }
   }, [
     props.card.entity,
