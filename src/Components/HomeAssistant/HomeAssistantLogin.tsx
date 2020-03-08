@@ -39,7 +39,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
   const [showDialog, setShowDialog] = React.useState<boolean>(false);
   const [url, setUrl] = React.useState<string>(
     `${process.env.REACT_APP_API_PROTOCOL ||
-      window.location.protocol}//hassio.local:8123`
+      window.location.protocol}//homeassistant.local:8123`
   );
   const [invalidText, setInvalidText] = React.useState<string>();
 
@@ -109,7 +109,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
                 required
                 id="url"
                 type="text"
-                placeholder="https://hassio.local:8123"
+                placeholder="https://homeassistant.local:8123"
                 inputProps={{
                   autoFocus: true,
                   autoCapitalize: 'none',
