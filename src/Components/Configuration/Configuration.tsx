@@ -7,13 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import {
-  sections as defaultSections,
-  ConfigProps,
-  SectionProps,
-  SectionItemsProps
-} from './Config';
-import makeKey from '../../utils/makeKey';
+import { sections, ConfigProps, SectionProps } from './Config';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -45,48 +39,9 @@ interface ConfigurationBaseProps
 export interface ConfigurationProps extends ConfigurationBaseProps {
   path: (string | number)[];
   section: SectionProps;
-  handleAdd: (
-    path: (string | number)[],
-    defaultItem: SectionItemsProps
-  ) => () => void;
-  handleSetSections: (
-    path: (string | number)[],
-    section: SectionProps | SectionProps[]
-  ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 function Configuration(props: ConfigurationBaseProps): ReactElement {
-  const [sections, setSections] = React.useState<SectionProps[]>(
-    defaultSections
-  );
-
-  const handleAdd = (
-    path: (string | number)[],
-    defaultItem: SectionItemsProps
-  ) => (): void => {
-    if (defaultItem.key) defaultItem.key = makeKey(16);
-    props.handleUpdateConfig(path, defaultItem);
-    if (path !== []) {
-      const newItems: SectionProps[] = [
-        ...sections,
-        {
-          ...sections[0],
-          name: sections.length,
-          title: defaultItem.name
-        }
-      ];
-      setSections(newItems);
-    }
-  };
-
-  const handleSetSections = (
-    path: (string | number)[],
-    section: SectionProps | SectionProps[]
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    setSections(Array.isArray(section) ? section : [section]);
-  };
-
   const classes = useStyles();
 
   return (
@@ -119,13 +74,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
           <Grid item xs>
             <Card>
               <CardContent className={classes.cardContent}>
-                <Section
-                  {...props}
-                  path={[section.name]}
-                  section={section}
-                  handleAdd={handleAdd}
-                  handleSetSections={handleSetSections}
-                />
+                <Section {...props} path={[section.name]} section={section} />
               </CardContent>
             </Card>
           </Grid>
