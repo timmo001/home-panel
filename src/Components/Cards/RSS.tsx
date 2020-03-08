@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useCallback, ReactElement } from 'react';
 import Parser from 'rss-parser';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -47,13 +46,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 let feedInterval: NodeJS.Timeout;
-function RSS(props: BaseProps) {
+function RSS(props: BaseProps): ReactElement {
   const [data, setData] = useState<FeedData[]>();
   const [error, setError] = useState<string>();
 
   const classes = useStyles();
 
-  const handleGetData = useCallback(async () => {
+  const handleGetData = useCallback(async (): Promise<void> => {
     if (props.card.url) {
       setError(undefined);
       console.log('Update RSS Feed for', props.card.url);
@@ -93,7 +92,7 @@ function RSS(props: BaseProps) {
     handleGetData();
     if (feedInterval) clearInterval(feedInterval);
     feedInterval = setInterval(() => handleGetData, 120000);
-    return () => {
+    return (): void => {
       if (feedInterval) clearInterval(feedInterval);
     };
   }, [props.card.disabled, handleGetData]);
@@ -143,11 +142,5 @@ function RSS(props: BaseProps) {
     </div>
   );
 }
-
-RSS.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default RSS;

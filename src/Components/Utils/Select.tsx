@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback, ReactElement } from 'react';
 import Fuse from 'fuse.js';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -27,48 +26,19 @@ interface SelectProps {
   label?: string;
   value: string;
   options: SuggestionType[];
-  handleChange: (value: any) => void;
+  handleChange: (value: string | number) => void;
 }
 
 let PopperNode: HTMLDivElement | null | undefined;
 
-function Select(props: SelectProps) {
+function Select(props: SelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSearch(event.target.value);
-    filterSuggestions();
-    setOpen(true);
-    props.handleChange('');
-  }
-
-  function handleFocus(
-    _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setOpen(true);
-  }
-
-  const handleChosen = (item: SuggestionType) => (
-    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
-    setSearch(item.label);
-    props.handleChange(item.value);
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (!search && props.options && props.value) {
-      const val = props.options.find(
-        (option: SuggestionType) => option.value === props.value
-      );
-      if (val) setSearch(val.label);
-    }
-  }, [search, props.options, props.value]);
+  const [search, setSearch] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [suggestions, setSuggestions] = useState<any[]>([]);
 
   const filterSuggestions = useCallback(() => {
     const opts: Fuse.FuseOptions<SuggestionType> = {
@@ -84,6 +54,38 @@ function Select(props: SelectProps) {
     );
   }, [props.options, search]);
 
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setSearch(event.target.value);
+    filterSuggestions();
+    setOpen(true);
+    props.handleChange('');
+  }
+
+  function handleFocus(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ): void {
+    setOpen(true);
+  }
+
+  const handleChosen = (item: SuggestionType) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ): void => {
+    setSearch(item.label);
+    props.handleChange(item.value);
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (!search && props.options && props.value) {
+      const val = props.options.find(
+        (option: SuggestionType) => option.value === props.value
+      );
+      if (val) setSearch(val.label);
+    }
+  }, [search, props.options, props.value]);
+
   return (
     <div className={classes.root}>
       <TextField
@@ -93,7 +95,7 @@ function Select(props: SelectProps) {
         placeholder={`Search for ${props.label ? props.label : 'items'}`}
         aria-controls="options"
         aria-haspopup="true"
-        ref={node => {
+        ref={(node: HTMLDivElement): void => {
           PopperNode = node;
         }}
         value={search}
@@ -126,12 +128,5 @@ function Select(props: SelectProps) {
     </div>
   );
 }
-
-Select.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  options: PropTypes.array,
-  handleChange: PropTypes.func
-};
 
 export default Select;

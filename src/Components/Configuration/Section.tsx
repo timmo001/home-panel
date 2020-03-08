@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +8,7 @@ import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Item from './Item';
 import MarkdownText from '../Utils/MarkdownText';
+import { SectionItemsProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}
 
-function Section(props: SectionProps) {
+function Section(props: SectionProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -39,8 +39,8 @@ function Section(props: SectionProps) {
       direction="row"
       alignContent="center"
       justify="space-between">
-      {props.section.items.map((item: any, key: number) => {
-        if (props.section.type === 'array') item.name = Number(key);
+      {props.section.items.map((item: SectionItemsProps, key: number) => {
+        // if (props.section.items === 'array') item.name = Number(key);
         return (
           <Grid
             key={key}
@@ -77,7 +77,7 @@ function Section(props: SectionProps) {
                 <Item
                   {...props}
                   item={item}
-                  path={[...props.path!, item.name]}
+                  path={[...props.path, item.name]}
                 />
               </Grid>
             </Grid>
@@ -87,12 +87,5 @@ function Section(props: SectionProps) {
     </Grid>
   );
 }
-
-Section.propTypes = {
-  config: PropTypes.any,
-  path: PropTypes.array.isRequired,
-  section: PropTypes.any.isRequired,
-  handleUpdateConfig: PropTypes.func.isRequired
-};
 
 export default Section;

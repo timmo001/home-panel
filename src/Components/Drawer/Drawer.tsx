@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -16,8 +15,6 @@ import Slide from '@material-ui/core/Slide';
 import SwipeableDrawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { RouteComponentExtendedProps } from '../Types/ReactRouter';
@@ -103,20 +100,18 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
-  back: boolean;
   config: ConfigurationProps;
   currentPage: string;
   editing: number;
   hassConnected: boolean;
   mouseMoved: boolean;
   userInitials: string;
-  handleBack: () => void;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
   handleSpaceTaken: (space: number) => void;
 }
 
-function ResponsiveDrawer(props: ResponsiveDrawerProps) {
+function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = React.useState(
     props.config.general.drawer_type &&
@@ -138,11 +133,11 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     );
   }, [props, drawerOpen]);
 
-  function handleDrawerToggle() {
+  function handleDrawerToggle(): void {
     setDrawerOpen(!drawerOpen);
   }
 
-  function handleDrawerClose() {
+  function handleDrawerClose(): void {
     setDrawerOpen(false);
   }
 
@@ -178,7 +173,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
               onClick={
                 props.config.general.drawer_type &&
                 props.config.general.drawer_type.includes('persistent')
-                  ? () => null
+                  ? (): void | null => null
                   : handleDrawerClose
               }>
               <ListItem
@@ -223,7 +218,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location!!.state!!.configuration
+    props.location?.state?.configuration
       ? true
       : false || drawerOpen || props.mouseMoved;
 
@@ -261,26 +256,15 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
                 ? 'dense'
                 : 'regular'
             }>
-            {props.back ? (
+            {props.config.general.drawer_type !== 'permanent_icons_only' && (
               <IconButton
                 color="inherit"
-                aria-label="Back"
+                aria-label="Open drawer"
                 edge="start"
-                onClick={props.handleBack}
+                onClick={handleDrawerToggle}
                 className={classes.menuButton}>
-                <ArrowBack />
+                <MenuIcon />
               </IconButton>
-            ) : (
-              props.config.general.drawer_type !== 'permanent_icons_only' && (
-                <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  className={classes.menuButton}>
-                  <MenuIcon />
-                </IconButton>
-              )
             )}
             <Typography className={classes.heading} variant="h6" noWrap>
               {props.currentPage}
@@ -352,17 +336,5 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps) {
     </div>
   );
 }
-
-ResponsiveDrawer.propTypes = {
-  currentPage: PropTypes.string.isRequired,
-  userInitials: PropTypes.string,
-  config: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConnected: PropTypes.bool,
-  back: PropTypes.bool.isRequired,
-  mouseMoved: PropTypes.bool.isRequired,
-  handleHassLogin: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired
-};
 
 export default ResponsiveDrawer;

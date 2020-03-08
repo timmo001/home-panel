@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -13,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 import { chartTypes } from '../../Visualisations/Chart';
+import { HomeAssistantEntityProps } from '../../HomeAssistant/HomeAssistant';
 import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,14 +26,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Entity(props: BaseProps) {
-  function handleGetEntityIcon() {
-    const entity = props.hassEntities[props.card.entity!];
-    if (entity && entity.attributes.icon)
-      props.handleManualChange!(
-        'icon',
-        entity.attributes.icon.replace('mdi:', '')
-      );
+interface EntityProps extends BaseProps, HomeAssistantEntityProps {}
+
+function Entity(props: EntityProps): ReactElement {
+  function handleGetEntityIcon(): void {
+    if (props.card.entity && props.handleManualChange) {
+      const entity = props.hassEntities[props.card.entity];
+      if (entity && entity.attributes.icon)
+        props.handleManualChange(
+          'icon',
+          entity.attributes.icon.replace('mdi:', '')
+        );
+    }
   }
 
   const classes = useStyles();
@@ -86,8 +90,11 @@ function Entity(props: BaseProps) {
           {props.hassEntities ? (
             <EntitySelect
               {...props}
-              entity={props.card.entity!}
-              handleChange={props.handleChange!('entity')}
+              entity={props.card.entity}
+              handleChange={(value: string): void =>
+                props.handleManualChange &&
+                props.handleManualChange('entity', value)
+              }
             />
           ) : (
             <TextField
@@ -96,7 +103,7 @@ function Entity(props: BaseProps) {
               label="Entity"
               placeholder="sensor.myamazingsensor"
               value={props.card.entity}
-              onChange={props.handleChange!('entity')}
+              onChange={props.handleChange && props.handleChange('entity')}
             />
           )}
         </Grid>
@@ -115,7 +122,7 @@ function Entity(props: BaseProps) {
                 label="Icon"
                 placeholder="thermometer"
                 value={props.card.icon}
-                onChange={props.handleChange!('icon')}
+                onChange={props.handleChange && props.handleChange('icon')}
               />
             </Grid>
             {props.card.entity && (
@@ -146,7 +153,7 @@ function Entity(props: BaseProps) {
                 label="Icon Size"
                 placeholder="initial"
                 value={props.card.icon_size}
-                onChange={props.handleChange!('icon_size')}
+                onChange={props.handleChange && props.handleChange('icon_size')}
               />
             </Grid>
           )}
@@ -159,7 +166,9 @@ function Entity(props: BaseProps) {
                 label="State Font Size"
                 placeholder="initial"
                 value={props.card.state_size}
-                onChange={props.handleChange!('state_size')}
+                onChange={
+                  props.handleChange && props.handleChange('state_size')
+                }
               />
             </Grid>
           )}
@@ -237,7 +246,9 @@ function Entity(props: BaseProps) {
                     max: 48
                   }}
                   value={props.card.chart_from}
-                  onChange={props.handleChange!('chart_from')}
+                  onChange={
+                    props.handleChange && props.handleChange('chart_from')
+                  }
                 />
               </Grid>
             )}
@@ -253,7 +264,10 @@ function Entity(props: BaseProps) {
                       defaultChecked={props.card.chart_labels}
                     />
                   }
-                  onChange={props.handleSwitchChange!('chart_labels')}
+                  onChange={
+                    props.handleSwitchChange &&
+                    props.handleSwitchChange('chart_labels')
+                  }
                 />
               </Grid>
             )}
@@ -263,13 +277,5 @@ function Entity(props: BaseProps) {
     </Grid>
   );
 }
-
-Entity.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleChange: PropTypes.func
-};
 
 export default Entity;

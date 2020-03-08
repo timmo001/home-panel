@@ -1,5 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
+import { HassEntity } from 'home-assistant-js-websocket';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 import { BaseProps } from '../../Cards/Base';
 import AlarmPanel from './AlarmPanel';
@@ -16,14 +19,62 @@ import Text from './Text';
 import Toggle from './Toggle';
 import Weather from './Weather';
 
-export interface EntityProps extends BaseProps {
+const useStyles = makeStyles(() => ({
+  root: {
+    flex: 1
+  },
+  text: {
+    overflow: 'hidden',
+    userSelect: 'none',
+    textAlign: 'center',
+    textOverflow: 'ellipsis'
+  }
+}));
+
+interface EntityBaseProps extends BaseProps {
   handleHassToggle: () => void;
 }
 
-function Entity(props: EntityProps) {
+export interface EntityProps extends EntityBaseProps {
+  entity: HassEntity;
+}
+
+function Entity(props: EntityBaseProps): ReactElement | null {
   const domain = props.card.entity && props.card.entity.split('.')[0].trim();
-  props.card.domain = domain;
-  if (!props.card.entity) return null;
+
+  let entity: HassEntity | undefined;
+
+  const classes = useStyles();
+
+  if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
+
+  if (props.card.entity) entity = props.hassEntities[props.card.entity];
+
+  if (!entity) {
+    props.card.disabled = true;
+    return (
+      <Grid
+        className={classes.root}
+        container
+        direction="row"
+        alignContent="center"
+        justify="center">
+        <Grid item xs>
+          <Typography
+            className={classes.text}
+            color="textPrimary"
+            variant="body2"
+            component="h5">
+            {props.card.entity
+              ? `${props.card.entity} not found`
+              : 'No entity specified'}
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  } else {
+    props.card.disabled = false;
+  }
 
   if (
     domain === 'air_quality' ||
@@ -34,7 +85,7 @@ function Entity(props: EntityProps) {
     domain === 'sensor' ||
     domain === 'sun'
   )
-    return <State {...props} />;
+    return <State {...props} entity={entity} />;
 
   if (
     domain === 'group' ||
@@ -45,28 +96,21 @@ function Entity(props: EntityProps) {
     domain === 'script' ||
     domain === 'switch'
   )
-    return <Toggle {...props} />;
-  if (domain === 'alarm_control_panel') return <AlarmPanel {...props} />;
-  if (domain === 'camera') return <Camera {...props} />;
-  if (domain === 'climate') return <Climate {...props} />;
-  if (domain === 'cover') return <Cover {...props} />;
-  if (domain === 'fan') return <Fan {...props} />;
-  if (domain === 'input_number') return <Number {...props} />;
-  if (domain === 'input_select') return <Select {...props} />;
-  if (domain === 'input_text') return <Text {...props} />;
-  if (domain === 'light') return <Light {...props} />;
-  if (domain === 'media_player') return <Media {...props} />;
-  if (domain === 'weather') return <Weather {...props} />;
+    return <Toggle {...props} entity={entity} />;
+  if (domain === 'alarm_control_panel')
+    return <AlarmPanel {...props} entity={entity} />;
+  if (domain === 'camera') return <Camera {...props} entity={entity} />;
+  if (domain === 'climate') return <Climate {...props} entity={entity} />;
+  if (domain === 'cover') return <Cover {...props} entity={entity} />;
+  if (domain === 'fan') return <Fan {...props} entity={entity} />;
+  if (domain === 'input_number') return <Number {...props} entity={entity} />;
+  if (domain === 'input_select') return <Select {...props} entity={entity} />;
+  if (domain === 'input_text') return <Text {...props} entity={entity} />;
+  if (domain === 'light') return <Light {...props} entity={entity} />;
+  if (domain === 'media_player') return <Media {...props} entity={entity} />;
+  if (domain === 'weather') return <Weather {...props} entity={entity} />;
 
   return null;
 }
-
-Entity.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleChange: PropTypes.func
-};
 
 export default Entity;

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, ReactElement } from 'react';
 import request from 'superagent';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 
 import { BaseProps } from './Base';
 import { SuggestionType } from '../../Utils/Select';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 import Select from '../../Utils/Select';
 
 type FeedSource = {
@@ -27,7 +26,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function News(props: BaseProps) {
+function News(props: BaseProps): ReactElement {
   const [sources, setSources] = useState<SuggestionType[]>();
   const [error, setError] = useState<string>();
   const classes = useStyles();
@@ -77,7 +76,10 @@ function News(props: BaseProps) {
               label="Source"
               options={sources}
               value={String(props.card.url)}
-              handleChange={props.handleChange!('url')}
+              handleChange={(value: string | number): void =>
+                props.handleManualChange &&
+                props.handleManualChange('url', value)
+              }
             />
           )
         )}
@@ -89,17 +91,11 @@ function News(props: BaseProps) {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>
   );
 }
-
-News.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default News;

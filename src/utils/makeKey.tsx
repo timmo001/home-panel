@@ -1,4 +1,4 @@
-function makeKey(length: number) {
+function makeKey(length: number): string {
   let result = '';
   const characters =
     'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

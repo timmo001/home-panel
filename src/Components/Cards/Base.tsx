@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -30,6 +29,7 @@ import Image from './Image';
 import Markdown from './Markdown';
 import News from './News';
 import RSS from './RSS';
+import Message from 'Components/Utils/Message';
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
@@ -85,7 +85,7 @@ export interface BaseProps
   extends RouteComponentProps,
     HomeAssistantChangeProps {
   card: CardProps;
-  command: CommandType | undefined;
+  command: CommandType;
   config: ConfigurationProps;
   editing: number;
   expandable: boolean;
@@ -98,7 +98,7 @@ export interface BaseProps
 }
 
 let holdTimeout: NodeJS.Timeout;
-function Base(props: BaseProps) {
+function Base(props: BaseProps): ReactElement {
   const [deleteConfirm, setDeleteConfirm] = React.useState<boolean>(false);
   const [editCard, setEditCard] = React.useState<boolean>(false);
   const [expandable, setExpandable] = React.useState<boolean>(false);
@@ -169,90 +169,88 @@ function Base(props: BaseProps) {
   useEffect(() => {
     const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
-    const entitySizeKey =
-      props.card.entity &&
-      Object.keys(entitySizes).find(
-        (domain: string) => domain === props.card.entity!.split('.')[0]
-      );
+    const entitySizeKey = Object.keys(entitySizes).find(
+      (domain: string) => domain === props.card.entity?.split('.')[0]
+    );
     handleSetHeight(cardSize, entitySizeKey);
     handleSetWidth(cardSize, entitySizeKey);
 
     handleSetToggleable();
 
-    if (
-      props.expandable &&
-      props.card.type === 'entity' &&
-      props.card.entity &&
-      entitySizeKey
-    )
+    if (props.expandable && props.card.type === 'entity' && entitySizeKey)
       handleSetExpandable(entitySizeKey);
   }, [
     props.card.entity,
     props.card.type,
     props.expandable,
+    theme.breakpoints,
     handleSetExpandable,
     handleSetHeight,
     handleSetToggleable,
     handleSetWidth,
     height,
-    theme.breakpoints,
     width
   ]);
 
-  function handleDeleteConfirm() {
+  function handleDeleteConfirm(): void {
     setDeleteConfirm(true);
   }
 
-  function handleConfirmClose() {
+  function handleConfirmClose(): void {
     setDeleteConfirm(false);
   }
 
-  function handleHassToggle() {
-    if (props.card.domain === 'lock') {
-      console.log(props.card.state);
-      props.handleHassChange!(
-        props.card.domain!,
-        props.card.state === 'locked' ? 'unlock' : 'lock',
-        {
-          entity_id: props.card.entity
-        }
-      );
-    } else {
-      console.log(props.card.domain, props.card.state === 'on' ? false : true, {
-        entity_id: props.card.entity
-      });
-      props.handleHassChange!(
-        props.card.domain!,
-        props.card.state === 'on' ? false : true,
-        {
-          entity_id: props.card.entity
-        },
-        props.hassEntities
-      );
-    }
+  function handleHassToggle(): void {
+    if (props.card.domain && props.handleHassChange)
+      if (props.card.domain === 'lock') {
+        console.log(props.card.state);
+        props.handleHassChange(
+          props.card.domain,
+          props.card.state === 'locked' ? 'unlock' : 'lock',
+          {
+            entity_id: props.card.entity
+          }
+        );
+      } else {
+        console.log(
+          props.card.domain,
+          props.card.state === 'on' ? false : true,
+          {
+            entity_id: props.card.entity
+          }
+        );
+        props.handleHassChange(
+          props.card.domain,
+          props.card.state === 'on' ? false : true,
+          {
+            entity_id: props.card.entity
+          },
+          props.hassEntities
+        );
+      }
   }
 
-  function handleEdit() {
+  function handleEdit(): void {
     setEditCard(true);
   }
 
-  function handleEditClose() {
+  function handleEditClose(): void {
     setEditCard(false);
   }
 
-  function handleExpand() {
+  function handleExpand(): void {
     setExpandCard(true);
   }
 
-  function handleCloseExpand() {
+  function handleCloseExpand(): void {
     setExpandCard(false);
   }
 
-  function handleHoldCancel() {
+  function handleHoldCancel(): void {
     if (holdTimeout) clearTimeout(holdTimeout);
   }
 
-  function handleHold() {
+  function handleHold(): void {
     if (expandable) {
       handleHoldCancel();
       holdTimeout = setTimeout(() => {
@@ -333,16 +331,12 @@ function Base(props: BaseProps) {
               )}
             </Grid>
           </Grid>
-          {props.card.type === 'entity' && (
-            <Entity
-              {...props}
-              card={props.card}
-              editing={props.editing}
-              hassConfig={props.hassConfig}
-              hassEntities={props.hassEntities}
-              handleHassToggle={handleHassToggle}
-            />
-          )}
+          {props.card.type === 'entity' &&
+            (props.hassAuth && props.hassConfig && props.hassEntities ? (
+              <Entity {...props} handleHassToggle={handleHassToggle} />
+            ) : (
+              <Message type="error" text="Home Assistant not connected" />
+            ))}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
           {props.card.type === 'markdown' && <Markdown {...props} />}
@@ -384,6 +378,7 @@ function Base(props: BaseProps) {
           <EditCard
             {...props}
             card={props.card}
+            command={props.command}
             handleClose={handleEditClose}
             handleUpdate={props.handleUpdate}
           />
@@ -407,20 +402,5 @@ function Base(props: BaseProps) {
     </ButtonBase>
   );
 }
-
-Base.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func,
-  handleDelete: PropTypes.func,
-  handleHassChange: PropTypes.func.isRequired,
-  handleMoveDown: PropTypes.func,
-  handleMoveUp: PropTypes.func,
-  handleSelectChange: PropTypes.func,
-  handleSwitchChange: PropTypes.func,
-  handleUpdate: PropTypes.func.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Base;

@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,7 +15,7 @@ import { HuePicker, ColorResult } from 'react-color';
 import { EntityProps } from './Entity';
 import FeatureClassNames from '../Utils/FeatureClassNames';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     flex: 1
   },
@@ -52,84 +50,74 @@ const FEATURE_CLASS_NAMES = {
   128: 'has-white_value'
 };
 
-function Light(props: EntityProps) {
+function Light(props: EntityProps): ReactElement | null {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [attributes, setAttributes] = React.useState<{ [key: string]: any }>();
   const [color, setColor] = React.useState('');
 
   const classes = useStyles();
   const theme = useTheme();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    attrClasses: string[] = [];
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
 
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = entity!.state;
-    props.card.state = state;
-    attrClasses = FeatureClassNames(entity!, FEATURE_CLASS_NAMES);
-  }
+  const attrClasses = FeatureClassNames(props.entity, FEATURE_CLASS_NAMES);
 
   useEffect(() => {
-    if (entity) {
-      setAttributes(entity.attributes);
+    if (props.entity) {
+      setAttributes(props.entity.attributes);
       setColor(
-        state === 'unavailable'
+        props.entity.state === 'unavailable'
           ? grey[600]
-          : state === 'on'
-          ? entity.attributes.rgb_color
-            ? `rgb(${entity.attributes.rgb_color.join(',')})`
+          : props.entity.state === 'on'
+          ? props.entity.attributes.rgb_color
+            ? `rgb(${props.entity.attributes.rgb_color.join(',')})`
             : theme.palette.primary.main
           : theme.palette.text.primary
       );
     }
-  }, [entity, state, theme.palette.primary.main, theme.palette.text.primary]);
+  }, [props.entity, theme.palette.primary.main, theme.palette.text.primary]);
 
-  const getText = (value: number) => `${value}`;
+  const getText = (value: number): string => `${value}`;
 
   const handleSliderChange = (name: string) => (
     _event: React.ChangeEvent<{}>,
     value: number | number[]
-  ) => {
+  ): void => {
     setAttributes({ ...attributes, [name]: value });
   };
 
   const handleSliderChangeComplete = (name: string) => (
     _event: React.ChangeEvent<{}>,
     value: number | number[]
-  ) => {
-    props.handleHassChange!('light', true, {
-      entity_id: entity!.entity_id,
-      [name]: value
-    });
+  ): void => {
+    props.handleHassChange &&
+      props.handleHassChange('light', true, {
+        entity_id: props.entity.entity_id,
+        [name]: value
+      });
   };
 
-  function handleColorChange(color: ColorResult) {
+  function handleColorChange(color: ColorResult): void {
     setAttributes({
       ...attributes,
       rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
     });
-    props.handleHassChange!('light', true, {
-      entity_id: entity!.entity_id,
-      rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
-    });
+    props.handleHassChange &&
+      props.handleHassChange('light', true, {
+        entity_id: props.entity.entity_id,
+        rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
+      });
   }
 
   const handleSelectChange = (name: string) => (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _child: React.ReactNode
-  ) => {
+  ): void => {
     setAttributes({ ...attributes, [name]: event.target.value });
-    props.handleHassChange!('light', true, {
-      entity_id: entity!.entity_id,
-      [name]: event.target.value
-    });
+    props.handleHassChange &&
+      props.handleHassChange('light', true, {
+        entity_id: props.entity.entity_id,
+        [name]: event.target.value
+      });
   };
 
   const controls = [];
@@ -161,7 +149,7 @@ function Light(props: EntityProps) {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-color_temp') && state === 'on')
+  if (attrClasses.includes('has-color_temp') && props.entity.state === 'on')
     controls.push(
       <Grid key={1} item xs={10}>
         <Typography id="discrete-slider" gutterBottom>
@@ -180,7 +168,7 @@ function Light(props: EntityProps) {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-white_value') && state === 'on')
+  if (attrClasses.includes('has-white_value') && props.entity.state === 'on')
     controls.push(
       <Grid key={2} item xs={10}>
         <Typography id="discrete-slider" gutterBottom>
@@ -199,7 +187,7 @@ function Light(props: EntityProps) {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-color') && state === 'on')
+  if (attrClasses.includes('has-color') && props.entity.state === 'on')
     controls.push(
       <Grid key={3} item xs={10}>
         <HuePicker
@@ -209,7 +197,7 @@ function Light(props: EntityProps) {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-effect_list') && state === 'on')
+  if (attrClasses.includes('has-effect_list') && props.entity.state === 'on')
     controls.push(
       <Grid key={4} item xs={10}>
         <FormControl>
@@ -264,7 +252,7 @@ function Light(props: EntityProps) {
             color="textPrimary"
             variant={props.card.disabled ? 'body2' : 'body1'}
             component="h5">
-            {state}
+            {props.entity.state}
           </Typography>
         </Grid>
       )}
@@ -279,12 +267,5 @@ function Light(props: EntityProps) {
     </Grid>
   );
 }
-
-Light.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleHassToggle: PropTypes.func.isRequired
-};
 
 export default Light;

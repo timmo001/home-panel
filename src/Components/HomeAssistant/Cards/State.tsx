@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
@@ -10,8 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
 import Chart, { ChartData } from '../../Visualisations/Chart';
-import properCase from '../../../Utils/properCase';
-import strings from '../Utils/Strings';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -39,52 +36,33 @@ const useStyles = makeStyles(() => ({
 }));
 
 let historyInterval: NodeJS.Timeout;
-function State(props: EntityProps) {
+function State(props: EntityProps): ReactElement | null {
   const [historyData, setHistoryData] = React.useState<ChartData[]>();
 
-  const classes = useStyles();
-  let entity: HassEntity | undefined, state: string | undefined;
-
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
-
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = properCase(entity!.state);
-    if (entity!.attributes) {
-      const domain = entity!.entity_id.split('.')[0];
-      if (entity!.attributes.device_class) {
-        const deviceClass =
-          strings.state[domain][entity!.attributes.device_class];
-        if (deviceClass) state = deviceClass[entity!.state];
+  const getHistory = useCallback(async (): Promise<void> => {
+    let data;
+    if (props.hassAuth && props.card.entity) {
+      data = await fetchHistory(
+        props.hassAuth,
+        props.card.entity,
+        moment()
+          .subtract(props.card.chart_from, 'hours')
+          .toDate(),
+        moment().toDate()
+      );
+      if (props.card.chart_detail && data && Array.isArray(data)) {
+        if (data.length > 0) {
+          const hData = data[0]
+            .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
+            .filter((_e: HassEntity, i: number) => {
+              if (props.card.chart_detail)
+                return (i + 1) % props.card.chart_detail === 0;
+              else return true;
+            })
+            .map((entity: HassEntity) => ({ value: Number(entity.state) }));
+          if (hData) setHistoryData(hData);
+        }
       }
-      if (entity!.attributes.unit_of_measurement)
-        state += ` ${entity!.attributes.unit_of_measurement}`;
-    }
-  }
-
-  const getHistory = useCallback(async () => {
-    const data = await fetchHistory(
-      props.hassAuth,
-      props.card.entity!,
-      moment()
-        .subtract(props.card.chart_from, 'hours')
-        .toDate(),
-      moment().toDate()
-    );
-    if (Array.isArray(data)) {
-      const hData = data[0]
-        .filter((entity: HassEntity) => !isNaN(Number(entity.state)))
-        .filter((_e: HassEntity, i: number) => {
-          return (i + 1) % props.card.chart_detail! === 0;
-        })
-        .map((entity: HassEntity) => ({ value: Number(entity.state) }));
-      if (hData) setHistoryData(hData);
     }
   }, [
     props.card.entity,
@@ -98,7 +76,7 @@ function State(props: EntityProps) {
       getHistory();
       if (historyInterval) clearInterval(historyInterval);
       historyInterval = setInterval(getHistory, 60000);
-      return () => {
+      return (): void => {
         if (historyInterval) clearInterval(historyInterval);
       };
     }
@@ -109,6 +87,8 @@ function State(props: EntityProps) {
     props.card.chart_from,
     getHistory
   ]);
+
+  const classes = useStyles();
 
   return (
     <Grid
@@ -151,17 +131,11 @@ function State(props: EntityProps) {
           variant={props.card.disabled ? 'body2' : 'body1'}
           component="h5"
           style={{ fontSize: props.card.state_size }}>
-          {state}
+          {props.entity.state}
         </Typography>
       </Grid>
     </Grid>
   );
 }
-
-State.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default State;

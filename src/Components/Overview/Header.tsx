@@ -1,12 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { ConfigProps } from '../../Configuration/Config';
-import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
+import { ConfigProps } from '../Configuration/Config';
+import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 
-function Header(props: HeaderProps) {
+function Header(props: HeaderProps): ReactElement | null {
   const classes = useStyles();
 
   const timeLocation = props.config.header.time_location;
@@ -91,7 +90,7 @@ function Header(props: HeaderProps) {
   if (!props.config.header.time_show && !props.config.header.date_show)
     return null;
 
-  const columns: any[] = ['', '', ''];
+  const columns: (string | boolean | ReactElement)[] = ['', '', ''];
   columns[timeLocation] = time;
   if (timeLocation !== dateLocation || !props.config.header.time_show)
     columns[dateLocation] = date;
@@ -105,7 +104,7 @@ function Header(props: HeaderProps) {
       justify="space-between"
       alignItems="center"
       spacing={2}>
-      {columns.map((columnData: any, key: number) => (
+      {columns.map((columnData, key: number) => (
         <Grid
           key={key}
           item
@@ -119,11 +118,5 @@ function Header(props: HeaderProps) {
     </Grid>
   );
 }
-
-Header.propTypes = {
-  editing: PropTypes.number,
-  config: PropTypes.any,
-  hassConfig: PropTypes.any
-};
 
 export default Header;

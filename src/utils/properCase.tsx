@@ -1,4 +1,4 @@
-const properCase = (text: string) => {
+const properCase = (text: string): string => {
   if (!text) return text;
   if (!text.includes('_')) return text.charAt(0).toUpperCase() + text.slice(1);
   const words = text.split('_');

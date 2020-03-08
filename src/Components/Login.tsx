@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -69,7 +68,7 @@ interface State {
 
 const firstTime =
   localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
-function Login(props: LoginProps) {
+function Login(props: LoginProps): ReactElement {
   const [createAccount, setCreateAccount] = React.useState<boolean>(firstTime);
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [invalidText, setInvalidText] = React.useState<string>();
@@ -306,10 +305,5 @@ function Login(props: LoginProps) {
     </Grid>
   );
 }
-
-Login.propTypes = {
-  handleCreateAccount: PropTypes.func.isRequired,
-  handleLogin: PropTypes.func.isRequired
-};
 
 export default Login;

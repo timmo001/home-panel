@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,14 +13,16 @@ import TextField from '@material-ui/core/TextField';
 import { ColorResult } from 'react-color';
 
 import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
-import { HomeAssistantChangeProps } from 'Components/HomeAssistant/HomeAssistant';
+import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
 import ColorAdornment from '../../Utils/ColorAdornment';
 import Entity from './Entity';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
+import Message from '../../Utils/Message';
 import News from './News';
 import RSS from './RSS';
+import { CommandType } from 'Components/Utils/Command';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -41,12 +42,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-export interface BaseProps
-  extends RouteComponentProps,
-    HomeAssistantChangeProps {
+export interface BaseProps extends RouteComponentProps {
   card: CardProps;
+  command: CommandType;
   config: ConfigurationProps;
-  handleManualChange?: (name: string, value: string) => void;
+  handleManualChange?: (name: string, value: string | number) => void;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,20 +58,24 @@ export interface BaseProps
   ) => void;
 }
 
-function Base(props: BaseProps) {
-  function handleGetEntityTitle() {
-    const entity = props.hassEntities[props.card.entity!];
-    if (entity && entity.attributes.friendly_name)
-      props.handleManualChange!('title', entity.attributes.friendly_name);
+interface BaseExtendedProps extends BaseProps, HomeAssistantChangeProps {}
+
+function Base(props: BaseExtendedProps): ReactElement | null {
+  function handleGetEntityTitle(): void {
+    if (props.hassEntities && props.card.entity) {
+      const entity = props.hassEntities[props.card.entity];
+      if (entity && entity.attributes.friendly_name)
+        props.handleManualChange?.('title', entity.attributes.friendly_name);
+    }
   }
 
-  const handleColorChange = (name: string) => (color: ColorResult) => {
-    props.handleManualChange!(name, color.hex);
+  const handleColorChange = (name: string) => (color: ColorResult): void => {
+    props.handleManualChange?.(name, color.hex);
   };
 
   const classes = useStyles();
 
-  if (!props.card) return null;
+  if (!props.card && !props.handleChange) return null;
   return (
     <div className={classes.root}>
       <Grid container direction="row" justify="center" alignContent="stretch">
@@ -90,7 +94,7 @@ function Base(props: BaseProps) {
               label="Title"
               placeholder={'Card Title'}
               value={props.card.title}
-              onChange={props.handleChange!('title')}
+              onChange={props.handleChange && props.handleChange('title')}
             />
           </Grid>
           {props.card.type === 'entity' && props.card.entity && (
@@ -137,7 +141,7 @@ function Base(props: BaseProps) {
             label="Elevation"
             placeholder="1"
             value={props.card.elevation}
-            onChange={props.handleChange!('elevation')}
+            onChange={props.handleChange && props.handleChange('elevation')}
           />
         </Grid>
         <Grid item xs container justify="flex-start" alignContent="center">
@@ -155,7 +159,7 @@ function Base(props: BaseProps) {
               )
             }}
             value={props.card.background}
-            onChange={props.handleChange!('background')}
+            onChange={props.handleChange && props.handleChange('background')}
           />
         </Grid>
       </Grid>
@@ -172,7 +176,7 @@ function Base(props: BaseProps) {
             label="Padding"
             placeholder="12px"
             value={props.card.padding}
-            onChange={props.handleChange!('padding')}
+            onChange={props.handleChange && props.handleChange('padding')}
           />
         </Grid>
         <Grid item xs container justify="flex-start" alignContent="center">
@@ -183,7 +187,9 @@ function Base(props: BaseProps) {
             control={
               <Switch color="primary" defaultChecked={props.card.square} />
             }
-            onChange={props.handleSwitchChange!('square')}
+            onChange={
+              props.handleSwitchChange && props.handleSwitchChange('square')
+            }
           />
         </Grid>
       </Grid>
@@ -201,7 +207,7 @@ function Base(props: BaseProps) {
             label="Width"
             placeholder="1"
             value={props.card.width}
-            onChange={props.handleChange!('width')}
+            onChange={props.handleChange && props.handleChange('width')}
           />
         </Grid>
         {props.card.type === 'entity' && (
@@ -213,7 +219,7 @@ function Base(props: BaseProps) {
               label="Height"
               placeholder="1"
               value={props.card.height}
-              onChange={props.handleChange!('height')}
+              onChange={props.handleChange && props.handleChange('height')}
             />
           </Grid>
         )}
@@ -233,12 +239,22 @@ function Base(props: BaseProps) {
               label="Title Font Size"
               placeholder="initial"
               value={props.card.title_size}
-              onChange={props.handleChange!('title_size')}
+              onChange={props.handleChange && props.handleChange('title_size')}
             />
           </Grid>
         )}
       </Grid>
-      {props.card.type === 'entity' && <Entity {...props} />}
+      {props.card.type === 'entity' &&
+        (props.hassAuth && props.hassConfig && props.hassEntities ? (
+          <Entity
+            {...props}
+            hassAuth={props.hassAuth}
+            hassConfig={props.hassConfig}
+            hassEntities={props.hassEntities}
+          />
+        ) : (
+          <Message type="error" text="Home Assistant not connected" />
+        ))}
       {props.card.type === 'iframe' && <Frame {...props} />}
       {props.card.type === 'image' && <Image {...props} />}
       {props.card.type === 'markdown' && <Markdown {...props} />}
@@ -247,15 +263,5 @@ function Base(props: BaseProps) {
     </div>
   );
 }
-
-Base.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleChange: PropTypes.func,
-  handleSelectChange: PropTypes.func,
-  handleSwitchChange: PropTypes.func
-};
 
 export default Base;

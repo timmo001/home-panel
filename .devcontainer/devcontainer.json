@@ -1,6 +1,9 @@
 {
   "name": "Home Panel Dev",
   "context": "..",
+  "containerEnv": {
+    "EDITOR": "code"
+  },
   "dockerFile": "../Dockerfile.dev",
   "appPort": [3000, 8234],
   "runArgs": [

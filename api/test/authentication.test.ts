@@ -11,7 +11,7 @@ describe('authentication', () => {
       password: 'supersecret'
     };
 
-    beforeAll(async () => {
+    beforeAll(async (): Promise<void> => {
       try {
         await app.service('users').create(userInfo);
       } catch (error) {
@@ -19,7 +19,7 @@ describe('authentication', () => {
       }
     });
 
-    it('authenticates user and creates accessToken', async () => {
+    it('authenticates user and creates accessToken', async (): Promise<void> => {
       const { user, accessToken } = await app.service('authentication').create({
         strategy: 'local',
         ...userInfo

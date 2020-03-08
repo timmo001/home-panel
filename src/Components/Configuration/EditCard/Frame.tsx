@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Frame(props: BaseProps) {
+function Frame(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -25,7 +24,7 @@ function Frame(props: BaseProps) {
           label="URL"
           placeholder="https://timmo.dev/home-panel"
           value={props.card.url}
-          onChange={props.handleChange!('url')}
+          onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
       <Grid item xs>
@@ -35,17 +34,11 @@ function Frame(props: BaseProps) {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>
   );
 }
-
-Frame.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Frame;

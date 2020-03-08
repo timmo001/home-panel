@@ -65,7 +65,7 @@ const mapColor = (color: string): PaletteColorOptions =>
     ? yellow
     : grey;
 
-export default function parseTheme(theme: ThemeProps) {
+export default function parseTheme(theme: ThemeProps): PaletteOptions {
   const palette: PaletteOptions = defaultPalette;
 
   if (theme.type && theme.type.match(/light|dark/gi)) palette.type = theme.type;
@@ -75,15 +75,15 @@ export default function parseTheme(theme: ThemeProps) {
   palette.background = {
     default: theme.background_default
       ? theme.background_default
-      : defaultPalette.background!.default,
+      : defaultPalette.background?.default,
     paper: theme.background_paper
       ? theme.background_paper
-      : defaultPalette.background!.paper
+      : defaultPalette.background?.paper
   };
   palette.text = {
     primary: theme.text_primary
       ? theme.text_primary
-      : defaultPalette.text!.primary
+      : defaultPalette.text?.primary
   };
   return palette;
 }

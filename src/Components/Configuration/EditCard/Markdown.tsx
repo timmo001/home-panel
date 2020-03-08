@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -13,7 +12,7 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function Markdown(props: BaseProps) {
+function Markdown(props: BaseProps): ReactElement {
   const classes = useStyles();
 
   return (
@@ -26,7 +25,7 @@ function Markdown(props: BaseProps) {
           label="Content"
           placeholder="- Markdown"
           value={props.card.content}
-          onChange={props.handleChange!('content')}
+          onChange={props.handleChange && props.handleChange('content')}
         />
       </Grid>
       <Grid item xs>
@@ -36,17 +35,11 @@ function Markdown(props: BaseProps) {
           label="Height"
           placeholder="auto"
           value={props.card.height}
-          onChange={props.handleChange!('height')}
+          onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
     </Grid>
   );
 }
-
-Markdown.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Markdown;

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useCallback, ReactElement } from 'react';
 import request from 'superagent';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 let feedInterval: NodeJS.Timeout;
-function News(props: BaseProps) {
+function News(props: BaseProps): ReactElement {
   const [data, setData] = useState<FeedData[]>();
   const [error, setError] = useState<string>();
 
@@ -87,7 +86,9 @@ function News(props: BaseProps) {
           props.card.disabled = true;
         });
     } else {
-      setError('You do not have a News API key set in your config.');
+      setError(
+        'You have not selected a source or do not  a News API key set in your config.'
+      );
       props.card.disabled = true;
     }
   }, [
@@ -102,7 +103,7 @@ function News(props: BaseProps) {
     handleGetData();
     if (feedInterval) clearInterval(feedInterval);
     feedInterval = setInterval(() => handleGetData, 120000);
-    return () => {
+    return (): void => {
       if (feedInterval) clearInterval(feedInterval);
     };
   }, [props.card.disabled, handleGetData]);
@@ -123,7 +124,7 @@ function News(props: BaseProps) {
               justify="center"
               alignContent="center"
               alignItems="center">
-              {props.card.width! > 2 && item.imageURL && (
+              {props.card.width && props.card.width > 2 && item.imageURL && (
                 <Grid className={classes.mediaContainer} item xs={3}>
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
                     <img
@@ -163,11 +164,5 @@ function News(props: BaseProps) {
     </div>
   );
 }
-
-News.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default News;

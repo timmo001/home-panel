@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -9,7 +8,7 @@ import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
-import { findPageIdByPage } from '../../Utils/find';
+import { findPageIdByPage } from '../../utils/find';
 import EditPage from '../Configuration/EditPage';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -26,22 +25,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface TabContainerProps {
-  children?: React.ReactNode;
-}
-
-function TabContainer(props: TabContainerProps) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
-TabContainer.propTypes = {
-  children: PropTypes.node.isRequired
-};
-
 let editTimeout: NodeJS.Timeout;
 interface PagesProps extends RouteComponentProps, ConfigProps {
   currentPage: string;
@@ -49,42 +32,45 @@ interface PagesProps extends RouteComponentProps, ConfigProps {
   setPage: (pageKey: string) => void;
 }
 
-function Pages(props: PagesProps) {
+function Pages(props: PagesProps): ReactElement {
   const [editingPage, setEditingPage] = React.useState<PageProps>();
 
-  function handlePageChange(_event: React.ChangeEvent<{}>, pageKey: string) {
+  function handlePageChange(
+    _event: React.ChangeEvent<{}>,
+    pageKey: string
+  ): void {
     props.setPage(pageKey);
   }
 
-  function handleAdd() {
+  function handleAdd(): void {
     const newPage = defaultPage();
-    props.handleUpdateConfig!(['pages', props.config.pages.length], newPage);
+    props.handleUpdateConfig(['pages', props.config.pages.length], newPage);
     props.setPage(newPage.key);
   }
 
-  const handleEditingPage = (page: PageProps) => () => {
+  const handleEditingPage = (page: PageProps) => (): void => {
     if (props.editing === 1)
       editTimeout = setTimeout(() => setEditingPage(page), 1000);
   };
 
-  function handleCancelEdit() {
+  function handleCancelEdit(): void {
     clearTimeout(editTimeout);
   }
 
-  function handleDoneEditingPage() {
+  function handleDoneEditingPage(): void {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (page: PageProps) => (data?: PageProps) => {
-    props.handleUpdateConfig!(
+  const handleUpdatePage = (page: PageProps) => (data?: PageProps): void => {
+    props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       data
     );
     props.setPage(props.config.pages[0].key);
   };
 
-  const handleMovePage = (page: PageProps) => (position: number) => {
-    props.handleUpdateConfig!(
+  const handleMovePage = (page: PageProps) => (position: number): void => {
+    props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       [position]
     );
@@ -155,14 +141,5 @@ function Pages(props: PagesProps) {
     </div>
   );
 }
-
-Pages.propTypes = {
-  config: PropTypes.any,
-  editing: PropTypes.number,
-  mouseMoved: PropTypes.bool,
-  currentPage: PropTypes.string.isRequired,
-  handleUpdateConfig: PropTypes.func,
-  setPage: PropTypes.func.isRequired
-};
 
 export default Pages;

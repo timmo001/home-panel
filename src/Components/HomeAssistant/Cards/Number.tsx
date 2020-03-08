@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
@@ -17,13 +15,6 @@ const useStyles = makeStyles(() => ({
   textContainer: {
     zIndex: 100
   },
-  text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
-    zIndex: 100
-  },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
@@ -35,88 +26,47 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-function NumberEntity(props: EntityProps) {
+function NumberEntity(props: EntityProps): ReactElement {
   const [number, setNumber] = React.useState<number>();
-
-  const classes = useStyles();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    attributes: { [key: string]: any } | undefined;
-
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
-
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = entity!.state;
-    attributes = entity!.attributes;
-  }
-
-  useEffect(() => {
-    if (entity) setNumber(Number(entity.state));
-  }, [entity]);
-
-  if (!entity)
-    return (
-      <Grid
-        className={classes.root}
-        container
-        direction="row"
-        alignContent="center"
-        justify="center">
-        <Grid item xs>
-          <Typography
-            className={classes.text}
-            color="textPrimary"
-            variant="body2"
-            component="h5">
-            {state}
-          </Typography>
-        </Grid>
-      </Grid>
-    );
-
-  const getText = (value: number) => `${value}`;
 
   function handleSliderChange(
     _event: React.ChangeEvent<{}>,
     value: number | number[]
-  ) {
+  ): void {
     setNumber(Array.isArray(value) ? value[0] : value);
   }
 
   function handleSliderChangeComplete(
     _event: React.ChangeEvent<{}>,
     value: number | number[]
-  ) {
-    props.handleHassChange!('input_number', 'set_value', {
-      entity_id: entity!.entity_id,
-      value
-    });
+  ): void {
+    props.handleHassChange &&
+      props.handleHassChange('input_number', 'set_value', {
+        entity_id: props.entity.entity_id,
+        value
+      });
   }
 
-  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleInputChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const val = Number(event.target.value);
     setNumber(!val ? 0 : val);
-    props.handleHassChange!('input_number', 'set_value', {
-      entity_id: entity!.entity_id,
-      value: val
-    });
+    props.handleHassChange &&
+      props.handleHassChange('input_number', 'set_value', {
+        entity_id: props.entity.entity_id,
+        value: val
+      });
   }
 
-  function handleBlur() {
-    if (attributes && number)
-      if (number < attributes.max) {
-        setNumber(Number(attributes.min));
-      } else if (number > attributes.max) {
-        setNumber(Number(attributes.max));
+  function handleBlur(): void {
+    if (props.entity.attributes && number)
+      if (number < props.entity.attributes.max) {
+        setNumber(Number(props.entity.attributes.min));
+      } else if (number > props.entity.attributes.max) {
+        setNumber(Number(props.entity.attributes.max));
       }
   }
+
+  const classes = useStyles();
 
   return (
     <Grid
@@ -148,18 +98,23 @@ function NumberEntity(props: EntityProps) {
           direction="row"
           alignContent="center"
           justify="center">
-          {attributes && entity!.attributes.mode === 'slider' ? (
+          {props.entity.attributes &&
+          props.entity.attributes.mode === 'slider' ? (
             <Grid item xs>
               <Slider
                 onChange={handleSliderChange}
                 onChangeCommitted={handleSliderChangeComplete}
                 value={number}
-                getAriaValueText={getText}
+                getAriaValueText={(value: number): string => `${value}`}
                 aria-labelledby="input-slider"
                 valueLabelDisplay="auto"
-                step={attributes ? attributes.step : 1}
-                min={attributes ? attributes.min : 0}
-                max={attributes ? attributes.max : 100}
+                step={
+                  props.entity.attributes ? props.entity.attributes.step : 1
+                }
+                min={props.entity.attributes ? props.entity.attributes.min : 0}
+                max={
+                  props.entity.attributes ? props.entity.attributes.max : 100
+                }
               />
             </Grid>
           ) : (
@@ -170,9 +125,15 @@ function NumberEntity(props: EntityProps) {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 inputProps={{
-                  step: attributes ? attributes.step : 1,
-                  min: attributes ? attributes.min : 0,
-                  max: attributes ? attributes.max : 100,
+                  step: props.entity.attributes
+                    ? props.entity.attributes.step
+                    : 1,
+                  min: props.entity.attributes
+                    ? props.entity.attributes.min
+                    : 0,
+                  max: props.entity.attributes
+                    ? props.entity.attributes.max
+                    : 100,
                   type: 'number',
                   'aria-labelledby': 'input-slider'
                 }}
@@ -184,11 +145,5 @@ function NumberEntity(props: EntityProps) {
     </Grid>
   );
 }
-
-NumberEntity.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default NumberEntity;

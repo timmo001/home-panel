@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -42,37 +41,37 @@ interface EditPageProps extends ConfigProps {
   handleUpdate: (data?: PageProps) => void;
 }
 
-function EditPage(props: EditPageProps) {
+function EditPage(props: EditPageProps): ReactElement {
   const [page, setPage] = React.useState(props.page);
   const [deleteConfirm, setDeleteConfirm] = React.useState(false);
 
   useEffect(() => setPage(props.page), [props.page]);
 
-  function handleDeleteConfirm() {
+  function handleDeleteConfirm(): void {
     setDeleteConfirm(true);
   }
 
-  function handleConfirmClose() {
+  function handleConfirmClose(): void {
     setDeleteConfirm(false);
   }
 
-  function handleClose() {
+  function handleClose(): void {
     props.handleClose();
   }
 
-  function handleConfirm() {
+  function handleConfirm(): void {
     props.handleUpdate(page);
     handleClose();
   }
 
-  function handleDelete() {
+  function handleDelete(): void {
     props.handleUpdate(undefined);
     handleClose();
   }
 
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     setPage({
       ...page,
       [name]: typeof event === 'string' ? event : event.target.value
@@ -85,13 +84,13 @@ function EditPage(props: EditPageProps) {
     ? true
     : false;
 
-  function handleMoveUp() {
+  function handleMoveUp(): void {
     props.handleUpdate(page);
     props.handleMove(-1);
     handleClose();
   }
 
-  function handleMoveDown() {
+  function handleMoveDown(): void {
     props.handleUpdate(page);
     props.handleMove(+1);
     handleClose();
@@ -170,12 +169,5 @@ function EditPage(props: EditPageProps) {
     </Dialog>
   );
 }
-
-EditPage.propTypes = {
-  page: PropTypes.object.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  handleMove: PropTypes.func.isRequired,
-  handleUpdate: PropTypes.func.isRequired
-};
 
 export default EditPage;

@@ -1,6 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { HassEntity } from 'home-assistant-js-websocket';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -8,7 +6,7 @@ import Input from '@material-ui/core/Input';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../Utils/properCase';
+import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -29,66 +27,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface AlarmPanelProps extends EntityProps {}
-
-function AlarmPanel(props: AlarmPanelProps) {
+function AlarmPanel(props: EntityProps): ReactElement | null {
   const [code, setCode] = React.useState('');
-  const classes = useStyles();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    attributes: any | undefined;
 
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
-
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    attributes = entity!.attributes;
-  }
-
-  if (!entity)
-    return (
-      <Grid
-        className={classes.root}
-        container
-        direction="row"
-        justify="center"
-        alignContent="space-between">
-        <Grid item xs>
-          <Typography
-            className={classes.text}
-            color="textPrimary"
-            variant="body2"
-            component="h5">
-            {state}
-          </Typography>
-        </Grid>
-      </Grid>
-    );
-
-  function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setCode(event.target.value);
   }
 
-  const handleCodePressed = (digit?: string) => () => {
+  const handleCodePressed = (digit?: string) => (): void => {
     if (digit) setCode(code + digit);
     else setCode('');
   };
 
-  const handleUpdate = (service: string) => () => {
-    props.handleHassChange!(props.card.domain!, service, {
-      entity_id: props.card.entity,
-      code
-    });
+  const handleUpdate = (service: string) => (): void => {
+    if (props.handleHassChange && props.card.domain)
+      props.handleHassChange(props.card.domain, service, {
+        entity_id: props.card.entity,
+        code
+      });
     setCode('');
   };
 
-  const armed = entity.state === 'armed_away' || entity.state === 'armed_home';
+  const armed =
+    props.entity.state === 'armed_away' || props.entity.state === 'armed_home';
+  const classes = useStyles();
 
   return (
     <Grid
@@ -100,7 +62,7 @@ function AlarmPanel(props: AlarmPanelProps) {
       direction="column">
       <Grid item>
         <Typography className={classes.text} color="textPrimary" component="h5">
-          {properCase(entity.state)}
+          {properCase(props.entity.state)}
         </Typography>
       </Grid>
       {(!props.card.width || props.card.width > 1) &&
@@ -118,8 +80,8 @@ function AlarmPanel(props: AlarmPanelProps) {
                   color="primary"
                   onClick={handleUpdate('alarm_arm_away')}
                   disabled={
-                    (attributes.code_arm_required && !code) ||
-                    entity.state === 'pending'
+                    (props.entity.attributes.code_arm_required && !code) ||
+                    props.entity.state === 'pending'
                   }>
                   Arm Away
                 </Button>
@@ -131,8 +93,8 @@ function AlarmPanel(props: AlarmPanelProps) {
                   color="primary"
                   onClick={handleUpdate('alarm_arm_home')}
                   disabled={
-                    (attributes.code_arm_required && !code) ||
-                    entity.state === 'pending'
+                    (props.entity.attributes.code_arm_required && !code) ||
+                    props.entity.state === 'pending'
                   }>
                   Arm Home
                 </Button>
@@ -144,8 +106,8 @@ function AlarmPanel(props: AlarmPanelProps) {
                   color="primary"
                   onClick={handleUpdate('alarm_disarm')}
                   disabled={
-                    (attributes.code_arm_required && !code) ||
-                    entity.state === 'pending'
+                    (props.entity.attributes.code_arm_required && !code) ||
+                    props.entity.state === 'pending'
                   }>
                   Disarm
                 </Button>
@@ -153,7 +115,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             )}
           </Grid>
         )}
-      {attributes.code_arm_required &&
+      {props.entity.attributes.code_arm_required &&
         (!props.card.width || props.card.width > 1) &&
         (!props.card.height || props.card.height > 2) && (
           <Grid item>
@@ -163,7 +125,7 @@ function AlarmPanel(props: AlarmPanelProps) {
                 'aria-label': 'code',
                 style: { textAlign: 'center' }
               }}
-              disabled={entity.state === 'pending'}
+              disabled={props.entity.state === 'pending'}
               placeholder="1234"
               type="number"
               value={code}
@@ -171,7 +133,7 @@ function AlarmPanel(props: AlarmPanelProps) {
             />
           </Grid>
         )}
-      {attributes.code_arm_required &&
+      {props.entity.attributes.code_arm_required &&
         (!props.card.width || props.card.width > 1) &&
         (!props.card.height || props.card.height > 1) && (
           <Grid
@@ -184,7 +146,7 @@ function AlarmPanel(props: AlarmPanelProps) {
               <Grid key={value} item xs={4}>
                 <Button
                   size="large"
-                  disabled={entity!.state === 'pending'}
+                  disabled={props.entity.state === 'pending'}
                   onClick={handleCodePressed(String(value))}>
                   {value}
                 </Button>
@@ -195,11 +157,5 @@ function AlarmPanel(props: AlarmPanelProps) {
     </Grid>
   );
 }
-
-AlarmPanel.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default AlarmPanel;

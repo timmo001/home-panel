@@ -1,7 +1,6 @@
-import React, { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import Dialog from '@material-ui/core/Dialog';
@@ -17,7 +16,7 @@ import HALogin from '../../Resources/ha-login.svg';
 import FormControl from '@material-ui/core/FormControl';
 import { DialogTitle } from '@material-ui/core';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     width: '100%'
@@ -36,11 +35,11 @@ interface HomeAssistantLoginProps {
   handleHassLogin: (url: string) => void;
 }
 
-function HomeAssistantLogin(props: HomeAssistantLoginProps) {
+function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
   const [showDialog, setShowDialog] = React.useState<boolean>(false);
   const [url, setUrl] = React.useState<string>(
     `${process.env.REACT_APP_API_PROTOCOL ||
-      window.location.protocol}//hassio.local:8123`
+      window.location.protocol}//homeassistant.local:8123`
   );
   const [invalidText, setInvalidText] = React.useState<string>();
 
@@ -66,16 +65,16 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
     handleValidation();
   }, [handleValidation]);
 
-  function handleToggleDialog() {
+  function handleToggleDialog(): void {
     setShowDialog(!showDialog);
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setUrl(event.target.value);
     handleValidation();
   }
 
-  function handleLogin() {
+  function handleLogin(): void {
     props.handleHassLogin(url);
     setShowDialog(false);
   }
@@ -110,7 +109,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
                 required
                 id="url"
                 type="text"
-                placeholder="https://hassio.local:8123"
+                placeholder="https://homeassistant.local:8123"
                 inputProps={{
                   autoFocus: true,
                   autoCapitalize: 'none',
@@ -137,9 +136,5 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps) {
     </div>
   );
 }
-
-HomeAssistantLogin.propTypes = {
-  handleHassLogin: PropTypes.func.isRequired
-};
 
 export default HomeAssistantLogin;

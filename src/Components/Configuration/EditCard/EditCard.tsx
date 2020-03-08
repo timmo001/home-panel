@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, ReactElement } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { CardProps, cardTypeDefaults } from '../Config';
-import { CommandType } from '../../Utils/Command';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
@@ -37,26 +35,21 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EditCardProps extends BaseProps {
-  command: CommandType | undefined;
   handleClose: () => void;
   handleUpdate: (data: CardProps) => void;
 }
 
-function EditCard(props: EditCardProps) {
+function EditCard(props: EditCardProps): ReactElement {
   const [card, setCard] = React.useState(props.card);
 
   useEffect(() => setCard(props.card), [props.card]);
 
-  function handleClose() {
+  function handleConfirm(): void {
+    props.handleUpdate(card);
     props.handleClose();
   }
 
-  function handleConfirm() {
-    handleClose();
-    props.handleUpdate(card);
-  }
-
-  function handleManualChange(name: string, value: string) {
+  function handleManualChange(name: string, value: string | number): void {
     setCard({
       ...card,
       [name]: value
@@ -65,7 +58,7 @@ function EditCard(props: EditCardProps) {
 
   const handleChange = (name: string) => (
     event: React.ChangeEvent<HTMLInputElement> | string
-  ) => {
+  ): void => {
     setCard({
       ...card,
       [name]: typeof event === 'string' ? event : event.target.value
@@ -75,13 +68,13 @@ function EditCard(props: EditCardProps) {
   const handleSwitchChange = (name: string) => (
     _event: React.ChangeEvent<{}>,
     checked: boolean
-  ) => {
+  ): void => {
     setCard({ ...card, [name]: checked });
   };
 
   function handleSelectChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ) {
+  ): void {
     switch (event.target.name) {
       default:
         return setCard({
@@ -154,16 +147,11 @@ function EditCard(props: EditCardProps) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
+        <Button onClick={props.handleClose}>Cancel</Button>
         <Button onClick={handleConfirm}>Save</Button>
       </DialogActions>
     </Dialog>
   );
 }
-
-EditCard.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  handleUpdate: PropTypes.func.isRequired
-};
 
 export default EditCard;

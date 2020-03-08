@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-function Markdown(props: BaseProps) {
+function Markdown(props: BaseProps): ReactElement | null {
   const classes = useStyles();
 
   if (!props.card.content) return null;
@@ -35,11 +34,5 @@ function Markdown(props: BaseProps) {
     </Typography>
   );
 }
-
-Markdown.propTypes = {
-  card: PropTypes.any.isRequired,
-  editing: PropTypes.number,
-  handleChange: PropTypes.func
-};
 
 export default Markdown;

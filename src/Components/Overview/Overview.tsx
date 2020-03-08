@@ -1,6 +1,5 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -19,15 +18,15 @@ import {
   CardProps
 } from '../Configuration/Config';
 import { CommandType } from '../Utils/Command';
-import { findGroupIdByGroup, findCardIdByCard } from '../../Utils/find';
+import { findGroupIdByGroup, findCardIdByCard } from '../../utils/find';
 import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
 import AddCard from '../Cards/AddCard';
 import AddGroup from '../Cards/AddGroup';
 import Base from '../Cards/Base';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 import EditGroup from '../Configuration/EditGroup';
-import Header from './Header/Header';
-import makeKey from '../../Utils/makeKey';
+import Header from './Header';
+import makeKey from '../../utils/makeKey';
 import Pages from './Pages';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -69,12 +68,12 @@ interface OverviewProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantChangeProps {
-  command: CommandType | undefined;
+  command: CommandType;
   mouseMoved: boolean;
 }
 
-function Overview(props: OverviewProps) {
-  const [currentPage, setCurrentPage] = React.useState(
+function Overview(props: OverviewProps): ReactElement {
+  const [currentPage, setCurrentPage] = React.useState<string>(
     props.config.pages[0].key
   );
   const [editingGroup, setEditingGroup] = React.useState<GroupProps>();
@@ -92,7 +91,7 @@ function Overview(props: OverviewProps) {
       if (props.command.page) handleSetCurrentPage(props.command.page);
       else if (props.command.card) {
         const foundCard: CardProps | undefined = props.config.cards.find(
-          (card: CardProps) => card.key === props.command!.card
+          (card: CardProps) => card.key === props.command?.card
         );
         if (foundCard) {
           const foundGroup: GroupProps | undefined = props.config.groups.find(
@@ -109,34 +108,34 @@ function Overview(props: OverviewProps) {
     handleSetCurrentPage
   ]);
 
-  function handleAddGroup() {
+  function handleAddGroup(): void {
     console.log('handleAddGroup:', currentPage);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['groups', props.config.groups.length],
       defaultGroup(currentPage)
     );
   }
 
-  const handleAddCard = (groupKey: string) => () => {
+  const handleAddCard = (groupKey: string) => (): void => {
     console.log('handleAddCard:', groupKey);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['cards', props.config.cards.length],
       defaultCard(groupKey)
     );
   };
 
-  const handleCopy = (card: CardProps) => () => {
+  const handleCopy = (card: CardProps) => (): void => {
     console.log('handleCopy:', card);
-    props.handleUpdateConfig!(['cards', props.config.cards.length], {
+    props.handleUpdateConfig(['cards', props.config.cards.length], {
       ...card,
       key: makeKey(16)
     });
   };
 
-  const handleDelete = (group?: GroupProps, card?: CardProps) => () => {
+  const handleDelete = (group?: GroupProps, card?: CardProps) => (): void => {
     console.log('handleDelete:', group, card);
     if (card)
-      props.handleUpdateConfig!(
+      props.handleUpdateConfig(
         ['cards', findCardIdByCard(props.config, card)],
         undefined
       );
@@ -146,58 +145,69 @@ function Overview(props: OverviewProps) {
         const groupKey = props.config.groups[groupId].key;
         props.config.cards.map((card: CardProps, id: number) => {
           if (card.group === groupKey)
-            props.handleUpdateConfig!(['cards', id], undefined);
+            props.handleUpdateConfig(['cards', id], undefined);
           return card;
         });
-        props.handleUpdateConfig!(['groups', groupId], undefined);
+        props.handleUpdateConfig(['groups', groupId], undefined);
       }
     }
   };
 
-  const handleMoveUp = (group: GroupProps, card?: CardProps) => () => {
+  const handleMoveUp = (group: GroupProps, card?: CardProps) => (): void => {
     console.log('handleMoveUp:', group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
       let pos = 0;
       for (let i = cardId - 1; i < props.config.cards.length; i++) {
         pos--;
-        if (props.config.cards[i].group === props.config.cards[cardId].group)
+        if (
+          i < 1 ||
+          (props.config.cards[i].key !== props.config.cards[cardId].key &&
+            props.config.cards[i].group === props.config.cards[cardId].group)
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
         console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
 
-      props.handleUpdateConfig!(['cards', cardId], [pos]);
+      props.handleUpdateConfig(['cards', cardId], [pos]);
     } else {
       const groupId = findGroupIdByGroup(props.config, group);
       let pos = 0;
       for (let i = groupId - 1; i < props.config.groups.length; i++) {
         pos--;
-        if (props.config.groups[i].page === props.config.groups[groupId].page)
+        if (
+          i < 1 ||
+          (props.config.groups[i].key !== props.config.groups[groupId].key &&
+            props.config.groups[i].page === props.config.groups[groupId].page)
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
         console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig!(['groups', groupId], [pos]);
+      props.handleUpdateConfig(['groups', groupId], [pos]);
     }
   };
 
-  const handleMoveDown = (group: GroupProps, card?: CardProps) => () => {
+  const handleMoveDown = (group: GroupProps, card?: CardProps) => (): void => {
     console.log('handleMoveDown:', group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
       let pos = 0;
       for (let i = cardId + 1; i < props.config.cards.length; i++) {
         pos--;
-        if (props.config.cards[i].group === props.config.cards[cardId].group)
+        if (
+          props.config.cards[i].key !== props.config.cards[cardId].key &&
+          props.config.cards[i].group === props.config.cards[cardId].group
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
         console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
 
-      props.handleUpdateConfig!(['cards', cardId], [pos]);
+      props.handleUpdateConfig(['cards', cardId], [pos]);
 
-      props.handleUpdateConfig!(
+      props.handleUpdateConfig(
         ['cards', findCardIdByCard(props.config, card)],
         [+1]
       );
@@ -206,45 +216,48 @@ function Overview(props: OverviewProps) {
       let pos = 0;
       for (let i = groupId + 1; i < props.config.groups.length; i++) {
         pos++;
-        if (props.config.groups[i].page === props.config.groups[groupId].page)
+        if (
+          props.config.groups[i].key !== props.config.groups[groupId].key &&
+          props.config.groups[i].page === props.config.groups[groupId].page
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
         console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig!(['groups', groupId], [pos]);
+      props.handleUpdateConfig(['groups', groupId], [pos]);
     }
   };
 
-  const handleUpdateCard = (card: CardProps) => (data: CardProps) => {
+  const handleUpdateCard = (card: CardProps) => (data: CardProps): void => {
     console.log('handleUpdateCard:', card, data);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['cards', findCardIdByCard(props.config, card)],
       data
     );
   };
 
-  const handleEditingGroup = (group: GroupProps) => () => {
+  const handleEditingGroup = (group: GroupProps) => (): void => {
     setEditingGroup(group);
   };
 
-  function handleDoneEditingGroup() {
+  function handleDoneEditingGroup(): void {
     setEditingGroup(undefined);
   }
 
-  const handleUpdateGroup = (group: GroupProps) => (data: GroupProps) => {
+  const handleUpdateGroup = (group: GroupProps) => (data: GroupProps): void => {
     console.log('handleUpdateGroup:', group, data);
-    props.handleUpdateConfig!(
+    props.handleUpdateConfig(
       ['groups', findGroupIdByGroup(props.config, group)],
       data
     );
   };
 
-  const handleDeleteConfirm = (group: GroupProps) => () => {
+  const handleDeleteConfirm = (group: GroupProps) => (): void => {
     console.log('handleDeleteConfirm:', group);
     setDeleteConfirm(group);
   };
 
-  function handleConfirmClose() {
+  function handleConfirmClose(): void {
     setDeleteConfirm(undefined);
   }
 
@@ -408,15 +421,5 @@ function Overview(props: OverviewProps) {
     </Grid>
   );
 }
-
-Overview.propTypes = {
-  config: PropTypes.any,
-  editing: PropTypes.number,
-  mouseMoved: PropTypes.bool,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any,
-  handleHassChange: PropTypes.func.isRequired,
-  handleUpdateConfig: PropTypes.func.isRequired
-};
 
 export default Overview;

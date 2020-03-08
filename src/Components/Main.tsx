@@ -1,25 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactElement } from 'react';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 
 import { RouteComponentExtendedProps } from './Types/ReactRouter';
-import { ConfigProps } from './Configuration/Config';
+import { ConfigurationProps, ThemeProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
 import { CommandType } from './Utils/Command';
-import clone from '../Utils/clone';
+import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange
 } from './HomeAssistant/HomeAssistant';
-import isObject from '../Utils/isObject';
+import isObject from '../utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
 import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
+import { AuthenticationResult } from '@feathersjs/authentication/lib';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -50,16 +50,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-interface MainProps extends RouteComponentExtendedProps, ConfigProps {
-  command: CommandType | undefined;
-  loginCredentials: any;
+interface MainProps extends RouteComponentExtendedProps {
+  command: CommandType;
+  config: ConfigurationProps;
+  editing: number;
+  loginCredentials: AuthenticationResult;
   mouseMoved: boolean;
-  handleLogout: () => any;
+  handleConfigChange: (config: ConfigurationProps) => void;
+  handleLogout: () => void;
   handleMouseMove: () => void;
+  handleSetTheme: (palette: ThemeProps) => void;
 }
 
-function Main(props: MainProps) {
-  const [back, setBack] = React.useState<boolean>(false);
+function Main(props: MainProps): ReactElement {
   const [hassAuth, setHassAuth] = React.useState<Auth>();
   const [hassConfig, setHassConfig] = React.useState<HassConfig>();
   const [hassConnected, setHassConnected] = React.useState<boolean>(false);
@@ -79,39 +82,54 @@ function Main(props: MainProps) {
     }
   }, [hassConnected]);
 
-  function handleUpdateConfig(path: any[], data: any) {
+  function handleUpdateConfig(
+    path: (string | number)[],
+    data?: string | number | boolean | object
+  ): void {
+    if (process.env.NODE_ENV === 'development')
+      console.log('handleUpdateConfig:', path, data);
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value
       const lastItem = path.pop();
-      const secondLastItem = path.reduce((o, k) => (o[k] = o[k] || {}), config);
-      if (Array.isArray(secondLastItem)) {
-        if (data === undefined) secondLastItem.splice(lastItem, 1);
-        else if (Array.isArray(data)) {
-          arrayMove.mutate(secondLastItem, lastItem, lastItem + data[0]);
-        } else if (isObject(data)) {
-          const newValue = JSON.parse(JSON.stringify(data));
-          if (!secondLastItem[lastItem]) secondLastItem[lastItem] = [];
-          secondLastItem[lastItem] = newValue;
-        }
-      } else secondLastItem[lastItem] = data;
+      const secondLastItem = path.reduce(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (o: any, k: any) => (o[k] = o[k] || {}),
+        config
+      );
+      if (process.env.NODE_ENV === 'development') {
+        console.log('secondLastItem:', secondLastItem);
+        console.log('lastItem:', lastItem);
+      }
+      if (lastItem !== undefined && secondLastItem !== undefined) {
+        if (Array.isArray(secondLastItem)) {
+          if (data === undefined) secondLastItem.splice(Number(lastItem), 1);
+          else if (Array.isArray(data)) {
+            arrayMove.mutate(
+              secondLastItem,
+              Number(lastItem),
+              lastItem + data[0]
+            );
+          } else if (isObject(data)) {
+            const newValue = JSON.parse(JSON.stringify(data));
+            if (!secondLastItem[Number(lastItem)])
+              secondLastItem[Number(lastItem)] = [];
+            secondLastItem[Number(lastItem)] = newValue;
+          }
+        } else secondLastItem[lastItem] = data;
+      }
     } else config = data;
-    props.handleConfigChange!(config);
-    if (path.find((i: any) => i === 'theme'))
-      props.handleSetTheme!(config.theme);
+    props.handleConfigChange(config);
+    if (path.find(i => i === 'theme')) props.handleSetTheme(config.theme);
   }
 
-  async function handleHassLogin(url: string) {
+  async function handleHassLogin(url: string): Promise<void> {
     console.log('handleHassLogin:', url);
     setHassUrl(url);
     setHassLogin(true);
   }
 
-  function handleBack() {
-    setBack(false);
-  }
-
-  function handleBackupConfig() {
+  function handleBackupConfig(): void {
     const a = document.createElement('a');
     const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
     a.href = URL.createObjectURL(file);
@@ -121,17 +139,18 @@ function Main(props: MainProps) {
     a.click();
   }
 
-  function handleRestoreConfig() {
+  function handleRestoreConfig(): void {
     const input = document.createElement('input');
     input.type = 'file';
-    input.onchange = (e: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    input.onchange = (e: any): void => {
       if (e && e.target) {
         const file = e.target.files[0];
 
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
 
-        reader.onload = (readerEvent: ProgressEvent<FileReader>) => {
+        reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
           if (readerEvent && readerEvent.target) {
             const content = readerEvent.target.result;
             if (typeof content === 'string') {
@@ -149,7 +168,7 @@ function Main(props: MainProps) {
   }
 
   useEffect(() => {
-    if (props.command && !props.location.state!!.overview)
+    if (props.command && !props.location.state?.overview)
       props.history.replace({ ...props.location, state: { overview: true } });
   }, [props.command, props.history, props.location]);
 
@@ -175,7 +194,7 @@ function Main(props: MainProps) {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.state!!.configuration
+    props.location.state?.configuration
       ? true
       : false || props.mouseMoved;
 
@@ -183,20 +202,18 @@ function Main(props: MainProps) {
     <div
       className={classnames(
         classes.root,
-        props.location.state!!.overview && classes.overview
+        props.location.state?.overview && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
       onMouseMove={props.handleMouseMove}>
       <Drawer
         {...props}
-        back={back}
         currentPage={currentPage}
         editing={editing}
         hassConnected={hassConnected}
         mouseMoved={props.mouseMoved}
         userInitials={userInitials}
-        handleBack={handleBack}
         handleHassLogin={handleHassLogin}
         handleSpaceTaken={setSpaceTaken}
       />
@@ -218,7 +235,7 @@ function Main(props: MainProps) {
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
             !showToolbar && classes.contentNoToolbar,
-            props.location.state!!.overview && classes.overview
+            props.location.state?.overview && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
@@ -231,50 +248,36 @@ function Main(props: MainProps) {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state!!.configuration &&
+          {props.location.state?.configuration &&
           hassAuth &&
           hassConfig &&
           hassEntities ? (
             <Configuration
               {...props}
-              back={back}
               editing={editing}
               hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
               handleBackupConfig={handleBackupConfig}
               handleRestoreConfig={handleRestoreConfig}
-              handleSetBack={setBack}
               handleUpdateConfig={handleUpdateConfig}
             />
           ) : (
-            hassAuth &&
-            hassConfig &&
-            hassEntities && (
-              <Overview
-                {...props}
-                editing={editing}
-                hassAuth={hassAuth}
-                hassConfig={hassConfig}
-                hassEntities={hassEntities}
-                mouseMoved={props.mouseMoved}
-                handleHassChange={handleHassChange}
-                handleUpdateConfig={handleUpdateConfig}
-              />
-            )
+            <Overview
+              {...props}
+              editing={editing}
+              hassAuth={hassAuth}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={props.mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
           )}
         </main>
       )}
     </div>
   );
 }
-
-Main.propTypes = {
-  loginCredentials: PropTypes.any,
-  config: PropTypes.object,
-  handleConfigChange: PropTypes.func.isRequired,
-  handleLogout: PropTypes.func.isRequired,
-  handleSetTheme: PropTypes.func.isRequired
-};
 
 export default Main;

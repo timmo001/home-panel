@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { ReactElement } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,14 +12,14 @@ interface ConfirmDialogProps {
   handleConfirm?: () => void;
 }
 
-function ConfirmDialog(props: ConfirmDialogProps) {
-  function handleClose() {
-    props.handleClose!();
+function ConfirmDialog(props: ConfirmDialogProps): ReactElement {
+  function handleClose(): void {
+    if (props.handleClose) props.handleClose();
   }
 
-  function handleConfirm() {
+  function handleConfirm(): void {
     handleClose();
-    props.handleConfirm!();
+    if (props.handleConfirm) props.handleConfirm();
   }
 
   return (
@@ -38,11 +37,5 @@ function ConfirmDialog(props: ConfirmDialogProps) {
     </Dialog>
   );
 }
-
-ConfirmDialog.propTypes = {
-  text: PropTypes.string,
-  handleClose: PropTypes.func.isRequired,
-  handleConfirm: PropTypes.func.isRequired
-};
 
 export default ConfirmDialog;

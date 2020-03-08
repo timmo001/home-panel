@@ -51,7 +51,7 @@ const fetchWithAuth = async (
   auth: Auth,
   input: RequestInfo,
   init: RequestInit = {}
-) => {
+): Promise<Response> => {
   if (auth.expired) {
     await auth.refreshAccessToken();
   }
@@ -73,7 +73,7 @@ export default async function hassCallApi<T>(
   method: string,
   path: string,
   parameters?: {}
-) {
+): Promise<T> {
   const url = `${auth.data.hassUrl}/api/${path}`;
 
   const init: RequestInit = {
@@ -96,10 +96,11 @@ export async function fetchHistory(
   entity: string,
   start: Date,
   end: Date
-) {
+): Promise<unknown> {
   let url = 'history/period';
   if (start) url += `/${start.toISOString()}`;
   url += `?filter_entity_id=${entity}`;
   if (end) url += `&end_time=${end.toISOString()}`;
+  if (process.env.NODE_ENV === 'development') console.log('fetchHistory:', url);
   return hassCallApi(auth, 'GET', url);
 }

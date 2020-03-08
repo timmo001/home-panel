@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, ReactElement } from 'react';
 import classnames from 'classnames';
-import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,7 +9,6 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../Utils/properCase';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -42,50 +39,33 @@ const useStyles = makeStyles(() => ({
 }));
 
 let PopoverNode: HTMLButtonElement | null | undefined;
-function Select(props: EntityProps) {
+function Select(props: EntityProps): ReactElement {
   const [open, setOpen] = useState(false);
 
-  const classes = useStyles();
-  const theme = useTheme();
-  let entity: HassEntity | undefined,
-    state: string | undefined,
-    options: string[] | undefined;
-
-  if (!props.hassEntities) {
-    state = 'Home Assistant not connected.';
-    props.card.disabled = true;
-  } else entity = props.hassEntities[props.card.entity!];
-
-  if (!entity && !state) {
-    props.card.disabled = true;
-    state = `${props.card.entity} not found`;
-  } else if (!state) {
-    props.card.disabled = false;
-    state = properCase(entity!.state);
-    if (entity!.attributes && entity!.attributes.options) {
-      options = entity!.attributes.options;
-    }
-  }
-
-  function handleToggle() {
+  function handleToggle(): void {
     setOpen(!open);
   }
 
   const handleChosen = (option: string) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
-    props.handleHassChange!('input_select', 'select_option', {
-      entity_id: props.card.entity,
-      option
-    });
+  ): void => {
+    props.handleHassChange &&
+      props.handleHassChange('input_select', 'select_option', {
+        entity_id: props.card.entity,
+        option
+      });
     setOpen(false);
   };
+
+  const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <IconButton
       className={classes.root}
       onClick={handleToggle}
-      ref={node => {
+      ref={(node: HTMLButtonElement): void => {
         PopoverNode = node;
       }}>
       <Grid
@@ -115,7 +95,7 @@ function Select(props: EntityProps) {
             color="textPrimary"
             variant={props.card.disabled ? 'body2' : 'body1'}
             component="h5">
-            {state}
+            {props.entity.state}
           </Typography>
         </Grid>
       </Grid>
@@ -133,22 +113,21 @@ function Select(props: EntityProps) {
             marginTop: theme.spacing(1),
             overflow: 'auto'
           }}>
-          {options &&
-            options.map((option: string, key: number) => (
-              <MenuItem key={key} onClick={handleChosen(option)} value={option}>
-                {option}
-              </MenuItem>
-            ))}
+          {props.entity.attributes.options &&
+            props.entity.attributes.options.map(
+              (option: string, key: number) => (
+                <MenuItem
+                  key={key}
+                  onClick={handleChosen(option)}
+                  value={option}>
+                  {option}
+                </MenuItem>
+              )
+            )}
         </Paper>
       </Popover>
     </IconButton>
   );
 }
-
-Select.propTypes = {
-  card: PropTypes.any.isRequired,
-  hassConfig: PropTypes.any,
-  hassEntities: PropTypes.any
-};
 
 export default Select;

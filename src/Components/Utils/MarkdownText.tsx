@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, ReactElement } from 'react';
 import emoji from 'markdown-it-emoji';
 import externalLinks from 'markdown-it-external-links';
 import markdownIt from 'markdown-it';
@@ -9,8 +8,8 @@ interface MarkdownTextProps {
   text: string;
 }
 
-function MarkdownText(props: MarkdownTextProps) {
-  const [text, setText] = useState<any>();
+function MarkdownText(props: MarkdownTextProps): ReactElement {
+  const [text, setText] = useState<ReactElement[]>();
 
   useEffect(() => {
     setText(
@@ -34,9 +33,5 @@ function MarkdownText(props: MarkdownTextProps) {
 
   return <span>{text}</span>;
 }
-
-MarkdownText.propTypes = {
-  text: PropTypes.string
-};
 
 export default MarkdownText;

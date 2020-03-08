@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -22,12 +22,12 @@ interface ColorAdornmentProps {
 }
 
 let PopoverNode: HTMLButtonElement | null | undefined;
-function ColorAdornment(props: ColorAdornmentProps) {
+function ColorAdornment(props: ColorAdornmentProps): ReactElement {
   const [showColorPicker, setShowColorPicker] = React.useState(false);
 
   const classes = useStyles();
 
-  function handleToggleColorPicker() {
+  function handleToggleColorPicker(): void {
     setShowColorPicker(!showColorPicker);
   }
 
@@ -37,7 +37,7 @@ function ColorAdornment(props: ColorAdornmentProps) {
         size="small"
         aria-label="Pick Color"
         onClick={handleToggleColorPicker}
-        ref={node => {
+        ref={(node: HTMLButtonElement): void => {
           PopoverNode = node;
         }}>
         <PaletteIcon fontSize="small" />
@@ -58,7 +58,5 @@ function ColorAdornment(props: ColorAdornmentProps) {
     </InputAdornment>
   );
 }
-
-ColorAdornment.propTypes = {};
 
 export default ColorAdornment;

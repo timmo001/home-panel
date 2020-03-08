@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useCallback, ReactElement } from 'react';
 import Fuse from 'fuse.js';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
@@ -28,19 +27,19 @@ interface SuggestionType {
 
 interface EntitySelectProps extends HomeAssistantEntityProps {
   entity?: string;
-  handleChange: (value: any) => void;
+  handleChange: (value: string) => void;
 }
 
 let PopperNode: HTMLDivElement | null | undefined;
 
-function EntitySelect(props: EntitySelectProps) {
+function EntitySelect(props: EntitySelectProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [options, setOptions]: SuggestionType[] | any[] = useState([]);
+  const [options, setOptions] = useState<SuggestionType[]>([]);
   const [search, setSearch] = useState('');
   const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions]: SuggestionType[] | any[] = useState([]);
+  const [suggestions, setSuggestions] = useState<SuggestionType[]>([]);
 
   const filterSuggestions = useCallback(() => {
     const fuse = new Fuse(options, {
@@ -53,7 +52,7 @@ function EntitySelect(props: EntitySelectProps) {
     setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
   }, [options, search]);
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setSearch(event.target.value);
     filterSuggestions();
     setOpen(true);
@@ -61,14 +60,16 @@ function EntitySelect(props: EntitySelectProps) {
   }
 
   function handleFocus(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
+  ): void {
     setOpen(true);
   }
 
   const handleChosen = (item: SuggestionType) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
+  ): void => {
     setSearch(item.label);
     props.handleChange(item.value);
     setOpen(false);
@@ -103,7 +104,7 @@ function EntitySelect(props: EntitySelectProps) {
         placeholder="Search for entities"
         aria-controls="options"
         aria-haspopup="true"
-        ref={node => {
+        ref={(node: HTMLDivElement): void => {
           PopperNode = node;
         }}
         value={search}
@@ -136,11 +137,5 @@ function EntitySelect(props: EntitySelectProps) {
     </div>
   );
 }
-
-EntitySelect.propTypes = {
-  entity: PropTypes.string,
-  hassEntities: PropTypes.any.isRequired,
-  handleChange: PropTypes.func
-};
 
 export default EntitySelect;

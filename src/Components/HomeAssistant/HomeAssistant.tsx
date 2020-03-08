@@ -1,5 +1,4 @@
 import { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import {
   Auth,
   AuthData,
@@ -32,11 +31,15 @@ export interface HomeAssistantEntityProps {
   hassEntities: HassEntities;
 }
 
-export interface HomeAssistantChangeProps extends HomeAssistantEntityProps {
+export interface HomeAssistantChangeProps {
+  hassAuth?: Auth;
+  hassConfig?: HassConfig;
+  hassEntities?: HassEntities;
   handleHassChange?: (
     domain: string,
     state: string | boolean,
-    data?: any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    data?: { [key: string]: any },
     entities?: HassEntities
   ) => void;
 }
@@ -69,7 +72,7 @@ export const entitySizes: {
 
 let connection: Connection, auth: Auth;
 
-export function loadTokens() {
+export async function loadTokens(): Promise<AuthData | null | undefined> {
   let hassTokens;
   try {
     hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
@@ -77,18 +80,17 @@ export function loadTokens() {
   return hassTokens;
 }
 
-export async function saveTokens(tokens?: AuthData | null) {
-  try {
-    localStorage.setItem('hass_tokens', JSON.stringify(tokens));
-  } catch (err) {}
+export function saveTokens(tokens?: AuthData | null): void {
+  localStorage.setItem('hass_tokens', JSON.stringify(tokens));
 }
 
 export function handleChange(
   domain: string,
   state: string | boolean,
-  data?: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: { [key: string]: any },
   entities?: HassEntities
-) {
+): void {
   process.env.NODE_ENV === 'development' &&
     console.log('handleChange:', domain, state, data);
   if (typeof state === 'string') {
@@ -101,7 +103,7 @@ export function handleChange(
       }
     );
   } else {
-    if (domain === 'group' && entities) {
+    if (domain === 'group' && entities && data) {
       entities[data.entity_id].attributes.entity_id.map((entity: string) =>
         callService(
           connection,
@@ -134,8 +136,8 @@ export function handleChange(
   }
 }
 
-function HomeAssistant(props: HomeAssistantProps) {
-  function eventHandler() {
+function HomeAssistant(props: HomeAssistantProps): null {
+  function eventHandler(): void {
     console.log('Home Assistant connection has been established again.');
   }
 
@@ -155,12 +157,12 @@ function HomeAssistant(props: HomeAssistantProps) {
 
   const connectToHASS = useCallback(() => {
     if (!connection)
-      (async () => {
+      (async (): Promise<void> => {
         localStorage.setItem('hass_url', props.url);
         auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
-          loadTokens: () => Promise.resolve(loadTokens())
+          loadTokens: loadTokens
         });
         try {
           connection = await createConnection({ auth });
@@ -178,7 +180,7 @@ function HomeAssistant(props: HomeAssistantProps) {
             auth = await getAuth({
               hassUrl: props.url,
               saveTokens: saveTokens,
-              loadTokens: () => Promise.resolve(loadTokens())
+              loadTokens: loadTokens
             });
             connection = await createConnection({ auth });
           } catch (err) {
@@ -204,13 +206,5 @@ function HomeAssistant(props: HomeAssistantProps) {
 
   return null;
 }
-
-HomeAssistant.propTypes = {
-  url: PropTypes.string.isRequired,
-  login: PropTypes.bool.isRequired,
-  setConnected: PropTypes.func.isRequired,
-  setConfig: PropTypes.func.isRequired,
-  setEntities: PropTypes.func.isRequired
-};
 
 export default HomeAssistant;

@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import classnames from 'classnames';
-import PropTypes from 'prop-types';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles((_theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   buttonCardContainer: {
     height: '100%',
     width: '100%',
@@ -28,7 +27,7 @@ export interface AddGroupProps {
   handleAdd: () => void;
 }
 
-function AddGroup(props: AddGroupProps) {
+function AddGroup(props: AddGroupProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -51,9 +50,5 @@ function AddGroup(props: AddGroupProps) {
     </Grid>
   );
 }
-
-AddGroup.propTypes = {
-  handleAdd: PropTypes.func.isRequired
-};
 
 export default AddGroup;
