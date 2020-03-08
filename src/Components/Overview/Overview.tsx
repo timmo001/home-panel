@@ -160,7 +160,10 @@ function Overview(props: OverviewProps): ReactElement {
       let pos = 0;
       for (let i = cardId - 1; i < props.config.cards.length; i++) {
         pos--;
-        if (props.config.cards[i].group === props.config.cards[cardId].group)
+        if (
+          i < 1 ||
+          props.config.cards[i].group === props.config.cards[cardId].group
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
