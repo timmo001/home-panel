@@ -65,7 +65,9 @@ function Entity(props: EntityBaseProps): ReactElement | null {
             color="textPrimary"
             variant="body2"
             component="h5">
-            {props.card.entity} not found
+            {props.card.entity
+              ? `${props.card.entity} not found`
+              : 'No entity specified'}
           </Typography>
         </Grid>
       </Grid>
