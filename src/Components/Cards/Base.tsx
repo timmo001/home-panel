@@ -335,7 +335,7 @@ function Base(props: BaseProps): ReactElement {
             (props.hassAuth && props.hassConfig && props.hassEntities ? (
               <Entity {...props} handleHassToggle={handleHassToggle} />
             ) : (
-              <Message type="error" text="Home Assistant not configured" />
+              <Message type="error" text="Home Assistant not connected" />
             ))}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}

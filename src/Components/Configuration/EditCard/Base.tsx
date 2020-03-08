@@ -253,7 +253,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             hassEntities={props.hassEntities}
           />
         ) : (
-          <Message type="error" text="Home Assistant not configured" />
+          <Message type="error" text="Home Assistant not connected" />
         ))}
       {props.card.type === 'iframe' && <Frame {...props} />}
       {props.card.type === 'image' && <Image {...props} />}
