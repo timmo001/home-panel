@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -38,10 +38,8 @@ interface ConfigurationBaseProps
   extends RouteComponentProps,
     ConfigProps,
     HomeAssistantEntityProps {
-  back: boolean;
   handleBackupConfig: () => void;
   handleRestoreConfig: () => void;
-  handleSetBack: (back: boolean) => void;
 }
 
 export interface ConfigurationProps extends ConfigurationBaseProps {
@@ -58,17 +56,9 @@ export interface ConfigurationProps extends ConfigurationBaseProps {
 }
 
 function Configuration(props: ConfigurationBaseProps): ReactElement {
-  // const [path, setPath] = React.useState<(string | number)[]>([]);
   const [sections, setSections] = React.useState<SectionProps[]>(
     defaultSections
   );
-
-  useEffect(() => {
-    if (!props.back) {
-      // setPath([]);
-      setSections(sections);
-    }
-  }, [props.back, sections]);
 
   const handleAdd = (
     path: (string | number)[],
@@ -94,9 +84,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
     section: SectionProps | SectionProps[]
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ) => (_event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-    // setPath(path);
     setSections(Array.isArray(section) ? section : [section]);
-    if (path !== []) props.handleSetBack(true);
   };
 
   const classes = useStyles();

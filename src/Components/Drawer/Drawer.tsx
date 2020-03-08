@@ -15,8 +15,6 @@ import Slide from '@material-ui/core/Slide';
 import SwipeableDrawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { RouteComponentExtendedProps } from '../Types/ReactRouter';
@@ -102,14 +100,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
-  back: boolean;
   config: ConfigurationProps;
   currentPage: string;
   editing: number;
   hassConnected: boolean;
   mouseMoved: boolean;
   userInitials: string;
-  handleBack: () => void;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
   handleSpaceTaken: (space: number) => void;
@@ -260,26 +256,15 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
                 ? 'dense'
                 : 'regular'
             }>
-            {props.back ? (
+            {props.config.general.drawer_type !== 'permanent_icons_only' && (
               <IconButton
                 color="inherit"
-                aria-label="Back"
+                aria-label="Open drawer"
                 edge="start"
-                onClick={props.handleBack}
+                onClick={handleDrawerToggle}
                 className={classes.menuButton}>
-                <ArrowBack />
+                <MenuIcon />
               </IconButton>
-            ) : (
-              props.config.general.drawer_type !== 'permanent_icons_only' && (
-                <IconButton
-                  color="inherit"
-                  aria-label="Open drawer"
-                  edge="start"
-                  onClick={handleDrawerToggle}
-                  className={classes.menuButton}>
-                  <MenuIcon />
-                </IconButton>
-              )
             )}
             <Typography className={classes.heading} variant="h6" noWrap>
               {props.currentPage}

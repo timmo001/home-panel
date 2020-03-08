@@ -63,7 +63,6 @@ interface MainProps extends RouteComponentExtendedProps {
 }
 
 function Main(props: MainProps): ReactElement {
-  const [back, setBack] = React.useState<boolean>(false);
   const [hassAuth, setHassAuth] = React.useState<Auth>();
   const [hassConfig, setHassConfig] = React.useState<HassConfig>();
   const [hassConnected, setHassConnected] = React.useState<boolean>(false);
@@ -115,10 +114,6 @@ function Main(props: MainProps): ReactElement {
     console.log('handleHassLogin:', url);
     setHassUrl(url);
     setHassLogin(true);
-  }
-
-  function handleBack(): void {
-    setBack(false);
   }
 
   function handleBackupConfig(): void {
@@ -201,13 +196,11 @@ function Main(props: MainProps): ReactElement {
       onMouseMove={props.handleMouseMove}>
       <Drawer
         {...props}
-        back={back}
         currentPage={currentPage}
         editing={editing}
         hassConnected={hassConnected}
         mouseMoved={props.mouseMoved}
         userInitials={userInitials}
-        handleBack={handleBack}
         handleHassLogin={handleHassLogin}
         handleSpaceTaken={setSpaceTaken}
       />
@@ -248,14 +241,12 @@ function Main(props: MainProps): ReactElement {
           hassEntities ? (
             <Configuration
               {...props}
-              back={back}
               editing={editing}
               hassAuth={hassAuth}
               hassConfig={hassConfig}
               hassEntities={hassEntities}
               handleBackupConfig={handleBackupConfig}
               handleRestoreConfig={handleRestoreConfig}
-              handleSetBack={setBack}
               handleUpdateConfig={handleUpdateConfig}
             />
           ) : (
