@@ -167,20 +167,18 @@ function Base(props: BaseProps): ReactElement {
   );
 
   useEffect(() => {
-    if (props.card.entity) {
-      const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
+    const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
 
-      const entitySizeKey = Object.keys(entitySizes).find(
-        (domain: string) => domain === props.card.entity?.split('.')[0]
-      );
-      handleSetHeight(cardSize, entitySizeKey);
-      handleSetWidth(cardSize, entitySizeKey);
+    const entitySizeKey = Object.keys(entitySizes).find(
+      (domain: string) => domain === props.card.entity?.split('.')[0]
+    );
+    handleSetHeight(cardSize, entitySizeKey);
+    handleSetWidth(cardSize, entitySizeKey);
 
-      handleSetToggleable();
+    handleSetToggleable();
 
-      if (props.expandable && props.card.type === 'entity' && entitySizeKey)
-        handleSetExpandable(entitySizeKey);
-    }
+    if (props.expandable && props.card.type === 'entity' && entitySizeKey)
+      handleSetExpandable(entitySizeKey);
   }, [
     props.card.entity,
     props.card.type,
