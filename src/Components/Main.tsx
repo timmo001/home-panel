@@ -101,7 +101,7 @@ function Main(props: MainProps): ReactElement {
         console.log('secondLastItem:', secondLastItem);
         console.log('lastItem:', lastItem);
       }
-      if (lastItem && secondLastItem) {
+      if (lastItem !== undefined && secondLastItem !== undefined) {
         if (Array.isArray(secondLastItem)) {
           if (data === undefined) secondLastItem.splice(Number(lastItem), 1);
           else if (Array.isArray(data)) {

@@ -162,7 +162,8 @@ function Overview(props: OverviewProps): ReactElement {
         pos--;
         if (
           i < 1 ||
-          props.config.cards[i].group === props.config.cards[cardId].group
+          (props.config.cards[i].key !== props.config.cards[cardId].key &&
+            props.config.cards[i].group === props.config.cards[cardId].group)
         )
           break;
       }
@@ -175,7 +176,11 @@ function Overview(props: OverviewProps): ReactElement {
       let pos = 0;
       for (let i = groupId - 1; i < props.config.groups.length; i++) {
         pos--;
-        if (props.config.groups[i].page === props.config.groups[groupId].page)
+        if (
+          i < 1 ||
+          (props.config.groups[i].key !== props.config.groups[groupId].key &&
+            props.config.groups[i].page === props.config.groups[groupId].page)
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
@@ -191,7 +196,10 @@ function Overview(props: OverviewProps): ReactElement {
       let pos = 0;
       for (let i = cardId + 1; i < props.config.cards.length; i++) {
         pos--;
-        if (props.config.cards[i].group === props.config.cards[cardId].group)
+        if (
+          props.config.cards[i].key !== props.config.cards[cardId].key &&
+          props.config.cards[i].group === props.config.cards[cardId].group
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
@@ -208,7 +216,10 @@ function Overview(props: OverviewProps): ReactElement {
       let pos = 0;
       for (let i = groupId + 1; i < props.config.groups.length; i++) {
         pos++;
-        if (props.config.groups[i].page === props.config.groups[groupId].page)
+        if (
+          props.config.groups[i].key !== props.config.groups[groupId].key &&
+          props.config.groups[i].page === props.config.groups[groupId].page
+        )
           break;
       }
       process.env.NODE_ENV === 'development' &&
