@@ -51,8 +51,6 @@ stages:
       - template: azure-ci/install/node.yml@organization
       - job: "Docker_Build_Publish"
         displayName: "Build and Publish"
-        dependsOn:
-          - "Install_Api"
         strategy:
           maxParallel: 4
           matrix:
@@ -69,6 +67,7 @@ stages:
               buildArch: "arm64v8"
               buildBase: $(arm64v8Base)
         steps:
+          - template: azure-ci/install/node.yml@organization
           - task: DownloadBuildArtifacts@0
             displayName: "Download App Artifacts"
             inputs:
@@ -122,7 +121,6 @@ stages:
       - job: "Docker_Manifest_Version"
         displayName: "Manifest Version"
         dependsOn:
-          - "Install_Api"
           - "Docker_Build_Publish"
         condition: succeeded()
         steps:
