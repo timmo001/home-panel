@@ -180,8 +180,8 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: "Download App Artifacts"
             inputs:
-              artifactName: "app"
-              downloadPath: $(System.DefaultWorkingDirectory)/build
+              artifactName: "build"
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
               zip -r $(dockerSlug)-built.zip build
               curl \
@@ -202,16 +202,16 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: "Download Api Artifacts"
             inputs:
-              artifactName: "api"
-              downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+              artifactName: "lib"
+              downloadPath: $(System.DefaultWorkingDirectory)/api
           - script: |
-              zip -r $(dockerSlug)-api.zip api/lib
+              zip -r $(dockerSlug)-api.zip api
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/zip" \
                 --data-binary @$(dockerSlug)-api.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-api.zip"
-              tar -czf $(dockerSlug)-api.tar.gz api/lib
+              tar -czf $(dockerSlug)-api.tar.gz api
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
