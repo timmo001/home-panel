@@ -69,13 +69,13 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: "Download App Artifacts"
             inputs:
-              artifactName: "app"
-              downloadPath: $(System.DefaultWorkingDirectory)/build
+              artifactName: "build"
+              downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
             displayName: "Download Api Artifacts"
             inputs:
-              artifactName: "api"
-              downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+              artifactName: "lib"
+              downloadPath: $(System.DefaultWorkingDirectory)/api
           - task: Docker@2
             inputs:
               containerRegistry: "dockerHub"
