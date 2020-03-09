@@ -89,15 +89,15 @@ stages:
               buildBase: $(arm64v8Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Build Artifacts"
+            displayName: "Download App Artifacts"
             inputs:
-              artifactName: "app"
-              downloadPath: $(System.DefaultWorkingDirectory)/build
+              artifactName: "build"
+              downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Build Artifacts"
+            displayName: "Download Api Artifacts"
             inputs:
-              artifactName: "api"
-              downloadPath: $(System.DefaultWorkingDirectory)/api/lib
+              artifactName: "lib"
+              downloadPath: $(System.DefaultWorkingDirectory)/api
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: "$(buildArch)"
