@@ -116,6 +116,7 @@ export type CardProps = {
   icon?: string;
   icon_size?: string;
   title?: string;
+  title_justify?: 'left' | 'center' | 'right' | 'justify';
   title_size?: string;
   content?: string;
   url?: string;

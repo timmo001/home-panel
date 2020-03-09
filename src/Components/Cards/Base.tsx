@@ -310,6 +310,9 @@ function Base(props: BaseProps): ReactElement {
               {props.card.title && (
                 <Typography
                   className={classes.title}
+                  align={
+                    props.card.title_justify ? props.card.title_justify : 'left'
+                  }
                   color="textPrimary"
                   variant="h6"
                   component="h3"

@@ -232,6 +232,25 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         alignContent="stretch">
         {props.card.title && (
           <Grid item xs container justify="flex-start" alignContent="center">
+            <FormControl className={classes.textField}>
+              <InputLabel htmlFor="title_justify">Type</InputLabel>
+              <Select
+                value={props.card.title_justify}
+                onChange={props.handleSelectChange}
+                inputProps={{
+                  name: 'title_justify',
+                  id: 'title_justify'
+                }}>
+                <MenuItem value={undefined}>Left</MenuItem>
+                <MenuItem value="center">Center</MenuItem>
+                <MenuItem value="right">Right</MenuItem>
+                <MenuItem value="justify">Justify</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+        )}
+        {props.card.title && (
+          <Grid item xs container justify="flex-start" alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
