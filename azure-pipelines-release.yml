@@ -51,6 +51,8 @@ stages:
       - template: azure-ci/install/node.yml@organization
       - job: "Docker_Build_Publish"
         displayName: "Build and Publish"
+        dependsOn:
+          - "Install_Api"
         strategy:
           maxParallel: 4
           matrix:
@@ -120,6 +122,7 @@ stages:
       - job: "Docker_Manifest_Version"
         displayName: "Manifest Version"
         dependsOn:
+          - "Install_Api"
           - "Docker_Build_Publish"
         condition: succeeded()
         steps:

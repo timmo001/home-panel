@@ -73,6 +73,8 @@ stages:
       - template: azure-ci/install/node.yml@organization
       - job: "Docker_Build"
         displayName: "Build"
+        dependsOn:
+          - "Install_Api"
         strategy:
           maxParallel: 4
           matrix:
