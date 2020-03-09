@@ -48,7 +48,6 @@ stages:
       - "Build"
     condition: succeeded()
     jobs:
-      - template: azure-ci/install/node.yml@organization
       - job: "Docker_Build_Publish"
         displayName: "Build and Publish"
         strategy:
