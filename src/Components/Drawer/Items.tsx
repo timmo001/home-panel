@@ -21,6 +21,6 @@ export default [
   {
     name: 'Configuration',
     link: 'configuration',
-    icon: 'mdi-settings'
+    icon: 'mdi-cog'
   }
 ];
