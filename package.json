@@ -33,7 +33,7 @@
     "react-html-parser": "2.0.2",
     "react-router-dom": "5.1.2",
     "react-scripts": "3.4.0",
-    "recharts": "2.0.0-beta.1",
+    "recharts": "2.0.0-beta.2",
     "rss-parser": "3.7.5",
     "socket.io-client": "2.3.0",
     "superagent": "5.2.2",
