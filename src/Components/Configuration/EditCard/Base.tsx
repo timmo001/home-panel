@@ -233,7 +233,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         {props.card.title && (
           <Grid item xs container justify="flex-start" alignContent="center">
             <FormControl className={classes.textField}>
-              <InputLabel htmlFor="title_justify">Type</InputLabel>
+              <InputLabel htmlFor="title_justify">Title Justify</InputLabel>
               <Select
                 value={props.card.title_justify}
                 onChange={props.handleSelectChange}
