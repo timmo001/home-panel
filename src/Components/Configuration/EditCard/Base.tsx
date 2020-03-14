@@ -241,7 +241,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
                   name: 'title_justify',
                   id: 'title_justify'
                 }}>
-                <MenuItem value={undefined}>Left</MenuItem>
+                <MenuItem value="left">Left</MenuItem>
                 <MenuItem value="center">Center</MenuItem>
                 <MenuItem value="right">Right</MenuItem>
                 <MenuItem value="justify">Justify</MenuItem>
