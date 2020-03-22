@@ -1,6 +1,5 @@
 import { Color } from '@material-ui/core';
 import { PaletteOptions } from '@material-ui/core/styles/createPalette';
-import { CommonColors } from '@material-ui/core/colors/common';
 import pink from '@material-ui/core/colors/pink';
 
 import { BaseProps } from '../Cards/Base';
@@ -68,8 +67,8 @@ export type GeneralProps = {
 
 export type ThemeProps = {
   type: 'light' | 'dark';
-  primary: string | Color | CommonColors;
-  secondary: string | Color | CommonColors;
+  primary: string | Color;
+  secondary: string | Color;
   background_default: string;
   background_paper: string;
   text_primary: string;
