@@ -12,27 +12,27 @@ import Chart, { ChartData } from '../../Visualisations/Chart';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   textContainer: {
-    zIndex: 100
+    zIndex: 100,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
     textOverflow: 'ellipsis',
-    zIndex: 100
+    zIndex: 100,
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    zIndex: 100
+    zIndex: 100,
   },
   icon: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }));
 
 let historyInterval: NodeJS.Timeout;
@@ -45,9 +45,7 @@ function State(props: EntityProps): ReactElement | null {
       data = await fetchHistory(
         props.hassAuth,
         props.card.entity,
-        moment()
-          .subtract(props.card.chart_from, 'hours')
-          .toDate(),
+        moment().subtract(props.card.chart_from, 'hours').toDate(),
         moment().toDate()
       );
       if (props.card.chart_detail && data && Array.isArray(data)) {
@@ -68,7 +66,7 @@ function State(props: EntityProps): ReactElement | null {
     props.card.entity,
     props.hassAuth,
     props.card.chart_detail,
-    props.card.chart_from
+    props.card.chart_from,
   ]);
 
   useEffect(() => {
@@ -85,7 +83,7 @@ function State(props: EntityProps): ReactElement | null {
     props.hassAuth,
     props.card.chart_detail,
     props.card.chart_from,
-    getHistory
+    getHistory,
   ]);
 
   const classes = useStyles();

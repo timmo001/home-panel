@@ -9,28 +9,28 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   iconContainer: {
     height: 32,
     width: 32,
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
     transform: 'translateY(-8px)',
     textAlign: 'center',
     color: theme.palette.text.primary,
-    opacity: 0.6
+    opacity: 0.6,
   },
   iconActive: {
     opacity: 1.0,
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   iconDisabled: {
-    opacity: 0.6
-  }
+    opacity: 0.6,
+  },
 }));
 
 function Fan(props: EntityProps): ReactElement | null {
@@ -38,7 +38,7 @@ function Fan(props: EntityProps): ReactElement | null {
     if (props.handleHassChange && props.entity)
       props.handleHassChange('fan', 'set_speed', {
         entity_id: props.entity.entity_id,
-        speed
+        speed,
       });
   }
 

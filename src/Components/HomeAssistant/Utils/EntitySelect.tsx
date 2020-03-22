@@ -13,11 +13,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
+    margin: 4,
   },
   menu: {
-    zIndex: 2000
-  }
+    zIndex: 2000,
+  },
 }));
 
 interface SuggestionType {
@@ -46,7 +46,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
       keys: ['label', 'value'],
       caseSensitive: false,
       minMatchCharLength: 2,
-      threshold: 0.2
+      threshold: 0.2,
     });
     const results = fuse.search(search);
     setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
@@ -81,7 +81,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
         label: entity.attributes.friendly_name
           ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
           : entity.entity_id,
-        value: entity.entity_id
+        value: entity.entity_id,
       }))
     );
   }, [props.hassEntities]);
@@ -122,7 +122,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
             maxHeight: 250,
             width: PopperNode ? PopperNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
-            overflow: 'auto'
+            overflow: 'auto',
           }}>
           {suggestions.map((suggestion: SuggestionType, key: number) => (
             <MenuItem

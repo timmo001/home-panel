@@ -30,19 +30,19 @@ type FeedData = {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   divider: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   mediaContainer: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   media: {
     height: `calc(100% - ${theme.spacing(2)}px)`,
-    width: '100%'
-  }
+    width: '100%',
+  },
 }));
 
 let feedInterval: NodeJS.Timeout;
@@ -69,7 +69,7 @@ function RSS(props: BaseProps): ReactElement {
               props.config.header.date_format
             }`
           ),
-          content: item.content || ''
+          content: item.content || '',
         }));
         setData(feed);
         props.card.disabled = false;
@@ -85,7 +85,7 @@ function RSS(props: BaseProps): ReactElement {
     props.card.disabled,
     props.card.url,
     props.config.header.date_format,
-    props.config.header.time_military
+    props.config.header.time_military,
   ]);
 
   useEffect(() => {

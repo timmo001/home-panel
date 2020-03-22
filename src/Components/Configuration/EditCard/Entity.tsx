@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
+    margin: 4,
   },
   switch: {
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 interface EntityProps extends BaseProps, HomeAssistantEntityProps {}
@@ -188,7 +188,7 @@ function Entity(props: EntityProps): ReactElement {
                   onChange={props.handleSelectChange}
                   inputProps={{
                     name: 'chart',
-                    id: 'chart'
+                    id: 'chart',
                   }}>
                   <MenuItem value="">None</MenuItem>
                   {Object.keys(chartTypes).map((chart: string, key: number) => (
@@ -220,7 +220,7 @@ function Entity(props: EntityProps): ReactElement {
                     onChange={props.handleSelectChange}
                     inputProps={{
                       name: 'chart_detail',
-                      id: 'chart_detail'
+                      id: 'chart_detail',
                     }}>
                     <MenuItem value={18}>Lower</MenuItem>
                     <MenuItem value={12}>Low</MenuItem>
@@ -243,7 +243,7 @@ function Entity(props: EntityProps): ReactElement {
                   inputProps={{
                     autoComplete: 'off',
                     min: 1,
-                    max: 48
+                    max: 48,
                   }}
                   value={props.card.chart_from}
                   onChange={

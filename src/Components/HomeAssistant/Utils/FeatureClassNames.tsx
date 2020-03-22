@@ -16,5 +16,5 @@ export default function featureClassNames(
         ? classNames[Number(feature)]
         : ''
     )
-    .filter(attr => attr !== '');
+    .filter((attr) => attr !== '');
 }

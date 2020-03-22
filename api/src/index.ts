@@ -17,7 +17,7 @@ if (isSsl) {
           .toString(),
         key: fs
           .readFileSync(process.env.SSL_PATH_KEY || 'privkey.pem')
-          .toString()
+          .toString(),
       },
       app
     )

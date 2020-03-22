@@ -16,11 +16,11 @@ export default [
     name: 'Overview',
     link: 'overview',
     icon: 'mdi-view-dashboard',
-    menuItems: [{ name: 'Edit', link: 'edit', icon: 'mdi-pencil' }]
+    menuItems: [{ name: 'Edit', link: 'edit', icon: 'mdi-pencil' }],
   },
   {
     name: 'Configuration',
     link: 'configuration',
-    icon: 'mdi-cog'
-  }
+    icon: 'mdi-cog',
+  },
 ];

@@ -44,9 +44,9 @@ app.configure(
       info: {
         title: 'Home Panel API',
         description: 'API for Home Panel',
-        version: '2.0.0'
-      }
-    }
+        version: '2.0.0',
+      },
+    },
   })
 );
 

@@ -13,7 +13,7 @@ import {
   HassEntities,
   HassUser,
   subscribeConfig,
-  subscribeEntities
+  subscribeEntities,
 } from 'home-assistant-js-websocket';
 
 interface HomeAssistantProps {
@@ -67,7 +67,7 @@ export const entitySizes: {
   sensor: { height: 1, width: 1 },
   sun: { height: 1, width: 1 },
   switch: { height: 1, width: 1 },
-  weather: { height: 2, width: 3 }
+  weather: { height: 2, width: 3 },
 };
 
 let connection: Connection, auth: Auth;
@@ -98,7 +98,7 @@ export function handleChange(
       () => {
         console.log('Called service');
       },
-      err => {
+      (err) => {
         console.error('Error calling service:', err);
       }
     );
@@ -114,7 +114,7 @@ export function handleChange(
           () => {
             console.log('Called service');
           },
-          err => {
+          (err) => {
             console.error('Error calling service:', err);
           }
         )
@@ -129,7 +129,7 @@ export function handleChange(
         () => {
           console.log('Called service');
         },
-        err => {
+        (err) => {
           console.error('Error calling service:', err);
         }
       );
@@ -162,7 +162,7 @@ function HomeAssistant(props: HomeAssistantProps): null {
         auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
-          loadTokens: loadTokens
+          loadTokens: loadTokens,
         });
         try {
           connection = await createConnection({ auth });
@@ -180,7 +180,7 @@ function HomeAssistant(props: HomeAssistantProps): null {
             auth = await getAuth({
               hassUrl: props.url,
               saveTokens: saveTokens,
-              loadTokens: loadTokens
+              loadTokens: loadTokens,
             });
             connection = await createConnection({ auth });
           } catch (err) {

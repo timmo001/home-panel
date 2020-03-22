@@ -20,7 +20,7 @@ export default (_options = {}): Hook => {
       userId: user._id,
       createdAt,
       // Add the current date
-      updatedAt: new Date().getTime()
+      updatedAt: new Date().getTime(),
     };
 
     // Best practice: hooks should always return the context

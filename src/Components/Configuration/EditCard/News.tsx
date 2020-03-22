@@ -22,8 +22,8 @@ type FeedSource = {
 const useStyles = makeStyles(() => ({
   textField: {
     width: 'calc(100% - 8px)',
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 function News(props: BaseProps): ReactElement {
@@ -38,18 +38,18 @@ function News(props: BaseProps): ReactElement {
         .get(
           `https://newsapi.org/v2/sources?apiKey=${props.config.news.news_api_key}`
         )
-        .then(res => {
+        .then((res) => {
           const options: SuggestionType[] = res.body.sources.map(
             (source: FeedSource) => ({
               label: `${source.name} - ${properCase(source.category)} - ${
                 source.url
               }`,
-              value: source.id
+              value: source.id,
             })
           );
           setSources(options);
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           setError('An error occured when getting the sources for News API.');
         });

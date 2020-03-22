@@ -11,31 +11,31 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginBottom: theme.spacing(1),
     [theme.breakpoints.down('sm')]: {
-      marginBottom: theme.spacing(0.5)
-    }
+      marginBottom: theme.spacing(0.5),
+    },
   },
   date: {
     fontSize: '2.4rem',
     [theme.breakpoints.down('md')]: {
-      fontSize: '2.0rem'
+      fontSize: '2.0rem',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem'
-    }
+      fontSize: '1.6rem',
+    },
   },
   time: {
-    lineHeight: 1
+    lineHeight: 1,
   },
   timePeriod: {
     marginLeft: theme.spacing(1),
     fontSize: '2.4rem',
     [theme.breakpoints.down('md')]: {
-      fontSize: '2.0rem'
+      fontSize: '2.0rem',
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem'
-    }
-  }
+      fontSize: '1.6rem',
+    },
+  },
 }));
 
 interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
@@ -110,7 +110,7 @@ function Header(props: HeaderProps): ReactElement | null {
           item
           xs
           style={{
-            textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start'
+            textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start',
           }}>
           {columnData}
         </Grid>

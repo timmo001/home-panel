@@ -3,12 +3,14 @@ import {
   NullableId,
   Paginated,
   Params,
-  ServiceMethods
+  ServiceMethods,
 } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Data {}
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface ServiceOptions {}
 
 export class Controller implements ServiceMethods<Data> {
@@ -27,13 +29,13 @@ export class Controller implements ServiceMethods<Data> {
   async get(id: Id, _params?: Params): Promise<Data> {
     return {
       id,
-      text: `A new message with ID: ${id}!`
+      text: `A new message with ID: ${id}!`,
     };
   }
 
   async create(data: Data, params?: Params): Promise<Data> {
     if (Array.isArray(data)) {
-      return Promise.all(data.map(current => this.create(current, params)));
+      return Promise.all(data.map((current) => this.create(current, params)));
     }
 
     return data;

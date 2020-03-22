@@ -9,18 +9,18 @@ const useStyles = makeStyles(() => ({
   buttonCardContainer: {
     height: '100%',
     width: '100%',
-    flex: 1
+    flex: 1,
   },
   card: {
     position: 'relative',
     height: '100%',
     width: '100%',
-    flex: 1
+    flex: 1,
   },
   icon: {
     fontSize: 48,
-    lineHeight: '70px'
-  }
+    lineHeight: '70px',
+  },
 }));
 
 export interface AddGroupProps {
@@ -37,7 +37,7 @@ function AddGroup(props: AddGroupProps): ReactElement {
       item
       style={{
         height: cardSize,
-        width: cardSize * 2
+        width: cardSize * 2,
       }}>
       <ButtonBase
         className={classes.buttonCardContainer}

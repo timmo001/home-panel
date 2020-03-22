@@ -15,7 +15,7 @@ import {
   defaultCard,
   defaultGroup,
   GroupProps,
-  CardProps
+  CardProps,
 } from '../Configuration/Config';
 import { CommandType } from '../Utils/Command';
 import { findGroupIdByGroup, findCardIdByCard } from '../../utils/find';
@@ -34,34 +34,34 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     minHeight: '100%',
     maxHeight: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   containerNavShown: {
-    paddingBottom: theme.spacing(6.5)
+    paddingBottom: theme.spacing(6.5),
   },
   title: {
     width: '100%',
     userSelect: 'none',
     fontWeight: 300,
-    lineHeight: 1.2
+    lineHeight: 1.2,
   },
   groupsContainer: {
     marginBottom: theme.spacing(0.5),
     overflowX: 'auto',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
   },
   groupContainer: {
     height: '100%',
     minWidth: theme.breakpoints.down('sm') ? 140 : 120,
     overflowX: 'hidden',
-    overflowY: 'hidden'
+    overflowY: 'hidden',
   },
   group: {
     height: `calc(100% - ${theme.spacing(6)}px)`,
     marginBottom: theme.spacing(0.5),
     overflowX: 'hidden',
-    overflowY: 'auto'
-  }
+    overflowY: 'auto',
+  },
 }));
 
 interface OverviewProps
@@ -105,7 +105,7 @@ function Overview(props: OverviewProps): ReactElement {
     props.command,
     props.config.cards,
     props.config.groups,
-    handleSetCurrentPage
+    handleSetCurrentPage,
   ]);
 
   function handleAddGroup(): void {
@@ -128,7 +128,7 @@ function Overview(props: OverviewProps): ReactElement {
     console.log('handleCopy:', card);
     props.handleUpdateConfig(['cards', props.config.cards.length], {
       ...card,
-      key: makeKey(16)
+      key: makeKey(16),
     });
   };
 
@@ -308,7 +308,7 @@ function Overview(props: OverviewProps): ReactElement {
               justify="flex-start"
               alignContent="flex-start"
               style={{
-                width: groupWidth
+                width: groupWidth,
               }}>
               <Grid
                 item
@@ -400,7 +400,7 @@ function Overview(props: OverviewProps): ReactElement {
             justify="flex-start"
             alignContent="flex-start"
             style={{
-              width: theme.breakpoints.down('sm') ? 140 : 120
+              width: theme.breakpoints.down('sm') ? 140 : 120,
             }}>
             <AddGroup handleAdd={handleAddGroup} />
           </Grid>

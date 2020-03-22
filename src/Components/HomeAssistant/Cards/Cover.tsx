@@ -12,16 +12,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 32,
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
     transform: 'translateY(-8px)',
     textAlign: 'center',
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   iconDisabled: {
-    opacity: 0.6
-  }
+    opacity: 0.6,
+  },
 }));
 
 function Cover(props: EntityProps): ReactElement | null {
@@ -48,7 +48,7 @@ function Cover(props: EntityProps): ReactElement | null {
             onClick={(): void =>
               props.handleHassChange &&
               props.handleHassChange('cover', 'open_cover', {
-                entity_id: props.entity.entity_id
+                entity_id: props.entity.entity_id,
               })
             }>
             <span
@@ -66,7 +66,7 @@ function Cover(props: EntityProps): ReactElement | null {
             onClick={(): void =>
               props.handleHassChange &&
               props.handleHassChange('cover', 'stop_cover', {
-                entity_id: props.entity.entity_id
+                entity_id: props.entity.entity_id,
               })
             }>
             <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
@@ -77,7 +77,7 @@ function Cover(props: EntityProps): ReactElement | null {
             onClick={(): void =>
               props.handleHassChange &&
               props.handleHassChange('cover', 'close_cover', {
-                entity_id: props.entity.entity_id
+                entity_id: props.entity.entity_id,
               })
             }>
             <span
@@ -100,7 +100,7 @@ function Cover(props: EntityProps): ReactElement | null {
               onClick={(): void =>
                 props.handleHassChange &&
                 props.handleHassChange('cover', 'open_cover_tilt', {
-                  entity_id: props.entity.entity_id
+                  entity_id: props.entity.entity_id,
                 })
               }>
               <span
@@ -118,7 +118,7 @@ function Cover(props: EntityProps): ReactElement | null {
               onClick={(): void =>
                 props.handleHassChange &&
                 props.handleHassChange('cover', 'stop_cover_tilt', {
-                  entity_id: props.entity.entity_id
+                  entity_id: props.entity.entity_id,
                 })
               }>
               <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
@@ -129,7 +129,7 @@ function Cover(props: EntityProps): ReactElement | null {
               onClick={(): void =>
                 props.handleHassChange &&
                 props.handleHassChange('cover', 'close_cover_tilt', {
-                  entity_id: props.entity.entity_id
+                  entity_id: props.entity.entity_id,
                 })
               }>
               <span

@@ -18,7 +18,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { CardProps, ConfigurationProps } from '../Configuration/Config';
 import {
   HomeAssistantChangeProps,
-  entitySizes
+  entitySizes,
 } from '../HomeAssistant/HomeAssistant';
 import { CommandType } from '../Utils/Command';
 import ConfirmDialog from '../Utils/ConfirmDialog';
@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
     position: 'absolute',
     top: theme.spacing(1.2),
-    right: theme.spacing(0.8)
+    right: theme.spacing(0.8),
   },
   card: {
-    flex: 1
+    flex: 1,
   },
   cardActions: {
     position: 'absolute',
@@ -54,31 +54,31 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: theme.palette.background.paper,
     opacity: 0,
     '&:hover': {
-      opacity: 1
-    }
+      opacity: 1,
+    },
   },
   cardContent: {
     textAlign: 'start',
     display: 'flex',
     flexDirection: 'column',
     '&:last-child': {
-      paddingBottom: 'initial'
-    }
+      paddingBottom: 'initial',
+    },
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
+    margin: 4,
   },
   title: {
     minHeight: theme.spacing(3),
     userSelect: 'none',
     fontWeight: 400,
-    lineHeight: 1.2
+    lineHeight: 1.2,
   },
   switch: {
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 export interface BaseProps
@@ -189,7 +189,7 @@ function Base(props: BaseProps): ReactElement {
     handleSetToggleable,
     handleSetWidth,
     height,
-    width
+    width,
   ]);
 
   function handleDeleteConfirm(): void {
@@ -208,7 +208,7 @@ function Base(props: BaseProps): ReactElement {
           props.card.domain,
           props.card.state === 'locked' ? 'unlock' : 'lock',
           {
-            entity_id: props.card.entity
+            entity_id: props.card.entity,
           }
         );
       } else {
@@ -216,14 +216,14 @@ function Base(props: BaseProps): ReactElement {
           props.card.domain,
           props.card.state === 'on' ? false : true,
           {
-            entity_id: props.card.entity
+            entity_id: props.card.entity,
           }
         );
         props.handleHassChange(
           props.card.domain,
           props.card.state === 'on' ? false : true,
           {
-            entity_id: props.card.entity
+            entity_id: props.card.entity,
           },
           props.hassEntities
         );
@@ -266,7 +266,7 @@ function Base(props: BaseProps): ReactElement {
       focusRipple={toggleable}
       style={{
         cursor: !toggleable ? 'unset' : 'pointer',
-        userSelect: !toggleable ? 'text' : 'none'
+        userSelect: !toggleable ? 'text' : 'none',
       }}
       onClick={toggleable ? handleHassToggle : undefined}
       onTouchStart={handleHold}
@@ -292,7 +292,7 @@ function Base(props: BaseProps): ReactElement {
             ? props.card.backgroundTemp
             : props.card.background
             ? props.card.background
-            : ''
+            : '',
         }}>
         <CardContent
           className={classes.cardContent}
@@ -303,7 +303,7 @@ function Base(props: BaseProps): ReactElement {
             minWidth: width,
             maxHeight: height,
             maxWidth: width,
-            padding: props.card.padding ? props.card.padding : 12
+            padding: props.card.padding ? props.card.padding : 12,
           }}>
           <Grid container direction="row">
             <Grid item xs>

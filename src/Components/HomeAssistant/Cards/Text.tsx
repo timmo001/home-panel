@@ -9,20 +9,20 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   textContainer: {
-    zIndex: 100
+    zIndex: 100,
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    zIndex: 100
+    zIndex: 100,
   },
   icon: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }));
 
 function TextEntity(props: EntityProps): ReactElement {
@@ -38,7 +38,7 @@ function TextEntity(props: EntityProps): ReactElement {
       setText(String(!val ? 0 : val));
       props.handleHassChange('input_text', 'set_value', {
         entity_id: props.entity.entity_id,
-        value: val
+        value: val,
       });
     }
   }
@@ -81,7 +81,7 @@ function TextEntity(props: EntityProps): ReactElement {
               margin="dense"
               onChange={handleInputChange}
               inputProps={{
-                type: 'text'
+                type: 'text',
               }}
             />
           </Grid>

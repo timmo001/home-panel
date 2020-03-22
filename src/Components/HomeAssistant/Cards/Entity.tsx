@@ -21,14 +21,14 @@ import Weather from './Weather';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
-  }
+    textOverflow: 'ellipsis',
+  },
 }));
 
 interface EntityBaseProps extends BaseProps {

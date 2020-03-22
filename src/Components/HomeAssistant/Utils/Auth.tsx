@@ -2,7 +2,7 @@ import {
   AuthData,
   ERR_INVALID_AUTH,
   genExpires,
-  ERR_INVALID_HTTPS_TO_HTTP
+  ERR_INVALID_HTTPS_TO_HTTP,
 } from 'home-assistant-js-websocket';
 import { saveTokens } from '../HomeAssistant';
 import queryString from 'query-string';
@@ -55,12 +55,12 @@ async function tokenRequest(
   const resp = await fetch(`${hassUrl}/auth/token`, {
     method: 'POST',
     credentials: 'same-origin',
-    body: formData
+    body: formData,
   });
 
   if (!resp.ok) {
     throw resp.status === 400 /* auth invalid */ ||
-    resp.status === 403 /* user not active */
+      resp.status === 403 /* user not active */
       ? ERR_INVALID_AUTH
       : new Error('Unable to fetch tokens');
   }
@@ -79,7 +79,7 @@ async function fetchToken(
 ): Promise<AuthData> {
   return tokenRequest(hassUrl, clientId, {
     code,
-    grant_type: 'authorization_code'
+    grant_type: 'authorization_code',
   });
 }
 export async function parseTokens(): Promise<void> {

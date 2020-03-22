@@ -12,13 +12,13 @@ declare module '../../declarations' {
   }
 }
 
-export default function(app: Application) {
+export default function (app: Application): void {
   const Model = createModel(app);
   const paginate = app.get('paginate');
 
   const options = {
     Model,
-    paginate
+    paginate,
   };
 
   // Initialize our service with any options it requires

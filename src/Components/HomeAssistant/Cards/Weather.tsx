@@ -10,7 +10,7 @@ import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   name: {
     margin: 'auto 0',
@@ -21,44 +21,44 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.text.primary,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
-      lineHeight: '1.14rem'
-    }
+      lineHeight: '1.14rem',
+    },
   },
   nameSub: {
-    margin: 'auto 8px'
+    margin: 'auto 8px',
   },
   temperature: {
-    display: 'flex'
+    display: 'flex',
   },
   icon: {
     color: theme.palette.text.primary,
     fontSize: 42,
-    lineHeight: '1.0em'
+    lineHeight: '1.0em',
   },
   attribute: {
-    lineHeight: '1.2em'
+    lineHeight: '1.2em',
   },
   forecast: {
     display: 'inline-flex',
     marginTop: theme.spacing(1),
-    overflow: 'auto'
+    overflow: 'auto',
   },
   forecastItem: {
     width: 60,
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   forecastText: {
     lineHeight: '1.24em',
     userSelect: 'none',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   forecastTextIcon: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   forecastIcon: {
     color: theme.palette.text.primary,
-    fontSize: 28
-  }
+    fontSize: 28,
+  },
 }));
 
 const weatherMap: { [item: string]: string } = {
@@ -75,7 +75,7 @@ const weatherMap: { [item: string]: string } = {
   'snowy-rainy': 'weather-snowy-rainy',
   sunny: 'weather-sunny',
   windy: 'weather-windy',
-  'windy-variant': 'weather-windy-variant'
+  'windy-variant': 'weather-windy-variant',
 };
 
 const weatherNameMap: { [item: string]: string } = {
@@ -92,7 +92,7 @@ const weatherNameMap: { [item: string]: string } = {
   'snowy-rainy': 'Snow & Rain',
   sunny: 'Sunny',
   windy: 'Windy',
-  'windy-variant': 'Windy'
+  'windy-variant': 'Windy',
 };
 
 function Weather(props: EntityProps): ReactElement {
@@ -173,7 +173,7 @@ function Weather(props: EntityProps): ReactElement {
           props.card.height > 1 ? (
             <Grid item xs>
               {Object.keys(props.entity.attributes)
-                .filter(i => typeof props.entity.attributes[i] == 'number')
+                .filter((i) => typeof props.entity.attributes[i] == 'number')
                 .map(
                   (attribute, i) =>
                     attribute !== 'temperature' &&

@@ -13,17 +13,17 @@ import { GroupProps } from '../Configuration/Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   dialogContent: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   container: {},
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 interface EditGroupProps {
@@ -51,7 +51,7 @@ function EditGroup(props: EditGroupProps): ReactElement {
   ): void => {
     setGroup({
       ...group,
-      [name]: typeof event === 'string' ? event : event.target.value
+      [name]: typeof event === 'string' ? event : event.target.value,
     });
   };
 

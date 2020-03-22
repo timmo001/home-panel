@@ -8,8 +8,8 @@ import { BaseProps } from './Base';
 const useStyles = makeStyles(() => ({
   textField: {
     width: 'calc(100% - 8px)',
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 function Frame(props: BaseProps): ReactElement {

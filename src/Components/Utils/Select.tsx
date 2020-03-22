@@ -10,11 +10,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
+    margin: 4,
   },
   menu: {
-    zIndex: 2000
-  }
+    zIndex: 2000,
+  },
 }));
 
 export interface SuggestionType {
@@ -45,7 +45,7 @@ function Select(props: SelectProps): ReactElement {
       keys: ['label', 'value'],
       caseSensitive: false,
       minMatchCharLength: 2,
-      threshold: 0.2
+      threshold: 0.2,
     };
     const fuse = new Fuse(props.options, opts);
     const results = fuse.search(search);
@@ -113,7 +113,7 @@ function Select(props: SelectProps): ReactElement {
             maxHeight: 250,
             width: PopperNode ? PopperNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
-            overflow: 'auto'
+            overflow: 'auto',
           }}>
           {suggestions.map((suggestion: SuggestionType, key: number) => (
             <MenuItem

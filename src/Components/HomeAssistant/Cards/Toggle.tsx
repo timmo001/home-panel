@@ -9,22 +9,22 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }));
 
 function Toggle(props: EntityProps): ReactElement {

@@ -26,34 +26,34 @@ import ColorAdornment from '../Utils/ColorAdornment';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    minWidth: 80
+    minWidth: 80,
   },
   backupButton: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   icon: {
     marginRight: theme.spacing(2),
-    fontSize: 24
+    fontSize: 24,
   },
   iconButton: {
     fontSize: 22,
-    height: 24
+    height: 24,
   },
   item: {
     padding: theme.spacing(1.5, 1),
     borderBottom: '1px solid #EEE',
     '&:first-child': {
-      paddingTop: 0
+      paddingTop: 0,
     },
     '&:last-child': {
       borderBottom: 'none',
-      paddingBottom: 0
-    }
+      paddingBottom: 0,
+    },
   },
   radioGroup: {
     display: 'flex',
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
 }));
 
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
@@ -181,7 +181,7 @@ function Item(props: ItemProps): ReactElement {
                 color={value}
                 handleColorChange={handleColorChange(props.path)}
               />
-            )
+            ),
           }}
           value={value}
           onChange={handleChange(props.path, 'color')}
@@ -228,7 +228,7 @@ function Item(props: ItemProps): ReactElement {
                   {showPassword ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
               </InputAdornment>
-            )
+            ),
           }}
         />
       );

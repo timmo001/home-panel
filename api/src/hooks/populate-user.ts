@@ -3,9 +3,10 @@
 import { Hook, HookContext } from '@feathersjs/feathers';
 
 export default (_options = {}): Hook => {
-  return async (context: HookContext) => {
+  return async (context: HookContext): Promise<HookContext> => {
     // Get `app`, `method`, `params` and `result` from the hook context
-    let { app, method, result, params } = context;
+    const { app, method, params } = context;
+    let { result } = context;
 
     // The authenticated user
     const userId = params.user._id;

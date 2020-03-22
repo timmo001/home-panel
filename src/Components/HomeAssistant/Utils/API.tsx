@@ -12,7 +12,7 @@ export async function handleFetchPromise<T>(
     throw {
       error: 'Request error',
       status_code: undefined,
-      body: undefined
+      body: undefined,
     };
   }
 
@@ -28,7 +28,7 @@ export async function handleFetchPromise<T>(
       throw {
         error: 'Unable to parse JSON response',
         status_code: err.status,
-        body: null
+        body: null,
       };
     }
   } else {
@@ -40,7 +40,7 @@ export async function handleFetchPromise<T>(
     throw {
       error: `Response error: ${response.status}`,
       status_code: response.status,
-      body
+      body,
     };
   }
 
@@ -78,7 +78,7 @@ export default async function hassCallApi<T>(
 
   const init: RequestInit = {
     method,
-    headers: {}
+    headers: {},
   };
 
   if (parameters) {

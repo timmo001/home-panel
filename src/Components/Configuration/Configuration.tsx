@@ -14,18 +14,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   section: {
     width: '100%',
     marginBottom: theme.spacing(2),
-    '&:last-child': { marginBottom: 0 }
+    '&:last-child': { marginBottom: 0 },
   },
   cardContent: {
     '&:last-child': {
-      paddingBottom: theme.spacing(2.5)
-    }
+      paddingBottom: theme.spacing(2.5),
+    },
   },
   fab: {
     position: 'fixed',
     right: theme.spacing(2),
-    bottom: theme.spacing(2)
-  }
+    bottom: theme.spacing(2),
+  },
 }));
 
 interface ConfigurationBaseProps

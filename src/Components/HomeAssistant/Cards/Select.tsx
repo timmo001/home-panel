@@ -12,30 +12,30 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   textContainer: {
-    zIndex: 100
+    zIndex: 100,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
     textOverflow: 'ellipsis',
-    zIndex: 100
+    zIndex: 100,
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    zIndex: 100
+    zIndex: 100,
   },
   icon: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   menu: {
-    zIndex: 2000
-  }
+    zIndex: 2000,
+  },
 }));
 
 let PopoverNode: HTMLButtonElement | null | undefined;
@@ -53,7 +53,7 @@ function Select(props: EntityProps): ReactElement {
     props.handleHassChange &&
       props.handleHassChange('input_select', 'select_option', {
         entity_id: props.card.entity,
-        option
+        option,
       });
     setOpen(false);
   };
@@ -111,7 +111,7 @@ function Select(props: EntityProps): ReactElement {
             maxHeight: 250,
             width: PopoverNode ? PopoverNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
-            overflow: 'auto'
+            overflow: 'auto',
           }}>
           {props.entity.attributes.options &&
             props.entity.attributes.options.map(

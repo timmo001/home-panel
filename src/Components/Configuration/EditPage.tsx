@@ -19,19 +19,19 @@ import ConfirmDialog from '../Utils/ConfirmDialog';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   dialogContent: {
-    overflow: 'visible'
+    overflow: 'visible',
   },
   fill: {
-    flex: 1
+    flex: 1,
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 interface EditPageProps extends ConfigProps {
@@ -74,7 +74,7 @@ function EditPage(props: EditPageProps): ReactElement {
   ): void => {
     setPage({
       ...page,
-      [name]: typeof event === 'string' ? event : event.target.value
+      [name]: typeof event === 'string' ? event : event.target.value,
     });
   };
 

@@ -17,21 +17,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
     overflowX: 'hidden',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   background: {
     padding: theme.spacing(2),
     background: theme.palette.background.default,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   editView: {
     minWidth: 200,
     [theme.breakpoints.down('sm')]: {
-      minWidth: '100%'
+      minWidth: '100%',
     },
     padding: theme.spacing(2),
-    overflow: 'auto'
-  }
+    overflow: 'auto',
+  },
 }));
 
 interface EditCardProps extends BaseProps {
@@ -52,7 +52,7 @@ function EditCard(props: EditCardProps): ReactElement {
   function handleManualChange(name: string, value: string | number): void {
     setCard({
       ...card,
-      [name]: value
+      [name]: value,
     });
   }
 
@@ -61,7 +61,7 @@ function EditCard(props: EditCardProps): ReactElement {
   ): void => {
     setCard({
       ...card,
-      [name]: typeof event === 'string' ? event : event.target.value
+      [name]: typeof event === 'string' ? event : event.target.value,
     });
   };
 
@@ -79,14 +79,14 @@ function EditCard(props: EditCardProps): ReactElement {
       default:
         return setCard({
           ...card,
-          [event.target.name as string]: event.target.value
+          [event.target.name as string]: event.target.value,
         });
       case 'type':
         // Cleanup types
         return setCard({
           ...cardTypeDefaults[event.target.value as string],
           key: card.key,
-          group: card.group
+          group: card.group,
         });
       case 'chart':
         if (!card.chart)
@@ -94,12 +94,12 @@ function EditCard(props: EditCardProps): ReactElement {
             ...card,
             [event.target.name as string]: event.target.value,
             chart_detail: 4,
-            chart_from: 3
+            chart_from: 3,
           });
         else
           return setCard({
             ...card,
-            [event.target.name as string]: event.target.value
+            [event.target.name as string]: event.target.value,
           });
     }
   }

@@ -4,15 +4,15 @@ const data = {
     weather: {
       humidity: 'Humidity',
       visibility: 'Visibility',
-      wind_speed: 'Wind speed'
-    }
+      wind_speed: 'Wind speed',
+    },
   },
   config_entry: {
     disabled_by: {
       config_entry: 'Config Entry',
       integration: 'Integration',
-      user: 'User'
-    }
+      user: 'User',
+    },
   },
   domain: {
     alarm_control_panel: 'Alarm control panel',
@@ -56,12 +56,12 @@ const data = {
     vacuum: 'Vacuum',
     weblink: 'Weblink',
     zha: 'ZHA',
-    zwave: 'Z-Wave'
+    zwave: 'Z-Wave',
   },
   groups: {
     'system-admin': 'Administrators',
     'system-read-only': 'Read-Only Users',
-    'system-users': 'Users'
+    'system-users': 'Users',
   },
   panel: {
     calendar: 'Calendar',
@@ -74,14 +74,14 @@ const data = {
     map: 'Map',
     profile: 'Profile',
     shopping_list: 'Shopping list',
-    states: 'Overview'
+    states: 'Overview',
   },
   state_attributes: {
     climate: {
       fan_mode: {
         auto: 'Auto',
         off: 'Off',
-        on: 'On'
+        on: 'On',
       },
       hvac_action: {
         cooling: 'Cooling',
@@ -89,7 +89,7 @@ const data = {
         fan: 'Fan',
         heating: 'Heating',
         idle: 'Idle',
-        off: 'Off'
+        off: 'Off',
       },
       preset_mode: {
         activity: 'Activity',
@@ -99,9 +99,9 @@ const data = {
         eco: 'Eco',
         home: 'Home',
         none: 'None',
-        sleep: 'Sleep'
-      }
-    }
+        sleep: 'Sleep',
+      },
+    },
   },
   state_badge: {
     alarm_control_panel: {
@@ -114,22 +114,22 @@ const data = {
       disarmed: 'Disarm',
       disarming: 'Disarm',
       pending: 'Pend',
-      triggered: 'Trig'
+      triggered: 'Trig',
     },
     default: {
       entity_not_found: 'Entity Not Found',
       error: 'Error',
       unavailable: 'Unavai',
-      unknown: 'Unk'
+      unknown: 'Unk',
     },
     device_tracker: {
       home: 'Home',
-      not_home: 'Away'
+      not_home: 'Away',
     },
     person: {
       home: 'Home',
-      not_home: 'Away'
-    }
+      not_home: 'Away',
+    },
   },
   state: {
     alarm_control_panel: {
@@ -142,102 +142,102 @@ const data = {
       disarmed: 'Disarmed',
       disarming: 'Disarming',
       pending: 'Pending',
-      triggered: 'Triggered'
+      triggered: 'Triggered',
     },
     automation: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     binary_sensor: {
       battery: {
         off: 'Normal',
-        on: 'Low'
+        on: 'Low',
       },
       cold: {
         off: 'Normal',
-        on: 'Cold'
+        on: 'Cold',
       },
       connectivity: {
         off: 'Disconnected',
-        on: 'Connected'
+        on: 'Connected',
       },
       default: {
         off: 'Off',
-        on: 'On'
+        on: 'On',
       },
       door: {
         off: 'Closed',
-        on: 'Open'
+        on: 'Open',
       },
       garage_door: {
         off: 'Closed',
-        on: 'Open'
+        on: 'Open',
       },
       gas: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       heat: {
         off: 'Normal',
-        on: 'Hot'
+        on: 'Hot',
       },
       lock: {
         off: 'Locked',
-        on: 'Unlocked'
+        on: 'Unlocked',
       },
       moisture: {
         off: 'Dry',
-        on: 'Wet'
+        on: 'Wet',
       },
       motion: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       occupancy: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       opening: {
         off: 'Closed',
-        on: 'Open'
+        on: 'Open',
       },
       presence: {
         off: 'Away',
-        on: 'Home'
+        on: 'Home',
       },
       problem: {
         off: 'OK',
-        on: 'Problem'
+        on: 'Problem',
       },
       safety: {
         off: 'Safe',
-        on: 'Unsafe'
+        on: 'Unsafe',
       },
       smoke: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       sound: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       vibration: {
         off: 'Clear',
-        on: 'Detected'
+        on: 'Detected',
       },
       window: {
         off: 'Closed',
-        on: 'Open'
-      }
+        on: 'Open',
+      },
     },
     calendar: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     camera: {
       idle: 'Idle',
       recording: 'Recording',
-      streaming: 'Streaming'
+      streaming: 'Streaming',
     },
     climate: {
       auto: 'Auto',
@@ -255,32 +255,32 @@ const data = {
       manual: 'Manual',
       off: 'Off',
       on: 'On',
-      performance: 'Performance'
+      performance: 'Performance',
     },
     configurator: {
       configure: 'Configure',
-      configured: 'Configured'
+      configured: 'Configured',
     },
     cover: {
       closed: 'Closed',
       closing: 'Closing',
       open: 'Open',
       opening: 'Opening',
-      stopped: 'Stopped'
+      stopped: 'Stopped',
     },
     default: {
       off: 'Off',
       on: 'On',
       unavailable: 'Unavailable',
-      unknown: 'Unknown'
+      unknown: 'Unknown',
     },
     device_tracker: {
       home: 'Home',
-      not_home: 'Away'
+      not_home: 'Away',
     },
     fan: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     group: {
       closed: 'Closed',
@@ -295,19 +295,19 @@ const data = {
       opening: 'Opening',
       problem: 'Problem',
       stopped: 'Stopped',
-      unlocked: 'Unlocked'
+      unlocked: 'Unlocked',
     },
     input_boolean: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     light: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     lock: {
       locked: 'Locked',
-      unlocked: 'Unlocked'
+      unlocked: 'Unlocked',
     },
     media_player: {
       idle: 'Idle',
@@ -315,43 +315,43 @@ const data = {
       on: 'On',
       paused: 'Paused',
       playing: 'Playing',
-      standby: 'Standby'
+      standby: 'Standby',
     },
     person: {
       home: 'Home',
-      not_home: 'Away'
+      not_home: 'Away',
     },
     plant: {
       ok: 'OK',
-      problem: 'Problem'
+      problem: 'Problem',
     },
     remote: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     scene: {
-      scening: 'Scening'
+      scening: 'Scening',
     },
     script: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     sensor: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     sun: {
       above_horizon: 'Above horizon',
-      below_horizon: 'Below horizon'
+      below_horizon: 'Below horizon',
     },
     switch: {
       off: 'Off',
-      on: 'On'
+      on: 'On',
     },
     timer: {
       active: 'active',
       idle: 'idle',
-      paused: 'paused'
+      paused: 'paused',
     },
     vacuum: {
       cleaning: 'Cleaning',
@@ -361,7 +361,7 @@ const data = {
       off: 'Off',
       on: 'On',
       paused: 'Paused',
-      returning: 'Returning to dock'
+      returning: 'Returning to dock',
     },
     weather: {
       'clear-night': 'Clear, night',
@@ -378,26 +378,26 @@ const data = {
       'snowy-rainy': 'Snowy, rainy',
       sunny: 'Sunny',
       windy: 'Windy',
-      'windy-variant': 'Windy'
+      'windy-variant': 'Windy',
     },
     zwave: {
       default: {
         dead: 'Dead',
         initializing: 'Initializing',
         ready: 'Ready',
-        sleeping: 'Sleeping'
+        sleeping: 'Sleeping',
       },
       query_stage: {
         dead: 'Dead ({query_stage})',
-        initializing: 'Initializing ({query_stage})'
-      }
-    }
+        initializing: 'Initializing ({query_stage})',
+      },
+    },
   },
   ui: {
     auth_store: {
       ask: 'Do you want to save this login?',
       confirm: 'Save login',
-      decline: 'No thanks'
+      decline: 'No thanks',
     },
     card: {
       alarm_control_panel: {
@@ -408,14 +408,14 @@ const data = {
         armed_custom_bypass: 'Custom bypass',
         clear_code: 'Clear',
         code: 'Code',
-        disarm: 'Disarm'
+        disarm: 'Disarm',
       },
       automation: {
         last_triggered: 'Last triggered',
-        trigger: 'Execute'
+        trigger: 'Execute',
       },
       camera: {
-        not_available: 'Image not available'
+        not_available: 'Image not available',
       },
       climate: {
         aux_heat: 'Aux heat',
@@ -434,61 +434,61 @@ const data = {
         target_humidity: 'Target humidity',
         target_temperature: 'Target temperature',
         target_temperature_entity: '{name} target temperature',
-        target_temperature_mode: '{name} target temperature {mode}'
+        target_temperature_mode: '{name} target temperature {mode}',
       },
       counter: {
         actions: {
           decrement: 'decrement',
           increment: 'increment',
-          reset: 'reset'
-        }
+          reset: 'reset',
+        },
       },
       cover: {
         position: 'Position',
-        tilt_position: 'Tilt position'
+        tilt_position: 'Tilt position',
       },
       fan: {
         direction: 'Direction',
         forward: 'Forward',
         oscillate: 'Oscillate',
         reverse: 'Reverse',
-        speed: 'Speed'
+        speed: 'Speed',
       },
       light: {
         brightness: 'Brightness',
         color_temperature: 'Color temperature',
         effect: 'Effect',
-        white_value: 'White value'
+        white_value: 'White value',
       },
       lock: {
         code: 'Code',
         lock: 'Lock',
-        unlock: 'Unlock'
+        unlock: 'Unlock',
       },
       media_player: {
         sound_mode: 'Sound mode',
         source: 'Source',
-        text_to_speak: 'Text to speak'
+        text_to_speak: 'Text to speak',
       },
       persistent_notification: {
-        dismiss: 'Dismiss'
+        dismiss: 'Dismiss',
       },
       scene: {
-        activate: 'Activate'
+        activate: 'Activate',
       },
       script: {
-        execute: 'Execute'
+        execute: 'Execute',
       },
       service: {
-        run: 'Run'
+        run: 'Run',
       },
       timer: {
         actions: {
           cancel: 'cancel',
           finish: 'finish',
           pause: 'pause',
-          start: 'start'
-        }
+          start: 'start',
+        },
       },
       vacuum: {
         actions: {
@@ -496,15 +496,15 @@ const data = {
           return_to_base: 'Return to dock',
           start_cleaning: 'Start cleaning',
           turn_off: 'Turn off',
-          turn_on: 'Turn on'
-        }
+          turn_on: 'Turn on',
+        },
       },
       water_heater: {
         away_mode: 'Away mode',
         currently: 'Currently',
         on_off: 'On / off',
         operation: 'Operation',
-        target_temperature: 'Target temperature'
+        target_temperature: 'Target temperature',
       },
       weather: {
         attributes: {
@@ -512,7 +512,7 @@ const data = {
           humidity: 'Humidity',
           temperature: 'Temperature',
           visibility: 'Visibility',
-          wind_speed: 'Wind speed'
+          wind_speed: 'Wind speed',
         },
         cardinal_direction: {
           e: 'E',
@@ -530,10 +530,10 @@ const data = {
           sw: 'SW',
           w: 'W',
           wnw: 'WNW',
-          wsw: 'WSW'
+          wsw: 'WSW',
         },
-        forecast: 'Forecast'
-      }
+        forecast: 'Forecast',
+      },
     },
     common: {
       cancel: 'Cancel',
@@ -542,7 +542,7 @@ const data = {
       no: 'No',
       save: 'Save',
       successfully_saved: 'Successfully saved',
-      yes: 'Yes'
+      yes: 'Yes',
     },
     components: {
       'area-picker': {
@@ -551,29 +551,29 @@ const data = {
           failed_create_area: 'Failed to create area.',
           name: 'Name',
           text: 'Enter the name of the new area.',
-          title: 'Add new area'
+          title: 'Add new area',
         },
         add_new: 'Add new area…',
         area: 'Area',
         clear: 'Clear',
-        show_areas: 'Show areas'
+        show_areas: 'Show areas',
       },
       'device-picker': {
         clear: 'Clear',
         device: 'Device',
         show_devices: 'Show devices',
-        toggle: 'Toggle'
+        toggle: 'Toggle',
       },
       entity: {
         'entity-picker': {
           clear: 'Clear',
           entity: 'Entity',
-          show_entities: 'Show entities'
-        }
+          show_entities: 'Show entities',
+        },
       },
       history_charts: {
         loading_history: 'Loading state history...',
-        no_history_found: 'No state history found.'
+        no_history_found: 'No state history found.',
       },
       'related-items': {
         area: 'Area',
@@ -584,7 +584,7 @@ const data = {
         integration: 'Integration',
         no_related_found: 'No related items found.',
         scene: 'Part of the following scenes',
-        script: 'Part of the following scripts'
+        script: 'Part of the following scripts',
       },
       relative_time: {
         duration: {
@@ -594,15 +594,15 @@ const data = {
             '{count} {count, plural,\n  one {minute}\n  other {minutes}\n}',
           second:
             '{count} {count, plural,\n  one {second}\n  other {seconds}\n}',
-          week: '{count} {count, plural,\n  one {week}\n  other {weeks}\n}'
+          week: '{count} {count, plural,\n  one {week}\n  other {weeks}\n}',
         },
         future: 'In {time}',
         never: 'Never',
-        past: '{time} ago'
+        past: '{time} ago',
       },
       'service-picker': {
-        service: 'Service'
-      }
+        service: 'Service',
+      },
     },
     dialogs: {
       config_entry_system_options: {
@@ -610,15 +610,15 @@ const data = {
           'If disabled, newly discovered entities for {integration} will not be automatically added to Home Assistant.',
         enable_new_entities_label: 'Enable newly added entities.',
         title: 'System Options for {integration}',
-        update: 'Update'
+        update: 'Update',
       },
       confirmation: {
         cancel: 'Cancel',
         ok: 'OK',
-        title: 'Are you sure?'
+        title: 'Are you sure?',
       },
       domain_toggler: {
-        title: 'Toggle Domains'
+        title: 'Toggle Domains',
       },
       entity_registry: {
         control: 'Control',
@@ -637,18 +637,18 @@ const data = {
           name: 'Name Override',
           note: 'Note: this might not work yet with all integrations.',
           unavailable: 'This entity is not currently available.',
-          update: 'UPDATE'
+          update: 'UPDATE',
         },
         no_unique_id:
           "This entity does not have a unique ID, therefore it's settings can not be managed from the UI.",
         related: 'Related',
-        settings: 'Settings'
+        settings: 'Settings',
       },
       generic: {
         cancel: 'Cancel',
         close: 'close',
         default_confirmation_title: 'Are you sure?',
-        ok: 'OK'
+        ok: 'OK',
       },
       helper_settings: {
         generic: {
@@ -656,11 +656,11 @@ const data = {
           initial_value: 'Initial value at start',
           initial_value_explain:
             "The value the element will have when Home Assistant starts. When left empty, the value will be restored to it's previous value.",
-          name: 'Name'
+          name: 'Name',
         },
         input_datetime: {
           has_date: 'Date',
-          has_time: 'Time'
+          has_time: 'Time',
         },
         input_number: {
           box: 'Input field',
@@ -669,13 +669,13 @@ const data = {
           mode: 'Display mode',
           slider: 'Slider',
           step: 'Step size of the slider',
-          unit_of_measurement: 'Unit of measurement'
+          unit_of_measurement: 'Unit of measurement',
         },
         input_select: {
           add: 'Add',
           add_option: 'Add option',
           no_options: 'There are no options yet.',
-          options: 'Options'
+          options: 'Options',
         },
         input_text: {
           max: 'Maximum lenght',
@@ -683,18 +683,18 @@ const data = {
           mode: 'Display mode',
           password: 'Password',
           pattern: 'Regex pattern for client-side validation',
-          text: 'Text'
+          text: 'Text',
         },
         not_editable: 'Not editable',
         not_editable_text:
           "This entity can't be changed from the UI because it is defined in configuration.yaml.",
-        required_error_msg: 'This field is required'
+        required_error_msg: 'This field is required',
       },
       more_info_control: {
         dismiss: 'Dismiss dialog',
         edit: 'Edit entity',
         person: {
-          create_zone: 'Create zone from current location'
+          create_zone: 'Create zone from current location',
         },
         restored: {
           confirm_remove_text: 'Are you sure you want to remove this entity?',
@@ -703,20 +703,20 @@ const data = {
             'This entity is currently unavailable and is an orphan to a removed, changed or dysfunctional integration or device.',
           remove_action: 'Remove entity',
           remove_intro:
-            'If the entity is no longer in use, you can clean it up by removing it.'
+            'If the entity is no longer in use, you can clean it up by removing it.',
         },
         script: {
           last_action: 'Last Action',
-          last_triggered: 'Last Triggered'
+          last_triggered: 'Last Triggered',
         },
         settings: 'Entity settings',
         sun: {
           elevation: 'Elevation',
           rising: 'Rising',
-          setting: 'Setting'
+          setting: 'Setting',
         },
         updater: {
-          title: 'Update Instructions'
+          title: 'Update Instructions',
         },
         vacuum: {
           clean_spot: 'Clean spot',
@@ -728,22 +728,22 @@ const data = {
           start: 'Start',
           start_pause: 'Start/Pause',
           status: 'Status',
-          stop: 'Stop'
-        }
+          stop: 'Stop',
+        },
       },
       more_info_settings: {
         back: 'Go back',
         entity_id: 'Entity ID',
         name: 'Name Override',
-        save: 'Save'
+        save: 'Save',
       },
       options_flow: {
         form: {
-          header: 'Options'
+          header: 'Options',
         },
         success: {
-          description: 'Options successfully saved.'
-        }
+          description: 'Options successfully saved.',
+        },
       },
       voice_command: {
         did_not_hear: 'Home Assistant did not hear anything',
@@ -751,16 +751,16 @@ const data = {
         found: 'I found the following for you:',
         how_can_i_help: 'How can I help?',
         label: "Type a question and press 'Enter'",
-        label_voice: "Type and press 'Enter' or tap the microphone to speak"
+        label_voice: "Type and press 'Enter' or tap the microphone to speak",
       },
       zha_device_info: {
         buttons: {
           add: 'Add Devices',
           reconfigure: 'Reconfigure Device',
-          remove: 'Remove Device'
+          remove: 'Remove Device',
         },
         confirmations: {
-          remove: 'Are you sure that you want to remove the device?'
+          remove: 'Are you sure that you want to remove the device?',
         },
         last_seen: 'Last Seen',
         manuf: 'by {manufacturer}',
@@ -772,33 +772,33 @@ const data = {
             'Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.',
           remove: 'Remove a device from the Zigbee network.',
           updateDeviceName:
-            'Set a custom name for this device in the device registry.'
+            'Set a custom name for this device in the device registry.',
         },
         unknown: 'Unknown',
         zha_device_card: {
           area_picker_label: 'Area',
           device_name_placeholder: 'User given name',
-          update_name_button: 'Update Name'
-        }
-      }
+          update_name_button: 'Update Name',
+        },
+      },
     },
     duration: {
       day: '{count} {count, plural,\n  one {day}\n  other {days}\n}',
       hour: '{count} {count, plural,\n  one {hour}\n  other {hours}\n}',
       minute: '{count} {count, plural,\n  one {minute}\n  other {minutes}\n}',
       second: '{count} {count, plural,\n  one {second}\n  other {seconds}\n}',
-      week: '{count} {count, plural,\n  one {week}\n  other {weeks}\n}'
+      week: '{count} {count, plural,\n  one {week}\n  other {weeks}\n}',
     },
     'login-form': {
       log_in: 'Log in',
       password: 'Password',
-      remember: 'Remember'
+      remember: 'Remember',
     },
     notification_drawer: {
       click_to_configure: 'Click button to configure {entity}',
       close: 'Close',
       empty: 'No Notifications',
-      title: 'Notifications'
+      title: 'Notifications',
     },
     notification_toast: {
       connection_lost: 'Connection lost. Reconnecting…',
@@ -806,13 +806,13 @@ const data = {
       entity_turned_on: 'Turned on {entity}.',
       service_call_failed: 'Failed to call service {service}.',
       service_called: 'Service {service} called.',
-      triggered: 'Triggered {name}'
+      triggered: 'Triggered {name}',
     },
     panel: {
       config: {
         advanced_mode: {
           hint_enable: 'Missing config options? Enable advanced mode on',
-          link_profile_page: 'your profile page'
+          link_profile_page: 'your profile page',
         },
         areas: {
           caption: 'Areas',
@@ -822,7 +822,7 @@ const data = {
             create: 'CREATE',
             default_name: 'New Area',
             delete: 'DELETE',
-            update: 'UPDATE'
+            update: 'UPDATE',
           },
           no_areas: 'Looks like you have no areas yet!',
           picker: {
@@ -833,8 +833,8 @@ const data = {
               'Areas are used to organize where devices are. This information will be used throughout Home Assistant to help you in organizing your interface, permissions and integrations with other systems.',
             introduction2:
               'To place devices in an area, use the link below to navigate to the integrations page and then click on a configured integration to get to the device cards.',
-            no_areas: 'Looks like you have no areas yet!'
-          }
+            no_areas: 'Looks like you have no areas yet!',
+          },
         },
         automation: {
           caption: 'Automations',
@@ -853,37 +853,37 @@ const data = {
               type_select: 'Action type',
               type: {
                 condition: {
-                  label: 'Condition'
+                  label: 'Condition',
                 },
                 delay: {
                   delay: 'Delay',
-                  label: 'Delay'
+                  label: 'Delay',
                 },
                 device_id: {
                   extra_fields: {
-                    code: 'Code'
+                    code: 'Code',
                   },
-                  label: 'Device'
+                  label: 'Device',
                 },
                 event: {
                   event: 'Event:',
                   label: 'Fire event',
-                  service_data: 'Service data'
+                  service_data: 'Service data',
                 },
                 scene: {
-                  label: 'Activate scene'
+                  label: 'Activate scene',
                 },
                 service: {
                   label: 'Call service',
-                  service_data: 'Service data'
+                  service_data: 'Service data',
                 },
                 wait_template: {
                   label: 'Wait',
                   timeout: 'Timeout (optional)',
-                  wait_template: 'Wait Template'
-                }
+                  wait_template: 'Wait Template',
+                },
               },
-              unsupported_action: 'Unsupported action: {action}'
+              unsupported_action: 'Unsupported action: {action}',
             },
             alias: 'Name',
             conditions: {
@@ -899,28 +899,28 @@ const data = {
               type_select: 'Condition type',
               type: {
                 and: {
-                  label: 'And'
+                  label: 'And',
                 },
                 device: {
                   extra_fields: {
                     above: 'Above',
                     below: 'Below',
-                    for: 'Duration'
+                    for: 'Duration',
                   },
-                  label: 'Device'
+                  label: 'Device',
                 },
                 numeric_state: {
                   above: 'Above',
                   below: 'Below',
                   label: 'Numeric state',
-                  value_template: 'Value template (optional)'
+                  value_template: 'Value template (optional)',
                 },
                 or: {
-                  label: 'Or'
+                  label: 'Or',
                 },
                 state: {
                   label: 'State',
-                  state: 'State'
+                  state: 'State',
                 },
                 sun: {
                   after: 'After:',
@@ -929,29 +929,29 @@ const data = {
                   before_offset: 'Before offset (optional)',
                   label: 'Sun',
                   sunrise: 'Sunrise',
-                  sunset: 'Sunset'
+                  sunset: 'Sunset',
                 },
                 template: {
                   label: 'Template',
-                  value_template: 'Value template'
+                  value_template: 'Value template',
                 },
                 time: {
                   after: 'After',
                   before: 'Before',
-                  label: 'Time'
+                  label: 'Time',
                 },
                 zone: {
                   entity: 'Entity with location',
                   label: 'Zone',
-                  zone: 'Zone'
-                }
+                  zone: 'Zone',
+                },
               },
-              unsupported_condition: 'Unsupported condition: {condition}'
+              unsupported_condition: 'Unsupported condition: {condition}',
             },
             default_name: 'New Automation',
             description: {
               label: 'Description',
-              placeholder: 'Optional description'
+              placeholder: 'Optional description',
             },
             edit_ui: 'Edit with UI',
             edit_yaml: 'Edit as YAML',
@@ -977,14 +977,14 @@ const data = {
                   extra_fields: {
                     above: 'Above',
                     below: 'Below',
-                    for: 'Duration'
+                    for: 'Duration',
                   },
-                  label: 'Device'
+                  label: 'Device',
                 },
                 event: {
                   event_data: 'Event data',
                   event_type: 'Event type',
-                  label: 'Event'
+                  label: 'Event',
                 },
                 geo_location: {
                   enter: 'Enter',
@@ -992,55 +992,55 @@ const data = {
                   label: 'Geolocation',
                   leave: 'Leave',
                   source: 'Source',
-                  zone: 'Zone'
+                  zone: 'Zone',
                 },
                 homeassistant: {
                   event: 'Event:',
                   label: 'Home Assistant',
                   shutdown: 'Shutdown',
-                  start: 'Start'
+                  start: 'Start',
                 },
                 mqtt: {
                   label: 'MQTT',
                   payload: 'Payload (optional)',
-                  topic: 'Topic'
+                  topic: 'Topic',
                 },
                 numeric_state: {
                   above: 'Above',
                   below: 'Below',
                   label: 'Numeric state',
-                  value_template: 'Value template (optional)'
+                  value_template: 'Value template (optional)',
                 },
                 state: {
                   for: 'For',
                   from: 'From',
                   label: 'State',
-                  to: 'To'
+                  to: 'To',
                 },
                 sun: {
                   event: 'Event:',
                   label: 'Sun',
                   offset: 'Offset (optional)',
                   sunrise: 'Sunrise',
-                  sunset: 'Sunset'
+                  sunset: 'Sunset',
                 },
                 template: {
                   label: 'Template',
-                  value_template: 'Value template'
+                  value_template: 'Value template',
                 },
                 time_pattern: {
                   hours: 'Hours',
                   label: 'Time Pattern',
                   minutes: 'Minutes',
-                  seconds: 'Seconds'
+                  seconds: 'Seconds',
                 },
                 time: {
                   at: 'At',
-                  label: 'Time'
+                  label: 'Time',
                 },
                 webhook: {
                   label: 'Webhook',
-                  webhook_id: 'Webhook ID'
+                  webhook_id: 'Webhook ID',
                 },
                 zone: {
                   enter: 'Enter',
@@ -1048,13 +1048,13 @@ const data = {
                   event: 'Event:',
                   label: 'Zone',
                   leave: 'Leave',
-                  zone: 'Zone'
-                }
+                  zone: 'Zone',
+                },
               },
-              unsupported_platform: 'Unsupported platform: {platform}'
+              unsupported_platform: 'Unsupported platform: {platform}',
             },
             unsaved_confirm:
-              'You have unsaved changes. Are you sure you want to leave?'
+              'You have unsaved changes. Are you sure you want to leave?',
           },
           picker: {
             add_automation: 'Add automation',
@@ -1069,8 +1069,8 @@ const data = {
             only_editable:
               'Only automations defined in automations.yaml are editable.',
             pick_automation: 'Pick automation to edit',
-            show_info_automation: 'Show info about automation'
-          }
+            show_info_automation: 'Show info about automation',
+          },
         },
         cloud: {
           account: {
@@ -1088,7 +1088,7 @@ const data = {
               state_reporting_error: 'Unable to {enable_disable} report state.',
               sync_entities: 'Sync Entities',
               sync_entities_error: 'Failed to sync entities:',
-              title: 'Alexa'
+              title: 'Alexa',
             },
             connected: 'Connected',
             connection_status: 'Cloud connection status',
@@ -1112,7 +1112,7 @@ const data = {
               sync_entities: 'Sync Entities to Google',
               sync_entities_404_message:
                 "Failed to sync your entities to Google, ask Google 'Hey Google, sync my devices' to sync your entities.",
-              title: 'Google Assistant'
+              title: 'Google Assistant',
             },
             integrations: 'Integrations',
             integrations_introduction:
@@ -1131,7 +1131,7 @@ const data = {
               instance_is_available: 'Your instance is available at',
               instance_will_be_available: 'Your instance will be available at',
               link_learn_how_it_works: 'Learn how it works',
-              title: 'Remote Control'
+              title: 'Remote Control',
             },
             sign_out: 'Sign out',
             thank_you_note:
@@ -1149,8 +1149,8 @@ const data = {
               no_hooks_yet_link_automation: 'webhook automation',
               no_hooks_yet_link_integration: 'webhook-based integration',
               no_hooks_yet2: ' or by creating a ',
-              title: 'Webhooks'
-            }
+              title: 'Webhooks',
+            },
           },
           alexa: {
             banner:
@@ -1158,7 +1158,7 @@ const data = {
             expose: 'Expose to Alexa',
             exposed_entities: 'Exposed entities',
             not_exposed_entities: 'Not Exposed entities',
-            title: 'Alexa'
+            title: 'Alexa',
           },
           caption: 'Home Assistant Cloud',
           description_features:
@@ -1170,7 +1170,7 @@ const data = {
             certificate_information: 'Certificate Information',
             close: 'Close',
             fingerprint: 'Certificate fingerprint:',
-            will_be_auto_renewed: 'Will be automatically renewed'
+            will_be_auto_renewed: 'Will be automatically renewed',
           },
           dialog_cloudhook: {
             available_at: 'The webhook is available at the following url:',
@@ -1183,7 +1183,7 @@ const data = {
             managed_by_integration:
               'This webhook is managed by an integration and cannot be disabled.',
             view_documentation: 'View documentation',
-            webhook_for: 'Webhook for {name}'
+            webhook_for: 'Webhook for {name}',
           },
           forgot_password: {
             check_your_email:
@@ -1194,7 +1194,7 @@ const data = {
               'Enter your email address and we will send you a link to reset your password.',
             send_reset_email: 'Send reset email',
             subtitle: 'Forgot your password',
-            title: 'Forgot password'
+            title: 'Forgot password',
           },
           google: {
             banner:
@@ -1204,7 +1204,7 @@ const data = {
             exposed_entities: 'Exposed entities',
             not_exposed_entities: 'Not Exposed entities',
             sync_to_google: 'Synchronizing changes to Google.',
-            title: 'Google Assistant'
+            title: 'Google Assistant',
           },
           login: {
             alert_email_confirm_necessary:
@@ -1228,7 +1228,7 @@ const data = {
             sign_in: 'Sign in',
             start_trial: 'Start your free 1 month trial',
             title: 'Cloud Login',
-            trial_info: 'No payment information necessary'
+            trial_info: 'No payment information necessary',
           },
           register: {
             account_created:
@@ -1257,14 +1257,14 @@ const data = {
             password_error_msg: 'Passwords are at least 8 characters',
             resend_confirm_email: 'Resend confirmation email',
             start_trial: 'Start Trial',
-            title: 'Register Account'
-          }
+            title: 'Register Account',
+          },
         },
         common: {
           editor: {
             confirm_unsaved:
-              'You have unsaved changes. Are you sure you want to leave?'
-          }
+              'You have unsaved changes. Are you sure you want to leave?',
+          },
         },
         core: {
           caption: 'General',
@@ -1286,11 +1286,11 @@ const data = {
                 time_zone: 'Time Zone',
                 unit_system: 'Unit System',
                 unit_system_imperial: 'Imperial',
-                unit_system_metric: 'Metric'
+                unit_system_metric: 'Metric',
               },
               header: 'General Configuration',
               introduction:
-                'Changing your configuration can be a tiresome process. We know. This section will try to make your life a little bit easier.'
+                'Changing your configuration can be a tiresome process. We know. This section will try to make your life a little bit easier.',
             },
             server_control: {
               reloading: {
@@ -1300,14 +1300,14 @@ const data = {
                 heading: 'Configuration reloading',
                 introduction:
                   'Some parts of Home Assistant can reload without requiring a restart. Hitting reload will unload their current configuration and load the new one.',
-                script: 'Reload scripts'
+                script: 'Reload scripts',
               },
               server_management: {
                 heading: 'Server management',
                 introduction:
                   'Control your Home Assistant server… from Home Assistant.',
                 restart: 'Restart',
-                stop: 'Stop'
+                stop: 'Stop',
               },
               validation: {
                 check_config: 'Check config',
@@ -1315,10 +1315,10 @@ const data = {
                 introduction:
                   'Validate your configuration if you recently made some changes to your configuration and want to make sure that it is all valid',
                 invalid: 'Configuration invalid',
-                valid: 'Configuration valid!'
-              }
-            }
-          }
+                valid: 'Configuration valid!',
+              },
+            },
+          },
         },
         customize: {
           attributes_customize:
@@ -1338,33 +1338,33 @@ const data = {
           picker: {
             header: 'Customizations',
             introduction:
-              'Tweak per-entity attributes. Added/edited customizations will take effect immediately. Removed customizations will take effect when the entity is updated.'
+              'Tweak per-entity attributes. Added/edited customizations will take effect immediately. Removed customizations will take effect when the entity is updated.',
           },
           warning: {
             include_link: 'include customize.yaml',
             include_sentence:
               "It seems that your configuration.yaml doesn't properly",
             not_applied:
-              'Changes made here are written in it, but will not be applied after a configuration reload unless the include is in place.'
-          }
+              'Changes made here are written in it, but will not be applied after a configuration reload unless the include is in place.',
+          },
         },
         devices: {
           area_picker_label: 'Area',
           automation: {
             actions: {
-              caption: 'When something is triggered...'
+              caption: 'When something is triggered...',
             },
             automations: 'Automations',
             conditions: {
-              caption: 'Only do something if...'
+              caption: 'Only do something if...',
             },
             create: 'Create automation with device',
             no_automations: 'No automations',
             no_device_automations:
               'There are no automations available for this device.',
             triggers: {
-              caption: 'Do something when...'
-            }
+              caption: 'Do something when...',
+            },
           },
           automations: 'Automations',
           cant_edit: 'You can only edit items that are created in the UI.',
@@ -1377,7 +1377,7 @@ const data = {
             device: 'Device',
             integration: 'Integration',
             manufacturer: 'Manufacturer',
-            model: 'Model'
+            model: 'Model',
           },
           description: 'Manage connected devices',
           details: 'Here are all the details of your device.',
@@ -1385,25 +1385,25 @@ const data = {
           entities: {
             add_entities_lovelace: 'Add to Lovelace',
             entities: 'Entities',
-            none: 'This device has no entities'
+            none: 'This device has no entities',
           },
           info: 'Device info',
           name: 'Name',
           scene: {
             create: 'Create scene with device',
             no_scenes: 'No scenes',
-            scenes: 'Scenes'
+            scenes: 'Scenes',
           },
           scenes: 'Scenes',
           script: {
             create: 'Create script with device',
             no_scripts: 'No scripts',
-            scripts: 'Scripts'
+            scripts: 'Scripts',
           },
           scripts: 'Scripts',
           unknown_error: 'Unknown error',
           unnamed_device: 'Unnamed device',
-          update: 'Update'
+          update: 'Update',
         },
         entities: {
           caption: 'Entities',
@@ -1422,26 +1422,26 @@ const data = {
             name: 'Name Override',
             note: 'Note: this might not work yet with all integrations.',
             unavailable: 'This entity is not currently available.',
-            update: 'UPDATE'
+            update: 'UPDATE',
           },
           picker: {
             disable_selected: {
               button: 'Disable selected',
               confirm_text:
                 'Disabled entities will not be added to Home Assistant.',
-              confirm_title: 'Do you want to disable {number} entities?'
+              confirm_title: 'Do you want to disable {number} entities?',
             },
             enable_selected: {
               button: 'Enable selected',
               confirm_text:
                 'This will make them available in Home Assistant again if they are now disabled.',
-              confirm_title: 'Do you want to enable {number} entities?'
+              confirm_title: 'Do you want to enable {number} entities?',
             },
             filter: {
               filter: 'Filter',
               show_disabled: 'Show disabled entities',
               show_readonly: 'Show read-only entities',
-              show_unavailable: 'Show unavailable entities'
+              show_unavailable: 'Show unavailable entities',
             },
             header: 'Entities',
             headers: {
@@ -1449,7 +1449,7 @@ const data = {
               entity_id: 'Entity ID',
               integration: 'Integration',
               name: 'Name',
-              status: 'Status'
+              status: 'Status',
             },
             integrations_page: 'Integrations page',
             introduction:
@@ -1460,7 +1460,7 @@ const data = {
               button: 'Remove selected',
               confirm_text:
                 'Entities can only be removed when the integration is no longer providing the entities.',
-              confirm_title: 'Do you want to remove {number} entities?'
+              confirm_title: 'Do you want to remove {number} entities?',
             },
             selected: '{number} selected',
             show_disabled: 'Show disabled entities',
@@ -1468,10 +1468,10 @@ const data = {
               disabled: 'Disabled',
               ok: 'Ok',
               readonly: 'Read-only',
-              unavailable: 'Unavailable'
+              unavailable: 'Unavailable',
             },
-            unavailable: '(unavailable)'
-          }
+            unavailable: '(unavailable)',
+          },
         },
         header: 'Configure Home Assistant',
         helpers: {
@@ -1480,23 +1480,23 @@ const data = {
           dialog: {
             add_helper: 'Add helper',
             add_platform: 'Add {platform}',
-            create: 'Create'
+            create: 'Create',
           },
           picker: {
             add_helper: 'Add helper',
             headers: {
               editable: 'Editable',
               name: 'Name',
-              type: 'Type'
-            }
+              type: 'Type',
+            },
           },
           types: {
             input_boolean: 'Toggle',
             input_datetime: 'Date and/or time',
             input_number: 'Number',
             input_select: 'Dropdown',
-            input_text: 'Text'
-          }
+            input_text: 'Text',
+          },
         },
         integrations: {
           caption: 'Integrations',
@@ -1516,7 +1516,7 @@ const data = {
               'Restart Home Assistant to finish removing this integration',
             settings_button: 'Edit settings for {integration}',
             system_options_button: 'System options for {integration}',
-            via: 'Connected via'
+            via: 'Connected via',
           },
           config_flow: {
             aborted: 'Aborted',
@@ -1529,13 +1529,13 @@ const data = {
             external_step: {
               description:
                 'This step requires you to visit an external website to be completed.',
-              open_site: 'Open website'
+              open_site: 'Open website',
             },
             failed_create_area: 'Failed to create area.',
             finish: 'Finish',
             name_new_area: 'Name of the new area?',
             not_all_required_fields: 'Not all required fields are filled in.',
-            submit: 'Submit'
+            submit: 'Submit',
           },
           configure: 'Configure',
           configured: 'Configured',
@@ -1554,14 +1554,14 @@ const data = {
             ignore: 'Ignore',
             ignored: 'Ignored',
             show_ignored: 'Show ignored integrations',
-            stop_ignore: 'Stop ignoring'
+            stop_ignore: 'Stop ignoring',
           },
           integration_not_found: 'Integration not found.',
           new: 'Set up a new integration',
           none: 'Nothing configured yet',
           note_about_integrations:
             'Not all integrations can be configured via the UI yet.',
-          note_about_website_reference: 'More are available on the '
+          note_about_website_reference: 'More are available on the ',
         },
         introduction:
           "Here it is possible to configure your components and Home Assistant. Not everything is possible to configure from the UI yet, but we're working on it.",
@@ -1573,7 +1573,7 @@ const data = {
             caption: 'Dashboards',
             conf_mode: {
               storage: 'UI controlled',
-              yaml: 'YAML file'
+              yaml: 'YAML file',
             },
             confirm_delete: 'Are you sure you want to delete this dashboard?',
             detail: {
@@ -1589,7 +1589,7 @@ const data = {
               update: 'Update',
               url: 'Url',
               url_error_msg:
-                'The url can not contain spaces or special characters, except for _ and -'
+                'The url can not contain spaces or special characters, except for _ and -',
             },
             picker: {
               add_dashboard: 'Add dashboard',
@@ -1598,10 +1598,10 @@ const data = {
                 filename: 'Filename',
                 require_admin: 'Admin only',
                 sidebar: 'Show in sidebar',
-                title: 'Title'
+                title: 'Title',
               },
-              open: 'Open dashboard'
-            }
+              open: 'Open dashboard',
+            },
           },
           description: 'Configure your Lovelace Dashboards',
           resources: {
@@ -1620,14 +1620,14 @@ const data = {
               url_error_msg: 'Url is a required field',
               warning_header: 'Be cautious!',
               warning_text:
-                'Adding resources can be dangerous, make sure you know the source of the resource and trust them. Bad resources could seriously harm your system.'
+                'Adding resources can be dangerous, make sure you know the source of the resource and trust them. Bad resources could seriously harm your system.',
             },
             picker: {
               add_resource: 'Add resource',
               headers: {
                 type: 'Type',
-                url: 'Url'
-              }
+                url: 'Url',
+              },
             },
             refresh_body:
               'You have to refresh the page to complete the removal, do you want to refresh now?',
@@ -1636,9 +1636,9 @@ const data = {
               css: 'Stylesheet',
               html: 'HTML (deprecated)',
               js: 'JavaScript File (deprecated)',
-              module: 'JavaScript Module'
-            }
-          }
+              module: 'JavaScript Module',
+            },
+          },
         },
         person: {
           add_person: 'Add Person',
@@ -1664,14 +1664,14 @@ const data = {
             new_person: 'New Person',
             no_device_tracker_available_intro:
               'When you have devices that indicate the presence of a person, you will be able to assign them to a person here. You can add your first device by adding a presence-detection integration from the integrations page.',
-            update: 'Update'
+            update: 'Update',
           },
           introduction:
             'Here you can define each person of interest in Home Assistant.',
           no_persons_created_yet:
             'Looks like you have not created any persons yet.',
           note_about_persons_configured_in_yaml:
-            'Note: persons configured via configuration.yaml cannot be edited via the UI.'
+            'Note: persons configured via configuration.yaml cannot be edited via the UI.',
         },
         scene: {
           activated: 'Activated scene {name}.',
@@ -1684,7 +1684,7 @@ const data = {
               delete: 'Delete device',
               header: 'Devices',
               introduction:
-                'Add the devices that you want to be included in your scene. Set all the devices to the state you want for this scene.'
+                'Add the devices that you want to be included in your scene. Set all the devices to the state you want for this scene.',
             },
             entities: {
               add: 'Add an entity',
@@ -1694,7 +1694,7 @@ const data = {
               header: 'Entities',
               introduction:
                 'Entities that do not belong to a device can be set here.',
-              without_device: 'Entities without device'
+              without_device: 'Entities without device',
             },
             introduction: 'Use scenes to bring your home alive.',
             load_error_not_editable: 'Only scenes in scenes.yaml are editable.',
@@ -1702,7 +1702,7 @@ const data = {
             name: 'Name',
             save: 'Save',
             unsaved_confirm:
-              'You have unsaved changes. Are you sure you want to leave?'
+              'You have unsaved changes. Are you sure you want to leave?',
           },
           picker: {
             add_scene: 'Add scene',
@@ -1716,8 +1716,8 @@ const data = {
             no_scenes: 'We couldn’t find any editable scenes',
             only_editable: 'Only scenes defined in scenes.yaml are editable.',
             pick_scene: 'Pick scene to edit',
-            show_info_scene: 'Show info about scene'
-          }
+            show_info_scene: 'Show info about scene',
+          },
         },
         script: {
           caption: 'Scripts',
@@ -1733,7 +1733,7 @@ const data = {
             load_error_not_editable:
               'Only scripts inside scripts.yaml are editable.',
             sequence: 'Sequence',
-            sequence_sentence: 'The sequence of actions of this script.'
+            sequence_sentence: 'The sequence of actions of this script.',
           },
           picker: {
             add_script: 'Add script',
@@ -1743,8 +1743,8 @@ const data = {
               'The script editor allows you to create and edit scripts. Please follow the link below to read the instructions to make sure that you have configured Home Assistant correctly.',
             learn_more: 'Learn more about scripts',
             no_scripts: 'We couldn’t find any editable scripts',
-            trigger_script: 'Trigger script'
-          }
+            trigger_script: 'Trigger script',
+          },
         },
         server_control: {
           caption: 'Server Controls',
@@ -1760,7 +1760,7 @@ const data = {
               person: 'Reload persons',
               scene: 'Reload scenes',
               script: 'Reload scripts',
-              zone: 'Reload zones'
+              zone: 'Reload zones',
             },
             server_management: {
               confirm_restart:
@@ -1770,7 +1770,7 @@ const data = {
               introduction:
                 'Control your Home Assistant server… from Home Assistant.',
               restart: 'Restart',
-              stop: 'Stop'
+              stop: 'Stop',
             },
             validation: {
               check_config: 'Check configuration',
@@ -1778,9 +1778,9 @@ const data = {
               introduction:
                 'Validate your configuration if you recently made some changes to your configuration and want to make sure that it is all valid',
               invalid: 'Configuration invalid',
-              valid: 'Configuration valid!'
-            }
-          }
+              valid: 'Configuration valid!',
+            },
+          },
         },
         users: {
           add_user: {
@@ -1788,7 +1788,7 @@ const data = {
             create: 'Create',
             name: 'Name',
             password: 'Password',
-            username: 'Username'
+            username: 'Username',
           },
           caption: 'Users',
           description: 'Manage users',
@@ -1810,12 +1810,12 @@ const data = {
             system_generated_users_not_removable:
               'Unable to remove system generated users.',
             unnamed_user: 'Unnamed User',
-            user_rename_failed: 'User rename failed:'
+            user_rename_failed: 'User rename failed:',
           },
           picker: {
             system_generated: 'System generated',
-            title: 'Users'
-          }
+            title: 'Users',
+          },
         },
         zha: {
           add_device_page: {
@@ -1823,11 +1823,11 @@ const data = {
               'Discovered devices will show up here. Follow the instructions for your device(s) and place the device(s) in pairing mode.',
             header: 'Zigbee Home Automation - Add Devices',
             search_again: 'Search Again',
-            spinner: 'Searching for ZHA Zigbee devices...'
+            spinner: 'Searching for ZHA Zigbee devices...',
           },
           add: {
             caption: 'Add Devices',
-            description: 'Add devices to the Zigbee network'
+            description: 'Add devices to the Zigbee network',
           },
           caption: 'ZHA',
           cluster_attributes: {
@@ -1841,37 +1841,37 @@ const data = {
             help_set_zigbee_attribute:
               'Set attribute value for the specified cluster on the specified entity.',
             introduction: 'View and edit cluster attributes.',
-            set_zigbee_attribute: 'Set Zigbee Attribute'
+            set_zigbee_attribute: 'Set Zigbee Attribute',
           },
           cluster_commands: {
             commands_of_cluster: 'Commands of the selected cluster',
             header: 'Cluster Commands',
             help_command_dropdown: 'Select a command to interact with.',
             introduction: 'View and issue cluster commands.',
-            issue_zigbee_command: 'Issue Zigbee Command'
+            issue_zigbee_command: 'Issue Zigbee Command',
           },
           clusters: {
             header: 'Clusters',
             help_cluster_dropdown:
               'Select a cluster to view attributes and commands.',
             introduction:
-              'Clusters are the building blocks for Zigbee functionality. They seperate functionality into logical units. There are client and server types and that are comprised of attributes and commands.'
+              'Clusters are the building blocks for Zigbee functionality. They seperate functionality into logical units. There are client and server types and that are comprised of attributes and commands.',
           },
           common: {
             add_devices: 'Add Devices',
             clusters: 'Clusters',
             devices: 'Devices',
             manufacturer_code_override: 'Manufacturer Code Override',
-            value: 'Value'
+            value: 'Value',
           },
           description: 'Zigbee Home Automation network management',
           device_card: {
             area_picker_label: 'Area',
             device_name_placeholder: 'User given name',
-            update_name_button: 'Update Name'
+            update_name_button: 'Update Name',
           },
           devices: {
-            header: 'Zigbee Home Automation - Device'
+            header: 'Zigbee Home Automation - Device',
           },
           group_binding: {
             bind_button_help:
@@ -1885,7 +1885,7 @@ const data = {
             introduction: 'Bind and unbind groups.',
             unbind_button_help:
               'Unbind the selected group from the selected device clusters.',
-            unbind_button_label: 'Unbind Group'
+            unbind_button_label: 'Unbind Group',
           },
           groups: {
             add_members: 'Add Members',
@@ -1914,14 +1914,14 @@ const data = {
             remove_members: 'Remove Members',
             removing_groups: 'Removing Groups',
             removing_members: 'Removing Members',
-            zha_zigbee_groups: 'ZHA Zigbee Groups'
+            zha_zigbee_groups: 'ZHA Zigbee Groups',
           },
           header: 'Configure Zigbee Home Automation',
           introduction:
             "Here it is possible to configure the ZHA component. Not everything is possible to configure from the UI yet, but we're working on it.",
           network_management: {
             header: 'Network Management',
-            introduction: 'Commands that affect the entire network'
+            introduction: 'Commands that affect the entire network',
           },
           node_management: {
             header: 'Device Management',
@@ -1931,16 +1931,16 @@ const data = {
             hint_wakeup:
               'Some devices such as Xiaomi sensors have a wake up button that you can press at ~5 second intervals that keep devices awake while you interact with them.',
             introduction:
-              'Run ZHA commands that affect a single device. Pick a device to see a list of available commands.'
+              'Run ZHA commands that affect a single device. Pick a device to see a list of available commands.',
           },
           services: {
             reconfigure:
               'Reconfigure ZHA device (heal device). Use this if you are having issues with the device. If the device in question is a battery powered device please ensure it is awake and accepting commands when you use this service.',
             remove: 'Remove a device from the ZigBee network.',
             updateDeviceName:
-              'Set a custom name for this device in the device registry.'
+              'Set a custom name for this device in the device registry.',
           },
-          title: 'Zigbee Home Automation'
+          title: 'Zigbee Home Automation',
         },
         zone: {
           add_zone: 'Add Zone',
@@ -1965,7 +1965,7 @@ const data = {
               'Passive zones are hidden in the frontend and are not used as location for device trackers. This is useful if you just want to use it for automations.',
             radius: 'Radius',
             required_error_msg: 'This field is required',
-            update: 'Update'
+            update: 'Update',
           },
           edit_home_zone:
             "The radius of the Home zone can't be edited from the frontend yet. Drag the marker on the map to move the home zone.",
@@ -1976,7 +1976,8 @@ const data = {
             "The location of your home zone is editable from the general configuration page. The radius of the Home zone can't be edited from the frontend yet. Do you want to go to the general configuration?",
           introduction:
             'Zones allow you to specify certain regions on earth. When a person is within a zone, the state will take the name from the zone. Zones can also be used as a trigger or condition inside automation setups.',
-          no_zones_created_yet: 'Looks like you have not created any zones yet.'
+          no_zones_created_yet:
+            'Looks like you have not created any zones yet.',
         },
         zwave: {
           caption: 'Z-Wave',
@@ -1985,14 +1986,14 @@ const data = {
             instance: 'Instance',
             unknown: 'unknown',
             value: 'Value',
-            wakeup_interval: 'Wakeup Interval'
+            wakeup_interval: 'Wakeup Interval',
           },
           description: 'Manage your Z-Wave network',
           learn_more: 'Learn more about Z-Wave',
           network_management: {
             header: 'Z-Wave Network Management',
             introduction:
-              "Run commands that affect the Z-Wave network. You won't get feedback on whether most commands succeeded, but you can check the OZW Log to try to find out."
+              "Run commands that affect the Z-Wave network. You won't get feedback on whether most commands succeeded, but you can check the OZW Log to try to find out.",
           },
           network_status: {
             network_started: 'Z-Wave Network Started',
@@ -2002,7 +2003,7 @@ const data = {
             network_starting: 'Starting Z-Wave Network...',
             network_starting_note:
               'This may take a while depending on the size of your network.',
-            network_stopped: 'Z-Wave Network Stopped'
+            network_stopped: 'Z-Wave Network Stopped',
           },
           node_config: {
             config_parameter: 'Configuration Parameter',
@@ -2012,12 +2013,12 @@ const data = {
             seconds: 'seconds',
             set_config_parameter: 'Set Configuration Parameter',
             set_wakeup: 'Set Wakeup Interval',
-            true: 'True'
+            true: 'True',
           },
           ozw_log: {
             header: 'OZW Log',
             introduction:
-              'View the log. 0 is the minimum (loads entire log) and 1000 is the maximum. Load will show a static log and tail will auto update with the last specified number of lines of the log.'
+              'View the log. 0 is the minimum (loads entire log) and 1000 is the maximum. Load will show a static log and tail will auto update with the last specified number of lines of the log.',
           },
           services: {
             add_node: 'Add Node',
@@ -2029,20 +2030,20 @@ const data = {
             soft_reset: 'Soft Reset',
             start_network: 'Start Network',
             stop_network: 'Stop Network',
-            test_network: 'Test Network'
+            test_network: 'Test Network',
           },
           values: {
-            header: 'Node Values'
-          }
-        }
+            header: 'Node Values',
+          },
+        },
       },
       custom: {
         external_panel: {
           complete_access: 'It will have access to all data in Home Assistant.',
           hide_message:
             'Check docs for the panel_custom component to hide this message',
-          question_trust: 'Do you trust the external panel {name} at {link}?'
-        }
+          question_trust: 'Do you trust the external panel {name} at {link}?',
+        },
       },
       'developer-tools': {
         tabs: {
@@ -2062,7 +2063,7 @@ const data = {
             stop_listening: 'Stop listening',
             subscribe_to: 'Event to subscribe to',
             title: 'Events',
-            type: 'Event Type'
+            type: 'Event Type',
           },
           info: {
             built_using: 'Built using',
@@ -2083,7 +2084,7 @@ const data = {
             states_ui: 'Go to the states UI',
             system_health_error:
               "System Health component is not loaded. Add 'system_health:' to configuration.yaml",
-            title: 'Info'
+            title: 'Info',
           },
           logs: {
             clear: 'Clear',
@@ -2095,7 +2096,7 @@ const data = {
             no_errors: 'No errors have been reported.',
             no_issues: 'There are no new issues!',
             refresh: 'Refresh',
-            title: 'Logs'
+            title: 'Logs',
           },
           mqtt: {
             description_listen: 'Listen to a topic',
@@ -2108,7 +2109,7 @@ const data = {
             stop_listening: 'Stop listening',
             subscribe_to: 'Topic to subscribe to',
             title: 'MQTT',
-            topic: 'topic'
+            topic: 'topic',
           },
           services: {
             alert_parsing_yaml: 'Error parsing YAML: {data}',
@@ -2123,7 +2124,7 @@ const data = {
             no_description: 'No description is available',
             no_parameters: 'This service takes no parameters.',
             select_service: 'Select a service to see the description',
-            title: 'Services'
+            title: 'Services',
           },
           states: {
             alert_entity_field: 'Entity is a mandatory field',
@@ -2145,7 +2146,7 @@ const data = {
             set_state: 'Set State',
             state: 'State',
             state_attributes: 'State attributes (YAML, optional)',
-            title: 'States'
+            title: 'States',
           },
           templates: {
             description:
@@ -2154,18 +2155,18 @@ const data = {
             jinja_documentation: 'Jinja2 template documentation',
             template_extensions: 'Home Assistant template extensions',
             title: 'Template',
-            unknown_error_template: 'Unknown error rendering template'
-          }
-        }
+            unknown_error_template: 'Unknown error rendering template',
+          },
+        },
       },
       history: {
         period: 'Period',
-        showing_entries: 'Showing entries for'
+        showing_entries: 'Showing entries for',
       },
       logbook: {
         entries_not_found: 'No logbook entries found.',
         period: 'Period',
-        showing_entries: 'Showing entries for'
+        showing_entries: 'Showing entries for',
       },
       lovelace: {
         add_entities: {
@@ -2173,7 +2174,7 @@ const data = {
             'You can only use this function when you have taken control of the Lovelace UI.',
           saving_failed: 'Saving Lovelace UI configuration failed.',
           yaml_unsupported:
-            'You can not use this function when using Lovelace UI in YAML mode.'
+            'You can not use this function when using Lovelace UI in YAML mode.',
         },
         cards: {
           confirm_delete: 'Are you sure you want to delete this card?',
@@ -2181,10 +2182,10 @@ const data = {
             go_to_integrations_page: 'Go to the integrations page.',
             no_devices:
               'This page allows you to control your devices, however it looks like you have no devices set up yet. Head to the integrations page to get started.',
-            title: 'Welcome Home'
+            title: 'Welcome Home',
           },
           entities: {
-            never_triggered: 'Never triggered'
+            never_triggered: 'Never triggered',
           },
           'picture-elements': {
             call_service: 'Call service {name}',
@@ -2193,54 +2194,54 @@ const data = {
             navigate_to: 'Navigate to {location}',
             tap: 'Tap:',
             toggle: 'Toggle {name}',
-            url: 'Open window to {url_path}'
+            url: 'Open window to {url_path}',
           },
           'safe-mode': {
             description:
               'Home Assistant ran into trouble while loading your configuration and is now running in safe mode. Take a look at the error log to see what went wrong.',
             header: 'Safe Mode Activated',
-            show_errors: 'Show errors'
+            show_errors: 'Show errors',
           },
           'shopping-list': {
             add_item: 'Add item',
             checked_items: 'Checked items',
-            clear_items: 'Clear checked items'
-          }
+            clear_items: 'Clear checked items',
+          },
         },
         changed_toast: {
           message:
             'The Lovelace UI configuration for this dashboard was updated, refresh to see changes?',
-          refresh: 'Refresh'
+          refresh: 'Refresh',
         },
         editor: {
           card: {
             alarm_panel: {
-              available_states: 'Available States'
+              available_states: 'Available States',
             },
             'alarm-panel': {
               available_states: 'Available States',
-              name: 'Alarm Panel'
+              name: 'Alarm Panel',
             },
             button: {
-              name: 'Button'
+              name: 'Button',
             },
             conditional: {
-              name: 'Conditional'
+              name: 'Conditional',
             },
             config: {
               optional: 'Optional',
-              required: 'Required'
+              required: 'Required',
             },
             entities: {
               name: 'Entities',
               show_header_toggle: 'Show Header Toggle?',
-              toggle: 'Toggle entities.'
+              toggle: 'Toggle entities.',
             },
             'entity-button': {
-              name: 'Entity Button'
+              name: 'Entity Button',
             },
             'entity-filter': {
-              name: 'Entity Filter'
+              name: 'Entity Filter',
             },
             gauge: {
               name: 'Gauge',
@@ -2248,8 +2249,8 @@ const data = {
                 define: 'Define Severity?',
                 green: 'Green',
                 red: 'Red',
-                yellow: 'Yellow'
-              }
+                yellow: 'Yellow',
+              },
             },
             generic: {
               aspect_ratio: 'Aspect Ratio',
@@ -2273,72 +2274,72 @@ const data = {
               theme: 'Theme',
               title: 'Title',
               unit: 'Unit',
-              url: 'Url'
+              url: 'Url',
             },
             glance: {
               columns: 'Columns',
-              name: 'Glance'
+              name: 'Glance',
             },
             'history-graph': {
-              name: 'History Graph'
+              name: 'History Graph',
             },
             'horizontal-stack': {
-              name: 'Horizontal Stack'
+              name: 'Horizontal Stack',
             },
             iframe: {
-              name: 'iFrame'
+              name: 'iFrame',
             },
             light: {
-              name: 'Light'
+              name: 'Light',
             },
             map: {
               dark_mode: 'Dark Mode?',
               default_zoom: 'Default Zoom',
               geo_location_sources: 'Geolocation Sources',
               name: 'Map',
-              source: 'Source'
+              source: 'Source',
             },
             markdown: {
               content: 'Content',
-              name: 'Markdown'
+              name: 'Markdown',
             },
             'media-control': {
-              name: 'Media Control'
+              name: 'Media Control',
             },
             'picture-elements': {
-              name: 'Picture Elements'
+              name: 'Picture Elements',
             },
             'picture-entity': {
-              name: 'Picture Entity'
+              name: 'Picture Entity',
             },
             'picture-glance': {
-              name: 'Picture Glance'
+              name: 'Picture Glance',
             },
             picture: {
-              name: 'Picture'
+              name: 'Picture',
             },
             'plant-status': {
-              name: 'Plant Status'
+              name: 'Plant Status',
             },
             sensor: {
               graph_detail: 'Graph Detail',
               graph_type: 'Graph Type',
-              name: 'Sensor'
+              name: 'Sensor',
             },
             'shopping-list': {
               integration_not_loaded:
                 'This card requires the `shopping_list` integration to be set up.',
-              name: 'Shopping List'
+              name: 'Shopping List',
             },
             thermostat: {
-              name: 'Thermostat'
+              name: 'Thermostat',
             },
             'vertical-stack': {
-              name: 'Vertical Stack'
+              name: 'Vertical Stack',
             },
             'weather-forecast': {
-              name: 'Weather Forecast'
-            }
+              name: 'Weather Forecast',
+            },
           },
           edit_card: {
             add: 'Add Card',
@@ -2353,13 +2354,13 @@ const data = {
             save: 'Save',
             show_code_editor: 'Show Code Editor',
             show_visual_editor: 'Show Visual Editor',
-            toggle_editor: 'Toggle Editor'
+            toggle_editor: 'Toggle Editor',
           },
           edit_lovelace: {
             edit_title: 'Edit title',
             explanation:
               'This title is shown above all your views in the Lovelace UI.',
-            header: 'Title of your Lovelace UI'
+            header: 'Title of your Lovelace UI',
           },
           edit_view: {
             add: 'Add view',
@@ -2370,12 +2371,12 @@ const data = {
             move_left: 'Move view left',
             move_right: 'Move view right',
             tab_badges: 'Badges',
-            tab_settings: 'Settings'
+            tab_settings: 'Settings',
           },
           header: 'Edit UI',
           menu: {
             open: 'Open Lovelace UI menu',
-            raw_editor: 'Raw configuration editor'
+            raw_editor: 'Raw configuration editor',
           },
           migrate: {
             header: 'Configuration Incompatible',
@@ -2383,7 +2384,7 @@ const data = {
             para_migrate:
               "Home Assistant can add ID's to all your cards and views automatically for you by pressing the 'Migrate configuration' button.",
             para_no_id:
-              "This element doesn't have an ID. Please add an ID to this element in 'ui-lovelace.yaml'."
+              "This element doesn't have an ID. Please add an ID to this element in 'ui-lovelace.yaml'.",
           },
           raw_editor: {
             confirm_remove_config_text:
@@ -2403,7 +2404,7 @@ const data = {
               'Resources should no longer be added to the Lovelace configuration but can be added in the Lovelace config panel.',
             save: 'Save',
             saved: 'Saved',
-            unsaved_changes: 'Unsaved changes'
+            unsaved_changes: 'Unsaved changes',
           },
           save_config: {
             cancel: 'Never mind',
@@ -2419,20 +2420,20 @@ const data = {
             yaml_control:
               "To take control in YAML mode, create a YAML file with the name you specified in your config for this dashboard, or the default 'ui-lovelace.yaml'.",
             yaml_mode:
-              "You are using YAML mode, that means you can not change your Lovelace config from the UI. If you want to change Lovelace from the UI, remove the 'mode: yaml' from your Lovelace configuration in 'configuration.yaml.'"
+              "You are using YAML mode, that means you can not change your Lovelace config from the UI. If you want to change Lovelace from the UI, remove the 'mode: yaml' from your Lovelace configuration in 'configuration.yaml.'",
           },
           suggest_card: {
             add: 'Add to Lovelace UI',
             create_own: 'Pick different card',
-            header: 'We created a suggestion for you'
+            header: 'We created a suggestion for you',
           },
           view: {
             panel_mode: {
               description:
                 'This renders the first card at full width; other cards in this view will not be rendered.',
-              title: 'Panel Mode?'
-            }
-          }
+              title: 'Panel Mode?',
+            },
+          },
         },
         menu: {
           close: 'Close',
@@ -2440,7 +2441,7 @@ const data = {
           exit_edit_mode: 'Exit UI edit mode',
           help: 'Help',
           refresh: 'Refresh',
-          unused_entities: 'Unused entities'
+          unused_entities: 'Unused entities',
         },
         reload_lovelace: 'Reload UI',
         unused_entities: {
@@ -2452,23 +2453,23 @@ const data = {
           last_changed: 'Last Changed',
           select_to_add:
             'Select the entities you want to add to a card and then click the add card button.',
-          title: 'Unused entities'
+          title: 'Unused entities',
         },
         views: {
           confirm_delete: 'Are you sure you want to delete this view?',
           existing_cards:
-            "You can't delete a view that has cards in it. Remove the cards first."
+            "You can't delete a view that has cards in it. Remove the cards first.",
         },
         warning: {
           entity_non_numeric: 'Entity is non-numeric: {entity}',
-          entity_not_found: 'Entity not available: {entity}'
-        }
+          entity_not_found: 'Entity not available: {entity}',
+        },
       },
       mailbox: {
         delete_button: 'Delete',
         delete_prompt: 'Delete this message?',
         empty: 'You do not have any messages',
-        playback_title: 'Message playback'
+        playback_title: 'Message playback',
       },
       'page-authorize': {
         abort_intro: 'Login aborted',
@@ -2478,99 +2479,99 @@ const data = {
           providers: {
             command_line: {
               abort: {
-                login_expired: 'Session expired, please login again.'
+                login_expired: 'Session expired, please login again.',
               },
               error: {
                 invalid_auth: 'Invalid username or password',
-                invalid_code: 'Invalid authentication code'
+                invalid_code: 'Invalid authentication code',
               },
               step: {
                 init: {
                   data: {
                     password: 'Password',
-                    username: 'Username'
-                  }
+                    username: 'Username',
+                  },
                 },
                 mfa: {
                   data: {
-                    code: 'Two-factor Authentication Code'
+                    code: 'Two-factor Authentication Code',
                   },
                   description:
-                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:'
-                }
-              }
+                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:',
+                },
+              },
             },
             homeassistant: {
               abort: {
-                login_expired: 'Session expired, please login again.'
+                login_expired: 'Session expired, please login again.',
               },
               error: {
                 invalid_auth: 'Invalid username or password',
-                invalid_code: 'Invalid authentication code'
+                invalid_code: 'Invalid authentication code',
               },
               step: {
                 init: {
                   data: {
                     password: 'Password',
-                    username: 'Username'
-                  }
+                    username: 'Username',
+                  },
                 },
                 mfa: {
                   data: {
-                    code: 'Two-factor Authentication Code'
+                    code: 'Two-factor Authentication Code',
                   },
                   description:
-                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:'
-                }
-              }
+                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:',
+                },
+              },
             },
             legacy_api_password: {
               abort: {
                 login_expired: 'Session expired, please login again.',
                 no_api_password_set:
-                  "You don't have an API password configured."
+                  "You don't have an API password configured.",
               },
               error: {
                 invalid_auth: 'Invalid API password',
-                invalid_code: 'Invalid authentication code'
+                invalid_code: 'Invalid authentication code',
               },
               step: {
                 init: {
                   data: {
-                    password: 'API Password'
+                    password: 'API Password',
                   },
                   description:
-                    'Please input the API password in your HTTP configuration:'
+                    'Please input the API password in your HTTP configuration:',
                 },
                 mfa: {
                   data: {
-                    code: 'Two-factor Authentication Code'
+                    code: 'Two-factor Authentication Code',
                   },
                   description:
-                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:'
-                }
-              }
+                    'Open the **{mfa_module_name}** on your device to view your two-factor authentication code and verify your identity:',
+                },
+              },
             },
             trusted_networks: {
               abort: {
-                not_whitelisted: 'Your computer is not whitelisted.'
+                not_whitelisted: 'Your computer is not whitelisted.',
               },
               step: {
                 init: {
                   data: {
-                    user: 'User'
+                    user: 'User',
                   },
-                  description: 'Please select a user you want to login as:'
-                }
-              }
-            }
+                  description: 'Please select a user you want to login as:',
+                },
+              },
+            },
           },
           unknown_error: 'Something went wrong',
-          working: 'Please wait'
+          working: 'Please wait',
         },
         initializing: 'Initializing',
         logging_in_with: 'Logging in with **{authProviderName}**.',
-        pick_auth_provider: 'Or log in with'
+        pick_auth_provider: 'Or log in with',
       },
       'page-demo': {
         cards: {
@@ -2579,8 +2580,8 @@ const data = {
             introduction:
               "Welcome home! You've reached the Home Assistant demo where we showcase the best UIs created by our community.",
             learn_more: 'Learn more about Home Assistant',
-            next_demo: 'Next demo'
-          }
+            next_demo: 'Next demo',
+          },
         },
         config: {
           arsaboo: {
@@ -2596,7 +2597,7 @@ const data = {
               morning_commute: 'Morning Commute',
               total_tv_time: 'Total TV Time',
               turn_tv_off: 'Turn Television off',
-              volume: 'Volume'
+              volume: 'Volume',
             },
             names: {
               family_room: 'Family Room',
@@ -2608,14 +2609,14 @@ const data = {
               patio: 'Patio',
               right: 'Right',
               temperature_study: 'Temperature Study',
-              upstairs: 'Upstairs'
+              upstairs: 'Upstairs',
             },
             unit: {
               minutes_abbr: 'min',
-              watching: 'watching'
-            }
-          }
-        }
+              watching: 'watching',
+            },
+          },
+        },
       },
       'page-onboarding': {
         'core-config': {
@@ -2627,13 +2628,13 @@ const data = {
             'We would like to know where you live. This information will help with displaying information and setting up sun-based automations. This data is never shared outside of your network.',
           intro_location_detect:
             'We can help you fill in this information by making a one-time request to an external service.',
-          location_name_default: 'Home'
+          location_name_default: 'Home',
         },
         integration: {
           finish: 'Finish',
           intro:
             'Devices and services are represented in Home Assistant as integrations. You can set them up now, or do it later from the configuration screen.',
-          more_integrations: 'More'
+          more_integrations: 'More',
         },
         intro:
           'Are you ready to awaken your home, reclaim your privacy and join a worldwide community of tinkerers?',
@@ -2643,21 +2644,21 @@ const data = {
             name: 'Name',
             password: 'Password',
             password_confirm: 'Confirm Password',
-            username: 'Username'
+            username: 'Username',
           },
           error: {
             password_not_match: "Passwords don't match",
-            required_fields: 'Fill in all required fields'
+            required_fields: 'Fill in all required fields',
           },
           intro: "Let's get started by creating a user account.",
-          required_field: 'Required'
-        }
+          required_field: 'Required',
+        },
       },
       profile: {
         advanced_mode: {
           description: 'Unlocks advanced features.',
           link_promo: 'Learn more',
-          title: 'Advanced Mode'
+          title: 'Advanced Mode',
         },
         change_password: {
           confirm_new_password: 'Confirm New Password',
@@ -2665,19 +2666,19 @@ const data = {
           error_required: 'Required',
           header: 'Change Password',
           new_password: 'New Password',
-          submit: 'Submit'
+          submit: 'Submit',
         },
         current_user: 'You are currently logged in as {fullName}.',
         force_narrow: {
           description:
             'This will hide the sidebar by default, similar to the mobile experience.',
-          header: 'Always hide the sidebar'
+          header: 'Always hide the sidebar',
         },
         is_owner: 'You are an owner.',
         language: {
           dropdown_label: 'Language',
           header: 'Language',
-          link_promo: 'Help translating'
+          link_promo: 'Help translating',
         },
         logout: 'Log out',
         logout_text: 'Are you sure you want to log out?',
@@ -2698,20 +2699,20 @@ const data = {
           not_used: 'Has never been used',
           prompt_copy_token:
             'Copy your access token. It will not be shown again.',
-          prompt_name: 'Name?'
+          prompt_name: 'Name?',
         },
         mfa_setup: {
           close: 'Close',
           step_done: 'Setup done for {step}',
           submit: 'Submit',
           title_aborted: 'Aborted',
-          title_success: 'Success!'
+          title_success: 'Success!',
         },
         mfa: {
           confirm_disable: 'Are you sure you want to disable {name}?',
           disable: 'Disable',
           enable: 'Enable',
-          header: 'Multi-factor Authentication Modules'
+          header: 'Multi-factor Authentication Modules',
         },
         push_notifications: {
           description: 'Send notifications to this device.',
@@ -2719,7 +2720,7 @@ const data = {
           error_use_https: 'Requires SSL enabled for frontend.',
           header: 'Push Notifications',
           link_promo: 'Learn more',
-          push_notifications: 'Push notifications'
+          push_notifications: 'Push notifications',
         },
         refresh_tokens: {
           confirm_delete:
@@ -2732,33 +2733,33 @@ const data = {
           header: 'Refresh Tokens',
           last_used: 'Last used at {date} from {location}',
           not_used: 'Has never been used',
-          token_title: 'Refresh token for {clientId}'
+          token_title: 'Refresh token for {clientId}',
         },
         themes: {
           dropdown_label: 'Theme',
           error_no_theme: 'No themes available.',
           header: 'Theme',
-          link_promo: 'Learn about themes'
+          link_promo: 'Learn about themes',
         },
         vibrate: {
           description:
             'Enable or disable vibration on this device when controlling devices.',
-          header: 'Vibrate'
-        }
+          header: 'Vibrate',
+        },
       },
       'shopping-list': {
         add_item: 'Add item',
         clear_completed: 'Clear completed',
         microphone_tip:
-          'Tap the microphone on the top right and say or type “Add candy to my shopping list”'
-      }
+          'Tap the microphone on the top right and say or type “Add candy to my shopping list”',
+      },
     },
     sidebar: {
       external_app_configuration: 'App Configuration',
       log_out: 'Log out',
-      sidebar_toggle: 'Sidebar Toggle'
-    }
-  }
+      sidebar_toggle: 'Sidebar Toggle',
+    },
+  },
 };
 
 export default data;

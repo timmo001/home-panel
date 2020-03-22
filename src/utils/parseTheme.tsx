@@ -1,6 +1,6 @@
 import {
   PaletteOptions,
-  PaletteColorOptions
+  PaletteColorOptions,
 } from '@material-ui/core/styles/createPalette';
 import amber from '@material-ui/core/colors/amber';
 import blue from '@material-ui/core/colors/blue';
@@ -78,12 +78,12 @@ export default function parseTheme(theme: ThemeProps): PaletteOptions {
       : defaultPalette.background?.default,
     paper: theme.background_paper
       ? theme.background_paper
-      : defaultPalette.background?.paper
+      : defaultPalette.background?.paper,
   };
   palette.text = {
     primary: theme.text_primary
       ? theme.text_primary
-      : defaultPalette.text?.primary
+      : defaultPalette.text?.primary,
   };
   return palette;
 }

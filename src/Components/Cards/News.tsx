@@ -32,19 +32,19 @@ type FeedData = {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
-    overflowY: 'auto'
+    overflowY: 'auto',
   },
   divider: {
     marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   mediaContainer: {
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   media: {
     height: `calc(100% - ${theme.spacing(2)}px)`,
-    width: '100%'
-  }
+    width: '100%',
+  },
 }));
 
 let feedInterval: NodeJS.Timeout;
@@ -62,7 +62,7 @@ function News(props: BaseProps): ReactElement {
         .get(
           `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.news.news_api_key}`
         )
-        .then(res => {
+        .then((res) => {
           const feed: FeedData[] = res.body.articles.map(
             (article: ArticleData) => ({
               heading: `[${article.title}](${article.url})`,
@@ -74,13 +74,13 @@ function News(props: BaseProps): ReactElement {
                 }`
               )} - ${article.author}`,
               imageURL: article.urlToImage,
-              content: article.description
+              content: article.description,
             })
           );
           setData(feed);
           props.card.disabled = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
           setError('An error occured when getting the sources for News API.');
           props.card.disabled = true;
@@ -96,7 +96,7 @@ function News(props: BaseProps): ReactElement {
     props.card.disabled,
     props.card.url,
     props.config.header.date_format,
-    props.config.header.time_military
+    props.config.header.time_military,
   ]);
 
   useEffect(() => {

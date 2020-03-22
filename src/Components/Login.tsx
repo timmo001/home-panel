@@ -21,44 +21,44 @@ import Logo from '../Resources/logo.svg';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
-    background: theme.palette.background.default
+    background: theme.palette.background.default,
   },
   button: {
-    margin: theme.spacing(0.5, 1)
+    margin: theme.spacing(0.5, 1),
   },
   buttonSuccess: {
     backgroundColor: green[500],
     '&:hover': {
-      backgroundColor: green[700]
-    }
+      backgroundColor: green[700],
+    },
   },
   buttonProgress: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     marginTop: theme.spacing(-1),
-    marginLeft: theme.spacing(-1)
+    marginLeft: theme.spacing(-1),
   },
   margin: {
-    margin: theme.spacing(0.5, 1)
+    margin: theme.spacing(0.5, 1),
   },
   media: {
     backgroundSize: 'contain',
-    height: 240
+    height: 240,
   },
   textField: {
-    flexBasis: '50%'
+    flexBasis: '50%',
   },
   wrapper: {
     display: 'flex',
     justifyContent: 'center',
-    margin: theme.spacing(1)
-  }
+    margin: theme.spacing(1),
+  },
 }));
 
 interface LoginProps extends RouteComponentProps {
-  handleCreateAccount(data: any, callback?: (error?: string) => void): any;
-  handleLogin(data: any, callback?: (error?: string) => void): any;
+  handleCreateAccount(data: any, callback?: (error?: string) => void): void;
+  handleLogin(data: any, callback?: (error?: string) => void): void;
 }
 
 interface State {
@@ -77,7 +77,7 @@ function Login(props: LoginProps): ReactElement {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [values, setValues] = React.useState<State>({
     username: '',
-    password: ''
+    password: '',
   });
 
   const handleValidation = useCallback(() => {
@@ -96,18 +96,18 @@ function Login(props: LoginProps): ReactElement {
     handleValidation();
   }, [handleValidation]);
 
-  function toggleCreateAccount() {
+  function toggleCreateAccount(): void {
     setCreateAccount(!createAccount);
   }
 
-  function handleCreateAccount() {
+  function handleCreateAccount(): void {
     setLoading(true);
     localStorage.setItem('not_my_first_rodeo', 'true');
     props.handleCreateAccount(
       {
         strategy: 'local',
         username: values.username,
-        password: values.password
+        password: values.password,
       },
       (error?: string) => {
         setLoading(false);
@@ -120,7 +120,7 @@ function Login(props: LoginProps): ReactElement {
             () =>
               props.history.replace({
                 ...props.location,
-                state: { overview: true }
+                state: { overview: true },
               }),
             500
           );
@@ -129,13 +129,13 @@ function Login(props: LoginProps): ReactElement {
     );
   }
 
-  function handleLogin() {
+  function handleLogin(): void {
     setLoading(true);
     props.handleLogin(
       {
         strategy: 'local',
         username: values.username,
-        password: values.password
+        password: values.password,
       },
       (error?: string) => {
         setLoading(false);
@@ -148,7 +148,7 @@ function Login(props: LoginProps): ReactElement {
             () =>
               props.history.replace({
                 ...props.location,
-                state: { overview: true }
+                state: { overview: true },
               }),
             500
           );
@@ -157,30 +157,30 @@ function Login(props: LoginProps): ReactElement {
     );
   }
 
-  function handleClickShowPassword() {
+  function handleClickShowPassword(): void {
     setShowPassword(!showPassword);
   }
 
-  function handleKeyPress(e: any) {
+  function handleKeyPress(e: any): void {
     handleValidation();
     if (e.key === 'Enter' && !invalidText) {
       createAccount ? handleCreateAccount() : handleLogin();
     }
   }
 
-  function handleMouseDownPassword(event: any) {
+  function handleMouseDownPassword(event: any): void {
     event.preventDefault();
   }
 
   const handleChange = (name: keyof State) => (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  ): void => {
     setValues({ ...values, [name]: event.target.value });
   };
 
   const classes = useStyles();
   const buttonClassname = classnames(classes.button, {
-    [classes.buttonSuccess]: loginSuccess
+    [classes.buttonSuccess]: loginSuccess,
   });
   return (
     <Grid
@@ -213,7 +213,7 @@ function Login(props: LoginProps): ReactElement {
               type="text"
               inputProps={{
                 autoCapitalize: 'none',
-                autoComplete: 'username'
+                autoComplete: 'username',
               }}
               value={values.username}
               onChange={handleChange('username')}
@@ -231,7 +231,7 @@ function Login(props: LoginProps): ReactElement {
                 autoCapitalize: 'none',
                 autoComplete: createAccount
                   ? 'new-password'
-                  : 'current-password'
+                  : 'current-password',
               }}
               value={values.password}
               onChange={handleChange('password')}

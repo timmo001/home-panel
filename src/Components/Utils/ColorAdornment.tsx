@@ -9,11 +9,11 @@ import { SketchPicker, ColorResult } from 'react-color';
 
 const useStyles = makeStyles((theme: Theme) => ({
   menu: {
-    zIndex: 2000
+    zIndex: 2000,
   },
   menuContent: {
-    padding: theme.spacing(2)
-  }
+    padding: theme.spacing(2),
+  },
 }));
 
 interface ColorAdornmentProps {

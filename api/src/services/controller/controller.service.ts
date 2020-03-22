@@ -11,11 +11,11 @@ declare module '../../declarations' {
   }
 }
 
-export default function(app: Application) {
+export default function (app: Application): void {
   const paginate = app.get('paginate');
 
   const options = {
-    paginate
+    paginate,
   };
 
   // Initialize our service with any options it requires

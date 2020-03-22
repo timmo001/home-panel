@@ -2,7 +2,7 @@ import {
   ConfigurationProps,
   PageProps,
   GroupProps,
-  CardProps
+  CardProps,
 } from 'Components/Configuration/Config';
 
 export function findPageIdByKey(

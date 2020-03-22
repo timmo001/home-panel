@@ -26,20 +26,20 @@ import { CommandType } from 'Components/Utils/Command';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
-    margin: 4
+    margin: 4,
   },
   title: {
     fontWeight: 400,
-    lineHeight: 1.2
+    lineHeight: 1.2,
   },
   switch: {
-    margin: 4
-  }
+    margin: 4,
+  },
 }));
 
 export interface BaseProps extends RouteComponentProps {
@@ -116,7 +116,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               onChange={props.handleSelectChange}
               inputProps={{
                 name: 'type',
-                id: 'type'
+                id: 'type',
               }}>
               {cardTypes.map((type: CardType, key: number) => (
                 <MenuItem key={key} value={type.name}>
@@ -156,7 +156,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
                   color={props.card.background}
                   handleColorChange={handleColorChange('background')}
                 />
-              )
+              ),
             }}
             value={props.card.background}
             onChange={props.handleChange && props.handleChange('background')}
@@ -239,7 +239,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
                 onChange={props.handleSelectChange}
                 inputProps={{
                   name: 'title_justify',
-                  id: 'title_justify'
+                  id: 'title_justify',
                 }}>
                 <MenuItem value="left">Left</MenuItem>
                 <MenuItem value="center">Center</MenuItem>

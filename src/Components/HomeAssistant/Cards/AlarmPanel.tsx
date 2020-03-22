@@ -10,21 +10,21 @@ import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     marginBottom: theme.spacing(0.2),
     userSelect: 'none',
     overflow: 'hidden',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   input: {
-    width: 60
+    width: 60,
   },
   codes: {
-    maxWidth: 168
-  }
+    maxWidth: 168,
+  },
 }));
 
 function AlarmPanel(props: EntityProps): ReactElement | null {
@@ -43,7 +43,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
     if (props.handleHassChange && props.card.domain)
       props.handleHassChange(props.card.domain, service, {
         entity_id: props.card.entity,
-        code
+        code,
       });
     setCode('');
   };
@@ -123,7 +123,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               className={classes.input}
               inputProps={{
                 'aria-label': 'code',
-                style: { textAlign: 'center' }
+                style: { textAlign: 'center' },
               }}
               disabled={props.entity.state === 'pending'}
               placeholder="1234"

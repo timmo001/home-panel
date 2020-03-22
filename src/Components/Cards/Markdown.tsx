@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     '&a': {
       color: theme.palette.text.secondary,
       '&:visited': {
-        color: theme.palette.text.secondary
+        color: theme.palette.text.secondary,
       },
       '&:hover': {
-        color: theme.palette.text.secondary
-      }
-    }
-  }
+        color: theme.palette.text.secondary,
+      },
+    },
+  },
 }));
 
 function Markdown(props: BaseProps): ReactElement | null {

@@ -18,11 +18,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: 0,
     right: 0,
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   icon: {
-    fontSize: '1.1rem'
-  }
+    fontSize: '1.1rem',
+  },
 }));
 
 let editTimeout: NodeJS.Timeout;

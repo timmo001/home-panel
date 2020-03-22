@@ -13,7 +13,7 @@ import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
-  handleChange as handleHassChange
+  handleChange as handleHassChange,
 } from './HomeAssistant/HomeAssistant';
 import isObject from '../utils/isObject';
 import Loading from './Utils/Loading';
@@ -26,28 +26,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: '100%',
     maxHeight: '100%',
     overflowX: 'hidden',
-    background: theme.palette.background.default
+    background: theme.palette.background.default,
   },
   content: {
     height: `calc(100% - ${theme.spacing(8)}px)`,
     maxHeight: `calc(100% - ${theme.spacing(8)}px)`,
-    padding: theme.spacing(1.5, 2, 0.5, 2)
+    padding: theme.spacing(1.5, 2, 0.5, 2),
   },
   contentDenseToolbar: {
     height: `calc(100% - ${theme.spacing(6)}px)`,
-    maxHeight: `calc(100% - ${theme.spacing(6)}px)`
+    maxHeight: `calc(100% - ${theme.spacing(6)}px)`,
   },
   contentNoToolbar: {
     height: '100%',
-    maxHeight: '100%'
+    maxHeight: '100%',
   },
   overview: {
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   toolbar: theme.mixins.toolbar,
   denseToolbar: {
-    minHeight: 48
-  }
+    minHeight: 48,
+  },
 }));
 
 interface MainProps extends RouteComponentExtendedProps {
@@ -120,7 +120,7 @@ function Main(props: MainProps): ReactElement {
       }
     } else config = data;
     props.handleConfigChange(config);
-    if (path.find(i => i === 'theme')) props.handleSetTheme(config.theme);
+    if (path.find((i) => i === 'theme')) props.handleSetTheme(config.theme);
   }
 
   async function handleHassLogin(url: string): Promise<void> {

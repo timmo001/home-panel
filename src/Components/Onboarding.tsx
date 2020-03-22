@@ -7,7 +7,7 @@ import socketio from '@feathersjs/socketio-client';
 import {
   createMuiTheme,
   responsiveFontSizes,
-  Theme
+  Theme,
 } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -16,7 +16,7 @@ import {
   ThemeProps,
   defaultPalette,
   defaultTheme,
-  ConfigurationProps
+  ConfigurationProps,
 } from './Configuration/Config';
 import { CommandType } from './Utils/Command';
 import clone from '../utils/clone';
@@ -42,7 +42,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   const [theme, setTheme] = React.useState<Theme>(
     responsiveFontSizes(
       createMuiTheme({
-        palette: defaultPalette
+        palette: defaultPalette,
       })
     )
   );
@@ -51,9 +51,9 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
     if (!client) {
       client = feathers();
       const path: string = clone(props.location.pathname);
-      const url = `${process.env.REACT_APP_API_PROTOCOL ||
-        window.location.protocol}//${process.env.REACT_APP_API_HOSTNAME ||
-        window.location.hostname}:${
+      const url = `${
+        process.env.REACT_APP_API_PROTOCOL || window.location.protocol
+      }//${process.env.REACT_APP_API_HOSTNAME || window.location.hostname}:${
         process.env.REACT_APP_API_PORT || process.env.NODE_ENV === 'development'
           ? '8234'
           : window.location.port
@@ -72,10 +72,10 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
           overrides: {
             MuiTypography: {
               subtitle1: {
-                lineHeight: 1.4
-              }
-            }
-          }
+                lineHeight: 1.4,
+              },
+            },
+          },
         })
       )
     );
@@ -204,8 +204,10 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
   const cssOverrides = `
     a {
-      color: ${(config && config.theme && config.theme.link_color) ||
-        defaultTheme.link_color};
+      color: ${
+        (config && config.theme && config.theme.link_color) ||
+        defaultTheme.link_color
+      };
     }
     ::-webkit-scrollbar-thumb {
       visibility: ${mouseMoved ? 'visible' : 'hidden'};

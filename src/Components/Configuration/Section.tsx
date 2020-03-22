@@ -13,19 +13,19 @@ import { SectionItemsProps } from './Config';
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
     marginRight: theme.spacing(2),
-    fontSize: 24
+    fontSize: 24,
   },
   item: {
     padding: theme.spacing(1.5, 1),
     borderBottom: '1px solid #EEE',
     '&:first-child': {
-      paddingTop: 0
+      paddingTop: 0,
     },
     '&:last-child': {
       borderBottom: 'none',
-      paddingBottom: 0
-    }
-  }
+      paddingBottom: 0,
+    },
+  },
 }));
 
 interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}

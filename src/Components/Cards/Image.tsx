@@ -6,22 +6,22 @@ import { BaseProps } from './Base';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%'
+    height: '100%',
   },
   dialogPaper: {
-    background: theme.palette.background.default
+    background: theme.palette.background.default,
   },
   dialog: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   image: {
     height: '100%',
     width: '100%',
     objectFit: 'scale-down',
     marginBottom: -6,
-    cursor: 'pointer'
-  }
+    cursor: 'pointer',
+  },
 }));
 
 function Image(props: BaseProps): ReactElement {

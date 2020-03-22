@@ -27,31 +27,31 @@ const drawerWidth = 240,
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex'
+    display: 'flex',
   },
   permanentIconsRoot: {
-    zIndex: 2000
+    zIndex: 2000,
   },
   avatar: {
     background: theme.palette.primary.main,
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
   },
   drawer: {
     [theme.breakpoints.up('md')]: {
       width: drawerWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
   drawerInner: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   drawerPaperIcons: {
     width: drawerWidthIcons,
-    overflowX: 'hidden'
+    overflowX: 'hidden',
   },
   drawerHeader: {
     ...theme.mixins.toolbar,
@@ -60,43 +60,43 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'space-between',
     alignContent: 'center',
     alignItems: 'center',
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   drawerHeaderDense: {
     minHeight: 48,
-    maxHeight: 48
+    maxHeight: 48,
   },
   drawerHeaderText: {
-    marginLeft: theme.spacing(1)
+    marginLeft: theme.spacing(1),
   },
   persistentToolbar: {
-    marginLeft: drawerWidth
+    marginLeft: drawerWidth,
   },
   persistentToolbarIcons: {
-    marginLeft: drawerWidthIcons
+    marginLeft: drawerWidthIcons,
   },
   heading: {
-    flex: 1
+    flex: 1,
   },
   icon: {
-    fontSize: 22
+    fontSize: 22,
   },
   link: {
     color: theme.palette.text.primary,
     '&:hover': {
-      color: theme.palette.text.primary
-    }
+      color: theme.palette.text.primary,
+    },
   },
   linkToolbar: {
     color: theme.palette.text.primary,
     '&:hover': {
-      color: theme.palette.text.primary
+      color: theme.palette.text.primary,
     },
-    maxWidth: 50
+    maxWidth: 50,
   },
   menuButton: {
-    marginRight: theme.spacing(1)
-  }
+    marginRight: theme.spacing(1),
+  },
 }));
 
 interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
@@ -279,8 +279,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
                       to={{
                         state: {
                           ...props.location.state,
-                          edit: props.editing ? false : true
-                        }
+                          edit: props.editing ? false : true,
+                        },
                       }}
                       key={key}>
                       <IconButton
@@ -325,10 +325,10 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
                 ? classes.drawerPaperIcons
                 : props.config.general.drawer_type === 'permanent_icons_only'
                 ? classes.drawerPaperIcons
-                : classes.drawerPaper
+                : classes.drawerPaper,
           }}
           ModalProps={{
-            keepMounted: true
+            keepMounted: true,
           }}>
           {drawer}
         </SwipeableDrawer>

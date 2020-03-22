@@ -144,7 +144,7 @@ export type CardType = {
 export const defaultPage = (): PageProps => ({
   key: makeKey(16),
   name: 'Page',
-  icon: 'file'
+  icon: 'file',
 });
 
 export const defaultGroup = (pageKey: string): GroupProps => ({
@@ -152,7 +152,7 @@ export const defaultGroup = (pageKey: string): GroupProps => ({
   name: 'Group',
   page: pageKey,
   width: 2,
-  cards: []
+  cards: [],
 });
 
 export const defaultCard = (groupKey: string): CardProps => ({
@@ -162,7 +162,7 @@ export const defaultCard = (groupKey: string): CardProps => ({
   type: 'entity',
   elevation: 1,
   width: 1,
-  height: 1
+  height: 1,
 });
 
 export const defaultTheme: ThemeProps = {
@@ -172,7 +172,7 @@ export const defaultTheme: ThemeProps = {
   background_default: '#303030',
   background_paper: '#383c45',
   text_primary: '#ffffff',
-  link_color: '#00ccff'
+  link_color: '#00ccff',
 };
 
 export const defaultPalette: PaletteOptions = {
@@ -181,11 +181,11 @@ export const defaultPalette: PaletteOptions = {
   secondary: pink,
   background: {
     default: '#303030',
-    paper: '#383c45'
+    paper: '#383c45',
   },
   text: {
-    primary: '#ffffff'
-  }
+    primary: '#ffffff',
+  },
 };
 
 export const cardTypes: CardType[] = [
@@ -194,7 +194,7 @@ export const cardTypes: CardType[] = [
   { name: 'image', title: 'Image' },
   { name: 'markdown', title: 'Markdown' },
   { name: 'news', title: 'News Feed' },
-  { name: 'rss', title: 'RSS Feed' }
+  { name: 'rss', title: 'RSS Feed' },
 ];
 
 export const cardTypeDefaults: { [type: string]: CardProps } = {
@@ -210,7 +210,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     width: 1,
     height: 1,
     icon: '',
-    entity: ''
+    entity: '',
   },
   iframe: {
     key: '',
@@ -223,7 +223,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     square: false,
     width: 2,
     height: 'auto',
-    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+    url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
   },
   image: {
     key: '',
@@ -235,7 +235,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     padding: '0px',
     square: false,
     width: 2,
-    url: 'https://source.unsplash.com/daily'
+    url: 'https://source.unsplash.com/daily',
   },
   markdown: {
     key: '',
@@ -248,7 +248,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     square: false,
     width: 2,
     height: 1,
-    content: ''
+    content: '',
   },
   news: {
     key: '',
@@ -261,7 +261,7 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     square: false,
     width: 2,
     height: 3,
-    url: ''
+    url: '',
   },
   rss: {
     key: '',
@@ -274,8 +274,8 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     square: false,
     width: 2,
     height: 3,
-    url: ''
-  }
+    url: '',
+  },
 };
 
 export const colorItems: string[] = [
@@ -296,7 +296,7 @@ export const colorItems: string[] = [
   'purple',
   'red',
   'teal',
-  'yellow'
+  'yellow',
 ];
 
 export const sections: SectionProps[] = [
@@ -311,7 +311,7 @@ export const sections: SectionProps[] = [
         description:
           'Backup and Restore. Restoring will wipe your current config.',
         icon: 'mdi-hammer',
-        type: 'backup_restore'
+        type: 'backup_restore',
       },
       {
         name: 'autohide_navigation',
@@ -319,7 +319,7 @@ export const sections: SectionProps[] = [
         description: 'Should the toolbar hide after a few seconds?',
         icon: 'mdi-page-layout-header',
         type: 'switch',
-        default: true
+        default: true,
       },
       {
         name: 'autohide_toolbar',
@@ -327,7 +327,7 @@ export const sections: SectionProps[] = [
         description: 'Should the toolbar hide after a few seconds?',
         icon: 'mdi-page-layout-header',
         type: 'switch',
-        default: false
+        default: false,
       },
       {
         name: 'dense_toolbar',
@@ -335,7 +335,7 @@ export const sections: SectionProps[] = [
         description: 'Should the toolbar use less space?',
         icon: 'mdi-page-layout-header',
         type: 'switch',
-        default: false
+        default: false,
       },
       {
         name: 'drawer_type',
@@ -348,10 +348,10 @@ export const sections: SectionProps[] = [
           'default',
           'persistent',
           'persistent_icons_only',
-          'permanent_icons_only'
-        ]
-      }
-    ]
+          'permanent_icons_only',
+        ],
+      },
+    ],
   },
   {
     name: 'news',
@@ -364,9 +364,9 @@ export const sections: SectionProps[] = [
         description: 'Your [News API](https://newsapi.org) key.',
         icon: 'mdi-page-layout-header',
         type: 'input_password',
-        default: ''
-      }
-    ]
+        default: '',
+      },
+    ],
   },
   {
     name: 'theme',
@@ -380,7 +380,7 @@ export const sections: SectionProps[] = [
         icon: 'mdi-theme-light-dark',
         type: 'select',
         default: 'dark',
-        items: ['dark', 'light']
+        items: ['dark', 'light'],
       },
       {
         name: 'primary',
@@ -390,7 +390,7 @@ export const sections: SectionProps[] = [
         icon: 'mdi-palette',
         type: 'select',
         default: 'pink',
-        items: colorItems
+        items: colorItems,
       },
       {
         name: 'secondary',
@@ -400,7 +400,7 @@ export const sections: SectionProps[] = [
         icon: 'mdi-palette',
         type: 'select',
         default: 'pink',
-        items: colorItems
+        items: colorItems,
       },
       {
         name: 'background_default',
@@ -408,7 +408,7 @@ export const sections: SectionProps[] = [
         description: 'Background color.',
         icon: 'mdi-format-color-fill',
         type: 'color',
-        default: '#303030'
+        default: '#303030',
       },
       {
         name: 'background_paper',
@@ -416,7 +416,7 @@ export const sections: SectionProps[] = [
         description: 'Card color.',
         icon: 'mdi-card-bulleted',
         type: 'color',
-        default: '#383c45'
+        default: '#383c45',
       },
       {
         name: 'text_primary',
@@ -424,7 +424,7 @@ export const sections: SectionProps[] = [
         description: 'Text color.',
         icon: 'mdi-text',
         type: 'color_only',
-        default: '#ffffff'
+        default: '#ffffff',
       },
       {
         name: 'link_color',
@@ -432,9 +432,9 @@ export const sections: SectionProps[] = [
         description: '[Link](https://timmo.dev/home-panel/configui/) color.',
         icon: 'mdi-link',
         type: 'color_only',
-        default: '#00ccff'
-      }
-    ]
+        default: '#00ccff',
+      },
+    ],
   },
   {
     name: 'header',
@@ -447,7 +447,7 @@ export const sections: SectionProps[] = [
         description: 'Show the time?',
         icon: 'mdi-progress-clock',
         type: 'switch',
-        default: true
+        default: true,
       },
       {
         name: 'time_military',
@@ -455,7 +455,7 @@ export const sections: SectionProps[] = [
         description: 'Should time be using the 24 hour clock?',
         icon: 'mdi-clock-outline',
         type: 'switch',
-        default: false
+        default: false,
       },
       {
         name: 'time_location',
@@ -464,7 +464,7 @@ export const sections: SectionProps[] = [
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
         default: 0,
-        items: ['Left', 'Center', 'Right']
+        items: ['Left', 'Center', 'Right'],
       },
       {
         name: 'time_font_size',
@@ -472,7 +472,7 @@ export const sections: SectionProps[] = [
         description: 'Custom font size for Time.',
         icon: 'mdi-text',
         type: 'input',
-        default: ''
+        default: '',
       },
       {
         name: 'time_period_font_size',
@@ -480,7 +480,7 @@ export const sections: SectionProps[] = [
         description: 'Custom font size for Time period (non-military time).',
         icon: 'mdi-text',
         type: 'input',
-        default: ''
+        default: '',
       },
       {
         name: 'date_show',
@@ -488,7 +488,7 @@ export const sections: SectionProps[] = [
         description: 'Show the date?',
         icon: 'mdi-calendar',
         type: 'switch',
-        default: true
+        default: true,
       },
       {
         name: 'date_format',
@@ -497,7 +497,7 @@ export const sections: SectionProps[] = [
           'Format of the date. See [here](https://momentjs.com/docs/#/displaying/format) for options.',
         icon: 'mdi-calendar-range',
         type: 'input',
-        default: 'Do MMMM YYYY'
+        default: 'Do MMMM YYYY',
       },
       {
         name: 'date_location',
@@ -506,7 +506,7 @@ export const sections: SectionProps[] = [
         icon: 'mdi-format-horizontal-align-center',
         type: 'radio',
         default: 1,
-        items: ['Left', 'Center', 'Right']
+        items: ['Left', 'Center', 'Right'],
       },
       {
         name: 'date_font_size',
@@ -514,8 +514,8 @@ export const sections: SectionProps[] = [
         description: 'Custom font size for Date.',
         icon: 'mdi-text',
         type: 'input',
-        default: ''
-      }
-    ]
-  }
+        default: '',
+      },
+    ],
+  },
 ];

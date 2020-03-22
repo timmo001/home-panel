@@ -3,9 +3,10 @@
 import { Hook, HookContext } from '@feathersjs/feathers';
 
 export default (_options = {}): Hook => {
-  return async (context: HookContext) => {
-    let { app, data, params } = context;
-    let { page, card, command } = data;
+  return async (context: HookContext): Promise<HookContext> => {
+    const { app, data, params } = context;
+    let { page, card } = data;
+    const { command } = data;
 
     if (!page && !card) throw new Error('page or card is required');
     if (page && typeof page !== 'string')
@@ -44,7 +45,7 @@ export default (_options = {}): Hook => {
     context.data = {
       ...data,
       page,
-      card
+      card,
     };
 
     // Best practice: hooks should always return the context

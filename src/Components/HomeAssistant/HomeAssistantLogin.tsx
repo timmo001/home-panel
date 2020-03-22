@@ -19,15 +19,15 @@ import { DialogTitle } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   media: {
     width: '100%',
-    height: 48
+    height: 48,
   },
   icon: {
-    fontSize: 22
-  }
+    fontSize: 22,
+  },
 }));
 
 interface HomeAssistantLoginProps {
@@ -38,8 +38,9 @@ interface HomeAssistantLoginProps {
 function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
   const [showDialog, setShowDialog] = React.useState<boolean>(false);
   const [url, setUrl] = React.useState<string>(
-    `${process.env.REACT_APP_API_PROTOCOL ||
-      window.location.protocol}//homeassistant.local:8123`
+    `${
+      process.env.REACT_APP_API_PROTOCOL || window.location.protocol
+    }//homeassistant.local:8123`
   );
   const [invalidText, setInvalidText] = React.useState<string>();
 
@@ -113,7 +114,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
                 inputProps={{
                   autoFocus: true,
                   autoCapitalize: 'none',
-                  autoComplete: 'url'
+                  autoComplete: 'url',
                 }}
                 value={url}
                 onChange={handleChange}

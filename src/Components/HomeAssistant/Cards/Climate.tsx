@@ -12,41 +12,41 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   temperature: {
     display: 'inline-flex',
-    marginLeft: theme.spacing(0.4)
+    marginLeft: theme.spacing(0.4),
   },
   iconContainer: {
     height: 32,
     width: 32,
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
     transform: 'translateY(-8px)',
     textAlign: 'center',
     color: theme.palette.text.primary,
-    opacity: 0.6
+    opacity: 0.6,
   },
   iconActive: {
     opacity: 1.0,
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
   },
   iconNormal: {
-    opacity: 1.0
+    opacity: 1.0,
   },
   hyphen: {
-    marginLeft: theme.spacing(0.4)
-  }
+    marginLeft: theme.spacing(0.4),
+  },
 }));
 
 function Climate(props: EntityProps): ReactElement | null {
@@ -64,7 +64,7 @@ function Climate(props: EntityProps): ReactElement | null {
       ) {
         const data = {
           entity_id: props.entity.entity_id,
-          [type]: newTemp
+          [type]: newTemp,
         };
         if (
           type === 'target_temp_low' &&
@@ -84,7 +84,7 @@ function Climate(props: EntityProps): ReactElement | null {
     if (props.handleHassChange && props.entity)
       props.handleHassChange('climate', 'set_hvac_mode', {
         entity_id: props.entity.entity_id,
-        hvac_mode
+        hvac_mode,
       });
   };
 
@@ -97,7 +97,7 @@ function Climate(props: EntityProps): ReactElement | null {
     )
       props.handleHassChange('climate', 'set_away_mode', {
         entity_id: props.entity.entity_id,
-        away_mode: props.entity.attributes.away_mode === 'on' ? 'off' : 'on'
+        away_mode: props.entity.attributes.away_mode === 'on' ? 'off' : 'on',
       });
   }
 

@@ -5,14 +5,14 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
-  }
+    textOverflow: 'ellipsis',
+  },
 }));
 
 interface MessageProps {
@@ -44,7 +44,7 @@ function Message(props: MessageProps): ReactElement {
       variant="outlined"
       style={{
         backgroundColor: color,
-        padding: props.padding ? props.padding : theme.spacing(1)
+        padding: props.padding ? props.padding : theme.spacing(1),
       }}>
       <Typography className={classes.text} component="h4" variant="subtitle1">
         {props.text}

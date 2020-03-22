@@ -19,29 +19,29 @@ import { EntityProps } from './Entity';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     height: '100%',
-    width: '100%'
+    width: '100%',
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   info: {
-    width: '100%'
+    width: '100%',
   },
   media: {
     height: 'calc(100% - 62px)',
     width: '100%',
     objectFit: 'scale-down',
-    marginBottom: theme.spacing(0.5)
+    marginBottom: theme.spacing(0.5),
   },
   button: {
-    margin: `0 ${theme.spacing(0.5)}px`
+    margin: `0 ${theme.spacing(0.5)}px`,
   },
   fill: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
 function Media(props: EntityProps): ReactElement | null {
@@ -52,37 +52,37 @@ function Media(props: EntityProps): ReactElement | null {
           break;
         case 'power':
           props.handleHassChange('media_player', 'toggle', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'play':
           props.handleHassChange('media_player', 'media_play', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'pause':
           props.handleHassChange('media_player', 'media_pause', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'next':
           props.handleHassChange('media_player', 'media_next_track', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'previous':
           props.handleHassChange('media_player', 'media_previous_track', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'vol_down':
           props.handleHassChange('media_player', 'volume_down', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
         case 'vol_up':
           props.handleHassChange('media_player', 'volume_up', {
-            entity_id: props.entity.entity_id
+            entity_id: props.entity.entity_id,
           });
           break;
       }
@@ -94,7 +94,7 @@ function Media(props: EntityProps): ReactElement | null {
     if (props.handleHassChange)
       props.handleHassChange('media_player', 'select_source', {
         entity_id: props.entity.entity_id,
-        source: event.target.value
+        source: event.target.value,
       });
   }
 
@@ -231,7 +231,7 @@ function Media(props: EntityProps): ReactElement | null {
               onChange={handleSelectChange}
               inputProps={{
                 name: 'source',
-                id: 'source'
+                id: 'source',
               }}>
               {props.entity.attributes.source_list &&
                 props.entity.state !== 'off' &&

@@ -10,26 +10,26 @@ const useStyles = makeStyles(() => ({
   buttonCardContainer: {
     height: '100%',
     width: '100%',
-    flex: 1
+    flex: 1,
   },
   card: {
     position: 'relative',
     height: '100%',
     width: '100%',
-    flex: 1
+    flex: 1,
   },
   cardContent: {
     padding: 12,
     '&:last-child': {
-      paddingBottom: 12
-    }
+      paddingBottom: 12,
+    },
   },
   grid: {
-    height: '100%'
+    height: '100%',
   },
   icon: {
-    fontSize: 48
-  }
+    fontSize: 48,
+  },
 }));
 
 export interface AddCardProps {
@@ -56,7 +56,7 @@ function AddCard(props: AddCardProps): ReactElement {
               minHeight: cardSize,
               minWidth: cardSize,
               maxHeight: cardSize,
-              maxWidth: cardSize
+              maxWidth: cardSize,
             }}>
             <Grid
               className={classes.grid}

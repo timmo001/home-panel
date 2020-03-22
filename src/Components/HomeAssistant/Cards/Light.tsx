@@ -17,29 +17,29 @@ import FeatureClassNames from '../Utils/FeatureClassNames';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   text: {
     overflow: 'hidden',
     userSelect: 'none',
     textAlign: 'center',
-    textOverflow: 'ellipsis'
+    textOverflow: 'ellipsis',
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   icon: {
     height: 48,
     width: 48,
     textAlign: 'center',
-    verticalAlign: 'center'
+    verticalAlign: 'center',
   },
   select: {
     minWidth: '100%',
-    width: '100%'
-  }
+    width: '100%',
+  },
 }));
 
 const FEATURE_CLASS_NAMES = {
@@ -47,7 +47,7 @@ const FEATURE_CLASS_NAMES = {
   2: 'has-color_temp',
   4: 'has-effect_list',
   16: 'has-color',
-  128: 'has-white_value'
+  128: 'has-white_value',
 };
 
 function Light(props: EntityProps): ReactElement | null {
@@ -91,19 +91,19 @@ function Light(props: EntityProps): ReactElement | null {
     props.handleHassChange &&
       props.handleHassChange('light', true, {
         entity_id: props.entity.entity_id,
-        [name]: value
+        [name]: value,
       });
   };
 
   function handleColorChange(color: ColorResult): void {
     setAttributes({
       ...attributes,
-      rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
+      rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
     });
     props.handleHassChange &&
       props.handleHassChange('light', true, {
         entity_id: props.entity.entity_id,
-        rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b]
+        rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
       });
   }
 
@@ -116,7 +116,7 @@ function Light(props: EntityProps): ReactElement | null {
     props.handleHassChange &&
       props.handleHassChange('light', true, {
         entity_id: props.entity.entity_id,
-        [name]: event.target.value
+        [name]: event.target.value,
       });
   };
 
@@ -208,7 +208,7 @@ function Light(props: EntityProps): ReactElement | null {
             onChange={handleSelectChange('effect')}
             inputProps={{
               name: 'effect',
-              id: 'effect'
+              id: 'effect',
             }}>
             <MenuItem value="none">None</MenuItem>
             {attributes &&
@@ -263,7 +263,7 @@ function Light(props: EntityProps): ReactElement | null {
               0,
               Number(props.card.height) > 1 ? Number(props.card.height) : 0
             )
-            .map(control => control)}
+            .map((control) => control)}
     </Grid>
   );
 }

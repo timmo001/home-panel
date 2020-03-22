@@ -10,20 +10,20 @@ import { EntityProps } from './Entity';
 
 const useStyles = makeStyles(() => ({
   root: {
-    flex: 1
+    flex: 1,
   },
   textContainer: {
-    zIndex: 100
+    zIndex: 100,
   },
   iconContainer: {
     display: 'flex',
     alignContent: 'center',
     justifyContent: 'center',
-    zIndex: 100
+    zIndex: 100,
   },
   icon: {
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 }));
 
 function NumberEntity(props: EntityProps): ReactElement {
@@ -43,7 +43,7 @@ function NumberEntity(props: EntityProps): ReactElement {
     props.handleHassChange &&
       props.handleHassChange('input_number', 'set_value', {
         entity_id: props.entity.entity_id,
-        value
+        value,
       });
   }
 
@@ -53,7 +53,7 @@ function NumberEntity(props: EntityProps): ReactElement {
     props.handleHassChange &&
       props.handleHassChange('input_number', 'set_value', {
         entity_id: props.entity.entity_id,
-        value: val
+        value: val,
       });
   }
 
@@ -135,7 +135,7 @@ function NumberEntity(props: EntityProps): ReactElement {
                     ? props.entity.attributes.max
                     : 100,
                   type: 'number',
-                  'aria-labelledby': 'input-slider'
+                  'aria-labelledby': 'input-slider',
                 }}
               />
             </Grid>

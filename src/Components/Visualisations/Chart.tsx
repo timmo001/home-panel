@@ -15,7 +15,7 @@ import {
   Scatter,
   ScatterChart,
   Tooltip,
-  YAxis
+  YAxis,
 } from 'recharts';
 import Typography from '@material-ui/core/Typography';
 
@@ -25,8 +25,8 @@ const useStyles = makeStyles(() => ({
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
-  }
+    right: 0,
+  },
 }));
 
 export const chartTypes: { [type: string]: string } = {
@@ -34,7 +34,7 @@ export const chartTypes: { [type: string]: string } = {
   bar: 'Bar',
   line: 'Line',
   radialBar: 'Gauge',
-  scatter: 'Scatter'
+  scatter: 'Scatter',
 };
 
 export type ChartData = {
@@ -119,7 +119,7 @@ function Chart(props: ChartProps): ReactElement | null {
           props.data.map((item: ChartData, key: number) => ({
             x: key,
             y: item.value,
-            z: item.value
+            z: item.value,
           }))
         );
       else setData(props.data);
@@ -154,7 +154,7 @@ function Chart(props: ChartProps): ReactElement | null {
               activeDot={{
                 stroke: theme.palette.secondary.main,
                 strokeWidth: 2,
-                r: 4
+                r: 4,
               }}
               fillOpacity={1}
               fill="url(#colorUv)"
@@ -198,7 +198,7 @@ function Chart(props: ChartProps): ReactElement | null {
               activeDot={{
                 stroke: theme.palette.secondary.main,
                 strokeWidth: 2,
-                r: 4
+                r: 4,
               }}
               stroke={theme.palette.secondary.main}
               strokeWidth={2}>

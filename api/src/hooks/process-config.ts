@@ -3,9 +3,10 @@
 import { Hook, HookContext } from '@feathersjs/feathers';
 
 export default (_options = {}): Hook => {
-  return async (context: HookContext) => {
+  return async (context: HookContext): Promise<HookContext> => {
     const { data } = context;
-    let { createNew, config } = data;
+    let { config } = data;
+    const { createNew } = data;
 
     if (createNew) {
       config = JSON.parse(
@@ -30,7 +31,7 @@ export default (_options = {}): Hook => {
       // Set the user id
       userId: user._id,
       // Add the current date
-      createdAt: new Date().getTime()
+      createdAt: new Date().getTime(),
     };
 
     // Best practice: hooks should always return the context

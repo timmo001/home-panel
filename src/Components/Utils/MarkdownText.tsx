@@ -22,7 +22,7 @@ function MarkdownText(props: MarkdownTextProps): ReactElement {
               breaks: false,
               langPrefix: 'language-',
               linkify: true,
-              typographer: true
+              typographer: true,
             })
               .use(emoji)
               .use(externalLinks, { externalTarget: '_blank' })
