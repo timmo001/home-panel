@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -44,6 +44,10 @@ function Entity(props: EntityBaseProps): ReactElement | null {
 
   let entity: HassEntity | undefined;
 
+  useEffect(() => {
+    if (entity) props.card.domain = entity.entity_id.split('.')[0];
+  }, [props.card.domain, entity]);
+
   const classes = useStyles();
 
   if (!props.hassAuth || !props.hassConfig || !props.hassEntities) return null;
@@ -74,6 +78,7 @@ function Entity(props: EntityBaseProps): ReactElement | null {
     );
   } else {
     props.card.disabled = false;
+    props.card.state = entity.state;
   }
 
   if (
