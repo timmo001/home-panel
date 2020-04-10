@@ -1,5 +1,7 @@
 # Home Panel
 
+[![Build Status](https://dev.azure.com/timmo0001/Home%20Panel/_apis/build/status/Edge?branchName=master)](https://dev.azure.com/timmo0001/Home%20Panel/_build/latest?definitionId=5&branchName=master)
+
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
