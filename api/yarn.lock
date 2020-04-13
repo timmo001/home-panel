@@ -2341,10 +2341,10 @@ feathers-nedb@5.1.0:
     "@feathersjs/commons" "^4.3.0"
     "@feathersjs/errors" "^4.3.4"
 
-feathers-swagger@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-1.1.1.tgz#98ffa3b9bad9c1a2485e37c64548ddde3dfac3b0"
-  integrity sha512-k3pf3isSTs1jfk8SkgtZFcgrwkjzgKdxrhfZWXUGbSGSULnw3yoP9uLcm7v+PVHaqbqLoTCnCx/2o3Hh37K0NA==
+feathers-swagger@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-1.2.0.tgz#efa8fb5a5eac74753b3857c54640e9499b2eda57"
+  integrity sha512-DSTov8UY5sxD0JCm6aOFTkNp/gDXw3YqtkVz0Sc+CEGXnvWp7Nf7QpzJL5S9PMYhgdIBE/E0YJyOwnxJQq7lTQ==
   dependencies:
     lodash "^4.17.11"
     serve-static "^1.13.2"
