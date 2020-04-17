@@ -2341,12 +2341,12 @@ feathers-nedb@5.1.0:
     "@feathersjs/commons" "^4.3.0"
     "@feathersjs/errors" "^4.3.4"
 
-feathers-swagger@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-1.2.0.tgz#efa8fb5a5eac74753b3857c54640e9499b2eda57"
-  integrity sha512-DSTov8UY5sxD0JCm6aOFTkNp/gDXw3YqtkVz0Sc+CEGXnvWp7Nf7QpzJL5S9PMYhgdIBE/E0YJyOwnxJQq7lTQ==
+feathers-swagger@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/feathers-swagger/-/feathers-swagger-1.2.1.tgz#f734921a46d964e6fd872b80dca502cac5544344"
+  integrity sha512-njBLCmWRAdNLQRITQwvKCsF+fn4WsPpCY2LSoThiLqO0HlmoBiOJpTF9PJuhwwPrzSJdVbl9ebwbmGsVnK3XKA==
   dependencies:
-    lodash "^4.17.11"
+    lodash "^4.17.15"
     serve-static "^1.13.2"
     swagger-ui-dist "^3.22.1"
 
@@ -3818,7 +3818,7 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
-lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
+lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
