@@ -6,15 +6,15 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
-import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
   },
   name: {
-    margin: 'auto 0',
+    margin: theme.spacing(0, 1),
     overflow: 'hidden',
+    textAlign: 'center',
     textOverflow: 'ellipsis',
     fontSize: '1.12rem',
     lineHeight: '1.34rem',
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   icon: {
     color: theme.palette.text.primary,
-    fontSize: 42,
-    lineHeight: '1.0em',
+    fontSize: 64,
+    lineHeight: '0.7em',
   },
   attribute: {
     lineHeight: '1.2em',
@@ -100,10 +100,13 @@ function Weather(props: EntityProps): ReactElement {
     if (props.hassConfig) {
       const lengthUnit = props.hassConfig.unit_system.length || '';
       switch (measure) {
+        case 'length':
+        case 'mass':
+        case 'volume':
+        case 'temperature':
+          return props.hassConfig.unit_system[measure];
         case 'pressure':
           return lengthUnit === 'km' ? ' hPa' : ' inHg';
-        case 'length':
-          return ` ${lengthUnit}`;
         case 'precipitation':
           return lengthUnit === 'km' ? ' mm' : ' in';
         case 'wind_speed':
@@ -114,9 +117,6 @@ function Weather(props: EntityProps): ReactElement {
           return '%';
         default:
           return '';
-        // return props.hassConfig.unit_system[measure]
-        //   ? `${props.hassConfig.unit_system[measure]}`
-        //   : '';
       }
     } else return null;
   }
@@ -124,72 +124,54 @@ function Weather(props: EntityProps): ReactElement {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.root} container direction="row">
+    <Grid
+      className={classes.root}
+      container
+      direction="row"
+      alignContent="space-around"
+      alignItems="center"
+      justify="space-around">
       <Grid
         item
         xs
         container
         direction="row"
         alignContent="center"
-        justify="space-between">
-        <Typography className={classes.name} variant="h5" noWrap>
-          {weatherNameMap[props.entity.state]}
-        </Typography>
+        alignItems="center"
+        justify="center">
+        <Grid item>
+          <Typography className={classes.forecastTextIcon} variant="body2">
+            <span
+              className={classnames(
+                'mdi',
+                `mdi-${weatherMap[props.entity.state]}`,
+                classes.icon
+              )}
+            />
+          </Typography>
+        </Grid>
         <Grid
           item
-          container
-          spacing={1}
-          direction="row"
-          alignContent="center"
-          justify="space-between">
-          <Grid
-            item
-            xs={!props.card.width || props.card.width > 1 ? 4 : 12}
-            container
-            direction="column"
-            alignContent="center"
-            justify="center">
-            <Grid item>
-              <span
-                className={classnames(
-                  'mdi',
-                  `mdi-${props.entity.attributes.icon}`,
-                  classes.icon
-                )}
-              />
-            </Grid>
-            <Grid item className={classes.temperature}>
-              <Typography variant="subtitle1">
-                {props.entity.attributes.temperature}
-              </Typography>
-              <Typography variant="subtitle1">
-                {getUnit('temperature')}
-              </Typography>
-            </Grid>
-          </Grid>
-          {!props.card.width ||
-          props.card.width > 1 ||
-          !props.card.height ||
-          props.card.height > 1 ? (
-            <Grid item xs>
-              {Object.keys(props.entity.attributes)
-                .filter((i) => typeof props.entity.attributes[i] == 'number')
-                .map(
-                  (attribute, i) =>
-                    attribute !== 'temperature' &&
-                    attribute !== 'ozone' && (
-                      <Typography
-                        key={i}
-                        className={classes.attribute}
-                        variant="body2">
-                        {properCase(attribute)}:{' '}
-                        {props.entity.attributes[attribute]}
-                        {getUnit(attribute)}
-                      </Typography>
-                    )
-                )}
-            </Grid>
-          ) : null}
+          style={{
+            textAlign:
+              !props.card.width || props.card.width < 1 ? 'center' : 'left',
+          }}>
+          <Typography
+            className={classes.name}
+            component="span"
+            variant="h5"
+            noWrap>
+            {weatherNameMap[props.entity.state]}
+          </Typography>
+          <br />
+          <Typography
+            className={classes.name}
+            component="span"
+            variant="h6"
+            noWrap>
+            {props.entity.attributes.temperature}
+            {getUnit('temperature')}
+          </Typography>
         </Grid>
       </Grid>
       {(!props.card.width || props.card.width > 1) &&
