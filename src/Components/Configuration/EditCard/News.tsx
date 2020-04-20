@@ -90,6 +90,9 @@ function News(props: BaseProps): ReactElement {
               fullWidth
               options={sources}
               getOptionLabel={(option: Option): string => option.label}
+              getOptionSelected={(option: Option): boolean =>
+                option.value === source?.value
+              }
               value={source}
               onChange={handleChange}
               renderInput={(params): ReactElement => (
