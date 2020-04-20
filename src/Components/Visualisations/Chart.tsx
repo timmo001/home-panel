@@ -162,6 +162,7 @@ function Chart(props: ChartProps): ReactElement | null {
               strokeWidth={2}>
               {props.labels && (
                 <LabelList
+                  data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
@@ -178,6 +179,7 @@ function Chart(props: ChartProps): ReactElement | null {
             <Bar dataKey="value" fill={theme.palette.secondary.main}>
               {props.labels && (
                 <LabelList
+                  data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
@@ -204,6 +206,7 @@ function Chart(props: ChartProps): ReactElement | null {
               strokeWidth={2}>
               {props.labels && (
                 <LabelList
+                  data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
@@ -243,9 +246,16 @@ function Chart(props: ChartProps): ReactElement | null {
           <ScatterChart margin={{ top: theme.spacing(5) }}>
             <YAxis hide dataKey="y" />
             <Tooltip content={<TooltipCustom {...props} />} />
-            <Scatter fill={theme.palette.secondary.main} data={data}>
+            <Scatter
+              className="scatter"
+              data={data}
+              fill={theme.palette.secondary.main}>
               {props.labels && (
-                <LabelList dataKey="y" content={<LabelCustom {...props} />} />
+                <LabelList
+                  data={data}
+                  dataKey="y"
+                  content={<LabelCustom {...props} />}
+                />
               )}
             </Scatter>
           </ScatterChart>
