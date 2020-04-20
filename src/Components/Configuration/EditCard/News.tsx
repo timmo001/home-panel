@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
 function News(props: BaseProps): ReactElement {
   const [sources, setSources] = useState<Option[]>();
-  const [source, setSource] = useState<Option | null>();
+  const [source, setSource] = useState<Option | null>(null);
   const [error, setError] = useState<string>();
 
   function handleChange(
