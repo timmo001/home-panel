@@ -28,7 +28,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
   const classes = useStyles();
 
   const [options, setOptions] = useState<Option[]>([]);
-  const [value, setValue] = useState<Option | null>();
+  const [value, setValue] = useState<Option | null>(null);
 
   function handleChange(
     _event: React.ChangeEvent<{}>,
@@ -75,7 +75,10 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
           properCase(option.value.split('.')[0])
         }
         getOptionLabel={(option: Option): string => option.label}
-        value={value}
+        getOptionSelected={(option: Option): boolean =>
+          option.value === value?.value
+        }
+        value={value || null}
         onChange={handleChange}
         renderInput={(params): ReactElement => (
           <TextField

@@ -23,7 +23,7 @@ function RSS(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="URL"
           placeholder="https://status.home-assistant.io/history.rss"
-          value={props.card.url}
+          value={props.card.url || ''}
           onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
@@ -33,7 +33,7 @@ function RSS(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          value={props.card.height}
+          value={props.card.height || 'auto'}
           onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>

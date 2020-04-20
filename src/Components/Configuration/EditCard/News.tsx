@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
 function News(props: BaseProps): ReactElement {
   const [sources, setSources] = useState<Option[]>();
-  const [source, setSource] = useState<Option | null>();
+  const [source, setSource] = useState<Option | null>(null);
   const [error, setError] = useState<string>();
 
   function handleChange(
@@ -81,7 +81,7 @@ function News(props: BaseProps): ReactElement {
             disabled
             InputLabelProps={{ shrink: true }}
             label="Source"
-            value={error}
+            value={error || ''}
           />
         ) : (
           sources && (
@@ -90,6 +90,9 @@ function News(props: BaseProps): ReactElement {
               fullWidth
               options={sources}
               getOptionLabel={(option: Option): string => option.label}
+              getOptionSelected={(option: Option): boolean =>
+                option.value === source?.value
+              }
               value={source}
               onChange={handleChange}
               renderInput={(params): ReactElement => (
@@ -105,7 +108,7 @@ function News(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          value={props.card.height}
+          value={props.card.height || 'auto'}
           onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>

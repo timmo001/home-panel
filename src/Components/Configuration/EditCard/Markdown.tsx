@@ -24,7 +24,7 @@ function Markdown(props: BaseProps): ReactElement {
           multiline
           label="Content"
           placeholder="- Markdown"
-          value={props.card.content}
+          value={props.card.content || ''}
           onChange={props.handleChange && props.handleChange('content')}
         />
       </Grid>
@@ -34,7 +34,7 @@ function Markdown(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          value={props.card.height}
+          value={props.card.height || 'auto'}
           onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>

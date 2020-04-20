@@ -104,7 +104,7 @@ function NumberEntity(props: EntityProps): ReactElement {
               <Slider
                 onChange={handleSliderChange}
                 onChangeCommitted={handleSliderChangeComplete}
-                value={number}
+                value={number || 0}
                 getAriaValueText={(value: number): string => `${value}`}
                 aria-labelledby="input-slider"
                 valueLabelDisplay="auto"
@@ -120,7 +120,7 @@ function NumberEntity(props: EntityProps): ReactElement {
           ) : (
             <Grid item>
               <Input
-                value={number}
+                value={number || 0}
                 margin="dense"
                 onChange={handleInputChange}
                 onBlur={handleBlur}
