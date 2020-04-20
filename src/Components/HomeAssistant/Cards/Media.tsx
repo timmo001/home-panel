@@ -223,7 +223,7 @@ function Media(props: EntityProps): ReactElement | null {
         {(!props.card.width || props.card.width > 2) && (
           <Grid item>
             <Select
-              value={props.entity.attributes.source}
+              value={props.entity.attributes.source || ''}
               disabled={
                 !props.entity.attributes.source_list ||
                 props.entity.state === 'off'

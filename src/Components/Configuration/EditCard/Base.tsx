@@ -92,8 +92,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               label="Title"
-              placeholder={'Card Title'}
-              value={props.card.title}
+              placeholder="Card Title"
+              value={props.card.title || 'Card'}
               onChange={props.handleChange && props.handleChange('title')}
             />
           </Grid>
@@ -112,7 +112,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           <FormControl className={classes.textField}>
             <InputLabel htmlFor="type">Type</InputLabel>
             <Select
-              value={props.card.type}
+              value={props.card.type || 'entity'}
               onChange={props.handleSelectChange}
               inputProps={{
                 name: 'type',
@@ -140,7 +140,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             type="number"
             label="Elevation"
             placeholder="1"
-            value={props.card.elevation}
+            value={props.card.elevation || '1'}
             onChange={props.handleChange && props.handleChange('elevation')}
           />
         </Grid>
@@ -158,7 +158,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
                 />
               ),
             }}
-            value={props.card.background}
+            value={props.card.background || 'default'}
             onChange={props.handleChange && props.handleChange('background')}
           />
         </Grid>
@@ -175,7 +175,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             InputLabelProps={{ shrink: true }}
             label="Padding"
             placeholder="12px"
-            value={props.card.padding}
+            value={props.card.padding || '12px'}
             onChange={props.handleChange && props.handleChange('padding')}
           />
         </Grid>
@@ -206,7 +206,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             type="number"
             label="Width"
             placeholder="1"
-            value={props.card.width}
+            value={props.card.width || '1'}
             onChange={props.handleChange && props.handleChange('width')}
           />
         </Grid>
@@ -218,7 +218,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               type="number"
               label="Height"
               placeholder="1"
-              value={props.card.height}
+              value={props.card.height || '1'}
               onChange={props.handleChange && props.handleChange('height')}
             />
           </Grid>
@@ -257,7 +257,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               type="text"
               label="Title Font Size"
               placeholder="initial"
-              value={props.card.title_size}
+              value={props.card.title_size || 'initial'}
               onChange={props.handleChange && props.handleChange('title_size')}
             />
           </Grid>

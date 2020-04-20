@@ -183,7 +183,7 @@ function Item(props: ItemProps): ReactElement {
               />
             ),
           }}
-          value={value}
+          value={value || ''}
           onChange={handleChange(props.path, 'color')}
         />
       );
@@ -200,7 +200,7 @@ function Item(props: ItemProps): ReactElement {
           className={classes.root}
           placeholder={String(props.item.default)}
           type={typeof props.item.default === 'number' ? 'number' : 'text'}
-          value={value}
+          value={value || ''}
           onChange={handleChange(
             props.path,
             typeof props.item.default === 'number' ? 'number' : 'string'
@@ -213,7 +213,7 @@ function Item(props: ItemProps): ReactElement {
           className={classes.root}
           type={showPassword ? 'text' : 'password'}
           placeholder={String(props.item.default)}
-          value={value}
+          value={value || ''}
           onChange={handleChange(
             props.path,
             typeof props.item.default === 'number' ? 'number' : 'string'
@@ -239,7 +239,7 @@ function Item(props: ItemProps): ReactElement {
             className={classes.radioGroup}
             aria-label={props.item.title}
             name={typeof props.item.name === 'string' ? props.item.name : ''}
-            value={value}
+            value={value || ''}
             onChange={handleRadioChange(props.path)}>
             {props.item.items &&
               props.item.items.map(
@@ -252,7 +252,7 @@ function Item(props: ItemProps): ReactElement {
                   return (
                     <FormControlLabel
                       key={key}
-                      value={key}
+                      value={key || ''}
                       label={rItem}
                       control={<Radio color="primary" />}
                     />

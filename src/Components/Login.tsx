@@ -215,7 +215,7 @@ function Login(props: LoginProps): ReactElement {
                 autoCapitalize: 'none',
                 autoComplete: 'username',
               }}
-              value={values.username}
+              value={values.username || ''}
               onChange={handleChange('username')}
               onKeyPress={handleKeyPress}
             />
@@ -233,7 +233,7 @@ function Login(props: LoginProps): ReactElement {
                   ? 'new-password'
                   : 'current-password',
               }}
-              value={values.password}
+              value={values.password || ''}
               onChange={handleChange('password')}
               onKeyPress={handleKeyPress}
               endAdornment={

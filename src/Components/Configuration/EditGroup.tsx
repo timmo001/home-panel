@@ -81,7 +81,7 @@ function EditGroup(props: EditGroupProps): ReactElement {
               InputLabelProps={{ shrink: true }}
               label="Name"
               placeholder={'Group Name'}
-              defaultValue={props.group.name}
+              defaultValue={props.group.name || ''}
               onChange={handleChange('name')}
             />
           </Grid>
@@ -92,7 +92,7 @@ function EditGroup(props: EditGroupProps): ReactElement {
               type="number"
               label="Width"
               placeholder="2"
-              defaultValue={props.group.width}
+              defaultValue={props.group.width || ''}
               onChange={handleChange('width')}
             />
           </Grid>

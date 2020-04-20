@@ -23,7 +23,7 @@ function Frame(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="URL"
           placeholder="https://timmo.dev/home-panel"
-          value={props.card.url}
+          value={props.card.url || ''}
           onChange={props.handleChange && props.handleChange('url')}
         />
       </Grid>
@@ -33,7 +33,7 @@ function Frame(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          value={props.card.height}
+          value={props.card.height || 'auto'}
           onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>

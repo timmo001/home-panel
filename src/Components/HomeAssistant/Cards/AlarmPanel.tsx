@@ -128,7 +128,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               disabled={props.entity.state === 'pending'}
               placeholder="1234"
               type="number"
-              value={code}
+              value={code || ''}
               onChange={handleCodeChange}
             />
           </Grid>

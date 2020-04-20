@@ -121,7 +121,7 @@ function EditPage(props: EditPageProps): ReactElement {
               InputLabelProps={{ shrink: true }}
               label="Name"
               placeholder={'Page Name'}
-              defaultValue={props.page.name}
+              defaultValue={props.page.name || ''}
               onChange={handleChange('name')}
             />
           </Grid>
@@ -131,7 +131,7 @@ function EditPage(props: EditPageProps): ReactElement {
               InputLabelProps={{ shrink: true }}
               label="Icon"
               placeholder={'home'}
-              defaultValue={props.page.icon}
+              defaultValue={props.page.icon || ''}
               onChange={handleChange('icon')}
             />
           </Grid>

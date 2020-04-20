@@ -78,7 +78,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
         getOptionSelected={(option: Option): boolean =>
           option.value === value?.value
         }
-        value={value}
+        value={value || null}
         onChange={handleChange}
         renderInput={(params): ReactElement => (
           <TextField

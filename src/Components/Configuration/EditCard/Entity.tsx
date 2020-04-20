@@ -102,7 +102,7 @@ function Entity(props: EntityProps): ReactElement {
               InputLabelProps={{ shrink: true }}
               label="Entity"
               placeholder="sensor.myamazingsensor"
-              value={props.card.entity}
+              value={props.card.entity || ''}
               onChange={props.handleChange && props.handleChange('entity')}
             />
           )}
@@ -121,7 +121,7 @@ function Entity(props: EntityProps): ReactElement {
                 InputLabelProps={{ shrink: true }}
                 label="Icon"
                 placeholder="thermometer"
-                value={props.card.icon}
+                value={props.card.icon || ''}
                 onChange={props.handleChange && props.handleChange('icon')}
               />
             </Grid>
@@ -152,7 +152,7 @@ function Entity(props: EntityProps): ReactElement {
                 type="text"
                 label="Icon Size"
                 placeholder="initial"
-                value={props.card.icon_size}
+                value={props.card.icon_size || 'initial'}
                 onChange={props.handleChange && props.handleChange('icon_size')}
               />
             </Grid>
@@ -165,7 +165,7 @@ function Entity(props: EntityProps): ReactElement {
                 type="text"
                 label="State Font Size"
                 placeholder="initial"
-                value={props.card.state_size}
+                value={props.card.state_size || 'initial'}
                 onChange={
                   props.handleChange && props.handleChange('state_size')
                 }
@@ -184,7 +184,7 @@ function Entity(props: EntityProps): ReactElement {
               <FormControl className={classes.textField}>
                 <InputLabel htmlFor="chart">Chart</InputLabel>
                 <Select
-                  value={props.card.chart ? props.card.chart : ''}
+                  value={props.card.chart || ''}
                   onChange={props.handleSelectChange}
                   inputProps={{
                     name: 'chart',
@@ -214,9 +214,7 @@ function Entity(props: EntityProps): ReactElement {
                 <FormControl className={classes.textField}>
                   <InputLabel htmlFor="chart_detail">Chart Detail</InputLabel>
                   <Select
-                    value={
-                      props.card.chart_detail ? props.card.chart_detail : 3
-                    }
+                    value={props.card.chart_detail || 3}
                     onChange={props.handleSelectChange}
                     inputProps={{
                       name: 'chart_detail',
@@ -245,7 +243,7 @@ function Entity(props: EntityProps): ReactElement {
                     min: 1,
                     max: 48,
                   }}
-                  value={props.card.chart_from}
+                  value={props.card.chart_from || '6'}
                   onChange={
                     props.handleChange && props.handleChange('chart_from')
                   }

@@ -116,7 +116,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
                   autoCapitalize: 'none',
                   autoComplete: 'url',
                 }}
-                value={url}
+                value={url || ''}
                 onChange={handleChange}
               />
             </FormControl>

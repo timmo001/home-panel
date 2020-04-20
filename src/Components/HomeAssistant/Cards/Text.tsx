@@ -77,7 +77,7 @@ function TextEntity(props: EntityProps): ReactElement {
           justify="center">
           <Grid item>
             <Input
-              value={text}
+              value={text || ''}
               margin="dense"
               onChange={handleInputChange}
               inputProps={{

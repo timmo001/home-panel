@@ -81,7 +81,7 @@ function News(props: BaseProps): ReactElement {
             disabled
             InputLabelProps={{ shrink: true }}
             label="Source"
-            value={error}
+            value={error || ''}
           />
         ) : (
           sources && (
@@ -108,7 +108,7 @@ function News(props: BaseProps): ReactElement {
           InputLabelProps={{ shrink: true }}
           label="Height"
           placeholder="auto"
-          value={props.card.height}
+          value={props.card.height || 'auto'}
           onChange={props.handleChange && props.handleChange('height')}
         />
       </Grid>
