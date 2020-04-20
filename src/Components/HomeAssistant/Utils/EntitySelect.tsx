@@ -6,6 +6,7 @@ import TextField from '@material-ui/core/TextField';
 
 import type { HomeAssistantEntityProps } from '../HomeAssistant';
 import type { Option } from '../../Types/Types';
+import properCase from '../../../utils/properCase';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -39,12 +40,16 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
 
   useEffect(() => {
     setOptions(
-      Object.values(props.hassEntities).map((entity: HassEntity) => ({
-        label: entity.attributes.friendly_name
-          ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
-          : entity.entity_id,
-        value: entity.entity_id,
-      }))
+      Object.values(props.hassEntities)
+        .filter(
+          (entity: HassEntity) => !entity.entity_id.startsWith('device_tracker')
+        )
+        .map((entity: HassEntity) => ({
+          label: entity.attributes.friendly_name
+            ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
+            : entity.entity_id,
+          value: entity.entity_id,
+        }))
     );
   }, [props.hassEntities]);
 
@@ -63,7 +68,9 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
         id="entity"
         fullWidth
         options={options}
-        groupBy={(option: Option): string => option.value.split('.')[0]}
+        groupBy={(option: Option): string =>
+          properCase(option.value.split('.')[0])
+        }
         getOptionLabel={(option: Option): string => option.label}
         value={value}
         onChange={handleChange}
