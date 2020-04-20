@@ -235,7 +235,7 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             <FormControl className={classes.textField}>
               <InputLabel htmlFor="title_justify">Title Justify</InputLabel>
               <Select
-                value={props.card.title_justify}
+                value={props.card.title_justify || 'left'}
                 onChange={props.handleSelectChange}
                 inputProps={{
                   name: 'title_justify',
