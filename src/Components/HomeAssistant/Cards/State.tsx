@@ -130,6 +130,7 @@ function State(props: EntityProps): ReactElement | null {
           component="h5"
           style={{ fontSize: props.card.state_size }}>
           {props.entity.state}
+          {props.entity.attributes.unit_of_measurement}
         </Typography>
       </Grid>
     </Grid>
