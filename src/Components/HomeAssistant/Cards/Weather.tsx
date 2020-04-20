@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { EntityProps } from './Entity';
+import { getUnit, weatherNameMap, weatherMap } from '../Utils/Units';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -61,66 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const weatherMap: { [item: string]: string } = {
-  'clear-night': 'weather-night',
-  cloudy: 'weather-cloudy',
-  fog: 'weather-fog',
-  hail: 'weather-hail',
-  lightning: 'weather-lightning',
-  'lightning-rainy': 'weather-lightning-rainy',
-  partlycloudy: 'weather-partly-cloudy',
-  pouring: 'weather-pouring',
-  rainy: 'weather-rainy',
-  snowy: 'weather-snowy',
-  'snowy-rainy': 'weather-snowy-rainy',
-  sunny: 'weather-sunny',
-  windy: 'weather-windy',
-  'windy-variant': 'weather-windy-variant',
-};
-
-const weatherNameMap: { [item: string]: string } = {
-  'clear-night': 'Clear',
-  cloudy: 'Cloudy',
-  fog: 'Fog',
-  hail: 'Hail',
-  lightning: 'Lightning',
-  'lightning-rainy': 'Lightning & Rain',
-  partlycloudy: 'Partly Cloudy',
-  pouring: 'Rain',
-  rainy: 'Rain',
-  snowy: 'Snow',
-  'snowy-rainy': 'Snow & Rain',
-  sunny: 'Sunny',
-  windy: 'Windy',
-  'windy-variant': 'Windy',
-};
-
 function Weather(props: EntityProps): ReactElement {
-  function getUnit(measure: string): string | null {
-    if (props.hassConfig) {
-      const lengthUnit = props.hassConfig.unit_system.length || '';
-      switch (measure) {
-        case 'length':
-        case 'mass':
-        case 'volume':
-        case 'temperature':
-          return props.hassConfig.unit_system[measure];
-        case 'pressure':
-          return lengthUnit === 'km' ? ' hPa' : ' inHg';
-        case 'precipitation':
-          return lengthUnit === 'km' ? ' mm' : ' in';
-        case 'wind_speed':
-          return lengthUnit === 'km' ? ' km/h' : ' mph';
-        case 'wind_bearing':
-          return '°';
-        case 'humidity':
-          return '%';
-        default:
-          return '';
-      }
-    } else return null;
-  }
-
   const classes = useStyles();
 
   return (
@@ -170,7 +112,7 @@ function Weather(props: EntityProps): ReactElement {
             variant="h6"
             noWrap>
             {props.entity.attributes.temperature}
-            {getUnit('temperature')}
+            {getUnit('temperature', props.hassConfig)}
           </Typography>
         </Grid>
       </Grid>
@@ -225,7 +167,7 @@ function Weather(props: EntityProps): ReactElement {
                       className={classes.forecastText}
                       variant="body2">
                       {w.temperature}
-                      {getUnit('temperature')}
+                      {getUnit('temperature', props.hassConfig)}
                     </Typography>
                     <Typography
                       noWrap
