@@ -1,13 +1,13 @@
 import React, { useEffect, useState, ReactElement } from 'react';
 import request from 'superagent';
 import { makeStyles } from '@material-ui/core/styles';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-import { BaseProps } from './Base';
-import { SuggestionType } from '../../Utils/Select';
+import type { BaseProps } from './Base';
+import type { Option } from '../../Types/Types';
 import properCase from '../../../utils/properCase';
-import Select from '../../Utils/Select';
 
 type FeedSource = {
   category: string;
@@ -27,9 +27,17 @@ const useStyles = makeStyles(() => ({
 }));
 
 function News(props: BaseProps): ReactElement {
-  const [sources, setSources] = useState<SuggestionType[]>();
+  const [sources, setSources] = useState<Option[]>();
+  const [source, setSource] = useState<Option | null>();
   const [error, setError] = useState<string>();
-  const classes = useStyles();
+
+  function handleChange(
+    _event: React.ChangeEvent<{}>,
+    newValue: Option | null
+  ): void {
+    setSource(newValue);
+    props.handleManualChange?.('url', newValue?.value);
+  }
 
   useEffect(() => {
     if (props.config.news && props.config.news.news_api_key) {
@@ -39,7 +47,7 @@ function News(props: BaseProps): ReactElement {
           `https://newsapi.org/v2/sources?apiKey=${props.config.news.news_api_key}`
         )
         .then((res) => {
-          const options: SuggestionType[] = res.body.sources.map(
+          const options: Option[] = res.body.sources.map(
             (source: FeedSource) => ({
               label: `${source.name} - ${properCase(source.category)} - ${
                 source.url
@@ -48,6 +56,10 @@ function News(props: BaseProps): ReactElement {
             })
           );
           setSources(options);
+          const val = options.find(
+            (option: Option) => option.value === props.card.url
+          );
+          if (val) setSource(val);
         })
         .catch((err) => {
           console.error(err);
@@ -57,8 +69,9 @@ function News(props: BaseProps): ReactElement {
       setError(
         'Invalid config or you do not have a News API key set in your config.'
       );
-  }, [props.config.news]);
+  }, [props.config.news, props.card.url]);
 
+  const classes = useStyles();
   return (
     <Grid container direction="row" justify="center" alignContent="stretch">
       <Grid item xs>
@@ -72,14 +85,16 @@ function News(props: BaseProps): ReactElement {
           />
         ) : (
           sources && (
-            <Select
-              label="Source"
+            <Autocomplete
+              id="entity"
+              fullWidth
               options={sources}
-              value={String(props.card.url)}
-              handleChange={(value: string | number): void =>
-                props.handleManualChange &&
-                props.handleManualChange('url', value)
-              }
+              getOptionLabel={(option: Option): string => option.label}
+              value={source}
+              onChange={handleChange}
+              renderInput={(params): ReactElement => (
+                <TextField {...params} label="Source" />
+              )}
             />
           )
         )}

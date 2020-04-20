@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useCallback, ReactElement } from 'react';
-import Fuse from 'fuse.js';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-import { HomeAssistantEntityProps } from '../HomeAssistant';
+import type { HomeAssistantEntityProps } from '../HomeAssistant';
+import type { Option } from '../../Types/Types';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -20,60 +18,24 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface SuggestionType {
-  label: string;
-  value: string;
-}
-
 interface EntitySelectProps extends HomeAssistantEntityProps {
   entity?: string;
-  handleChange: (value: string) => void;
+  handleChange: (value?: string) => void;
 }
-
-let PopperNode: HTMLDivElement | null | undefined;
 
 function EntitySelect(props: EntitySelectProps): ReactElement {
   const classes = useStyles();
-  const theme = useTheme();
 
-  const [options, setOptions] = useState<SuggestionType[]>([]);
-  const [search, setSearch] = useState('');
-  const [open, setOpen] = useState(false);
-  const [suggestions, setSuggestions] = useState<SuggestionType[]>([]);
+  const [options, setOptions] = useState<Option[]>([]);
+  const [value, setValue] = useState<Option | null>();
 
-  const filterSuggestions = useCallback(() => {
-    const fuse = new Fuse(options, {
-      keys: ['label', 'value'],
-      caseSensitive: false,
-      minMatchCharLength: 2,
-      threshold: 0.2,
-    });
-    const results = fuse.search(search);
-    setSuggestions((Array.isArray(results) ? results : options).slice(0, 20));
-  }, [options, search]);
-
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
-    setSearch(event.target.value);
-    filterSuggestions();
-    setOpen(true);
-    props.handleChange('');
-  }
-
-  function handleFocus(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  function handleChange(
+    _event: React.ChangeEvent<{}>,
+    newValue: Option | null
   ): void {
-    setOpen(true);
+    setValue(newValue);
+    props.handleChange(newValue?.value);
   }
-
-  const handleChosen = (item: SuggestionType) => (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ): void => {
-    setSearch(item.label);
-    props.handleChange(item.value);
-    setOpen(false);
-  };
 
   useEffect(() => {
     setOptions(
@@ -87,53 +49,32 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
   }, [props.hassEntities]);
 
   useEffect(() => {
-    if (!search && options && props.entity) {
+    if (!value && options && props.entity) {
       const val = options.find(
-        (option: SuggestionType) => option.value === props.entity
+        (option: Option) => option.value === props.entity
       );
-      if (val) setSearch(val.label);
+      if (val) setValue(val);
     }
-  }, [search, options, props.entity]);
+  }, [value, options, props.entity]);
 
   return (
     <div className={classes.root}>
-      <TextField
+      <Autocomplete
+        id="entity"
         fullWidth
-        InputLabelProps={{ shrink: true }}
-        label="Entity"
-        placeholder="Search for entities"
-        aria-controls="options"
-        aria-haspopup="true"
-        ref={(node: HTMLDivElement): void => {
-          PopperNode = node;
-        }}
-        value={search}
+        options={options}
+        groupBy={(option: Option): string => option.value.split('.')[0]}
+        getOptionLabel={(option: Option): string => option.label}
+        value={value}
         onChange={handleChange}
-        onFocus={handleFocus}
+        renderInput={(params): ReactElement => (
+          <TextField
+            {...params}
+            placeholder="Search for entities"
+            label="Entity"
+          />
+        )}
       />
-      <Popper
-        className={classes.menu}
-        id="options"
-        anchorEl={PopperNode}
-        open={open}>
-        <Paper
-          square
-          style={{
-            maxHeight: 250,
-            width: PopperNode ? PopperNode.clientWidth : undefined,
-            marginTop: theme.spacing(1),
-            overflow: 'auto',
-          }}>
-          {suggestions.map((suggestion: SuggestionType, key: number) => (
-            <MenuItem
-              key={key}
-              onClick={handleChosen(suggestion)}
-              value={suggestion.value}>
-              {suggestion.label}
-            </MenuItem>
-          ))}
-        </Paper>
-      </Popper>
     </div>
   );
 }

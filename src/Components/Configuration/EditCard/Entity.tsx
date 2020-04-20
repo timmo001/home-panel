@@ -91,7 +91,7 @@ function Entity(props: EntityProps): ReactElement {
             <EntitySelect
               {...props}
               entity={props.card.entity}
-              handleChange={(value: string): void =>
+              handleChange={(value?: string): void =>
                 props.handleManualChange &&
                 props.handleManualChange('entity', value)
               }
