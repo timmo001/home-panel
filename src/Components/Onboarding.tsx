@@ -25,9 +25,6 @@ import Login from './Login';
 import Main from './Main';
 import parseTheme from '../utils/parseTheme';
 
-import 'typeface-roboto';
-import '@mdi/font/css/materialdesignicons.min.css';
-
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application;
 function Onboarding(props: RouteComponentExtendedProps): ReactElement {
