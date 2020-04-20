@@ -5209,11 +5209,6 @@ functional-red-black-tree@^1.0.1:
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
   integrity sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc=
 
-fuse.js@5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/fuse.js/-/fuse.js-5.2.1.tgz#d42c65e8e3d9cd436ff1410ec717b05a7b5f4352"
-  integrity sha512-yvRW0rHl3qEjZMEpVt62fOKbE5wwnKyunl25DvwtaQDlas+bMP9kq0U5SuRhyLFfBaQSMMY9FBFkBP/Vy+81cA==
-
 gensync@^1.0.0-beta.1:
   version "1.0.0-beta.1"
   resolved "https://registry.yarnpkg.com/gensync/-/gensync-1.0.0-beta.1.tgz#58f4361ff987e5ff6e1e7a210827aa371eaac269"
