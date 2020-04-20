@@ -44,6 +44,9 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
         .filter(
           (entity: HassEntity) => !entity.entity_id.startsWith('device_tracker')
         )
+        .sort((a: HassEntity, b: HassEntity) =>
+          a.entity_id > b.entity_id ? 1 : a.entity_id < b.entity_id ? -1 : 0
+        )
         .map((entity: HassEntity) => ({
           label: entity.attributes.friendly_name
             ? `${entity.attributes.friendly_name} - ${entity.entity_id}`
