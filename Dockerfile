@@ -33,7 +33,7 @@ RUN \
     \
     && apk add --no-cache --virtual .build-dependencies \
         curl=7.67.0-r0 \
-        git=2.24.2-r1 \
+        git=2.24.3-r0 \
         tar=1.32-r1 \
         yarn=1.19.2-r0 \
     \
@@ -41,7 +41,7 @@ RUN \
         bash=5.0.11-r1 \
         nginx=1.16.1-r6 \
         nodejs-current=13.1.0-r0 \
-        openssl=1.1.1d-r3 \
+        openssl=1.1.1g-r0 \
         tzdata=2019c-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
