@@ -3,7 +3,7 @@ name: Update Dockerfile
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 17 * * *"
 
 jobs:
   deploy:
