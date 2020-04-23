@@ -78,7 +78,7 @@
     "@types/react-dom": "16.9.6",
     "@types/react-html-parser": "2.0.1",
     "@types/react-router-dom": "5.1.4",
-    "@types/recharts": "1.8.9",
+    "@types/recharts": "1.8.10",
     "@types/socket.io": "2.1.4",
     "@types/socket.io-client": "1.4.32",
     "@types/superagent": "4.1.7",
