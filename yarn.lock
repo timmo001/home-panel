@@ -1029,10 +1029,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.8.0.tgz#bbbff68978fefdbe68ccb533bc8cbe1d1afb5413"
   integrity sha512-kBJtf7PH6aWwZ6fka3zQ0p6SBYzx4fl1LoZXE2RrnYST9Xljm7WfKJrU4g/Xr3Beg72MLrp1AWNUmuYJTL7Cow==
 
-"@feathersjs/authentication-client@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-client/-/authentication-client-4.5.3.tgz#5b3ad68d0333fea4e48aa1ae6c14950f5259bcc9"
-  integrity sha512-yLTFv9d53XrQi3rt3ephcKoqqndOuVxeD8g9MkIbldoqWhgCpbyuPm0v13J0cn5BK8K7fhydMb4CPg9VFQ+Pow==
+"@feathersjs/authentication-client@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/authentication-client/-/authentication-client-4.5.4.tgz#09bf7d25b40241336eed693d4727f57fef2e6dfa"
+  integrity sha512-LdSK8FjGxrI7ag03KZLbd7uQng41WqFL5/zpOGuHyqsg3iq/GBaTLEJm/B5Uh1CWDP2PvTJTqdr/s8Q3vRDKtw==
   dependencies:
     "@feathersjs/authentication" "^4.5.3"
     "@feathersjs/commons" "^4.5.3"
@@ -1077,10 +1077,10 @@
     events "^3.1.0"
     uberproto "^2.0.6"
 
-"@feathersjs/socketio-client@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.5.3.tgz#78eec591f0800489962f1ee5d5d6932ace8d2c14"
-  integrity sha512-ghkBq9WnPnQGubZ6BkuCF3gRZPzg62tqdS306dCOxZnRcoOGf/jmsdHi56X0kWvirfw35xujI1FnaMAIXNddCg==
+"@feathersjs/socketio-client@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio-client/-/socketio-client-4.5.4.tgz#9e280e3b3f3f110a4138f6cdf252d14fe0e49d3e"
+  integrity sha512-pyqy/AyCyLAyBcd2KpxIuiSnZ9piY98ESJIWOgzTQmTN9KvJ2XUhShJWRsOwRAIFlOPDXbg06nw6qvedtPPliw==
   dependencies:
     "@feathersjs/transport-commons" "^4.5.3"
     "@types/socket.io-client" "^1.4.32"
