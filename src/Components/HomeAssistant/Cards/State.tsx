@@ -2,7 +2,7 @@ import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -10,7 +10,7 @@ import { EntityProps } from './Entity';
 import { fetchHistory } from '../Utils/API';
 import Chart, { ChartData } from '../../Visualisations/Chart';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
   },
@@ -23,6 +23,9 @@ const useStyles = makeStyles(() => ({
     textAlign: 'center',
     textOverflow: 'ellipsis',
     zIndex: 100,
+  },
+  textSecondary: {
+    marginLeft: theme.spacing(0.5),
   },
   iconContainer: {
     display: 'flex',
@@ -127,10 +130,12 @@ function State(props: EntityProps): ReactElement | null {
           className={classes.text}
           color="textPrimary"
           variant={props.card.disabled ? 'body2' : 'body1'}
-          component="h5"
+          component="span"
           style={{ fontSize: props.card.state_size }}>
           {props.entity.state}
-          {props.entity.attributes.unit_of_measurement}
+          <span className={classes.textSecondary}>
+            {props.entity.attributes.unit_of_measurement}
+          </span>
         </Typography>
       </Grid>
     </Grid>

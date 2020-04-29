@@ -60,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.text.primary,
     fontSize: 28,
   },
+  textSecondary: {
+    marginLeft: theme.spacing(0.5),
+  },
 }));
 
 function Weather(props: EntityProps): ReactElement {
@@ -112,7 +115,9 @@ function Weather(props: EntityProps): ReactElement {
             variant="h6"
             noWrap>
             {props.entity.attributes.temperature}
-            {getUnit('temperature', props.hassConfig)}
+            <span className={classes.textSecondary}>
+              {getUnit('temperature', props.hassConfig)}
+            </span>
           </Typography>
         </Grid>
       </Grid>
@@ -167,7 +172,9 @@ function Weather(props: EntityProps): ReactElement {
                       className={classes.forecastText}
                       variant="body2">
                       {w.temperature}
-                      {getUnit('temperature', props.hassConfig)}
+                      <span className={classes.textSecondary}>
+                        {getUnit('temperature', props.hassConfig)}
+                      </span>
                     </Typography>
                     <Typography
                       noWrap
