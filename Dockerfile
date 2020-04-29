@@ -42,7 +42,7 @@ RUN \
         nginx=1.16.1-r6 \
         nodejs-current=13.1.0-r0 \
         openssl=1.1.1g-r0 \
-        tzdata=2019c-r0 \
+        tzdata=2020a-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
