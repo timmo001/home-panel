@@ -360,10 +360,10 @@
     events "^3.1.0"
     uberproto "^2.0.6"
 
-"@feathersjs/socketio@4.5.3":
-  version "4.5.3"
-  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.5.3.tgz#11b216116b9f400d1f3e4cadab4bfcc4843f4a3f"
-  integrity sha512-ufyYQJdBMeMzwsQLFeoI3UOnY8YReZl+vieyF6S7bvYHISnUFfXEY5Ee0I6CMVoxa4Ki5MxsUUvHQcBitU+qEg==
+"@feathersjs/socketio@4.5.4":
+  version "4.5.4"
+  resolved "https://registry.yarnpkg.com/@feathersjs/socketio/-/socketio-4.5.4.tgz#a2dbd05a645a9aff93d88bb50b10c250e022a3b9"
+  integrity sha512-2V/aEJrdnTFIxE+4TpOTBquttgA3taqAqLSNz7ZVKQYxt0bO134STFF1FRyHAFvDFqidx5RyHQKxW8/A8sS/iA==
   dependencies:
     "@feathersjs/transport-commons" "^4.5.3"
     "@types/socket.io" "^2.1.4"
