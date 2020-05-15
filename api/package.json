@@ -57,7 +57,7 @@
     "jest-junit": "10.0.0",
     "nodemon": "2.0.4",
     "shx": "0.3.2",
-    "ts-jest": "25.5.1",
+    "ts-jest": "26.0.0",
     "ts-node-dev": "1.0.0-pre.44",
     "tslint": "6.1.2",
     "typescript": "3.9.2"
