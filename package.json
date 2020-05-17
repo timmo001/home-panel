@@ -79,7 +79,7 @@
     "@types/react-html-parser": "2.0.1",
     "@types/react-router-dom": "5.1.5",
     "@types/recharts": "1.8.10",
-    "@types/socket.io": "2.1.5",
+    "@types/socket.io": "2.1.6",
     "@types/socket.io-client": "1.4.33",
     "@types/superagent": "4.1.7",
     "@typescript-eslint/eslint-plugin": "2.33.0",
