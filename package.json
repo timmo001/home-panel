@@ -18,7 +18,7 @@
     "@material-ui/lab": "4.0.0-alpha.54",
     "@material-ui/styles": "4.10.0",
     "@mdi/font": "5.3.45",
-    "array-move": "2.2.1",
+    "array-move": "2.2.2",
     "classnames": "2.2.6",
     "history": "4.10.1",
     "home-assistant-js-websocket": "5.1.2",
