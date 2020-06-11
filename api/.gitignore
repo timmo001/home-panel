@@ -1,3 +1,9 @@
+# Yarn 2
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+.pnp.*
+
 # Logs
 logs
 *.log
