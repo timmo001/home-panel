@@ -1,14 +1,16 @@
-import React, { useEffect, ReactElement } from 'react';
+import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
+import { AuthenticationResult } from '@feathersjs/authentication/lib';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import React, { useEffect, ReactElement } from 'react';
 import Slide from '@material-ui/core/Slide';
 
-import { RouteComponentExtendedProps } from './Types/ReactRouter';
+import { CommandType } from './Utils/Command';
 import { ConfigurationProps, ThemeProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
-import { CommandType } from './Utils/Command';
+import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
@@ -18,8 +20,6 @@ import HomeAssistant, {
 import isObject from '../utils/isObject';
 import Loading from './Utils/Loading';
 import Overview from './Overview/Overview';
-import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
-import { AuthenticationResult } from '@feathersjs/authentication/lib';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
