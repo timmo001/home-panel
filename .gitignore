@@ -11,6 +11,8 @@
 .yarn/*
 !.yarn/releases
 !.yarn/plugins
+!.yarn/pnpify
+!.yarn/versions
 .pnp.*
 
 # misc
