@@ -2,53 +2,53 @@
 trigger: none
 
 pr:
-  - "master"
+  - 'master'
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: 'ubuntu-latest'
 
 variables:
-  - name: "yarnCachePath"
-    value: "$(Pipeline.Workspace)/.yarn/cache"
-  - group: "github"
-  - name: "githubRepository"
-    value: "timmo001/home-panel"
-  - group: "docker"
-  - name: "dockerSlug"
-    value: "home-panel"
-  - name: "dockerTarget"
-    value: "."
-  - name: "amd64Base"
-    value: "amd64/alpine:latest"
-  - name: "arm32v6Base"
-    value: "arm32v6/alpine:latest"
-  - name: "arm32v7Base"
-    value: "arm32v7/alpine:latest"
-  - name: "arm64v8Base"
-    value: "arm64v8/alpine:latest"
+  - name: 'yarnCachePath'
+    value: '$(Pipeline.Workspace)/.yarn/cache'
+  - group: 'github'
+  - name: 'githubRepository'
+    value: 'timmo001/home-panel'
+  - group: 'docker'
+  - name: 'dockerSlug'
+    value: 'home-panel'
+  - name: 'dockerTarget'
+    value: '.'
+  - name: 'amd64Base'
+    value: 'amd64/alpine:latest'
+  - name: 'arm32v6Base'
+    value: 'arm32v6/alpine:latest'
+  - name: 'arm32v7Base'
+    value: 'arm32v7/alpine:latest'
+  - name: 'arm64v8Base'
+    value: 'arm64v8/alpine:latest'
 
 resources:
   repositories:
-    - repository: "organization"
-      type: "github"
-      name: "timmo001/organization"
-      endpoint: "timmo001"
+    - repository: 'organization'
+      type: 'github'
+      name: 'timmo001/organization'
+      endpoint: 'timmo001'
 
 stages:
-  - stage: "Setup"
+  - stage: 'Setup'
     dependsOn: []
     jobs:
       - template: azure-ci/setup/node.yml@organization
-  - stage: "Lint"
+  - stage: 'Lint'
     dependsOn:
-      - "Setup"
+      - 'Setup'
     jobs:
       # - template: azure-ci/lint/eslint.yml@organization
       #   parameters:
       #     path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/hadolint.yml@organization
         parameters:
-          path: "Dockerfile"
+          path: 'Dockerfile'
       - template: azure-ci/lint/jsonlint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
@@ -64,58 +64,58 @@ stages:
       - template: azure-ci/lint/yamllint.yml@organization
         parameters:
           path: $(System.DefaultWorkingDirectory)
-  - stage: "Build"
+  - stage: 'Build'
     dependsOn:
-      - "Setup"
+      - 'Setup'
     jobs:
       - template: azure-ci/build/react-app.yml@organization
       - template: azure-ci/build/node-ts.yml@organization
-  - stage: "Docker"
+  - stage: 'Docker'
     dependsOn:
-      - "Lint"
-      - "Build"
+      - 'Lint'
+      - 'Build'
     condition: succeeded()
     jobs:
-      - job: "Docker_Build"
-        displayName: "Build"
+      - job: 'Docker_Build'
+        displayName: 'Build'
         strategy:
           maxParallel: 4
           matrix:
             amd64:
-              buildArch: "amd64"
+              buildArch: 'amd64'
               buildBase: $(amd64Base)
             arm32v6:
-              buildArch: "arm32v6"
+              buildArch: 'arm32v6'
               buildBase: $(arm32v6Base)
             arm32v7:
-              buildArch: "arm32v7"
+              buildArch: 'arm32v7'
               buildBase: $(arm32v7Base)
             arm64v8:
-              buildArch: "arm64v8"
+              buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: "Download App Artifacts"
+            displayName: 'Download App Artifacts'
             inputs:
-              artifactName: "build"
+              artifactName: 'build'
               downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
-            displayName: "Download Api Artifacts"
+            displayName: 'Download Api Artifacts'
             inputs:
-              artifactName: "lib"
+              artifactName: 'lib'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
-              buildArch: "$(buildArch)"
-              buildBase: "$(buildBase)"
-              githubRepository: "$(githubRepository)"
-  - stage: "Test"
+              buildArch: '$(buildArch)'
+              buildBase: '$(buildBase)'
+              githubRepository: '$(githubRepository)'
+  - stage: 'Test'
     dependsOn:
-      - "Lint"
+      - 'Lint'
     condition: succeeded()
     jobs:
-      - job: "Test_App"
-        displayName: "App"
+      - job: 'Test_App'
+        displayName: 'App'
         steps:
           - task: Cache@2
             inputs:
@@ -124,29 +124,29 @@ stages:
               restoreKeys: |
                 yarn | "$(Agent.OS)"
                 yarn
-            displayName: "Cache Yarn Packages"
+            displayName: 'Cache Yarn Packages'
           - script: |
               yarn install --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: "Install"
+            displayName: 'Install'
           - script: |
               yarn test
-            displayName: "Test"
+            displayName: 'Test'
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: "Publish Tests"
+            displayName: 'Publish Tests'
             inputs:
-              testResultsFormat: "JUnit"
-              testResultsFiles: "**/junit.xml"
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
-              testRunTitle: "App"
+              testRunTitle: 'App'
           - task: PublishCodeCoverageResults@1
-            displayName: "Publish Coverage"
+            displayName: 'Publish Coverage'
             inputs:
-              codeCoverageTool: "Cobertura"
-              summaryFileLocation: "**/cobertura-coverage.xml"
-              pathToSources: "src"
-      - job: "Test_API"
-        displayName: "API"
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '**/cobertura-coverage.xml'
+              pathToSources: 'src'
+      - job: 'Test_API'
+        displayName: 'API'
         steps:
           - task: Cache@2
             inputs:
@@ -155,65 +155,65 @@ stages:
               restoreKeys: |
                 yarn | "$(Agent.OS)"
                 yarn
-            displayName: "Cache Yarn Packages"
+            displayName: 'Cache Yarn Packages'
           - script: |
               cd api
               yarn install --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: "Install"
+            displayName: 'Install'
           - script: |
               cd api
               yarn test
-            displayName: "Test"
+            displayName: 'Test'
             continueOnError: true
           - task: PublishTestResults@2
-            displayName: "Publish Tests"
+            displayName: 'Publish Tests'
             inputs:
-              testResultsFormat: "JUnit"
-              testResultsFiles: "**/junit.xml"
+              testResultsFormat: 'JUnit'
+              testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
-              testRunTitle: "API"
+              testRunTitle: 'API'
           - task: PublishCodeCoverageResults@1
-            displayName: "Publish Coverage"
+            displayName: 'Publish Coverage'
             inputs:
-              codeCoverageTool: "Cobertura"
-              summaryFileLocation: "**/cobertura-coverage.xml"
-              pathToSources: "src"
-  - stage: "Pipeline_Passed"
-    displayName: "Pipeline Passed"
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '**/cobertura-coverage.xml'
+              pathToSources: 'src'
+  - stage: 'Pipeline_Passed'
+    displayName: 'Pipeline Passed'
     dependsOn:
-      - "Lint"
-      - "Build"
-      - "Docker"
-      - "Test"
+      - 'Lint'
+      - 'Build'
+      - 'Docker'
+      - 'Test'
     condition: succeeded()
     jobs:
-      - job: "Pipeline_Passed_GitHub"
-        displayName: "GitHub"
+      - job: 'Pipeline_Passed_GitHub'
+        displayName: 'GitHub'
         steps:
           - task: GitHubComment@0
-            displayName: "Send Comment"
+            displayName: 'Send Comment'
             inputs:
-              gitHubConnection: "timmo001"
-              repositoryName: "$(Build.Repository.Name)"
+              gitHubConnection: 'timmo001'
+              repositoryName: '$(Build.Repository.Name)'
               comment: |
                 ✔️ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has passed.
-  - stage: "Pipeline_Failed"
-    displayName: "Pipeline Failed"
+  - stage: 'Pipeline_Failed'
+    displayName: 'Pipeline Failed'
     dependsOn:
-      - "Lint"
-      - "Build"
-      - "Docker"
-      - "Test"
+      - 'Lint'
+      - 'Build'
+      - 'Docker'
+      - 'Test'
     condition: failed()
     jobs:
-      - job: "Pipeline_Failed_GitHub"
-        displayName: "GitHub"
+      - job: 'Pipeline_Failed_GitHub'
+        displayName: 'GitHub'
         steps:
           - task: GitHubComment@0
-            displayName: "Send Comment"
+            displayName: 'Send Comment'
             inputs:
-              gitHubConnection: "timmo001"
-              repositoryName: "$(Build.Repository.Name)"
+              gitHubConnection: 'timmo001'
+              repositoryName: '$(Build.Repository.Name)'
               comment: |
                 ❌ Pipeline for build [$(Build.BuildNumber)](https://dev.azure.com/timmo0001/Home%20Panel/_build/results?buildId=$(Build.BuildId)&view=results) has failed.
 
