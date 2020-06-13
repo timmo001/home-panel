@@ -56,13 +56,6 @@ node_modules
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-
 ### Linux ###
 *~
 
@@ -85,7 +78,6 @@ node_modules
 
 # Icon must end with two \r
 Icon
-
 
 # Thumbnails
 ._*
