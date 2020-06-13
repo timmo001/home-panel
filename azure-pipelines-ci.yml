@@ -44,26 +44,12 @@ stages:
       - 'Setup'
     jobs:
       # - template: azure-ci/lint/eslint.yml@organization
-      #   parameters:
-      #     path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/hadolint.yml@organization
-        parameters:
-          path: 'Dockerfile'
       - template: azure-ci/lint/jsonlint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/markdownlint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/prettier.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/shellcheck.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/yamllint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
   - stage: 'Build'
     dependsOn:
       - 'Setup'
@@ -95,14 +81,14 @@ stages:
               buildBase: $(arm64v8Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download App Artifacts'
+            displayName: 'Download Frontend Artifacts'
             inputs:
-              artifactName: 'build'
+              artifactName: 'frontend'
               downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Api Artifacts'
+            displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'lib'
+              artifactName: 'backend'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
@@ -114,8 +100,8 @@ stages:
       - 'Lint'
     condition: succeeded()
     jobs:
-      - job: 'Test_App'
-        displayName: 'App'
+      - job: 'Test_Frontend'
+        displayName: 'Frontend'
         steps:
           - task: Cache@2
             inputs:
@@ -138,15 +124,15 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
-              testRunTitle: 'App'
+              testRunTitle: 'Frontend'
           - task: PublishCodeCoverageResults@1
             displayName: 'Publish Coverage'
             inputs:
               codeCoverageTool: 'Cobertura'
               summaryFileLocation: '**/cobertura-coverage.xml'
               pathToSources: 'src'
-      - job: 'Test_API'
-        displayName: 'API'
+      - job: 'Test_Backend'
+        displayName: 'Backend'
         steps:
           - task: Cache@2
             inputs:
@@ -157,11 +143,11 @@ stages:
                 yarn
             displayName: 'Cache Yarn Packages'
           - script: |
-              cd api
+              cd backend
               yarn install --pure-lockfile --cache-folder $(yarnCachePath)
             displayName: 'Install'
           - script: |
-              cd api
+              cd backend
               yarn test
             displayName: 'Test'
             continueOnError: true
@@ -171,7 +157,7 @@ stages:
               testResultsFormat: 'JUnit'
               testResultsFiles: '**/junit.xml'
               failTaskOnFailedTests: true
-              testRunTitle: 'API'
+              testRunTitle: 'Backend'
           - task: PublishCodeCoverageResults@1
             displayName: 'Publish Coverage'
             inputs:

@@ -47,26 +47,12 @@ stages:
       - 'Setup'
     jobs:
       # - template: azure-ci/lint/eslint.yml@organization
-      #   parameters:
-      #     path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/hadolint.yml@organization
-        parameters:
-          path: 'Dockerfile'
       - template: azure-ci/lint/jsonlint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/markdownlint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/prettier.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/shellcheck.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
       - template: azure-ci/lint/yamllint.yml@organization
-        parameters:
-          path: $(System.DefaultWorkingDirectory)
   - stage: 'Build'
     dependsOn:
       - 'Setup'
@@ -79,8 +65,8 @@ stages:
       - 'Build'
     condition: succeeded()
     jobs:
-      - job: 'Docker_Build_Publish'
-        displayName: 'Build and Publish'
+      - job: 'Docker_Build'
+        displayName: 'Build'
         strategy:
           maxParallel: 4
           matrix:
@@ -98,14 +84,14 @@ stages:
               buildBase: $(arm64v8Base)
         steps:
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download App Artifacts'
+            displayName: 'Download Frontend Artifacts'
             inputs:
-              artifactName: 'build'
+              artifactName: 'frontend'
               downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Api Artifacts'
+            displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'lib'
+              artifactName: 'backend'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - task: Docker@2
             inputs:
