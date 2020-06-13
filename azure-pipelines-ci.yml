@@ -98,18 +98,9 @@ stages:
       - job: 'Test_Frontend'
         displayName: 'Frontend'
         steps:
-          - task: Cache@2
-            inputs:
-              key: 'yarn | "$(Agent.OS)" | yarn.lock'
-              path: $(yarnCachePath)
-              restoreKeys: |
-                yarn | "$(Agent.OS)"
-                yarn
-            displayName: 'Cache Yarn Packages'
+          - template: azure-ci/setup/node.yml@organization
           - script: |
-              yarn install --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: 'Install'
-          - script: |
+              cd frontend
               yarn test
             displayName: 'Test'
             continueOnError: true
@@ -129,18 +120,7 @@ stages:
       - job: 'Test_Backend'
         displayName: 'Backend'
         steps:
-          - task: Cache@2
-            inputs:
-              key: 'yarn | "$(Agent.OS)" | yarn.lock'
-              path: $(yarnCachePath)
-              restoreKeys: |
-                yarn | "$(Agent.OS)"
-                yarn
-            displayName: 'Cache Yarn Packages'
-          - script: |
-              cd backend
-              yarn install --pure-lockfile --cache-folder $(yarnCachePath)
-            displayName: 'Install'
+          - template: azure-ci/setup/node.yml@organization
           - script: |
               cd backend
               yarn test
