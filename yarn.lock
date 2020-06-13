@@ -4496,7 +4496,6 @@ __metadata:
     "@types/serve-favicon": 2.5.0
     compression: 1.7.4
     cors: 2.8.5
-    eslint: 7.2.0
     feathers-nedb: 5.1.0
     feathers-swagger: 1.2.1
     helmet: 3.22.1
@@ -8596,10 +8595,6 @@ __metadata:
     array-move: 2.2.2
     backend: 2.0.0
     classnames: 2.2.6
-    eslint: 7.2.0
-    eslint-config-prettier: 6.11.0
-    eslint-plugin-prettier: 3.1.3
-    eslint-plugin-react: 7.20.0
     history: 5.0.0
     home-assistant-js-websocket: 5.2.3
     jest-junit: 10.0.0
@@ -8607,7 +8602,6 @@ __metadata:
     markdown-it-emoji: 1.4.0
     markdown-it-external-links: 0.0.6
     moment: 2.24.0
-    prettier: 2.0.5
     query-string: 6.13.1
     react: 16.13.1
     react-color: 2.18.1
@@ -16620,6 +16614,13 @@ resolve@1.15.0:
 "root-workspace-0b6124@workspace:.":
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
+  dependencies:
+    eslint: 7.2.0
+    eslint-config-prettier: 6.11.0
+    eslint-plugin-prettier: 3.1.3
+    eslint-plugin-react: 7.20.0
+    prettier: 2.0.5
+    typescript: 3.9.5
   languageName: unknown
   linkType: soft
 
