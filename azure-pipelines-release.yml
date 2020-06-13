@@ -38,8 +38,13 @@ resources:
       endpoint: "timmo001"
 
 stages:
-  - stage: "Build"
+  - stage: "Setup"
     dependsOn: []
+    jobs:
+      - template: azure-ci/setup/install-node.yml@organization
+  - stage: "Build"
+    dependsOn:
+      - "Setup"
     jobs:
       - template: azure-ci/build/react-app.yml@organization
       - template: azure-ci/build/node-ts.yml@organization
@@ -66,7 +71,6 @@ stages:
               buildArch: "arm64v8"
               buildBase: $(arm64v8Base)
         steps:
-          - template: azure-ci/install/node.yml@organization
           - task: DownloadBuildArtifacts@0
             displayName: "Download App Artifacts"
             inputs:
