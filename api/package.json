@@ -39,7 +39,7 @@
     "cors": "2.8.5",
     "feathers-nedb": "5.1.0",
     "feathers-swagger": "1.2.1",
-    "helmet": "3.22.1",
+    "helmet": "3.23.0",
     "nedb": "1.8.0",
     "serve-favicon": "2.5.0",
     "winston": "3.2.1"
