@@ -41,7 +41,7 @@ stages:
   - stage: "Setup"
     dependsOn: []
     jobs:
-      - template: azure-ci/setup/install-node.yml@organization
+      - template: azure-ci/setup/node.yml@organization
   - stage: "Build"
     dependsOn:
       - "Setup"
