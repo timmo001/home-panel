@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "yarn run compile && yarn run jest",
-    "dev": "ts-node-dev --no-notify src/",
+    "dev": "ts-node-dev --no-notify ./src/",
     "start": "yarn run compile && node lib/",
     "jest": "CI=true jest --forceExit --detectOpenHandles --reporters=default --reporters=jest-junit --coverage --coverageDirectory=output/coverage/jest --coverageReporters=cobertura",
     "compile": "shx rm -rf lib/ && tsc"
@@ -38,6 +38,7 @@
     "@feathersjs/socketio": "4.5.4",
     "compression": "1.7.4",
     "cors": "2.8.5",
+    "express": "4.17.1",
     "feathers-nedb": "5.1.0",
     "feathers-swagger": "1.2.1",
     "helmet": "3.22.1",

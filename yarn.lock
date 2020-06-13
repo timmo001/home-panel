@@ -4478,6 +4478,7 @@ __metadata:
     "@types/serve-favicon": 2.5.0
     compression: 1.7.4
     cors: 2.8.5
+    express: 4.17.1
     feathers-nedb: 5.1.0
     feathers-swagger: 1.2.1
     helmet: 3.22.1
@@ -7975,7 +7976,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"express@npm:^4.17.1":
+"express@npm:4.17.1, express@npm:^4.17.1":
   version: 4.17.1
   resolution: "express@npm:4.17.1"
   dependencies:
@@ -9015,6 +9016,7 @@ fsevents@^1.2.7:
   version: 4.7.0
   resolution: "grant@npm:4.7.0"
   dependencies:
+    express: ^4.17.1
     qs: ^6.9.1
     request-compose: ^1.2.1
     request-oauth: 0.0.3
@@ -18416,6 +18418,18 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
+"ts-pnp@npm:1.2.0":
+  version: 1.2.0
+  resolution: "ts-pnp@npm:1.2.0"
+  peerDependencies:
+    typescript: "*"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 78341a27939de565e2754ff65ebb689743c16e3295528089d143c08d91842cf9029c3d6b3c95a9a20854a114a7904329d02c710d63f7ce4dbf671b8a3e560ac1
+  languageName: node
+  linkType: hard
+
 "ts-pnp@npm:^1.1.6":
   version: 1.1.6
   resolution: "ts-pnp@npm:1.1.6"
@@ -18425,18 +18439,6 @@ resolve@1.15.0:
     typescript:
       optional: true
   checksum: 0c1ab7d1b85820a4ad12d25f18e6e9b68e57095412cb436266e8d0c58508892d871cd6d39512701e1117b0ad6354f0596d7f9ef9a0e630538ef3c7ff1970e0ef
-  languageName: node
-  linkType: hard
-
-"ts-pnp@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "ts-pnp@npm:1.2.0"
-  peerDependencies:
-    typescript: "*"
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 78341a27939de565e2754ff65ebb689743c16e3295528089d143c08d91842cf9029c3d6b3c95a9a20854a114a7904329d02c710d63f7ce4dbf671b8a3e560ac1
   languageName: node
   linkType: hard
 
