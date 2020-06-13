@@ -4,7 +4,7 @@ FROM node:current
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
-# hadolint ignore=DL3008
+# hadolint ignore=DL3008,SC2086
 RUN apt update \
     && apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -18,7 +18,6 @@ RUN apt update \
         wget \
         zsh \
     && curl -o- "https://get.docker.com" | bash \
-    && apt clean \
     && curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose \
