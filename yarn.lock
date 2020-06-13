@@ -1756,15 +1756,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@icons/material@npm:^0.2.4":
-  version: 0.2.4
-  resolution: "@icons/material@npm:0.2.4"
-  peerDependencies:
-    react: "*"
-  checksum: 10b1841bfb7f1b6735d8ebe32a18bbbff96221bd42afa9ce7acd87c09d467d5c6468ad2e220dd739dd2e49c4aed09d62cbf06942890265002e0f769afeb1f5ad
-  languageName: node
-  linkType: hard
-
 "@istanbuljs/load-nyc-config@npm:^1.0.0":
   version: 1.1.0
   resolution: "@istanbuljs/load-nyc-config@npm:1.1.0"
@@ -2938,15 +2929,6 @@ __metadata:
   version: 1.2.3
   resolution: "@types/range-parser@npm:1.2.3"
   checksum: 092fabae0ecbd728d3e4debc938cd043e97cb9f210cfec1c56ff6065c6e91666f376eb586591825d6757a058fd1a1dc4831d34e04ecfbb0800f35b8d86d38635
-  languageName: node
-  linkType: hard
-
-"@types/react-color@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@types/react-color@npm:3.0.2"
-  dependencies:
-    "@types/react": "*"
-  checksum: 888e6a5e72e596b4452f0179e7f0fbbb803247db93c6a30c91b617f7ad4d548df791b7caf0a9ef8382410d093a2bed55988ee7dda9c5185609ce4fb5f2d5ff51
   languageName: node
   linkType: hard
 
@@ -4475,7 +4457,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"backend@2.0.0, backend@workspace:backend":
+"backend@workspace:backend":
   version: 0.0.0-use.local
   resolution: "backend@workspace:backend"
   dependencies:
@@ -8580,7 +8562,6 @@ __metadata:
     "@types/markdown-it": 10.0.1
     "@types/node": 14.0.13
     "@types/react": 16.9.36
-    "@types/react-color": 3.0.2
     "@types/react-dom": 16.9.8
     "@types/react-html-parser": 2.0.1
     "@types/react-router": 5.1.7
@@ -8593,8 +8574,11 @@ __metadata:
     "@typescript-eslint/parser": 3.2.0
     "@yarnpkg/pnpify": 2.0.0-rc.23
     array-move: 2.2.2
-    backend: 2.0.0
     classnames: 2.2.6
+    eslint: 7.2.0
+    eslint-config-prettier: 6.11.0
+    eslint-plugin-prettier: 3.1.3
+    eslint-plugin-react: 7.20.0
     history: 5.0.0
     home-assistant-js-websocket: 5.2.3
     jest-junit: 10.0.0
@@ -8602,9 +8586,9 @@ __metadata:
     markdown-it-emoji: 1.4.0
     markdown-it-external-links: 0.0.6
     moment: 2.24.0
+    prettier: 2.0.5
     query-string: 6.13.1
     react: 16.13.1
-    react-color: 2.18.1
     react-dom: 16.13.1
     react-html-parser: 2.0.2
     react-router-dom: 5.2.0
@@ -12323,7 +12307,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"lodash@npm:>=3.5 <5, lodash@npm:^4.0.1, lodash@npm:^4.17.11, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.5, lodash@npm:~4.17.4":
+"lodash@npm:>=3.5 <5, lodash@npm:^4.17.11, lodash@npm:^4.17.13, lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.5, lodash@npm:~4.17.4":
   version: 4.17.15
   resolution: "lodash@npm:4.17.15"
   checksum: aec3fbb7570aa67bda500b8299b1b1821d60646bede87f76a74dfcc7666ab3445267d734ec71424d70809d52ad67a1356fab5ab694a3faa1908d68e9d48f00f5
@@ -12519,13 +12503,6 @@ fsevents@^1.2.7:
   bin:
     markdown-it: bin/markdown-it.js
   checksum: 1fb3b47b11a801f2bd7d83e63cb11605fc44e60a25a901c8a445b55c445a0b48553930e2a7ea40fad4e5dcf48af1167b9b65813f489702cca1f8561c3000f85f
-  languageName: node
-  linkType: hard
-
-"material-colors@npm:^1.2.1":
-  version: 1.2.6
-  resolution: "material-colors@npm:1.2.6"
-  checksum: 15883150a32abdb79638175b320712621a2962200ca3c09dfa0d5e3b614c081a0d459058ae367714f133801b8d9779f4137ddda4f2fbcaf8038a4624ab32c037
   languageName: node
   linkType: hard
 
@@ -15286,7 +15263,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.5.10, prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.6.0, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -15576,20 +15553,6 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"react-color@npm:2.18.1":
-  version: 2.18.1
-  resolution: "react-color@npm:2.18.1"
-  dependencies:
-    "@icons/material": ^0.2.4
-    lodash: ^4.17.11
-    material-colors: ^1.2.1
-    prop-types: ^15.5.10
-    reactcss: ^1.2.0
-    tinycolor2: ^1.4.1
-  checksum: 554cea86900cb47d91d8ef09df827f5797a5d011194011c9a2f322c0725a6a73c9e9ce8ed4d61e98f2868e5da3acbcca5bb4fbf9a56129a5c8ecf3113e2b0558
-  languageName: node
-  linkType: hard
-
 "react-dev-utils@npm:^10.2.1":
   version: 10.2.1
   resolution: "react-dev-utils@npm:10.2.1"
@@ -15845,15 +15808,6 @@ fsevents@^1.2.7:
     object-assign: ^4.1.1
     prop-types: ^15.6.2
   checksum: 13dcc9ba8a7521ecc3d7e69998dbc5703ae9515308d06a94a474ad34b42f1fc109372265e924a8c9b11d20fa1828407c290b8f61617c36734c4ca907ae7e5f45
-  languageName: node
-  linkType: hard
-
-"reactcss@npm:^1.2.0":
-  version: 1.2.3
-  resolution: "reactcss@npm:1.2.3"
-  dependencies:
-    lodash: ^4.0.1
-  checksum: 90fcf85d800293e2875a6e2d146765ec6e6958b2fa99542ee06a17f2dd7154e5eb116ca551718f684ea04be7841775e3d633e5ceeb3da82f990367bd4c28d3ad
   languageName: node
   linkType: hard
 
@@ -18232,13 +18186,6 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
-"tinycolor2@npm:^1.4.1":
-  version: 1.4.1
-  resolution: "tinycolor2@npm:1.4.1"
-  checksum: 7667d9b10cdf40b5af4b4d8c71d75fcf9ab1d89ad569b2d2213926929ac6666d2722320a5fe16d16d11ff77fca8aeb5974ef290161422b54700407e32113824a
-  languageName: node
-  linkType: hard
-
 "tmp@npm:^0.0.33":
   version: 0.0.33
   resolution: "tmp@npm:0.0.33"
@@ -18469,7 +18416,7 @@ resolve@1.15.0:
   languageName: node
   linkType: hard
 
-"ts-pnp@npm:1.1.6, ts-pnp@npm:^1.1.6":
+"ts-pnp@npm:^1.1.6":
   version: 1.1.6
   resolution: "ts-pnp@npm:1.1.6"
   peerDependencies:
@@ -18478,6 +18425,18 @@ resolve@1.15.0:
     typescript:
       optional: true
   checksum: 0c1ab7d1b85820a4ad12d25f18e6e9b68e57095412cb436266e8d0c58508892d871cd6d39512701e1117b0ad6354f0596d7f9ef9a0e630538ef3c7ff1970e0ef
+  languageName: node
+  linkType: hard
+
+"ts-pnp@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "ts-pnp@npm:1.2.0"
+  peerDependencies:
+    typescript: "*"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 78341a27939de565e2754ff65ebb689743c16e3295528089d143c08d91842cf9029c3d6b3c95a9a20854a114a7904329d02c710d63f7ce4dbf671b8a3e560ac1
   languageName: node
   linkType: hard
 

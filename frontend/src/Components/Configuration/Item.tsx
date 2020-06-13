@@ -15,13 +15,12 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import { ColorResult } from 'react-color';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import { SectionItemsProps } from './Config';
 import clone from '../../utils/clone';
-import ColorAdornment from '../Utils/ColorAdornment';
+// import ColorAdornment from '../Utils/ColorAdornment';
 // import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -138,11 +137,11 @@ function Item(props: ItemProps): ReactElement {
     handleUpdate(path, event.target.value);
   };
 
-  const handleColorChange = (path: (string | number)[]) => (
-    color: ColorResult
-  ): void => {
-    handleUpdate(path, color.hex);
-  };
+  // const handleColorChange = (path: (string | number)[]) => (
+  //   color: ColorResult
+  // ): void => {
+  //   handleUpdate(path, color.hex);
+  // };
 
   const classes = useStyles();
 
@@ -175,25 +174,25 @@ function Item(props: ItemProps): ReactElement {
           className={classes.root}
           placeholder={String(props.item.default)}
           type="text"
-          InputProps={{
-            endAdornment: (
-              <ColorAdornment
-                color={value}
-                handleColorChange={handleColorChange(props.path)}
-              />
-            ),
-          }}
+          // InputProps={{
+          //   endAdornment: (
+          //     <ColorAdornment
+          //       color={value}
+          //       handleColorChange={handleColorChange(props.path)}
+          //     />
+          //   ),
+          // }}
           value={value || ''}
           onChange={handleChange(props.path, 'color')}
         />
       );
-    case 'color_only':
-      return (
-        <ColorAdornment
-          color={value}
-          handleColorChange={handleColorChange(props.path)}
-        />
-      );
+    // case 'color_only':
+    //   return (
+    //     <ColorAdornment
+    //       color={value}
+    //       handleColorChange={handleColorChange(props.path)}
+    //     />
+    //   );
     case 'input':
       return (
         <TextField
