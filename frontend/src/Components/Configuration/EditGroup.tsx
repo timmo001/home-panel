@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { GroupProps } from '../Configuration/Config';
+import { GroupProps } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {

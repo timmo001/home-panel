@@ -1,7 +1,8 @@
 {
-  "name": "home-panel-api",
-  "description": "Home Panel API",
+  "name": "backend",
+  "description": "Home Panel Backend",
   "version": "2.0.0",
+  "private": true,
   "homepage": ".",
   "main": "src",
   "keywords": [
@@ -42,7 +43,6 @@
     "helmet": "3.22.1",
     "nedb": "1.8.0",
     "serve-favicon": "2.5.0",
-    "typescript": "3.9.5",
     "winston": "3.2.1"
   },
   "devDependencies": {
@@ -57,10 +57,9 @@
     "jest": "26.0.1",
     "jest-junit": "10.0.0",
     "nodemon": "2.0.4",
-    "prettier": "2.0.5",
     "shx": "0.3.2",
     "ts-jest": "26.1.0",
     "ts-node-dev": "1.0.0-pre.44",
-    "tslint": "6.1.2"
+    "typescript": "3.9.5"
   }
 }

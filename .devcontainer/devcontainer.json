@@ -20,7 +20,6 @@
     "esbenp.prettier-vscode",
     "ms-azure-devops.azure-pipelines",
     "ms-azuretools.vscode-docker",
-    "ms-vscode.vscode-typescript-tslint-plugin",
     "redhat.vscode-yaml"
   ],
   "settings": {}
