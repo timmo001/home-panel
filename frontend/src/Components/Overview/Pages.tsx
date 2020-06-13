@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 let editTimeout: NodeJS.Timeout;
-interface PagesProps extends RouteComponentProps, ConfigProps {
+interface PagesProps extends ConfigProps {
   currentPage: string;
   mouseMoved: boolean;
   setPage: (pageKey: string) => void;

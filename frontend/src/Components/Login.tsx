@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
-import { RouteComponentProps } from 'react-router';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface LoginProps extends RouteComponentProps {
+interface LoginProps {
   handleCreateAccount(data: any, callback?: (error?: string) => void): void;
   handleLogin(data: any, callback?: (error?: string) => void): void;
 }
@@ -116,14 +115,14 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(
-            () =>
-              props.history.replace({
-                ...props.location,
-                state: { overview: true },
-              }),
-            500
-          );
+          // setTimeout(
+          //   () =>
+          //     props.history.replace({
+          //       ...props.location,
+          //       state: { overview: true },
+          //     }),
+          //   500
+          // );
         }
       }
     );
@@ -144,14 +143,14 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(
-            () =>
-              props.history.replace({
-                ...props.location,
-                state: { overview: true },
-              }),
-            500
-          );
+          // setTimeout(
+          //   () =>
+          //     props.history.replace({
+          //       ...props.location,
+          //       state: { overview: true },
+          //     }),
+          //   500
+          // );
         }
       }
     );

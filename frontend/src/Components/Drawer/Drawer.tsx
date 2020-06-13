@@ -1,5 +1,4 @@
 import React, { useEffect, ReactElement } from 'react';
-import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,7 +17,6 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { ConfigurationProps } from '../Configuration/Config';
-import { RouteComponentExtendedProps } from '../Types/ReactRouter';
 import Items, { ItemsProps, MenuItemsProps } from './Items';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
 
@@ -99,7 +97,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ResponsiveDrawerProps extends RouteComponentExtendedProps {
+interface ResponsiveDrawerProps {
   config: ConfigurationProps;
   currentPage: string;
   editing: number;
@@ -166,27 +164,21 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
       <div className={classes.drawerInner}>
         <List>
           {Items.map((item: ItemsProps, key: number) => (
-            <Link
+            <ListItem
               key={key}
-              className={classes.link}
-              to={{ state: { [item.link]: true } }}
+              selected={props.currentPage === item.name ? true : false}
+              button
               onClick={
                 props.config.general.drawer_type &&
                 props.config.general.drawer_type.includes('persistent')
                   ? (): void | null => null
                   : handleDrawerClose
               }>
-              <ListItem
-                selected={props.currentPage === item.name ? true : false}
-                button>
-                <ListItemIcon>
-                  <span
-                    className={classnames('mdi', item.icon, classes.icon)}
-                  />
-                </ListItemIcon>
-                {!hideText && <ListItemText primary={item.name} />}
-              </ListItem>
-            </Link>
+              <ListItemIcon>
+                <span className={classnames('mdi', item.icon, classes.icon)} />
+              </ListItemIcon>
+              {!hideText && <ListItemText primary={item.name} />}
+            </ListItem>
           ))}
         </List>
         <div className={'fill'} />
@@ -218,9 +210,12 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location?.state?.configuration
-      ? true
-      : false || drawerOpen || props.mouseMoved;
+    // props.location?.state?.configuration
+    // ? true
+    // :
+    false ||
+    drawerOpen ||
+    props.mouseMoved;
 
   return (
     <div
@@ -274,28 +269,19 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               currentPageItem.menuItems.map(
                 (item: MenuItemsProps, key: number) => {
                   return (
-                    <Link
-                      className={classes.linkToolbar}
-                      to={{
-                        state: {
-                          ...props.location.state,
-                          edit: props.editing ? false : true,
-                        },
-                      }}
-                      key={key}>
-                      <IconButton
-                        color="inherit"
-                        aria-label={item.name}
-                        className={classes.menuButton}>
-                        <span
-                          className={classnames(
-                            'mdi',
-                            props.editing ? 'mdi-check' : item.icon,
-                            classes.icon
-                          )}
-                        />
-                      </IconButton>
-                    </Link>
+                    <IconButton
+                      key={key}
+                      color="inherit"
+                      aria-label={item.name}
+                      className={classes.menuButton}>
+                      <span
+                        className={classnames(
+                          'mdi',
+                          props.editing ? 'mdi-check' : item.icon,
+                          classes.icon
+                        )}
+                      />
+                    </IconButton>
                   );
                 }
               )}

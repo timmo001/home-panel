@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -81,9 +80,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface BaseProps
-  extends RouteComponentProps,
-    HomeAssistantChangeProps {
+export interface BaseProps extends HomeAssistantChangeProps {
   card: CardProps;
   command: CommandType;
   config: ConfigurationProps;

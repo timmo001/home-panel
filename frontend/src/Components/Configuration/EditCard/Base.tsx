@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -41,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export interface BaseProps extends RouteComponentProps {
+export interface BaseProps {
   card: CardProps;
   command: CommandType;
   config: ConfigurationProps;

@@ -4,15 +4,14 @@ import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
-import moment from 'moment';
+// import moment from 'moment';
 import Slide from '@material-ui/core/Slide';
 
 import { CommandType } from './Utils/Command';
 import { ConfigurationProps, ThemeProps } from './Configuration/Config';
-import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
 import clone from '../utils/clone';
-import Configuration from './Configuration/Configuration';
+// import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange,
@@ -50,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface MainProps extends RouteComponentExtendedProps {
+interface MainProps {
   command: CommandType;
   config: ConfigurationProps;
   editing: number;
@@ -72,8 +71,8 @@ function Main(props: MainProps): ReactElement {
   const [spaceTaken, setSpaceTaken] = React.useState<number>(0);
 
   useEffect(() => {
-    if (props.location.search) parseTokens();
-  }, [props.location.search]);
+    if (window.location.search) parseTokens();
+  }, []);
 
   useEffect(() => {
     if (!hassConnected) {
@@ -126,64 +125,65 @@ function Main(props: MainProps): ReactElement {
     setHassLogin(true);
   }
 
-  function handleBackupConfig(): void {
-    const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
-    a.href = URL.createObjectURL(file);
-    a.download = `home-panel-config-backup-${moment().format(
-      'YYYYMMDDHHmmss'
-    )}.json`;
-    a.click();
-  }
+  // function handleBackupConfig(): void {
+  //   const a = document.createElement('a');
+  //   const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
+  //   a.href = URL.createObjectURL(file);
+  //   a.download = `home-panel-config-backup-${moment().format(
+  //     'YYYYMMDDHHmmss'
+  //   )}.json`;
+  //   a.click();
+  // }
 
-  function handleRestoreConfig(): void {
-    const input = document.createElement('input');
-    input.type = 'file';
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    input.onchange = (e: any): void => {
-      if (e && e.target) {
-        const file = e.target.files[0];
+  // function handleRestoreConfig(): void {
+  //   const input = document.createElement('input');
+  //   input.type = 'file';
+  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   input.onchange = (e: any): void => {
+  //     if (e && e.target) {
+  //       const file = e.target.files[0];
 
-        const reader = new FileReader();
-        reader.readAsText(file, 'UTF-8');
+  //       const reader = new FileReader();
+  //       reader.readAsText(file, 'UTF-8');
 
-        reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
-          if (readerEvent && readerEvent.target) {
-            const content = readerEvent.target.result;
-            if (typeof content === 'string') {
-              const json = JSON.parse(content);
-              if (json) {
-                handleUpdateConfig([], json);
-                window.location.reload();
-              }
-            }
-          }
-        };
-      }
-    };
-    input.click();
-  }
+  //       reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
+  //         if (readerEvent && readerEvent.target) {
+  //           const content = readerEvent.target.result;
+  //           if (typeof content === 'string') {
+  //             const json = JSON.parse(content);
+  //             if (json) {
+  //               handleUpdateConfig([], json);
+  //               window.location.reload();
+  //             }
+  //           }
+  //         }
+  //       };
+  //     }
+  //   };
+  //   input.click();
+  // }
 
-  useEffect(() => {
-    if (props.command && !props.location.state?.overview)
-      props.history.replace({ ...props.location, state: { overview: true } });
-  }, [props.command, props.history, props.location]);
+  // useEffect(() => {
+  //   if (props.command && !props.location.state?.overview)
+  //     props.history.replace({ ...props.location, state: { overview: true } });
+  // }, [props.command, props.history, props.location]);
 
   const classes = useStyles();
 
-  if (!props.location.state)
-    props.history.replace({ ...props.location, state: { overview: true } });
+  // if (!props.location.state)
+  //   props.history.replace({ ...props.location, state: { overview: true } });
 
   if (!props.config) {
     return <Loading text="Loading Config. Please Wait.." />;
   }
 
-  const editing = props.location.state && props.location.state.edit ? 1 : 0;
-  const currentPage = !props.location.state
-    ? 'Overview'
-    : props.location.state.configuration
-    ? 'Configuration'
-    : 'Overview';
+  const editing = 0; // props.location.state && props.location.state.edit ? 1 : 0;
+  const currentPage = //!props.location.state
+    // ? 'Overview'
+    // : props.location.state.configuration
+    // ? 'Configuration'
+    // :
+    'Overview';
 
   const userInitials =
     props.loginCredentials &&
@@ -191,15 +191,17 @@ function Main(props: MainProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.location.state?.configuration
-      ? true
-      : false || props.mouseMoved;
+    // props.location.state?.configuration
+    // ? true
+    // :
+    false ||
+    props.mouseMoved;
 
   return (
     <div
       className={classnames(
-        classes.root,
-        props.location.state?.overview && classes.overview
+        classes.root
+        // props.location.state?.overview && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
@@ -231,8 +233,8 @@ function Main(props: MainProps): ReactElement {
             props.config.general &&
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
-            !showToolbar && classes.contentNoToolbar,
-            props.location.state?.overview && classes.overview
+            !showToolbar && classes.contentNoToolbar
+            // props.location.state?.overview && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
@@ -245,7 +247,7 @@ function Main(props: MainProps): ReactElement {
               setEntities={setHassEntities}
             />
           )}
-          {props.location.state?.configuration &&
+          {/* {props.location.state?.configuration &&
           hassAuth &&
           hassConfig &&
           hassEntities ? (
@@ -259,18 +261,18 @@ function Main(props: MainProps): ReactElement {
               handleRestoreConfig={handleRestoreConfig}
               handleUpdateConfig={handleUpdateConfig}
             />
-          ) : (
-            <Overview
-              {...props}
-              editing={editing}
-              hassAuth={hassAuth}
-              hassConfig={hassConfig}
-              hassEntities={hassEntities}
-              mouseMoved={props.mouseMoved}
-              handleHassChange={handleHassChange}
-              handleUpdateConfig={handleUpdateConfig}
-            />
-          )}
+          ) : ( */}
+          <Overview
+            {...props}
+            editing={editing}
+            hassAuth={hassAuth}
+            hassConfig={hassConfig}
+            hassEntities={hassEntities}
+            mouseMoved={props.mouseMoved}
+            handleHassChange={handleHassChange}
+            handleUpdateConfig={handleUpdateConfig}
+          />
+          {/* )} */}
         </main>
       )}
     </div>

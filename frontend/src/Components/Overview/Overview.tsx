@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import classnames from 'classnames';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -64,10 +63,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface OverviewProps
-  extends RouteComponentProps,
-    ConfigProps,
-    HomeAssistantChangeProps {
+interface OverviewProps extends ConfigProps, HomeAssistantChangeProps {
   command: CommandType;
   mouseMoved: boolean;
 }

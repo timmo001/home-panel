@@ -11,7 +11,6 @@ import {
 } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 
-import { RouteComponentExtendedProps } from './Types/ReactRouter';
 import {
   ThemeProps,
   defaultPalette,
@@ -27,7 +26,7 @@ import parseTheme from '../utils/parseTheme';
 
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application;
-function Onboarding(props: RouteComponentExtendedProps): ReactElement {
+function Onboarding(): ReactElement {
   const [loginAttempted, setLoginAttempted] = React.useState<boolean>(false);
   const [loginCredentials, setLoginCredentials] = React.useState<
     AuthenticationResult
@@ -47,7 +46,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
   useEffect(() => {
     if (!client) {
       client = feathers();
-      const path: string = clone(props.location.pathname);
+      const path: string = clone(window.location.pathname);
       const url = `${
         process.env.REACT_APP_API_PROTOCOL || window.location.protocol
       }//${process.env.REACT_APP_API_HOSTNAME || window.location.hostname}:${
@@ -59,7 +58,7 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
       client.configure(socketio(socket));
       client.configure(authentication());
     }
-  }, [props.location]);
+  }, []);
 
   function handleSetTheme(palette: ThemeProps): void {
     setTheme(
@@ -193,10 +192,10 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
 
   function handleMouseMove(): void {
     if (moveTimeout) clearTimeout(moveTimeout);
-    if (!props.location.state?.configuration) {
-      setMouseMoved(true);
-      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
-    }
+    // if (!window.location.state?.configuration) {
+    setMouseMoved(true);
+    moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
+    // }
   }
 
   const cssOverrides = `
@@ -218,7 +217,6 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
         <Loading text="Attempting Login. Please Wait.." />
       ) : loginCredentials && config ? (
         <Main
-          {...props}
           config={config}
           command={command}
           editing={0}
@@ -231,7 +229,6 @@ function Onboarding(props: RouteComponentExtendedProps): ReactElement {
         />
       ) : (
         <Login
-          {...props}
           handleCreateAccount={handleCreateAccount}
           handleLogin={handleLogin}
         />

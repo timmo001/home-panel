@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -28,10 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ConfigurationBaseProps
-  extends RouteComponentProps,
-    ConfigProps,
-    HomeAssistantEntityProps {
+interface ConfigurationBaseProps extends ConfigProps, HomeAssistantEntityProps {
   handleBackupConfig: () => void;
   handleRestoreConfig: () => void;
 }
