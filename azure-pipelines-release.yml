@@ -38,23 +38,29 @@ resources:
       endpoint: 'timmo001'
 
 stages:
-  - stage: 'Setup'
+  - stage: 'Lint'
     dependsOn: []
     jobs:
-      - template: azure-ci/setup/node.yml@organization
+      # - template: azure-ci/lint/eslint.yml@organization
+      - template: azure-ci/lint/hadolint.yml@organization
+      - template: azure-ci/lint/jsonlint.yml@organization
+      - template: azure-ci/lint/markdownlint.yml@organization
+      - template: azure-ci/lint/prettier.yml@organization
+      - template: azure-ci/lint/shellcheck.yml@organization
+      - template: azure-ci/lint/yamllint.yml@organization
   - stage: 'Build'
-    dependsOn:
-      - 'Setup'
+    dependsOn: []
     jobs:
       - template: azure-ci/build/react-app.yml@organization
       - template: azure-ci/build/node-ts.yml@organization
   - stage: 'Docker'
     dependsOn:
+      - 'Lint'
       - 'Build'
     condition: succeeded()
     jobs:
-      - job: 'Docker_Build_Publish'
-        displayName: 'Build and Publish'
+      - job: 'Docker_Build'
+        displayName: 'Build'
         strategy:
           maxParallel: 4
           matrix:
@@ -71,15 +77,16 @@ stages:
               buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
         steps:
+          - template: azure-ci/setup/node.yml@organization
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download App Artifacts'
+            displayName: 'Download Frontend Artifacts'
             inputs:
-              artifactName: 'build'
+              artifactName: 'frontend'
               downloadPath: $(System.DefaultWorkingDirectory)
           - task: DownloadBuildArtifacts@0
-            displayName: 'Download Api Artifacts'
+            displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'lib'
+              artifactName: 'backend'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - task: Docker@2
             inputs:
