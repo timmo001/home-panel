@@ -98,7 +98,7 @@ stages:
             displayName: "Download Api Artifacts"
             inputs:
               artifactName: "lib"
-              downloadPath: $(System.DefaultWorkingDirectory)/api
+              downloadPath: $(System.DefaultWorkingDirectory)/backend
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: "$(buildArch)"

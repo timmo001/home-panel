@@ -101,7 +101,7 @@ stages:
             displayName: "Download Api Artifacts"
             inputs:
               artifactName: "lib"
-              downloadPath: $(System.DefaultWorkingDirectory)/api
+              downloadPath: $(System.DefaultWorkingDirectory)/backend
           - task: Docker@2
             inputs:
               containerRegistry: "dockerHub"

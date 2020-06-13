@@ -15,10 +15,10 @@ ENV \
 COPY rootfs /
 
 # Copy api
-COPY api /opt/panel
+COPY backend /opt/panel
 
 # Copy app
-COPY build /opt/panel/public
+COPY frontend/build /opt/panel/public
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
@@ -50,7 +50,7 @@ RUN \
     && if [ "${BUILD_ARCH}" = "arm64v8" ]; then S6_ARCH="aarch64"; fi \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
     \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-${S6_ARCH}.tar.gz" \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v2.0.0.1/s6-overlay-${S6_ARCH}.tar.gz" \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
@@ -71,7 +71,7 @@ ARG BUILD_VERSION
 
 # Labels
 LABEL \
-    maintainer="Timmo <contact@timmo.xyz>" \
+    maintainer="Aidan Timson <contact@timmo.xyz>" \
     org.label-schema.description="A touch-compatible web-app for controlling the home" \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Home Panel" \
