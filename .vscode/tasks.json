@@ -19,7 +19,8 @@
     {
       "label": "Start Webapp",
       "type": "shell",
-      "command": "yarn install && yarn start",
+      "command": "yarn start",
+      "dependsOn": ["Install Dependencies"],
       "group": {
         "kind": "test",
         "isDefault": true
@@ -33,7 +34,8 @@
     {
       "label": "Start API",
       "type": "shell",
-      "command": "cd api && yarn install && yarn dev",
+      "command": "cd api && yarn dev",
+      "dependsOn": ["Install Dependencies"],
       "group": {
         "kind": "test",
         "isDefault": true
@@ -47,7 +49,7 @@
     {
       "label": "Install Dependencies",
       "type": "shell",
-      "command": "yarn install && cd api && yarn install",
+      "command": "yarn install",
       "group": {
         "kind": "build",
         "isDefault": true
