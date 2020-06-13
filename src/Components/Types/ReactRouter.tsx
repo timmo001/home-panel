@@ -1,19 +1,16 @@
-import { RouteComponentProps } from 'react-router-dom';
-import * as H from 'history';
+import { RouteComponentProps } from 'react-router';
+import { History, Location } from 'history';
 
-type LocationStateExtended =
-  | {
-      configuration: string;
-      edit: string;
-      overview: string;
-    }
-  | null
-  | undefined;
+type Params = {
+  configuration: string;
+  edit: string;
+  overview: string;
+};
 
-interface LocationExtended extends H.Location<H.LocationState> {
-  state: LocationStateExtended;
-}
+type LocationExtended = Location<any>;
 
-export interface RouteComponentExtendedProps extends RouteComponentProps {
+export interface RouteComponentExtendedProps
+  extends RouteComponentProps<Params> {
   location: LocationExtended;
+  history: History<any>;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, ReactElement } from 'react';
 import classnames from 'classnames';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';

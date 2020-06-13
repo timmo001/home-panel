@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { BaseProps } from './Base';
-import MarkdownText from 'Components/Utils/MarkdownText';
+import MarkdownText from '../Utils/MarkdownText';
 
 type RSSData = {
   content?: string;

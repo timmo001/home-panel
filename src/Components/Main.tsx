@@ -1,16 +1,16 @@
+import React, { useEffect, ReactElement } from 'react';
 import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import arrayMove from 'array-move';
 import classnames from 'classnames';
 import moment from 'moment';
-import React, { useEffect, ReactElement } from 'react';
 import Slide from '@material-ui/core/Slide';
 
 import { CommandType } from './Utils/Command';
 import { ConfigurationProps, ThemeProps } from './Configuration/Config';
-import { parseTokens } from './HomeAssistant/Utils/Auth';
 import { RouteComponentExtendedProps } from './Types/ReactRouter';
+import { parseTokens } from './HomeAssistant/Utils/Auth';
 import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
@@ -82,10 +82,7 @@ function Main(props: MainProps): ReactElement {
     }
   }, [hassConnected]);
 
-  function handleUpdateConfig(
-    path: (string | number)[],
-    data?: string | number | boolean | object
-  ): void {
+  function handleUpdateConfig(path: (string | number)[], data?: any): void {
     if (process.env.NODE_ENV === 'development')
       console.log('handleUpdateConfig:', path, data);
     let config = clone(props.config);

@@ -6,7 +6,7 @@ import {
   Bar,
   BarChart,
   Cell,
-  LabelList,
+  // LabelList,
   Line,
   LineChart,
   RadialBar,
@@ -67,31 +67,46 @@ function TooltipCustom(props: TooltipProps): ReactElement | null {
   return null;
 }
 
-interface LabelProps extends ChartProps {
-  index?: number;
-  offset?: number;
-  position?: string;
-  value?: number;
-  x?: number;
-  y?: number;
-}
+// interface LabelProps extends ChartProps {
+//   index?: number;
+//   offset?: number;
+//   position?: string;
+//   value?: number;
+//   x?: number;
+//   y?: number;
+// }
 
-function LabelCustom(props: LabelProps): ReactElement | null {
-  const theme = useTheme();
+// function LabelCustom(props: LabelProps): ReactElement | null {
+//   const theme = useTheme();
 
-  if (props.x && props.y && props.value)
-    return (
-      <text
-        fill={theme.palette.text.secondary}
-        x={props.x + theme.spacing(1.8)}
-        y={props.y - theme.spacing(1)}
-        textAnchor="middle"
-        dominantBaseline="middle">
-        {props.value}
-      </text>
-    );
-  return null;
-}
+//   if (props.x && props.y && props.value)
+//     return (
+//       <text
+//         fill={theme.palette.text.secondary}
+//         x={props.x + theme.spacing(1.8)}
+//         y={props.y - theme.spacing(1)}
+//         textAnchor="middle"
+//         dominantBaseline="middle">
+//         {props.value}
+//       </text>
+//     );
+//   return null;
+// }function LabelCustom(props: LabelProps): ReactElement | null {
+//   const theme = useTheme();
+
+//   if (props.x && props.y && props.value)
+//     return (
+//       <text
+//         fill={theme.palette.text.secondary}
+//         x={props.x + theme.spacing(1.8)}
+//         y={props.y - theme.spacing(1)}
+//         textAnchor="middle"
+//         dominantBaseline="middle">
+//         {props.value}
+//       </text>
+//     );
+//   return null;
+// }
 
 function Chart(props: ChartProps): ReactElement | null {
   const [dataIn, setDataIn] = React.useState<ChartData[]>();
@@ -160,13 +175,13 @@ function Chart(props: ChartProps): ReactElement | null {
               fill="url(#colorUv)"
               stroke={theme.palette.secondary.main}
               strokeWidth={2}>
-              {props.labels && (
+              {/* {props.labels && (
                 <LabelList
                   data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
-              )}
+              )} */}
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -177,13 +192,13 @@ function Chart(props: ChartProps): ReactElement | null {
           <BarChart data={data} margin={{ top: theme.spacing(6) }}>
             <Tooltip content={<TooltipCustom {...props} />} />
             <Bar dataKey="value" fill={theme.palette.secondary.main}>
-              {props.labels && (
+              {/* {props.labels && (
                 <LabelList
                   data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
-              )}
+              )} */}
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -204,13 +219,13 @@ function Chart(props: ChartProps): ReactElement | null {
               }}
               stroke={theme.palette.secondary.main}
               strokeWidth={2}>
-              {props.labels && (
+              {/* {props.labels && (
                 <LabelList
                   data={data}
                   dataKey="value"
                   content={<LabelCustom {...props} />}
                 />
-              )}
+              )} */}
             </Line>
           </LineChart>
         </ResponsiveContainer>
@@ -246,17 +261,14 @@ function Chart(props: ChartProps): ReactElement | null {
           <ScatterChart margin={{ top: theme.spacing(5) }}>
             <YAxis hide dataKey="y" />
             <Tooltip content={<TooltipCustom {...props} />} />
-            <Scatter
-              className="scatter"
-              data={data}
-              fill={theme.palette.secondary.main}>
-              {props.labels && (
+            <Scatter data={data} fill={theme.palette.secondary.main}>
+              {/* {props.labels && (
                 <LabelList
                   data={data}
                   dataKey="y"
                   content={<LabelCustom {...props} />}
                 />
-              )}
+              )} */}
             </Scatter>
           </ScatterChart>
         </ResponsiveContainer>

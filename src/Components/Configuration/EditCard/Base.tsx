@@ -13,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import { ColorResult } from 'react-color';
 
 import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
+import { CommandType } from '../../Utils/Command';
 import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
 import ColorAdornment from '../../Utils/ColorAdornment';
 import Entity from './Entity';
@@ -22,7 +23,6 @@ import Markdown from './Markdown';
 import Message from '../../Utils/Message';
 import News from './News';
 import RSS from './RSS';
-import { CommandType } from 'Components/Utils/Command';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {

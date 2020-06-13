@@ -29,7 +29,7 @@ import Image from './Image';
 import Markdown from './Markdown';
 import News from './News';
 import RSS from './RSS';
-import Message from 'Components/Utils/Message';
+import Message from '../Utils/Message';
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {

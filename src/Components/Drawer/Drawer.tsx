@@ -17,8 +17,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import { RouteComponentExtendedProps } from '../Types/ReactRouter';
 import { ConfigurationProps } from '../Configuration/Config';
+import { RouteComponentExtendedProps } from '../Types/ReactRouter';
 import Items, { ItemsProps, MenuItemsProps } from './Items';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
 
