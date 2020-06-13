@@ -1,9 +1,10 @@
 FROM node:current
 
-# Set the default shell to zsh
-ENV SHELL /bin/bash
+# Set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
+# hadolint ignore=DL3008
 RUN apt update \
     && apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -16,7 +17,7 @@ RUN apt update \
         software-properties-common \
         wget \
         zsh \
-    && curl -o- https://get.docker.com | bash \
+    && curl -o- "https://get.docker.com" | bash \
     && apt clean \
     && curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose \
