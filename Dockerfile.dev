@@ -17,6 +17,7 @@ RUN apt-get update \
         software-properties-common \
         wget \
         zsh \
+    && apt-get clean \
     && curl -o- "https://get.docker.com" | bash \
     && curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose \
