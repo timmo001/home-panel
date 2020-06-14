@@ -78,8 +78,8 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Frontend Artifacts'
             inputs:
-              artifactName: 'frontend'
-              downloadPath: $(System.DefaultWorkingDirectory)
+              artifactName: 'frontend-build'
+              downloadPath: $(System.DefaultWorkingDirectory)/frontend/build
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Backend Artifacts'
             inputs:
