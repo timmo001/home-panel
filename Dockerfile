@@ -32,15 +32,15 @@ RUN \
     set -o pipefail \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.67.0-r0 \
-        git=2.24.3-r0 \
+        curl=7.69.1-r0 \
+        git=2.26.2-r0 \
         tar=1.32-r1 \
-        yarn=1.19.2-r0 \
+        yarn=1.22.4-r0 \
     \
     && apk add --no-cache \
-        bash=5.0.11-r1 \
-        nginx=1.16.1-r6 \
-        nodejs-current=13.1.0-r0 \
+        bash=5.0.17-r0 \
+        nginx=1.18.0-r0 \
+        nodejs-current=14.3.0-r0 \
         openssl=1.1.1g-r0 \
         tzdata=2020a-r0 \
     \
