@@ -14,11 +14,8 @@ ENV \
 # Copy root filesystem
 COPY rootfs /
 
-# Copy api
-COPY backend /opt/panel
-
-# Copy app
-COPY frontend/build /opt/panel/public
+# Copy application
+COPY . /opt/panel
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
@@ -35,7 +32,6 @@ RUN \
         curl=7.69.1-r0 \
         git=2.26.2-r0 \
         tar=1.32-r1 \
-        yarn=1.22.4-r0 \
     \
     && apk add --no-cache \
         bash=5.0.17-r0 \
@@ -43,6 +39,7 @@ RUN \
         nodejs-current=14.3.0-r0 \
         openssl=1.1.1g-r0 \
         tzdata=2020a-r0 \
+        yarn=1.22.4-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
@@ -57,7 +54,11 @@ RUN \
     \
     && mkdir -p /data/db \
     \
-    && yarn cache clean \
+    && mv /opt/panel/frontend/build/* /opt/panel/backend/public \
+    # && mv /opt/panel/frontend/build/.* /opt/panel/backend/public \
+    && rm -rf /opt/panel/frontend \
+    && rm -rf /opt/panel/rootfs \
+    \
     && apk del --purge .build-dependencies \
     && rm -fr /tmp/*
 
