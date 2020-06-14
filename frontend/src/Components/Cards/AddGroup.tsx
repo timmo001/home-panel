@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import CardContent from '@material-ui/core/CardContent';
@@ -44,7 +44,7 @@ function AddGroup(props: AddGroupProps): ReactElement {
         focusRipple
         onClick={props.handleAdd}>
         <CardContent>
-          <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
+          <span className={clsx('mdi', 'mdi-plus', classes.icon)} />
         </CardContent>
       </ButtonBase>
     </Grid>

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -61,7 +61,7 @@ function Section(props: SectionProps): ReactElement {
               {item.icon && (
                 <Grid item>
                   <span
-                    className={classnames('mdi', item.icon, classes.icon)}
+                    className={clsx('mdi', item.icon, classes.icon)}
                   />
                 </Grid>
               )}

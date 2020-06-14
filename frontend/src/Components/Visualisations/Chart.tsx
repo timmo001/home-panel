@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Area,
@@ -109,9 +109,9 @@ function TooltipCustom(props: TooltipProps): ReactElement | null {
 // }
 
 function Chart(props: ChartProps): ReactElement | null {
-  const [dataIn, setDataIn] = React.useState<ChartData[]>();
-  const [data, setData] = React.useState<ChartData[]>();
-  const [type, setType] = React.useState<string>();
+  const [dataIn, setDataIn] = useState<ChartData[]>();
+  const [data, setData] = useState<ChartData[]>();
+  const [type, setType] = useState<string>();
 
   const classes = useStyles();
   const theme = useTheme();

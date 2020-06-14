@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
+import { Page } from './Types/Types';
 import Logo from '../Resources/logo.svg';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,6 +58,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface LoginProps {
   handleCreateAccount(data: any, callback?: (error?: string) => void): void;
+  handleSetCurrentPage: (page: Page) => void;
   handleLogin(data: any, callback?: (error?: string) => void): void;
 }
 
@@ -68,13 +70,13 @@ interface State {
 const firstTime =
   localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
 function Login(props: LoginProps): ReactElement {
-  const [createAccount, setCreateAccount] = React.useState<boolean>(firstTime);
-  const [showPassword, setShowPassword] = React.useState<boolean>(false);
-  const [invalidText, setInvalidText] = React.useState<string>();
-  const [errorText, setErrorText] = React.useState<string>();
-  const [loginSuccess, setLoginSuccess] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [values, setValues] = React.useState<State>({
+  const [createAccount, setCreateAccount] = useState<boolean>(firstTime);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [invalidText, setInvalidText] = useState<string>();
+  const [errorText, setErrorText] = useState<string>();
+  const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [values, setValues] = useState<State>({
     username: '',
     password: '',
   });
@@ -115,14 +117,7 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          // setTimeout(
-          //   () =>
-          //     props.history.replace({
-          //       ...props.location,
-          //       state: { overview: true },
-          //     }),
-          //   500
-          // );
+          setTimeout(() => props.handleSetCurrentPage('Overview'), 500);
         }
       }
     );
@@ -143,14 +138,7 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          // setTimeout(
-          //   () =>
-          //     props.history.replace({
-          //       ...props.location,
-          //       state: { overview: true },
-          //     }),
-          //   500
-          // );
+          setTimeout(() => props.handleSetCurrentPage('Overview'), 500);
         }
       }
     );
@@ -178,7 +166,7 @@ function Login(props: LoginProps): ReactElement {
   };
 
   const classes = useStyles();
-  const buttonClassname = classnames(classes.button, {
+  const buttonClassname = clsx(classes.button, {
     [classes.buttonSuccess]: loginSuccess,
   });
   return (
@@ -203,8 +191,7 @@ function Login(props: LoginProps): ReactElement {
             align="center">
             {createAccount ? 'Welcome!' : 'Login'}
           </Typography>
-          <FormControl
-            className={classnames(classes.margin, classes.textField)}>
+          <FormControl className={clsx(classes.margin, classes.textField)}>
             <InputLabel htmlFor="username">Username</InputLabel>
             <Input
               required
@@ -219,8 +206,7 @@ function Login(props: LoginProps): ReactElement {
               onKeyPress={handleKeyPress}
             />
           </FormControl>
-          <FormControl
-            className={classnames(classes.margin, classes.textField)}>
+          <FormControl className={clsx(classes.margin, classes.textField)}>
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input
               required

@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -33,7 +33,7 @@ interface EditGroupProps {
 }
 
 function EditGroup(props: EditGroupProps): ReactElement {
-  const [group, setGroup] = React.useState(props.group);
+  const [group, setGroup] = useState(props.group);
 
   useEffect(() => setGroup(props.group), [props.group]);
 

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, ReactElement } from 'react';
+import React, { useCallback, useEffect, ReactElement, useState } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -96,13 +96,13 @@ export interface BaseProps extends HomeAssistantChangeProps {
 
 let holdTimeout: NodeJS.Timeout;
 function Base(props: BaseProps): ReactElement {
-  const [deleteConfirm, setDeleteConfirm] = React.useState<boolean>(false);
-  const [editCard, setEditCard] = React.useState<boolean>(false);
-  const [expandable, setExpandable] = React.useState<boolean>(false);
-  const [expandCard, setExpandCard] = React.useState<boolean>(false);
-  const [height, setHeight] = React.useState<string | number>();
-  const [width, setWidth] = React.useState<string | number>();
-  const [toggleable, setToggleable] = React.useState<boolean>();
+  const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
+  const [editCard, setEditCard] = useState<boolean>(false);
+  const [expandable, setExpandable] = useState<boolean>(false);
+  const [expandCard, setExpandCard] = useState<boolean>(false);
+  const [height, setHeight] = useState<string | number>();
+  const [width, setWidth] = useState<string | number>();
+  const [toggleable, setToggleable] = useState<boolean>();
 
   const classes = useStyles();
   const theme = useTheme();

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import authentication from '@feathersjs/authentication-client';
 import feathers from '@feathersjs/feathers';
@@ -18,6 +18,7 @@ import {
   ConfigurationProps,
 } from './Configuration/Config';
 import { CommandType } from './Utils/Command';
+import { Page } from './Types/Types';
 import clone from '../utils/clone';
 import Loading from './Utils/Loading';
 import Login from './Login';
@@ -27,21 +28,22 @@ import parseTheme from '../utils/parseTheme';
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application;
 function Onboarding(): ReactElement {
-  const [loginAttempted, setLoginAttempted] = React.useState<boolean>(false);
-  const [loginCredentials, setLoginCredentials] = React.useState<
+  const [loginAttempted, setLoginAttempted] = useState<boolean>(false);
+  const [loginCredentials, setLoginCredentials] = useState<
     AuthenticationResult
   >();
-  const [config, setConfig] = React.useState<ConfigurationProps>();
-  const [configId, setConfigId] = React.useState<string>();
-  const [command, setCommand] = React.useState<CommandType>();
-  const [mouseMoved, setMouseMoved] = React.useState<boolean>(false);
-  const [theme, setTheme] = React.useState<Theme>(
+  const [config, setConfig] = useState<ConfigurationProps>();
+  const [configId, setConfigId] = useState<string>();
+  const [command, setCommand] = useState<CommandType>();
+  const [mouseMoved, setMouseMoved] = useState<boolean>(false);
+  const [theme, setTheme] = useState<Theme>(
     responsiveFontSizes(
       createMuiTheme({
         palette: defaultPalette,
       })
     )
   );
+  const [currentPage, setCurrentPage] = useState<Page>('Overview');
 
   useEffect(() => {
     if (!client) {
@@ -192,10 +194,14 @@ function Onboarding(): ReactElement {
 
   function handleMouseMove(): void {
     if (moveTimeout) clearTimeout(moveTimeout);
-    // if (!window.location.state?.configuration) {
-    setMouseMoved(true);
-    moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
-    // }
+    if (currentPage !== 'Configuration') {
+      setMouseMoved(true);
+      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
+    }
+  }
+
+  function handleSetCurrentPage(page: Page) {
+    setCurrentPage(page);
   }
 
   const cssOverrides = `
@@ -217,19 +223,22 @@ function Onboarding(): ReactElement {
         <Loading text="Attempting Login. Please Wait.." />
       ) : loginCredentials && config ? (
         <Main
-          config={config}
           command={command}
+          config={config}
+          currentPage={currentPage}
           editing={0}
           loginCredentials={loginCredentials}
           mouseMoved={mouseMoved}
           handleConfigChange={handleConfigChange}
           handleLogout={handleLogout}
           handleMouseMove={handleMouseMove}
+          handleSetCurrentPage={handleSetCurrentPage}
           handleSetTheme={handleSetTheme}
         />
       ) : (
         <Login
           handleCreateAccount={handleCreateAccount}
+          handleSetCurrentPage={handleSetCurrentPage}
           handleLogin={handleLogin}
         />
       )}

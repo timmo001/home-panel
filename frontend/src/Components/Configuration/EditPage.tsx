@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -42,8 +42,8 @@ interface EditPageProps extends ConfigProps {
 }
 
 function EditPage(props: EditPageProps): ReactElement {
-  const [page, setPage] = React.useState(props.page);
-  const [deleteConfirm, setDeleteConfirm] = React.useState(false);
+  const [page, setPage] = useState(props.page);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   useEffect(() => setPage(props.page), [props.page]);
 

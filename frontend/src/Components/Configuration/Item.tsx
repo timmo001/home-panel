@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
@@ -61,8 +61,8 @@ interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
 
 let updateTimeout: NodeJS.Timeout;
 function Item(props: ItemProps): ReactElement {
-  const [value, setValue] = React.useState<string>();
-  const [showPassword, setShowPassword] = React.useState<boolean>(false);
+  const [value, setValue] = useState<string>();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   useEffect(() => {
     setValue(undefined);

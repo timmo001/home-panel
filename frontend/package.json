@@ -20,7 +20,7 @@
     "@material-ui/styles": "4.10.0",
     "@mdi/font": "5.3.45",
     "array-move": "2.2.2",
-    "classnames": "2.2.6",
+    "clsx": "1.1.1",
     "history": "5.0.0",
     "home-assistant-js-websocket": "5.2.3",
     "markdown-it": "11.0.0",
@@ -68,7 +68,6 @@
     "usePathForSuiteName": "true"
   },
   "devDependencies": {
-    "@types/classnames": "2.2.10",
     "@types/history": "4.7.6",
     "@types/jest": "26.0.0",
     "@types/markdown-it": "10.0.1",

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -87,7 +87,7 @@ function Weather(props: EntityProps): ReactElement {
         <Grid item>
           <Typography className={classes.forecastTextIcon} variant="body2">
             <span
-              className={classnames(
+              className={clsx(
                 'mdi',
                 `mdi-${weatherMap[props.entity.state]}`,
                 classes.icon
@@ -159,7 +159,7 @@ function Weather(props: EntityProps): ReactElement {
                       className={classes.forecastTextIcon}
                       variant="body2">
                       <span
-                        className={classnames(
+                        className={clsx(
                           'mdi',
                           `mdi-${icon}`,
                           classes.forecastIcon

@@ -1,26 +1,26 @@
-export interface ItemsProps {
-  name: string;
-  link: string;
+import { Page } from '../Types/Types';
+
+export interface DrawerItem {
+  name: Page;
   icon: string;
-  menuItems?: MenuItemsProps[];
+  menuItems?: MenuItem[];
 }
 
-export interface MenuItemsProps {
+export interface MenuItem {
   name: string;
-  link: string;
   icon: string;
 }
 
-export default [
+const Items: DrawerItem[] = [
   {
     name: 'Overview',
-    link: 'overview',
     icon: 'mdi-view-dashboard',
-    menuItems: [{ name: 'Edit', link: 'edit', icon: 'mdi-pencil' }],
+    menuItems: [{ name: 'Edit', icon: 'mdi-pencil' }],
   },
   {
     name: 'Configuration',
-    link: 'configuration',
     icon: 'mdi-cog',
   },
 ];
+
+export default Items;

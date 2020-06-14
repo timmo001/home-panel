@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -36,13 +36,13 @@ interface HomeAssistantLoginProps {
 }
 
 function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
-  const [showDialog, setShowDialog] = React.useState<boolean>(false);
-  const [url, setUrl] = React.useState<string>(
+  const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>(
     `${
       process.env.REACT_APP_API_PROTOCOL || window.location.protocol
     }//homeassistant.local:8123`
   );
-  const [invalidText, setInvalidText] = React.useState<string>();
+  const [invalidText, setInvalidText] = useState<string>();
 
   const handleValidation = useCallback(() => {
     if (!url) {
@@ -86,9 +86,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
       <ListItem button onClick={handleToggleDialog}>
         {props.iconOnly ? (
           <ListItemIcon>
-            <span
-              className={classnames('mdi', 'mdi-home-assistant', classes.icon)}
-            />
+            <span className={clsx('mdi', 'mdi-home-assistant', classes.icon)} />
           </ListItemIcon>
         ) : (
           <CardMedia

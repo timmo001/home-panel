@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -52,7 +52,7 @@ function Cover(props: EntityProps): ReactElement | null {
               })
             }>
             <span
-              className={classnames(
+              className={clsx(
                 'mdi',
                 'mdi-arrow-up',
                 classes.icon,
@@ -69,7 +69,7 @@ function Cover(props: EntityProps): ReactElement | null {
                 entity_id: props.entity.entity_id,
               })
             }>
-            <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
+            <span className={clsx('mdi', 'mdi-stop', classes.icon)} />
           </IconButton>
           <IconButton
             className={classes.iconContainer}
@@ -81,7 +81,7 @@ function Cover(props: EntityProps): ReactElement | null {
               })
             }>
             <span
-              className={classnames(
+              className={clsx(
                 'mdi',
                 'mdi-arrow-down',
                 classes.icon,
@@ -104,7 +104,7 @@ function Cover(props: EntityProps): ReactElement | null {
                 })
               }>
               <span
-                className={classnames(
+                className={clsx(
                   'mdi',
                   'mdi-arrow-top-right',
                   classes.icon,
@@ -121,7 +121,7 @@ function Cover(props: EntityProps): ReactElement | null {
                   entity_id: props.entity.entity_id,
                 })
               }>
-              <span className={classnames('mdi', 'mdi-stop', classes.icon)} />
+              <span className={clsx('mdi', 'mdi-stop', classes.icon)} />
             </IconButton>
             <IconButton
               className={classes.iconContainer}
@@ -133,7 +133,7 @@ function Cover(props: EntityProps): ReactElement | null {
                 })
               }>
               <span
-                className={classnames(
+                className={clsx(
                   'mdi',
                   'mdi-arrow-bottom-left',
                   classes.icon,

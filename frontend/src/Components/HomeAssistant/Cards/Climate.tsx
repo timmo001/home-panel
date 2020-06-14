@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -145,7 +145,7 @@ function Climate(props: EntityProps): ReactElement | null {
                     props.entity.attributes.temperature + 0.5
                   )}>
                   <KeyboardArrowUp
-                    className={classnames(classes.icon, classes.iconNormal)}
+                    className={clsx(classes.icon, classes.iconNormal)}
                     fontSize="small"
                   />
                 </IconButton>
@@ -164,7 +164,7 @@ function Climate(props: EntityProps): ReactElement | null {
                     props.entity.attributes.temperature - 0.5
                   )}>
                   <KeyboardArrowDown
-                    className={classnames(classes.icon, classes.iconNormal)}
+                    className={clsx(classes.icon, classes.iconNormal)}
                     fontSize="small"
                   />
                 </IconButton>
@@ -191,7 +191,7 @@ function Climate(props: EntityProps): ReactElement | null {
                       props.entity.attributes.target_temp_low + 0.5
                     )}>
                     <KeyboardArrowUp
-                      className={classnames(classes.icon, classes.iconNormal)}
+                      className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
                     />
                   </IconButton>
@@ -210,7 +210,7 @@ function Climate(props: EntityProps): ReactElement | null {
                       props.entity.attributes.target_temp_low - 0.5
                     )}>
                     <KeyboardArrowDown
-                      className={classnames(classes.icon, classes.iconNormal)}
+                      className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
                     />
                   </IconButton>
@@ -233,7 +233,7 @@ function Climate(props: EntityProps): ReactElement | null {
                       props.entity.attributes.target_temp_high + 0.5
                     )}>
                     <KeyboardArrowUp
-                      className={classnames(classes.icon, classes.iconNormal)}
+                      className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
                     />
                   </IconButton>
@@ -252,7 +252,7 @@ function Climate(props: EntityProps): ReactElement | null {
                       props.entity.attributes.target_temp_high - 0.5
                     )}>
                     <KeyboardArrowDown
-                      className={classnames(classes.icon, classes.iconNormal)}
+                      className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
                     />
                   </IconButton>
@@ -297,7 +297,7 @@ function Climate(props: EntityProps): ReactElement | null {
                         className={classes.iconContainer}
                         onClick={handleHvacChange(mode)}>
                         <span
-                          className={classnames(
+                          className={clsx(
                             'mdi',
                             icon,
                             classes.icon,
@@ -310,7 +310,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 return (
                   <Grid key={key} item>
                     <Button
-                      className={classnames(
+                      className={clsx(
                         props.entity.state === mode && classes.iconActive
                       )}
                       onClick={handleHvacChange(mode)}>
@@ -332,7 +332,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 <Grid item>
                   <IconButton onClick={handleAwayToggle}>
                     <span
-                      className={classnames(
+                      className={clsx(
                         'mdi',
                         'mdi-walk',
                         classes.icon,

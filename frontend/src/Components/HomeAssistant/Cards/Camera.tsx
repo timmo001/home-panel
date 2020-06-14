@@ -1,10 +1,10 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 
 import { EntityProps } from './Entity';
 import Image from '../../Cards/Image';
 
 function Camera(props: EntityProps): ReactElement | null {
-  const [url, setUrl] = React.useState<string>();
+  const [url, setUrl] = useState<string>();
 
   useEffect(() => {
     if (props.hassAuth && props.entity.attributes)

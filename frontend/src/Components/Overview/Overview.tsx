@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -69,11 +69,11 @@ interface OverviewProps extends ConfigProps, HomeAssistantChangeProps {
 }
 
 function Overview(props: OverviewProps): ReactElement {
-  const [currentPage, setCurrentPage] = React.useState<string>(
+  const [currentPage, setCurrentPage] = useState<string>(
     props.config.pages[0].key
   );
-  const [editingGroup, setEditingGroup] = React.useState<GroupProps>();
-  const [deleteConfirm, setDeleteConfirm] = React.useState<GroupProps>();
+  const [editingGroup, setEditingGroup] = useState<GroupProps>();
+  const [deleteConfirm, setDeleteConfirm] = useState<GroupProps>();
 
   const handleSetCurrentPage = useCallback(
     (page: string) => {
@@ -267,7 +267,7 @@ function Overview(props: OverviewProps): ReactElement {
 
   return (
     <Grid
-      className={classnames(
+      className={clsx(
         classes.container,
         props.mouseMoved && classes.containerNavShown
       )}

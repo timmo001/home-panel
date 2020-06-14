@@ -1,17 +1,18 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, useState, ReactElement } from 'react';
 import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
 import { AuthenticationResult } from '@feathersjs/authentication/lib';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import arrayMove from 'array-move';
-import classnames from 'classnames';
-// import moment from 'moment';
+import clsx from 'clsx';
+import moment from 'moment';
 import Slide from '@material-ui/core/Slide';
 
 import { CommandType } from './Utils/Command';
 import { ConfigurationProps, ThemeProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
+import { Page, Editing } from './Types/Types';
 import clone from '../utils/clone';
-// import Configuration from './Configuration/Configuration';
+import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
 import HomeAssistant, {
   handleChange as handleHassChange,
@@ -49,8 +50,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface MainProps {
+export interface MainProps {
   command: CommandType;
+  currentPage: Page;
   config: ConfigurationProps;
   editing: number;
   loginCredentials: AuthenticationResult;
@@ -58,17 +60,19 @@ interface MainProps {
   handleConfigChange: (config: ConfigurationProps) => void;
   handleLogout: () => void;
   handleMouseMove: () => void;
+  handleSetCurrentPage: (page: Page) => void;
   handleSetTheme: (palette: ThemeProps) => void;
 }
 
 function Main(props: MainProps): ReactElement {
-  const [hassAuth, setHassAuth] = React.useState<Auth>();
-  const [hassConfig, setHassConfig] = React.useState<HassConfig>();
-  const [hassConnected, setHassConnected] = React.useState<boolean>(false);
-  const [hassEntities, setHassEntities] = React.useState<HassEntities>();
-  const [hassLogin, setHassLogin] = React.useState<boolean>(false);
-  const [hassUrl, setHassUrl] = React.useState<string>();
-  const [spaceTaken, setSpaceTaken] = React.useState<number>(0);
+  const [hassAuth, setHassAuth] = useState<Auth>();
+  const [hassConfig, setHassConfig] = useState<HassConfig>();
+  const [hassConnected, setHassConnected] = useState<boolean>(false);
+  const [hassEntities, setHassEntities] = useState<HassEntities>();
+  const [hassLogin, setHassLogin] = useState<boolean>(false);
+  const [hassUrl, setHassUrl] = useState<string>();
+  const [spaceTaken, setSpaceTaken] = useState<number>(0);
+  const [editing, setEditing] = useState<Editing>(0);
 
   useEffect(() => {
     if (window.location.search) parseTokens();
@@ -77,11 +81,13 @@ function Main(props: MainProps): ReactElement {
   useEffect(() => {
     if (!hassConnected) {
       const haUrl = localStorage.getItem('hass_url');
-      if (haUrl) setHassUrl(haUrl);
+      if (haUrl) {
+        setHassUrl(haUrl);
+      }
     }
   }, [hassConnected]);
 
-  function handleUpdateConfig(path: (string | number)[], data?: any): void {
+  function handleUpdateConfig(path: (string | number)[], data?: unknown): void {
     if (process.env.NODE_ENV === 'development')
       console.log('handleUpdateConfig:', path, data);
     let config = clone(props.config);
@@ -125,65 +131,58 @@ function Main(props: MainProps): ReactElement {
     setHassLogin(true);
   }
 
-  // function handleBackupConfig(): void {
-  //   const a = document.createElement('a');
-  //   const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
-  //   a.href = URL.createObjectURL(file);
-  //   a.download = `home-panel-config-backup-${moment().format(
-  //     'YYYYMMDDHHmmss'
-  //   )}.json`;
-  //   a.click();
-  // }
+  function handleBackupConfig(): void {
+    const a = document.createElement('a');
+    const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
+    a.href = URL.createObjectURL(file);
+    a.download = `home-panel-config-backup-${moment().format(
+      'YYYYMMDDHHmmss'
+    )}.json`;
+    a.click();
+  }
 
-  // function handleRestoreConfig(): void {
-  //   const input = document.createElement('input');
-  //   input.type = 'file';
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   input.onchange = (e: any): void => {
-  //     if (e && e.target) {
-  //       const file = e.target.files[0];
+  function handleRestoreConfig(): void {
+    const input = document.createElement('input');
+    input.type = 'file';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    input.onchange = (e: any): void => {
+      if (e && e.target) {
+        const file = e.target.files[0];
 
-  //       const reader = new FileReader();
-  //       reader.readAsText(file, 'UTF-8');
+        const reader = new FileReader();
+        reader.readAsText(file, 'UTF-8');
 
-  //       reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
-  //         if (readerEvent && readerEvent.target) {
-  //           const content = readerEvent.target.result;
-  //           if (typeof content === 'string') {
-  //             const json = JSON.parse(content);
-  //             if (json) {
-  //               handleUpdateConfig([], json);
-  //               window.location.reload();
-  //             }
-  //           }
-  //         }
-  //       };
-  //     }
-  //   };
-  //   input.click();
-  // }
+        reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
+          if (readerEvent && readerEvent.target) {
+            const content = readerEvent.target.result;
+            if (typeof content === 'string') {
+              const json = JSON.parse(content);
+              if (json) {
+                handleUpdateConfig([], json);
+                window.location.reload();
+              }
+            }
+          }
+        };
+      }
+    };
+    input.click();
+  }
 
-  // useEffect(() => {
-  //   if (props.command && !props.location.state?.overview)
-  //     props.history.replace({ ...props.location, state: { overview: true } });
-  // }, [props.command, props.history, props.location]);
+  useEffect(() => {
+    if (props.command && props.currentPage !== 'Overview')
+      props.handleSetCurrentPage('Overview');
+  }, [props, props.command, props.currentPage]);
+
+  function handleSetEditing(value: Editing) {
+    setEditing(value);
+  }
 
   const classes = useStyles();
-
-  // if (!props.location.state)
-  //   props.history.replace({ ...props.location, state: { overview: true } });
 
   if (!props.config) {
     return <Loading text="Loading Config. Please Wait.." />;
   }
-
-  const editing = 0; // props.location.state && props.location.state.edit ? 1 : 0;
-  const currentPage = //!props.location.state
-    // ? 'Overview'
-    // : props.location.state.configuration
-    // ? 'Configuration'
-    // :
-    'Overview';
 
   const userInitials =
     props.loginCredentials &&
@@ -191,34 +190,32 @@ function Main(props: MainProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    // props.location.state?.configuration
-    // ? true
-    // :
-    false ||
-    props.mouseMoved;
+    props.currentPage === 'Configuration'
+      ? true
+      : false || props.mouseMoved;
 
   return (
     <div
-      className={classnames(
-        classes.root
-        // props.location.state?.overview && classes.overview
+      className={clsx(
+        classes.root,
+        props.currentPage === 'Overview' && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
       onMouseMove={props.handleMouseMove}>
       <Drawer
         {...props}
-        currentPage={currentPage}
         editing={editing}
         hassConnected={hassConnected}
         mouseMoved={props.mouseMoved}
         userInitials={userInitials}
         handleHassLogin={handleHassLogin}
+        handleSetEditing={handleSetEditing}
         handleSpaceTaken={setSpaceTaken}
       />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <div
-          className={classnames(
+          className={clsx(
             classes.toolbar,
             props.config.general &&
               props.config.general.dense_toolbar &&
@@ -228,13 +225,13 @@ function Main(props: MainProps): ReactElement {
       </Slide>
       {props.config && (
         <main
-          className={classnames(
+          className={clsx(
             classes.content,
             props.config.general &&
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
-            !showToolbar && classes.contentNoToolbar
-            // props.location.state?.overview && classes.overview
+            !showToolbar && classes.contentNoToolbar,
+            props.currentPage === 'Overview' && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
@@ -247,7 +244,7 @@ function Main(props: MainProps): ReactElement {
               setEntities={setHassEntities}
             />
           )}
-          {/* {props.location.state?.configuration &&
+          {props.currentPage === 'Configuration' &&
           hassAuth &&
           hassConfig &&
           hassEntities ? (
@@ -261,18 +258,18 @@ function Main(props: MainProps): ReactElement {
               handleRestoreConfig={handleRestoreConfig}
               handleUpdateConfig={handleUpdateConfig}
             />
-          ) : ( */}
-          <Overview
-            {...props}
-            editing={editing}
-            hassAuth={hassAuth}
-            hassConfig={hassConfig}
-            hassEntities={hassEntities}
-            mouseMoved={props.mouseMoved}
-            handleHassChange={handleHassChange}
-            handleUpdateConfig={handleUpdateConfig}
-          />
-          {/* )} */}
+          ) : (
+            <Overview
+              {...props}
+              editing={editing}
+              hassAuth={hassAuth}
+              hassConfig={hassConfig}
+              hassEntities={hassEntities}
+              mouseMoved={props.mouseMoved}
+              handleHassChange={handleHassChange}
+              handleUpdateConfig={handleUpdateConfig}
+            />
+          )}
         </main>
       )}
     </div>

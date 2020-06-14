@@ -3,11 +3,12 @@ import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 import pink from '@material-ui/core/colors/pink';
 
 import { BaseProps } from '../Cards/Base';
+import { Editing } from '../Types/Types';
 import makeKey from '../../utils/makeKey';
 
 export interface ConfigProps {
   config: ConfigurationProps;
-  editing: number;
+  editing: Editing;
   handleUpdateConfig: (
     path: (string | number)[],
     data?:

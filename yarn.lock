@@ -2582,13 +2582,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/classnames@npm:2.2.10":
-  version: 2.2.10
-  resolution: "@types/classnames@npm:2.2.10"
-  checksum: 31b6380183c2123c69f5e50b9e40c7da2862ddfe634361d906a6e300dacd716656ce95e508541d0ec300f71aeed57d30a7ea46f36e881c01eb2334843700fadc
-  languageName: node
-  linkType: hard
-
 "@types/color-name@npm:^1.1.1":
   version: 1.1.1
   resolution: "@types/color-name@npm:1.1.1"
@@ -5322,7 +5315,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:2.2.6, classnames@npm:^2.2.5":
+"classnames@npm:^2.2.5":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 490eaeca5931846737ffd33e472a701d268d5b8bc5717dd4cf108a127b06e86e05350e06799abbbe763a0e4c945b4217f6700b7ae00ddc703505682c370e5cf2
@@ -5441,7 +5434,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.0.4":
+"clsx@npm:1.1.1, clsx@npm:^1.0.4":
   version: 1.1.1
   resolution: "clsx@npm:1.1.1"
   checksum: d8ae10ac0546da19fe8c9516886f6582a64a382cf4d09ea7d36d5287cafbdab1192ab249adc2cdf0310e0b0aeac4f4142cf7c738c98d9cb68c19ba24b6f673d5
@@ -8536,7 +8529,6 @@ __metadata:
     "@material-ui/lab": 4.0.0-alpha.56
     "@material-ui/styles": 4.10.0
     "@mdi/font": 5.3.45
-    "@types/classnames": 2.2.10
     "@types/history": 4.7.6
     "@types/jest": 26.0.0
     "@types/markdown-it": 10.0.1
@@ -8552,7 +8544,7 @@ __metadata:
     "@typescript-eslint/parser": 3.2.0
     "@yarnpkg/pnpify": 2.0.0-rc.23
     array-move: 2.2.2
-    classnames: 2.2.6
+    clsx: 1.1.1
     eslint: 7.2.0
     eslint-config-prettier: 6.11.0
     eslint-plugin-prettier: 3.1.3

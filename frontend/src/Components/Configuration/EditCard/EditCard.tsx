@@ -1,4 +1,4 @@
-import React, { useEffect, ReactElement } from 'react';
+import React, { useEffect, ReactElement, useState } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -40,7 +40,7 @@ interface EditCardProps extends BaseProps {
 }
 
 function EditCard(props: EditCardProps): ReactElement {
-  const [card, setCard] = React.useState(props.card);
+  const [card, setCard] = useState(props.card);
 
   useEffect(() => setCard(props.card), [props.card]);
 

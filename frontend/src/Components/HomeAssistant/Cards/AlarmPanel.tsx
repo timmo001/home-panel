@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function AlarmPanel(props: EntityProps): ReactElement | null {
-  const [code, setCode] = React.useState('');
+  const [code, setCode] = useState<string>('');
 
   function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setCode(event.target.value);

@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import moment from 'moment';
 import { HassEntity } from 'home-assistant-js-websocket';
 import { makeStyles, Theme } from '@material-ui/core/styles';
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 let historyInterval: NodeJS.Timeout;
 function State(props: EntityProps): ReactElement | null {
-  const [historyData, setHistoryData] = React.useState<ChartData[]>();
+  const [historyData, setHistoryData] = useState<ChartData[]>();
 
   const getHistory = useCallback(async (): Promise<void> => {
     let data;
@@ -113,7 +113,7 @@ function State(props: EntityProps): ReactElement | null {
       <Grid className={classes.iconContainer} item>
         {props.card.icon && (
           <Typography
-            className={classnames(
+            className={clsx(
               'mdi',
               `mdi-${props.card.icon}`,
               classes.icon

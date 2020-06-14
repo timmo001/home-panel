@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -49,7 +49,7 @@ function Toggle(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={classnames(
+            className={clsx(
               'mdi',
               `mdi-${props.card.icon}`,
               classes.icon

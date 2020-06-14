@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, ReactElement } from 'react';
+import React, { useEffect, useCallback, ReactElement, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function Image(props: BaseProps): ReactElement {
-  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleSetDialogOpen = useCallback((open: boolean) => {
     setDialogOpen(open);

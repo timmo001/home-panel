@@ -1,5 +1,5 @@
-import React, { useEffect, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
@@ -26,7 +26,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function TextEntity(props: EntityProps): ReactElement {
-  const [text, setText] = React.useState<string>();
+  const [text, setText] = useState<string>();
 
   useEffect(() => {
     setText(props.entity.state);
@@ -55,7 +55,7 @@ function TextEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={classnames(
+            className={clsx(
               'mdi',
               `mdi-${props.card.icon}`,
               classes.icon

@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -78,7 +78,7 @@ function Fan(props: EntityProps): ReactElement | null {
                     className={classes.iconContainer}
                     onClick={(): void => handleSpeedChange(speed)}>
                     <span
-                      className={classnames(
+                      className={clsx(
                         'mdi',
                         icon,
                         classes.icon,
@@ -92,7 +92,7 @@ function Fan(props: EntityProps): ReactElement | null {
             return (
               <Grid key={key} item>
                 <Button
-                  className={classnames(
+                  className={clsx(
                     props.entity.attributes.hvac_action === speed &&
                       classes.iconActive
                   )}

@@ -1,5 +1,5 @@
-import React, { useEffect, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, ReactElement, useState, useMemo } from 'react';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Avatar from '@material-ui/core/Avatar';
@@ -17,8 +17,10 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { ConfigurationProps } from '../Configuration/Config';
-import Items, { ItemsProps, MenuItemsProps } from './Items';
+import { Editing } from '../Types/Types';
+import { MainProps } from '../Main';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
+import Items, { DrawerItem, MenuItem } from './Items';
 
 const drawerWidth = 240,
   drawerWidthIcons = 54;
@@ -97,21 +99,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ResponsiveDrawerProps {
+interface ResponsiveDrawerProps extends MainProps {
   config: ConfigurationProps;
-  currentPage: string;
-  editing: number;
+  editing: Editing;
   hassConnected: boolean;
   mouseMoved: boolean;
   userInitials: string;
   handleHassLogin: (url: string) => void;
   handleLogout: () => void;
+  handleSetEditing: (editing: Editing) => void;
   handleSpaceTaken: (space: number) => void;
 }
 
 function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const classes = useStyles();
-  const [drawerOpen, setDrawerOpen] = React.useState(
+  const [drawerOpen, setDrawerOpen] = useState(
     props.config.general.drawer_type &&
       props.config.general.drawer_type.includes('persistent')
       ? true
@@ -139,6 +141,19 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     setDrawerOpen(false);
   }
 
+  const handleItemClicked = (item: DrawerItem) => () => {
+    if (
+      !props.config.general.drawer_type ||
+      !props.config.general.drawer_type.includes('persistent')
+    )
+      handleDrawerClose();
+    props.handleSetCurrentPage(item.name);
+  };
+
+  function handleToggleEditing() {
+    props.handleSetEditing(props.editing === 0 ? 1 : 0);
+  }
+
   const hideText = !(
     props.config.general.drawer_type !== 'persistent_icons_only' &&
     props.config.general.drawer_type !== 'permanent_icons_only'
@@ -147,7 +162,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const drawer = (
     <div>
       <div
-        className={classnames(
+        className={clsx(
           classes.drawerHeader,
           props.config.general.dense_toolbar && classes.drawerHeaderDense
         )}>
@@ -163,19 +178,14 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
       <Divider />
       <div className={classes.drawerInner}>
         <List>
-          {Items.map((item: ItemsProps, key: number) => (
+          {Items.map((item: DrawerItem, key: number) => (
             <ListItem
               key={key}
               selected={props.currentPage === item.name ? true : false}
               button
-              onClick={
-                props.config.general.drawer_type &&
-                props.config.general.drawer_type.includes('persistent')
-                  ? (): void | null => null
-                  : handleDrawerClose
-              }>
+              onClick={handleItemClicked(item)}>
               <ListItemIcon>
-                <span className={classnames('mdi', item.icon, classes.icon)} />
+                <span className={clsx('mdi', item.icon, classes.icon)} />
               </ListItemIcon>
               {!hideText && <ListItemText primary={item.name} />}
             </ListItem>
@@ -195,7 +205,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
           )}
           <ListItem button onClick={props.handleLogout}>
             <ListItemIcon>
-              <span className={classnames('mdi', 'mdi-logout', classes.icon)} />
+              <span className={clsx('mdi', 'mdi-logout', classes.icon)} />
             </ListItemIcon>
             {!hideText && <ListItemText primary="Log Out" />}
           </ListItem>
@@ -204,22 +214,20 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     </div>
   );
 
-  const currentPageItem = Items.find(
-    (item: ItemsProps) => props.currentPage === item.name
+  const currentPageItem = useMemo(
+    () => Items.find((item: DrawerItem) => item.name === props.currentPage),
+    [props.currentPage]
   );
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    // props.location?.state?.configuration
-    // ? true
-    // :
-    false ||
-    drawerOpen ||
-    props.mouseMoved;
+    props.currentPage === 'Configuration'
+      ? true
+      : false || drawerOpen || props.mouseMoved;
 
   return (
     <div
-      className={classnames(
+      className={clsx(
         classes.root,
         props.config.general.drawer_type === 'persistent' && drawerOpen
           ? classes.persistentToolbar
@@ -231,7 +239,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
       <CssBaseline />
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <AppBar
-          className={classnames(
+          className={clsx(
             (props.config.general.drawer_type === 'persistent_icons_only' &&
               drawerOpen) ||
               props.config.general.drawer_type === 'permanent_icons_only'
@@ -239,7 +247,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               : null
           )}>
           <Toolbar
-            className={classnames(
+            className={clsx(
               props.config.general.drawer_type === 'persistent' && drawerOpen
                 ? classes.persistentToolbar
                 : null
@@ -266,25 +274,24 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
             </Typography>
             {currentPageItem &&
               currentPageItem.menuItems &&
-              currentPageItem.menuItems.map(
-                (item: MenuItemsProps, key: number) => {
-                  return (
-                    <IconButton
-                      key={key}
-                      color="inherit"
-                      aria-label={item.name}
-                      className={classes.menuButton}>
-                      <span
-                        className={classnames(
-                          'mdi',
-                          props.editing ? 'mdi-check' : item.icon,
-                          classes.icon
-                        )}
-                      />
-                    </IconButton>
-                  );
-                }
-              )}
+              currentPageItem.menuItems.map((item: MenuItem, key: number) => {
+                return (
+                  <IconButton
+                    key={key}
+                    color="inherit"
+                    aria-label={item.name}
+                    className={classes.menuButton}
+                    onClick={handleToggleEditing}>
+                    <span
+                      className={clsx(
+                        'mdi',
+                        props.editing ? 'mdi-check' : item.icon,
+                        classes.icon
+                      )}
+                    />
+                  </IconButton>
+                );
+              })}
           </Toolbar>
         </AppBar>
       </Slide>

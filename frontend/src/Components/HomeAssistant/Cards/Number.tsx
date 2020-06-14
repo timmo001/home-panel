@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 function NumberEntity(props: EntityProps): ReactElement {
-  const [number, setNumber] = React.useState<number>();
+  const [number, setNumber] = useState<number>();
 
   function handleSliderChange(
     _event: React.ChangeEvent<{}>,
@@ -78,7 +78,7 @@ function NumberEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={classnames(
+            className={clsx(
               'mdi',
               `mdi-${props.card.icon}`,
               classes.icon

@@ -1,5 +1,5 @@
-import React, { useEffect, ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { useEffect, ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -51,8 +51,8 @@ const FEATURE_CLASS_NAMES = {
 
 function Light(props: EntityProps): ReactElement | null {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [attributes, setAttributes] = React.useState<{ [key: string]: any }>();
-  const [color, setColor] = React.useState('');
+  const [attributes, setAttributes] = useState<{ [key: string]: any }>();
+  const [color, setColor] = useState('');
 
   const classes = useStyles();
   const theme = useTheme();
@@ -233,7 +233,7 @@ function Light(props: EntityProps): ReactElement | null {
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton onClick={props.handleHassToggle}>
           <Typography
-            className={classnames(
+            className={clsx(
               'mdi',
               `mdi-${props.card.icon || 'lightbulb'}`,
               classes.icon

@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import React, { ReactElement, useState } from 'react';
+import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -32,7 +32,7 @@ interface PagesProps extends ConfigProps {
 }
 
 function Pages(props: PagesProps): ReactElement {
-  const [editingPage, setEditingPage] = React.useState<PageProps>();
+  const [editingPage, setEditingPage] = useState<PageProps>();
 
   function handlePageChange(
     _event: React.ChangeEvent<{}>,
@@ -76,14 +76,10 @@ function Pages(props: PagesProps): ReactElement {
     props.setPage(props.config.pages[findPageIdByPage(props.config, page)].key);
   };
 
-  const showNavigation =
-    !props.config.general.autohide_navigation ||
-    (props.config.general.autohide_navigation && props.mouseMoved);
-
   const classes = useStyles();
   return (
     <div>
-      <Slide direction="up" in={showNavigation} mountOnEnter unmountOnExit>
+      <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
         <BottomNavigation
           className={classes.root}
           value={props.currentPage}
@@ -103,11 +99,7 @@ function Pages(props: PagesProps): ReactElement {
                 onMouseLeave={handleCancelEdit}
                 icon={
                   <Typography
-                    className={classnames(
-                      'mdi',
-                      `mdi-${page.icon}`,
-                      classes.icon
-                    )}
+                    className={clsx('mdi', `mdi-${page.icon}`, classes.icon)}
                     variant="h4"
                     component="h5"
                   />
@@ -119,7 +111,7 @@ function Pages(props: PagesProps): ReactElement {
               onClick={handleAdd}
               icon={
                 <Typography
-                  className={classnames('mdi', 'mdi-plus', classes.icon)}
+                  className={clsx('mdi', 'mdi-plus', classes.icon)}
                   variant="h4"
                   component="h5"
                 />

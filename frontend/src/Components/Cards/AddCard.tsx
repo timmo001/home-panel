@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import classnames from 'classnames';
+import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -63,7 +63,7 @@ function AddCard(props: AddCardProps): ReactElement {
               container
               alignContent="center"
               justify="center">
-              <span className={classnames('mdi', 'mdi-plus', classes.icon)} />
+              <span className={clsx('mdi', 'mdi-plus', classes.icon)} />
             </Grid>
           </CardContent>
         </Card>
