@@ -91,21 +91,6 @@ function TooltipCustom(props: TooltipProps): ReactElement | null {
 //       </text>
 //     );
 //   return null;
-// }function LabelCustom(props: LabelProps): ReactElement | null {
-//   const theme = useTheme();
-
-//   if (props.x && props.y && props.value)
-//     return (
-//       <text
-//         fill={theme.palette.text.secondary}
-//         x={props.x + theme.spacing(1.8)}
-//         y={props.y - theme.spacing(1)}
-//         textAnchor="middle"
-//         dominantBaseline="middle">
-//         {props.value}
-//       </text>
-//     );
-//   return null;
 // }
 
 function Chart(props: ChartProps): ReactElement | null {
