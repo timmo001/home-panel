@@ -42,6 +42,8 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/lint/eslint.yml@organization
+        parameters:
+          packages: 'eslint eslint-plugin-prettier eslint-plugin-react'
       - template: azure-ci/lint/hadolint.yml@organization
       - template: azure-ci/lint/jsonlint.yml@organization
       - template: azure-ci/lint/markdownlint.yml@organization
