@@ -1,9 +1,8 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Fragment, ReactElement, useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
 
 import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
@@ -78,48 +77,46 @@ function Pages(props: PagesProps): ReactElement {
 
   const classes = useStyles();
   return (
-    <div>
-      <Slide direction="up" in={props.mouseMoved} mountOnEnter unmountOnExit>
-        <BottomNavigation
-          className={classes.root}
-          value={props.currentPage}
-          onChange={handlePageChange}
-          showLabels>
-          {props.config &&
-            props.config.pages.map((page: PageProps, key: number) => (
-              <BottomNavigationAction
-                key={key}
-                value={page.key}
-                label={page.name}
-                onTouchStart={handleEditingPage(page)}
-                onMouseDown={handleEditingPage(page)}
-                onTouchCancel={handleCancelEdit}
-                onTouchEnd={handleCancelEdit}
-                onMouseUp={handleCancelEdit}
-                onMouseLeave={handleCancelEdit}
-                icon={
-                  <Typography
-                    className={clsx('mdi', `mdi-${page.icon}`, classes.icon)}
-                    variant="h4"
-                    component="h5"
-                  />
-                }
-              />
-            ))}
-          {props.editing === 1 && (
+    <Fragment>
+      <BottomNavigation
+        className={classes.root}
+        value={props.currentPage}
+        onChange={handlePageChange}
+        showLabels>
+        {props.config &&
+          props.config.pages.map((page: PageProps, key: number) => (
             <BottomNavigationAction
-              onClick={handleAdd}
+              key={key}
+              value={page.key}
+              label={page.name}
+              onTouchStart={handleEditingPage(page)}
+              onMouseDown={handleEditingPage(page)}
+              onTouchCancel={handleCancelEdit}
+              onTouchEnd={handleCancelEdit}
+              onMouseUp={handleCancelEdit}
+              onMouseLeave={handleCancelEdit}
               icon={
                 <Typography
-                  className={clsx('mdi', 'mdi-plus', classes.icon)}
+                  className={clsx('mdi', `mdi-${page.icon}`, classes.icon)}
                   variant="h4"
                   component="h5"
                 />
               }
             />
-          )}
-        </BottomNavigation>
-      </Slide>
+          ))}
+        {props.editing === 1 && (
+          <BottomNavigationAction
+            onClick={handleAdd}
+            icon={
+              <Typography
+                className={clsx('mdi', 'mdi-plus', classes.icon)}
+                variant="h4"
+                component="h5"
+              />
+            }
+          />
+        )}
+      </BottomNavigation>
       {editingPage && (
         <EditPage
           {...props}
@@ -129,7 +126,7 @@ function Pages(props: PagesProps): ReactElement {
           handleUpdate={handleUpdatePage(editingPage)}
         />
       )}
-    </div>
+    </Fragment>
   );
 }
 

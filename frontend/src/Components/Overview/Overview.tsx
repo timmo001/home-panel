@@ -1,5 +1,4 @@
 import React, { useEffect, useCallback, ReactElement, useState } from 'react';
-import clsx from 'clsx';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
@@ -34,8 +33,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: '100%',
     maxHeight: '100%',
     overflow: 'hidden',
-  },
-  containerNavShown: {
     paddingBottom: theme.spacing(6.5),
   },
   title: {
@@ -267,10 +264,7 @@ function Overview(props: OverviewProps): ReactElement {
 
   return (
     <Grid
-      className={clsx(
-        classes.container,
-        props.mouseMoved && classes.containerNavShown
-      )}
+      className={classes.container}
       container
       direction="column"
       justify="flex-start"
