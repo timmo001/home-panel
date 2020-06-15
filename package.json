@@ -1,96 +1,15 @@
 {
-  "name": "home-panel",
-  "version": "2.0.0",
   "private": true,
-  "author": {
-    "name": "Timmo",
-    "email": "contact@timmo.xyz"
-  },
-  "license": "MIT",
-  "homepage": ".",
-  "dependencies": {
-    "@feathersjs/authentication": "4.5.3",
-    "@feathersjs/authentication-client": "4.5.4",
-    "@feathersjs/feathers": "4.5.3",
-    "@feathersjs/socketio-client": "4.5.4",
-    "@material-ui/core": "4.10.2",
-    "@material-ui/icons": "4.9.1",
-    "@material-ui/lab": "4.0.0-alpha.56",
-    "@material-ui/styles": "4.10.0",
-    "@mdi/font": "5.3.45",
-    "array-move": "2.2.2",
-    "classnames": "2.2.6",
-    "history": "4.10.1",
-    "home-assistant-js-websocket": "5.2.3",
-    "markdown-it": "11.0.0",
-    "markdown-it-emoji": "1.4.0",
-    "markdown-it-external-links": "0.0.6",
-    "moment": "2.24.0",
-    "query-string": "6.13.1",
-    "react": "16.13.1",
-    "react-color": "2.18.1",
-    "react-dom": "16.13.1",
-    "react-html-parser": "2.0.2",
-    "react-router-dom": "5.2.0",
-    "react-scripts": "3.4.1",
-    "recharts": "2.0.0-beta.6",
-    "rss-parser": "3.8.0",
-    "socket.io-client": "2.3.0",
-    "superagent": "5.2.2",
-    "typeface-roboto": "0.0.75",
-    "typescript": "3.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "CI=true react-scripts test --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
-    "eject": "react-scripts eject",
-    "eslint": "eslint -c .eslintrc.json --color src"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "jest": {
-    "coverageReporters": [
-      "text",
-      "cobertura"
-    ]
-  },
-  "jest-junit": {
-    "output": "output/coverage/junit/junit.xml",
-    "usePathForSuiteName": "true"
-  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "devDependencies": {
-    "@types/classnames": "2.2.10",
-    "@types/jest": "26.0.0",
-    "@types/markdown-it": "10.0.1",
-    "@types/react": "16.9.36",
-    "@types/react-color": "3.0.2",
-    "@types/react-dom": "16.9.8",
-    "@types/react-html-parser": "2.0.1",
-    "@types/react-router-dom": "5.1.5",
-    "@types/recharts": "1.8.12",
-    "@types/socket.io": "2.1.8",
-    "@types/socket.io-client": "1.4.33",
-    "@types/superagent": "4.1.7",
-    "@typescript-eslint/eslint-plugin": "3.2.0",
-    "@typescript-eslint/parser": "3.2.0",
-    "@yarnpkg/pnpify": "2.0.0-rc.23",
     "eslint": "7.2.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.3",
     "eslint-plugin-react": "7.20.0",
-    "jest-junit": "10.0.0",
-    "prettier": "2.0.5"
-  },
-  "snyk": true
+    "prettier": "2.0.5",
+    "typescript": "3.9.5"
+  }
 }

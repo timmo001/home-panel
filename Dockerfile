@@ -14,11 +14,8 @@ ENV \
 # Copy root filesystem
 COPY rootfs /
 
-# Copy api
-COPY api /opt/panel
-
-# Copy app
-COPY build /opt/panel/public
+# Copy application
+COPY . /opt/panel
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
@@ -32,17 +29,17 @@ RUN \
     set -o pipefail \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.67.0-r0 \
-        git=2.24.3-r0 \
+        curl=7.69.1-r0 \
+        git=2.26.2-r0 \
         tar=1.32-r1 \
-        yarn=1.19.2-r0 \
     \
     && apk add --no-cache \
-        bash=5.0.11-r1 \
-        nginx=1.16.1-r6 \
-        nodejs-current=13.1.0-r0 \
+        bash=5.0.17-r0 \
+        nginx=1.18.0-r0 \
+        nodejs-current=14.3.0-r0 \
         openssl=1.1.1g-r0 \
         tzdata=2020a-r0 \
+        yarn=1.22.4-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
@@ -50,14 +47,18 @@ RUN \
     && if [ "${BUILD_ARCH}" = "arm64v8" ]; then S6_ARCH="aarch64"; fi \
     && if [ "${BUILD_ARCH}" = "i386" ]; then S6_ARCH="x86"; fi \
     \
-    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-${S6_ARCH}.tar.gz" \
+    && curl -L -s "https://github.com/just-containers/s6-overlay/releases/download/v2.0.0.1/s6-overlay-${S6_ARCH}.tar.gz" \
         | tar zxvf - -C / \
     \
     && mkdir -p /etc/fix-attrs.d \
     \
     && mkdir -p /data/db \
     \
-    && yarn cache clean \
+    && mv /opt/panel/frontend/build/* /opt/panel/backend/public \
+    # && mv /opt/panel/frontend/build/.* /opt/panel/backend/public \
+    && rm -rf /opt/panel/frontend \
+    && rm -rf /opt/panel/rootfs \
+    \
     && apk del --purge .build-dependencies \
     && rm -fr /tmp/*
 
@@ -71,7 +72,7 @@ ARG BUILD_VERSION
 
 # Labels
 LABEL \
-    maintainer="Timmo <contact@timmo.xyz>" \
+    maintainer="Aidan Timson <contact@timmo.xyz>" \
     org.label-schema.description="A touch-compatible web-app for controlling the home" \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Home Panel" \

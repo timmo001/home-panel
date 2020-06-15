@@ -1,6 +1,6 @@
 # Home Panel
 
-[![Build Status](https://dev.azure.com/timmo0001/Home%20Panel/_apis/build/status/Edge?branchName=master)](https://dev.azure.com/timmo0001/Home%20Panel/_build/latest?definitionId=5&branchName=master)
+[![Build Status](https://dev.azure.com/timmo0001/Home%20Panel/_apis/build/status/Edge?branchName=master)](https://dev.azure.com/timmo0001/Home%20Panel/_build?definitionId=5)
 
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
@@ -42,9 +42,11 @@ Setup and configuration for the app is available [here][setup-docs]
 
 [Support / Discussion][forum]
 
+[Code of Conduct][code-of-conduct]
+
 [Contribution Guidelines][contributing]
 
-[Code of Conduct][code_of_conduct]
+[License][license]
 
 ## Screenshots
 
@@ -60,7 +62,7 @@ Setup and configuration for the app is available [here][setup-docs]
 [banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/banner.png
 [buymeacoffee-shield]: https://www.buymeacoffee.com/assets/img/guidelines/download-assets-sm-2.svg
 [buymeacoffee]: https://www.buymeacoffee.com/timmo
-[code_of_conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
+[code-of-conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [commits-shield]: https://img.shields.io/github/commit-activity/y/timmo001/home-panel.svg
 [commits]: https://github.com/timmo001/home-panel/commits/master
 [contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
@@ -71,6 +73,7 @@ Setup and configuration for the app is available [here][setup-docs]
 [hass]: https://www.home-assistant.io/
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
+[license]: https://github.com/timmo001/home-panel/blob/master/LICENSE.md
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg

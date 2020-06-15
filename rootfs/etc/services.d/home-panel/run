@@ -5,7 +5,7 @@
 echo 'Run Home Panel..'
 
 # shellcheck disable=SC2164
-cd /opt/panel
+cd /opt/panel/backend
 
 if [ -n "$SSL_CERTFILE" ]; then
   SSL_PATH_CERT="/data/ssl/$SSL_CERTFILE"
@@ -17,4 +17,4 @@ if [ -n "$SSL_KEYFILE" ]; then
   export SSL_PATH_KEY
 fi
 
-exec node lib/
+exec yarn run start-precompiled
