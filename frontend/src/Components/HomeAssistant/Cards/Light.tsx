@@ -1,5 +1,6 @@
 import React, { useEffect, ReactElement, useState } from 'react';
 import clsx from 'clsx';
+import { ColorResult, HuePicker } from 'react-color';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
@@ -94,17 +95,17 @@ function Light(props: EntityProps): ReactElement | null {
       });
   };
 
-  // function handleColorChange(color: ColorResult): void {
-  //   setAttributes({
-  //     ...attributes,
-  //     rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
-  //   });
-  //   props.handleHassChange &&
-  //     props.handleHassChange('light', true, {
-  //       entity_id: props.entity.entity_id,
-  //       rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
-  //     });
-  // }
+  function handleColorChange(color: ColorResult): void {
+    setAttributes({
+      ...attributes,
+      rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
+    });
+    props.handleHassChange &&
+      props.handleHassChange('light', true, {
+        entity_id: props.entity.entity_id,
+        rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
+      });
+  }
 
   const handleSelectChange = (name: string) => (
     event: React.ChangeEvent<{ name?: string; value: unknown }>,
@@ -189,11 +190,11 @@ function Light(props: EntityProps): ReactElement | null {
   if (attrClasses.includes('has-color') && props.entity.state === 'on')
     controls.push(
       <Grid key={3} item xs={10}>
-        {/* <HuePicker
+        <HuePicker
           color={color}
           width="200"
           onChangeComplete={handleColorChange}
-        /> */}
+        />
       </Grid>
     );
   if (attrClasses.includes('has-effect_list') && props.entity.state === 'on')
