@@ -131,7 +131,7 @@ stages:
       - job: 'Docker_Manifest_Version'
         displayName: 'Manifest Version'
         dependsOn:
-          - 'Docker_Build_Publish'
+          - 'Docker_Build'
         condition: succeeded()
         steps:
           - task: Docker@2
@@ -148,7 +148,7 @@ stages:
       - job: 'Docker_Manifest_Beta'
         displayName: 'Manifest Beta'
         dependsOn:
-          - 'Docker_Build_Publish'
+          - 'Docker_Build'
         condition: and(succeeded(), contains(variables['Build.SourceBranchName'], 'beta'))
         steps:
           - task: Docker@2
@@ -165,7 +165,7 @@ stages:
       - job: 'Docker_Manifest_Stable'
         displayName: 'Manifest Stable'
         dependsOn:
-          - 'Docker_Build_Publish'
+          - 'Docker_Build'
         condition: and(succeeded(), not(contains(variables['Build.SourceBranchName'], 'beta')))
         steps:
           - task: Docker@2
