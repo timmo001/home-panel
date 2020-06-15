@@ -183,7 +183,8 @@ function Login(props: LoginProps): ReactElement {
           container
           direction="column"
           justify="center"
-          alignContent="center">
+          alignContent="center"
+          component="form">
           <Typography
             color="textPrimary"
             variant="h5"

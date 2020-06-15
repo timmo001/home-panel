@@ -137,7 +137,7 @@ export function handleChange(
 }
 
 function HomeAssistant(props: HomeAssistantProps): null {
-  function eventHandler(): void {
+  async function eventHandler(): Promise<void> {
     console.log('Home Assistant connection has been established again.');
   }
 

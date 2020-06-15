@@ -59,7 +59,7 @@ export interface MainProps {
   mouseMoved: boolean;
   handleConfigChange: (config: ConfigurationProps) => void;
   handleLogout: () => void;
-  handleMouseMove: () => void;
+  handleMouseMove: () => Promise<void>;
   handleSetCurrentPage: (page: Page) => void;
   handleSetTheme: (palette: ThemeProps) => void;
 }

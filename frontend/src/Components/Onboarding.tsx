@@ -120,7 +120,7 @@ function Onboarding(): ReactElement {
   function handleCommand(message: CommandType): void {
     console.log('Command Received:', message);
     setCommand(message);
-    setTimeout(() => setCommand(undefined), 200);
+    setTimeout(async () => setCommand(undefined), 200);
   }
 
   const handleLogin = useCallback(
@@ -192,11 +192,11 @@ function Onboarding(): ReactElement {
     );
   }
 
-  function handleMouseMove(): void {
+  async function handleMouseMove(): Promise<void> {
     if (moveTimeout) clearTimeout(moveTimeout);
     if (currentPage !== 'Configuration') {
       setMouseMoved(true);
-      moveTimeout = setTimeout(() => setMouseMoved(false), 4000);
+      moveTimeout = setTimeout(async () => setMouseMoved(false), 4000);
     }
   }
 
