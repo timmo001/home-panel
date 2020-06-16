@@ -56,10 +56,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+export interface Auth {
+  strategy: string;
+  username: string;
+  password: string;
+}
+
 interface LoginProps {
-  handleCreateAccount(data: any, callback?: (error?: string) => void): void;
+  handleCreateAccount(data: Auth, callback?: (error?: string) => void): void;
   handleSetCurrentPage: (page: Page) => void;
-  handleLogin(data: any, callback?: (error?: string) => void): void;
+  handleLogin(data: Auth, callback?: (error?: string) => void): void;
 }
 
 interface State {
@@ -148,14 +154,14 @@ function Login(props: LoginProps): ReactElement {
     setShowPassword(!showPassword);
   }
 
-  function handleKeyPress(e: any): void {
+  function handleKeyPress(e: unknown): void {
     handleValidation();
     if (e.key === 'Enter' && !invalidText) {
       createAccount ? handleCreateAccount() : handleLogin();
     }
   }
 
-  function handleMouseDownPassword(event: any): void {
+  function handleMouseDownPassword(event: unknown): void {
     event.preventDefault();
   }
 

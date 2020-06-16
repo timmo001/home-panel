@@ -30,14 +30,14 @@ function NumberEntity(props: EntityProps): ReactElement {
   const [number, setNumber] = useState<number>();
 
   function handleSliderChange(
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     value: number | number[]
   ): void {
     setNumber(Array.isArray(value) ? value[0] : value);
   }
 
   function handleSliderChangeComplete(
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     value: number | number[]
   ): void {
     props.handleHassChange &&
@@ -78,11 +78,7 @@ function NumberEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={clsx(
-              'mdi',
-              `mdi-${props.card.icon}`,
-              classes.icon
-            )}
+            className={clsx('mdi', `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"

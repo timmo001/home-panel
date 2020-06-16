@@ -78,14 +78,14 @@ function Light(props: EntityProps): ReactElement | null {
   const getText = (value: number): string => `${value}`;
 
   const handleSliderChange = (name: string) => (
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     value: number | number[]
   ): void => {
     setAttributes({ ...attributes, [name]: value });
   };
 
   const handleSliderChangeComplete = (name: string) => (
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     value: number | number[]
   ): void => {
     props.handleHassChange &&

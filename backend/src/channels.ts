@@ -7,12 +7,13 @@ export default function (app: Application): void {
     return;
   }
 
-  app.on('connection', (connection: any): void => {
+  app.on('connection', (connection: unknown): void => {
     // On a new real-time connection, add it to the anonymous channel
     app.channel('anonymous').join(connection);
   });
 
-  app.on('login', (authResult: any, { connection }: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  app.on('login', (_authResult: any, { connection }: any) => {
     // connection can be undefined if there is no
     // real-time connection, e.g. when logging in via REST
     if (connection) {

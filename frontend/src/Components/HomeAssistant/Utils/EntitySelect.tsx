@@ -31,7 +31,7 @@ function EntitySelect(props: EntitySelectProps): ReactElement {
   const [value, setValue] = useState<Option | null>(null);
 
   function handleChange(
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     newValue: Option | null
   ): void {
     setValue(newValue);

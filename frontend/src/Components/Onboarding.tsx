@@ -17,6 +17,7 @@ import {
   defaultTheme,
   ConfigurationProps,
 } from './Configuration/Config';
+import { Auth } from './Login';
 import { CommandType } from './Utils/Command';
 import { Page } from './Types/Types';
 import clone from '../utils/clone';
@@ -124,7 +125,7 @@ function Onboarding(): ReactElement {
   }
 
   const handleLogin = useCallback(
-    (data?, callback?: (error?: string) => void) => {
+    (data?: Auth, callback?: (error?: string) => void) => {
       (async (): Promise<void> => {
         try {
           let clientData: AuthenticationResult;
@@ -155,7 +156,7 @@ function Onboarding(): ReactElement {
   }, [loginCredentials, handleLogin]);
 
   function handleCreateAccount(
-    data: object,
+    data: Auth,
     callback?: (error?: string) => void
   ): void {
     socket.emit('create', 'users', data, (error: { message: string }) => {

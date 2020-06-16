@@ -66,7 +66,7 @@ function EditCard(props: EditCardProps): ReactElement {
   };
 
   const handleSwitchChange = (name: string) => (
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     checked: boolean
   ): void => {
     setCard({ ...card, [name]: checked });

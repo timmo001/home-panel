@@ -22,10 +22,12 @@ export class Controller implements ServiceMethods<Data> {
     this.app = app;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async find(_params?: Params): Promise<Data[] | Paginated<Data>> {
     return [];
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async get(id: Id, _params?: Params): Promise<Data> {
     return {
       id,
@@ -41,14 +43,17 @@ export class Controller implements ServiceMethods<Data> {
     return data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async update(_id: NullableId, data: Data, _params?: Params): Promise<Data> {
     return data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async patch(_id: NullableId, data: Data, _params?: Params): Promise<Data> {
     return data;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async remove(id: NullableId, _params?: Params): Promise<Data> {
     return { id };
   }

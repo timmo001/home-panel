@@ -34,7 +34,7 @@ function Pages(props: PagesProps): ReactElement {
   const [editingPage, setEditingPage] = useState<PageProps>();
 
   function handlePageChange(
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     pageKey: string
   ): void {
     props.setPage(pageKey);

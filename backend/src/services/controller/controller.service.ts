@@ -7,7 +7,7 @@ import hooks from './controller.hooks';
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    controller: Controller & ServiceAddons<any>;
+    controller: Controller & ServiceAddons<unknown>;
   }
 }
 
