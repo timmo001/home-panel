@@ -45,7 +45,6 @@ stages:
       - template: azure-ci/build/node-ts.yml@organization
   - stage: 'Docker'
     dependsOn:
-      - 'Lint'
       - 'Build'
     condition: succeeded()
     jobs:
