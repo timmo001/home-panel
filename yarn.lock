@@ -8557,7 +8557,7 @@ __metadata:
     array-move: 2.2.2
     clsx: 1.1.1
     history: 5.0.0
-    home-assistant-js-websocket: 5.2.3
+    home-assistant-js-websocket: 5.3.0
     jest-junit: 10.0.0
     markdown-it: 11.0.0
     markdown-it-emoji: 1.4.0
@@ -9277,10 +9277,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"home-assistant-js-websocket@npm:5.2.3":
-  version: 5.2.3
-  resolution: "home-assistant-js-websocket@npm:5.2.3"
-  checksum: b286468ef3d02d56c8268b26dcfb59ae0dce53dbc29869d6abb08749876179163ac79e2f893bbb9cfb88cc9468d4cb7f613269f4c7aea78b7c47ede8f2977dbf
+"home-assistant-js-websocket@npm:5.3.0":
+  version: 5.3.0
+  resolution: "home-assistant-js-websocket@npm:5.3.0"
+  checksum: 7a91e9a2828d6f04a62ee70b9a03380d3668030ccfc584b282adf08c2d8ec2451d1fe030fc5f068b6a37d0d869660dcfb62d7c41bd075a981d43fb6843f471c0
   languageName: node
   linkType: hard
 
