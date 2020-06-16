@@ -38,16 +38,6 @@ resources:
       endpoint: 'timmo001'
 
 stages:
-  - stage: 'Lint'
-    dependsOn: []
-    jobs:
-      - template: azure-ci/lint/eslint.yml@organization
-      - template: azure-ci/lint/hadolint.yml@organization
-      - template: azure-ci/lint/jsonlint.yml@organization
-      - template: azure-ci/lint/markdownlint.yml@organization
-      - template: azure-ci/lint/prettier.yml@organization
-      - template: azure-ci/lint/shellcheck.yml@organization
-      - template: azure-ci/lint/yamllint.yml@organization
   - stage: 'Build'
     dependsOn: []
     jobs:
