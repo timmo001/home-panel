@@ -83,7 +83,7 @@
     "@types/superagent": "4.1.7",
     "@typescript-eslint/eslint-plugin": "3.2.0",
     "@typescript-eslint/parser": "3.2.0",
-    "@yarnpkg/pnpify": "2.0.0-rc.23",
+    "@yarnpkg/pnpify": "2.0.0-rc.25",
     "eslint": "7.2.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.3",
