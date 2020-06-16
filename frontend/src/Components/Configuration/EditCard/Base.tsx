@@ -50,7 +50,7 @@ export interface BaseProps {
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSwitchChange?: (
     name: string
-  ) => (_event: React.ChangeEvent<{}>, checked: boolean) => void;
+  ) => (_event: React.ChangeEvent<unknown>, checked: boolean) => void;
   handleSelectChange?: (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => void;

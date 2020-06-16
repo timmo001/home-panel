@@ -2,6 +2,12 @@
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
 
+interface Configuration {
+  user: string;
+  userId: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (_options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
     // Get `app`, `method`, `params` and `result` from the hook context
@@ -18,14 +24,14 @@ export default (_options = {}): Hook => {
     // Asynchronously get user object from each message's `userId`
     // and add it to the message
     await Promise.all(
-      config.map(async (config: any) => {
+      config.map(async (config: Configuration) => {
         // Also pass the original `params` to the service call
         // so that it has the same information available (e.g. who is requesting it)
         config.user = await app.service('users').get(config.userId, params);
       })
     );
 
-    config = config.filter((config: any) => config.userId === userId);
+    config = config.filter((config: Configuration) => config.userId === userId);
 
     if (method === 'find') result.data = config;
     else result = result.userId === userId ? result : null;

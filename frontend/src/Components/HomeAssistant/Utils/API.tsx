@@ -62,7 +62,7 @@ const fetchWithAuth = async (
   if (!init.headers) {
     init.headers = {};
   }
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   init.headers.authorization = `Bearer ${auth.accessToken}`;
   return fetch(input, init);
@@ -72,6 +72,7 @@ export default async function hassCallApi<T>(
   auth: Auth,
   method: string,
   path: string,
+  // eslint-disable-next-line @typescript-eslint/ban-types
   parameters?: {}
 ): Promise<T> {
   const url = `${auth.data.hassUrl}/api/${path}`;
@@ -82,7 +83,7 @@ export default async function hassCallApi<T>(
   };
 
   if (parameters) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     init.headers['Content-Type'] = 'application/json;charset=UTF-8';
     init.body = JSON.stringify(parameters);

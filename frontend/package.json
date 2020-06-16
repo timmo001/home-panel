@@ -43,8 +43,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "CI=true react-scripts test --forceExit --detectOpenHandles --coverage --coverageDirectory=output/coverage/jest --reporters=default --reporters=jest-junit",
-    "eject": "react-scripts eject",
-    "eslint": "eslint -c .eslintrc.json --color src"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
@@ -81,13 +80,7 @@
     "@types/socket.io": "2.1.8",
     "@types/socket.io-client": "1.4.33",
     "@types/superagent": "4.1.7",
-    "@typescript-eslint/eslint-plugin": "3.2.0",
-    "@typescript-eslint/parser": "3.2.0",
     "@yarnpkg/pnpify": "2.0.0-rc.25",
-    "eslint": "7.2.0",
-    "eslint-config-prettier": "6.11.0",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.20.0",
     "jest-junit": "10.0.0",
     "prettier": "2.0.5",
     "typescript": "3.9.5"

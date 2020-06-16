@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 const clone = (obj: any): any => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let copy: any;

@@ -3100,11 +3100,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:3.2.0"
+"@typescript-eslint/eslint-plugin@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@typescript-eslint/eslint-plugin@npm:3.3.0"
   dependencies:
-    "@typescript-eslint/experimental-utils": 3.2.0
+    "@typescript-eslint/experimental-utils": 3.3.0
     functional-red-black-tree: ^1.0.1
     regexpp: ^3.0.0
     semver: ^7.3.2
@@ -3116,7 +3116,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 921309e9f7282a0f62695483bff53996de6addd7f5a3082275f97ecd1dfe961a0aeb09e1191a0f47d850ed7706c4776b488f077c797331d3aafb530d62633a57
+  checksum: 5a29cad7f36c15d0a1bd3fb12144ee543a5c8ba110b73e332023d896d8ebf4cb192f339464c4222d9b831b1558e9d1ec45bb9697d434252f398afa5e3ba598c2
   languageName: node
   linkType: hard
 
@@ -3153,27 +3153,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/experimental-utils@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@typescript-eslint/experimental-utils@npm:3.2.0"
+"@typescript-eslint/experimental-utils@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@typescript-eslint/experimental-utils@npm:3.3.0"
   dependencies:
     "@types/json-schema": ^7.0.3
-    "@typescript-eslint/typescript-estree": 3.2.0
+    "@typescript-eslint/typescript-estree": 3.3.0
     eslint-scope: ^5.0.0
     eslint-utils: ^2.0.0
   peerDependencies:
     eslint: "*"
-  checksum: f01e45ef6d80642ce2f72c1d07c3cc0914d09e26ed66316adbd755ee1275804ccafa53862b06f9841ff6dcfefa1df7586ec468dcb405b9afc3d433b99ad4e167
+  checksum: da968f8cd85e7cee1556da2a699ace328f5d54e196f92222e4376c7e7abe74441e91448157c501b73eb9c159b3bf33b1d3cd74c7f819f1140c8cb48a89d7e41a
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@typescript-eslint/parser@npm:3.2.0"
+"@typescript-eslint/parser@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@typescript-eslint/parser@npm:3.3.0"
   dependencies:
     "@types/eslint-visitor-keys": ^1.0.0
-    "@typescript-eslint/experimental-utils": 3.2.0
-    "@typescript-eslint/typescript-estree": 3.2.0
+    "@typescript-eslint/experimental-utils": 3.3.0
+    "@typescript-eslint/typescript-estree": 3.3.0
     eslint-visitor-keys: ^1.1.0
   peerDependencies:
     eslint: ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -3181,7 +3181,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 70d59abc67a802daa65b66d737e357da6730386fd2f4d168326d7cb41cd24da2cf52dcbd0c650cd330c9952082613caec6b4ad6e4ac086e3a85714156c85370d
+  checksum: 19bb5c5ac28b99964695265c6e9be4a09dbd6f161d4bcc0434d830ebeb3b09369c14cda7eab23d6a59776e662c1bd43b324c03628303558a4d64bf2d4445c27f
   languageName: node
   linkType: hard
 
@@ -3223,9 +3223,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/typescript-estree@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@typescript-eslint/typescript-estree@npm:3.2.0"
+"@typescript-eslint/typescript-estree@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@typescript-eslint/typescript-estree@npm:3.3.0"
   dependencies:
     debug: ^4.1.1
     eslint-visitor-keys: ^1.1.0
@@ -3239,7 +3239,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 081da5cb028576eeb103d5989f421999a00e795b6575061d5ae650409b6b5d1e913b383bf0611557e710fcc6cc7dcf35f5cbfb3b2e8dc71049ac7d1c1454895c
+  checksum: f81a1f2efcc98ebaf0069c0e1bd27d1cf0d674e19530a2eb466a4fe41cfe2a02136426d51239cfed6482c894660808b90e658cd98051055165159ec9a4bdbebb
   languageName: node
   linkType: hard
 
@@ -8553,15 +8553,9 @@ __metadata:
     "@types/socket.io": 2.1.8
     "@types/socket.io-client": 1.4.33
     "@types/superagent": 4.1.7
-    "@typescript-eslint/eslint-plugin": 3.2.0
-    "@typescript-eslint/parser": 3.2.0
     "@yarnpkg/pnpify": 2.0.0-rc.25
     array-move: 2.2.2
     clsx: 1.1.1
-    eslint: 7.2.0
-    eslint-config-prettier: 6.11.0
-    eslint-plugin-prettier: 3.1.4
-    eslint-plugin-react: 7.20.0
     history: 5.0.0
     home-assistant-js-websocket: 5.2.3
     jest-junit: 10.0.0
@@ -16488,6 +16482,8 @@ resolve@1.15.0:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
+    "@typescript-eslint/eslint-plugin": 3.3.0
+    "@typescript-eslint/parser": 3.3.0
     eslint: 7.2.0
     eslint-config-prettier: 6.11.0
     eslint-plugin-prettier: 3.1.4

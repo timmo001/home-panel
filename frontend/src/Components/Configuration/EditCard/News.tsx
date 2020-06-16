@@ -32,7 +32,7 @@ function News(props: BaseProps): ReactElement {
   const [error, setError] = useState<string>();
 
   function handleChange(
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     newValue: Option | null
   ): void {
     setSource(newValue);

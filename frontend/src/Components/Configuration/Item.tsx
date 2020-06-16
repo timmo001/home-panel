@@ -125,7 +125,7 @@ function Item(props: ItemProps): ReactElement {
   };
 
   const handleSwitchChange = (path: (string | number)[]) => (
-    _event: React.ChangeEvent<{}>,
+    _event: React.ChangeEvent<unknown>,
     checked: boolean
   ): void => {
     handleUpdate(path, checked);

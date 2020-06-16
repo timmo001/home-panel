@@ -1,7 +1,9 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
 import { Hook, HookContext } from '@feathersjs/feathers';
+import fs from 'fs';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default (_options = {}): Hook => {
   return async (context: HookContext): Promise<HookContext> => {
     const { data } = context;
@@ -10,7 +12,7 @@ export default (_options = {}): Hook => {
 
     if (createNew) {
       config = JSON.parse(
-        require('fs').readFileSync('config/config.default.json')
+        String(fs.readFileSync('config/config.default.json'))
       );
       // Throw an error if there isn't any default config
       if (!config)
