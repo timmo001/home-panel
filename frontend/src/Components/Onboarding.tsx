@@ -164,7 +164,7 @@ function Onboarding(): ReactElement {
         console.error('Error creating account:', error);
         if (callback) callback(`Error creating account: ${error.message}`);
       } else {
-        handleLogin({ strategy: 'local', ...data }, callback);
+        handleLogin(data, callback);
       }
     });
   }

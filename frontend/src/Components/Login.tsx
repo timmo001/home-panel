@@ -154,14 +154,14 @@ function Login(props: LoginProps): ReactElement {
     setShowPassword(!showPassword);
   }
 
-  function handleKeyPress(e: unknown): void {
+  function handleKeyPress(event: { key: string; }): void {
     handleValidation();
-    if (e.key === 'Enter' && !invalidText) {
+    if (event.key === 'Enter' && !invalidText) {
       createAccount ? handleCreateAccount() : handleLogin();
     }
   }
 
-  function handleMouseDownPassword(event: unknown): void {
+  function handleMouseDownPassword(event: { preventDefault: () => void; }): void {
     event.preventDefault();
   }
 
