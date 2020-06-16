@@ -51,8 +51,7 @@ stages:
   - stage: 'Build'
     dependsOn: []
     jobs:
-      - template: azure-ci/build/react-app.yml@organization
-      - template: azure-ci/build/node-ts.yml@organization
+      - template: azure-ci/build/node-monorepo.yml@organization
   - stage: 'Docker'
     dependsOn:
       - 'Lint'
