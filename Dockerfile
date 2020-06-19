@@ -11,17 +11,19 @@ ENV \
     S6_CMD_WAIT_FOR_SERVICES=1 \
     TERM="xterm-256color"
 
-# Copy root filesystem
-COPY rootfs /
-
 # Copy application
 COPY . /opt/panel
+
+# Copy root filesystem
+COPY rootfs /
 
 # Build arch argument
 ARG BUILD_ARCH=amd64
 
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
+
+WORKDIR /opt/panel
 
 # Install system
 # hadolint ignore=DL3003,DL3018
@@ -57,6 +59,8 @@ RUN \
     && mv /opt/panel/frontend/build/* /opt/panel/backend/public \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
+    \
+    && yarn install \
     \
     && apk del --purge .build-dependencies \
     && rm -fr /tmp/*
