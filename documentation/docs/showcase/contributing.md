@@ -12,10 +12,10 @@ If you would like to showcase your own setup, submit a PR to the repository
  information using [timmo.md][timmo.md] as a simple example.
 1. If possible, add a 'how I did it' section to your file explaining how to
  replicate, for example, your theme.
-1. Finally, add your file's name and path to the `documentation/mkdocs.yml` file in
- the navigation section. Once again use my example and make a new line at the
- end. This will allow [mkdocs] to see your file and add it to the navigation
- of the documentation
+1. Finally, add your file's name and path to the `documentation/mkdocs.yml`
+ file in the navigation section. Once again use my example and make a new
+ line at the end. This will allow [mkdocs] to see your file and add it to
+ the navigation of the documentation.
 
 !!! info ""
     Any large files should be stored elsewhere and linked in. For example,
