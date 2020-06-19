@@ -83,5 +83,5 @@ Setup and configuration for the app is available [here][setup-docs]
 [screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-main.png
 [screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-main.png
 [setup-docs]: https://timmo.dev/home-panel/setup/
-[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/documentation/showcase/timmo/purple-space.png
+[showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/showcase/timmo/purple-space.png
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
