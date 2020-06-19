@@ -22,13 +22,13 @@ variables:
   - name: 'dockerTarget'
     value: '.'
   - name: 'amd64Base'
-    value: 'amd64/alpine:latest'
+    value: 'amd64/alpine:3.12.0'
   - name: 'arm32v6Base'
-    value: 'arm32v6/alpine:latest'
+    value: 'arm32v6/alpine:3.12.0'
   - name: 'arm32v7Base'
-    value: 'arm32v7/alpine:latest'
+    value: 'arm32v7/alpine:3.12.0'
   - name: 'arm64v8Base'
-    value: 'arm64v8/alpine:latest'
+    value: 'arm64v8/alpine:3.12.0'
 
 resources:
   repositories:

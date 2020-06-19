@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:latest
+ARG BUILD_FROM=alpine:3.12.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -55,7 +55,6 @@ RUN \
     && mkdir -p /data/db \
     \
     && mv /opt/panel/frontend/build/* /opt/panel/backend/public \
-    # && mv /opt/panel/frontend/build/.* /opt/panel/backend/public \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
