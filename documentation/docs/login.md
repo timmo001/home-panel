@@ -41,5 +41,5 @@ Enter your username and password you used previously and click `Log In`.
 
 ![Account Login Screen Screenshot][screen-account-login]
 
-[screen-account-creation]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-account-creation.png
-[screen-account-login]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-account-login.png
+[screen-account-creation]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-account-creation.png
+[screen-account-login]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-account-login.png

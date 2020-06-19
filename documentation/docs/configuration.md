@@ -23,7 +23,7 @@ From here you can change things like the base, primary color palette,
     will grab an image from unsplash with any image containing the word space:
     `url(https://source.unsplash.com/1920x1080/?space)`
 
-[screen-configuration-header]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-header.png
-[screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-main.png
-[screen-configuration-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-configuration-theme.gif
+[screen-configuration-header]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-header.png
+[screen-configuration-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-main.png
+[screen-configuration-theme]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-theme.gif
 [css-background-property]: https://www.w3schools.com/cssref/css3_pr_background.asp

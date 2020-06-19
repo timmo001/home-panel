@@ -12,7 +12,7 @@ If you would like to showcase your own setup, submit a PR to the repository
  information using [timmo.md][timmo.md] as a simple example.
 1. If possible, add a 'how I did it' section to your file explaining how to
  replicate, for example, your theme.
-1. Finally, add your file's name and path to the `docs/mkdocs.yml` file in
+1. Finally, add your file's name and path to the `documentation/mkdocs.yml` file in
  the navigation section. Once again use my example and make a new line at the
  end. This will allow [mkdocs] to see your file and add it to the navigation
  of the documentation
@@ -24,6 +24,6 @@ If you would like to showcase your own setup, submit a PR to the repository
 
 [code_of_conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
-[directory]: https://github.com/timmo001/home-panel/tree/master/docs/docs/showcase
+[directory]: https://github.com/timmo001/home-panel/tree/master/documentation/docs/showcase
 [mkdocs]: https://www.mkdocs.org
 [timmo.md]: timmo/timmo.md
