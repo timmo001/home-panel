@@ -69,6 +69,7 @@ stages:
         steps:
           - script: |
               mv $(System.DefaultWorkingDirectory)/rootfs/opt/panel/package.json $(System.DefaultWorkingDirectory)
+            displayName: 'Move backend-only package.json'
           - template: azure-ci/setup/node.yml@organization
             parameters:
               cache: false
@@ -89,6 +90,7 @@ stages:
               mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/frontend/build
               rmdir $(System.DefaultWorkingDirectory)/backend-lib
               rmdir $(System.DefaultWorkingDirectory)/frontend-build
+            displayName: 'Setup app'
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
@@ -229,4 +231,62 @@ stages:
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/tar+gzip" \
                 --data-binary @$(dockerSlug)-backend-lib.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-backend-lib.tar.gz"
+            displayName: 'Publish'
+      - job: 'Publish_Artifacts_App'
+        displayName: 'App'
+        steps:
+          - script: |
+              mv $(System.DefaultWorkingDirectory)/rootfs/opt/panel/package.json $(System.DefaultWorkingDirectory)
+            displayName: 'Move backend-only package.json'
+          - template: azure-ci/setup/node.yml@organization
+            parameters:
+              cache: false
+          - script: |
+              mkdir -p $(System.DefaultWorkingDirectory)/backend/lib
+              mv $(System.DefaultWorkingDirectory)/backend-lib/* $(System.DefaultWorkingDirectory)/backend/lib
+              mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/backend/public
+              rmdir $(System.DefaultWorkingDirectory)/backend-lib
+              rmdir $(System.DefaultWorkingDirectory)/frontend-build
+              rm -rf $(System.DefaultWorkingDirectory)/.devcontainer
+              rm -rf $(System.DefaultWorkingDirectory)/.dockerignore
+              rm -rf $(System.DefaultWorkingDirectory)/.editorconfig
+              rm -rf $(System.DefaultWorkingDirectory)/.eslintrc.json
+              rm -rf $(System.DefaultWorkingDirectory)/.git
+              rm -rf $(System.DefaultWorkingDirectory)/.git*
+              rm -rf $(System.DefaultWorkingDirectory)/.github
+              rm -rf $(System.DefaultWorkingDirectory)/.gitignore
+              rm -rf $(System.DefaultWorkingDirectory)/.mdlrc
+              rm -rf $(System.DefaultWorkingDirectory)/.prettierrc.json
+              rm -rf $(System.DefaultWorkingDirectory)/.snyk
+              rm -rf $(System.DefaultWorkingDirectory)/.vscode
+              rm -rf $(System.DefaultWorkingDirectory)/.yamllint
+              rm -rf $(System.DefaultWorkingDirectory)/*.log
+              rm -rf $(System.DefaultWorkingDirectory)/*.md
+              rm -rf $(System.DefaultWorkingDirectory)/backend/jest.config.js
+              rm -rf $(System.DefaultWorkingDirectory)/backend/src
+              rm -rf $(System.DefaultWorkingDirectory)/backend/test
+              rm -rf $(System.DefaultWorkingDirectory)/backend/tsconfig.json
+              rm -rf $(System.DefaultWorkingDirectory)/config.template.json
+              rm -rf $(System.DefaultWorkingDirectory)/docker-compose*
+              rm -rf $(System.DefaultWorkingDirectory)/Dockerfile*
+              rm -rf $(System.DefaultWorkingDirectory)/documentation
+              rm -rf $(System.DefaultWorkingDirectory)/frontend
+              rm -rf $(System.DefaultWorkingDirectory)/mdl_style.rb
+              rm -rf $(System.DefaultWorkingDirectory)/renovate.json
+              rm -rf $(System.DefaultWorkingDirectory)/rootfs
+              rm -rf $(System.DefaultWorkingDirectory)/tsconfig.json
+            displayName: 'Setup app'
+          - script: |
+              zip -r $(dockerSlug).zip $(System.DefaultWorkingDirectory)
+              curl \
+                -H "Authorization: token $(githubToken)" -H \
+                -H "Accept: application/vnd.github.manifold-preview" \
+                -H "Content-Type: application/zip" \
+                --data-binary @$(dockerSlug).zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug).zip"
+              tar -czf $(dockerSlug).tar.gz $(System.DefaultWorkingDirectory)
+              curl \
+                -H "Authorization: token $(githubToken)" -H \
+                -H "Accept: application/vnd.github.manifold-preview" \
+                -H "Content-Type: application/tar+gzip" \
+                --data-binary @$(dockerSlug).tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug).tar.gz"
             displayName: 'Publish'
