@@ -15,9 +15,9 @@
 *.md
 azure*
 backend/jest.config.js
-backend/src/
+# backend/src/
 backend/test/
-backend/tsconfig.json
+# backend/tsconfig.json
 config.template.json
 docker-compose*
 Dockerfile*
