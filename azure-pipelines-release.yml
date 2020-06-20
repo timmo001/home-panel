@@ -76,12 +76,15 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'backend'
-              downloadPath: $(System.DefaultWorkingDirectory)/backend
+              artifactName: 'backend-lib'
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
+              mkdir -p $(System.DefaultWorkingDirectory)/backend/lib
               mkdir -p $(System.DefaultWorkingDirectory)/frontend/build
+              mv $(System.DefaultWorkingDirectory)/backend-lib/* $(System.DefaultWorkingDirectory)/backend/lib
               mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/frontend/build
-              rmdir $(System.DefaultWorkingDirectory)/frontend-build/*
+              rmdir $(System.DefaultWorkingDirectory)/backend-lib
+              rmdir $(System.DefaultWorkingDirectory)/frontend-build
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
@@ -186,20 +189,20 @@ stages:
             displayName: 'Download Frontend Artifacts'
             inputs:
               artifactName: 'frontend-build'
-              downloadPath: $(System.DefaultWorkingDirectory)/frontend/build
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
-              zip -r $(dockerSlug)-frontend.zip frontend/build
+              zip -r $(dockerSlug)-frontend-build.zip frontend-build
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/zip" \
-                --data-binary @$(dockerSlug)-frontend.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-frontend.zip"
-              tar -czf $(dockerSlug)-frontend.tar.gz frontend/build
+                --data-binary @$(dockerSlug)-frontend-build.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-frontend-build.zip"
+              tar -czf $(dockerSlug)-frontend-build.tar.gz frontend-build
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/tar+gzip" \
-                --data-binary @$(dockerSlug)-frontend.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-frontend.tar.gz"
+                --data-binary @$(dockerSlug)-frontend-build.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-frontend-build.tar.gz"
             displayName: 'Publish'
       - job: 'Publish_Artifacts_Backend'
         displayName: 'Backend'
@@ -207,19 +210,19 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'backend'
-              downloadPath: $(System.DefaultWorkingDirectory)/backend
+              artifactName: 'backend-lib'
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
-              zip -r $(dockerSlug)-backend.zip backend
+              zip -r $(dockerSlug)-backend-lib.zip backend-lib
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/zip" \
-                --data-binary @$(dockerSlug)-backend.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-backend.zip"
-              tar -czf $(dockerSlug)-backend.tar.gz backend
+                --data-binary @$(dockerSlug)-backend-lib.zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-backend-lib.zip"
+              tar -czf $(dockerSlug)-backend-lib.tar.gz backend-lib
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
                 -H "Content-Type: application/tar+gzip" \
-                --data-binary @$(dockerSlug)-backend.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://backend.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-backend.tar.gz"
+                --data-binary @$(dockerSlug)-backend-lib.tar.gz "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug)-backend-lib.tar.gz"
             displayName: 'Publish'

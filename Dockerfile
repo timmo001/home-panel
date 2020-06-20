@@ -59,7 +59,6 @@ RUN \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
-    && yarn set version berry \
     && yarn install \
     \
     && apk del --purge .build-dependencies \

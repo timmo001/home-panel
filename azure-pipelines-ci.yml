@@ -84,12 +84,15 @@ stages:
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Backend Artifacts'
             inputs:
-              artifactName: 'backend'
-              downloadPath: $(System.DefaultWorkingDirectory)/backend
+              artifactName: 'backend-lib'
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
+              mkdir -p $(System.DefaultWorkingDirectory)/backend/lib
               mkdir -p $(System.DefaultWorkingDirectory)/frontend/build
+              mv $(System.DefaultWorkingDirectory)/backend-lib/* $(System.DefaultWorkingDirectory)/backend/lib
               mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/frontend/build
-              rmdir $(System.DefaultWorkingDirectory)/frontend-build/*
+              rmdir $(System.DefaultWorkingDirectory)/backend-lib
+              rmdir $(System.DefaultWorkingDirectory)/frontend-build
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: '$(buildArch)'

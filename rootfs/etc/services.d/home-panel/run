@@ -17,4 +17,4 @@ if [ -n "$SSL_KEYFILE" ]; then
   export SSL_PATH_KEY
 fi
 
-exec yarn start
+exec yarn run start-precompiled
