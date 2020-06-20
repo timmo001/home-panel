@@ -87,7 +87,9 @@ stages:
               artifactName: 'backend'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - script: |
+              mkdir -p $(System.DefaultWorkingDirectory)/frontend/build
               mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/frontend/build
+              rmdir $(System.DefaultWorkingDirectory)/frontend-build/*
           - template: azure-ci/docker/qemu-build.yml@organization
             parameters:
               buildArch: '$(buildArch)'

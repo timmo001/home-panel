@@ -90,11 +90,9 @@ stages:
               artifactName: 'backend'
               downloadPath: $(System.DefaultWorkingDirectory)/backend
           - script: |
-              ls -al $(System.DefaultWorkingDirectory)
-              ls -al $(System.DefaultWorkingDirectory)/frontend
               mkdir -p $(System.DefaultWorkingDirectory)/frontend/build
               mv $(System.DefaultWorkingDirectory)/frontend-build/* $(System.DefaultWorkingDirectory)/frontend/build
-              ls -al $(System.DefaultWorkingDirectory)/frontend/build
+              rmdir $(System.DefaultWorkingDirectory)/frontend-build/*
           - task: Docker@2
             inputs:
               containerRegistry: 'dockerHub'
