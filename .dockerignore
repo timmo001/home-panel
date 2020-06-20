@@ -11,9 +11,6 @@
 .snyk
 .vscode
 .yamllint
-.yamllint
-.yarnclean
-.yarnrc
 *.log
 *.md
 azure*
