@@ -73,7 +73,14 @@ stages:
               buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
         steps:
-          - template: azure-ci/setup/node.yml@organization
+          - task: Cache@2
+            inputs:
+              key: 'yarn | "$(Agent.OS)" | yarn.lock'
+              path: ${{ parameters.yarnCachePath }}
+              restoreKeys: |
+                yarn | "$(Agent.OS)"
+                yarn
+            displayName: 'Cache Yarn Packages'
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Frontend Artifacts'
             inputs:
