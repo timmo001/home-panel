@@ -241,6 +241,16 @@ stages:
           - template: azure-ci/setup/node.yml@organization
             parameters:
               cache: false
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Frontend Artifacts'
+            inputs:
+              artifactName: 'frontend-build'
+              downloadPath: $(System.DefaultWorkingDirectory)
+          - task: DownloadBuildArtifacts@0
+            displayName: 'Download Backend Artifacts'
+            inputs:
+              artifactName: 'backend-lib'
+              downloadPath: $(System.DefaultWorkingDirectory)
           - script: |
               mkdir -p $(System.DefaultWorkingDirectory)/backend/lib
               mv $(System.DefaultWorkingDirectory)/backend-lib/* $(System.DefaultWorkingDirectory)/backend/lib
@@ -262,6 +272,7 @@ stages:
               rm -rf $(System.DefaultWorkingDirectory)/.yamllint
               rm -rf $(System.DefaultWorkingDirectory)/*.log
               rm -rf $(System.DefaultWorkingDirectory)/*.md
+              rm -rf $(System.DefaultWorkingDirectory)/azure*
               rm -rf $(System.DefaultWorkingDirectory)/backend/jest.config.js
               rm -rf $(System.DefaultWorkingDirectory)/backend/src
               rm -rf $(System.DefaultWorkingDirectory)/backend/test
@@ -277,13 +288,7 @@ stages:
               rm -rf $(System.DefaultWorkingDirectory)/tsconfig.json
             displayName: 'Setup app'
           - script: |
-              zip -r $(dockerSlug).zip $(System.DefaultWorkingDirectory)
-              curl \
-                -H "Authorization: token $(githubToken)" -H \
-                -H "Accept: application/vnd.github.manifold-preview" \
-                -H "Content-Type: application/zip" \
-                --data-binary @$(dockerSlug).zip "https://uploads.github.com/repos/$(githubRepository)/releases/$(curl https://api.github.com/repos/$(githubRepository)/releases | jq '.[0].id')/assets?name=$(dockerSlug).zip"
-              tar -czf $(dockerSlug).tar.gz $(System.DefaultWorkingDirectory)
+              tar -czf $(dockerSlug).tar.gz ./
               curl \
                 -H "Authorization: token $(githubToken)" -H \
                 -H "Accept: application/vnd.github.manifold-preview" \
