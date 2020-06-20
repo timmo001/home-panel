@@ -73,6 +73,8 @@ stages:
               buildArch: 'arm64v8'
               buildBase: $(arm64v8Base)
         steps:
+          - script: |
+              mv $(System.DefaultWorkingDirectory)/rootfs/opt/panel/package.json $(System.DefaultWorkingDirectory)
           - template: azure-ci/setup/node.yml@organization
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Frontend Artifacts'
