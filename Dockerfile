@@ -40,7 +40,6 @@ RUN \
         nodejs-current=14.3.0-r0 \
         openssl=1.1.1g-r0 \
         tzdata=2020a-r0 \
-        yarn=1.22.4-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
@@ -59,6 +58,8 @@ RUN \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
+    && npm install -g yarn \
+    && yarn set version berry \
     && yarn install \
     \
     && apk del --purge .build-dependencies \
