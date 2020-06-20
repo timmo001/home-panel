@@ -42,6 +42,8 @@ stages:
     dependsOn: []
     jobs:
       - template: azure-ci/build/node-monorepo.yml@organization
+        parameters:
+          cache: false
   - stage: 'Docker'
     dependsOn:
       - 'Build'
@@ -68,6 +70,8 @@ stages:
           - script: |
               mv $(System.DefaultWorkingDirectory)/rootfs/opt/panel/package.json $(System.DefaultWorkingDirectory)
           - template: azure-ci/setup/node.yml@organization
+            parameters:
+              cache: false
           - task: DownloadBuildArtifacts@0
             displayName: 'Download Frontend Artifacts'
             inputs:
