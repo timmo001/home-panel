@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, ReactElement, useState } from 'react';
+import React, {
+  Fragment,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Card from '@material-ui/core/Card';
@@ -7,12 +13,7 @@ import Dialog from '@material-ui/core/Dialog';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import CloseIcon from '@material-ui/icons/Close';
-import CopyIcon from '@material-ui/icons/FileCopy';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 
 import { CardProps, ConfigurationProps } from '../Configuration/Config';
 import {
@@ -20,15 +21,14 @@ import {
   entitySizes,
 } from '../HomeAssistant/HomeAssistant';
 import { CommandType } from '../Utils/Command';
-import ConfirmDialog from '../Utils/ConfirmDialog';
-import EditCard from '../Configuration/EditCard/EditCard';
 import Entity from '../HomeAssistant/Cards/Entity';
 import Frame from './Frame';
 import Image from './Image';
 import Markdown from './Markdown';
-import News from './News';
-import RSS from './RSS';
 import Message from '../Utils/Message';
+import News from './News';
+import Overlay from './Overlay';
+import RSS from './RSS';
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
@@ -38,23 +38,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   card: {
     flex: 1,
-  },
-  cardActions: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    height: '100%',
-    width: '100%',
-    padding: theme.spacing(0.5),
-    zIndex: 1000,
-    transition: '.4s ease',
-    background: theme.palette.background.paper,
-    opacity: 0,
-    '&:hover': {
-      opacity: 1,
-    },
   },
   cardContent: {
     textAlign: 'start',
@@ -96,8 +79,6 @@ export interface BaseProps extends HomeAssistantChangeProps {
 
 let holdTimeout: NodeJS.Timeout;
 function Base(props: BaseProps): ReactElement {
-  const [deleteConfirm, setDeleteConfirm] = useState<boolean>(false);
-  const [editCard, setEditCard] = useState<boolean>(false);
   const [expandable, setExpandable] = useState<boolean>(false);
   const [expandCard, setExpandCard] = useState<boolean>(false);
   const [height, setHeight] = useState<string | number>();
@@ -189,14 +170,6 @@ function Base(props: BaseProps): ReactElement {
     width,
   ]);
 
-  function handleDeleteConfirm(): void {
-    setDeleteConfirm(true);
-  }
-
-  function handleConfirmClose(): void {
-    setDeleteConfirm(false);
-  }
-
   function handleHassToggle(): void {
     if (props.card.domain && props.handleHassChange)
       if (props.card.domain === 'lock') {
@@ -227,14 +200,6 @@ function Base(props: BaseProps): ReactElement {
       }
   }
 
-  function handleEdit(): void {
-    setEditCard(true);
-  }
-
-  function handleEditClose(): void {
-    setEditCard(false);
-  }
-
   function handleExpand(): void {
     setExpandCard(true);
   }
@@ -255,6 +220,29 @@ function Base(props: BaseProps): ReactElement {
       }, 1000);
     }
   }
+
+  const card: ReactElement =
+    props.card.type === 'entity' ? (
+      props.hassConnection === -2 ? (
+        <Message type="error" text="Home Assistant not connected" />
+      ) : props.hassConnection === -1 ? (
+        <Message text="Connecting to Home Assistant.." />
+      ) : (
+        <Entity {...props} handleHassToggle={handleHassToggle} />
+      )
+    ) : props.card.type === 'iframe' ? (
+      <Frame {...props} />
+    ) : props.card.type === 'image' ? (
+      <Image {...props} />
+    ) : props.card.type === 'markdown' ? (
+      <Markdown {...props} />
+    ) : props.card.type === 'news' ? (
+      <News {...props} />
+    ) : props.card.type === 'rss' ? (
+      <RSS {...props} />
+    ) : (
+      <Fragment />
+    );
 
   return (
     <ButtonBase
@@ -331,60 +319,9 @@ function Base(props: BaseProps): ReactElement {
               )}
             </Grid>
           </Grid>
-          {props.card.type === 'entity' &&
-            (props.hassConnection === -2 ? (
-              <Message type="error" text="Home Assistant not connected" />
-            ) : props.hassConnection === -1 ? (
-              <Message text="Connecting to Home Assistant.." />
-            ) : (
-              <Entity {...props} handleHassToggle={handleHassToggle} />
-            ))}
-          {props.card.type === 'iframe' && <Frame {...props} />}
-          {props.card.type === 'image' && <Image {...props} />}
-          {props.card.type === 'markdown' && <Markdown {...props} />}
-          {props.card.type === 'news' && <News {...props} />}
-          {props.card.type === 'rss' && <RSS {...props} />}
-          {props.editing === 1 && (
-            <Grid
-              className={classes.cardActions}
-              container
-              alignContent="center"
-              alignItems="center"
-              justify="center">
-              <IconButton color="primary" onClick={handleEdit}>
-                <EditIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={handleDeleteConfirm}>
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleCopy}>
-                <CopyIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleMoveUp}>
-                <ArrowUpwardIcon fontSize="small" />
-              </IconButton>
-              <IconButton color="primary" onClick={props.handleMoveDown}>
-                <ArrowDownwardsIcon fontSize="small" />
-              </IconButton>
-              {deleteConfirm && (
-                <ConfirmDialog
-                  text="Are you sure you want to delete this card?"
-                  handleClose={handleConfirmClose}
-                  handleConfirm={props.handleDelete}
-                />
-              )}
-            </Grid>
-          )}
+          {card}
+          {props.editing === 1 && <Overlay {...props} />}
         </CardContent>
-        {editCard && (
-          <EditCard
-            {...props}
-            card={props.card}
-            command={props.command}
-            handleClose={handleEditClose}
-            handleUpdate={props.handleUpdate}
-          />
-        )}
       </Card>
       {expandCard && (
         <Dialog
