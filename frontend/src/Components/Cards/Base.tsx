@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useEffect,
   useState,
+  useMemo,
 } from 'react';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
@@ -244,6 +245,34 @@ function Base(props: BaseProps): ReactElement {
       <Fragment />
     );
 
+  const background = useMemo(
+    () =>
+      props.card.disabled
+        ? theme.palette.error.main
+        : props.editing !== 2 && props.card.backgroundTemp
+        ? props.card.backgroundTemp
+        : props.card.background
+        ? props.card.background
+        : '',
+    [
+      props.card.background,
+      props.card.backgroundTemp,
+      props.card.disabled,
+      props.editing,
+      theme.palette.error.main,
+    ]
+  );
+
+  const elevation = useMemo(
+    () =>
+      props.editing === 2
+        ? 0
+        : props.card.elevation
+        ? Number(props.card.elevation)
+        : 1,
+    [props.card.elevation, props.editing]
+  );
+
   return (
     <ButtonBase
       component="div"
@@ -263,21 +292,9 @@ function Base(props: BaseProps): ReactElement {
       <Card
         className={classes.card}
         square={props.card.square}
-        elevation={
-          props.editing === 2
-            ? 0
-            : props.card.elevation
-            ? Number(props.card.elevation)
-            : 1
-        }
+        elevation={elevation}
         style={{
-          background: props.card.disabled
-            ? theme.palette.error.main
-            : props.editing !== 2 && props.card.backgroundTemp
-            ? props.card.backgroundTemp
-            : props.card.background
-            ? props.card.background
-            : '',
+          background: background,
         }}>
         <CardContent
           className={classes.cardContent}
