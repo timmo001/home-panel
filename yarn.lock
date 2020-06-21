@@ -8581,7 +8581,7 @@ __metadata:
     markdown-it: 11.0.0
     markdown-it-emoji: 1.4.0
     markdown-it-external-links: 0.0.6
-    moment: 2.24.0
+    moment: 2.27.0
     prettier: 2.0.5
     query-string: 6.13.1
     react: 16.13.1
@@ -12880,10 +12880,10 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"moment@npm:2.24.0":
-  version: 2.24.0
-  resolution: "moment@npm:2.24.0"
-  checksum: 983617bc51c8121a88d9530671fb9e5dc2c71d67ba5bf1b16ebef25b51bd3d1291f17735ac33e8604f4984a275561dfe0fb883664eceacf8f67291ffd26acee9
+"moment@npm:2.27.0":
+  version: 2.27.0
+  resolution: "moment@npm:2.27.0"
+  checksum: 72d9a7d8dba59e3d538440cdc0b59fa895b123361e370be231896478aaf157a484355ce32bd8daf6f731d6d1636d3a67ecb67531e536e093ca18b43e0cbae194
   languageName: node
   linkType: hard
 
