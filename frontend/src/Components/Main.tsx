@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import { CommandType } from './Utils/Command';
 import { ConfigurationProps, ThemeProps } from './Configuration/Config';
 import { parseTokens } from './HomeAssistant/Utils/Auth';
-import { Page, Editing } from './Types/Types';
+import { Page, Editing, ProgressState } from './Types/Types';
 import clone from '../utils/clone';
 import Configuration from './Configuration/Configuration';
 import Drawer from './Drawer/Drawer';
@@ -67,9 +67,8 @@ export interface MainProps {
 function Main(props: MainProps): ReactElement {
   const [hassAuth, setHassAuth] = useState<Auth>();
   const [hassConfig, setHassConfig] = useState<HassConfig>();
-  const [hassConnected, setHassConnected] = useState<boolean>(false);
+  const [hassConnection, setHassConnection] = useState<ProgressState>(-2);
   const [hassEntities, setHassEntities] = useState<HassEntities>();
-  const [hassLogin, setHassLogin] = useState<boolean>(false);
   const [hassUrl, setHassUrl] = useState<string>();
   const [spaceTaken, setSpaceTaken] = useState<number>(0);
   const [editing, setEditing] = useState<Editing>(0);
@@ -79,13 +78,14 @@ function Main(props: MainProps): ReactElement {
   }, []);
 
   useEffect(() => {
-    if (!hassConnected) {
+    if (hassConnection === -2) {
       const haUrl = localStorage.getItem('hass_url');
       if (haUrl) {
         setHassUrl(haUrl);
+        setHassConnection(-1);
       }
     }
-  }, [hassConnected]);
+  }, [hassConnection]);
 
   function handleUpdateConfig(path: (string | number)[], data?: unknown): void {
     if (process.env.NODE_ENV === 'development')
@@ -126,9 +126,8 @@ function Main(props: MainProps): ReactElement {
   }
 
   async function handleHassLogin(url: string): Promise<void> {
-    console.log('handleHassLogin:', url);
     setHassUrl(url);
-    setHassLogin(true);
+    setHassConnection(-1);
   }
 
   function handleBackupConfig(): void {
@@ -206,7 +205,7 @@ function Main(props: MainProps): ReactElement {
       <Drawer
         {...props}
         editing={editing}
-        hassConnected={hassConnected}
+        hassConnection={hassConnection}
         mouseMoved={props.mouseMoved}
         userInitials={userInitials}
         handleHassLogin={handleHassLogin}
@@ -236,11 +235,11 @@ function Main(props: MainProps): ReactElement {
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
             <HomeAssistant
+              connection={hassConnection}
               url={hassUrl}
-              login={hassLogin}
               setAuth={setHassAuth}
               setConfig={setHassConfig}
-              setConnected={setHassConnected}
+              setConnection={setHassConnection}
               setEntities={setHassEntities}
             />
           )}
@@ -264,6 +263,7 @@ function Main(props: MainProps): ReactElement {
               editing={editing}
               hassAuth={hassAuth}
               hassConfig={hassConfig}
+              hassConnection={hassConnection}
               hassEntities={hassEntities}
               mouseMoved={props.mouseMoved}
               handleHassChange={handleHassChange}

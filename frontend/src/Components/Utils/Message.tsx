@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface MessageProps {
-  type: '' | 'info' | 'warning' | 'error';
+  type?: 'info' | 'warning' | 'error';
   text: string;
   padding?: string | number;
 }
@@ -41,7 +41,7 @@ function Message(props: MessageProps): ReactElement {
   return (
     <Paper
       className={classes.root}
-      variant="outlined"
+      elevation={0}
       style={{
         backgroundColor: color,
         padding: props.padding ? props.padding : theme.spacing(1),

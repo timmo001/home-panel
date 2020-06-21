@@ -17,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
 
 import { ConfigurationProps } from '../Configuration/Config';
-import { Editing } from '../Types/Types';
+import { Editing, ProgressState } from '../Types/Types';
 import { MainProps } from '../Main';
 import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
 import Items, { DrawerItem, MenuItem } from './Items';
@@ -102,7 +102,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface ResponsiveDrawerProps extends MainProps {
   config: ConfigurationProps;
   editing: Editing;
-  hassConnected: boolean;
+  hassConnection: ProgressState;
   mouseMoved: boolean;
   userInitials: string;
   handleHassLogin: (url: string) => void;
@@ -194,7 +194,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
         <div className={'fill'} />
         <Divider />
         <List>
-          {!props.hassConnected && (
+          {props.hassConnection === -2 && (
             <HomeAssistantLogin
               iconOnly={
                 props.config.general.drawer_type === 'persistent_icons_only' ||

@@ -16,12 +16,14 @@ import {
   subscribeEntities,
 } from 'home-assistant-js-websocket';
 
+import { ProgressState } from '../Types/Types';
+
 interface HomeAssistantProps {
+  connection: ProgressState;
   url: string;
-  login: boolean;
-  setConnected: (connected: boolean) => void;
   setAuth: (auth: Auth) => void;
   setConfig: (config: HassConfig) => void;
+  setConnection: (connected: ProgressState) => void;
   setEntities: (entities: HassEntities) => void;
 }
 
@@ -34,6 +36,7 @@ export interface HomeAssistantEntityProps {
 export interface HomeAssistantChangeProps {
   hassAuth?: Auth;
   hassConfig?: HassConfig;
+  hassConnection?: ProgressState;
   hassEntities?: HassEntities;
   handleHassChange?: (
     domain: string,
@@ -187,7 +190,6 @@ function HomeAssistant(props: HomeAssistantProps): null {
             throw err;
           }
         }
-        props.setConnected(true);
         connection.removeEventListener('ready', eventHandler);
         connection.addEventListener('ready', eventHandler);
         props.setAuth(auth);
@@ -196,13 +198,15 @@ function HomeAssistant(props: HomeAssistantProps): null {
         getUser(connection).then((user: HassUser) => {
           console.log('Logged into Home Assistant as', user.name);
         });
+        props.setConnection(2);
       })();
   }, [props, updateConfig, updateEntites]);
 
   useEffect(() => {
-    if (connection || !props.url || (!props.login && !loadTokens())) return;
+    if (connection || !props.url || props.connection === -2 || !loadTokens())
+      return;
     connectToHASS();
-  }, [props.login, props.url, connectToHASS]);
+  }, [props.connection, props.url, connectToHASS]);
 
   return null;
 }

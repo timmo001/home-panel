@@ -332,10 +332,12 @@ function Base(props: BaseProps): ReactElement {
             </Grid>
           </Grid>
           {props.card.type === 'entity' &&
-            (props.hassAuth && props.hassConfig && props.hassEntities ? (
-              <Entity {...props} handleHassToggle={handleHassToggle} />
-            ) : (
+            (props.hassConnection === -2 ? (
               <Message type="error" text="Home Assistant not connected" />
+            ) : props.hassConnection === -1 ? (
+              <Message text="Connecting to Home Assistant.." />
+            ) : (
+              <Entity {...props} handleHassToggle={handleHassToggle} />
             ))}
           {props.card.type === 'iframe' && <Frame {...props} />}
           {props.card.type === 'image' && <Image {...props} />}
