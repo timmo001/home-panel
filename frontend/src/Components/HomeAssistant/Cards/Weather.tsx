@@ -127,15 +127,7 @@ function Weather(props: EntityProps): ReactElement {
             {props.entity.attributes.forecast.map(
               (
                 w: {
-                  datetime:
-                    | string
-                    | number
-                    | void
-                    | moment.Moment
-                    | Date
-                    | (string | number)[]
-                    | moment.MomentInputObject
-                    | undefined;
+                  datetime: string | Date;
                   condition: string;
                   temperature: React.ReactNode;
                   precipitation: React.ReactNode;
