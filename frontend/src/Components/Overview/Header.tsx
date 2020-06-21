@@ -100,13 +100,16 @@ function Header(props: HeaderProps): ReactElement | null {
     </Typography>
   );
 
+  const columns: (string | boolean | ReactElement)[] = useMemo(() => {
+    const cols: (string | boolean | ReactElement)[] = ['', '', ''];
+    cols[timeLocation] = time;
+    if (timeLocation !== dateLocation || !props.config.header.time_show)
+      cols[dateLocation] = date;
+    return cols;
+  }, [props.config.header.time_show, date, dateLocation, time, timeLocation]);
+
   if (!props.config.header.time_show && !props.config.header.date_show)
     return null;
-
-  const columns: (string | boolean | ReactElement)[] = ['', '', ''];
-  columns[timeLocation] = time;
-  if (timeLocation !== dateLocation || !props.config.header.time_show)
-    columns[dateLocation] = date;
 
   return (
     <Grid
