@@ -10,6 +10,7 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import {
   ThemeProps,
@@ -219,6 +220,7 @@ function Onboarding(): ReactElement {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <style>{cssOverrides}</style>
       {!loginAttempted ? (
         <Loading text="Attempting Login. Please Wait.." />
