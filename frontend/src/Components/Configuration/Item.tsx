@@ -1,4 +1,10 @@
-import React, { useEffect, ReactElement, useState } from 'react';
+import React, {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { ColorResult } from 'react-color';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -86,220 +92,257 @@ function Item(props: ItemProps): ReactElement {
     }
   }, [props.config, props.item.default, props.path, value]);
 
-  function handleClickShowPassword(): void {
+  const handleClickShowPassword = useCallback((): void => {
     setShowPassword(!showPassword);
-  }
+  }, [showPassword]);
 
-  function handleMouseDownPassword(event: {
-    preventDefault: () => void;
-  }): void {
-    event.preventDefault();
-  }
+  const handleMouseDownPassword = useCallback(
+    (event: { preventDefault: () => void }): void => {
+      event.preventDefault();
+    },
+    []
+  );
 
-  async function handleUpdate(
-    p: (string | number)[],
-    v: unknown
-  ): Promise<void> {
-    const path = clone(p),
-      value = clone(v);
-    setValue(value);
-    if (updateTimeout) clearTimeout(updateTimeout);
-    updateTimeout = setTimeout(() => {
-      props.handleUpdateConfig(path, value);
-    }, 500);
-  }
+  const handleUpdate = useCallback(
+    (p: (string | number)[], v: unknown): void => {
+      const path = clone(p),
+        value = clone(v);
+      setValue(value);
+      if (updateTimeout) clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => {
+        props.handleUpdateConfig(path, value);
+      }, 500);
+    },
+    [props]
+  );
 
-  const handleChange = (path: (string | number)[], type: string) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    const val =
-      type === 'number' ? Number(event.target.value) : event.target.value;
-    handleUpdate(path, val);
-  };
+  const handleChange = useCallback(
+    (path: (string | number)[], type: string) => (
+      event: React.ChangeEvent<HTMLInputElement>
+    ): void => {
+      const val =
+        type === 'number' ? Number(event.target.value) : event.target.value;
+      handleUpdate(path, val);
+    },
+    [handleUpdate]
+  );
 
-  const handleRadioChange = (path: (string | number)[]) => (
-    event: React.ChangeEvent<unknown>
-  ): void => {
-    const val = Number((event.target as HTMLInputElement).value);
-    handleUpdate(path, val);
-  };
+  const handleRadioChange = useCallback(
+    (path: (string | number)[]) => (
+      event: React.ChangeEvent<unknown>
+    ): void => {
+      const val = Number((event.target as HTMLInputElement).value);
+      handleUpdate(path, val);
+    },
+    [handleUpdate]
+  );
 
-  const handleSwitchChange = (path: (string | number)[]) => (
-    _event: React.ChangeEvent<unknown>,
-    checked: boolean
-  ): void => {
-    handleUpdate(path, checked);
-  };
+  const handleSwitchChange = useCallback(
+    (path: (string | number)[]) => (
+      _event: React.ChangeEvent<unknown>,
+      checked: boolean
+    ): void => {
+      handleUpdate(path, checked);
+    },
+    [handleUpdate]
+  );
 
-  const handleSelectChange = (path: (string | number)[]) => (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>
-  ): void => {
-    handleUpdate(path, event.target.value);
-  };
+  const handleSelectChange = useCallback(
+    (path: (string | number)[]) => (
+      event: React.ChangeEvent<{ name?: string; value: unknown }>
+    ): void => {
+      handleUpdate(path, event.target.value);
+    },
+    [handleUpdate]
+  );
 
-  const handleColorChange = (path: (string | number)[]) => (
-    color: ColorResult
-  ): void => {
-    handleUpdate(path, color.hex);
-  };
+  const handleColorChange = useCallback(
+    (path: (string | number)[]) => (color: ColorResult): void => {
+      handleUpdate(path, color.hex);
+    },
+    [handleUpdate]
+  );
 
   const classes = useStyles();
 
-  if (props.item.type !== 'backup_restore' && value === undefined)
-    return <div />;
-  switch (props.item.type) {
-    default:
+  return useMemo(() => {
+    if (props.item.type !== 'backup_restore' && value === undefined)
       return <div />;
-    case 'backup_restore':
-      return (
-        <Grid container direction="row">
-          <Button
-            className={classes.backupButton}
-            color="primary"
-            variant="contained"
-            onClick={props.handleBackupConfig}>
-            Backup
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            onClick={props.handleRestoreConfig}>
-            Restore
-          </Button>
-        </Grid>
-      );
-    case 'color':
-      return (
-        <TextField
-          className={classes.root}
-          placeholder={String(props.item.default)}
-          type="text"
-          InputProps={{
-            endAdornment: (
-              <ColorAdornment
-                color={value}
-                handleColorChange={handleColorChange(props.path)}
-              />
-            ),
-          }}
-          value={value || ''}
-          onChange={handleChange(props.path, 'color')}
-        />
-      );
-    case 'color_only':
-      return (
-        <ColorAdornment
-          color={value}
-          handleColorChange={handleColorChange(props.path)}
-        />
-      );
-    case 'input':
-      return (
-        <TextField
-          className={classes.root}
-          placeholder={String(props.item.default)}
-          type={typeof props.item.default === 'number' ? 'number' : 'text'}
-          value={value || ''}
-          onChange={handleChange(
-            props.path,
-            typeof props.item.default === 'number' ? 'number' : 'string'
-          )}
-        />
-      );
-    case 'input_password':
-      return (
-        <TextField
-          className={classes.root}
-          type={showPassword ? 'text' : 'password'}
-          placeholder={String(props.item.default)}
-          value={value || ''}
-          onChange={handleChange(
-            props.path,
-            typeof props.item.default === 'number' ? 'number' : 'string'
-          )}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="Toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}>
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      );
-    case 'radio':
-      return (
-        <FormControl component="fieldset">
-          <RadioGroup
-            className={classes.radioGroup}
-            aria-label={props.item.title}
-            name={typeof props.item.name === 'string' ? props.item.name : ''}
-            value={value || ''}
-            onChange={handleRadioChange(props.path)}>
-            {props.item.items &&
-              props.item.items.map(
-                (
-                  rItem: string | number | SectionItemsProps,
-                  key: number
-                ): ReactElement | null => {
-                  if (typeof rItem !== 'string' && typeof rItem !== 'number')
-                    return null;
-                  return (
-                    <FormControlLabel
-                      key={key}
-                      value={key || ''}
-                      label={rItem}
-                      control={<Radio color="primary" />}
-                    />
-                  );
-                }
-              )}
-          </RadioGroup>
-        </FormControl>
-      );
-    case 'select':
-      return (
-        <FormControl>
-          <InputLabel htmlFor="theme"></InputLabel>
-          <Select
+    switch (props.item.type) {
+      default:
+        return <div />;
+      case 'backup_restore':
+        return (
+          <Grid container direction="row">
+            <Button
+              className={classes.backupButton}
+              color="primary"
+              variant="contained"
+              onClick={props.handleBackupConfig}>
+              Backup
+            </Button>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={props.handleRestoreConfig}>
+              Restore
+            </Button>
+          </Grid>
+        );
+      case 'color':
+        return (
+          <TextField
             className={classes.root}
-            value={value}
-            onChange={handleSelectChange(props.path)}>
-            {props.item.items &&
-              props.item.items.map(
-                (
-                  sItem: string | number | SectionItemsProps,
-                  key: number
-                ): ReactElement | null => {
-                  if (typeof sItem !== 'string' && typeof sItem !== 'number')
-                    return null;
-                  return (
-                    <MenuItem key={key} value={sItem}>
-                      {sItem}
-                    </MenuItem>
-                  );
-                }
-              )}
-          </Select>
-        </FormControl>
-      );
-    case 'switch':
-      return (
-        <Switch
-          color="primary"
-          checked={
-            value !== undefined && typeof value === 'boolean'
-              ? Boolean(value)
-              : Boolean(props.item.default)
-          }
-          onChange={handleSwitchChange(props.path)}
-        />
-      );
-  }
+            placeholder={String(props.item.default)}
+            type="text"
+            InputProps={{
+              endAdornment: (
+                <ColorAdornment
+                  color={value}
+                  handleColorChange={handleColorChange(props.path)}
+                />
+              ),
+            }}
+            value={value || ''}
+            onChange={handleChange(props.path, 'color')}
+          />
+        );
+      case 'color_only':
+        return (
+          <ColorAdornment
+            color={value}
+            handleColorChange={handleColorChange(props.path)}
+          />
+        );
+      case 'input':
+        return (
+          <TextField
+            className={classes.root}
+            placeholder={String(props.item.default)}
+            type={typeof props.item.default === 'number' ? 'number' : 'text'}
+            value={value || ''}
+            onChange={handleChange(
+              props.path,
+              typeof props.item.default === 'number' ? 'number' : 'string'
+            )}
+          />
+        );
+      case 'input_password':
+        return (
+          <TextField
+            className={classes.root}
+            type={showPassword ? 'text' : 'password'}
+            placeholder={String(props.item.default)}
+            value={value || ''}
+            onChange={handleChange(
+              props.path,
+              typeof props.item.default === 'number' ? 'number' : 'string'
+            )}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}>
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        );
+      case 'radio':
+        return (
+          <FormControl component="fieldset">
+            <RadioGroup
+              className={classes.radioGroup}
+              aria-label={props.item.title}
+              name={typeof props.item.name === 'string' ? props.item.name : ''}
+              value={value || ''}
+              onChange={handleRadioChange(props.path)}>
+              {props.item.items &&
+                props.item.items.map(
+                  (
+                    rItem: string | number | SectionItemsProps,
+                    key: number
+                  ): ReactElement | null => {
+                    if (typeof rItem !== 'string' && typeof rItem !== 'number')
+                      return null;
+                    return (
+                      <FormControlLabel
+                        key={key}
+                        value={key || ''}
+                        label={rItem}
+                        control={<Radio color="primary" />}
+                      />
+                    );
+                  }
+                )}
+            </RadioGroup>
+          </FormControl>
+        );
+      case 'select':
+        return (
+          <FormControl>
+            <InputLabel htmlFor="theme"></InputLabel>
+            <Select
+              className={classes.root}
+              value={value}
+              onChange={handleSelectChange(props.path)}>
+              {props.item.items &&
+                props.item.items.map(
+                  (
+                    sItem: string | number | SectionItemsProps,
+                    key: number
+                  ): ReactElement | null => {
+                    if (typeof sItem !== 'string' && typeof sItem !== 'number')
+                      return null;
+                    return (
+                      <MenuItem key={key} value={sItem}>
+                        {sItem}
+                      </MenuItem>
+                    );
+                  }
+                )}
+            </Select>
+          </FormControl>
+        );
+      case 'switch':
+        return (
+          <Switch
+            color="primary"
+            checked={
+              value !== undefined && typeof value === 'boolean'
+                ? Boolean(value)
+                : Boolean(props.item.default)
+            }
+            onChange={handleSwitchChange(props.path)}
+          />
+        );
+    }
+  }, [
+    classes.backupButton,
+    classes.radioGroup,
+    classes.root,
+    handleChange,
+    handleClickShowPassword,
+    handleColorChange,
+    handleMouseDownPassword,
+    handleRadioChange,
+    handleSelectChange,
+    handleSwitchChange,
+    props.handleBackupConfig,
+    props.handleRestoreConfig,
+    props.item.default,
+    props.item.items,
+    props.item.name,
+    props.item.title,
+    props.item.type,
+    props.path,
+    showPassword,
+    value,
+  ]);
 }
 
 export default Item;

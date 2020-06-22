@@ -10,6 +10,7 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import {
   ThemeProps,
@@ -17,19 +18,18 @@ import {
   defaultTheme,
   ConfigurationProps,
 } from './Configuration/Config';
-import { Auth } from './Login';
 import { CommandType } from './Utils/Command';
-import { Page } from './Types/Types';
+import { Page, ProgressState } from './Types/Types';
 import clone from '../utils/clone';
 import Loading from './Utils/Loading';
-import Login from './Login';
+import Login, { Auth } from './Login';
 import Main from './Main';
 import parseTheme from '../utils/parseTheme';
 
 let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application;
 function Onboarding(): ReactElement {
-  const [loginAttempted, setLoginAttempted] = useState<boolean>(false);
+  const [loginAttempt, setLoginAttempt] = useState<ProgressState>(-2);
   const [loginCredentials, setLoginCredentials] = useState<
     AuthenticationResult
   >();
@@ -136,13 +136,13 @@ function Onboarding(): ReactElement {
           else clientData = await client.authenticate(data, callback);
           console.log('User:', clientData.user);
           setLoginCredentials(clientData.user);
-          setLoginAttempted(true);
+          setLoginAttempt(-1);
           getConfig(clientData.user._id);
           const controllerService = await client.service('controller');
           controllerService.on('created', handleCommand);
         } catch (error) {
           console.error('Error in handleLogin:', error);
-          setLoginAttempted(true);
+          setLoginAttempt(2);
           setLoginCredentials(undefined);
           if (callback) callback(`Login error: ${error.message}`);
         }
@@ -205,6 +205,12 @@ function Onboarding(): ReactElement {
     setCurrentPage(page);
   }
 
+  useEffect(() => {
+    if (config && loginCredentials) {
+      setLoginAttempt(1);
+    }
+  }, [config, loginCredentials]);
+
   const cssOverrides = `
     a {
       color: ${
@@ -219,10 +225,15 @@ function Onboarding(): ReactElement {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <style>{cssOverrides}</style>
-      {!loginAttempted ? (
-        <Loading text="Attempting Login. Please Wait.." />
-      ) : loginCredentials && config ? (
+      {loginAttempt === -2 || loginAttempt === -1 ? (
+        <Loading
+          text={`${
+            loginAttempt === -2 ? 'Attempting Login' : 'Loading Config'
+          }. Please Wait..`}
+        />
+      ) : config && loginCredentials ? (
         <Main
           command={command}
           config={config}

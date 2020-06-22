@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useMemo } from 'react';
 import moment from 'moment';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -43,17 +43,30 @@ interface HeaderProps extends ConfigProps, HomeAssistantChangeProps {}
 function Header(props: HeaderProps): ReactElement | null {
   const classes = useStyles();
 
+  const momentDate = moment();
   const timeLocation = props.config.header.time_location;
   const dateLocation = props.config.header.date_location;
-  let timeFormat = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
+  const timeFormat = useMemo(() => {
+    let format = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
 
-  if (timeLocation === dateLocation && props.config.header.date_show)
-    timeFormat += `-_-${props.config.header.date_format}`;
+    if (timeLocation === dateLocation && props.config.header.date_show)
+      format += `-_-${props.config.header.date_format}`;
 
-  const timeRows = moment()
-    .format(timeFormat)
-    .split('-_-')
-    .map((timeColumn: string) => timeColumn.split('_-_'));
+    return format;
+  }, [
+    props.config.header.date_format,
+    props.config.header.date_show,
+    props.config.header.time_military,
+    dateLocation,
+    timeLocation,
+  ]);
+
+  const timeRows = useMemo(() => {
+    return momentDate
+      .format(timeFormat)
+      .split('-_-')
+      .map((timeColumn: string) => timeColumn.split('_-_'));
+  }, [momentDate, timeFormat]);
 
   const time = props.config.header.time_show && (
     <Typography
@@ -87,13 +100,16 @@ function Header(props: HeaderProps): ReactElement | null {
     </Typography>
   );
 
+  const columns: (string | boolean | ReactElement)[] = useMemo(() => {
+    const cols: (string | boolean | ReactElement)[] = ['', '', ''];
+    cols[timeLocation] = time;
+    if (timeLocation !== dateLocation || !props.config.header.time_show)
+      cols[dateLocation] = date;
+    return cols;
+  }, [props.config.header.time_show, date, dateLocation, time, timeLocation]);
+
   if (!props.config.header.time_show && !props.config.header.date_show)
     return null;
-
-  const columns: (string | boolean | ReactElement)[] = ['', '', ''];
-  columns[timeLocation] = time;
-  if (timeLocation !== dateLocation || !props.config.header.time_show)
-    columns[dateLocation] = date;
 
   return (
     <Grid
