@@ -5,7 +5,7 @@
       "label": "Start All",
       "type": "shell",
       "command": "echo 'Running all..'",
-      "dependsOn": ["Start Backend", "Start Webapp"],
+      "dependsOn": ["Install Dependencies", "Start Backend", "Start Webapp"],
       "group": {
         "kind": "test",
         "isDefault": true
@@ -20,7 +20,6 @@
       "label": "Start Webapp",
       "type": "shell",
       "command": "cd frontend && yarn start",
-      "dependsOn": ["Install Dependencies"],
       "group": {
         "kind": "test",
         "isDefault": true
@@ -35,7 +34,6 @@
       "label": "Start Backend",
       "type": "shell",
       "command": "cd backend && yarn dev",
-      "dependsOn": ["Install Dependencies"],
       "group": {
         "kind": "test",
         "isDefault": true
@@ -97,7 +95,6 @@
         "isDefault": true
       },
       "presentation": {
-        "reveal": "test",
         "panel": "new"
       },
       "problemMatcher": []
