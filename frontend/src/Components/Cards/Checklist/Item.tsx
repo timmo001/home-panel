@@ -14,6 +14,9 @@ import InputBase from '@material-ui/core/InputBase';
 import { ChecklistItem } from '../../Configuration/Config';
 
 const useStyles = makeStyles(() => ({
+  input: {
+    padding: 0,
+  },
   inputChecked: {
     textDecoration: 'line-through',
   },
@@ -66,7 +69,7 @@ function Checklist(props: ItemProps): ReactElement | null {
         onChange={handleCheckedChange}
       />
       <InputBase
-        className={clsx(checked && classes.inputChecked)}
+        className={clsx(classes.input, checked && classes.inputChecked)}
         disabled={checked}
         inputProps={{ 'aria-label': 'text' }}
         multiline
