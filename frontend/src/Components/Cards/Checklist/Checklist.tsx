@@ -1,5 +1,6 @@
 import React, { Fragment, ReactElement, useCallback } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import arrayMove from 'array-move';
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -7,9 +8,10 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { BaseProps } from '../Base';
 import { ChecklistItem } from '../../Configuration/Config';
+import clone from '../../../utils/clone';
 import Item from './Item';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     height: '100%',
     width: '100%',
@@ -24,7 +26,25 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function Checklist(props: BaseProps): ReactElement | null {
-  const handleUpdateItems = useCallback(
+  const handleDeleteItem = useCallback(
+    (key: number) => () => {
+      const items = props.card.checklist_items || [];
+      items.splice(key, 1);
+      props.handleUpdate({ ...props.card, checklist_items: items });
+    },
+    [props]
+  );
+
+  const handleMoveItem = useCallback(
+    (key: number) => (amount: number) => {
+      const items = clone(props.card.checklist_items) || [];
+      arrayMove(items, key, key + amount);
+      props.handleUpdate({ ...props.card, checklist_items: items });
+    },
+    [props]
+  );
+
+  const handleUpdateItem = useCallback(
     (key: number) => (item: ChecklistItem) => {
       const items = props.card.checklist_items || [];
       items[key] = item;
@@ -55,7 +75,12 @@ function Checklist(props: BaseProps): ReactElement | null {
       alignItems="center">
       {props.card.checklist_items.map((item: ChecklistItem, key: number) => (
         <Fragment key={key}>
-          <Item item={item} handleUpdateItem={handleUpdateItems(key)} />
+          <Item
+            item={item}
+            handleDeleteItem={handleDeleteItem(key)}
+            handleMoveItem={handleMoveItem(key)}
+            handleUpdateItem={handleUpdateItem(key)}
+          />
           {key !== itemsLength - 1 && (
             <Grid item xs={12}>
               <Divider light variant="middle" />
