@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactElement,
-  useCallback,
-  // useEffect,
-  // useState,
-} from 'react';
+import React, { Fragment, ReactElement, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
@@ -24,24 +18,17 @@ const useStyles = makeStyles((theme: Theme) => ({
   button: {
     width: '100%',
   },
-  divider: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
   inputChecked: {
     textDecoration: 'line-through',
   },
 }));
 
 function Checklist(props: BaseProps): ReactElement | null {
-  // const [checklistItems, setChecklistItems] = useState<ChecklistItem[]>();
-
   const handleUpdateItems = useCallback(
     (key: number) => (item: ChecklistItem) => {
       const items = props.card.checklist_items || [];
       items[key] = item;
       console.log('handleUpdateItems:', items);
-      // setChecklistItems(items);
       props.handleUpdate({ ...props.card, checklist_items: items });
     },
     [props]
@@ -51,23 +38,8 @@ function Checklist(props: BaseProps): ReactElement | null {
     const items = props.card.checklist_items || [];
     items.push({ text: '', checked: false });
     console.log('setChecklistItems - Add:', items);
-    // setChecklistItems(items);
     props.handleUpdate({ ...props.card, checklist_items: items });
   }, [props]);
-
-  // useEffect(() => {
-  //   if (!checklistItems) {
-  //     console.log(
-  //       'setChecklistItems - Initial:',
-  //       props.card.checklist_items || []
-  //     );
-  //     setChecklistItems(
-  //       props.card.checklist_items && Array.isArray(props.card.checklist_items)
-  //         ? props.card.checklist_items
-  //         : []
-  //     );
-  //   }
-  // }, [props.card.checklist_items, checklistItems, handleUpdateItems]);
 
   const classes = useStyles();
   if (!props.card.checklist_items || !Array.isArray(props.card.checklist_items))
@@ -86,7 +58,7 @@ function Checklist(props: BaseProps): ReactElement | null {
           <Item item={item} handleUpdateItem={handleUpdateItems(key)} />
           {key !== itemsLength - 1 && (
             <Grid item xs={12}>
-              <Divider className={classes.divider} light variant="middle" />
+              <Divider light variant="middle" />
             </Grid>
           )}
         </Fragment>
