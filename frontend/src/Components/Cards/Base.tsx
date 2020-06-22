@@ -22,6 +22,7 @@ import {
   entitySizes,
 } from '../HomeAssistant/HomeAssistant';
 import { CommandType } from '../Utils/Command';
+import Checklist from './Checklist/Checklist';
 import Entity from '../HomeAssistant/Cards/Entity';
 import Frame from './Frame';
 import Image from './Image';
@@ -241,6 +242,8 @@ function Base(props: BaseProps): ReactElement {
       <News {...props} />
     ) : props.card.type === 'rss' ? (
       <RSS {...props} />
+    ) : props.card.type === 'checklist' ? (
+      <Checklist {...props} />
     ) : (
       <Fragment />
     );
