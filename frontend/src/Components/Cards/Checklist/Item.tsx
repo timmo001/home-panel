@@ -64,37 +64,30 @@ function Checklist(props: ItemProps): ReactElement | null {
     props.handleMoveItem(+1);
   }
 
-  const handleUpdateItem = useCallback(
-    (item: ChecklistItem) => {
-      console.log('handleUpdateItem:', item);
-      if (updateTimeout) clearTimeout(updateTimeout);
-      updateTimeout = setTimeout(() => props.handleUpdateItem(item), 500);
-    },
-    [props]
-  );
+  const handleUpdateItem = useCallback(() => {
+    console.log('handleUpdateItem:', { checked, text });
+    if (updateTimeout) clearTimeout(updateTimeout);
+    updateTimeout = setTimeout(
+      () => props.handleUpdateItem({ checked, text }),
+      500
+    );
+  }, [props, checked, text]);
 
   const handleCheckedChange = useCallback(
     (_event: ChangeEvent<HTMLInputElement>, c: boolean) => {
       setChecked(c);
-      if (checked !== props.item.checked)
-        handleUpdateItem({ checked: c, text });
+      handleUpdateItem();
     },
-    [props.item.checked, checked, text, handleUpdateItem]
+    [handleUpdateItem]
   );
 
   const handleTextChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setText(event.target.value);
-      if (text !== props.item.text)
-        handleUpdateItem({ checked, text: event.target.value });
+      handleUpdateItem();
     },
-    [props.item.text, checked, text, handleUpdateItem]
+    [handleUpdateItem]
   );
-
-  // useEffect(() => {
-  //   if (checked !== props.item.checked) setChecked(props.item.checked);
-  //   if (text !== props.item.text) setText(props.item.text);
-  // }, [props.item, checked, text]);
 
   const classes = useStyles();
   return (
