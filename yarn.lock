@@ -2989,13 +2989,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:16.9.38":
-  version: 16.9.38
-  resolution: "@types/react@npm:16.9.38"
+"@types/react@npm:16.9.41":
+  version: 16.9.41
+  resolution: "@types/react@npm:16.9.41"
   dependencies:
     "@types/prop-types": "*"
     csstype: ^2.2.0
-  checksum: fa07e07d5b6028f36c5fa6a79ed8c36bb4418d06131cd69ae12d7e64e572364c721f9d20caa09ffb62a31389e56916ed5b4c751642f44c6b1e871bdcfdf9df51
+  checksum: d9fc63c96f926a246a2f1e3f0fa42895f0047fef1e8f5f7c1e68ce043792b72502c73478ba473e2371e9c4771b25b3910969d959d43e9ee4e7809950be62d4e2
   languageName: node
   linkType: hard
 
@@ -8573,7 +8573,7 @@ __metadata:
     "@types/jest": 26.0.3
     "@types/markdown-it": 10.0.1
     "@types/node": 14.0.14
-    "@types/react": 16.9.38
+    "@types/react": 16.9.41
     "@types/react-color": 3.0.4
     "@types/react-dom": 16.9.8
     "@types/react-html-parser": 2.0.1
