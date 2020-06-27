@@ -130,7 +130,14 @@ export type CardProps = {
   chart_detail?: number;
   chart_from?: number;
   chart_labels?: boolean;
+  checklist_items?: ChecklistItem[];
 };
+
+export interface ChecklistItem {
+  key: string;
+  checked: boolean;
+  text: string;
+}
 
 export type NewsProps = {
   news_api_key: string;
@@ -195,6 +202,7 @@ export const cardTypes: CardType[] = [
   { name: 'markdown', title: 'Markdown' },
   { name: 'news', title: 'News Feed' },
   { name: 'rss', title: 'RSS Feed' },
+  { name: 'checklist', title: 'Checklist' },
 ];
 
 export const cardTypeDefaults: { [type: string]: CardProps } = {
@@ -275,6 +283,19 @@ export const cardTypeDefaults: { [type: string]: CardProps } = {
     width: 2,
     height: 3,
     url: '',
+  },
+  checklist: {
+    key: '',
+    group: '',
+    title: cardTypes[6].title,
+    type: 'checklist',
+    elevation: 1,
+    background: '',
+    padding: '',
+    square: false,
+    width: 2,
+    height: 3,
+    checklist_items: [],
   },
 };
 

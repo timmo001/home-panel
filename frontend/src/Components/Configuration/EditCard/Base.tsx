@@ -9,11 +9,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import { ColorResult } from 'react-color';
 
 import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
 import { CommandType } from '../../Utils/Command';
 import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
-// import ColorAdornment from '../../Utils/ColorAdornment';
+import ColorAdornment from '../../Utils/ColorAdornment';
 import Entity from './Entity';
 import Frame from './Frame';
 import Image from './Image';
@@ -67,9 +68,9 @@ function Base(props: BaseExtendedProps): ReactElement | null {
     }
   }
 
-  // const handleColorChange = (name: string) => (color: ColorResult): void => {
-  //   props.handleManualChange?.(name, color.hex);
-  // };
+  const handleColorChange = (name: string) => (color: ColorResult): void => {
+    props.handleManualChange?.(name, color.hex);
+  };
 
   const classes = useStyles();
 
@@ -148,14 +149,14 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             InputLabelProps={{ shrink: true }}
             label="Background"
             placeholder="default"
-            // InputProps={{
-            //   endAdornment: (
-            //     <ColorAdornment
-            //       color={props.card.background}
-            //       handleColorChange={handleColorChange('background')}
-            //     />
-            //   ),
-            // }}
+            InputProps={{
+              endAdornment: (
+                <ColorAdornment
+                  color={props.card.background}
+                  handleColorChange={handleColorChange('background')}
+                />
+              ),
+            }}
             value={props.card.background || 'default'}
             onChange={props.handleChange && props.handleChange('background')}
           />
