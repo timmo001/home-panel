@@ -134,6 +134,7 @@ export type CardProps = {
 };
 
 export interface ChecklistItem {
+  key: string;
   checked: boolean;
   text: string;
 }

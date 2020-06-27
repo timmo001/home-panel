@@ -3,8 +3,8 @@ import React, {
   Fragment,
   ReactElement,
   useCallback,
-  // useEffect,
   useState,
+  useEffect,
 } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,6 +29,8 @@ const useStyles = makeStyles(() => ({
 
 interface ItemProps {
   item: ChecklistItem;
+  maxPosition: number;
+  position: number;
   handleDeleteItem: () => void;
   handleMoveItem: (amount: number) => void;
   handleUpdateItem: (item: ChecklistItem) => void;
@@ -36,8 +38,7 @@ interface ItemProps {
 
 let updateTimeout: NodeJS.Timeout;
 function Checklist(props: ItemProps): ReactElement | null {
-  const [checked, setChecked] = useState<boolean>(props.item.checked);
-  const [text, setText] = useState<string>(props.item.text);
+  const [item, setItem] = useState<ChecklistItem>(props.item);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -64,30 +65,32 @@ function Checklist(props: ItemProps): ReactElement | null {
     props.handleMoveItem(+1);
   }
 
-  const handleUpdateItem = useCallback(() => {
-    console.log('handleUpdateItem:', { checked, text });
-    if (updateTimeout) clearTimeout(updateTimeout);
-    updateTimeout = setTimeout(
-      () => props.handleUpdateItem({ checked, text }),
-      500
-    );
-  }, [props, checked, text]);
+  const handleUpdateItem = useCallback(
+    async (newItem: ChecklistItem) => {
+      setItem(newItem);
+      if (updateTimeout) clearTimeout(updateTimeout);
+      updateTimeout = setTimeout(() => props.handleUpdateItem(newItem), 500);
+    },
+    [props]
+  );
 
   const handleCheckedChange = useCallback(
-    (_event: ChangeEvent<HTMLInputElement>, c: boolean) => {
-      setChecked(c);
-      handleUpdateItem();
+    async (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      handleUpdateItem({ ...item, checked: checked });
     },
-    [handleUpdateItem]
+    [item, handleUpdateItem]
   );
 
   const handleTextChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      setText(event.target.value);
-      handleUpdateItem();
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      handleUpdateItem({ ...item, text: event.target.value });
     },
-    [handleUpdateItem]
+    [item, handleUpdateItem]
   );
+
+  useEffect(() => {
+    if (props.item.key !== item.key) setItem(props.item);
+  }, [props.item, item]);
 
   const classes = useStyles();
   return (
@@ -103,18 +106,21 @@ function Checklist(props: ItemProps): ReactElement | null {
         alignItems="center">
         <Grid item>
           <Checkbox
-            checked={checked}
+            checked={item.checked}
             inputProps={{ 'aria-label': 'checked' }}
             onChange={handleCheckedChange}
           />
         </Grid>
         <Grid item xs>
           <InputBase
-            className={clsx(classes.input, checked && classes.inputChecked)}
-            disabled={checked}
+            className={clsx(
+              classes.input,
+              item.checked && classes.inputChecked
+            )}
+            disabled={item.checked}
             inputProps={{ 'aria-label': 'text' }}
             multiline
-            value={text}
+            value={item.text}
             onChange={handleTextChange}
           />
         </Grid>
@@ -139,8 +145,12 @@ function Checklist(props: ItemProps): ReactElement | null {
             minWidth: '20ch',
           },
         }}>
-        <MenuItem onClick={handleMoveUp}>Move Up</MenuItem>
-        <MenuItem onClick={handleMoveDown}>Move Down</MenuItem>
+        {props.position > 0 && (
+          <MenuItem onClick={handleMoveUp}>Move Up</MenuItem>
+        )}
+        {props.position < props.maxPosition && (
+          <MenuItem onClick={handleMoveDown}>Move Down</MenuItem>
+        )}
         <MenuItem onClick={handleDeleteItem}>Delete</MenuItem>
       </Menu>
     </Fragment>

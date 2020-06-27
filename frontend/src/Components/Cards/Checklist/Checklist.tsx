@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useCallback } from 'react';
+import React, { Fragment, ReactElement, useCallback, useMemo } from 'react';
 import arrayMove from 'array-move';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -10,6 +10,7 @@ import { BaseProps } from '../Base';
 import { ChecklistItem } from '../../Configuration/Config';
 import clone from '../../../utils/clone';
 import Item from './Item';
+import makeKey from '../../../utils/makeKey';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -38,8 +39,10 @@ function Checklist(props: BaseProps): ReactElement | null {
   const handleMoveItem = useCallback(
     (key: number) => (amount: number) => {
       const items = clone(props.card.checklist_items) || [];
-      arrayMove(items, key, key + amount);
-      props.handleUpdate({ ...props.card, checklist_items: items });
+      props.handleUpdate({
+        ...props.card,
+        checklist_items: arrayMove(items, key, key + amount),
+      });
     },
     [props]
   );
@@ -48,7 +51,6 @@ function Checklist(props: BaseProps): ReactElement | null {
     (key: number) => (item: ChecklistItem) => {
       const items = props.card.checklist_items || [];
       items[key] = item;
-      console.log('handleUpdateItems:', items);
       props.handleUpdate({ ...props.card, checklist_items: items });
     },
     [props]
@@ -56,15 +58,11 @@ function Checklist(props: BaseProps): ReactElement | null {
 
   const handleAddItem = useCallback(() => {
     const items = props.card.checklist_items || [];
-    items.push({ text: '', checked: false });
-    console.log('setChecklistItems - Add:', items);
+    items.push({ key: makeKey(32), text: '', checked: false });
     props.handleUpdate({ ...props.card, checklist_items: items });
   }, [props]);
 
   const classes = useStyles();
-  if (!props.card.checklist_items || !Array.isArray(props.card.checklist_items))
-    return null;
-  const itemsLength = props.card.checklist_items.length;
   return (
     <Grid
       className={classes.root}
@@ -73,21 +71,38 @@ function Checklist(props: BaseProps): ReactElement | null {
       justify="center"
       alignContent="flex-start"
       alignItems="center">
-      {props.card.checklist_items.map((item: ChecklistItem, key: number) => (
-        <Fragment key={key}>
-          <Item
-            item={item}
-            handleDeleteItem={handleDeleteItem(key)}
-            handleMoveItem={handleMoveItem(key)}
-            handleUpdateItem={handleUpdateItem(key)}
-          />
-          {key !== itemsLength - 1 && (
-            <Grid item xs={12}>
-              <Divider light variant="middle" />
-            </Grid>
-          )}
-        </Fragment>
-      ))}
+      {useMemo(() => {
+        if (
+          props.card.checklist_items !== undefined &&
+          Array.isArray(props.card.checklist_items)
+        ) {
+          const itemLength = props.card.checklist_items.length - 1;
+          return props.card.checklist_items.map(
+            (item: ChecklistItem, key: number) => (
+              <Fragment key={key}>
+                <Item
+                  item={item}
+                  maxPosition={itemLength}
+                  position={key}
+                  handleDeleteItem={handleDeleteItem(key)}
+                  handleMoveItem={handleMoveItem(key)}
+                  handleUpdateItem={handleUpdateItem(key)}
+                />
+                {key !== itemLength && (
+                  <Grid item xs={12}>
+                    <Divider light variant="middle" />
+                  </Grid>
+                )}
+              </Fragment>
+            )
+          );
+        }
+      }, [
+        props.card.checklist_items,
+        handleDeleteItem,
+        handleMoveItem,
+        handleUpdateItem,
+      ])}
       <Grid item xs={12}>
         <Button className={classes.button} onClick={handleAddItem}>
           <AddIcon />
