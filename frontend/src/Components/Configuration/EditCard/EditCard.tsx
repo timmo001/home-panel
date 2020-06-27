@@ -142,7 +142,14 @@ function EditCard(props: EditCardProps): ReactElement {
             container
             alignContent="center"
             justify="space-around">
-            <CardBase {...props} card={card} editing={0} expandable={true} />
+            <CardBase
+              {...props}
+              card={card}
+              editing={0}
+              expandable={true}
+              maxPosition={0}
+              position={0}
+            />
           </Grid>
         </Grid>
       </DialogContent>

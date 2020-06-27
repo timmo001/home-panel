@@ -363,6 +363,8 @@ function Overview(props: OverviewProps): ReactElement {
                       card={card}
                       editing={props.editing}
                       expandable
+                      maxPosition={cards.length - 1}
+                      position={cardKey}
                       handleCopy={handleCopy(card)}
                       handleDelete={handleDelete(group, card)}
                       handleMoveUp={handleMoveUp(group, card)}

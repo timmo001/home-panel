@@ -71,6 +71,8 @@ export interface BaseProps extends HomeAssistantChangeProps {
   config: ConfigurationProps;
   editing: number;
   expandable: boolean;
+  maxPosition: number;
+  position: number;
   handleCloseExpand?: () => void;
   handleCopy?: () => void;
   handleDelete?: () => void;

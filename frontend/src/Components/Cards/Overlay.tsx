@@ -70,10 +70,16 @@ function Overlay(props: BaseProps): ReactElement {
         <IconButton color="primary" onClick={props.handleCopy}>
           <CopyIcon fontSize="small" />
         </IconButton>
-        <IconButton color="primary" onClick={props.handleMoveUp}>
+        <IconButton
+          disabled={props.position === 0}
+          color="primary"
+          onClick={props.handleMoveUp}>
           <ArrowUpwardIcon fontSize="small" />
         </IconButton>
-        <IconButton color="primary" onClick={props.handleMoveDown}>
+        <IconButton
+          disabled={props.position === props.maxPosition}
+          color="primary"
+          onClick={props.handleMoveDown}>
           <ArrowDownwardsIcon fontSize="small" />
         </IconButton>
         {deleteConfirm && (
