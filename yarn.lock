@@ -2789,13 +2789,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:26.0.0":
-  version: 26.0.0
-  resolution: "@types/jest@npm:26.0.0"
+"@types/jest@npm:26.0.3":
+  version: 26.0.3
+  resolution: "@types/jest@npm:26.0.3"
   dependencies:
     jest-diff: ^25.2.1
     pretty-format: ^25.2.1
-  checksum: 6c482e91e8ac3850a1db50d086900c810951eab7514d6b705a616934afd362f606b638a2967edad1ff716aa2ec7cc7631f68774fe9c19e3576ceb90c8df68f7b
+  checksum: 8a8a98865cce9d454bc0b5332e9caa5d7cfb3f9f608dfb355c12a5e5eb14ce0626854329d5046015098dcb5fb022cf9fe18c5ad72d7b4563ad3f44ad1ab84050
   languageName: node
   linkType: hard
 
@@ -2871,10 +2871,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:14.0.13":
+"@types/node@npm:*":
   version: 14.0.13
   resolution: "@types/node@npm:14.0.13"
   checksum: 2f2be6f7f1a916b0f4d58949bd934a8e41c0dcb15c493c17c3eaf78da3065c09650030f0dfe2e8c11880d597ee001d7cd925129218037fdb4432e80f7d895673
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:14.0.14":
+  version: 14.0.14
+  resolution: "@types/node@npm:14.0.14"
+  checksum: 0a2072aa7de32e6535ce6bc7383965fc0a4b7bbf6d76f69027db72e86381921c820a8a2173f75fa210d9fb3286c707079d3804ef33c76a065bcb890858e50ee9
   languageName: node
   linkType: hard
 
@@ -2934,12 +2941,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-color@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@types/react-color@npm:3.0.2"
+"@types/react-color@npm:3.0.4":
+  version: 3.0.4
+  resolution: "@types/react-color@npm:3.0.4"
   dependencies:
     "@types/react": "*"
-  checksum: 888e6a5e72e596b4452f0179e7f0fbbb803247db93c6a30c91b617f7ad4d548df791b7caf0a9ef8382410d093a2bed55988ee7dda9c5185609ce4fb5f2d5ff51
+    "@types/reactcss": "*"
+  checksum: da1f0589e147aab9dca94e7157f00bf13d34f03b070016b2fc62c946e5d642f507742d40ffadc8222f09907d1d602e786dd32a104ff628ed94db9636ede3090f
   languageName: node
   linkType: hard
 
@@ -2991,21 +2999,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/recharts-scale@npm:*":
-  version: 1.0.0
-  resolution: "@types/recharts-scale@npm:1.0.0"
-  checksum: 1ff86c5d50644c9b5ef1014c9c033796e9d210e05dd4a3017f11b0032aa7502cb22f85318f7d59c95a0e5902a56812a786e77e067fba5e15d2ef156538b2afa4
+"@types/reactcss@npm:*":
+  version: 1.2.3
+  resolution: "@types/reactcss@npm:1.2.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 5ac6dfc02c1b0cd3c6e85b9447e0a7eeff471cdd10e4b308f6f647678bf5fe996a6f2283ebac129f89e53abb533943633641c26420f25f0095b4de8a9cdb59b1
   languageName: node
   linkType: hard
 
-"@types/recharts@npm:1.8.12":
-  version: 1.8.12
-  resolution: "@types/recharts@npm:1.8.12"
+"@types/recharts@npm:1.8.13":
+  version: 1.8.13
+  resolution: "@types/recharts@npm:1.8.13"
   dependencies:
     "@types/d3-shape": "*"
     "@types/react": "*"
-    "@types/recharts-scale": "*"
-  checksum: 7dcdd9fe6b4fe676a92de1094c0ad9727ff8ba6d3a972b5b0f08c967c5768508728201eda8fd796d836aaf4121d750e4088e92a6dd3083e5979e898520d5c59e
+  checksum: fe0750e0dbfd32c0ddb9758278e5d5ad7c1434e6385bba921c3ad73f522a1dafbba10b8f42a8f41ce115f8bd0cf1cddc1bae9cca26ccad1483e9527b5dcb3d62
   languageName: node
   linkType: hard
 
@@ -4482,7 +4491,7 @@ __metadata:
     "@types/compression": 1.7.0
     "@types/cors": 2.8.6
     "@types/helmet": 0.0.47
-    "@types/jest": 26.0.0
+    "@types/jest": 26.0.3
     "@types/jsonwebtoken": 8.5.0
     "@types/nedb": 1.8.9
     "@types/serve-favicon": 2.5.0
@@ -7671,9 +7680,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:7.3.0":
-  version: 7.3.0
-  resolution: "eslint@npm:7.3.0"
+"eslint@npm:7.3.1":
+  version: 7.3.1
+  resolution: "eslint@npm:7.3.1"
   dependencies:
     "@babel/code-frame": ^7.0.0
     ajv: ^6.10.0
@@ -7713,7 +7722,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: a9551aaa81bc22dc948f058da82d2698119b12c767f2bfa1f992126f3bbf4c8cfc03aec5614e57727f8520bda10ddb868fb83b07a4fb30fee0a25b319cd3fde0
+  checksum: 5d9fd38514ffb43d0c326488bae2338861a654d507e40594f0d6b39efee5d91ec3105d5408f2add6891e8b47d512a75f06b4ce974c2d70bc6d9ae62574b31deb
   languageName: node
   linkType: hard
 
@@ -8561,14 +8570,14 @@ __metadata:
     "@material-ui/styles": 4.10.0
     "@mdi/font": 5.3.45
     "@types/history": 4.7.6
-    "@types/jest": 26.0.0
+    "@types/jest": 26.0.3
     "@types/markdown-it": 10.0.1
-    "@types/node": 14.0.13
+    "@types/node": 14.0.14
     "@types/react": 16.9.38
-    "@types/react-color": 3.0.2
+    "@types/react-color": 3.0.4
     "@types/react-dom": 16.9.8
     "@types/react-html-parser": 2.0.1
-    "@types/recharts": 1.8.12
+    "@types/recharts": 1.8.13
     "@types/socket.io": 2.1.8
     "@types/socket.io-client": 1.4.33
     "@types/superagent": 4.1.7
@@ -16503,7 +16512,7 @@ resolve@1.15.0:
   dependencies:
     "@typescript-eslint/eslint-plugin": 3.3.0
     "@typescript-eslint/parser": 3.3.0
-    eslint: 7.3.0
+    eslint: 7.3.1
     eslint-config-prettier: 6.11.0
     eslint-plugin-prettier: 3.1.4
     eslint-plugin-react: 7.20.0
