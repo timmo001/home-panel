@@ -76,7 +76,7 @@
     "@types/react-color": "3.0.2",
     "@types/react-dom": "16.9.8",
     "@types/react-html-parser": "2.0.1",
-    "@types/recharts": "1.8.12",
+    "@types/recharts": "1.8.13",
     "@types/socket.io": "2.1.8",
     "@types/socket.io-client": "1.4.33",
     "@types/superagent": "4.1.7",
