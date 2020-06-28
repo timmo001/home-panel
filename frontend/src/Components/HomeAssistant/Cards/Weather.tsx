@@ -124,60 +124,61 @@ function Weather(props: EntityProps): ReactElement {
       {(!props.card.width || props.card.width > 1) &&
         (!props.card.height || props.card.height > 1) && (
           <Grid item className={classes.forecast}>
-            {props.entity.attributes.forecast.map(
-              (
-                w: {
-                  datetime: string | Date;
-                  condition: string;
-                  temperature: React.ReactNode;
-                  precipitation: React.ReactNode;
-                },
-                key: number
-              ) => {
-                const datetime = moment(w.datetime);
-                const icon = weatherMap[w.condition];
-                return (
-                  <div key={key} className={classes.forecastItem}>
-                    <Typography
-                      noWrap
-                      className={classes.forecastText}
-                      variant="body2">
-                      {datetime.format('ddd')}
-                      <br />
-                      {datetime.format('h a')}
-                    </Typography>
+            {props.entity.attributes.forecast &&
+              props.entity.attributes.forecast.map(
+                (
+                  w: {
+                    datetime: string | Date;
+                    condition: string;
+                    temperature: React.ReactNode;
+                    precipitation: React.ReactNode;
+                  },
+                  key: number
+                ) => {
+                  const datetime = moment(w.datetime);
+                  const icon = weatherMap[w.condition];
+                  return (
+                    <div key={key} className={classes.forecastItem}>
+                      <Typography
+                        noWrap
+                        className={classes.forecastText}
+                        variant="body2">
+                        {datetime.format('ddd')}
+                        <br />
+                        {datetime.format('h a')}
+                      </Typography>
 
-                    <Typography
-                      className={classes.forecastTextIcon}
-                      variant="body2">
-                      <span
-                        className={clsx(
-                          'mdi',
-                          `mdi-${icon}`,
-                          classes.forecastIcon
-                        )}
-                      />
-                    </Typography>
+                      <Typography
+                        className={classes.forecastTextIcon}
+                        variant="body2">
+                        <span
+                          className={clsx(
+                            'mdi',
+                            `mdi-${icon}`,
+                            classes.forecastIcon
+                          )}
+                        />
+                      </Typography>
 
-                    <Typography
-                      noWrap
-                      className={classes.forecastText}
-                      variant="body2">
-                      {w.temperature}
-                      <span className={classes.textSecondary}>
-                        {getUnit('temperature', props.hassConfig)}
-                      </span>
-                    </Typography>
-                    <Typography
-                      noWrap
-                      className={classes.forecastText}
-                      variant="body2">
-                      {w.precipitation}
-                    </Typography>
-                  </div>
-                );
-              }
-            )}
+                      <Typography
+                        noWrap
+                        className={classes.forecastText}
+                        variant="body2">
+                        {w.temperature}
+                        <span className={classes.textSecondary}>
+                          {getUnit('temperature', props.hassConfig)}
+                        </span>
+                      </Typography>
+                      <Typography
+                        noWrap
+                        className={classes.forecastText}
+                        variant="body2">
+                        {w.precipitation}
+                      </Typography>
+                    </div>
+                  );
+                }
+              )}
           </Grid>
         )}
     </Grid>
