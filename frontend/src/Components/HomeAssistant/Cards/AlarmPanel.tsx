@@ -40,8 +40,9 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
   };
 
   const handleUpdate = (service: string) => (): void => {
-    if (props.handleHassChange && props.card.domain)
-      props.handleHassChange(props.card.domain, service, {
+    const domain = props.card.entity?.split('.')[0];
+    if (props.handleHassChange && domain)
+      props.handleHassChange(domain, service, {
         entity_id: props.card.entity,
         code,
       });

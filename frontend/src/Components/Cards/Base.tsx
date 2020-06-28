@@ -127,12 +127,19 @@ function Base(props: BaseProps): ReactElement {
   );
 
   const handleSetToggleable = useCallback(() => {
-    setToggleable(
-      props.editing === 1
-        ? false
-        : !props.card.disabled && props.card.toggleable
-    );
-  }, [props.card.disabled, props.card.toggleable, props.editing]);
+    if (props.card.click_action?.type === 'call-service') setToggleable(true);
+    else
+      setToggleable(
+        props.editing === 1
+          ? false
+          : !props.card.disabled && props.card.toggleable
+      );
+  }, [
+    props.card.click_action,
+    props.card.disabled,
+    props.card.toggleable,
+    props.editing,
+  ]);
 
   const handleSetExpandable = useCallback(
     (entitySizeKey: string) => {
@@ -176,6 +183,8 @@ function Base(props: BaseProps): ReactElement {
 
   function handleHassToggle(): void {
     if (props.handleHassChange) {
+      const domain = props.card.entity?.split('.')[0];
+      console.log('handleHassToggle', props.card);
       if (
         props.card.click_action &&
         props.card.click_action.type === 'call-service' &&
@@ -188,12 +197,12 @@ function Base(props: BaseProps): ReactElement {
           service[1],
           JSON.parse(props.card.click_action.service_data)
         );
-      } else if (props.card.domain) {
-        if (props.card.domain === 'lock') {
+      } else if (domain) {
+        if (domain === 'lock') {
           process.env.NODE_ENV === 'development' &&
             console.log(props.card.state);
           props.handleHassChange(
-            props.card.domain,
+            domain,
             props.card.state === 'locked' ? 'unlock' : 'lock',
             {
               entity_id: props.card.entity,
@@ -201,15 +210,11 @@ function Base(props: BaseProps): ReactElement {
           );
         } else {
           process.env.NODE_ENV === 'development' &&
-            console.log(
-              props.card.domain,
-              props.card.state === 'on' ? false : true,
-              {
-                entity_id: props.card.entity,
-              }
-            );
+            console.log(domain, props.card.state === 'on' ? false : true, {
+              entity_id: props.card.entity,
+            });
           props.handleHassChange(
-            props.card.domain,
+            domain,
             props.card.state === 'on' ? false : true,
             {
               entity_id: props.card.entity,
