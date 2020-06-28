@@ -19,6 +19,8 @@
 
 [![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
 
+[![Sponsor Timmo][sponsor-badge]][sponsor]
+
 A web frontend for controlling the home. Integrates with
 [Home Assistant][hass] as an additional frontend.
 
@@ -84,4 +86,6 @@ Setup and configuration for the app is available [here][setup-docs]
 [screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-main.png
 [setup-docs]: https://timmo.dev/home-panel/setup/
 [showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/docs/showcase/timmo/purple-space.png
+[sponsor-badge]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/sponsor.png
+[sponsor]: https://github.com/sponsors/timmo001?o=esc
 [version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg
