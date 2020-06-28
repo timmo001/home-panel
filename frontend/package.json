@@ -79,7 +79,7 @@
     "@types/recharts": "1.8.13",
     "@types/socket.io": "2.1.8",
     "@types/socket.io-client": "1.4.33",
-    "@types/superagent": "4.1.7",
+    "@types/superagent": "4.1.8",
     "@yarnpkg/pnpify": "2.0.0-rc.25",
     "jest-junit": "10.0.0",
     "prettier": "2.0.5",
