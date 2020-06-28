@@ -2,8 +2,8 @@ import React, { ReactElement, Fragment, useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import ArrowDownwardsIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
+import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import CopyIcon from '@material-ui/icons/FileCopy';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
@@ -74,13 +74,13 @@ function Overlay(props: BaseProps): ReactElement {
           disabled={props.position === 0}
           color="primary"
           onClick={props.handleMoveUp}>
-          <ArrowUpwardIcon fontSize="small" />
+          <ArrowLeftIcon fontSize="small" />
         </IconButton>
         <IconButton
           disabled={props.position === props.maxPosition}
           color="primary"
           onClick={props.handleMoveDown}>
-          <ArrowDownwardsIcon fontSize="small" />
+          <ArrowRightIcon fontSize="small" />
         </IconButton>
         {deleteConfirm && (
           <ConfirmDialog
