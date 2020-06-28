@@ -127,12 +127,19 @@ function Base(props: BaseProps): ReactElement {
   );
 
   const handleSetToggleable = useCallback(() => {
-    setToggleable(
-      props.editing === 1
-        ? false
-        : !props.card.disabled && props.card.toggleable
-    );
-  }, [props.card.disabled, props.card.toggleable, props.editing]);
+    if (props.card.click_action?.type === 'call-service') setToggleable(true);
+    else
+      setToggleable(
+        props.editing === 1
+          ? false
+          : !props.card.disabled && props.card.toggleable
+      );
+  }, [
+    props.card.click_action,
+    props.card.disabled,
+    props.card.toggleable,
+    props.editing,
+  ]);
 
   const handleSetExpandable = useCallback(
     (entitySizeKey: string) => {
@@ -175,33 +182,48 @@ function Base(props: BaseProps): ReactElement {
   ]);
 
   function handleHassToggle(): void {
-    if (props.card.domain && props.handleHassChange)
-      if (props.card.domain === 'lock') {
-        console.log(props.card.state);
+    if (props.handleHassChange) {
+      const domain = props.card.entity?.split('.')[0];
+      console.log('handleHassToggle', props.card);
+      if (
+        props.card.click_action &&
+        props.card.click_action.type === 'call-service' &&
+        props.card.click_action.service &&
+        props.card.click_action.service_data
+      ) {
+        const service = props.card.click_action.service.split('.');
         props.handleHassChange(
-          props.card.domain,
-          props.card.state === 'locked' ? 'unlock' : 'lock',
-          {
-            entity_id: props.card.entity,
-          }
+          service[0],
+          service[1],
+          JSON.parse(props.card.click_action.service_data)
         );
-      } else {
-        console.log(
-          props.card.domain,
-          props.card.state === 'on' ? false : true,
-          {
-            entity_id: props.card.entity,
-          }
-        );
-        props.handleHassChange(
-          props.card.domain,
-          props.card.state === 'on' ? false : true,
-          {
-            entity_id: props.card.entity,
-          },
-          props.hassEntities
-        );
+      } else if (domain) {
+        if (domain === 'lock') {
+          process.env.NODE_ENV === 'development' &&
+            console.log(props.card.state);
+          props.handleHassChange(
+            domain,
+            props.card.state === 'locked' ? 'unlock' : 'lock',
+            {
+              entity_id: props.card.entity,
+            }
+          );
+        } else {
+          process.env.NODE_ENV === 'development' &&
+            console.log(domain, props.card.state === 'on' ? false : true, {
+              entity_id: props.card.entity,
+            });
+          props.handleHassChange(
+            domain,
+            props.card.state === 'on' ? false : true,
+            {
+              entity_id: props.card.entity,
+            },
+            props.hassEntities
+          );
+        }
       }
+    }
   }
 
   function handleExpand(): void {

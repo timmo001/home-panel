@@ -16,6 +16,7 @@ import { BaseProps } from './Base';
 import { chartTypes } from '../../Visualisations/Chart';
 import { HomeAssistantEntityProps } from '../../HomeAssistant/HomeAssistant';
 import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
+import EntityAction from './EntityAction';
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface EntityProps extends BaseProps, HomeAssistantEntityProps {}
+export interface EntityProps extends BaseProps, HomeAssistantEntityProps {}
 
 function Entity(props: EntityProps): ReactElement {
   function handleGetEntityIcon(): void {
@@ -289,6 +290,7 @@ function Entity(props: EntityProps): ReactElement {
             )}
           </Grid>
         )}
+        <EntityAction {...props} />
       </Grid>
     </Fragment>
   );

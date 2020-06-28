@@ -232,7 +232,9 @@ function Light(props: EntityProps): ReactElement | null {
       justify="center"
       spacing={1}>
       <Grid className={classes.iconContainer} item xs={10}>
-        <IconButton onClick={props.handleHassToggle}>
+        <IconButton
+          disabled={props.card.click_action?.type === 'call-service'}
+          onClick={props.handleHassToggle}>
           <Typography
             className={clsx(
               'mdi',
