@@ -55,7 +55,7 @@
     "@types/jsonwebtoken": "8.5.0",
     "@types/nedb": "1.8.9",
     "@types/serve-favicon": "2.5.0",
-    "jest": "26.0.1",
+    "jest": "26.1.0",
     "jest-junit": "10.0.0",
     "nodemon": "2.0.4",
     "shx": "0.3.2",
