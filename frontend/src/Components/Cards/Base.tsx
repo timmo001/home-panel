@@ -175,33 +175,50 @@ function Base(props: BaseProps): ReactElement {
   ]);
 
   function handleHassToggle(): void {
-    if (props.card.domain && props.handleHassChange)
-      if (props.card.domain === 'lock') {
-        console.log(props.card.state);
+    if (props.handleHassChange) {
+      if (
+        props.card.click_action &&
+        props.card.click_action.type === 'call-service' &&
+        props.card.click_action.service &&
+        props.card.click_action.service_data
+      ) {
+        const service = props.card.click_action.service.split('.');
         props.handleHassChange(
-          props.card.domain,
-          props.card.state === 'locked' ? 'unlock' : 'lock',
-          {
-            entity_id: props.card.entity,
-          }
+          service[0],
+          service[1],
+          JSON.parse(props.card.click_action.service_data)
         );
-      } else {
-        console.log(
-          props.card.domain,
-          props.card.state === 'on' ? false : true,
-          {
-            entity_id: props.card.entity,
-          }
-        );
-        props.handleHassChange(
-          props.card.domain,
-          props.card.state === 'on' ? false : true,
-          {
-            entity_id: props.card.entity,
-          },
-          props.hassEntities
-        );
+      } else if (props.card.domain) {
+        if (props.card.domain === 'lock') {
+          process.env.NODE_ENV === 'development' &&
+            console.log(props.card.state);
+          props.handleHassChange(
+            props.card.domain,
+            props.card.state === 'locked' ? 'unlock' : 'lock',
+            {
+              entity_id: props.card.entity,
+            }
+          );
+        } else {
+          process.env.NODE_ENV === 'development' &&
+            console.log(
+              props.card.domain,
+              props.card.state === 'on' ? false : true,
+              {
+                entity_id: props.card.entity,
+              }
+            );
+          props.handleHassChange(
+            props.card.domain,
+            props.card.state === 'on' ? false : true,
+            {
+              entity_id: props.card.entity,
+            },
+            props.hassEntities
+          );
+        }
       }
+    }
   }
 
   function handleExpand(): void {

@@ -136,7 +136,7 @@ export interface ChecklistItem {
 export interface EntityAction {
   type: EntityActionType;
   service?: string;
-  service_data?: { [key: string]: unknown };
+  service_data?: string;
 }
 
 export type EntityActionType = 'default' | 'call-service';

@@ -64,6 +64,7 @@ export interface BaseProps {
   handleSelectChange?: (
     event: React.ChangeEvent<{ name?: string; value: unknown }>
   ) => void;
+  handleValidation?: (key: string, error?: string) => void;
 }
 
 interface BaseExtendedProps extends BaseProps, HomeAssistantChangeProps {}

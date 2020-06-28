@@ -6,11 +6,13 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { CardProps, cardTypeDefaults, EntityAction } from '../Config';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
+import clone from '../../../utils/clone';
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialogContent: {
@@ -34,13 +36,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+interface Validation {
+  key: string;
+  error?: string;
+}
+
 interface EditCardProps extends BaseProps {
   handleClose: () => void;
   handleUpdate: (data: CardProps) => void;
 }
 
 function EditCard(props: EditCardProps): ReactElement {
-  const [card, setCard] = useState(props.card);
+  const [validation, setValidation] = useState<Validation[]>([]);
+  const [card, setCard] = useState<CardProps>(props.card);
 
   useEffect(() => setCard(props.card), [props.card]);
 
@@ -107,6 +115,16 @@ function EditCard(props: EditCardProps): ReactElement {
     }
   }
 
+  function handleValidation(key: string, error?: string) {
+    const newVal = clone(validation);
+    const valIndex = validation.findIndex((val: Validation) => val.key === key);
+    if (valIndex > -1) newVal[valIndex].error = error;
+    else newVal.push({ key, error });
+    setValidation(newVal);
+  }
+
+  const valErrors = validation.filter((val: Validation) => val.error);
+
   const classes = useStyles();
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -132,10 +150,11 @@ function EditCard(props: EditCardProps): ReactElement {
             <Base
               {...props}
               card={card}
-              handleManualChange={handleManualChange}
               handleChange={handleChange}
+              handleManualChange={handleManualChange}
               handleSelectChange={handleSelectChange}
               handleSwitchChange={handleSwitchChange}
+              handleValidation={handleValidation}
             />
           </Grid>
           <Grid
@@ -157,8 +176,15 @@ function EditCard(props: EditCardProps): ReactElement {
         </Grid>
       </DialogContent>
       <DialogActions>
+        <Typography variant="body1" color="error">
+          {valErrors.map((val: Validation, key: number) => (
+            <span key={key}>{val.error}</span>
+          ))}
+        </Typography>
         <Button onClick={props.handleClose}>Cancel</Button>
-        <Button onClick={handleConfirm}>Save</Button>
+        <Button disabled={valErrors.length > 0} onClick={handleConfirm}>
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );
