@@ -213,6 +213,7 @@ function Groups(props: GroupsProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
+  const groupLength = groups.length - 1;
   return (
     <Fragment>
       {groups.map((group: GroupProps, groupKey: number) => {
@@ -268,10 +269,16 @@ function Groups(props: GroupsProps): ReactElement {
                     onClick={handleDeleteConfirm(group)}>
                     <DeleteIcon fontSize="small" />
                   </IconButton>
-                  <IconButton color="primary" onClick={handleMoveUp(group)}>
+                  <IconButton
+                    disabled={groupKey === 0}
+                    color="primary"
+                    onClick={handleMoveUp(group)}>
                     <ArrowLeftIcon fontSize="small" />
                   </IconButton>
-                  <IconButton color="primary" onClick={handleMoveDown(group)}>
+                  <IconButton
+                    disabled={groupKey === groupLength}
+                    color="primary"
+                    onClick={handleMoveDown(group)}>
                     <ArrowRightIcon fontSize="small" />
                   </IconButton>
                   {deleteConfirm && (
