@@ -54,6 +54,9 @@ function Entity(props: EntityBaseProps): ReactElement | null {
 
   if (props.card.entity) entity = props.hassEntities[props.card.entity];
 
+  if (props.card.click_action?.type === 'call-service')
+    props.card.toggleable = true;
+
   if (!entity) {
     props.card.disabled = true;
     return (
