@@ -25,7 +25,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { SectionItemsProps } from './Config';
+import { ConfigSectionItem } from './Config';
 import clone from '../../utils/clone';
 import ColorAdornment from '../Utils/ColorAdornment';
 
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
-  item: SectionItemsProps;
+  item: ConfigSectionItem;
 }
 
 let updateTimeout: NodeJS.Timeout;
@@ -264,7 +264,7 @@ function Item(props: ItemProps): ReactElement {
               {props.item.items &&
                 props.item.items.map(
                   (
-                    rItem: string | number | SectionItemsProps,
+                    rItem: string | number | ConfigSectionItem,
                     key: number
                   ): ReactElement | null => {
                     if (typeof rItem !== 'string' && typeof rItem !== 'number')
@@ -293,7 +293,7 @@ function Item(props: ItemProps): ReactElement {
               {props.item.items &&
                 props.item.items.map(
                   (
-                    sItem: string | number | SectionItemsProps,
+                    sItem: string | number | ConfigSectionItem,
                     key: number
                   ): ReactElement | null => {
                     if (typeof sItem !== 'string' && typeof sItem !== 'number')

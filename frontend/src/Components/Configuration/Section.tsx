@@ -8,7 +8,7 @@ import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Item from './Item';
 import MarkdownText from '../Utils/MarkdownText';
-import { SectionItemsProps } from './Config';
+import { ConfigSectionItem } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -39,7 +39,7 @@ function Section(props: SectionProps): ReactElement {
       direction="row"
       alignContent="center"
       justify="space-between">
-      {props.section.items.map((item: SectionItemsProps, key: number) => {
+      {props.section.items.map((item: ConfigSectionItem, key: number) => {
         // if (props.section.items === 'array') item.name = Number(key);
         return (
           <Grid

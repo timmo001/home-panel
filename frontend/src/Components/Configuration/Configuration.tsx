@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { sections, ConfigProps, SectionProps } from './Config';
+import { sections, ConfigProps, ConfigSection } from './Config';
 import Section from './Section';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -34,7 +34,7 @@ interface ConfigurationBaseProps extends ConfigProps, HomeAssistantEntityProps {
 
 export interface ConfigurationProps extends ConfigurationBaseProps {
   path: (string | number)[];
-  section: SectionProps;
+  section: ConfigSection;
 }
 
 function Configuration(props: ConfigurationBaseProps): ReactElement {
@@ -47,7 +47,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
       justify="center"
       alignContent="center"
       spacing={1}>
-      {sections.map((section: SectionProps, key: number) => (
+      {sections.map((section: ConfigSection, key: number) => (
         <Grid
           className={classes.section}
           key={key}

@@ -14,15 +14,15 @@ export interface ConfigProps {
     data?:
       | string
       | number
-      | SectionItemsProps
-      | PageProps
+      | ConfigSectionItem
+      | Page
       | GroupProps
       | CardProps
       | (
           | string
           | number
-          | SectionItemsProps
-          | PageProps
+          | ConfigSectionItem
+          | Page
           | GroupProps
           | CardProps
         )[]
@@ -31,14 +31,14 @@ export interface ConfigProps {
   handleSetTheme: (palette: ThemeProps) => void;
 }
 
-export type SectionProps = {
+export type ConfigSection = {
   name: string | number;
   title: string | number;
   type: string;
-  items: SectionItemsProps[];
+  items: ConfigSectionItem[];
 };
 
-export type SectionItemsProps = {
+export type ConfigSectionItem = {
   key?: string;
   name: string | number;
   title: string;
@@ -46,20 +46,20 @@ export type SectionItemsProps = {
   icon: string;
   type: string;
   default?: string | number | boolean;
-  items?: (string | number | SectionItemsProps)[];
+  items?: (string | number | ConfigSectionItem)[];
 };
 
 export type ConfigurationProps = {
-  general: GeneralProps;
+  general: General;
   theme: ThemeProps;
-  header: HeaderProps;
-  pages: PageProps[];
+  header: Header;
+  pages: Page[];
   groups: GroupProps[];
   cards: CardProps[];
-  news: NewsProps;
+  news: News;
 };
 
-export type GeneralProps = {
+export type General = {
   autohide_navigation: boolean;
   autohide_toolbar: boolean;
   dense_toolbar: boolean;
@@ -76,7 +76,7 @@ export type ThemeProps = {
   link_color: string;
 };
 
-export type HeaderProps = {
+export type Header = {
   time_show: boolean;
   time_military: boolean;
   time_location: number;
@@ -88,7 +88,7 @@ export type HeaderProps = {
   date_font_size: string;
 };
 
-export type PageProps = {
+export type Page = {
   key: string;
   name: string;
   icon: string;
@@ -139,7 +139,7 @@ export interface ChecklistItem {
   text: string;
 }
 
-export type NewsProps = {
+export type News = {
   news_api_key: string;
 };
 
@@ -148,7 +148,7 @@ export type CardType = {
   title: string;
 };
 
-export const defaultPage = (): PageProps => ({
+export const defaultPage = (): Page => ({
   key: makeKey(16),
   name: 'Page',
   icon: 'file',
@@ -320,7 +320,7 @@ export const colorItems: string[] = [
   'yellow',
 ];
 
-export const sections: SectionProps[] = [
+export const sections: ConfigSection[] = [
   {
     name: 'general',
     title: 'General',

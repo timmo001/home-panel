@@ -1,6 +1,6 @@
 import {
   ConfigurationProps,
-  PageProps,
+  Page,
   GroupProps,
   CardProps,
 } from '../Components/Configuration/Config';
@@ -9,21 +9,21 @@ export function findPageIdByKey(
   config: ConfigurationProps,
   key: string
 ): number {
-  return config.pages.findIndex((i: PageProps) => i.key === key);
+  return config.pages.findIndex((i: Page) => i.key === key);
 }
 
 export function findPageIdByPage(
   config: ConfigurationProps,
-  page: PageProps
+  page: Page
 ): number {
-  return config.pages.findIndex((i: PageProps) => i.key === page.key);
+  return config.pages.findIndex((i: Page) => i.key === page.key);
 }
 
 export function findPageByKey(
   config: ConfigurationProps,
   key: string
-): PageProps | undefined {
-  return config.pages.find((i: PageProps) => i.key === key);
+): Page | undefined {
+  return config.pages.find((i: Page) => i.key === key);
 }
 
 export function findGroupIdByKey(

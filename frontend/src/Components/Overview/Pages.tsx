@@ -5,7 +5,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Typography from '@material-ui/core/Typography';
 
-import { ConfigProps, defaultPage, PageProps } from '../Configuration/Config';
+import { ConfigProps, defaultPage, Page } from '../Configuration/Config';
 import { findPageIdByPage } from '../../utils/find';
 import EditPage from '../Configuration/EditPage';
 
@@ -31,7 +31,7 @@ interface PagesProps extends ConfigProps {
 }
 
 function Pages(props: PagesProps): ReactElement {
-  const [editingPage, setEditingPage] = useState<PageProps>();
+  const [editingPage, setEditingPage] = useState<Page>();
 
   function handlePageChange(
     _event: React.ChangeEvent<unknown>,
@@ -46,7 +46,7 @@ function Pages(props: PagesProps): ReactElement {
     props.setPage(newPage.key);
   }
 
-  const handleEditingPage = (page: PageProps) => (): void => {
+  const handleEditingPage = (page: Page) => (): void => {
     if (props.editing === 1)
       editTimeout = setTimeout(() => setEditingPage(page), 1000);
   };
@@ -59,7 +59,7 @@ function Pages(props: PagesProps): ReactElement {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (page: PageProps) => (data?: PageProps): void => {
+  const handleUpdatePage = (page: Page) => (data?: Page): void => {
     props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       data
@@ -67,7 +67,7 @@ function Pages(props: PagesProps): ReactElement {
     props.setPage(props.config.pages[0].key);
   };
 
-  const handleMovePage = (page: PageProps) => (position: number): void => {
+  const handleMovePage = (page: Page) => (position: number): void => {
     props.handleUpdateConfig(
       ['pages', findPageIdByPage(props.config, page)],
       [position]
@@ -84,7 +84,7 @@ function Pages(props: PagesProps): ReactElement {
         onChange={handlePageChange}
         showLabels>
         {props.config &&
-          props.config.pages.map((page: PageProps, key: number) => (
+          props.config.pages.map((page: Page, key: number) => (
             <BottomNavigationAction
               key={key}
               value={page.key}

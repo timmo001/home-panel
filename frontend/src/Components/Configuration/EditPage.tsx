@@ -14,7 +14,7 @@ import ArrowDownIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpIcon from '@material-ui/icons/ArrowUpward';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-import { ConfigProps, PageProps, GroupProps } from './Config';
+import { ConfigProps, Page, GroupProps } from './Config';
 import ConfirmDialog from '../Utils/ConfirmDialog';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface EditPageProps extends ConfigProps {
-  page: PageProps;
+  page: Page;
   handleClose: () => void;
   handleMove: (position: number) => void;
-  handleUpdate: (data?: PageProps) => void;
+  handleUpdate: (data?: Page) => void;
 }
 
 function EditPage(props: EditPageProps): ReactElement {
