@@ -1,9 +1,11 @@
-import React, { useEffect, useState, ReactElement } from 'react';
+import React, { ReactElement, Fragment, useEffect, useState } from 'react';
 import request from 'superagent';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import type { BaseProps } from './Base';
 import type { Option } from '../../Types/Types';
@@ -19,7 +21,13 @@ type FeedSource = {
   url: string;
 };
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    padding: theme.spacing(1),
+  },
+  heading: {
+    marginTop: theme.spacing(2),
+  },
   textField: {
     width: 'calc(100% - 8px)',
     margin: 4,
@@ -73,46 +81,65 @@ function News(props: BaseProps): ReactElement {
 
   const classes = useStyles();
   return (
-    <Grid container direction="row" justify="center" alignContent="stretch">
-      <Grid item xs>
-        {error ? (
+    <Fragment>
+      <Grid item xs={12}>
+        <Typography
+          className={classes.heading}
+          variant="subtitle1"
+          gutterBottom>
+          News Configuration
+        </Typography>
+        <Divider variant="fullWidth" />
+      </Grid>
+      <Grid
+        className={classes.container}
+        container
+        direction="row"
+        justify="center"
+        alignItems="flex-end"
+        alignContent="flex-end"
+        item
+        xs>
+        <Grid item xs>
+          {error ? (
+            <TextField
+              className={classes.textField}
+              disabled
+              InputLabelProps={{ shrink: true }}
+              label="Source"
+              value={error || ''}
+            />
+          ) : (
+            sources && (
+              <Autocomplete
+                id="entity"
+                fullWidth
+                options={sources}
+                getOptionLabel={(option: Option): string => option.label}
+                getOptionSelected={(option: Option): boolean =>
+                  option.value === source?.value
+                }
+                value={source}
+                onChange={handleChange}
+                renderInput={(params): ReactElement => (
+                  <TextField {...params} label="Source" />
+                )}
+              />
+            )
+          )}
+        </Grid>
+        <Grid item xs>
           <TextField
             className={classes.textField}
-            disabled
             InputLabelProps={{ shrink: true }}
-            label="Source"
-            value={error || ''}
+            label="Height"
+            placeholder="auto"
+            value={props.card.height || 'auto'}
+            onChange={props.handleChange && props.handleChange('height')}
           />
-        ) : (
-          sources && (
-            <Autocomplete
-              id="entity"
-              fullWidth
-              options={sources}
-              getOptionLabel={(option: Option): string => option.label}
-              getOptionSelected={(option: Option): boolean =>
-                option.value === source?.value
-              }
-              value={source}
-              onChange={handleChange}
-              renderInput={(params): ReactElement => (
-                <TextField {...params} label="Source" />
-              )}
-            />
-          )
-        )}
+        </Grid>
       </Grid>
-      <Grid item xs>
-        <TextField
-          className={classes.textField}
-          InputLabelProps={{ shrink: true }}
-          label="Height"
-          placeholder="auto"
-          value={props.card.height || 'auto'}
-          onChange={props.handleChange && props.handleChange('height')}
-        />
-      </Grid>
-    </Grid>
+    </Fragment>
   );
 }
 

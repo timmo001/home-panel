@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Fragment } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -9,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
 import { BaseProps } from './Base';
 import { chartTypes } from '../../Visualisations/Chart';
@@ -16,6 +18,12 @@ import { HomeAssistantEntityProps } from '../../HomeAssistant/HomeAssistant';
 import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
 
 const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    padding: theme.spacing(1),
+  },
+  heading: {
+    marginTop: theme.spacing(2),
+  },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
     flex: '1 1 auto',
@@ -77,8 +85,18 @@ function Entity(props: EntityProps): ReactElement {
     graphAllowed = true;
 
   return (
-    <Grid container direction="column" justify="center" alignContent="stretch">
+    <Fragment>
+      <Grid item xs={12}>
+        <Typography
+          className={classes.heading}
+          variant="subtitle1"
+          gutterBottom>
+          Entity Configuration
+        </Typography>
+        <Divider variant="fullWidth" />
+      </Grid>
       <Grid
+        className={classes.container}
         container
         direction="row"
         justify="center"
@@ -272,7 +290,7 @@ function Entity(props: EntityProps): ReactElement {
           </Grid>
         )}
       </Grid>
-    </Grid>
+    </Fragment>
   );
 }
 
