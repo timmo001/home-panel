@@ -18,14 +18,7 @@ export interface ConfigProps {
       | Page
       | GroupProps
       | CardProps
-      | (
-          | string
-          | number
-          | ConfigSectionItem
-          | Page
-          | GroupProps
-          | CardProps
-        )[]
+      | (string | number | ConfigSectionItem | Page | GroupProps | CardProps)[]
   ) => void;
   handleConfigChange: (config: ConfigurationProps) => void;
   handleSetTheme: (palette: ThemeProps) => void;
@@ -131,6 +124,7 @@ export type CardProps = {
   chart_from?: number;
   chart_labels?: boolean;
   checklist_items?: ChecklistItem[];
+  click_action?: EntityAction;
 };
 
 export interface ChecklistItem {
@@ -138,6 +132,14 @@ export interface ChecklistItem {
   checked: boolean;
   text: string;
 }
+
+export interface EntityAction {
+  type: EntityActionType;
+  service?: string;
+  service_data?: { [key: string]: unknown };
+}
+
+export type EntityActionType = 'default' | 'call-service';
 
 export type News = {
   news_api_key: string;

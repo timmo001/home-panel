@@ -11,7 +11,13 @@ import Switch from '@material-ui/core/Switch';
 import TextField from '@material-ui/core/TextField';
 import { ColorResult } from 'react-color';
 
-import { CardProps, cardTypes, CardType, ConfigurationProps } from '../Config';
+import {
+  CardProps,
+  cardTypes,
+  CardType,
+  ConfigurationProps,
+  EntityAction,
+} from '../Config';
 import { CommandType } from '../../Utils/Command';
 import { HomeAssistantChangeProps } from '../../HomeAssistant/HomeAssistant';
 import ColorAdornment from '../../Utils/ColorAdornment';
@@ -45,7 +51,10 @@ export interface BaseProps {
   card: CardProps;
   command: CommandType;
   config: ConfigurationProps;
-  handleManualChange?: (name: string, value?: string | number) => void;
+  handleManualChange?: (
+    name: string,
+    value?: string | number | EntityAction
+  ) => void;
   handleChange?: (
     name: string
   ) => (event: React.ChangeEvent<HTMLInputElement>) => void;

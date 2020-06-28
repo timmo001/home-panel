@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Grid from '@material-ui/core/Grid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { CardProps, cardTypeDefaults } from '../Config';
+import { CardProps, cardTypeDefaults, EntityAction } from '../Config';
 import Base, { BaseProps } from './Base';
 import CardBase from '../../Cards/Base';
 
@@ -49,7 +49,10 @@ function EditCard(props: EditCardProps): ReactElement {
     props.handleClose();
   }
 
-  function handleManualChange(name: string, value?: string | number): void {
+  function handleManualChange(
+    name: string,
+    value?: string | number | EntityAction
+  ): void {
     setCard({
       ...card,
       [name]: value,
