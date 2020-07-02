@@ -56,7 +56,7 @@
     "@types/nedb": "1.8.9",
     "@types/serve-favicon": "2.5.0",
     "jest": "26.1.0",
-    "jest-junit": "10.0.0",
+    "jest-junit": "11.0.1",
     "nodemon": "2.0.4",
     "shx": "0.3.2",
     "ts-jest": "26.1.0",
