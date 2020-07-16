@@ -83,7 +83,7 @@
     "@yarnpkg/pnpify": "2.0.0-rc.25",
     "jest-junit": "10.0.0",
     "prettier": "2.0.5",
-    "typescript": "3.9.5"
+    "typescript": "3.9.7"
   },
   "snyk": true
 }
