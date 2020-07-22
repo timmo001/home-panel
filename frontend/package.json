@@ -81,7 +81,7 @@
     "@types/socket.io-client": "1.4.33",
     "@types/superagent": "4.1.8",
     "@yarnpkg/pnpify": "2.0.0-rc.25",
-    "jest-junit": "10.0.0",
+    "jest-junit": "11.0.1",
     "prettier": "2.0.5",
     "typescript": "3.9.5"
   },
