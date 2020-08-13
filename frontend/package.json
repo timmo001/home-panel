@@ -32,7 +32,7 @@
     "react-color": "2.18.1",
     "react-dom": "16.13.1",
     "react-html-parser": "2.0.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.3",
     "recharts": "2.0.0-beta.6",
     "rss-parser": "3.8.0",
     "socket.io-client": "2.3.0",
