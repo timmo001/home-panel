@@ -1,8 +1,8 @@
 # Setup
 
-## Hass.io Add-on
+## Home Assistant Add-on
 
-If you have Hass.io, you can install the app via the community add-ons repo.
+If you have Home Assistant (former Hass.io), you can install the app via the community add-ons repo.
 
 Find the docs [here](https://github.com/hassio-addons/addon-home-panel#readme)
 
