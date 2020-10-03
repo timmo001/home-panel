@@ -246,7 +246,7 @@ function Chart(props: ChartProps): ReactElement | null {
           <ScatterChart margin={{ top: theme.spacing(5) }}>
             <YAxis hide dataKey="y" />
             <Tooltip content={<TooltipCustom {...props} />} />
-            <Scatter data={data} fill={theme.palette.secondary.main}>
+            <Scatter className="scatter" data={data}>
               {/* {props.labels && (
                 <LabelList
                   data={data}

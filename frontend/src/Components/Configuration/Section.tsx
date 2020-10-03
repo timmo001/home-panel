@@ -3,11 +3,11 @@ import clsx from 'clsx';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import ReactMarkdown from 'react-markdown';
 
 import { ConfigurationProps } from './Configuration';
 import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
 import Item from './Item';
-import MarkdownText from '../Utils/MarkdownText';
 import { ConfigSectionItem } from './Config';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -60,16 +60,17 @@ function Section(props: SectionProps): ReactElement {
               justify="space-between">
               {item.icon && (
                 <Grid item>
-                  <span
-                    className={clsx('mdi', item.icon, classes.icon)}
-                  />
+                  <span className={clsx('mdi', item.icon, classes.icon)} />
                 </Grid>
               )}
               {item.title && item.description && (
                 <Grid item xs>
                   <Typography variant="subtitle1">{item.title}</Typography>
                   <Typography variant="body2" component="span">
-                    <MarkdownText text={item.description} />
+                    <ReactMarkdown
+                      source={item.description}
+                      escapeHtml={false}
+                    />
                   </Typography>
                 </Grid>
               )}

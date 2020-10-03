@@ -5,9 +5,9 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import ReactMarkdown from 'react-markdown';
 
 import { BaseProps } from './Base';
-import MarkdownText from '../Utils/MarkdownText';
 
 type ArticleData = {
   source: string;
@@ -137,7 +137,7 @@ function News(props: BaseProps): ReactElement {
               )}
               <Grid item xs>
                 <Typography variant="subtitle1" component="h3">
-                  <MarkdownText text={item.heading} />
+                  <ReactMarkdown source={item.heading} escapeHtml={false} />
                 </Typography>
                 {item.meta && (
                   <Typography
@@ -145,12 +145,12 @@ function News(props: BaseProps): ReactElement {
                     component="h5"
                     gutterBottom
                     noWrap>
-                    <MarkdownText text={item.meta} />
+                    <ReactMarkdown source={item.meta} escapeHtml={false} />
                   </Typography>
                 )}
                 {item.content && (
                   <Typography variant="body2" component="span">
-                    <MarkdownText text={item.content} />
+                    <ReactMarkdown source={item.content} escapeHtml={false} />
                   </Typography>
                 )}
               </Grid>
