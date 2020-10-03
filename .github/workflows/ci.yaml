@@ -21,7 +21,7 @@ jobs:
       - name: Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetching Yarn cache
+      - name: Fetch Yarn cache
         uses: actions/cache@v1
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -32,8 +32,68 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: Run eslint
+      - name: Install packages
+        run: |
+          apt install -y jsonlint
+      - name: ESLint
         run: yarn eslint
+      - name: Hadolint
+        uses: brpaz/hadolint-action@v1.1.0
+        with:
+          dockerfile: Dockerfile
+      - name: JSONLint
+        run: |
+          for file in $(find ./ -type f -name "*.json"); do
+            if ! jsonlint-php -q $file; then
+              export FAILED=1
+            else
+              echo "$file OK"
+            fi
+          done
+          if [ "${FAILED}" = "1" ]; then
+            exit 1
+          fi
+      - name: markdownlint-cli
+        uses: nosborn/github-action-markdown-cli@v1.1.1
+        with:
+          files: .
+          rules: mdl_style.rb
+      - name: Markdown Link Checks
+        uses: gaurav-nelson/github-action-markdown-link-check@1.0.7
+        with:
+          use-quiet-mode: no
+          use-verbose-mode: no
+          folder-path: .
+          max-depth: -1
+          check-modified-files-only: no
+          base-branch: master
+          file-extension: .md
+      - name: Prettier Check ts*
+        uses: creyD/prettier_action@v3.0
+        with:
+          file_pattern: ./**/*.ts*
+          prettier_options: --check
+          dry: yes
+      - name: Prettier Check js*
+        uses: creyD/prettier_action@v3.0
+        with:
+          file_pattern: ./**/*.js*
+          prettier_options: --check
+          dry: yes
+      - name: ShellCheck
+        uses: ludeeus/action-shellcheck@0.5.0
+        with:
+          ignore: |
+            .vscode
+            .yarn
+          check_together: yes
+      - name: YAMLLint
+        uses: ibiqlik/action-yamllint@v1.0.0
+        with:
+          file_or_dir: .
+          config_file: .yamllint
+          format: colored
+          strict: false
   build:
     runs-on: ubuntu-latest
     needs: [lint]
@@ -47,7 +107,7 @@ jobs:
       - name: Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetching Yarn cache
+      - name: Fetch Yarn cache
         uses: actions/cache@v1
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -61,4 +121,5 @@ jobs:
       - name: Build Application
         run: yarn build
         env:
+          CI: true
           NODE_ENV: 'production'
