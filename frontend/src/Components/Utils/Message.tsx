@@ -1,37 +1,37 @@
-import React, { ReactElement } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => ({
   root: {
     flex: 1,
   },
   text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    userSelect: "none",
+    textAlign: "center",
+    textOverflow: "ellipsis",
   },
 }));
 
 interface MessageProps {
-  type?: 'info' | 'warning' | 'error';
+  type?: "info" | "warning" | "error";
   text: string;
   padding?: string | number;
 }
 
 function Message(props: MessageProps): ReactElement {
-  let color = '';
+  let color = "";
   switch (props.type) {
-    case 'info':
-      color = 'teal';
+    case "info":
+      color = "teal";
       break;
-    case 'warning':
-      color = 'orange';
+    case "warning":
+      color = "orange";
       break;
-    case 'error':
-      color = 'red';
+    case "error":
+      color = "red";
       break;
   }
 

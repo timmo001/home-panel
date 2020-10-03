@@ -1,26 +1,26 @@
-import React, { useEffect, useCallback, ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import CardMedia from '@material-ui/core/CardMedia';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import FormControl from '@material-ui/core/FormControl';
-import green from '@material-ui/core/colors/green';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import Typography from '@material-ui/core/Typography';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import React, { useEffect, useCallback, ReactElement, useState } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import CardMedia from "@material-ui/core/CardMedia";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import FormControl from "@material-ui/core/FormControl";
+import green from "@material-ui/core/colors/green";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Input from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import InputLabel from "@material-ui/core/InputLabel";
+import Typography from "@material-ui/core/Typography";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import { Page } from './Types/Types';
-import Logo from '../Resources/logo.svg';
+import { Page } from "./Types/Types";
+import Logo from "../Resources/logo.svg";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    height: "100%",
     background: theme.palette.background.default,
   },
   button: {
@@ -28,14 +28,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonSuccess: {
     backgroundColor: green[500],
-    '&:hover': {
+    "&:hover": {
       backgroundColor: green[700],
     },
   },
   buttonProgress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     marginTop: theme.spacing(-1),
     marginLeft: theme.spacing(-1),
   },
@@ -43,15 +43,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: theme.spacing(0.5, 1),
   },
   media: {
-    backgroundSize: 'contain',
+    backgroundSize: "contain",
     height: 240,
   },
   textField: {
-    flexBasis: '50%',
+    flexBasis: "50%",
   },
   wrapper: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     margin: theme.spacing(1),
   },
 }));
@@ -74,7 +74,7 @@ interface State {
 }
 
 const firstTime =
-  localStorage.getItem('not_my_first_rodeo') === 'true' ? false : true;
+  localStorage.getItem("not_my_first_rodeo") === "true" ? false : true;
 function Login(props: LoginProps): ReactElement {
   const [createAccount, setCreateAccount] = useState<boolean>(firstTime);
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -83,17 +83,17 @@ function Login(props: LoginProps): ReactElement {
   const [loginSuccess, setLoginSuccess] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [values, setValues] = useState<State>({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
   });
 
   const handleValidation = useCallback(() => {
     if (!values.username) {
-      setInvalidText('No username!');
+      setInvalidText("No username!");
       return;
     }
     if (!values.password) {
-      setInvalidText('No password!');
+      setInvalidText("No password!");
       return;
     }
     setInvalidText(undefined);
@@ -109,10 +109,10 @@ function Login(props: LoginProps): ReactElement {
 
   function handleCreateAccount(): void {
     setLoading(true);
-    localStorage.setItem('not_my_first_rodeo', 'true');
+    localStorage.setItem("not_my_first_rodeo", "true");
     props.handleCreateAccount(
       {
-        strategy: 'local',
+        strategy: "local",
         username: values.username,
         password: values.password,
       },
@@ -123,7 +123,7 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.handleSetCurrentPage('Overview'), 500);
+          setTimeout(() => props.handleSetCurrentPage("Overview"), 500);
         }
       }
     );
@@ -133,7 +133,7 @@ function Login(props: LoginProps): ReactElement {
     setLoading(true);
     props.handleLogin(
       {
-        strategy: 'local',
+        strategy: "local",
         username: values.username,
         password: values.password,
       },
@@ -144,7 +144,7 @@ function Login(props: LoginProps): ReactElement {
           setErrorText(error);
         } else {
           setLoginSuccess(true);
-          setTimeout(() => props.handleSetCurrentPage('Overview'), 500);
+          setTimeout(() => props.handleSetCurrentPage("Overview"), 500);
         }
       }
     );
@@ -154,14 +154,16 @@ function Login(props: LoginProps): ReactElement {
     setShowPassword(!showPassword);
   }
 
-  function handleKeyPress(event: { key: string; }): void {
+  function handleKeyPress(event: { key: string }): void {
     handleValidation();
-    if (event.key === 'Enter' && !invalidText) {
+    if (event.key === "Enter" && !invalidText) {
       createAccount ? handleCreateAccount() : handleLogin();
     }
   }
 
-  function handleMouseDownPassword(event: { preventDefault: () => void; }): void {
+  function handleMouseDownPassword(event: {
+    preventDefault: () => void;
+  }): void {
     event.preventDefault();
   }
 
@@ -196,7 +198,7 @@ function Login(props: LoginProps): ReactElement {
             variant="h5"
             component="h2"
             align="center">
-            {createAccount ? 'Welcome!' : 'Login'}
+            {createAccount ? "Welcome!" : "Login"}
           </Typography>
           <FormControl className={clsx(classes.margin, classes.textField)}>
             <InputLabel htmlFor="username">Username</InputLabel>
@@ -205,11 +207,11 @@ function Login(props: LoginProps): ReactElement {
               id="username"
               type="text"
               inputProps={{
-                autoCapitalize: 'none',
-                autoComplete: 'username',
+                autoCapitalize: "none",
+                autoComplete: "username",
               }}
-              value={values.username || ''}
-              onChange={handleChange('username')}
+              value={values.username || ""}
+              onChange={handleChange("username")}
               onKeyPress={handleKeyPress}
             />
           </FormControl>
@@ -218,15 +220,15 @@ function Login(props: LoginProps): ReactElement {
             <Input
               required
               id="password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               inputProps={{
-                autoCapitalize: 'none',
+                autoCapitalize: "none",
                 autoComplete: createAccount
-                  ? 'new-password'
-                  : 'current-password',
+                  ? "new-password"
+                  : "current-password",
               }}
-              value={values.password || ''}
-              onChange={handleChange('password')}
+              value={values.password || ""}
+              onChange={handleChange("password")}
               onKeyPress={handleKeyPress}
               endAdornment={
                 <InputAdornment position="end">
@@ -257,7 +259,7 @@ function Login(props: LoginProps): ReactElement {
             size="small"
             variant="contained"
             onClick={toggleCreateAccount}>
-            {createAccount ? 'Already have an account?' : 'Create New Account'}
+            {createAccount ? "Already have an account?" : "Create New Account"}
           </Button>
           {createAccount === true ? (
             <Button

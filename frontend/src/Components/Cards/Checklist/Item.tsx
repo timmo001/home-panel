@@ -5,25 +5,25 @@ import React, {
   useCallback,
   useState,
   useEffect,
-} from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import InputBase from '@material-ui/core/InputBase';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+} from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Checkbox from "@material-ui/core/Checkbox";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import InputBase from "@material-ui/core/InputBase";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
-import { ChecklistItem } from '../../Configuration/Config';
+import { ChecklistItem } from "../../Configuration/Config";
 
 const useStyles = makeStyles(() => ({
   input: {
     padding: 0,
   },
   inputChecked: {
-    textDecoration: 'line-through',
+    textDecoration: "line-through",
   },
 }));
 
@@ -107,7 +107,7 @@ function Checklist(props: ItemProps): ReactElement | null {
         <Grid item>
           <Checkbox
             checked={item.checked}
-            inputProps={{ 'aria-label': 'checked' }}
+            inputProps={{ "aria-label": "checked" }}
             onChange={handleCheckedChange}
           />
         </Grid>
@@ -118,7 +118,7 @@ function Checklist(props: ItemProps): ReactElement | null {
               item.checked && classes.inputChecked
             )}
             disabled={item.checked}
-            inputProps={{ 'aria-label': 'text' }}
+            inputProps={{ "aria-label": "text" }}
             multiline
             value={item.text}
             onChange={handleTextChange}
@@ -142,7 +142,7 @@ function Checklist(props: ItemProps): ReactElement | null {
         onClose={handleCloseMenu}
         PaperProps={{
           style: {
-            minWidth: '20ch',
+            minWidth: "20ch",
           },
         }}>
         {props.position > 0 && (

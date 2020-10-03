@@ -3,9 +3,9 @@ import {
   ERR_INVALID_AUTH,
   genExpires,
   ERR_INVALID_HTTPS_TO_HTTP,
-} from 'home-assistant-js-websocket';
-import { saveTokens } from '../HomeAssistant';
-import queryString from 'query-string';
+} from "home-assistant-js-websocket";
+import { saveTokens } from "../HomeAssistant";
+import queryString from "query-string";
 
 type OAuthState = {
   hassUrl: string;
@@ -13,12 +13,12 @@ type OAuthState = {
 };
 
 type AuthorizationCodeRequest = {
-  grant_type: 'authorization_code';
+  grant_type: "authorization_code";
   code: string;
 };
 
 type RefreshTokenRequest = {
-  grant_type: 'refresh_token';
+  grant_type: "refresh_token";
   refresh_token: string;
 };
 
@@ -35,26 +35,26 @@ async function tokenRequest(
   // Browsers don't allow fetching tokens from https -> http.
   // Throw an error because it's a pain to debug this.
   // Guard against not working in node.
-  const l = typeof window.location !== 'undefined' && window.location;
-  if (l && l.protocol === 'https:') {
+  const l = typeof window.location !== "undefined" && window.location;
+  if (l && l.protocol === "https:") {
     // Ensure that the hassUrl is hosted on https.
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = hassUrl;
-    if (a.protocol === 'http:' && a.hostname !== 'localhost') {
+    if (a.protocol === "http:" && a.hostname !== "localhost") {
       throw ERR_INVALID_HTTPS_TO_HTTP;
       // return null;
     }
   }
 
   const formData = new FormData();
-  formData.append('client_id', clientId);
+  formData.append("client_id", clientId);
   Object.keys(data).forEach((key: string) => {
     formData.append(key, data[key]);
   });
 
   const resp = await fetch(`${hassUrl}/auth/token`, {
-    method: 'POST',
-    credentials: 'same-origin',
+    method: "POST",
+    credentials: "same-origin",
     body: formData,
   });
 
@@ -62,7 +62,7 @@ async function tokenRequest(
     throw resp.status === 400 /* auth invalid */ ||
       resp.status === 403 /* user not active */
       ? ERR_INVALID_AUTH
-      : new Error('Unable to fetch tokens');
+      : new Error("Unable to fetch tokens");
   }
 
   const tokens: AuthData = await resp.json();
@@ -79,22 +79,22 @@ async function fetchToken(
 ): Promise<AuthData> {
   return tokenRequest(hassUrl, clientId, {
     code,
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
   });
 }
 export async function parseTokens(): Promise<void> {
   let data: AuthData | null | undefined;
   const query = queryString.parse(window.location.search);
   // Check if we got redirected here from authorize page
-  if ('auth_callback' in query) {
+  if ("auth_callback" in query) {
     // Restore state
-    if (typeof query.state === 'string' && typeof query.code === 'string') {
+    if (typeof query.state === "string" && typeof query.code === "string") {
       const state = decodeOAuthState(query.state);
       data = await fetchToken(state.hassUrl, state.clientId, query.code);
       if (data) {
         await saveTokens(data);
         window.location.replace(
-          window.location.href.replace(window.location.search, '')
+          window.location.href.replace(window.location.search, "")
         );
       }
     }

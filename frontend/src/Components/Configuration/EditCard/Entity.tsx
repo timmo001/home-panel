@@ -1,22 +1,22 @@
-import React, { ReactElement, Fragment } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, Fragment } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
-import { BaseProps } from './Base';
-import { chartTypes } from '../../Visualisations/Chart';
-import { HomeAssistantEntityProps } from '../../HomeAssistant/HomeAssistant';
-import EntitySelect from '../../HomeAssistant/Utils/EntitySelect';
-import EntityAction from './EntityAction';
+import { BaseProps } from "./Base";
+import { chartTypes } from "../../Visualisations/Chart";
+import { HomeAssistantEntityProps } from "../../HomeAssistant/HomeAssistant";
+import EntitySelect from "../../HomeAssistant/Utils/EntitySelect";
+import EntityAction from "./EntityAction";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
-    flex: '1 1 auto',
+    flex: "1 1 auto",
     margin: 4,
   },
   switch: {
@@ -43,45 +43,45 @@ function Entity(props: EntityProps): ReactElement {
       const entity = props.hassEntities[props.card.entity];
       if (entity && entity.attributes.icon)
         props.handleManualChange(
-          'icon',
-          entity.attributes.icon.replace('mdi:', '')
+          "icon",
+          entity.attributes.icon.replace("mdi:", "")
         );
     }
   }
 
   const classes = useStyles();
-  const domain = props.card.entity && props.card.entity.split('.')[0].trim();
+  const domain = props.card.entity && props.card.entity.split(".")[0].trim();
 
   let iconAllowed = false,
     graphAllowed = false;
   if (
-    domain === 'air_quality' ||
-    domain === 'binary_sensor' ||
-    domain === 'device_tracker' ||
-    domain === 'geo_location' ||
-    domain === 'group' ||
-    domain === 'input_boolean' ||
-    domain === 'input_text' ||
-    domain === 'input_number' ||
-    domain === 'input_select' ||
-    domain === 'light' ||
-    domain === 'lock' ||
-    domain === 'remote' ||
-    domain === 'scene' ||
-    domain === 'script' ||
-    domain === 'sensor' ||
-    domain === 'sun' ||
-    domain === 'switch'
+    domain === "air_quality" ||
+    domain === "binary_sensor" ||
+    domain === "device_tracker" ||
+    domain === "geo_location" ||
+    domain === "group" ||
+    domain === "input_boolean" ||
+    domain === "input_text" ||
+    domain === "input_number" ||
+    domain === "input_select" ||
+    domain === "light" ||
+    domain === "lock" ||
+    domain === "remote" ||
+    domain === "scene" ||
+    domain === "script" ||
+    domain === "sensor" ||
+    domain === "sun" ||
+    domain === "switch"
   )
     iconAllowed = true;
 
   if (
-    domain === 'air_quality' ||
-    domain === 'binary_sensor' ||
-    domain === 'device_tracker' ||
-    domain === 'geo_location' ||
-    domain === 'sensor' ||
-    domain === 'sun'
+    domain === "air_quality" ||
+    domain === "binary_sensor" ||
+    domain === "device_tracker" ||
+    domain === "geo_location" ||
+    domain === "sensor" ||
+    domain === "sun"
   )
     graphAllowed = true;
 
@@ -112,7 +112,7 @@ function Entity(props: EntityProps): ReactElement {
               entity={props.card.entity}
               handleChange={(value?: string): void =>
                 props.handleManualChange &&
-                props.handleManualChange('entity', value)
+                props.handleManualChange("entity", value)
               }
             />
           ) : (
@@ -121,8 +121,8 @@ function Entity(props: EntityProps): ReactElement {
               InputLabelProps={{ shrink: true }}
               label="Entity"
               placeholder="sensor.myamazingsensor"
-              value={props.card.entity || ''}
-              onChange={props.handleChange && props.handleChange('entity')}
+              value={props.card.entity || ""}
+              onChange={props.handleChange && props.handleChange("entity")}
             />
           )}
         </Grid>
@@ -140,8 +140,8 @@ function Entity(props: EntityProps): ReactElement {
                 InputLabelProps={{ shrink: true }}
                 label="Icon"
                 placeholder="thermometer"
-                value={props.card.icon || ''}
-                onChange={props.handleChange && props.handleChange('icon')}
+                value={props.card.icon || ""}
+                onChange={props.handleChange && props.handleChange("icon")}
               />
             </Grid>
             {props.card.entity && (
@@ -171,8 +171,8 @@ function Entity(props: EntityProps): ReactElement {
                 type="text"
                 label="Icon Size"
                 placeholder="initial"
-                value={props.card.icon_size || 'initial'}
-                onChange={props.handleChange && props.handleChange('icon_size')}
+                value={props.card.icon_size || "initial"}
+                onChange={props.handleChange && props.handleChange("icon_size")}
               />
             </Grid>
           )}
@@ -184,9 +184,9 @@ function Entity(props: EntityProps): ReactElement {
                 type="text"
                 label="State Font Size"
                 placeholder="initial"
-                value={props.card.state_size || 'initial'}
+                value={props.card.state_size || "initial"}
                 onChange={
-                  props.handleChange && props.handleChange('state_size')
+                  props.handleChange && props.handleChange("state_size")
                 }
               />
             </Grid>
@@ -203,11 +203,11 @@ function Entity(props: EntityProps): ReactElement {
               <FormControl className={classes.textField}>
                 <InputLabel htmlFor="chart">Chart</InputLabel>
                 <Select
-                  value={props.card.chart || ''}
+                  value={props.card.chart || ""}
                   onChange={props.handleSelectChange}
                   inputProps={{
-                    name: 'chart',
-                    id: 'chart',
+                    name: "chart",
+                    id: "chart",
                   }}>
                   <MenuItem value="">None</MenuItem>
                   {Object.keys(chartTypes).map((chart: string, key: number) => (
@@ -228,7 +228,7 @@ function Entity(props: EntityProps): ReactElement {
             justify="center"
             alignContent="stretch"
             alignItems="flex-end">
-            {props.card.chart && props.card.chart !== 'radialBar' && (
+            {props.card.chart && props.card.chart !== "radialBar" && (
               <Grid item xs>
                 <FormControl className={classes.textField}>
                   <InputLabel htmlFor="chart_detail">Chart Detail</InputLabel>
@@ -236,8 +236,8 @@ function Entity(props: EntityProps): ReactElement {
                     value={props.card.chart_detail || 3}
                     onChange={props.handleSelectChange}
                     inputProps={{
-                      name: 'chart_detail',
-                      id: 'chart_detail',
+                      name: "chart_detail",
+                      id: "chart_detail",
                     }}>
                     <MenuItem value={18}>Lower</MenuItem>
                     <MenuItem value={12}>Low</MenuItem>
@@ -249,7 +249,7 @@ function Entity(props: EntityProps): ReactElement {
                 </FormControl>
               </Grid>
             )}
-            {props.card.chart && props.card.chart !== 'radialBar' && (
+            {props.card.chart && props.card.chart !== "radialBar" && (
               <Grid item xs>
                 <TextField
                   className={classes.textField}
@@ -258,18 +258,18 @@ function Entity(props: EntityProps): ReactElement {
                   label="Chart Hours From"
                   placeholder="6"
                   inputProps={{
-                    autoComplete: 'off',
+                    autoComplete: "off",
                     min: 1,
                     max: 48,
                   }}
-                  value={props.card.chart_from || '6'}
+                  value={props.card.chart_from || "6"}
                   onChange={
-                    props.handleChange && props.handleChange('chart_from')
+                    props.handleChange && props.handleChange("chart_from")
                   }
                 />
               </Grid>
             )}
-            {props.card.chart && props.card.chart !== 'radialBar' && (
+            {props.card.chart && props.card.chart !== "radialBar" && (
               <Grid item xs>
                 <FormControlLabel
                   className={classes.switch}
@@ -283,7 +283,7 @@ function Entity(props: EntityProps): ReactElement {
                   }
                   onChange={
                     props.handleSwitchChange &&
-                    props.handleSwitchChange('chart_labels')
+                    props.handleSwitchChange("chart_labels")
                   }
                 />
               </Grid>

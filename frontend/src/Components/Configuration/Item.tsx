@@ -4,30 +4,30 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from 'react';
-import { ColorResult } from 'react-color';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Select from '@material-ui/core/Select';
-import Switch from '@material-ui/core/Switch';
-import TextField from '@material-ui/core/TextField';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+} from "react";
+import { ColorResult } from "react-color";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import FormControl from "@material-ui/core/FormControl";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import Select from "@material-ui/core/Select";
+import Switch from "@material-ui/core/Switch";
+import TextField from "@material-ui/core/TextField";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import { ConfigurationProps } from './Configuration';
-import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { ConfigSectionItem } from './Config';
-import clone from '../../utils/clone';
-import ColorAdornment from '../Utils/ColorAdornment';
+import { ConfigurationProps } from "./Configuration";
+import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
+import { ConfigSectionItem } from "./Config";
+import clone from "../../utils/clone";
+import ColorAdornment from "../Utils/ColorAdornment";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -46,18 +46,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   item: {
     padding: theme.spacing(1.5, 1),
-    borderBottom: '1px solid #EEE',
-    '&:first-child': {
+    borderBottom: "1px solid #EEE",
+    "&:first-child": {
       paddingTop: 0,
     },
-    '&:last-child': {
-      borderBottom: 'none',
+    "&:last-child": {
+      borderBottom: "none",
       paddingBottom: 0,
     },
   },
   radioGroup: {
-    display: 'flex',
-    flexDirection: 'row',
+    display: "flex",
+    flexDirection: "row",
   },
 }));
 
@@ -121,7 +121,7 @@ function Item(props: ItemProps): ReactElement {
       event: React.ChangeEvent<HTMLInputElement>
     ): void => {
       const val =
-        type === 'number' ? Number(event.target.value) : event.target.value;
+        type === "number" ? Number(event.target.value) : event.target.value;
       handleUpdate(path, val);
     },
     [handleUpdate]
@@ -166,12 +166,12 @@ function Item(props: ItemProps): ReactElement {
   const classes = useStyles();
 
   return useMemo(() => {
-    if (props.item.type !== 'backup_restore' && value === undefined)
+    if (props.item.type !== "backup_restore" && value === undefined)
       return <div />;
     switch (props.item.type) {
       default:
         return <div />;
-      case 'backup_restore':
+      case "backup_restore":
         return (
           <Grid container direction="row">
             <Button
@@ -189,7 +189,7 @@ function Item(props: ItemProps): ReactElement {
             </Button>
           </Grid>
         );
-      case 'color':
+      case "color":
         return (
           <TextField
             className={classes.root}
@@ -203,40 +203,40 @@ function Item(props: ItemProps): ReactElement {
                 />
               ),
             }}
-            value={value || ''}
-            onChange={handleChange(props.path, 'color')}
+            value={value || ""}
+            onChange={handleChange(props.path, "color")}
           />
         );
-      case 'color_only':
+      case "color_only":
         return (
           <ColorAdornment
             color={value}
             handleColorChange={handleColorChange(props.path)}
           />
         );
-      case 'input':
+      case "input":
         return (
           <TextField
             className={classes.root}
             placeholder={String(props.item.default)}
-            type={typeof props.item.default === 'number' ? 'number' : 'text'}
-            value={value || ''}
+            type={typeof props.item.default === "number" ? "number" : "text"}
+            value={value || ""}
             onChange={handleChange(
               props.path,
-              typeof props.item.default === 'number' ? 'number' : 'string'
+              typeof props.item.default === "number" ? "number" : "string"
             )}
           />
         );
-      case 'input_password':
+      case "input_password":
         return (
           <TextField
             className={classes.root}
-            type={showPassword ? 'text' : 'password'}
+            type={showPassword ? "text" : "password"}
             placeholder={String(props.item.default)}
-            value={value || ''}
+            value={value || ""}
             onChange={handleChange(
               props.path,
-              typeof props.item.default === 'number' ? 'number' : 'string'
+              typeof props.item.default === "number" ? "number" : "string"
             )}
             InputProps={{
               endAdornment: (
@@ -252,14 +252,14 @@ function Item(props: ItemProps): ReactElement {
             }}
           />
         );
-      case 'radio':
+      case "radio":
         return (
           <FormControl component="fieldset">
             <RadioGroup
               className={classes.radioGroup}
               aria-label={props.item.title}
-              name={typeof props.item.name === 'string' ? props.item.name : ''}
-              value={value || ''}
+              name={typeof props.item.name === "string" ? props.item.name : ""}
+              value={value || ""}
               onChange={handleRadioChange(props.path)}>
               {props.item.items &&
                 props.item.items.map(
@@ -267,12 +267,12 @@ function Item(props: ItemProps): ReactElement {
                     rItem: string | number | ConfigSectionItem,
                     key: number
                   ): ReactElement | null => {
-                    if (typeof rItem !== 'string' && typeof rItem !== 'number')
+                    if (typeof rItem !== "string" && typeof rItem !== "number")
                       return null;
                     return (
                       <FormControlLabel
                         key={key}
-                        value={key || ''}
+                        value={key || ""}
                         label={rItem}
                         control={<Radio color="primary" />}
                       />
@@ -282,7 +282,7 @@ function Item(props: ItemProps): ReactElement {
             </RadioGroup>
           </FormControl>
         );
-      case 'select':
+      case "select":
         return (
           <FormControl>
             <InputLabel htmlFor="theme"></InputLabel>
@@ -296,7 +296,7 @@ function Item(props: ItemProps): ReactElement {
                     sItem: string | number | ConfigSectionItem,
                     key: number
                   ): ReactElement | null => {
-                    if (typeof sItem !== 'string' && typeof sItem !== 'number')
+                    if (typeof sItem !== "string" && typeof sItem !== "number")
                       return null;
                     return (
                       <MenuItem key={key} value={sItem}>
@@ -308,12 +308,12 @@ function Item(props: ItemProps): ReactElement {
             </Select>
           </FormControl>
         );
-      case 'switch':
+      case "switch":
         return (
           <Switch
             color="primary"
             checked={
-              value !== undefined && typeof value === 'boolean'
+              value !== undefined && typeof value === "boolean"
                 ? Boolean(value)
                 : Boolean(props.item.default)
             }

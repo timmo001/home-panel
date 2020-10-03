@@ -4,8 +4,8 @@ import {
   Paginated,
   Params,
   ServiceMethods,
-} from '@feathersjs/feathers';
-import { Application } from '../../declarations';
+} from "@feathersjs/feathers";
+import { Application } from "../../declarations";
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Data {}

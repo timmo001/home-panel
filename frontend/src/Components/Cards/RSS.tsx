@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback, ReactElement } from 'react';
-import Parser from 'rss-parser';
-import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ReactMarkdown from 'react-markdown';
+import React, { useState, useEffect, useCallback, ReactElement } from "react";
+import Parser from "rss-parser";
+import moment from "moment";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import ReactMarkdown from "react-markdown";
 
-import { BaseProps } from './Base';
+import { BaseProps } from "./Base";
 
 type RSSData = {
   content?: string;
@@ -29,8 +29,8 @@ type FeedData = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
-    overflowY: 'auto',
+    height: "100%",
+    overflowY: "auto",
   },
   divider: {
     marginTop: theme.spacing(1),
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   media: {
     height: `calc(100% - ${theme.spacing(2)}px)`,
-    width: '100%',
+    width: "100%",
   },
 }));
 
@@ -55,30 +55,30 @@ function RSS(props: BaseProps): ReactElement {
   const handleGetData = useCallback(async (): Promise<void> => {
     if (props.card.url) {
       setError(undefined);
-      console.log('Update RSS Feed for', props.card.url);
+      console.log("Update RSS Feed for", props.card.url);
       const parser = new Parser();
       const rss = await parser.parseURL(props.card.url);
 
       if (rss && rss.items) {
         const feed: FeedData[] = rss.items.map((item: RSSData) => ({
           heading: `[${item.title}](${item.link})`,
-          title: item.title || '',
-          url: item.link || '',
+          title: item.title || "",
+          url: item.link || "",
           meta: moment(item.pubDate).format(
-            `${props.config.header.time_military ? 'HH:mm' : 'hh:mm a'} ${
+            `${props.config.header.time_military ? "HH:mm" : "hh:mm a"} ${
               props.config.header.date_format
             }`
           ),
-          content: item.content || '',
+          content: item.content || "",
         }));
         setData(feed);
         props.card.disabled = false;
       } else {
-        setError('There was an error getting the feed.');
+        setError("There was an error getting the feed.");
         props.card.disabled = true;
       }
     } else {
-      setError('You do not have a URL set.');
+      setError("You do not have a URL set.");
       props.card.disabled = true;
     }
   }, [

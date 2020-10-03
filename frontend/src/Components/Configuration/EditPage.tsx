@@ -1,35 +1,35 @@
-import React, { useEffect, ReactElement, useState } from 'react';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import ArrowDownIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpIcon from '@material-ui/icons/ArrowUpward';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { useEffect, ReactElement, useState } from "react";
+import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import ArrowDownIcon from "@material-ui/icons/ArrowDownward";
+import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-import { ConfigProps, Page, GroupProps } from './Config';
-import ConfirmDialog from '../Utils/ConfirmDialog';
+import { ConfigProps, Page, GroupProps } from "./Config";
+import ConfirmDialog from "../Utils/ConfirmDialog";
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialog: {
-    overflow: 'visible',
+    overflow: "visible",
   },
   dialogContent: {
-    overflow: 'visible',
+    overflow: "visible",
   },
   fill: {
     flex: 1,
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
-    flex: '1 1 auto',
+    flex: "1 1 auto",
     margin: 4,
   },
 }));
@@ -74,7 +74,7 @@ function EditPage(props: EditPageProps): ReactElement {
   ): void => {
     setPage({
       ...page,
-      [name]: typeof event === 'string' ? event : event.target.value,
+      [name]: typeof event === "string" ? event : event.target.value,
     });
   };
 
@@ -98,7 +98,7 @@ function EditPage(props: EditPageProps): ReactElement {
 
   const classes = useStyles();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog
@@ -120,9 +120,9 @@ function EditPage(props: EditPageProps): ReactElement {
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               label="Name"
-              placeholder={'Page Name'}
-              defaultValue={props.page.name || ''}
-              onChange={handleChange('name')}
+              placeholder={"Page Name"}
+              defaultValue={props.page.name || ""}
+              onChange={handleChange("name")}
             />
           </Grid>
           <Grid item xs container justify="flex-start" alignContent="center">
@@ -130,9 +130,9 @@ function EditPage(props: EditPageProps): ReactElement {
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
               label="Icon"
-              placeholder={'home'}
-              defaultValue={props.page.icon || ''}
-              onChange={handleChange('icon')}
+              placeholder={"home"}
+              defaultValue={props.page.icon || ""}
+              onChange={handleChange("icon")}
             />
           </Grid>
         </Grid>

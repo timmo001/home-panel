@@ -1,32 +1,32 @@
-import React, { useEffect, ReactElement, useState, useMemo } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Avatar from '@material-ui/core/Avatar';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Slide from '@material-ui/core/Slide';
-import SwipeableDrawer from '@material-ui/core/Drawer';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
+import React, { useEffect, ReactElement, useState, useMemo } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Avatar from "@material-ui/core/Avatar";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Slide from "@material-ui/core/Slide";
+import SwipeableDrawer from "@material-ui/core/Drawer";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import MenuIcon from "@material-ui/icons/Menu";
 
-import { ConfigurationProps } from '../Configuration/Config';
-import { Editing, ProgressState } from '../Types/Types';
-import { MainProps } from '../Main';
-import HomeAssistantLogin from '../HomeAssistant/HomeAssistantLogin';
-import Items, { DrawerItem, MenuItem } from './Items';
+import { ConfigurationProps } from "../Configuration/Config";
+import { Editing, ProgressState } from "../Types/Types";
+import { MainProps } from "../Main";
+import HomeAssistantLogin from "../HomeAssistant/HomeAssistantLogin";
+import Items, { DrawerItem, MenuItem } from "./Items";
 
 const drawerWidth = 240,
   drawerWidthIcons = 54;
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   permanentIconsRoot: {
     zIndex: 2000,
@@ -36,29 +36,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: theme.palette.text.primary,
   },
   drawer: {
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       width: drawerWidth,
       flexShrink: 0,
     },
   },
   drawerInner: {
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
   },
   drawerPaper: {
     width: drawerWidth,
   },
   drawerPaperIcons: {
     width: drawerWidthIcons,
-    overflowX: 'hidden',
+    overflowX: "hidden",
   },
   drawerHeader: {
     ...theme.mixins.toolbar,
     background: theme.palette.background.paper,
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "space-between",
+    alignContent: "center",
+    alignItems: "center",
     padding: theme.spacing(1),
   },
   drawerHeaderDense: {
@@ -82,13 +82,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   link: {
     color: theme.palette.text.primary,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.text.primary,
     },
   },
   linkToolbar: {
     color: theme.palette.text.primary,
-    '&:hover': {
+    "&:hover": {
       color: theme.palette.text.primary,
     },
     maxWidth: 50,
@@ -114,19 +114,19 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const classes = useStyles();
   const [drawerOpen, setDrawerOpen] = useState(
     props.config.general.drawer_type &&
-      props.config.general.drawer_type.includes('persistent')
+      props.config.general.drawer_type.includes("persistent")
       ? true
       : false
   );
 
   useEffect(() => {
     props.handleSpaceTaken(
-      props.config.general.drawer_type === 'persistent' && drawerOpen
+      props.config.general.drawer_type === "persistent" && drawerOpen
         ? drawerWidth
-        : props.config.general.drawer_type === 'persistent_icons_only' &&
+        : props.config.general.drawer_type === "persistent_icons_only" &&
           drawerOpen
         ? drawerWidthIcons
-        : props.config.general.drawer_type === 'permanent_icons_only'
+        : props.config.general.drawer_type === "permanent_icons_only"
         ? drawerWidthIcons
         : 0
     );
@@ -143,7 +143,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   const handleItemClicked = (item: DrawerItem) => () => {
     if (
       !props.config.general.drawer_type ||
-      !props.config.general.drawer_type.includes('persistent')
+      !props.config.general.drawer_type.includes("persistent")
     )
       handleDrawerClose();
     props.handleSetCurrentPage(item.name);
@@ -154,8 +154,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
   }
 
   const hideText = !(
-    props.config.general.drawer_type !== 'persistent_icons_only' &&
-    props.config.general.drawer_type !== 'permanent_icons_only'
+    props.config.general.drawer_type !== "persistent_icons_only" &&
+    props.config.general.drawer_type !== "permanent_icons_only"
   );
 
   const drawer = (
@@ -165,7 +165,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
           classes.drawerHeader,
           props.config.general.dense_toolbar && classes.drawerHeaderDense
         )}>
-        {props.config.general.drawer_type !== 'persistent_icons_only' && (
+        {props.config.general.drawer_type !== "persistent_icons_only" && (
           <Typography className={classes.drawerHeaderText} variant="h6" noWrap>
             Home Panel
           </Typography>
@@ -184,27 +184,27 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               button
               onClick={handleItemClicked(item)}>
               <ListItemIcon>
-                <span className={clsx('mdi', item.icon, classes.icon)} />
+                <span className={clsx("mdi", item.icon, classes.icon)} />
               </ListItemIcon>
               {!hideText && <ListItemText primary={item.name} />}
             </ListItem>
           ))}
         </List>
-        <div className={'fill'} />
+        <div className={"fill"} />
         <Divider />
         <List>
           {props.hassConnection === -2 && (
             <HomeAssistantLogin
               iconOnly={
-                props.config.general.drawer_type === 'persistent_icons_only' ||
-                props.config.general.drawer_type === 'permanent_icons_only'
+                props.config.general.drawer_type === "persistent_icons_only" ||
+                props.config.general.drawer_type === "permanent_icons_only"
               }
               handleHassLogin={props.handleHassLogin}
             />
           )}
           <ListItem button onClick={props.handleLogout}>
             <ListItemIcon>
-              <span className={clsx('mdi', 'mdi-logout', classes.icon)} />
+              <span className={clsx("mdi", "mdi-logout", classes.icon)} />
             </ListItemIcon>
             {!hideText && <ListItemText primary="Log Out" />}
           </ListItem>
@@ -220,7 +220,7 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.currentPage === 'Configuration'
+    props.currentPage === "Configuration"
       ? true
       : false || drawerOpen || props.mouseMoved;
 
@@ -228,9 +228,9 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     <div
       className={clsx(
         classes.root,
-        props.config.general.drawer_type === 'persistent' && drawerOpen
+        props.config.general.drawer_type === "persistent" && drawerOpen
           ? classes.persistentToolbar
-          : props.config.general.drawer_type === 'persistent_icons_only' &&
+          : props.config.general.drawer_type === "persistent_icons_only" &&
             drawerOpen
           ? classes.persistentToolbarIcons
           : null
@@ -238,15 +238,15 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <AppBar
           className={clsx(
-            (props.config.general.drawer_type === 'persistent_icons_only' &&
+            (props.config.general.drawer_type === "persistent_icons_only" &&
               drawerOpen) ||
-              props.config.general.drawer_type === 'permanent_icons_only'
+              props.config.general.drawer_type === "permanent_icons_only"
               ? classes.permanentIconsRoot
               : null
           )}>
           <Toolbar
             className={clsx(
-              props.config.general.drawer_type === 'persistent' && drawerOpen
+              props.config.general.drawer_type === "persistent" && drawerOpen
                 ? classes.persistentToolbar
                 : null
             )}
@@ -254,10 +254,10 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               props.config &&
               props.config.general &&
               props.config.general.dense_toolbar
-                ? 'dense'
-                : 'regular'
+                ? "dense"
+                : "regular"
             }>
-            {props.config.general.drawer_type !== 'permanent_icons_only' && (
+            {props.config.general.drawer_type !== "permanent_icons_only" && (
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
@@ -282,8 +282,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
                     onClick={handleToggleEditing}>
                     <span
                       className={clsx(
-                        'mdi',
-                        props.editing ? 'mdi-check' : item.icon,
+                        "mdi",
+                        props.editing ? "mdi-check" : item.icon,
                         classes.icon
                       )}
                     />
@@ -296,25 +296,25 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
       <nav className={classes.drawer}>
         <SwipeableDrawer
           variant={
-            props.config.general.drawer_type === 'persistent' && drawerOpen
-              ? 'persistent'
-              : props.config.general.drawer_type === 'persistent_icons_only' &&
+            props.config.general.drawer_type === "persistent" && drawerOpen
+              ? "persistent"
+              : props.config.general.drawer_type === "persistent_icons_only" &&
                 drawerOpen
-              ? 'persistent'
-              : props.config.general.drawer_type === 'permanent_icons_only'
-              ? 'permanent'
-              : 'temporary'
+              ? "persistent"
+              : props.config.general.drawer_type === "permanent_icons_only"
+              ? "permanent"
+              : "temporary"
           }
           open={drawerOpen}
           onClose={handleDrawerToggle}
           classes={{
             paper:
-              props.config.general.drawer_type === 'persistent' && drawerOpen
+              props.config.general.drawer_type === "persistent" && drawerOpen
                 ? classes.drawerPaper
                 : props.config.general.drawer_type ===
-                    'persistent_icons_only' && drawerOpen
+                    "persistent_icons_only" && drawerOpen
                 ? classes.drawerPaperIcons
-                : props.config.general.drawer_type === 'permanent_icons_only'
+                : props.config.general.drawer_type === "permanent_icons_only"
                 ? classes.drawerPaperIcons
                 : classes.drawerPaper,
           }}

@@ -1,12 +1,12 @@
-import React, { ReactElement, useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, useState } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import Input from "@material-ui/core/Input";
+import Typography from "@material-ui/core/Typography";
 
-import { EntityProps } from './Entity';
-import properCase from '../../../utils/properCase';
+import { EntityProps } from "./Entity";
+import properCase from "../../../utils/properCase";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,10 +14,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   text: {
     marginBottom: theme.spacing(0.2),
-    userSelect: 'none',
-    overflow: 'hidden',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    userSelect: "none",
+    overflow: "hidden",
+    textAlign: "center",
+    textOverflow: "ellipsis",
   },
   input: {
     width: 60,
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function AlarmPanel(props: EntityProps): ReactElement | null {
-  const [code, setCode] = useState<string>('');
+  const [code, setCode] = useState<string>("");
 
   function handleCodeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     setCode(event.target.value);
@@ -36,21 +36,21 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
 
   const handleCodePressed = (digit?: string) => (): void => {
     if (digit) setCode(code + digit);
-    else setCode('');
+    else setCode("");
   };
 
   const handleUpdate = (service: string) => (): void => {
-    const domain = props.card.entity?.split('.')[0];
+    const domain = props.card.entity?.split(".")[0];
     if (props.handleHassChange && domain)
       props.handleHassChange(domain, service, {
         entity_id: props.card.entity,
         code,
       });
-    setCode('');
+    setCode("");
   };
 
   const armed =
-    props.entity.state === 'armed_away' || props.entity.state === 'armed_home';
+    props.entity.state === "armed_away" || props.entity.state === "armed_home";
   const classes = useStyles();
 
   return (
@@ -79,10 +79,10 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               <Grid item>
                 <Button
                   color="primary"
-                  onClick={handleUpdate('alarm_arm_away')}
+                  onClick={handleUpdate("alarm_arm_away")}
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
-                    props.entity.state === 'pending'
+                    props.entity.state === "pending"
                   }>
                   Arm Away
                 </Button>
@@ -92,10 +92,10 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               <Grid item>
                 <Button
                   color="primary"
-                  onClick={handleUpdate('alarm_arm_home')}
+                  onClick={handleUpdate("alarm_arm_home")}
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
-                    props.entity.state === 'pending'
+                    props.entity.state === "pending"
                   }>
                   Arm Home
                 </Button>
@@ -105,10 +105,10 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               <Grid item>
                 <Button
                   color="primary"
-                  onClick={handleUpdate('alarm_disarm')}
+                  onClick={handleUpdate("alarm_disarm")}
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
-                    props.entity.state === 'pending'
+                    props.entity.state === "pending"
                   }>
                   Disarm
                 </Button>
@@ -123,13 +123,13 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
             <Input
               className={classes.input}
               inputProps={{
-                'aria-label': 'code',
-                style: { textAlign: 'center' },
+                "aria-label": "code",
+                style: { textAlign: "center" },
               }}
-              disabled={props.entity.state === 'pending'}
+              disabled={props.entity.state === "pending"}
               placeholder="1234"
               type="number"
-              value={code || ''}
+              value={code || ""}
               onChange={handleCodeChange}
             />
           </Grid>
@@ -147,7 +147,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
               <Grid key={value} item xs={4}>
                 <Button
                   size="large"
-                  disabled={props.entity.state === 'pending'}
+                  disabled={props.entity.state === "pending"}
                   onClick={handleCodePressed(String(value))}>
                   {value}
                 </Button>

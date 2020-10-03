@@ -1,5 +1,5 @@
-import { Service, NedbServiceOptions } from 'feathers-nedb';
-import { Application } from '../../declarations';
+import { Service, NedbServiceOptions } from "feathers-nedb";
+import { Application } from "../../declarations";
 
 export class Users extends Service {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

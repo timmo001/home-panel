@@ -1,11 +1,11 @@
-import React, { useEffect, ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect, ReactElement, useState } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Input from "@material-ui/core/Input";
+import Typography from "@material-ui/core/Typography";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -15,13 +15,13 @@ const useStyles = makeStyles(() => ({
     zIndex: 100,
   },
   iconContainer: {
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
     zIndex: 100,
   },
   icon: {
-    textAlign: 'center',
+    textAlign: "center",
   },
 }));
 
@@ -36,7 +36,7 @@ function TextEntity(props: EntityProps): ReactElement {
     if (props.handleHassChange) {
       const val = event.target.value;
       setText(String(!val ? 0 : val));
-      props.handleHassChange('input_text', 'set_value', {
+      props.handleHassChange("input_text", "set_value", {
         entity_id: props.entity.entity_id,
         value: val,
       });
@@ -55,11 +55,7 @@ function TextEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={clsx(
-              'mdi',
-              `mdi-${props.card.icon}`,
-              classes.icon
-            )}
+            className={clsx("mdi", `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"
@@ -77,11 +73,11 @@ function TextEntity(props: EntityProps): ReactElement {
           justify="center">
           <Grid item>
             <Input
-              value={text || ''}
+              value={text || ""}
               margin="dense"
               onChange={handleInputChange}
               inputProps={{
-                type: 'text',
+                type: "text",
               }}
             />
           </Grid>

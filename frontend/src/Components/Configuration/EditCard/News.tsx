@@ -1,15 +1,15 @@
-import React, { ReactElement, Fragment, useEffect, useState } from 'react';
-import request from 'superagent';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, Fragment, useEffect, useState } from "react";
+import request from "superagent";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
-import type { BaseProps } from './Base';
-import type { Option } from '../../Types/Types';
-import properCase from '../../../utils/properCase';
+import type { BaseProps } from "./Base";
+import type { Option } from "../../Types/Types";
+import properCase from "../../../utils/properCase";
 
 type FeedSource = {
   category: string;
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   textField: {
-    width: 'calc(100% - 8px)',
+    width: "calc(100% - 8px)",
     margin: 4,
   },
 }));
@@ -44,7 +44,7 @@ function News(props: BaseProps): ReactElement {
     newValue: Option | null
   ): void {
     setSource(newValue);
-    props.handleManualChange?.('url', newValue?.value);
+    props.handleManualChange?.("url", newValue?.value);
   }
 
   useEffect(() => {
@@ -71,11 +71,11 @@ function News(props: BaseProps): ReactElement {
         })
         .catch((err) => {
           console.error(err);
-          setError('An error occured when getting the sources for News API.');
+          setError("An error occured when getting the sources for News API.");
         });
     } else
       setError(
-        'Invalid config or you do not have a News API key set in your config.'
+        "Invalid config or you do not have a News API key set in your config."
       );
   }, [props.config.news, props.card.url]);
 
@@ -107,7 +107,7 @@ function News(props: BaseProps): ReactElement {
               disabled
               InputLabelProps={{ shrink: true }}
               label="Source"
-              value={error || ''}
+              value={error || ""}
             />
           ) : (
             sources && (
@@ -134,8 +134,8 @@ function News(props: BaseProps): ReactElement {
             InputLabelProps={{ shrink: true }}
             label="Height"
             placeholder="auto"
-            value={props.card.height || 'auto'}
-            onChange={props.handleChange && props.handleChange('height')}
+            value={props.card.height || "auto"}
+            onChange={props.handleChange && props.handleChange("height")}
           />
         </Grid>
       </Grid>

@@ -1,14 +1,14 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ReactMarkdown from 'react-markdown';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import ReactMarkdown from "react-markdown";
 
-import { ConfigurationProps } from './Configuration';
-import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import Item from './Item';
-import { ConfigSectionItem } from './Config';
+import { ConfigurationProps } from "./Configuration";
+import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
+import Item from "./Item";
+import { ConfigSectionItem } from "./Config";
 
 const useStyles = makeStyles((theme: Theme) => ({
   icon: {
@@ -17,12 +17,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   item: {
     padding: theme.spacing(1.5, 1),
-    borderBottom: '1px solid #EEE',
-    '&:first-child': {
+    borderBottom: "1px solid #EEE",
+    "&:first-child": {
       paddingTop: 0,
     },
-    '&:last-child': {
-      borderBottom: 'none',
+    "&:last-child": {
+      borderBottom: "none",
       paddingBottom: 0,
     },
   },
@@ -60,7 +60,7 @@ function Section(props: SectionProps): ReactElement {
               justify="space-between">
               {item.icon && (
                 <Grid item>
-                  <span className={clsx('mdi', item.icon, classes.icon)} />
+                  <span className={clsx("mdi", item.icon, classes.icon)} />
                 </Grid>
               )}
               {item.title && item.description && (

@@ -1,14 +1,14 @@
-import React, { useState, ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Popover from '@material-ui/core/Popover';
-import Typography from '@material-ui/core/Typography';
+import React, { useState, ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import Popover from "@material-ui/core/Popover";
+import Typography from "@material-ui/core/Typography";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -18,20 +18,20 @@ const useStyles = makeStyles(() => ({
     zIndex: 100,
   },
   text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    userSelect: "none",
+    textAlign: "center",
+    textOverflow: "ellipsis",
     zIndex: 100,
   },
   iconContainer: {
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
     zIndex: 100,
   },
   icon: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   menu: {
     zIndex: 2000,
@@ -51,7 +51,7 @@ function Select(props: EntityProps): ReactElement {
     _event: React.MouseEvent<HTMLLIElement, MouseEvent>
   ): void => {
     props.handleHassChange &&
-      props.handleHassChange('input_select', 'select_option', {
+      props.handleHassChange("input_select", "select_option", {
         entity_id: props.card.entity,
         option,
       });
@@ -77,11 +77,7 @@ function Select(props: EntityProps): ReactElement {
         <Grid className={classes.iconContainer} item xs={12}>
           {props.card.icon && (
             <Typography
-              className={clsx(
-                'mdi',
-                `mdi-${props.card.icon}`,
-                classes.icon
-              )}
+              className={clsx("mdi", `mdi-${props.card.icon}`, classes.icon)}
               color="textPrimary"
               variant="h3"
               component="h5"
@@ -93,7 +89,7 @@ function Select(props: EntityProps): ReactElement {
           <Typography
             className={classes.text}
             color="textPrimary"
-            variant={props.card.disabled ? 'body2' : 'body1'}
+            variant={props.card.disabled ? "body2" : "body1"}
             component="h5">
             {props.entity.state}
           </Typography>
@@ -111,7 +107,7 @@ function Select(props: EntityProps): ReactElement {
             maxHeight: 250,
             width: PopoverNode ? PopoverNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
-            overflow: 'auto',
+            overflow: "auto",
           }}>
           {props.entity.attributes.options &&
             props.entity.attributes.options.map(

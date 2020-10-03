@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import moment from "moment";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-import { EntityProps } from './Entity';
-import { getUnit, weatherNameMap, weatherMap } from '../Utils/Units';
+import { EntityProps } from "./Entity";
+import { getUnit, weatherNameMap, weatherMap } from "../Utils/Units";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,47 +14,47 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   name: {
     margin: theme.spacing(0, 1),
-    overflow: 'hidden',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
-    fontSize: '1.12rem',
-    lineHeight: '1.34rem',
+    overflow: "hidden",
+    textAlign: "center",
+    textOverflow: "ellipsis",
+    fontSize: "1.12rem",
+    lineHeight: "1.34rem",
     color: theme.palette.text.primary,
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '0.9rem',
-      lineHeight: '1.14rem',
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.9rem",
+      lineHeight: "1.14rem",
     },
   },
   nameSub: {
-    margin: 'auto 8px',
+    margin: "auto 8px",
   },
   temperature: {
-    display: 'flex',
+    display: "flex",
   },
   icon: {
     color: theme.palette.text.primary,
     fontSize: 64,
-    lineHeight: '0.7em',
+    lineHeight: "0.7em",
   },
   attribute: {
-    lineHeight: '1.2em',
+    lineHeight: "1.2em",
   },
   forecast: {
-    display: 'inline-flex',
+    display: "inline-flex",
     marginTop: theme.spacing(1),
-    overflow: 'auto',
+    overflow: "auto",
   },
   forecastItem: {
     width: 60,
     marginRight: theme.spacing(1),
   },
   forecastText: {
-    lineHeight: '1.24em',
-    userSelect: 'none',
-    textAlign: 'center',
+    lineHeight: "1.24em",
+    userSelect: "none",
+    textAlign: "center",
   },
   forecastTextIcon: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   forecastIcon: {
     color: theme.palette.text.primary,
@@ -88,7 +88,7 @@ function Weather(props: EntityProps): ReactElement {
           <Typography className={classes.forecastTextIcon} variant="body2">
             <span
               className={clsx(
-                'mdi',
+                "mdi",
                 `mdi-${weatherMap[props.entity.state]}`,
                 classes.icon
               )}
@@ -99,7 +99,7 @@ function Weather(props: EntityProps): ReactElement {
           item
           style={{
             textAlign:
-              !props.card.width || props.card.width < 1 ? 'center' : 'left',
+              !props.card.width || props.card.width < 1 ? "center" : "left",
           }}>
           <Typography
             className={classes.name}
@@ -116,7 +116,7 @@ function Weather(props: EntityProps): ReactElement {
             noWrap>
             {props.entity.attributes.temperature}
             <span className={classes.textSecondary}>
-              {getUnit('temperature', props.hassConfig)}
+              {getUnit("temperature", props.hassConfig)}
             </span>
           </Typography>
         </Grid>
@@ -143,9 +143,9 @@ function Weather(props: EntityProps): ReactElement {
                         noWrap
                         className={classes.forecastText}
                         variant="body2">
-                        {datetime.format('ddd')}
+                        {datetime.format("ddd")}
                         <br />
-                        {datetime.format('h a')}
+                        {datetime.format("h a")}
                       </Typography>
 
                       <Typography
@@ -153,7 +153,7 @@ function Weather(props: EntityProps): ReactElement {
                         variant="body2">
                         <span
                           className={clsx(
-                            'mdi',
+                            "mdi",
                             `mdi-${icon}`,
                             classes.forecastIcon
                           )}
@@ -166,7 +166,7 @@ function Weather(props: EntityProps): ReactElement {
                         variant="body2">
                         {w.temperature}
                         <span className={classes.textSecondary}>
-                          {getUnit('temperature', props.hassConfig)}
+                          {getUnit("temperature", props.hassConfig)}
                         </span>
                       </Typography>
                       <Typography

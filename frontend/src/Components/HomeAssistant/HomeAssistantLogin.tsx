@@ -1,28 +1,28 @@
-import React, { useEffect, useCallback, ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import CardMedia from '@material-ui/core/CardMedia';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Typography from '@material-ui/core/Typography';
+import React, { useEffect, useCallback, ReactElement, useState } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import CardMedia from "@material-ui/core/CardMedia";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import Typography from "@material-ui/core/Typography";
 
-import HALogin from '../../Resources/ha-login.svg';
-import FormControl from '@material-ui/core/FormControl';
-import { DialogTitle } from '@material-ui/core';
+import HALogin from "../../Resources/ha-login.svg";
+import FormControl from "@material-ui/core/FormControl";
+import { DialogTitle } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   root: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
   },
   media: {
-    width: '100%',
+    width: "100%",
     height: 48,
   },
   icon: {
@@ -46,16 +46,16 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
 
   const handleValidation = useCallback(() => {
     if (!url) {
-      setInvalidText('No Home Assistant URL.');
+      setInvalidText("No Home Assistant URL.");
       return;
     }
-    if (!url.startsWith('http') || !url.includes('://')) {
-      setInvalidText('Home Assistant URL invalid!');
+    if (!url.startsWith("http") || !url.includes("://")) {
+      setInvalidText("Home Assistant URL invalid!");
       return;
     }
-    if (window.location.protocol === 'https:') {
-      if (url.startsWith('http:')) {
-        setInvalidText('Your HASS instance must use SSL/https.');
+    if (window.location.protocol === "https:") {
+      if (url.startsWith("http:")) {
+        setInvalidText("Your HASS instance must use SSL/https.");
         return;
       }
     }
@@ -86,7 +86,7 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
       <ListItem button onClick={handleToggleDialog}>
         {props.iconOnly ? (
           <ListItemIcon>
-            <span className={clsx('mdi', 'mdi-home-assistant', classes.icon)} />
+            <span className={clsx("mdi", "mdi-home-assistant", classes.icon)} />
           </ListItemIcon>
         ) : (
           <CardMedia
@@ -111,10 +111,10 @@ function HomeAssistantLogin(props: HomeAssistantLoginProps): ReactElement {
                 placeholder="https://homeassistant.local:8123"
                 inputProps={{
                   autoFocus: true,
-                  autoCapitalize: 'none',
-                  autoComplete: 'url',
+                  autoCapitalize: "none",
+                  autoComplete: "url",
                 }}
-                value={url || ''}
+                value={url || ""}
                 onChange={handleChange}
               />
             </FormControl>

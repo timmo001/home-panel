@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from "react";
 import {
   Auth,
   AuthData,
@@ -14,9 +14,9 @@ import {
   HassUser,
   subscribeConfig,
   subscribeEntities,
-} from 'home-assistant-js-websocket';
+} from "home-assistant-js-websocket";
 
-import { ProgressState } from '../Types/Types';
+import { ProgressState } from "../Types/Types";
 
 interface HomeAssistantProps {
   connection: ProgressState;
@@ -78,13 +78,13 @@ let connection: Connection, auth: Auth;
 export async function loadTokens(): Promise<AuthData | null | undefined> {
   let hassTokens;
   try {
-    hassTokens = JSON.parse(String(localStorage.getItem('hass_tokens')));
+    hassTokens = JSON.parse(String(localStorage.getItem("hass_tokens")));
   } catch (err) {}
   return hassTokens;
 }
 
 export function saveTokens(tokens?: AuthData | null): void {
-  localStorage.setItem('hass_tokens', JSON.stringify(tokens));
+  localStorage.setItem("hass_tokens", JSON.stringify(tokens));
 }
 
 export function handleChange(
@@ -94,31 +94,31 @@ export function handleChange(
   data?: { [key: string]: any },
   entities?: HassEntities
 ): void {
-  process.env.NODE_ENV === 'development' &&
-    console.log('handleChange:', domain, state, data);
-  if (typeof state === 'string') {
+  process.env.NODE_ENV === "development" &&
+    console.log("handleChange:", domain, state, data);
+  if (typeof state === "string") {
     callService(connection, domain, state, data).then(
       () => {
-        console.log('Called service');
+        console.log("Called service");
       },
       (err) => {
-        console.error('Error calling service:', err);
+        console.error("Error calling service:", err);
       }
     );
   } else {
-    if (domain === 'group' && entities && data) {
+    if (domain === "group" && entities && data) {
       entities[data.entity_id].attributes.entity_id.map((entity: string) =>
         callService(
           connection,
-          entity.split('.')[0],
-          state ? 'turn_on' : 'turn_off',
+          entity.split(".")[0],
+          state ? "turn_on" : "turn_off",
           { entity_id: entity }
         ).then(
           () => {
-            console.log('Called service');
+            console.log("Called service");
           },
           (err) => {
-            console.error('Error calling service:', err);
+            console.error("Error calling service:", err);
           }
         )
       );
@@ -126,14 +126,14 @@ export function handleChange(
       callService(
         connection,
         domain,
-        state ? 'turn_on' : 'turn_off',
+        state ? "turn_on" : "turn_off",
         data
       ).then(
         () => {
-          console.log('Called service');
+          console.log("Called service");
         },
         (err) => {
-          console.error('Error calling service:', err);
+          console.error("Error calling service:", err);
         }
       );
   }
@@ -141,7 +141,7 @@ export function handleChange(
 
 function HomeAssistant(props: HomeAssistantProps): null {
   async function eventHandler(): Promise<void> {
-    console.log('Home Assistant connection has been established again.');
+    console.log("Home Assistant connection has been established again.");
   }
 
   const updateConfig = useCallback(
@@ -161,7 +161,7 @@ function HomeAssistant(props: HomeAssistantProps): null {
   const connectToHASS = useCallback(() => {
     if (!connection)
       (async (): Promise<void> => {
-        localStorage.setItem('hass_url', props.url);
+        localStorage.setItem("hass_url", props.url);
         auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
@@ -190,13 +190,13 @@ function HomeAssistant(props: HomeAssistantProps): null {
             throw err;
           }
         }
-        connection.removeEventListener('ready', eventHandler);
-        connection.addEventListener('ready', eventHandler);
+        connection.removeEventListener("ready", eventHandler);
+        connection.addEventListener("ready", eventHandler);
         props.setAuth(auth);
         subscribeConfig(connection, updateConfig);
         subscribeEntities(connection, updateEntites);
         getUser(connection).then((user: HassUser) => {
-          console.log('Logged into Home Assistant as', user.name);
+          console.log("Logged into Home Assistant as", user.name);
         });
         props.setConnection(2);
       })();

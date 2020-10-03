@@ -1,4 +1,4 @@
-import { Auth } from 'home-assistant-js-websocket';
+import { Auth } from "home-assistant-js-websocket";
 
 export async function handleFetchPromise<T>(
   fetchPromise: Promise<Response>
@@ -10,7 +10,7 @@ export async function handleFetchPromise<T>(
   } catch (err) {
     // eslint-disable-next-line
     throw {
-      error: 'Request error',
+      error: "Request error",
       status_code: undefined,
       body: undefined,
     };
@@ -18,15 +18,15 @@ export async function handleFetchPromise<T>(
 
   let body = null;
 
-  const contentType = response.headers.get('content-type');
+  const contentType = response.headers.get("content-type");
 
-  if (contentType && contentType.includes('application/json')) {
+  if (contentType && contentType.includes("application/json")) {
     try {
       body = await response.json();
     } catch (err) {
       // eslint-disable-next-line
       throw {
-        error: 'Unable to parse JSON response',
+        error: "Unable to parse JSON response",
         status_code: err.status,
         body: null,
       };
@@ -55,7 +55,7 @@ const fetchWithAuth = async (
   if (auth.expired) {
     await auth.refreshAccessToken();
   }
-  init.credentials = 'same-origin';
+  init.credentials = "same-origin";
   if (!init.headers) {
     init.headers = {};
   }
@@ -85,7 +85,7 @@ export default async function hassCallApi<T>(
   if (parameters) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    init.headers['Content-Type'] = 'application/json;charset=UTF-8';
+    init.headers["Content-Type"] = "application/json;charset=UTF-8";
     init.body = JSON.stringify(parameters);
   }
 
@@ -98,10 +98,10 @@ export async function fetchHistory(
   start: Date,
   end: Date
 ): Promise<unknown> {
-  let url = 'history/period';
+  let url = "history/period";
   if (start) url += `/${start.toISOString()}`;
   url += `?filter_entity_id=${entity}`;
   if (end) url += `&end_time=${end.toISOString()}`;
-  if (process.env.NODE_ENV === 'development') console.log('fetchHistory:', url);
-  return hassCallApi(auth, 'GET', url);
+  if (process.env.NODE_ENV === "development") console.log("fetchHistory:", url);
+  return hassCallApi(auth, "GET", url);
 }

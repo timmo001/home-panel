@@ -1,7 +1,7 @@
-import React, { useEffect, ReactElement, useState } from 'react';
+import React, { useEffect, ReactElement, useState } from "react";
 
-import { EntityProps } from './Entity';
-import Image from '../../Cards/Image';
+import { EntityProps } from "./Entity";
+import Image from "../../Cards/Image";
 
 function Camera(props: EntityProps): ReactElement | null {
   const [url, setUrl] = useState<string>();

@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Paper from '@material-ui/core/Paper';
-import Popover from '@material-ui/core/Popover';
-import PaletteIcon from '@material-ui/icons/Palette';
-import { SketchPicker, ColorResult } from 'react-color';
+import React, { ReactElement } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Paper from "@material-ui/core/Paper";
+import Popover from "@material-ui/core/Popover";
+import PaletteIcon from "@material-ui/icons/Palette";
+import { SketchPicker, ColorResult } from "react-color";
 
 const useStyles = makeStyles((theme: Theme) => ({
   menu: {
