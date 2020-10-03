@@ -66,13 +66,11 @@ jobs:
           base-branch: master
           file-extension: .md
       - name: 'Prettier Check .ts*'
-        uses: actionsx/prettier@v2
-        with:
-          args: '--check ./**/*.ts*'
+        run: |
+          npx prettier --check ./**/*.ts*
       - name: 'Prettier Check .js*'
-        uses: actionsx/prettier@v2
-        with:
-          args: '--check ./**/*.js*'
+        run: |
+          npx prettier --check ./**/*.js*
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:
