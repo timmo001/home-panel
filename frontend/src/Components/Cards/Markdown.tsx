@@ -30,7 +30,7 @@ function Markdown(props: BaseProps): ReactElement | null {
       color="textPrimary"
       variant="body1"
       component="span">
-      <ReactMarkdown source={props.card.content} escapeHtml={true} />
+      <ReactMarkdown source={props.card.content} escapeHtml={false} />
     </Typography>
   );
 }

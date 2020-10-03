@@ -115,7 +115,7 @@ function RSS(props: BaseProps): ReactElement {
               alignItems="center">
               <Grid item xs>
                 <Typography variant="subtitle1" component="h3">
-                  <ReactMarkdown source={item.heading} escapeHtml={true} />
+                  <ReactMarkdown source={item.heading} escapeHtml={false} />
                 </Typography>
                 {item.meta && (
                   <Typography
@@ -123,12 +123,12 @@ function RSS(props: BaseProps): ReactElement {
                     component="h5"
                     gutterBottom
                     noWrap>
-                    <ReactMarkdown source={item.meta} escapeHtml={true} />
+                    <ReactMarkdown source={item.meta} escapeHtml={false} />
                   </Typography>
                 )}
                 {item.content && (
                   <Typography variant="body2" component="span">
-                    <ReactMarkdown source={item.content} escapeHtml={true} />
+                    <ReactMarkdown source={item.content} escapeHtml={false} />
                   </Typography>
                 )}
               </Grid>

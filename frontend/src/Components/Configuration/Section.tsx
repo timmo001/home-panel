@@ -69,7 +69,7 @@ function Section(props: SectionProps): ReactElement {
                   <Typography variant="body2" component="span">
                     <ReactMarkdown
                       source={item.description}
-                      escapeHtml={true}
+                      escapeHtml={false}
                     />
                   </Typography>
                 </Grid>
