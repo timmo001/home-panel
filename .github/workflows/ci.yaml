@@ -65,18 +65,14 @@ jobs:
           check-modified-files-only: no
           base-branch: master
           file-extension: .md
-      - name: Prettier Check ts*
-        uses: creyD/prettier_action@v3.0
+      - name: 'Prettier Check .ts*'
+        uses: actionsx/prettier@v2
         with:
-          file_pattern: ./**/*.ts*
-          prettier_options: --check
-          dry: yes
-      - name: Prettier Check js*
-        uses: creyD/prettier_action@v3.0
+          args: --check ./**/*.ts*
+      - name: 'Prettier Check .js*'
+        uses: actionsx/prettier@v2
         with:
-          file_pattern: ./**/*.js*
-          prettier_options: --check
-          dry: yes
+          args: --check ./**/*.js*
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:
