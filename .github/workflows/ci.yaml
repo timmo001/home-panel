@@ -115,13 +115,6 @@ jobs:
         env:
           CI: true
         working-directory: backend
-      - name: 'Backend - Jest Report'
-        uses: IgnusG/jest-report-action@v2.3.3
-        with:
-          junit-file: junit.xml
-          run-name: backend
-          check-name: Jest
-          working-directory: backend
   build:
     runs-on: ubuntu-latest
     steps:
