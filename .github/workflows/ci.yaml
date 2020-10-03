@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  lint:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Check out files from GitHub
@@ -35,6 +35,10 @@ jobs:
       - name: Install packages
         run: |
           sudo apt install -y jsonlint
+  lint:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
       - name: ESLint
         run: yarn eslint
       - name: Hadolint
@@ -96,28 +100,8 @@ jobs:
           strict: false
   build:
     runs-on: ubuntu-latest
-    needs: [lint]
+    needs: [setup, lint]
     steps:
-      - name: Check out files from GitHub
-        uses: actions/checkout@v2
-      - name: Setting up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - name: Get yarn cache path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install
-        env:
-          CI: true
       - name: Build Application
         run: yarn build
         env:
