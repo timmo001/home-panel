@@ -74,6 +74,7 @@ jobs:
         uses: ludeeus/action-shellcheck@0.5.0
         with:
           ignore: |
+            .devcontainer
             .vscode
             .yarn
           check_together: yes
