@@ -5,6 +5,9 @@
     },
     {
       "pattern": "^contact@timmo"
+    },
+    {
+      "pattern": "^https://www.buymeacoffee.com"
     }
   ],
   "retryOn429": true
