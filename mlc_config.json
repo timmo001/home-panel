@@ -8,6 +8,9 @@
     },
     {
       "pattern": "^https://www.buymeacoffee.com"
+    },
+    {
+      "pattern": "^https://microbadger.com"
     }
   ],
   "retryOn429": true
