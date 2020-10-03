@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest    
+    runs-on: ubuntu-latest
     steps:
       - name: Check out files from GitHub
         uses: actions/checkout@v2
@@ -113,8 +113,8 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: Build Backend
-        run: yarn build
+      - name: Compile Backend
+        run: yarn compile
         env:
           CI: true
           NODE_ENV: 'production'
