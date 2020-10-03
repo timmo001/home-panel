@@ -34,7 +34,7 @@ jobs:
           CI: true
       - name: Install packages
         run: |
-          apt install -y jsonlint
+          sudo apt install -y jsonlint
       - name: ESLint
         run: yarn eslint
       - name: Hadolint
