@@ -57,11 +57,6 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
-      - name: markdownlint-cli
-        uses: nosborn/github-action-markdown-cli@v1.1.1
-        with:
-          files: .
-          rules: mdl_style.rb
       - name: Markdown Link Checks
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.7
         with:
