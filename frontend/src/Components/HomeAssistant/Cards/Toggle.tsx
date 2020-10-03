@@ -1,29 +1,29 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import grey from "@material-ui/core/colors/grey";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles(() => ({
   root: {
     flex: 1,
   },
   text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    userSelect: "none",
+    textAlign: "center",
+    textOverflow: "ellipsis",
   },
   iconContainer: {
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
   },
   icon: {
-    textAlign: 'center',
+    textAlign: "center",
   },
 }));
 
@@ -31,11 +31,11 @@ function Toggle(props: EntityProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  props.card.toggleable = props.entity.state === 'unavailable' ? false : true;
+  props.card.toggleable = props.entity.state === "unavailable" ? false : true;
   props.card.backgroundTemp =
-    props.entity.state === 'unavailable'
+    props.entity.state === "unavailable"
       ? grey[600]
-      : props.entity.state === 'on' || props.entity.state === 'locked'
+      : props.entity.state === "on" || props.entity.state === "locked"
       ? theme.palette.primary.main
       : props.card.background;
 
@@ -49,7 +49,7 @@ function Toggle(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={clsx('mdi', `mdi-${props.card.icon}`, classes.icon)}
+            className={clsx("mdi", `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"
@@ -62,7 +62,7 @@ function Toggle(props: EntityProps): ReactElement {
           <Typography
             className={classes.text}
             color="textPrimary"
-            variant={props.card.disabled ? 'body2' : 'body1'}
+            variant={props.card.disabled ? "body2" : "body1"}
             component="h5">
             {props.entity.state}
           </Typography>

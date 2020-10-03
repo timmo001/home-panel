@@ -1,31 +1,31 @@
-import React, { useEffect, useState, ReactElement } from 'react';
-import { Auth, HassConfig, HassEntities } from 'home-assistant-js-websocket';
-import { AuthenticationResult } from '@feathersjs/authentication/lib';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import arrayMove from 'array-move';
-import clsx from 'clsx';
-import moment from 'moment';
-import Slide from '@material-ui/core/Slide';
+import React, { useEffect, useState, ReactElement } from "react";
+import { Auth, HassConfig, HassEntities } from "home-assistant-js-websocket";
+import { AuthenticationResult } from "@feathersjs/authentication/lib";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import arrayMove from "array-move";
+import clsx from "clsx";
+import moment from "moment";
+import Slide from "@material-ui/core/Slide";
 
-import { CommandType } from './Utils/Command';
-import { ConfigurationProps, ThemeProps } from './Configuration/Config';
-import { parseTokens } from './HomeAssistant/Utils/Auth';
-import { Page, Editing, ProgressState } from './Types/Types';
-import clone from '../utils/clone';
-import Configuration from './Configuration/Configuration';
-import Drawer from './Drawer/Drawer';
+import { CommandType } from "./Utils/Command";
+import { ConfigurationProps, ThemeProps } from "./Configuration/Config";
+import { parseTokens } from "./HomeAssistant/Utils/Auth";
+import { Page, Editing, ProgressState } from "./Types/Types";
+import clone from "../utils/clone";
+import Configuration from "./Configuration/Configuration";
+import Drawer from "./Drawer/Drawer";
 import HomeAssistant, {
   handleChange as handleHassChange,
-} from './HomeAssistant/HomeAssistant';
-import isObject from '../utils/isObject';
-import Loading from './Utils/Loading';
-import Overview from './Overview/Overview';
+} from "./HomeAssistant/HomeAssistant";
+import isObject from "../utils/isObject";
+import Loading from "./Utils/Loading";
+import Overview from "./Overview/Overview";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
-    maxHeight: '100%',
-    overflowX: 'hidden',
+    height: "100%",
+    maxHeight: "100%",
+    overflowX: "hidden",
     background: theme.palette.background.default,
   },
   content: {
@@ -38,11 +38,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: `calc(100% - ${theme.spacing(6)}px)`,
   },
   contentNoToolbar: {
-    height: '100%',
-    maxHeight: '100%',
+    height: "100%",
+    maxHeight: "100%",
   },
   overview: {
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   toolbar: theme.mixins.toolbar,
   denseToolbar: {
@@ -79,7 +79,7 @@ function Main(props: MainProps): ReactElement {
 
   useEffect(() => {
     if (hassConnection === -2) {
-      const haUrl = localStorage.getItem('hass_url');
+      const haUrl = localStorage.getItem("hass_url");
       if (haUrl) {
         setHassUrl(haUrl);
         setHassConnection(-1);
@@ -88,8 +88,8 @@ function Main(props: MainProps): ReactElement {
   }, [hassConnection]);
 
   function handleUpdateConfig(path: (string | number)[], data?: unknown): void {
-    if (process.env.NODE_ENV === 'development')
-      console.log('handleUpdateConfig:', path, data);
+    if (process.env.NODE_ENV === "development")
+      console.log("handleUpdateConfig:", path, data);
     let config = clone(props.config);
     if (path.length > 0) {
       // Set the new value
@@ -99,9 +99,9 @@ function Main(props: MainProps): ReactElement {
         (o: any, k: any) => (o[k] = o[k] || {}),
         config
       );
-      if (process.env.NODE_ENV === 'development') {
-        console.log('secondLastItem:', secondLastItem);
-        console.log('lastItem:', lastItem);
+      if (process.env.NODE_ENV === "development") {
+        console.log("secondLastItem:", secondLastItem);
+        console.log("lastItem:", lastItem);
       }
       if (lastItem !== undefined && secondLastItem !== undefined) {
         if (Array.isArray(secondLastItem)) {
@@ -122,7 +122,7 @@ function Main(props: MainProps): ReactElement {
       }
     } else config = data;
     props.handleConfigChange(config);
-    if (path.find((i) => i === 'theme')) props.handleSetTheme(config.theme);
+    if (path.find((i) => i === "theme")) props.handleSetTheme(config.theme);
   }
 
   async function handleHassLogin(url: string): Promise<void> {
@@ -131,30 +131,30 @@ function Main(props: MainProps): ReactElement {
   }
 
   function handleBackupConfig(): void {
-    const a = document.createElement('a');
-    const file = new Blob([JSON.stringify(props.config)], { type: 'json' });
+    const a = document.createElement("a");
+    const file = new Blob([JSON.stringify(props.config)], { type: "json" });
     a.href = URL.createObjectURL(file);
     a.download = `home-panel-config-backup-${moment().format(
-      'YYYYMMDDHHmmss'
+      "YYYYMMDDHHmmss"
     )}.json`;
     a.click();
   }
 
   function handleRestoreConfig(): void {
-    const input = document.createElement('input');
-    input.type = 'file';
+    const input = document.createElement("input");
+    input.type = "file";
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     input.onchange = (e: any): void => {
       if (e && e.target) {
         const file = e.target.files[0];
 
         const reader = new FileReader();
-        reader.readAsText(file, 'UTF-8');
+        reader.readAsText(file, "UTF-8");
 
         reader.onload = (readerEvent: ProgressEvent<FileReader>): void => {
           if (readerEvent && readerEvent.target) {
             const content = readerEvent.target.result;
-            if (typeof content === 'string') {
+            if (typeof content === "string") {
               const json = JSON.parse(content);
               if (json) {
                 handleUpdateConfig([], json);
@@ -169,8 +169,8 @@ function Main(props: MainProps): ReactElement {
   }
 
   useEffect(() => {
-    if (props.command && props.currentPage !== 'Overview')
-      props.handleSetCurrentPage('Overview');
+    if (props.command && props.currentPage !== "Overview")
+      props.handleSetCurrentPage("Overview");
   }, [props, props.command, props.currentPage]);
 
   function handleSetEditing(value: Editing) {
@@ -189,7 +189,7 @@ function Main(props: MainProps): ReactElement {
 
   const showToolbar =
     !props.config.general.autohide_toolbar ||
-    props.currentPage === 'Configuration'
+    props.currentPage === "Configuration"
       ? true
       : false || props.mouseMoved;
 
@@ -197,7 +197,7 @@ function Main(props: MainProps): ReactElement {
     <div
       className={clsx(
         classes.root,
-        props.currentPage === 'Overview' && classes.overview
+        props.currentPage === "Overview" && classes.overview
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
@@ -230,7 +230,7 @@ function Main(props: MainProps): ReactElement {
               props.config.general.dense_toolbar &&
               classes.contentDenseToolbar,
             !showToolbar && classes.contentNoToolbar,
-            props.currentPage === 'Overview' && classes.overview
+            props.currentPage === "Overview" && classes.overview
           )}
           style={{ marginLeft: spaceTaken }}>
           {hassUrl && (
@@ -243,7 +243,7 @@ function Main(props: MainProps): ReactElement {
               setEntities={setHassEntities}
             />
           )}
-          {props.currentPage === 'Configuration' &&
+          {props.currentPage === "Configuration" &&
           hassAuth &&
           hassConfig &&
           hassEntities ? (

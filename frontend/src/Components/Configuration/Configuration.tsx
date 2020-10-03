@@ -1,27 +1,27 @@
-import React, { ReactElement } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-import { HomeAssistantEntityProps } from '../HomeAssistant/HomeAssistant';
-import { sections, ConfigProps, ConfigSection } from './Config';
-import Section from './Section';
+import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
+import { sections, ConfigProps, ConfigSection } from "./Config";
+import Section from "./Section";
 
 const useStyles = makeStyles((theme: Theme) => ({
   section: {
-    width: '100%',
+    width: "100%",
     marginBottom: theme.spacing(2),
-    '&:last-child': { marginBottom: 0 },
+    "&:last-child": { marginBottom: 0 },
   },
   cardContent: {
-    '&:last-child': {
+    "&:last-child": {
       paddingBottom: theme.spacing(2.5),
     },
   },
   fab: {
-    position: 'fixed',
+    position: "fixed",
     right: theme.spacing(2),
     bottom: theme.spacing(2),
   },

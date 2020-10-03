@@ -1,4 +1,4 @@
-import { Page } from '../Types/Types';
+import { Page } from "../Types/Types";
 
 export interface DrawerItem {
   name: Page;
@@ -13,13 +13,13 @@ export interface MenuItem {
 
 const Items: DrawerItem[] = [
   {
-    name: 'Overview',
-    icon: 'mdi-view-dashboard',
-    menuItems: [{ name: 'Edit', icon: 'mdi-pencil' }],
+    name: "Overview",
+    icon: "mdi-view-dashboard",
+    menuItems: [{ name: "Edit", icon: "mdi-pencil" }],
   },
   {
-    name: 'Configuration',
-    icon: 'mdi-cog',
+    name: "Configuration",
+    icon: "mdi-cog",
   },
 ];
 

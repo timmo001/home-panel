@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback, ReactElement } from 'react';
-import request from 'superagent';
-import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import ReactMarkdown from 'react-markdown';
+import React, { useState, useEffect, useCallback, ReactElement } from "react";
+import request from "superagent";
+import moment from "moment";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import ReactMarkdown from "react-markdown";
 
-import { BaseProps } from './Base';
+import { BaseProps } from "./Base";
 
 type ArticleData = {
   source: string;
@@ -31,8 +31,8 @@ type FeedData = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
-    overflowY: 'auto',
+    height: "100%",
+    overflowY: "auto",
   },
   divider: {
     marginTop: theme.spacing(1),
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   media: {
     height: `calc(100% - ${theme.spacing(2)}px)`,
-    width: '100%',
+    width: "100%",
   },
 }));
 
@@ -57,7 +57,7 @@ function News(props: BaseProps): ReactElement {
   const handleGetData = useCallback(() => {
     if (props.config.news && props.config.news.news_api_key && props.card.url) {
       setError(undefined);
-      console.log('Update News Feed for', props.card.url);
+      console.log("Update News Feed for", props.card.url);
       request
         .get(
           `https://newsapi.org/v2/top-headlines?sources=${props.card.url}&apiKey=${props.config.news.news_api_key}`
@@ -69,7 +69,7 @@ function News(props: BaseProps): ReactElement {
               title: article.title,
               url: article.url,
               meta: `${moment(article.publishedAt).format(
-                `${props.config.header.time_military ? 'HH:mm' : 'hh:mm a'} ${
+                `${props.config.header.time_military ? "HH:mm" : "hh:mm a"} ${
                   props.config.header.date_format
                 }`
               )} - ${article.author}`,
@@ -82,12 +82,12 @@ function News(props: BaseProps): ReactElement {
         })
         .catch((err) => {
           console.error(err);
-          setError('An error occured when getting the sources for News API.');
+          setError("An error occured when getting the sources for News API.");
           props.card.disabled = true;
         });
     } else {
       setError(
-        'You have not selected a source or do not  a News API key set in your config.'
+        "You have not selected a source or do not  a News API key set in your config."
       );
       props.card.disabled = true;
     }

@@ -1,31 +1,31 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Grid from '@material-ui/core/Grid';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles(() => ({
   buttonCardContainer: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
     flex: 1,
   },
   card: {
-    position: 'relative',
-    height: '100%',
-    width: '100%',
+    position: "relative",
+    height: "100%",
+    width: "100%",
     flex: 1,
   },
   cardContent: {
     padding: 12,
-    '&:last-child': {
+    "&:last-child": {
       paddingBottom: 12,
     },
   },
   grid: {
-    height: '100%',
+    height: "100%",
   },
   icon: {
     fontSize: 48,
@@ -40,7 +40,7 @@ function AddCard(props: AddCardProps): ReactElement {
   const classes = useStyles();
   const theme = useTheme();
 
-  const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
+  const cardSize = theme.breakpoints.down("sm") ? 140 : 120;
   return (
     <Grid item>
       <ButtonBase
@@ -63,7 +63,7 @@ function AddCard(props: AddCardProps): ReactElement {
               container
               alignContent="center"
               justify="center">
-              <span className={clsx('mdi', 'mdi-plus', classes.icon)} />
+              <span className={clsx("mdi", "mdi-plus", classes.icon)} />
             </Grid>
           </CardContent>
         </Card>

@@ -3,7 +3,7 @@ import {
   Page,
   GroupProps,
   CardProps,
-} from '../Components/Configuration/Config';
+} from "../Components/Configuration/Config";
 
 export function findPageIdByKey(
   config: ConfigurationProps,

@@ -5,36 +5,36 @@ import React, {
   useEffect,
   useState,
   useMemo,
-} from 'react';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import ButtonBase from '@material-ui/core/ButtonBase';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Dialog from '@material-ui/core/Dialog';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import CloseIcon from '@material-ui/icons/Close';
+} from "react";
+import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import ButtonBase from "@material-ui/core/ButtonBase";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Dialog from "@material-ui/core/Dialog";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import CloseIcon from "@material-ui/icons/Close";
 
-import { CardProps, ConfigurationProps } from '../Configuration/Config';
+import { CardProps, ConfigurationProps } from "../Configuration/Config";
 import {
   HomeAssistantChangeProps,
   entitySizes,
-} from '../HomeAssistant/HomeAssistant';
-import { CommandType } from '../Utils/Command';
-import Checklist from './Checklist/Checklist';
-import Entity from '../HomeAssistant/Cards/Entity';
-import Frame from './Frame';
-import Image from './Image';
-import Markdown from './Markdown';
-import Message from '../Utils/Message';
-import News from './News';
-import Overlay from './Overlay';
-import RSS from './RSS';
+} from "../HomeAssistant/HomeAssistant";
+import { CommandType } from "../Utils/Command";
+import Checklist from "./Checklist/Checklist";
+import Entity from "../HomeAssistant/Cards/Entity";
+import Frame from "./Frame";
+import Image from "./Image";
+import Markdown from "./Markdown";
+import Message from "../Utils/Message";
+import News from "./News";
+import Overlay from "./Overlay";
+import RSS from "./RSS";
 
 const useStyles = makeStyles((theme: Theme) => ({
   buttonExpand: {
-    position: 'absolute',
+    position: "absolute",
     top: theme.spacing(1.2),
     right: theme.spacing(0.8),
   },
@@ -42,21 +42,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     flex: 1,
   },
   cardContent: {
-    textAlign: 'start',
-    display: 'flex',
-    flexDirection: 'column',
-    '&:last-child': {
-      paddingBottom: 'initial',
+    textAlign: "start",
+    display: "flex",
+    flexDirection: "column",
+    "&:last-child": {
+      paddingBottom: "initial",
     },
   },
   textField: {
     width: `calc(100% - ${theme.spacing(1)}px)`,
-    flex: '1 1 auto',
+    flex: "1 1 auto",
     margin: 4,
   },
   title: {
     minHeight: theme.spacing(3),
-    userSelect: 'none',
+    userSelect: "none",
     fontWeight: 400,
     lineHeight: 1.2,
   },
@@ -98,7 +98,7 @@ function Base(props: BaseProps): ReactElement {
         !props.expandable && entitySizeKey
           ? entitySizes[entitySizeKey].height * cardSize
           : props.editing === 2 || !props.card.height
-          ? 'initial'
+          ? "initial"
           : !isNaN(Number(props.card.height))
           ? Number(props.card.height) * cardSize || cardSize
           : props.card.height;
@@ -127,7 +127,7 @@ function Base(props: BaseProps): ReactElement {
   );
 
   const handleSetToggleable = useCallback(() => {
-    if (props.card.click_action?.type === 'call-service') setToggleable(true);
+    if (props.card.click_action?.type === "call-service") setToggleable(true);
     else
       setToggleable(
         props.editing === 1
@@ -156,17 +156,17 @@ function Base(props: BaseProps): ReactElement {
   );
 
   useEffect(() => {
-    const cardSize = theme.breakpoints.down('sm') ? 140 : 120;
+    const cardSize = theme.breakpoints.down("sm") ? 140 : 120;
 
     const entitySizeKey = Object.keys(entitySizes).find(
-      (domain: string) => domain === props.card.entity?.split('.')[0]
+      (domain: string) => domain === props.card.entity?.split(".")[0]
     );
     handleSetHeight(cardSize, entitySizeKey);
     handleSetWidth(cardSize, entitySizeKey);
 
     handleSetToggleable();
 
-    if (props.expandable && props.card.type === 'entity' && entitySizeKey)
+    if (props.expandable && props.card.type === "entity" && entitySizeKey)
       handleSetExpandable(entitySizeKey);
   }, [
     props.card.entity,
@@ -183,39 +183,39 @@ function Base(props: BaseProps): ReactElement {
 
   function handleHassToggle(): void {
     if (props.handleHassChange) {
-      const domain = props.card.entity?.split('.')[0];
-      console.log('handleHassToggle', props.card);
+      const domain = props.card.entity?.split(".")[0];
+      console.log("handleHassToggle", props.card);
       if (
         props.card.click_action &&
-        props.card.click_action.type === 'call-service' &&
+        props.card.click_action.type === "call-service" &&
         props.card.click_action.service &&
         props.card.click_action.service_data
       ) {
-        const service = props.card.click_action.service.split('.');
+        const service = props.card.click_action.service.split(".");
         props.handleHassChange(
           service[0],
           service[1],
           JSON.parse(props.card.click_action.service_data)
         );
       } else if (domain) {
-        if (domain === 'lock') {
-          process.env.NODE_ENV === 'development' &&
+        if (domain === "lock") {
+          process.env.NODE_ENV === "development" &&
             console.log(props.card.state);
           props.handleHassChange(
             domain,
-            props.card.state === 'locked' ? 'unlock' : 'lock',
+            props.card.state === "locked" ? "unlock" : "lock",
             {
               entity_id: props.card.entity,
             }
           );
         } else {
-          process.env.NODE_ENV === 'development' &&
-            console.log(domain, props.card.state === 'on' ? false : true, {
+          process.env.NODE_ENV === "development" &&
+            console.log(domain, props.card.state === "on" ? false : true, {
               entity_id: props.card.entity,
             });
           props.handleHassChange(
             domain,
-            props.card.state === 'on' ? false : true,
+            props.card.state === "on" ? false : true,
             {
               entity_id: props.card.entity,
             },
@@ -248,7 +248,7 @@ function Base(props: BaseProps): ReactElement {
   }
 
   const card: ReactElement =
-    props.card.type === 'entity' ? (
+    props.card.type === "entity" ? (
       props.hassConnection === -2 ? (
         <Message type="error" text="Home Assistant not connected" />
       ) : props.hassConnection === -1 ? (
@@ -256,17 +256,17 @@ function Base(props: BaseProps): ReactElement {
       ) : (
         <Entity {...props} handleHassToggle={handleHassToggle} />
       )
-    ) : props.card.type === 'iframe' ? (
+    ) : props.card.type === "iframe" ? (
       <Frame {...props} />
-    ) : props.card.type === 'image' ? (
+    ) : props.card.type === "image" ? (
       <Image {...props} />
-    ) : props.card.type === 'markdown' ? (
+    ) : props.card.type === "markdown" ? (
       <Markdown {...props} />
-    ) : props.card.type === 'news' ? (
+    ) : props.card.type === "news" ? (
       <News {...props} />
-    ) : props.card.type === 'rss' ? (
+    ) : props.card.type === "rss" ? (
       <RSS {...props} />
-    ) : props.card.type === 'checklist' ? (
+    ) : props.card.type === "checklist" ? (
       <Checklist {...props} />
     ) : (
       <Fragment />
@@ -280,7 +280,7 @@ function Base(props: BaseProps): ReactElement {
         ? props.card.backgroundTemp
         : props.card.background
         ? props.card.background
-        : '',
+        : "",
     [
       props.card.background,
       props.card.backgroundTemp,
@@ -306,8 +306,8 @@ function Base(props: BaseProps): ReactElement {
       disableRipple={!toggleable}
       focusRipple={toggleable}
       style={{
-        cursor: !toggleable ? 'unset' : 'pointer',
-        userSelect: !toggleable ? 'text' : 'none',
+        cursor: !toggleable ? "unset" : "pointer",
+        userSelect: !toggleable ? "text" : "none",
       }}
       onClick={toggleable ? handleHassToggle : undefined}
       onTouchStart={handleHold}
@@ -340,7 +340,7 @@ function Base(props: BaseProps): ReactElement {
                 <Typography
                   className={classes.title}
                   align={
-                    props.card.title_justify ? props.card.title_justify : 'left'
+                    props.card.title_justify ? props.card.title_justify : "left"
                   }
                   color="textPrimary"
                   variant="h6"
@@ -369,7 +369,7 @@ function Base(props: BaseProps): ReactElement {
       </Card>
       {expandCard && (
         <Dialog
-          PaperProps={{ style: { background: 'transparent' } }}
+          PaperProps={{ style: { background: "transparent" } }}
           open={expandCard}
           onClose={handleCloseExpand}>
           <Grid container justify="center">

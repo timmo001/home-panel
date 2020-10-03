@@ -60,7 +60,7 @@ jobs:
           use-verbose-mode: no
           config-file: mlc_config.json
           folder-path: documentation, backend, frontend, rootfs, .github
-          file-path: './README.md, ./LICENSE.md'
+          file-path: "./README.md, ./LICENSE.md"
           max-depth: -1
           check-modified-files-only: no
           base-branch: master
@@ -69,6 +69,7 @@ jobs:
         run: |
           yarn prettier-check-ts
           yarn prettier-check-js
+          yarn prettier-check-yml
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:
@@ -106,12 +107,12 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: 'Backend - Test'
+      - name: "Backend - Test"
         run: yarn test
         env:
           CI: true
         working-directory: backend
-      - name: 'Frontend - Test'
+      - name: "Frontend - Test"
         run: yarn test
         env:
           CI: true
@@ -139,24 +140,24 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: 'Backend - Compile'
+      - name: "Backend - Compile"
         run: yarn compile
         env:
           CI: true
-          NODE_ENV: 'production'
+          NODE_ENV: "production"
         working-directory: backend
-      - name: 'Backend - Upload Artifacts'
+      - name: "Backend - Upload Artifacts"
         uses: actions/upload-artifact@v2
         with:
           name: backend-lib
           path: backend/lib/
-      - name: 'Frontend - Build'
+      - name: "Frontend - Build"
         run: yarn build
         env:
           CI: true
-          NODE_ENV: 'production'
+          NODE_ENV: "production"
         working-directory: frontend
-      - name: 'Frontend - Upload Artifacts'
+      - name: "Frontend - Upload Artifacts"
         uses: actions/upload-artifact@v2
         with:
           name: frontend-build

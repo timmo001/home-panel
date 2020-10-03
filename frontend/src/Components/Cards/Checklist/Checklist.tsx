@@ -1,28 +1,28 @@
-import React, { Fragment, ReactElement, useCallback, useMemo } from 'react';
-import arrayMove from 'array-move';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import AddIcon from '@material-ui/icons/Add';
+import React, { Fragment, ReactElement, useCallback, useMemo } from "react";
+import arrayMove from "array-move";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import AddIcon from "@material-ui/icons/Add";
 
-import { BaseProps } from '../Base';
-import { ChecklistItem } from '../../Configuration/Config';
-import clone from '../../../utils/clone';
-import Item from './Item';
-import makeKey from '../../../utils/makeKey';
+import { BaseProps } from "../Base";
+import { ChecklistItem } from "../../Configuration/Config";
+import clone from "../../../utils/clone";
+import Item from "./Item";
+import makeKey from "../../../utils/makeKey";
 
 const useStyles = makeStyles(() => ({
   root: {
-    height: '100%',
-    width: '100%',
-    overflowY: 'auto',
+    height: "100%",
+    width: "100%",
+    overflowY: "auto",
   },
   button: {
-    width: '100%',
+    width: "100%",
   },
   inputChecked: {
-    textDecoration: 'line-through',
+    textDecoration: "line-through",
   },
 }));
 
@@ -58,7 +58,7 @@ function Checklist(props: BaseProps): ReactElement | null {
 
   const handleAddItem = useCallback(() => {
     const items = props.card.checklist_items || [];
-    items.push({ key: makeKey(32), text: '', checked: false });
+    items.push({ key: makeKey(32), text: "", checked: false });
     props.handleUpdate({ ...props.card, checklist_items: items });
   }, [props]);
 

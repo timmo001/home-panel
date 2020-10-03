@@ -1,12 +1,12 @@
-import React, { ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, useState } from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Input from "@material-ui/core/Input";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -16,13 +16,13 @@ const useStyles = makeStyles(() => ({
     zIndex: 100,
   },
   iconContainer: {
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
     zIndex: 100,
   },
   icon: {
-    textAlign: 'center',
+    textAlign: "center",
   },
 }));
 
@@ -41,7 +41,7 @@ function NumberEntity(props: EntityProps): ReactElement {
     value: number | number[]
   ): void {
     props.handleHassChange &&
-      props.handleHassChange('input_number', 'set_value', {
+      props.handleHassChange("input_number", "set_value", {
         entity_id: props.entity.entity_id,
         value,
       });
@@ -51,7 +51,7 @@ function NumberEntity(props: EntityProps): ReactElement {
     const val = Number(event.target.value);
     setNumber(!val ? 0 : val);
     props.handleHassChange &&
-      props.handleHassChange('input_number', 'set_value', {
+      props.handleHassChange("input_number", "set_value", {
         entity_id: props.entity.entity_id,
         value: val,
       });
@@ -78,7 +78,7 @@ function NumberEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={clsx('mdi', `mdi-${props.card.icon}`, classes.icon)}
+            className={clsx("mdi", `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"
@@ -95,7 +95,7 @@ function NumberEntity(props: EntityProps): ReactElement {
           alignContent="center"
           justify="center">
           {props.entity.attributes &&
-          props.entity.attributes.mode === 'slider' ? (
+          props.entity.attributes.mode === "slider" ? (
             <Grid item xs>
               <Slider
                 onChange={handleSliderChange}
@@ -130,8 +130,8 @@ function NumberEntity(props: EntityProps): ReactElement {
                   max: props.entity.attributes
                     ? props.entity.attributes.max
                     : 100,
-                  type: 'number',
-                  'aria-labelledby': 'input-slider',
+                  type: "number",
+                  "aria-labelledby": "input-slider",
                 }}
               />
             </Grid>

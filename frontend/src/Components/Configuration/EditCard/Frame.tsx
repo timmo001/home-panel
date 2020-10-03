@@ -1,11 +1,11 @@
-import React, { ReactElement, Fragment } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, Fragment } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Divider from "@material-ui/core/Divider";
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Typography from "@material-ui/core/Typography";
 
-import { BaseProps } from './Base';
+import { BaseProps } from "./Base";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(2),
   },
   textField: {
-    width: 'calc(100% - 8px)',
+    width: "calc(100% - 8px)",
     margin: 4,
   },
 }));
@@ -49,8 +49,8 @@ function Frame(props: BaseProps): ReactElement {
             InputLabelProps={{ shrink: true }}
             label="URL"
             placeholder="https://timmo.dev/home-panel"
-            value={props.card.url || ''}
-            onChange={props.handleChange && props.handleChange('url')}
+            value={props.card.url || ""}
+            onChange={props.handleChange && props.handleChange("url")}
           />
         </Grid>
         <Grid item xs>
@@ -59,8 +59,8 @@ function Frame(props: BaseProps): ReactElement {
             InputLabelProps={{ shrink: true }}
             label="Height"
             placeholder="auto"
-            value={props.card.height || 'auto'}
-            onChange={props.handleChange && props.handleChange('height')}
+            value={props.card.height || "auto"}
+            onChange={props.handleChange && props.handleChange("height")}
           />
         </Grid>
       </Grid>

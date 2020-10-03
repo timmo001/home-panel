@@ -1,46 +1,46 @@
-import React, { ReactElement, Fragment, useState } from 'react';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import ArrowLeftIcon from '@material-ui/icons/KeyboardArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import React, { ReactElement, Fragment, useState } from "react";
+import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import ArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import ArrowRightIcon from "@material-ui/icons/KeyboardArrowRight";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 import {
   CardProps,
   defaultCard,
   defaultGroup,
   GroupProps,
-} from '../Configuration/Config';
-import { OverviewProps } from '../Overview/Overview';
-import { findGroupIdByGroup, findCardIdByCard } from '../../utils/find';
-import AddCard from '../Cards/AddCard';
-import AddGroup from '../Cards/AddGroup';
-import Base from '../Cards/Base';
-import ConfirmDialog from '../Utils/ConfirmDialog';
-import EditGroup from '../Configuration/EditGroup';
-import makeKey from '../../utils/makeKey';
+} from "../Configuration/Config";
+import { OverviewProps } from "../Overview/Overview";
+import { findGroupIdByGroup, findCardIdByCard } from "../../utils/find";
+import AddCard from "../Cards/AddCard";
+import AddGroup from "../Cards/AddGroup";
+import Base from "../Cards/Base";
+import ConfirmDialog from "../Utils/ConfirmDialog";
+import EditGroup from "../Configuration/EditGroup";
+import makeKey from "../../utils/makeKey";
 
 const useStyles = makeStyles((theme: Theme) => ({
   title: {
-    width: '100%',
-    userSelect: 'none',
+    width: "100%",
+    userSelect: "none",
     fontWeight: 300,
     lineHeight: 1.2,
   },
   groupContainer: {
-    height: '100%',
-    minWidth: theme.breakpoints.down('sm') ? 140 : 120,
-    overflowX: 'hidden',
-    overflowY: 'hidden',
+    height: "100%",
+    minWidth: theme.breakpoints.down("sm") ? 140 : 120,
+    overflowX: "hidden",
+    overflowY: "hidden",
   },
   group: {
     height: `calc(100% - ${theme.spacing(6)}px)`,
     marginBottom: theme.spacing(0.5),
-    overflowX: 'hidden',
-    overflowY: 'auto',
+    overflowX: "hidden",
+    overflowY: "auto",
   },
 }));
 
@@ -53,34 +53,34 @@ function Groups(props: GroupsProps): ReactElement {
   const [deleteConfirm, setDeleteConfirm] = useState<GroupProps>();
 
   function handleAddGroup(): void {
-    console.log('handleAddGroup:', props.currentPage);
+    console.log("handleAddGroup:", props.currentPage);
     props.handleUpdateConfig(
-      ['groups', props.config.groups.length],
+      ["groups", props.config.groups.length],
       defaultGroup(props.currentPage)
     );
   }
 
   const handleAddCard = (groupKey: string) => (): void => {
-    console.log('handleAddCard:', groupKey);
+    console.log("handleAddCard:", groupKey);
     props.handleUpdateConfig(
-      ['cards', props.config.cards.length],
+      ["cards", props.config.cards.length],
       defaultCard(groupKey)
     );
   };
 
   const handleCopy = (card: CardProps) => (): void => {
-    console.log('handleCopy:', card);
-    props.handleUpdateConfig(['cards', props.config.cards.length], {
+    console.log("handleCopy:", card);
+    props.handleUpdateConfig(["cards", props.config.cards.length], {
       ...card,
       key: makeKey(16),
     });
   };
 
   const handleDelete = (group?: GroupProps, card?: CardProps) => (): void => {
-    console.log('handleDelete:', group, card);
+    console.log("handleDelete:", group, card);
     if (card)
       props.handleUpdateConfig(
-        ['cards', findCardIdByCard(props.config, card)],
+        ["cards", findCardIdByCard(props.config, card)],
         undefined
       );
     else if (group) {
@@ -89,16 +89,16 @@ function Groups(props: GroupsProps): ReactElement {
         const groupKey = props.config.groups[groupId].key;
         props.config.cards.map((card: CardProps, id: number) => {
           if (card.group === groupKey)
-            props.handleUpdateConfig(['cards', id], undefined);
+            props.handleUpdateConfig(["cards", id], undefined);
           return card;
         });
-        props.handleUpdateConfig(['groups', groupId], undefined);
+        props.handleUpdateConfig(["groups", groupId], undefined);
       }
     }
   };
 
   const handleMoveUp = (group: GroupProps, card?: CardProps) => (): void => {
-    console.log('handleMoveUp:', group, card);
+    console.log("handleMoveUp:", group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
       let pos = 0;
@@ -111,10 +111,10 @@ function Groups(props: GroupsProps): ReactElement {
         )
           break;
       }
-      process.env.NODE_ENV === 'development' &&
-        console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
+      process.env.NODE_ENV === "development" &&
+        console.log("cardId:", cardId, "pos:", pos, "Result:", cardId + pos);
 
-      props.handleUpdateConfig(['cards', cardId], [pos]);
+      props.handleUpdateConfig(["cards", cardId], [pos]);
     } else {
       const groupId = findGroupIdByGroup(props.config, group);
       let pos = 0;
@@ -127,14 +127,14 @@ function Groups(props: GroupsProps): ReactElement {
         )
           break;
       }
-      process.env.NODE_ENV === 'development' &&
-        console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig(['groups', groupId], [pos]);
+      process.env.NODE_ENV === "development" &&
+        console.log("groupId:", groupId, "pos:", pos, "Result:", groupId + pos);
+      props.handleUpdateConfig(["groups", groupId], [pos]);
     }
   };
 
   const handleMoveDown = (group: GroupProps, card?: CardProps) => (): void => {
-    console.log('handleMoveDown:', group, card);
+    console.log("handleMoveDown:", group, card);
     if (card) {
       const cardId = findCardIdByCard(props.config, card);
       let pos = 0;
@@ -146,13 +146,13 @@ function Groups(props: GroupsProps): ReactElement {
         )
           break;
       }
-      process.env.NODE_ENV === 'development' &&
-        console.log('cardId:', cardId, 'pos:', pos, 'Result:', cardId + pos);
+      process.env.NODE_ENV === "development" &&
+        console.log("cardId:", cardId, "pos:", pos, "Result:", cardId + pos);
 
-      props.handleUpdateConfig(['cards', cardId], [pos]);
+      props.handleUpdateConfig(["cards", cardId], [pos]);
 
       props.handleUpdateConfig(
-        ['cards', findCardIdByCard(props.config, card)],
+        ["cards", findCardIdByCard(props.config, card)],
         [+1]
       );
     } else {
@@ -166,16 +166,16 @@ function Groups(props: GroupsProps): ReactElement {
         )
           break;
       }
-      process.env.NODE_ENV === 'development' &&
-        console.log('groupId:', groupId, 'pos:', pos, 'Result:', groupId + pos);
-      props.handleUpdateConfig(['groups', groupId], [pos]);
+      process.env.NODE_ENV === "development" &&
+        console.log("groupId:", groupId, "pos:", pos, "Result:", groupId + pos);
+      props.handleUpdateConfig(["groups", groupId], [pos]);
     }
   };
 
   const handleUpdateCard = (card: CardProps) => (data: CardProps): void => {
-    console.log('handleUpdateCard:', card, data);
+    console.log("handleUpdateCard:", card, data);
     props.handleUpdateConfig(
-      ['cards', findCardIdByCard(props.config, card)],
+      ["cards", findCardIdByCard(props.config, card)],
       data
     );
   };
@@ -189,15 +189,15 @@ function Groups(props: GroupsProps): ReactElement {
   }
 
   const handleUpdateGroup = (group: GroupProps) => (data: GroupProps): void => {
-    console.log('handleUpdateGroup:', group, data);
+    console.log("handleUpdateGroup:", group, data);
     props.handleUpdateConfig(
-      ['groups', findGroupIdByGroup(props.config, group)],
+      ["groups", findGroupIdByGroup(props.config, group)],
       data
     );
   };
 
   const handleDeleteConfirm = (group: GroupProps) => (): void => {
-    console.log('handleDeleteConfirm:', group);
+    console.log("handleDeleteConfirm:", group);
     setDeleteConfirm(group);
   };
 
@@ -222,7 +222,7 @@ function Groups(props: GroupsProps): ReactElement {
           (card: CardProps) => card.group === group.key
         );
         const groupWidth =
-          (theme.breakpoints.down('sm') ? 140 : 120) * group.width +
+          (theme.breakpoints.down("sm") ? 140 : 120) * group.width +
           group.width * theme.spacing(1.5);
         return (
           <Grid
@@ -255,7 +255,7 @@ function Groups(props: GroupsProps): ReactElement {
               {props.editing === 1 && (
                 <Grid
                   item
-                  style={{ width: 'fit-content' }}
+                  style={{ width: "fit-content" }}
                   container
                   alignContent="center"
                   justify="flex-end">
@@ -335,7 +335,7 @@ function Groups(props: GroupsProps): ReactElement {
           justify="flex-start"
           alignContent="flex-start"
           style={{
-            width: theme.breakpoints.down('sm') ? 140 : 120,
+            width: theme.breakpoints.down("sm") ? 140 : 120,
           }}>
           <AddGroup handleAdd={handleAddGroup} />
         </Grid>

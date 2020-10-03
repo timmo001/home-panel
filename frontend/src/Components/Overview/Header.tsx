@@ -1,26 +1,26 @@
-import React, { ReactElement, useMemo } from 'react';
-import moment from 'moment';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import React, { ReactElement, useMemo } from "react";
+import moment from "moment";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 
-import { ConfigProps } from '../Configuration/Config';
-import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
+import { ConfigProps } from "../Configuration/Config";
+import { HomeAssistantChangeProps } from "../HomeAssistant/HomeAssistant";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     marginBottom: theme.spacing(1),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down("sm")]: {
       marginBottom: theme.spacing(0.5),
     },
   },
   date: {
-    fontSize: '2.4rem',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '2.0rem',
+    fontSize: "2.4rem",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "2.0rem",
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem',
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.6rem",
     },
   },
   time: {
@@ -28,12 +28,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   timePeriod: {
     marginLeft: theme.spacing(1),
-    fontSize: '2.4rem',
-    [theme.breakpoints.down('md')]: {
-      fontSize: '2.0rem',
+    fontSize: "2.4rem",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "2.0rem",
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1.6rem',
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1.6rem",
     },
   },
 }));
@@ -47,7 +47,7 @@ function Header(props: HeaderProps): ReactElement | null {
   const timeLocation = props.config.header.time_location;
   const dateLocation = props.config.header.date_location;
   const timeFormat = useMemo(() => {
-    let format = props.config.header.time_military ? 'HH:mm' : 'hh:mm_-_a';
+    let format = props.config.header.time_military ? "HH:mm" : "hh:mm_-_a";
 
     if (timeLocation === dateLocation && props.config.header.date_show)
       format += `-_-${props.config.header.date_format}`;
@@ -64,8 +64,8 @@ function Header(props: HeaderProps): ReactElement | null {
   const timeRows = useMemo(() => {
     return momentDate
       .format(timeFormat)
-      .split('-_-')
-      .map((timeColumn: string) => timeColumn.split('_-_'));
+      .split("-_-")
+      .map((timeColumn: string) => timeColumn.split("_-_"));
   }, [momentDate, timeFormat]);
 
   const time = props.config.header.time_show && (
@@ -101,7 +101,7 @@ function Header(props: HeaderProps): ReactElement | null {
   );
 
   const columns: (string | boolean | ReactElement)[] = useMemo(() => {
-    const cols: (string | boolean | ReactElement)[] = ['', '', ''];
+    const cols: (string | boolean | ReactElement)[] = ["", "", ""];
     cols[timeLocation] = time;
     if (timeLocation !== dateLocation || !props.config.header.time_show)
       cols[dateLocation] = date;
@@ -126,7 +126,7 @@ function Header(props: HeaderProps): ReactElement | null {
           item
           xs
           style={{
-            textAlign: key === 2 ? 'end' : key === 1 ? 'center' : 'start',
+            textAlign: key === 2 ? "end" : key === 1 ? "center" : "start",
           }}>
           {columnData}
         </Grid>

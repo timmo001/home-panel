@@ -1,4 +1,4 @@
-export type Page = 'Overview' | 'Configuration';
+export type Page = "Overview" | "Configuration";
 export type Editing = 0 | 1 | 2;
 
 // -2 - Unloaded

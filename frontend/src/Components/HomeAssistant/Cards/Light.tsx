@@ -1,59 +1,59 @@
-import React, { useEffect, ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { ColorResult, HuePicker } from 'react-color';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
-import grey from '@material-ui/core/colors/grey';
+import React, { useEffect, ReactElement, useState } from "react";
+import clsx from "clsx";
+import { ColorResult, HuePicker } from "react-color";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import FormControl from "@material-ui/core/FormControl";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
+import grey from "@material-ui/core/colors/grey";
 
-import { EntityProps } from './Entity';
-import FeatureClassNames from '../Utils/FeatureClassNames';
+import { EntityProps } from "./Entity";
+import FeatureClassNames from "../Utils/FeatureClassNames";
 
 const useStyles = makeStyles(() => ({
   root: {
     flex: 1,
   },
   text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    userSelect: "none",
+    textAlign: "center",
+    textOverflow: "ellipsis",
   },
   iconContainer: {
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
   },
   icon: {
     height: 48,
     width: 48,
-    textAlign: 'center',
-    verticalAlign: 'center',
+    textAlign: "center",
+    verticalAlign: "center",
   },
   select: {
-    minWidth: '100%',
-    width: '100%',
+    minWidth: "100%",
+    width: "100%",
   },
 }));
 
 const FEATURE_CLASS_NAMES = {
-  1: 'has-brightness',
-  2: 'has-color_temp',
-  4: 'has-effect_list',
-  16: 'has-color',
-  128: 'has-white_value',
+  1: "has-brightness",
+  2: "has-color_temp",
+  4: "has-effect_list",
+  16: "has-color",
+  128: "has-white_value",
 };
 
 function Light(props: EntityProps): ReactElement | null {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [attributes, setAttributes] = useState<{ [key: string]: any }>();
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState("");
 
   const classes = useStyles();
   const theme = useTheme();
@@ -64,11 +64,11 @@ function Light(props: EntityProps): ReactElement | null {
     if (props.entity) {
       setAttributes(props.entity.attributes);
       setColor(
-        props.entity.state === 'unavailable'
+        props.entity.state === "unavailable"
           ? grey[600]
-          : props.entity.state === 'on'
+          : props.entity.state === "on"
           ? props.entity.attributes.rgb_color
-            ? `rgb(${props.entity.attributes.rgb_color.join(',')})`
+            ? `rgb(${props.entity.attributes.rgb_color.join(",")})`
             : theme.palette.primary.main
           : theme.palette.text.primary
       );
@@ -89,7 +89,7 @@ function Light(props: EntityProps): ReactElement | null {
     value: number | number[]
   ): void => {
     props.handleHassChange &&
-      props.handleHassChange('light', true, {
+      props.handleHassChange("light", true, {
         entity_id: props.entity.entity_id,
         [name]: value,
       });
@@ -101,7 +101,7 @@ function Light(props: EntityProps): ReactElement | null {
       rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
     });
     props.handleHassChange &&
-      props.handleHassChange('light', true, {
+      props.handleHassChange("light", true, {
         entity_id: props.entity.entity_id,
         rgb_color: [color.rgb.r, color.rgb.g, color.rgb.b],
       });
@@ -114,7 +114,7 @@ function Light(props: EntityProps): ReactElement | null {
   ): void => {
     setAttributes({ ...attributes, [name]: event.target.value });
     props.handleHassChange &&
-      props.handleHassChange('light', true, {
+      props.handleHassChange("light", true, {
         entity_id: props.entity.entity_id,
         [name]: event.target.value,
       });
@@ -122,15 +122,15 @@ function Light(props: EntityProps): ReactElement | null {
 
   const controls = [];
 
-  if (attrClasses.includes('has-brightness'))
+  if (attrClasses.includes("has-brightness"))
     controls.push(
       <Grid key={0} item xs={10}>
         <Typography id="discrete-slider" gutterBottom>
           Brightness
         </Typography>
         <Slider
-          onChange={handleSliderChange('brightness_pct')}
-          onChangeCommitted={handleSliderChangeComplete('brightness_pct')}
+          onChange={handleSliderChange("brightness_pct")}
+          onChangeCommitted={handleSliderChangeComplete("brightness_pct")}
           value={
             attributes
               ? attributes.brightness_pct
@@ -149,15 +149,15 @@ function Light(props: EntityProps): ReactElement | null {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-color_temp') && props.entity.state === 'on')
+  if (attrClasses.includes("has-color_temp") && props.entity.state === "on")
     controls.push(
       <Grid key={1} item xs={10}>
         <Typography id="discrete-slider" gutterBottom>
           Color Temperature
         </Typography>
         <Slider
-          onChange={handleSliderChange('color_temp')}
-          onChangeCommitted={handleSliderChangeComplete('color_temp')}
+          onChange={handleSliderChange("color_temp")}
+          onChangeCommitted={handleSliderChangeComplete("color_temp")}
           value={attributes ? attributes.color_temp : 0}
           getAriaValueText={getText}
           aria-labelledby="discrete-slider"
@@ -168,15 +168,15 @@ function Light(props: EntityProps): ReactElement | null {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-white_value') && props.entity.state === 'on')
+  if (attrClasses.includes("has-white_value") && props.entity.state === "on")
     controls.push(
       <Grid key={2} item xs={10}>
         <Typography id="discrete-slider" gutterBottom>
           White Value
         </Typography>
         <Slider
-          onChange={handleSliderChange('white_value')}
-          onChangeCommitted={handleSliderChangeComplete('white_value')}
+          onChange={handleSliderChange("white_value")}
+          onChangeCommitted={handleSliderChangeComplete("white_value")}
           value={attributes ? attributes.white_value : 0}
           getAriaValueText={getText}
           aria-labelledby="discrete-slider"
@@ -187,7 +187,7 @@ function Light(props: EntityProps): ReactElement | null {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-color') && props.entity.state === 'on')
+  if (attrClasses.includes("has-color") && props.entity.state === "on")
     controls.push(
       <Grid key={3} item xs={10}>
         <HuePicker
@@ -197,18 +197,18 @@ function Light(props: EntityProps): ReactElement | null {
         />
       </Grid>
     );
-  if (attrClasses.includes('has-effect_list') && props.entity.state === 'on')
+  if (attrClasses.includes("has-effect_list") && props.entity.state === "on")
     controls.push(
       <Grid key={4} item xs={10}>
         <FormControl>
           <InputLabel htmlFor="effect">Effect</InputLabel>
           <Select
             className={classes.select}
-            value={attributes && attributes.effect ? attributes.effect : 'none'}
-            onChange={handleSelectChange('effect')}
+            value={attributes && attributes.effect ? attributes.effect : "none"}
+            onChange={handleSelectChange("effect")}
             inputProps={{
-              name: 'effect',
-              id: 'effect',
+              name: "effect",
+              id: "effect",
             }}>
             <MenuItem value="none">None</MenuItem>
             {attributes &&
@@ -233,12 +233,12 @@ function Light(props: EntityProps): ReactElement | null {
       spacing={1}>
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton
-          disabled={props.card.click_action?.type === 'call-service'}
+          disabled={props.card.click_action?.type === "call-service"}
           onClick={props.handleHassToggle}>
           <Typography
             className={clsx(
-              'mdi',
-              `mdi-${props.card.icon || 'lightbulb'}`,
+              "mdi",
+              `mdi-${props.card.icon || "lightbulb"}`,
               classes.icon
             )}
             style={{ color, fontSize: props.card.icon_size }}
@@ -252,7 +252,7 @@ function Light(props: EntityProps): ReactElement | null {
           <Typography
             className={classes.text}
             color="textPrimary"
-            variant={props.card.disabled ? 'body2' : 'body1'}
+            variant={props.card.disabled ? "body2" : "body1"}
             component="h5">
             {props.entity.state}
           </Typography>

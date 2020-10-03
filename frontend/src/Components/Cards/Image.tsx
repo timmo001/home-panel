@@ -1,26 +1,26 @@
-import React, { useEffect, useCallback, ReactElement, useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
+import React, { useEffect, useCallback, ReactElement, useState } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
 
-import { BaseProps } from './Base';
+import { BaseProps } from "./Base";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    height: "100%",
   },
   dialogPaper: {
     background: theme.palette.background.default,
   },
   dialog: {
-    height: '100%',
-    width: '100%',
+    height: "100%",
+    width: "100%",
   },
   image: {
-    height: '100%',
-    width: '100%',
-    objectFit: 'scale-down',
+    height: "100%",
+    width: "100%",
+    objectFit: "scale-down",
     marginBottom: -6,
-    cursor: 'pointer',
+    cursor: "pointer",
   },
 }));
 
@@ -37,8 +37,8 @@ function Image(props: BaseProps): ReactElement {
 
   useEffect(() => {
     if (props.command && props.command.card === props.card.key) {
-      if (props.command.command === 'expand') handleSetDialogOpen(true);
-      else if (props.command.command === 'unexpand') handleSetDialogOpen(false);
+      if (props.command.command === "expand") handleSetDialogOpen(true);
+      else if (props.command.command === "unexpand") handleSetDialogOpen(false);
     }
   }, [props.command, props.card.key, handleSetDialogOpen]);
 

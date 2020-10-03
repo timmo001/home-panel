@@ -1,39 +1,39 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import KeyboardArrowUp from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import KeyboardArrowUp from "@material-ui/icons/KeyboardArrowUp";
+import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     flex: 1,
   },
   text: {
-    overflow: 'hidden',
-    userSelect: 'none',
-    textAlign: 'center',
-    textOverflow: 'ellipsis',
+    overflow: "hidden",
+    userSelect: "none",
+    textAlign: "center",
+    textOverflow: "ellipsis",
   },
   temperature: {
-    display: 'inline-flex',
+    display: "inline-flex",
     marginLeft: theme.spacing(0.4),
   },
   iconContainer: {
     height: 32,
     width: 32,
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
   },
   icon: {
-    transform: 'translateY(-8px)',
-    textAlign: 'center',
+    transform: "translateY(-8px)",
+    textAlign: "center",
     color: theme.palette.text.primary,
     opacity: 0.6,
   },
@@ -67,22 +67,22 @@ function Climate(props: EntityProps): ReactElement | null {
           [type]: newTemp,
         };
         if (
-          type === 'target_temp_low' &&
+          type === "target_temp_low" &&
           props.entity.attributes.target_temp_high
         )
           data.target_temp_high = props.entity.attributes.target_temp_high;
         else if (
-          type === 'target_temp_high' &&
+          type === "target_temp_high" &&
           props.entity.attributes.target_temp_low
         )
           data.target_temp_low = props.entity.attributes.target_temp_low;
-        props.handleHassChange('climate', 'set_temperature', data);
+        props.handleHassChange("climate", "set_temperature", data);
       }
   };
 
   const handleHvacChange = (hvac_mode: string) => (): void => {
     if (props.handleHassChange && props.entity)
-      props.handleHassChange('climate', 'set_hvac_mode', {
+      props.handleHassChange("climate", "set_hvac_mode", {
         entity_id: props.entity.entity_id,
         hvac_mode,
       });
@@ -95,9 +95,9 @@ function Climate(props: EntityProps): ReactElement | null {
       props.entity.attributes &&
       props.entity.attributes.away_mode
     )
-      props.handleHassChange('climate', 'set_away_mode', {
+      props.handleHassChange("climate", "set_away_mode", {
         entity_id: props.entity.entity_id,
-        away_mode: props.entity.attributes.away_mode === 'on' ? 'off' : 'on',
+        away_mode: props.entity.attributes.away_mode === "on" ? "off" : "on",
       });
   }
 
@@ -141,7 +141,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 <IconButton
                   className={classes.iconContainer}
                   onClick={handleTempChange(
-                    'temperature',
+                    "temperature",
                     props.entity.attributes.temperature + 0.5
                   )}>
                   <KeyboardArrowUp
@@ -160,7 +160,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 <IconButton
                   className={classes.iconContainer}
                   onClick={handleTempChange(
-                    'temperature',
+                    "temperature",
                     props.entity.attributes.temperature - 0.5
                   )}>
                   <KeyboardArrowDown
@@ -187,7 +187,7 @@ function Climate(props: EntityProps): ReactElement | null {
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
-                      'target_temp_low',
+                      "target_temp_low",
                       props.entity.attributes.target_temp_low + 0.5
                     )}>
                     <KeyboardArrowUp
@@ -206,7 +206,7 @@ function Climate(props: EntityProps): ReactElement | null {
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
-                      'target_temp_low',
+                      "target_temp_low",
                       props.entity.attributes.target_temp_low - 0.5
                     )}>
                     <KeyboardArrowDown
@@ -229,7 +229,7 @@ function Climate(props: EntityProps): ReactElement | null {
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
-                      'target_temp_high',
+                      "target_temp_high",
                       props.entity.attributes.target_temp_high + 0.5
                     )}>
                     <KeyboardArrowUp
@@ -248,7 +248,7 @@ function Climate(props: EntityProps): ReactElement | null {
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
-                      'target_temp_high',
+                      "target_temp_high",
                       props.entity.attributes.target_temp_high - 0.5
                     )}>
                     <KeyboardArrowDown
@@ -274,20 +274,20 @@ function Climate(props: EntityProps): ReactElement | null {
             {props.entity.attributes.hvac_modes.map(
               (mode: string, key: number) => {
                 const icon: string | undefined =
-                  mode === 'off'
-                    ? 'mdi-power'
-                    : mode === 'heat'
-                    ? 'mdi-fire'
-                    : mode === 'cool'
-                    ? 'mdi-snowflake'
-                    : mode === 'heat_cool'
-                    ? 'mdi-autorenew'
-                    : mode === 'auto'
-                    ? 'mdi-calendar-repeat'
-                    : mode === 'dry'
-                    ? 'mdi-water-percent'
-                    : mode === 'fan_only'
-                    ? 'mdi-fan'
+                  mode === "off"
+                    ? "mdi-power"
+                    : mode === "heat"
+                    ? "mdi-fire"
+                    : mode === "cool"
+                    ? "mdi-snowflake"
+                    : mode === "heat_cool"
+                    ? "mdi-autorenew"
+                    : mode === "auto"
+                    ? "mdi-calendar-repeat"
+                    : mode === "dry"
+                    ? "mdi-water-percent"
+                    : mode === "fan_only"
+                    ? "mdi-fan"
                     : undefined;
 
                 if (icon)
@@ -298,7 +298,7 @@ function Climate(props: EntityProps): ReactElement | null {
                         onClick={handleHvacChange(mode)}>
                         <span
                           className={clsx(
-                            'mdi',
+                            "mdi",
                             icon,
                             classes.icon,
                             props.entity.state === mode && classes.iconActive
@@ -333,10 +333,10 @@ function Climate(props: EntityProps): ReactElement | null {
                   <IconButton onClick={handleAwayToggle}>
                     <span
                       className={clsx(
-                        'mdi',
-                        'mdi-walk',
+                        "mdi",
+                        "mdi-walk",
                         classes.icon,
-                        props.entity.attributes.away_mode === 'on' &&
+                        props.entity.attributes.away_mode === "on" &&
                           classes.iconActive
                       )}
                     />

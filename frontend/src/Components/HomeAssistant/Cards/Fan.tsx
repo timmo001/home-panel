@@ -1,11 +1,11 @@
-import React, { ReactElement } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+import React, { ReactElement } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
 
-import { EntityProps } from './Entity';
+import { EntityProps } from "./Entity";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -14,13 +14,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   iconContainer: {
     height: 32,
     width: 32,
-    display: 'flex',
-    alignContent: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "center",
   },
   icon: {
-    transform: 'translateY(-8px)',
-    textAlign: 'center',
+    transform: "translateY(-8px)",
+    textAlign: "center",
     color: theme.palette.text.primary,
     opacity: 0.6,
   },
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 function Fan(props: EntityProps): ReactElement | null {
   function handleSpeedChange(speed: string): void {
     if (props.handleHassChange && props.entity)
-      props.handleHassChange('fan', 'set_speed', {
+      props.handleHassChange("fan", "set_speed", {
         entity_id: props.entity.entity_id,
         speed,
       });
@@ -62,14 +62,14 @@ function Fan(props: EntityProps): ReactElement | null {
         {props.entity.attributes.speed_list.map(
           (speed: string, key: number) => {
             const icon: string | undefined =
-              speed === 'off'
-                ? 'mdi-numeric-0'
-                : speed === 'low'
-                ? 'mdi-numeric-1'
-                : speed === 'medium'
-                ? 'mdi-numeric-2'
-                : speed === 'high'
-                ? 'mdi-numeric-3'
+              speed === "off"
+                ? "mdi-numeric-0"
+                : speed === "low"
+                ? "mdi-numeric-1"
+                : speed === "medium"
+                ? "mdi-numeric-2"
+                : speed === "high"
+                ? "mdi-numeric-3"
                 : undefined;
             if (icon)
               return (
@@ -79,7 +79,7 @@ function Fan(props: EntityProps): ReactElement | null {
                     onClick={(): void => handleSpeedChange(speed)}>
                     <span
                       className={clsx(
-                        'mdi',
+                        "mdi",
                         icon,
                         classes.icon,
                         props.entity.attributes.speed === speed &&

@@ -1,38 +1,38 @@
-import React, { useEffect, ReactElement, useState } from 'react';
-import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import React, { useEffect, ReactElement, useState } from "react";
+import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
-import { CardProps, cardTypeDefaults, EntityAction } from '../Config';
-import Base, { BaseProps } from './Base';
-import CardBase from '../../Cards/Base';
-import clone from '../../../utils/clone';
+import { CardProps, cardTypeDefaults, EntityAction } from "../Config";
+import Base, { BaseProps } from "./Base";
+import CardBase from "../../Cards/Base";
+import clone from "../../../utils/clone";
 
 const useStyles = makeStyles((theme: Theme) => ({
   dialogContent: {
     paddingLeft: 0,
     paddingRight: 0,
-    overflowX: 'hidden',
-    overflowY: 'auto',
+    overflowX: "hidden",
+    overflowY: "auto",
   },
   background: {
     padding: theme.spacing(2),
     background: theme.palette.background.default,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   editView: {
     minWidth: 200,
-    [theme.breakpoints.down('sm')]: {
-      minWidth: '100%',
+    [theme.breakpoints.down("sm")]: {
+      minWidth: "100%",
     },
     padding: theme.spacing(2),
-    overflow: 'auto',
+    overflow: "auto",
   },
 }));
 
@@ -72,7 +72,7 @@ function EditCard(props: EditCardProps): ReactElement {
   ): void => {
     setCard({
       ...card,
-      [name]: typeof event === 'string' ? event : event.target.value,
+      [name]: typeof event === "string" ? event : event.target.value,
     });
   };
 
@@ -92,14 +92,14 @@ function EditCard(props: EditCardProps): ReactElement {
           ...card,
           [event.target.name as string]: event.target.value,
         });
-      case 'type':
+      case "type":
         // Cleanup types
         return setCard({
           ...cardTypeDefaults[event.target.value as string],
           key: card.key,
           group: card.group,
         });
-      case 'chart':
+      case "chart":
         if (!card.chart)
           return setCard({
             ...card,
@@ -127,7 +127,7 @@ function EditCard(props: EditCardProps): ReactElement {
 
   const classes = useStyles();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Dialog

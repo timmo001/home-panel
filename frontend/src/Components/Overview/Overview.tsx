@@ -1,26 +1,26 @@
-import React, { useEffect, useCallback, ReactElement, useState } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useCallback, ReactElement, useState } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
 
-import { CommandType } from '../Utils/Command';
-import { ConfigProps, GroupProps, CardProps } from '../Configuration/Config';
-import { HomeAssistantChangeProps } from '../HomeAssistant/HomeAssistant';
-import Groups from '../Groups/Groups';
-import Header from './Header';
-import Pages from './Pages';
+import { CommandType } from "../Utils/Command";
+import { ConfigProps, GroupProps, CardProps } from "../Configuration/Config";
+import { HomeAssistantChangeProps } from "../HomeAssistant/HomeAssistant";
+import Groups from "../Groups/Groups";
+import Header from "./Header";
+import Pages from "./Pages";
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
-    height: '100%',
-    minHeight: '100%',
-    maxHeight: '100%',
-    overflow: 'hidden',
+    height: "100%",
+    minHeight: "100%",
+    maxHeight: "100%",
+    overflow: "hidden",
     paddingBottom: theme.spacing(6.5),
   },
   groupsContainer: {
     marginBottom: theme.spacing(0.5),
-    overflowX: 'auto',
-    overflowY: 'hidden',
+    overflowX: "auto",
+    overflowY: "hidden",
   },
 }));
 

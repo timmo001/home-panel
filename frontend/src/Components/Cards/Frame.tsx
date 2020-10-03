@@ -1,15 +1,15 @@
-import React, { ReactElement } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import React, { ReactElement } from "react";
+import { makeStyles, Theme } from "@material-ui/core/styles";
 
-import { BaseProps } from './Base';
+import { BaseProps } from "./Base";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    height: '100%',
+    height: "100%",
   },
   frame: {
-    display: 'block',
-    width: '100%',
+    display: "block",
+    width: "100%",
     height: `calc(100% - ${theme.spacing(2)}px)`,
     border: 0,
   },

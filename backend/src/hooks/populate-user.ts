@@ -1,6 +1,6 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
-import { Hook, HookContext } from '@feathersjs/feathers';
+import { Hook, HookContext } from "@feathersjs/feathers";
 
 interface Configuration {
   user: string;
@@ -19,7 +19,7 @@ export default (_options = {}): Hook => {
 
     // Make sure that we always have a list of messages either by wrapping
     // a single message into an array or by getting the `data` from the `find` method's result
-    let config = method === 'find' ? result.data : [result];
+    let config = method === "find" ? result.data : [result];
 
     // Asynchronously get user object from each message's `userId`
     // and add it to the message
@@ -27,13 +27,13 @@ export default (_options = {}): Hook => {
       config.map(async (config: Configuration) => {
         // Also pass the original `params` to the service call
         // so that it has the same information available (e.g. who is requesting it)
-        config.user = await app.service('users').get(config.userId, params);
+        config.user = await app.service("users").get(config.userId, params);
       })
     );
 
     config = config.filter((config: Configuration) => config.userId === userId);
 
-    if (method === 'find') result.data = config;
+    if (method === "find") result.data = config;
     else result = result.userId === userId ? result : null;
 
     // Best practice: hooks should always return the context

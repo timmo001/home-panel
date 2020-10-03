@@ -1,5 +1,5 @@
-import React, { useEffect, ReactElement, useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import React, { useEffect, ReactElement, useState } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
   Area,
   AreaChart,
@@ -16,12 +16,12 @@ import {
   ScatterChart,
   Tooltip,
   YAxis,
-} from 'recharts';
-import Typography from '@material-ui/core/Typography';
+} from "recharts";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => ({
   root: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     left: 0,
@@ -30,11 +30,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 export const chartTypes: { [type: string]: string } = {
-  area: 'Area',
-  bar: 'Bar',
-  line: 'Line',
-  radialBar: 'Gauge',
-  scatter: 'Scatter',
+  area: "Area",
+  bar: "Bar",
+  line: "Line",
+  radialBar: "Gauge",
+  scatter: "Scatter",
 };
 
 export type ChartData = {
@@ -112,9 +112,9 @@ function Chart(props: ChartProps): ReactElement | null {
   useEffect(() => {
     if (!data || dataIn !== props.data) {
       setDataIn(props.data);
-      if (props.type === 'radialBar')
+      if (props.type === "radialBar")
         setData([props.data[props.data.length - 1], { value: 100 }]);
-      else if (props.type === 'scatter')
+      else if (props.type === "scatter")
         setData(
           props.data.map((item: ChartData, key: number) => ({
             x: key,
@@ -128,7 +128,7 @@ function Chart(props: ChartProps): ReactElement | null {
 
   if (!data || !type) return null;
   switch (type) {
-    case 'area':
+    case "area":
       return (
         <ResponsiveContainer className={classes.root}>
           <AreaChart data={data} margin={{ top: theme.spacing(5) }}>
@@ -171,7 +171,7 @@ function Chart(props: ChartProps): ReactElement | null {
           </AreaChart>
         </ResponsiveContainer>
       );
-    case 'bar':
+    case "bar":
       return (
         <ResponsiveContainer className={classes.root}>
           <BarChart data={data} margin={{ top: theme.spacing(6) }}>
@@ -188,7 +188,7 @@ function Chart(props: ChartProps): ReactElement | null {
           </BarChart>
         </ResponsiveContainer>
       );
-    case 'line':
+    case "line":
       return (
         <ResponsiveContainer className={classes.root}>
           <LineChart data={data} margin={{ top: theme.spacing(5) }}>
@@ -215,7 +215,7 @@ function Chart(props: ChartProps): ReactElement | null {
           </LineChart>
         </ResponsiveContainer>
       );
-    case 'radialBar':
+    case "radialBar":
       return (
         <ResponsiveContainer className={classes.root}>
           <RadialBarChart
@@ -232,7 +232,7 @@ function Chart(props: ChartProps): ReactElement | null {
                 <Cell
                   key={key}
                   fill={
-                    key !== 0 ? 'transparent' : theme.palette.secondary.main
+                    key !== 0 ? "transparent" : theme.palette.secondary.main
                   }
                 />
               ))}
@@ -240,7 +240,7 @@ function Chart(props: ChartProps): ReactElement | null {
           </RadialBarChart>
         </ResponsiveContainer>
       );
-    case 'scatter':
+    case "scatter":
       return (
         <ResponsiveContainer className={classes.root}>
           <ScatterChart margin={{ top: theme.spacing(5) }}>

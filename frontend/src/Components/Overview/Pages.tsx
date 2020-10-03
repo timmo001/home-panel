@@ -1,17 +1,17 @@
-import React, { Fragment, ReactElement, useState } from 'react';
-import clsx from 'clsx';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Typography from '@material-ui/core/Typography';
+import React, { Fragment, ReactElement, useState } from "react";
+import clsx from "clsx";
+import { makeStyles, Theme } from "@material-ui/core/styles";
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import Typography from "@material-ui/core/Typography";
 
-import { ConfigProps, defaultPage, Page } from '../Configuration/Config';
-import { findPageIdByPage } from '../../utils/find';
-import EditPage from '../Configuration/EditPage';
+import { ConfigProps, defaultPage, Page } from "../Configuration/Config";
+import { findPageIdByPage } from "../../utils/find";
+import EditPage from "../Configuration/EditPage";
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    position: 'fixed',
+    position: "fixed",
     bottom: 0,
     left: 0,
     right: 0,
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   icon: {
-    fontSize: '1.1rem',
+    fontSize: "1.1rem",
   },
 }));
 
@@ -42,7 +42,7 @@ function Pages(props: PagesProps): ReactElement {
 
   function handleAdd(): void {
     const newPage = defaultPage();
-    props.handleUpdateConfig(['pages', props.config.pages.length], newPage);
+    props.handleUpdateConfig(["pages", props.config.pages.length], newPage);
     props.setPage(newPage.key);
   }
 
@@ -61,7 +61,7 @@ function Pages(props: PagesProps): ReactElement {
 
   const handleUpdatePage = (page: Page) => (data?: Page): void => {
     props.handleUpdateConfig(
-      ['pages', findPageIdByPage(props.config, page)],
+      ["pages", findPageIdByPage(props.config, page)],
       data
     );
     props.setPage(props.config.pages[0].key);
@@ -69,7 +69,7 @@ function Pages(props: PagesProps): ReactElement {
 
   const handleMovePage = (page: Page) => (position: number): void => {
     props.handleUpdateConfig(
-      ['pages', findPageIdByPage(props.config, page)],
+      ["pages", findPageIdByPage(props.config, page)],
       [position]
     );
     props.setPage(props.config.pages[findPageIdByPage(props.config, page)].key);
@@ -97,7 +97,7 @@ function Pages(props: PagesProps): ReactElement {
               onMouseLeave={handleCancelEdit}
               icon={
                 <Typography
-                  className={clsx('mdi', `mdi-${page.icon}`, classes.icon)}
+                  className={clsx("mdi", `mdi-${page.icon}`, classes.icon)}
                   variant="h4"
                   component="h5"
                 />
@@ -109,7 +109,7 @@ function Pages(props: PagesProps): ReactElement {
             onClick={handleAdd}
             icon={
               <Typography
-                className={clsx('mdi', 'mdi-plus', classes.icon)}
+                className={clsx("mdi", "mdi-plus", classes.icon)}
                 variant="h4"
                 component="h5"
               />
