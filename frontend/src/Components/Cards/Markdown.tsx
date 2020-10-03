@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import ReactMarkdown from 'react-markdown';
 
 import { BaseProps } from './Base';
-import MarkdownText from '../Utils/MarkdownText';
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {
@@ -30,7 +30,7 @@ function Markdown(props: BaseProps): ReactElement | null {
       color="textPrimary"
       variant="body1"
       component="span">
-      <MarkdownText text={props.card.content} />
+      <ReactMarkdown source={props.card.content} escapeHtml={true} />
     </Typography>
   );
 }

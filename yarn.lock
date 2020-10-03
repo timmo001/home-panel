@@ -2680,6 +2680,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/cookiejar@npm:*":
+  version: 2.1.1
+  resolution: "@types/cookiejar@npm:2.1.1"
+  checksum: 822b514900c457756479f42b382efb57437e68352acead76f47bc0c0bc9eecf0df2623fd4506111058437b41552d0fb74d4c14fa5d033d642ca952dffb697ed3
+  languageName: node
+  linkType: hard
+
 "@types/cors@npm:2.8.7":
   version: 2.8.7
   resolution: "@types/cors@npm:2.8.7"
@@ -2924,6 +2931,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-color@npm:3.0.4":
+  version: 3.0.4
+  resolution: "@types/react-color@npm:3.0.4"
+  dependencies:
+    "@types/react": "*"
+    "@types/reactcss": "*"
+  checksum: da1f0589e147aab9dca94e7157f00bf13d34f03b070016b2fc62c946e5d642f507742d40ffadc8222f09907d1d602e786dd32a104ff628ed94db9636ede3090f
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.2.0":
   version: 4.4.0
   resolution: "@types/react-transition-group@npm:4.4.0"
@@ -2950,6 +2967,15 @@ __metadata:
     "@types/prop-types": "*"
     csstype: ^3.0.2
   checksum: 3941c4f31cf5a44d376a8ca2b5e5df1ab6af0588da88f8975dc3dac55f3345a7634d599c1a808726723509611b0536943622fbc9162afff2ad869677672b877a
+  languageName: node
+  linkType: hard
+
+"@types/reactcss@npm:*":
+  version: 1.2.3
+  resolution: "@types/reactcss@npm:1.2.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 5ac6dfc02c1b0cd3c6e85b9447e0a7eeff471cdd10e4b308f6f647678bf5fe996a6f2283ebac129f89e53abb533943633641c26420f25f0095b4de8a9cdb59b1
   languageName: node
   linkType: hard
 
@@ -3016,6 +3042,16 @@ __metadata:
   version: 0.0.30
   resolution: "@types/strip-json-comments@npm:0.0.30"
   checksum: 2b9eff26906f14903835a3ecd316e7df130bdfbbd0b784fba15b9ff99ac1ef041aeb7a37c9535dfc0e733211ef3cb881cc91940a52aa9076982ea0cbca50e088
+  languageName: node
+  linkType: hard
+
+"@types/superagent@npm:4.1.10":
+  version: 4.1.10
+  resolution: "@types/superagent@npm:4.1.10"
+  dependencies:
+    "@types/cookiejar": "*"
+    "@types/node": "*"
+  checksum: 6ef5ebd6e0194ba6197d6ebe96516db751142d8c0c2805c818d02727cef094e2272fab6a9557aed87ef7840984f5c2abdf9af8a7b375417e535d1e3616a31453
   languageName: node
   linkType: hard
 
@@ -8425,6 +8461,8 @@ __metadata:
     "@mdi/font": 5.6.55
     "@types/node": 14.11.2
     "@types/react": 16.9.50
+    "@types/react-color": 3.0.4
+    "@types/superagent": 4.1.10
     array-move: 3.0.1
     clsx: 1.1.1
     history: 5.0.0
