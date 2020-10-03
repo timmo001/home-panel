@@ -7,4 +7,5 @@ rules:
     ignore: |
       .gitlab-ci.yml
       .github/
+      .yarn/
     level: warning
