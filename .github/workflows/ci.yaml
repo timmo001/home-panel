@@ -58,7 +58,9 @@ jobs:
         with:
           use-quiet-mode: no
           use-verbose-mode: no
-          folder-path: .
+          config-file: mlc_config.json
+          folder-path: documentation, backend, frontend, rootfs, .github
+          file-path: './README.md, ./LICENSE.md'
           max-depth: -1
           check-modified-files-only: no
           base-branch: master

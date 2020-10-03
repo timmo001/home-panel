@@ -35,4 +35,4 @@ Enter the Config UI, go to the end of the page and click the + that is shown.
 
 Enter the Config UI and click the + on the navigation bar.
 
-[screen-config-ui]: https://raw.githubusercontent.com/timmo001/home-panel/master/docs/resources/screen-config-ui.gif
+[screen-config-ui]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-config-ui.gif

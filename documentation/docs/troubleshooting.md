@@ -23,9 +23,6 @@ docker pull timmo001/home-panel-api
 and run the containers again. You may have to clear the cache/cookies in your
  browser.
 
-If running natively, checkout the latest version from the release page for
- the [app] and the [api] and rerun the app.
-
 ## I'm still having issues
 
 If you are still stuck, post any logs you can gather from the steps above
@@ -35,8 +32,6 @@ If you are still stuck, post any logs you can gather from the steps above
 You can also post an issue on the GitHub repositories if you have uncovered a
  bug.
 
-[app]: https://github.com/timmo001/home-panel/releases
-[api]: https://github.com/timmo001/home-panel-api/releases
 [forum thread]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
 [setup]: https://timmo.dev/home-panel/setup/
 [login]: https://timmo.dev/home-panel/login/
