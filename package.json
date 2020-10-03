@@ -5,7 +5,11 @@
     "frontend"
   ],
   "scripts": {
-    "eslint": "eslint --ext .ts --ext .tsx --color ./"
+    "eslint": "eslint --ext .ts --ext .tsx --color ./",
+    "prettier-check-ts": "prettier --check ./**/*.ts*",
+    "prettier-check-js": "prettier --check ./**/*.js*",
+    "prettier-ts": "prettier --write ./**/*.ts*",
+    "prettier-js": "prettier --write ./**/*.js*"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "4.3.0",

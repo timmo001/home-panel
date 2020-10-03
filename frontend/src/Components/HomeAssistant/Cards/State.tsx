@@ -113,11 +113,7 @@ function State(props: EntityProps): ReactElement | null {
       <Grid className={classes.iconContainer} item>
         {props.card.icon && (
           <Typography
-            className={clsx(
-              'mdi',
-              `mdi-${props.card.icon}`,
-              classes.icon
-            )}
+            className={clsx('mdi', `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"

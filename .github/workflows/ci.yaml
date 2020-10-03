@@ -65,12 +65,10 @@ jobs:
           check-modified-files-only: no
           base-branch: master
           file-extension: .md
-      - name: 'Prettier Check .ts*'
+      - name: Prettier Check
         run: |
-          npx prettier --check ./**/*.ts*
-      - name: 'Prettier Check .js*'
-        run: |
-          npx prettier --check ./**/*.js*
+          yarn prettier-check-ts
+          yarn prettier-check-js
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:

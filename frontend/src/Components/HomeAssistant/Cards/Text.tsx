@@ -55,11 +55,7 @@ function TextEntity(props: EntityProps): ReactElement {
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
-            className={clsx(
-              'mdi',
-              `mdi-${props.card.icon}`,
-              classes.icon
-            )}
+            className={clsx('mdi', `mdi-${props.card.icon}`, classes.icon)}
             color="textPrimary"
             variant="h3"
             component="h5"
