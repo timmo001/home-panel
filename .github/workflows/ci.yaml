@@ -53,7 +53,7 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
-      - name: Markdown Link Checks
+      - name: Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.7
         with:
           use-quiet-mode: no
