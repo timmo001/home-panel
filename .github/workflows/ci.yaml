@@ -68,11 +68,11 @@ jobs:
       - name: 'Prettier Check .ts*'
         uses: actionsx/prettier@v2
         with:
-          args: --check ./**/*.ts*
+          args: '--check ./**/*.ts*'
       - name: 'Prettier Check .js*'
         uses: actionsx/prettier@v2
         with:
-          args: --check ./**/*.js*
+          args: '--check ./**/*.js*'
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:
@@ -122,7 +122,6 @@ jobs:
           run-name: backend
           check-name: Jest
           working-directory: backend
-
   build:
     runs-on: ubuntu-latest
     steps:
