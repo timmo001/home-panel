@@ -14,6 +14,10 @@ jobs:
     steps:
       - name: Check out files from GitHub
         uses: actions/checkout@v2
+      - name: Setup
+        run: |
+          sudo apt install -y jsonlint
+          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.1.0
         with:
@@ -75,10 +79,6 @@ jobs:
         run: yarn install
         env:
           CI: true
-      - name: Setup
-        run: |
-          sudo apt install -y jsonlint
-          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: ESLint
         run: yarn eslint
       - name: Prettier Check
