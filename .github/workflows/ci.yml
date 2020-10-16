@@ -14,30 +14,6 @@ jobs:
     steps:
       - name: Check out files from GitHub
         uses: actions/checkout@v2
-      - name: Setting up Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.x
-      - name: Get yarn cache path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install
-        env:
-          CI: true
-      - name: Setup
-        run: |
-          sudo apt install -y jsonlint
-          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
-      - name: ESLint
-        run: yarn eslint
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.1.0
         with:
@@ -66,11 +42,6 @@ jobs:
           check-modified-files-only: no
           base-branch: master
           file-extension: .md
-      - name: Prettier Check
-        run: |
-          yarn prettier-check-ts
-          yarn prettier-check-js
-          yarn prettier-check-yml
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@0.5.0
         with:
@@ -83,9 +54,38 @@ jobs:
         uses: ibiqlik/action-yamllint@v1.0.0
         with:
           file_or_dir: .
-          config_file: .yamllint
+          config_file: .yamllint.yml
           format: colored
           strict: false
+      - name: Setting up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Get yarn cache path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Fetch Yarn cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        run: yarn install
+        env:
+          CI: true
+      - name: Setup
+        run: |
+          sudo apt install -y jsonlint
+          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
+      - name: ESLint
+        run: yarn eslint
+      - name: Prettier Check
+        run: |
+          yarn prettier-check-ts
+          yarn prettier-check-js
+          yarn prettier-check-yml
   test:
     runs-on: ubuntu-latest
     steps:
