@@ -85,7 +85,6 @@ jobs:
         run: |
           yarn prettier-check-ts
           yarn prettier-check-js
-          yarn prettier-check-yaml
           yarn prettier-check-yml
   test:
     runs-on: ubuntu-latest
