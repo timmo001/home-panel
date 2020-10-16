@@ -452,7 +452,7 @@ export const sections: ConfigSection[] = [
       {
         name: "link_color",
         title: "Link",
-        description: "[Link](https://timmo.dev/home-panel/configui/) color.",
+        description: "[Link](https://home-panel-docs.timmo.dev/configui/) color.",
         icon: "mdi-link",
         type: "color_only",
         default: "#00ccff",

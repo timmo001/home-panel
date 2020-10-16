@@ -48,7 +48,7 @@ function Frame(props: BaseProps): ReactElement {
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
             label="URL"
-            placeholder="https://timmo.dev/home-panel"
+            placeholder="https://home-panel-docs.timmo.dev"
             value={props.card.url || ""}
             onChange={props.handleChange && props.handleChange("url")}
           />

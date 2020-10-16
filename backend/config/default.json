@@ -16,7 +16,7 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://timmo.dev/home-panel",
+      "audience": "https://home-panel-docs.timmo.dev",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"

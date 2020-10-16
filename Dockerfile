@@ -79,7 +79,7 @@ LABEL \
     org.label-schema.build-date=${BUILD_DATE} \
     org.label-schema.name="Home Panel" \
     org.label-schema.schema-version="1.0" \
-    org.label-schema.url="https://timmo.dev/home-panel" \
+    org.label-schema.url="https://home-panel-docs.timmo.dev" \
     org.label-schema.usage="https://github.com/timmo001/home-panel/tree/master/README.md" \
     org.label-schema.vcs-ref=${BUILD_REF} \
     org.label-schema.vcs-url="https://github.com/timmo001/home-panel" \

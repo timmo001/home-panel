@@ -33,7 +33,7 @@ You can also post an issue on the GitHub repositories if you have uncovered a
  bug.
 
 [forum thread]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597
-[setup]: https://timmo.dev/home-panel/setup/
-[login]: https://timmo.dev/home-panel/login/
+[setup]: https://home-panel-docs.timmo.dev/setup/
+[login]: https://home-panel-docs.timmo.dev/login/
 [GitHub repository]: https://github.com/timmo001/home-panel/issues
 [here]: https://github.com/timmo001/addon-home-panel/issues
