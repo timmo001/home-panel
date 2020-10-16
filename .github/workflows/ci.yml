@@ -81,10 +81,11 @@ jobs:
           CI: true
       - name: ESLint
         run: yarn eslint
-      - name: Prettier Check
-        run: |
-          yarn prettier-check-ts
-          yarn prettier-check-js
+      # - name: Prettier Check
+      #   run: |
+      #     yarn prettier-check-ts
+      #     yarn prettier-check-js
+      #     yarn prettier-check-yml
   test:
     runs-on: ubuntu-latest
     steps:
