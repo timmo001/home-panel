@@ -43,6 +43,6 @@ stages:
             displayName: "Setup Git"
           - script: |
               git status
-              cd docs
+              cd documentation
               python3 -m mkdocs gh-deploy -v -c -m ":books: Update docs"
             displayName: "MkDocs"
