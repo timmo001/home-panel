@@ -9,7 +9,7 @@ pool:
 
 variables:
   - name: "yarnCachePath"
-    value: "$(Pipeline.Workspace)/.yarn/cache"
+    value: "$(System.DefaultWorkingDirectory)/.yarn/cache"
   - group: "github"
   - name: "githubRepository"
     value: "timmo001/home-panel"
