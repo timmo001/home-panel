@@ -27,16 +27,15 @@ theme:
 
 # Customization
 extra:
-  search:
-    language: "en"
-    tokenizer: '[\s\-\.]+'
-  social:
-    - type: "github"
-      link: "https://github.com/timmo001/home-panel"
-    - type: "twitter"
-      link: "https://twitter.com/timmo001"
-    - type: "stack-overflow"
-      link: "https://stackoverflow.com/users/1888770/timmo"
+  - search:
+      separator: '[\s\-\.]+'
+      lang:
+        - en
+  - social:
+      - icon: fontawesome/brands/github-alt
+        link: "https://github.com/timmo001/home-panel"
+      - icon: fontawesome/brands/twitter
+        link: "https://twitter.com/timmo001"
 
 # Extensions
 markdown_extensions:
