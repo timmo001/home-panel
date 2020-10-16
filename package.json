@@ -8,9 +8,11 @@
     "eslint": "eslint --ext .ts --ext .tsx --color ./",
     "prettier-check-ts": "prettier --check ./**/*.ts*",
     "prettier-check-js": "prettier --check ./**/*.js*",
+    "prettier-check-yaml": "prettier --write ./**/*.yaml",
     "prettier-check-yml": "prettier --write ./**/*.yml",
     "prettier-ts": "prettier --write ./**/*.ts*",
     "prettier-js": "prettier --write ./**/*.js*",
+    "prettier-yaml": "prettier --write ./**/*.yaml",
     "prettier-yml": "prettier --write ./**/*.yml"
   },
   "devDependencies": {
