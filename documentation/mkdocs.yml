@@ -18,7 +18,7 @@ theme:
   language: "en"
   palette:
     scheme: slate
-    primary: purple
+    primary: "blue grey"
     accent: indigo
   font:
     text: "Roboto"
