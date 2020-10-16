@@ -18,8 +18,8 @@ theme:
   language: "en"
   palette:
     scheme: slate
-    primary: "blue grey"
-    accent: "light blue"
+    primary: purple
+    accent: indigo
   font:
     text: "Roboto"
     code: "Roboto Mono"
