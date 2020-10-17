@@ -1,9 +1,9 @@
 ---
 version: 2
-open-pull-requests-limit: 20
 updates:
   - package-ecosystem: "npm"
     directory: "/"
+    open-pull-requests-limit: 10
     schedule:
       interval: "daily"
   - package-ecosystem: "docker"
