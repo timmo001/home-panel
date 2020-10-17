@@ -30,13 +30,13 @@
   },
   "dependencies": {
     "@feathersjs/authentication": "4.5.9",
-    "@feathersjs/authentication-local": "4.5.8",
-    "@feathersjs/authentication-oauth": "4.5.8",
-    "@feathersjs/configuration": "4.5.8",
-    "@feathersjs/errors": "4.5.8",
-    "@feathersjs/express": "4.5.8",
-    "@feathersjs/feathers": "4.5.8",
-    "@feathersjs/socketio": "4.5.8",
+    "@feathersjs/authentication-local": "4.5.9",
+    "@feathersjs/authentication-oauth": "4.5.9",
+    "@feathersjs/configuration": "4.5.9",
+    "@feathersjs/errors": "4.5.9",
+    "@feathersjs/express": "4.5.9",
+    "@feathersjs/feathers": "4.5.9",
+    "@feathersjs/socketio": "4.5.9",
     "compression": "1.7.4",
     "cors": "2.8.5",
     "express": "4.17.1",
@@ -57,10 +57,10 @@
     "@types/serve-favicon": "2.5.0",
     "jest": "26.5.3",
     "jest-junit": "12.0.0",
-    "nodemon": "2.0.4",
+    "nodemon": "2.0.5",
     "shx": "0.3.2",
     "ts-jest": "26.4.1",
-    "ts-node-dev": "1.0.0-pre.63",
+    "ts-node-dev": "1.0.0-pre.65",
     "typescript": "4.0.3"
   }
 }
