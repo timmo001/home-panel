@@ -91,9 +91,9 @@ docker volume create home_panel_data
 ```bash
 docker run -d \
   -p 8234:8234 \
-  -v home_panel_data:/data
-  -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem
-  -v ~/ssl/privkey.pem:/data/ssl/privkey.pem
+  -v home_panel_data:/data \
+  -v ~/ssl/fullchain.pem:/data/ssl/fullchain.pem \
+  -v ~/ssl/privkey.pem:/data/ssl/privkey.pem \
   -e SSL_CERTFILE=fullchain.pem \
   -e SSL_KEYFILE=privkey.pem \
   timmo001/home-panel
@@ -108,7 +108,7 @@ docker run -d \
 
 ```bash
 docker run -d \
-  -v home_panel_data:/data
+  -v home_panel_data:/data \
   -p 8234:8234 \
   timmo001/home-panel
 ```
