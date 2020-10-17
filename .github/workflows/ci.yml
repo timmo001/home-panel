@@ -158,6 +158,7 @@ jobs:
         env:
           CI: true
           NODE_ENV: "production"
+          INLINE_RUNTIME_CHUNK: false
         working-directory: frontend
       - name: "Frontend - Upload Artifacts"
         uses: actions/upload-artifact@v2
