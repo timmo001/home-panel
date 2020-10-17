@@ -60,7 +60,7 @@
     "nodemon": "2.0.5",
     "shx": "0.3.2",
     "ts-jest": "26.4.1",
-    "ts-node-dev": "1.0.0-pre.65",
+    "ts-node-dev": "1.0.0",
     "typescript": "4.0.3"
   }
 }
