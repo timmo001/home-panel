@@ -51,7 +51,7 @@
     "@types/compression": "1.7.0",
     "@types/cors": "2.8.8",
     "@types/helmet": "0.0.48",
-    "@types/jest": "26.0.14",
+    "@types/jest": "26.0.15",
     "@types/jsonwebtoken": "8.5.0",
     "@types/nedb": "1.8.11",
     "@types/serve-favicon": "2.5.0",
