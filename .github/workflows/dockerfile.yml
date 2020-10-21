@@ -2,6 +2,9 @@
 name: Update Dockerfile
 
 on:
+  push:
+    branches:
+      - master
   schedule:
     - cron: "0 17 * * *"
 
