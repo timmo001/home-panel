@@ -1626,9 +1626,9 @@
     prop-types "^15.7.2"
     react-is "^16.8.0"
 
-"@mdi/font@5.7.55":
-  version "5.7.55"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.7.55.tgz#8e05c27824f0c29c236389fc59db39bde5e92d8d"
+"@mdi/font@5.8.55":
+  version "5.8.55"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-5.8.55.tgz#1464155bcbc8a6e4af6dffd611fe8e38e09af285"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
