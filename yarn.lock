@@ -1133,11 +1133,7 @@
     long-timeout "^0.1.1"
     uuid "^8.3.0"
 
-"@feathersjs/commons@^4.3.0", "@feathersjs/commons@^4.5.8", "@feathersjs/commons@^4.5.9":
-  version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.9.tgz#07340081b52b6c012b23019d65b8980118cb02d6"
-
-"@feathersjs/commons@^4.5.10":
+"@feathersjs/commons@^4.3.0", "@feathersjs/commons@^4.5.10", "@feathersjs/commons@^4.5.8", "@feathersjs/commons@^4.5.9":
   version "4.5.10"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.10.tgz#e2dc526ce44f8e32c88fbb7bc3b89670e2781622"
 
@@ -1149,24 +1145,18 @@
     config "^3.3.1"
     debug "^4.2.0"
 
-"@feathersjs/errors@4.5.10", "@feathersjs/errors@^4.3.4", "@feathersjs/errors@^4.5.8", "@feathersjs/errors@^4.5.9":
+"@feathersjs/errors@4.5.10", "@feathersjs/errors@^4.3.4", "@feathersjs/errors@^4.5.10", "@feathersjs/errors@^4.5.8", "@feathersjs/errors@^4.5.9":
   version "4.5.10"
   resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.5.10.tgz#d85a485aec7aaab0a62b05d4f292c09836d93a3f"
   dependencies:
     debug "^4.2.0"
 
-"@feathersjs/errors@^4.5.10":
+"@feathersjs/express@4.5.10", "@feathersjs/express@^4.5.9":
   version "4.5.10"
-  resolved "https://registry.yarnpkg.com/@feathersjs/errors/-/errors-4.5.10.tgz#d85a485aec7aaab0a62b05d4f292c09836d93a3f"
+  resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.5.10.tgz#7a8c6ce2b3eae97b94b85e165be8cca8cc2a7c00"
   dependencies:
-    debug "^4.2.0"
-
-"@feathersjs/express@4.5.9", "@feathersjs/express@^4.5.9":
-  version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@feathersjs/express/-/express-4.5.9.tgz#af8d67fe709801f1d4e655867abab5a8ac11d52c"
-  dependencies:
-    "@feathersjs/commons" "^4.5.9"
-    "@feathersjs/errors" "^4.5.9"
+    "@feathersjs/commons" "^4.5.10"
+    "@feathersjs/errors" "^4.5.10"
     "@types/express" "^4.17.8"
     debug "^4.2.0"
     express "^4.17.1"
