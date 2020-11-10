@@ -1137,12 +1137,12 @@
   version "4.5.10"
   resolved "https://registry.yarnpkg.com/@feathersjs/commons/-/commons-4.5.10.tgz#e2dc526ce44f8e32c88fbb7bc3b89670e2781622"
 
-"@feathersjs/configuration@4.5.9":
-  version "4.5.9"
-  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.5.9.tgz#2d9e5251c3bc52b92d445a9e3c1b46b8025001d9"
+"@feathersjs/configuration@4.5.10":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/configuration/-/configuration-4.5.10.tgz#3bae2bbad83c4933050eceba82fbed49b22d8aba"
   dependencies:
-    "@feathersjs/feathers" "^4.5.9"
-    config "^3.3.1"
+    "@feathersjs/feathers" "^4.5.10"
+    config "^3.3.2"
     debug "^4.2.0"
 
 "@feathersjs/errors@4.5.10", "@feathersjs/errors@^4.3.4", "@feathersjs/errors@^4.5.10", "@feathersjs/errors@^4.5.8", "@feathersjs/errors@^4.5.9":
@@ -1163,11 +1163,20 @@
     lodash "^4.17.20"
     uberproto "^2.0.6"
 
-"@feathersjs/feathers@4.5.9", "@feathersjs/feathers@^4.5.8", "@feathersjs/feathers@^4.5.9":
+"@feathersjs/feathers@4.5.9":
   version "4.5.9"
   resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.5.9.tgz#73ba6d51f7b15c4eb35ceb925f936e5edab4cede"
   dependencies:
     "@feathersjs/commons" "^4.5.9"
+    debug "^4.2.0"
+    events "^3.2.0"
+    uberproto "^2.0.6"
+
+"@feathersjs/feathers@^4.5.10", "@feathersjs/feathers@^4.5.8", "@feathersjs/feathers@^4.5.9":
+  version "4.5.10"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-4.5.10.tgz#bef3b9a2362503b23ca8292426c494725f2192fa"
+  dependencies:
+    "@feathersjs/commons" "^4.5.10"
     debug "^4.2.0"
     events "^3.2.0"
     uberproto "^2.0.6"
@@ -3667,7 +3676,7 @@ concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
-config@^3.3.1:
+config@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/config/-/config-3.3.2.tgz#35be3846054340f0f79778b2445afffbc11867c7"
   dependencies:
