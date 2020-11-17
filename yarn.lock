@@ -3766,7 +3766,7 @@ core-js@^2.4.0:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.11.tgz#38831469f9922bded8ee21c9dc46985e0399308c"
 
-core-js@^3.4.2, core-js@^3.5.0:
+core-js@^3.5.0:
   version "3.6.5"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.6.5.tgz#7395dc273af37fb2e50e9bd3d9fe841285231d1a"
 
@@ -10355,12 +10355,11 @@ recharts-scale@^0.4.2:
   dependencies:
     decimal.js-light "^2.4.1"
 
-recharts@2.0.0-beta.7:
-  version "2.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.0.0-beta.7.tgz#9d0f8259852e1c45c0bfdc8d638c793c4037bc10"
+recharts@2.0.0-beta.8:
+  version "2.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/recharts/-/recharts-2.0.0-beta.8.tgz#5cde779cbd5e06b091f495e09b6a1d9a2237d82b"
   dependencies:
     classnames "^2.2.5"
-    core-js "^3.4.2"
     d3-interpolate "^1.3.0"
     d3-scale "^3.1.0"
     d3-shape "^1.3.5"
