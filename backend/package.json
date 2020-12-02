@@ -29,7 +29,7 @@
     "compile": "shx rm -rf lib/ && tsc"
   },
   "dependencies": {
-    "@feathersjs/authentication": "4.5.9",
+    "@feathersjs/authentication": "4.5.10",
     "@feathersjs/authentication-local": "4.5.9",
     "@feathersjs/authentication-oauth": "4.5.9",
     "@feathersjs/configuration": "4.5.9",
