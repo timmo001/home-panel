@@ -35,7 +35,7 @@
     "@feathersjs/configuration": "4.5.9",
     "@feathersjs/errors": "4.5.10",
     "@feathersjs/express": "4.5.10",
-    "@feathersjs/feathers": "4.5.9",
+    "@feathersjs/feathers": "4.5.10",
     "@feathersjs/socketio": "4.5.10",
     "compression": "1.7.4",
     "cors": "2.8.5",
