@@ -1999,9 +1999,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/serve-favicon@2.5.1":
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/@types/serve-favicon/-/serve-favicon-2.5.1.tgz#d8e4279e7b70bede84ed9fa82667fd537cf9b2c9"
+"@types/serve-favicon@2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@types/serve-favicon/-/serve-favicon-2.5.2.tgz#c0f73f9e4f61fe61ad209ec7b8daacf3159f0fa8"
   dependencies:
     "@types/express" "*"
 
