@@ -39,7 +39,7 @@ RUN \
         nginx=1.16.1-r6 \
         nodejs-current=13.1.0-r0 \
         openssl=1.1.1i-r0 \
-        tzdata=2020c-r1 \
+        tzdata=2020f-r0 \
         yarn=1.22.4-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
