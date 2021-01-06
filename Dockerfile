@@ -40,7 +40,7 @@ RUN \
         nodejs-current=13.1.0-r0 \
         openssl=1.1.1i-r0 \
         tzdata=2020f-r0 \
-        yarn=1.22.4-r0 \
+        yarn=1.19.2-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
