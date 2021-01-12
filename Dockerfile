@@ -36,7 +36,7 @@ RUN \
     \
     && apk add --no-cache \
         bash=5.0.11-r1 \
-        nginx=1.18.0-r1 \
+        nginx=1.16.1-r6 \
         nodejs-current=14.5.0-r0 \
         openssl=1.1.1g-r0 \
         tzdata=2020c-r1 \
