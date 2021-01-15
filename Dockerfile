@@ -35,7 +35,7 @@ RUN \
         tar=1.32-r1 \
     \
     && apk add --no-cache \
-        bash=5.0.17-r0 \
+        bash=5.0.11-r1 \
         nginx=1.18.0-r1 \
         nodejs-current=14.5.0-r0 \
         openssl=1.1.1g-r0 \
