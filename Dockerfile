@@ -1,4 +1,4 @@
-ARG BUILD_FROM=alpine:3.12.0
+ARG BUILD_FROM=alpine:3.13.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -31,16 +31,16 @@ RUN \
     set -o pipefail \
     \
     && apk add --no-cache --virtual .build-dependencies \
-        curl=7.69.1-r1 \
+        curl=7.67.0-r3 \
         tar=1.32-r1 \
     \
     && apk add --no-cache \
-        bash=5.0.17-r0 \
-        nginx=1.18.0-r1 \
-        nodejs-current=14.5.0-r0 \
-        openssl=1.1.1g-r0 \
-        tzdata=2020c-r1 \
-        yarn=1.22.4-r0 \
+        bash=5.0.11-r1 \
+        nginx=1.16.1-r6 \
+        nodejs-current=13.1.0-r0 \
+        openssl=1.1.1i-r0 \
+        tzdata=2020f-r0 \
+        yarn=1.19.2-r0 \
     \
     && S6_ARCH="${BUILD_ARCH}" \
     && if [ "${BUILD_ARCH}" = "arm32v6" ]; then S6_ARCH="armhf"; fi \
