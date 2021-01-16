@@ -38,7 +38,7 @@ RUN \
         bash=5.0.11-r1 \
         nginx=1.16.1-r6 \
         nodejs-current=13.1.0-r0 \
-        openssl=1.1.1g-r0 \
+        openssl=1.1.1i-r0 \
         tzdata=2020c-r1 \
         yarn=1.22.4-r0 \
     \
