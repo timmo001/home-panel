@@ -13,7 +13,7 @@
     "@feathersjs/authentication": "4.5.11",
     "@feathersjs/authentication-client": "4.5.11",
     "@feathersjs/feathers": "4.5.9",
-    "@feathersjs/socketio-client": "4.5.10",
+    "@feathersjs/socketio-client": "4.5.11",
     "@material-ui/core": "4.11.1",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
