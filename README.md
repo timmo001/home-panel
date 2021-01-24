@@ -76,7 +76,7 @@ Setup and configuration for the app is available [here][setup-docs]
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
 [license]: https://github.com/timmo001/home-panel/blob/master/LICENSE.md
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg
 [microbadger]: https://microbadger.com/images/timmo001/home-panel
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
