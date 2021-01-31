@@ -16,13 +16,13 @@
     "prettier-yml": "prettier --write ./**/*.yml"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "4.9.0",
-    "@typescript-eslint/parser": "4.9.0",
-    "eslint": "7.13.0",
-    "eslint-config-prettier": "6.15.0",
-    "eslint-plugin-prettier": "3.1.4",
-    "eslint-plugin-react": "7.21.5",
+    "@typescript-eslint/eslint-plugin": "4.14.1",
+    "@typescript-eslint/parser": "4.14.1",
+    "eslint": "7.19.0",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.22.0",
     "prettier": "2.2.1",
-    "typescript": "4.1.2"
+    "typescript": "4.1.3"
   }
 }
