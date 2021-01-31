@@ -15,7 +15,7 @@ export default (_options = {}): Hook => {
     let { result } = context;
 
     // The authenticated user
-    const userId = params.user._id;
+    const userId = params.user?._id;
 
     // Make sure that we always have a list of messages either by wrapping
     // a single message into an array or by getting the `data` from the `find` method's result

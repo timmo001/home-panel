@@ -18,7 +18,7 @@ export default (_options = {}): Hook => {
     context.data = {
       config,
       // Set the user id
-      userId: user._id,
+      userId: user?._id,
       createdAt,
       // Add the current date
       updatedAt: new Date().getTime(),
