@@ -69,7 +69,7 @@ function Checklist(props: ItemProps): ReactElement | null {
     async (newItem: ChecklistItem) => {
       setItem(newItem);
       if (updateTimeout) clearTimeout(updateTimeout);
-      updateTimeout = setTimeout(() => props.handleUpdateItem(newItem), 500);
+      updateTimeout = setTimeout(() => props.handleUpdateItem(newItem), 100);
     },
     [props]
   );

@@ -111,7 +111,7 @@ function Item(props: ItemProps): ReactElement {
       if (updateTimeout) clearTimeout(updateTimeout);
       updateTimeout = setTimeout(() => {
         props.handleUpdateConfig(path, value);
-      }, 500);
+      }, 100);
     },
     [props]
   );

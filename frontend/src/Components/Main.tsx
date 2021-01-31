@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactElement } from "react";
+import React, { useEffect, useState, useMemo, ReactElement } from "react";
 import { Auth, HassConfig, HassEntities } from "home-assistant-js-websocket";
 import { AuthenticationResult } from "@feathersjs/authentication/lib";
 import { makeStyles, Theme } from "@material-ui/core/styles";
@@ -187,11 +187,14 @@ function Main(props: MainProps): ReactElement {
     props.loginCredentials &&
     props.loginCredentials.username.substring(0, 1).toUpperCase();
 
-  const showToolbar =
-    !props.config.general.autohide_toolbar ||
-    props.currentPage === "Configuration"
-      ? true
-      : false || props.mouseMoved;
+  const showToolbar = useMemo(
+    () =>
+      !props.config.general.autohide_toolbar ||
+      props.currentPage === "Configuration"
+        ? true
+        : false || props.mouseMoved,
+    [props.config.general.autohide_toolbar, props.currentPage, props.mouseMoved]
+  );
 
   return (
     <div

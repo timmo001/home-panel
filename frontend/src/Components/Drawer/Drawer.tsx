@@ -153,9 +153,13 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     props.handleSetEditing(props.editing === 0 ? 1 : 0);
   }
 
-  const hideText = !(
-    props.config.general.drawer_type !== "persistent_icons_only" &&
-    props.config.general.drawer_type !== "permanent_icons_only"
+  const hideText = useMemo(
+    () =>
+      !(
+        props.config.general.drawer_type !== "persistent_icons_only" &&
+        props.config.general.drawer_type !== "permanent_icons_only"
+      ),
+    [props.config.general.drawer_type]
   );
 
   const drawer = (
@@ -218,11 +222,19 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
     [props.currentPage]
   );
 
-  const showToolbar =
-    !props.config.general.autohide_toolbar ||
-    props.currentPage === "Configuration"
-      ? true
-      : false || drawerOpen || props.mouseMoved;
+  const showToolbar = useMemo(
+    () =>
+      !props.config.general.autohide_toolbar ||
+      props.currentPage === "Configuration"
+        ? true
+        : false || drawerOpen || props.mouseMoved,
+    [
+      props.config.general.autohide_toolbar,
+      props.currentPage,
+      props.mouseMoved,
+      drawerOpen,
+    ]
+  );
 
   return (
     <div
