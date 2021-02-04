@@ -10499,9 +10499,9 @@ rollup@^1.31.1:
     "@types/node" "*"
     acorn "^7.1.0"
 
-rss-parser@3.10.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.10.0.tgz#19a8bcc569981832180a87fe58a17f1838ca3a45"
+rss-parser@3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/rss-parser/-/rss-parser-3.11.0.tgz#d885ea2ee12758377397648ac20582182379bbf6"
   dependencies:
     entities "^2.0.3"
     xml2js "^0.4.19"
