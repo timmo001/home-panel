@@ -19,7 +19,7 @@ jobs:
           sudo apt install -y jsonlint
           find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: Hadolint
-        uses: brpaz/hadolint-action@v1.1.0
+        uses: brpaz/hadolint-action@v1.3.1
         with:
           dockerfile: Dockerfile
       - name: JSONLint
