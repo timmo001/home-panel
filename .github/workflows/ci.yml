@@ -55,7 +55,7 @@ jobs:
             .yarn
           check_together: yes
       - name: YAMLLint
-        uses: ibiqlik/action-yamllint@v1.0.0
+        uses: ibiqlik/action-yamllint@v3
         with:
           file_or_dir: .
           config_file: .yamllint.yml
