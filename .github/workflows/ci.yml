@@ -49,10 +49,7 @@ jobs:
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
         with:
-          ignore: |
-            .devcontainer
-            .vscode
-            .yarn
+          ignore: .devcontainer .vscode .yarn
           check_together: yes
       - name: YAMLLint
         uses: ibiqlik/action-yamllint@v3
