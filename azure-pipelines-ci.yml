@@ -89,60 +89,11 @@ stages:
               buildArch: "$(buildArch)"
               buildBase: "$(buildBase)"
               githubRepository: "$(githubRepository)"
-  - stage: "Test"
-    dependsOn: []
-    condition: succeeded()
-    jobs:
-      - job: "Test_Frontend"
-        displayName: "Frontend"
-        steps:
-          - template: azure-ci/setup/node.yml@organization
-          - script: |
-              cd frontend
-              yarn test
-            displayName: "Test"
-            continueOnError: true
-          - task: PublishTestResults@2
-            displayName: "Publish Tests"
-            inputs:
-              testResultsFormat: "JUnit"
-              testResultsFiles: "**/junit.xml"
-              failTaskOnFailedTests: true
-              testRunTitle: "Frontend"
-          - task: PublishCodeCoverageResults@1
-            displayName: "Publish Coverage"
-            inputs:
-              codeCoverageTool: "Cobertura"
-              summaryFileLocation: "**/cobertura-coverage.xml"
-              pathToSources: "src"
-      - job: "Test_Backend"
-        displayName: "Backend"
-        steps:
-          - template: azure-ci/setup/node.yml@organization
-          - script: |
-              cd backend
-              yarn test
-            displayName: "Test"
-            continueOnError: true
-          - task: PublishTestResults@2
-            displayName: "Publish Tests"
-            inputs:
-              testResultsFormat: "JUnit"
-              testResultsFiles: "**/junit.xml"
-              failTaskOnFailedTests: true
-              testRunTitle: "Backend"
-          - task: PublishCodeCoverageResults@1
-            displayName: "Publish Coverage"
-            inputs:
-              codeCoverageTool: "Cobertura"
-              summaryFileLocation: "**/cobertura-coverage.xml"
-              pathToSources: "src"
   - stage: "Pipeline_Passed"
     displayName: "Pipeline Passed"
     dependsOn:
       - "Build"
       - "Docker"
-      - "Test"
     condition: succeeded()
     jobs:
       - job: "Pipeline_Passed_GitHub"
