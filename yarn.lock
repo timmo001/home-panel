@@ -6240,9 +6240,9 @@ hoist-non-react-statics@^3.3.2:
   dependencies:
     react-is "^16.7.0"
 
-home-assistant-js-websocket@5.7.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-5.7.0.tgz#01980b7fcd49a10ae5ce486b9adcf26fee08bd13"
+home-assistant-js-websocket@5.8.0:
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-5.8.0.tgz#7e24f4005f93ae5cd42274feab347434e2f232d1"
 
 hoopy@^0.1.4:
   version "0.1.4"
