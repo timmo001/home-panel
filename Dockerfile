@@ -29,7 +29,6 @@ RUN \
     \
     && yarn install \
     \
-    && apk del --no-cache --purge .build-dependencies \
     && rm -fr /tmp/*
 
 # Build arguments
