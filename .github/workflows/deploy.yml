@@ -161,9 +161,15 @@ jobs:
           workflow_conclusion: success
       - name: 🏗 Compress directories
         run: |
+          mkdir -p output/config
+          mkdir -p output/db
+          mkdir -p output/lib
           mkdir -p output/public
-          cp -r backend/lib/* output
+          cp -r backend/config/* output/config
+          cp -r backend/lib/* output/lib
           cp -r frontend/build/* output/public
+          cp backend/package.json output
+          cp LICENSE.md output
 
           tar -czvf home-panel-backend.tar.gz backend/lib
           tar -czvf home-panel-frontend.tar.gz frontend/build
