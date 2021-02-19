@@ -137,3 +137,17 @@ jobs:
             BUILD_REF=${{ github.sha }}
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=${{ needs.information.outputs.version }}
+      - name: ⬆ Backend - Upload Artifacts to Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_COMPRESS: gz
+          GHR_PATH: backend/lib
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ⬆ Frontend - Upload Artifacts to Release
+        uses: fnkr/github-action-ghr@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GHR_COMPRESS: gz
+          GHR_PATH: frontend/build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
