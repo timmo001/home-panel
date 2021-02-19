@@ -71,18 +71,6 @@ jobs:
             docker-${{ github.ref }}-${{ matrix.architecture }}
       - name: 🏗 Set up QEMU
         uses: docker/setup-qemu-action@v1.0.1
-      - name: 🏗 Set up QEMU User Static for aarch64
-        if: ${{ matrix.architecture == 'aarch64' }}
-        run: |
-          curl -L -s \
-            "https://github.com/hassio-addons/qemu-user-static/releases/download/v5.0.0/qemu-aarch64-static.tar.gz" | \
-            tar zxvf - -C "./rootfs/usr/bin/"
-      - name: 🏗 Set up QEMU User Static for armhf/armv7
-        if: ${{ matrix.architecture == 'armhf' || matrix.architecture == 'armv7' }}
-        run: |
-          curl -L -s \
-            "https://github.com/hassio-addons/qemu-user-static/releases/download/v5.0.0/qemu-arm-static.tar.gz" | \
-            tar zxvf - -C "./rootfs/usr/bin/"
       - name: 🏗 Set up Docker Buildx
         uses: docker/setup-buildx-action@v1.1.1
       - name: ℹ️ Compose build flags
