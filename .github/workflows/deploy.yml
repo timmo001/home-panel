@@ -171,12 +171,12 @@ jobs:
       - name: ⬆ Backend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_PATH: home-panel-backend-lib.tar.gz
+          GHR_PATH: home-panel-backend.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ⬆ Frontend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_PATH: home-panel-frontend-build.tar.gz
+          GHR_PATH: home-panel-frontend.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ⬆ Full - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
