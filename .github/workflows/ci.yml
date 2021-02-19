@@ -285,9 +285,7 @@ jobs:
           build-args: |
             BUILD_ARCH=${{ matrix.architecture }}
             BUILD_DATE=${{ steps.flags.outputs.date }}
-            BUILD_DESCRIPTION=$(jq --raw-output ".description" "build.json")
             BUILD_FROM=${{ steps.flags.outputs.from }}
-            BUILD_NAME=$(jq --raw-output ".description" "build.json")
             BUILD_REF=${{ github.sha }}
             BUILD_REPOSITORY=${{ github.repository }}
             BUILD_VERSION=edge
