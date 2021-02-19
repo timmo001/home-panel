@@ -11,19 +11,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  lint-setup:
-    name: Linter Setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
-      - name: Setup
-        run: |
-          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
   lint-hadolint:
     name: Hadolint
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -34,8 +23,6 @@ jobs:
           dockerfile: Dockerfile
   lint-json:
     name: JSONLint
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -63,8 +50,6 @@ jobs:
         uses: actionshub/markdownlint@2.0.2
   lint-markdown-links:
     name: Markdown Links
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -83,12 +68,13 @@ jobs:
           file-extension: .md
   lint-shellcheck:
     name: ShellCheck
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
+      - name: ✏ Setup
+        run: |
+          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: 🚀 Run ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
         with:
@@ -96,8 +82,6 @@ jobs:
           check_together: yes
   lint-yaml:
     name: YAMLLint
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -111,8 +95,6 @@ jobs:
           strict: false
   lint-eslint:
     name: ESLint
-    needs:
-      - lint-setup
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
