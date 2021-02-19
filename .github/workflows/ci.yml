@@ -201,7 +201,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: backend-lib
-          path: backend/lib/
+          path: backend/lib
       - name: 🚀 Frontend - Build
         run: yarn build
         env:
@@ -213,7 +213,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: frontend-build
-          path: frontend/build/
+          path: frontend/build
   build-container:
     name: Build Container - ${{ matrix.architecture }}
     needs:
@@ -239,6 +239,16 @@ jobs:
     steps:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
+      - name: ⤵️ Backend - Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-lib
+          path: backend/lib
+      - name: ⤵️ Frontend - Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+          path: frontend/build
       - name: 🏗 Set up build cache
         id: cache
         uses: actions/cache@v2.1.4
