@@ -2,26 +2,44 @@ name: CI
 
 on:
   push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+    types:
+      - opened
+      - reopened
+      - synchronize
+  workflow_dispatch:
 
 jobs:
-  lint:
+  lint-setup:
+    name: Linter Setup
     runs-on: ubuntu-latest
     steps:
       - name: Check out files from GitHub
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: Setup
         run: |
           sudo apt install -y jsonlint
           find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
+  lint-hadolint:
+    name: Hadolint
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.3.1
         with:
           dockerfile: Dockerfile
+  lint-json:
+    name: JSONLint
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: JSONLint
         run: |
           for file in $(find ./ -type f -name "*.json"); do
@@ -34,6 +52,14 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
+  lint-markdown-links:
+    name: Markdown Links
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
         with:
@@ -46,11 +72,27 @@ jobs:
           check-modified-files-only: no
           base-branch: master
           file-extension: .md
+  lint-shellcheck:
+    name: ShellCheck
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
         with:
           ignore: .devcontainer .vscode .yarn
           check_together: yes
+  lint-yaml:
+    name: YAMLLint
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: YAMLLint
         uses: ibiqlik/action-yamllint@v3
         with:
@@ -58,6 +100,14 @@ jobs:
           config_file: .yamllint.yml
           format: colored
           strict: false
+  lint-eslint:
+    name: ESLint
+    needs:
+      - lint-setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out files from GitHub
+        uses: actions/checkout@v2.3.4
       - name: Setting up Node.js
         uses: actions/setup-node@v2.1.4
         with:
