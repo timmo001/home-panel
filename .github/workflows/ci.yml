@@ -1,5 +1,6 @@
 name: CI
 
+# yamllint disable-line rule:truthy
 on:
   push:
   pull_request:
@@ -14,7 +15,7 @@ jobs:
     name: Linter Setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: Setup
         run: |
@@ -25,7 +26,7 @@ jobs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.3.1
@@ -37,9 +38,9 @@ jobs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: JSONLint
+      - name: 🚀 Run JSONLint
         run: |
           sudo apt install -y jsonlint
           for file in $(find ./ -type f -name "*.json"); do
@@ -52,15 +53,23 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
+  lint-markdown:
+    name: MarkdownLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run mdl
+        uses: actionshub/markdownlint@2.0.2
   lint-markdown-links:
     name: Markdown Links
     needs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: Markdown Links
+      - name: 🚀 Run Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
         with:
           use-quiet-mode: no
@@ -78,9 +87,9 @@ jobs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: ShellCheck
+      - name: 🚀 Run ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
         with:
           ignore: .devcontainer .vscode .yarn
@@ -91,9 +100,9 @@ jobs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: YAMLLint
+      - name: 🚀 Run YAMLLint
         uses: ibiqlik/action-yamllint@v3
         with:
           file_or_dir: .
@@ -106,27 +115,27 @@ jobs:
       - lint-setup
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: Setting up Node.js
+      - name: ⤵️ Set up Node.js
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
-      - name: Get yarn cache path
+      - name: ⤵️ Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
+      - name: ⤵️ Fetch Yarn cache
         uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install dependencies
+      - name: ⤵️ Install dependencies
         run: yarn install
         env:
           CI: true
-      - name: ESLint
+      - name: 🚀 Run ESLint
         run: yarn eslint
       # - name: Prettier Check
       #   run: |
@@ -137,32 +146,32 @@ jobs:
     name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: Setting up Node.js
+      - name: ⤵️ Set up Node.js
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
-      - name: Get yarn cache path
+      - name: ⤵️ Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
+      - name: ⤵️ Fetch Yarn cache
         uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install dependencies
+      - name: ⤵️ Install dependencies
         run: yarn install
         env:
           CI: true
-      - name: "Backend - Test"
+      - name: 🧪 Backend - Test
         run: yarn test
         env:
           CI: true
         working-directory: backend
-      - name: "Frontend - Test"
+      - name: 🧪 Frontend - Test
         run: yarn test
         env:
           CI: true
@@ -171,45 +180,45 @@ jobs:
     name: Build Application
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
+      - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
-      - name: Setting up Node.js
+      - name: ⤵️ Set up Node.js
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
-      - name: Get yarn cache path
+      - name: ⤵️ Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
+      - name: ⤵️ Fetch Yarn cache
         uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install dependencies
+      - name: ⤵️ Install dependencies
         run: yarn install
         env:
           CI: true
-      - name: "Backend - Compile"
+      - name: 🚀 Backend - Compile
         run: yarn compile
         env:
           CI: true
           NODE_ENV: "production"
         working-directory: backend
-      - name: "Backend - Upload Artifacts"
+      - name: ⬆ Backend - Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: backend-lib
           path: backend/lib/
-      - name: "Frontend - Build"
+      - name: 🚀 Frontend - Build
         run: yarn build
         env:
           CI: true
           NODE_ENV: "production"
           INLINE_RUNTIME_CHUNK: false
         working-directory: frontend
-      - name: "Frontend - Upload Artifacts"
+      - name: ⬆ Frontend - Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: frontend-build
