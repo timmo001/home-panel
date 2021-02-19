@@ -2,7 +2,8 @@
 
 ## Home Assistant Add-on
 
-If you have Home Assistant OS or Supervised, you can install the app via the community add-ons repo.
+If you have Home Assistant OS or Supervised, you can install the app
+via the community add-ons repo.
 
 Find the docs [here](https://github.com/hassio-addons/addon-home-panel#readme)
 
