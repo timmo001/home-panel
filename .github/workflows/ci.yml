@@ -12,7 +12,7 @@ on:
 
 jobs:
   lint-eslint:
-    name: ESLint
+    name: 👕 ESLint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -38,7 +38,7 @@ jobs:
       - name: 🚀 Run ESLint
         run: yarn eslint
   lint-hadolint:
-    name: Hadolint
+    name: 👕 Hadolint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -48,7 +48,7 @@ jobs:
         with:
           dockerfile: Dockerfile
   lint-json:
-    name: JSONLint
+    name: 👕 JSONLint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -66,8 +66,8 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
-  lint-markdown:
-    name: MarkdownLint
+  lint-markdownlint:
+    name: 👕 MarkdownLint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -75,7 +75,7 @@ jobs:
       - name: 🚀 Run mdl
         uses: actionshub/markdownlint@2.0.2
   lint-markdown-links:
-    name: Markdown Links
+    name: 👕 Markdown Link Check
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -93,7 +93,7 @@ jobs:
           base-branch: master
           file-extension: .md
   lint-prettier:
-    name: Prettier
+    name: 👕 Prettier
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -105,7 +105,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   lint-shellcheck:
-    name: ShellCheck
+    name: 👕 ShellCheck
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -121,7 +121,7 @@ jobs:
           ignore: .devcontainer .vscode .yarn
           check_together: yes
   lint-yamllint:
-    name: YAMLLint
+    name: 👕 YAMLLint
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -134,7 +134,7 @@ jobs:
           format: colored
           strict: false
   tests:
-    name: Tests
+    name: 🧪 Tests
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -168,7 +168,7 @@ jobs:
           CI: true
         working-directory: frontend
   build-app:
-    name: Build Application
+    name: 🚀 Build Application
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
@@ -215,7 +215,7 @@ jobs:
           name: frontend-build
           path: frontend/build
   build-container:
-    name: Build Container - ${{ matrix.architecture }}
+    name: 🚀 Build Container - ${{ matrix.architecture }}
     needs:
       - lint-eslint
       - lint-hadolint
