@@ -171,9 +171,14 @@ jobs:
           cp backend/package.json output
           cp LICENSE.md output
 
-          tar -czvf home-panel-backend.tar.gz backend/lib
-          tar -czvf home-panel-frontend.tar.gz frontend/build
-          tar -czvf home-panel.tar.gz output
+          cd backend/lib
+          tar -czvf ../../home-panel-backend.tar.gz *
+
+          cd ../../frontend/build
+          tar -czvf ../../home-panel-frontend.tar.gz *
+
+          cd ../../output
+          tar -czvf ../home-panel.tar.gz *
       - name: ⬆ Backend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
