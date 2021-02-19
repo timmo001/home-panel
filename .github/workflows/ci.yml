@@ -47,7 +47,7 @@ jobs:
         uses: brpaz/hadolint-action@v1.3.1
         with:
           dockerfile: Dockerfile
-  lint-json:
+  lint-jsonlint:
     name: 👕 JSONLint
     runs-on: ubuntu-latest
     steps:
@@ -219,8 +219,8 @@ jobs:
     needs:
       - lint-eslint
       - lint-hadolint
-      - lint-json
-      - lint-markdown
+      - lint-jsonlint
+      - lint-markdownlint
       - lint-markdown-links
       - lint-prettier
       - lint-shellcheck
