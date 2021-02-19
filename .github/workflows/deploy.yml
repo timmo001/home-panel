@@ -178,3 +178,8 @@ jobs:
         env:
           GHR_PATH: home-panel-frontend-build.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ⬆ Full - Upload Artifacts to Release
+        uses: fnkr/github-action-ghr@v1
+        env:
+          GHR_PATH: home-panel.tar.gz
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
