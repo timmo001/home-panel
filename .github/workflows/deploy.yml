@@ -62,15 +62,19 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: ⤵️ Backend - Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: backend-lib
           path: backend/lib
+          workflow: ci.yml
+          workflow_conclusion: success
       - name: ⤵️ Frontend - Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: dawidd6/action-download-artifact@v2
         with:
           name: frontend-build
           path: frontend/build
+          workflow: ci.yml
+          workflow_conclusion: success
       - name: 🏗 Set up build cache
         id: cache
         uses: actions/cache@v2.1.4
