@@ -13,7 +13,6 @@ mentionAuthors: true
 
 # Preserve mentions in the issue content
 keepContentMentions: false
-
 # Set custom aliases for targets
 # aliases:
 #   r: repo
