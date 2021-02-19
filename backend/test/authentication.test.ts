@@ -21,9 +21,7 @@ describe("authentication", () => {
       }
     );
 
-    it("authenticates user and creates accessToken", async (): Promise<
-      void
-    > => {
+    it("authenticates user and creates accessToken", async (): Promise<void> => {
       const { user, accessToken } = await app.service("authentication").create({
         strategy: "local",
         ...userInfo,

@@ -1,29 +1,61 @@
 name: CI
 
+# yamllint disable-line rule:truthy
 on:
   push:
-    branches:
-      - master
   pull_request:
-    branches:
-      - master
+    types:
+      - opened
+      - reopened
+      - synchronize
+  workflow_dispatch:
 
 jobs:
-  lint:
+  lint-eslint:
+    name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
-        uses: actions/checkout@v2
-      - name: Setup
-        run: |
-          sudo apt install -y jsonlint
-          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🏗 Set up Node.js
+        uses: actions/setup-node@v2.1.4
+        with:
+          node-version: 14.x
+      - name: ⤵️ Get yarn cache path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: ⤵️ Fetch Yarn cache
+        uses: actions/cache@v2.1.4
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: ⤵️ Install dependencies
+        run: yarn install
+        env:
+          CI: true
+      - name: 🚀 Run ESLint
+        run: yarn eslint
+  lint-hadolint:
+    name: Hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.3.1
         with:
           dockerfile: Dockerfile
-      - name: JSONLint
+  lint-json:
+    name: JSONLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run JSONLint
         run: |
+          sudo apt install -y jsonlint
           for file in $(find ./ -type f -name "*.json"); do
             if ! jsonlint-php -q $file; then
               export FAILED=1
@@ -34,7 +66,21 @@ jobs:
           if [ "${FAILED}" = "1" ]; then
             exit 1
           fi
-      - name: Markdown Links
+  lint-markdown:
+    name: MarkdownLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run mdl
+        uses: actionshub/markdownlint@2.0.2
+  lint-markdown-links:
+    name: Markdown Links
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
         with:
           use-quiet-mode: no
@@ -46,119 +92,210 @@ jobs:
           check-modified-files-only: no
           base-branch: master
           file-extension: .md
-      - name: ShellCheck
+  lint-prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run Prettier
+        uses: creyD/prettier_action@v3.3
+        with:
+          prettier_options: --write **/*.{js,json,ts,tsx,yml,yaml}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  lint-shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: ✏ Setup
+        run: |
+          find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
+      - name: 🚀 Run ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
+        env:
+          SHELLCHECK_OPTS: -s bash
         with:
           ignore: .devcontainer .vscode .yarn
           check_together: yes
-      - name: YAMLLint
+  lint-yamllint:
+    name: YAMLLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run YAMLLint
         uses: ibiqlik/action-yamllint@v3
         with:
           file_or_dir: .
           config_file: .yamllint.yml
           format: colored
           strict: false
-      - name: Setting up Node.js
-        uses: actions/setup-node@v2.1.4
-        with:
-          node-version: 14.x
-      - name: Get yarn cache path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
-        uses: actions/cache@v2.1.4
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: Install dependencies
-        run: yarn install
-        env:
-          CI: true
-      - name: ESLint
-        run: yarn eslint
-      # - name: Prettier Check
-      #   run: |
-      #     yarn prettier-check-ts
-      #     yarn prettier-check-js
-      #     yarn prettier-check-yml
-  test:
+  tests:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
-        uses: actions/checkout@v2
-      - name: Setting up Node.js
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🏗 Set up Node.js
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
-      - name: Get yarn cache path
+      - name: ⤵️ Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
+      - name: ⤵️ Fetch Yarn cache
         uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install dependencies
+      - name: ⤵️ Install dependencies
         run: yarn install
         env:
           CI: true
-      - name: "Backend - Test"
+      - name: 🧪 Backend - Test
         run: yarn test
         env:
           CI: true
         working-directory: backend
-      - name: "Frontend - Test"
+      - name: 🧪 Frontend - Test
         run: yarn test
         env:
           CI: true
         working-directory: frontend
-  build:
+  build-app:
+    name: Build Application
     runs-on: ubuntu-latest
     steps:
-      - name: Check out files from GitHub
-        uses: actions/checkout@v2
-      - name: Setting up Node.js
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🏗 Set up Node.js
         uses: actions/setup-node@v2.1.4
         with:
           node-version: 14.x
-      - name: Get yarn cache path
+      - name: ⤵️ Get yarn cache path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Fetch Yarn cache
+      - name: ⤵️ Fetch Yarn cache
         uses: actions/cache@v2.1.4
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Install dependencies
+      - name: ⤵️ Install dependencies
         run: yarn install
         env:
           CI: true
-      - name: "Backend - Compile"
+      - name: 🚀 Backend - Compile
         run: yarn compile
         env:
           CI: true
           NODE_ENV: "production"
         working-directory: backend
-      - name: "Backend - Upload Artifacts"
+      - name: ⬆ Backend - Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: backend-lib
-          path: backend/lib/
-      - name: "Frontend - Build"
+          path: backend/lib
+      - name: 🚀 Frontend - Build
         run: yarn build
         env:
           CI: true
           NODE_ENV: "production"
           INLINE_RUNTIME_CHUNK: false
         working-directory: frontend
-      - name: "Frontend - Upload Artifacts"
+      - name: ⬆ Frontend - Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: frontend-build
-          path: frontend/build/
+          path: frontend/build
+  build-container:
+    name: Build Container - ${{ matrix.architecture }}
+    needs:
+      - lint-eslint
+      - lint-hadolint
+      - lint-json
+      - lint-markdown
+      - lint-markdown-links
+      - lint-prettier
+      - lint-shellcheck
+      - lint-yamllint
+      - tests
+      - build-app
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        architecture:
+          - aarch64
+          - amd64
+          - armhf
+          - armv7
+          - i386
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: ⤵️ Backend - Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: backend-lib
+          path: backend/lib
+      - name: ⤵️ Frontend - Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+          path: frontend/build
+      - name: 🏗 Set up build cache
+        id: cache
+        uses: actions/cache@v2.1.4
+        with:
+          path: /tmp/.docker-cache
+          key: docker-${{ github.ref }}-${{ matrix.architecture }}-${{ github.sha }}
+          restore-keys: |
+            docker-${{ github.ref }}-${{ matrix.architecture }}
+      - name: 🏗 Set up QEMU
+        uses: docker/setup-qemu-action@v1.0.1
+      - name: 🏗 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1.1.1
+      - name: ℹ️ Compose build flags
+        id: flags
+        run: |
+          echo "::set-output name=date::$(date +"%Y-%m-%dT%H:%M:%SZ")"
+          from=$(jq --raw-output ".build_from.${{ matrix.architecture }}" "build.json")
+          echo "::set-output name=from::${from}"
+          if [[ "${{ matrix.architecture}}" = "amd64" ]]; then
+            echo "::set-output name=platform::linux/amd64"
+          elif [[ "${{ matrix.architecture }}" = "i386" ]]; then
+            echo "::set-output name=platform::linux/386"
+          elif [[ "${{ matrix.architecture }}" = "armhf" ]]; then
+            echo "::set-output name=platform::linux/arm/v6"
+          elif [[ "${{ matrix.architecture }}" = "armv7" ]]; then
+            echo "::set-output name=platform::linux/arm/v7"
+          elif [[ "${{ matrix.architecture }}" = "aarch64" ]]; then
+            echo "::set-output name=platform::linux/arm64/v8"
+          else
+            echo "::error ::Could not determine platform for architecture ${{ matrix.architecture }}"
+            exit 1
+          fi
+      - name: 🚀 Build
+        uses: docker/build-push-action@v2.3.0
+        with:
+          push: false
+          context: .
+          file: Dockerfile
+          cache-from: |
+            type=local,src=/tmp/.docker-cache
+            ghcr.io/timmo001/home-panel/${{ matrix.architecture }}:edge
+          cache-to: type=local,mode=max,dest=/tmp/.docker-cache
+          platforms: ${{ steps.flags.outputs.platform }}
+          build-args: |
+            BUILD_ARCH=${{ matrix.architecture }}
+            BUILD_DATE=${{ steps.flags.outputs.date }}
+            BUILD_FROM=${{ steps.flags.outputs.from }}
+            BUILD_REF=${{ github.sha }}
+            BUILD_REPOSITORY=${{ github.repository }}
+            BUILD_VERSION=edge
