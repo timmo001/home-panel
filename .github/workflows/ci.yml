@@ -134,10 +134,11 @@ jobs:
       #     yarn prettier-check-js
       #     yarn prettier-check-yml
   test:
+    name: Tests
     runs-on: ubuntu-latest
     steps:
       - name: Check out files from GitHub
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: Setting up Node.js
         uses: actions/setup-node@v2.1.4
         with:
@@ -167,10 +168,11 @@ jobs:
           CI: true
         working-directory: frontend
   build:
+    name: Build Application
     runs-on: ubuntu-latest
     steps:
       - name: Check out files from GitHub
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
       - name: Setting up Node.js
         uses: actions/setup-node@v2.1.4
         with:
