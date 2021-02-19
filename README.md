@@ -1,6 +1,6 @@
 # Home Panel
 
-[![Build Status](https://dev.azure.com/timmo0001/Home%20Panel/_apis/build/status/Edge?branchName=master)](https://dev.azure.com/timmo0001/Home%20Panel/_build?definitionId=5)
+[![Github Actions][github-actions-shield]][github-actions]
 
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
@@ -72,6 +72,8 @@ Setup and configuration for the app is available [here][setup-docs]
 [dockerhub]: https://hub.docker.com/r/timmo001/home-panel
 [forum-shield]: https://img.shields.io/badge/community-forum-brightgreen.svg
 [forum]: https://community.home-assistant.io/t/home-panel-a-touch-compatible-webapp-for-controlling-the-home/62597?u=timmo001
+[github-actions-shield]: https://github.com/timmo001/home-panel/workflows/CI/badge.svg
+[github-actions]: https://github.com/timmo001/home-panel/actions
 [hass]: https://www.home-assistant.io/
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
