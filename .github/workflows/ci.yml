@@ -101,7 +101,7 @@ jobs:
       - name: 🚀 Run Prettier
         uses: creyD/prettier_action@v3.3
         with:
-          prettier_options: "**/*.{js,json,md,ts,tsx,yaml}"
+          prettier_options: --write **/*.{js,json,ts,tsx,yml,yaml}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   lint-shellcheck:
