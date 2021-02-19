@@ -77,6 +77,8 @@ jobs:
           find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: 🚀 Run ShellCheck
         uses: ludeeus/action-shellcheck@1.0.0
+        env:
+          SHELLCHECK_OPTS: -s bash
         with:
           ignore: .devcontainer .vscode .yarn
           check_together: yes
@@ -119,11 +121,18 @@ jobs:
           CI: true
       - name: 🚀 Run ESLint
         run: yarn eslint
-      # - name: Prettier Check
-      #   run: |
-      #     yarn prettier-check-ts
-      #     yarn prettier-check-js
-      #     yarn prettier-check-yml
+  lint-prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⤵️ Check out code from GitHub
+        uses: actions/checkout@v2.3.4
+      - name: 🚀 Run Prettier
+        uses: creyD/prettier_action@v3.3
+        with:
+          prettier_options: --write **/*.{js,json,md,ts,tsx,yaml}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   test:
     name: Tests
     runs-on: ubuntu-latest
@@ -159,7 +168,7 @@ jobs:
           CI: true
         working-directory: frontend
   build:
-    name: Build Application
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
