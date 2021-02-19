@@ -108,7 +108,7 @@ jobs:
             echo "::error ::Could not determine platform for architecture ${{ matrix.architecture }}"
             exit 1
           fi
-      - name: 🏗  Login to GitHub Container Registry
+      - name: 🏗 Login to GitHub Container Registry
         uses: docker/login-action@v1.8.0
         with:
           registry: ghcr.io
@@ -159,15 +159,17 @@ jobs:
           path: frontend/build
           workflow: ci.yml
           workflow_conclusion: success
+      - name: 🏗 Compress directories
+        run: |
+          tar -czvf home-panel-backend-lib.tar.gz backend/lib
+          tar -czvf home-panel-frontend-build.tar.gz frontend/build
       - name: ⬆ Backend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_COMPRESS: gz
-          GHR_PATH: backend/lib
+          GHR_PATH: home-panel-backend-lib.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: ⬆ Frontend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
-          GHR_COMPRESS: gz
-          GHR_PATH: frontend/build
+          GHR_PATH: home-panel-frontend-build.tar.gz
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
