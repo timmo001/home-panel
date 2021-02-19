@@ -161,10 +161,13 @@ jobs:
           workflow_conclusion: success
       - name: 🏗 Compress directories
         run: |
+          mkdir -p output/public
+          cp -r backend/lib/* output
+          cp -r frontend/build/* output/public
+
           tar -czvf home-panel-backend.tar.gz backend/lib
           tar -czvf home-panel-frontend.tar.gz frontend/build
-          cp -r frontend/build/* backend/lib/public
-          tar -czvf home-panel.tar.gz backend/lib
+          tar -czvf home-panel.tar.gz output
       - name: ⬆ Backend - Upload Artifacts to Release
         uses: fnkr/github-action-ghr@v1
         env:
