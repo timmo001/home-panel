@@ -2030,12 +2030,12 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@4.16.1", "@typescript-eslint/eslint-plugin@^4.5.0":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.16.1.tgz#2caf6a79dd19c3853b8d39769a27fccb24e4e651"
+"@typescript-eslint/eslint-plugin@4.17.0", "@typescript-eslint/eslint-plugin@^4.5.0":
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.17.0.tgz#6f856eca4e6a52ce9cf127dfd349096ad936aa2d"
   dependencies:
-    "@typescript-eslint/experimental-utils" "4.16.1"
-    "@typescript-eslint/scope-manager" "4.16.1"
+    "@typescript-eslint/experimental-utils" "4.17.0"
+    "@typescript-eslint/scope-manager" "4.17.0"
     debug "^4.1.1"
     functional-red-black-tree "^1.0.1"
     lodash "^4.17.15"
@@ -2043,14 +2043,14 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@4.16.1", "@typescript-eslint/experimental-utils@^4.0.1":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-4.16.1.tgz#da7a396dc7d0e01922acf102b76efff17320b328"
+"@typescript-eslint/experimental-utils@4.17.0", "@typescript-eslint/experimental-utils@^4.0.1":
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-4.17.0.tgz#762c44aaa1a6a3c05b6d63a8648fb89b89f84c80"
   dependencies:
     "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/scope-manager" "4.16.1"
-    "@typescript-eslint/types" "4.16.1"
-    "@typescript-eslint/typescript-estree" "4.16.1"
+    "@typescript-eslint/scope-manager" "4.17.0"
+    "@typescript-eslint/types" "4.17.0"
+    "@typescript-eslint/typescript-estree" "4.17.0"
     eslint-scope "^5.0.0"
     eslint-utils "^2.0.0"
 
@@ -2073,13 +2073,6 @@
     "@typescript-eslint/typescript-estree" "4.17.0"
     debug "^4.1.1"
 
-"@typescript-eslint/scope-manager@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-4.16.1.tgz#244e2006bc60cfe46987e9987f4ff49c9e3f00d5"
-  dependencies:
-    "@typescript-eslint/types" "4.16.1"
-    "@typescript-eslint/visitor-keys" "4.16.1"
-
 "@typescript-eslint/scope-manager@4.17.0":
   version "4.17.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-4.17.0.tgz#f4edf94eff3b52a863180f7f89581bf963e3d37d"
@@ -2090,10 +2083,6 @@
 "@typescript-eslint/types@3.10.1":
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-3.10.1.tgz#1d7463fa7c32d8a23ab508a803ca2fe26e758727"
-
-"@typescript-eslint/types@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-4.16.1.tgz#5ba2d3e38b1a67420d2487519e193163054d9c15"
 
 "@typescript-eslint/types@4.17.0":
   version "4.17.0"
@@ -2109,18 +2098,6 @@
     glob "^7.1.6"
     is-glob "^4.0.1"
     lodash "^4.17.15"
-    semver "^7.3.2"
-    tsutils "^3.17.1"
-
-"@typescript-eslint/typescript-estree@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-4.16.1.tgz#c2fc46b05a48fbf8bbe8b66a63f0a9ba04b356f1"
-  dependencies:
-    "@typescript-eslint/types" "4.16.1"
-    "@typescript-eslint/visitor-keys" "4.16.1"
-    debug "^4.1.1"
-    globby "^11.0.1"
-    is-glob "^4.0.1"
     semver "^7.3.2"
     tsutils "^3.17.1"
 
@@ -2141,13 +2118,6 @@
   resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-3.10.1.tgz#cd4274773e3eb63b2e870ac602274487ecd1e931"
   dependencies:
     eslint-visitor-keys "^1.1.0"
-
-"@typescript-eslint/visitor-keys@4.16.1":
-  version "4.16.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-4.16.1.tgz#d7571fb580749fae621520deeb134370bbfc7293"
-  dependencies:
-    "@typescript-eslint/types" "4.16.1"
-    eslint-visitor-keys "^2.0.0"
 
 "@typescript-eslint/visitor-keys@4.17.0":
   version "4.17.0"
