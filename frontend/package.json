@@ -38,7 +38,7 @@
     "typeface-roboto": "1.1.13"
   },
   "devDependencies": {
-    "@types/node": "14.14.34",
+    "@types/node": "14.14.35",
     "@types/react": "17.0.3",
     "@types/react-color": "3.0.4",
     "@types/react-dom": "17.0.2",
