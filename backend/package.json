@@ -22,7 +22,7 @@
   },
   "scripts": {
     "test": "yarn run compile && yarn run jest",
-    "dev": "ts-node-dev --no-notify ./src/",
+    "start:dev": "ts-node-dev --no-notify ./src/",
     "start": "yarn run compile && node lib/",
     "start-precompiled": "node lib/",
     "jest": "CI=true jest --forceExit --detectOpenHandles --reporters=default --reporters=jest-junit --coverage --coverageDirectory=output/coverage/jest --coverageReporters=cobertura",
@@ -61,6 +61,6 @@
     "shx": "0.3.3",
     "ts-jest": "26.5.4",
     "ts-node-dev": "1.1.6",
-    "typescript": "4.1.5"
+    "typescript": "4.2.3"
   }
 }
