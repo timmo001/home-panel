@@ -120,7 +120,7 @@ function Light(props: EntityProps): ReactElement | null {
       });
   };
 
-  const controls = [];
+  const controls: Array<ReactElement> = [];
 
   if (attrClasses.includes("has-brightness"))
     controls.push(
