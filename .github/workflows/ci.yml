@@ -219,15 +219,6 @@ jobs:
   build-container:
     name: 🚀 Build Container - ${{ matrix.architecture }}
     needs:
-      - lint-eslint
-      - lint-hadolint
-      - lint-jsonlint
-      - lint-markdownlint
-      - lint-markdown-links
-      - lint-prettier
-      - lint-shellcheck
-      - lint-yamllint
-      - tests
       - build-app
     runs-on: ubuntu-latest
     strategy:
