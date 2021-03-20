@@ -24,7 +24,6 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 import { ConfigurationProps } from "./Configuration";
-import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
 import { ConfigSectionItem } from "./Config";
 import clone from "../../utils/clone";
 import ColorAdornment from "../Utils/ColorAdornment";
@@ -61,7 +60,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ItemProps extends ConfigurationProps, HomeAssistantEntityProps {
+interface ItemProps extends ConfigurationProps {
   item: ConfigSectionItem;
 }
 

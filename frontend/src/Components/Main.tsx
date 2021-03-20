@@ -78,13 +78,13 @@ function Main(props: MainProps): ReactElement {
   }, []);
 
   useEffect(() => {
-    if (hassConnection === -2) {
-      const haUrl = localStorage.getItem("hass_url");
-      if (haUrl) {
-        setHassUrl(haUrl);
-        setHassConnection(-1);
-      }
-    }
+    // if (hassConnection === -2) {
+    //   const haUrl = localStorage.getItem("hass_url");
+    //   if (haUrl) {
+    //     setHassUrl(haUrl);
+    //     setHassConnection(-1);
+    //   }
+    // }
   }, [hassConnection]);
 
   function handleUpdateConfig(path: (string | number)[], data?: unknown): void {
@@ -246,16 +246,10 @@ function Main(props: MainProps): ReactElement {
               setEntities={setHassEntities}
             />
           )}
-          {props.currentPage === "Configuration" &&
-          hassAuth &&
-          hassConfig &&
-          hassEntities ? (
+          {props.currentPage === "Configuration" ? (
             <Configuration
               {...props}
               editing={editing}
-              hassAuth={hassAuth}
-              hassConfig={hassConfig}
-              hassEntities={hassEntities}
               handleBackupConfig={handleBackupConfig}
               handleRestoreConfig={handleRestoreConfig}
               handleUpdateConfig={handleUpdateConfig}

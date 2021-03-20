@@ -5,7 +5,6 @@ import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
-import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
 import { sections, ConfigProps, ConfigSection } from "./Config";
 import Section from "./Section";
 
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface ConfigurationBaseProps extends ConfigProps, HomeAssistantEntityProps {
+interface ConfigurationBaseProps extends ConfigProps {
   handleBackupConfig: () => void;
   handleRestoreConfig: () => void;
 }
