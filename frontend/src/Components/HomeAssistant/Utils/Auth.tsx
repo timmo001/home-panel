@@ -92,7 +92,8 @@ export async function parseTokens(): Promise<void> {
       const state = decodeOAuthState(query.state);
       data = await fetchToken(state.hassUrl, state.clientId, query.code);
       if (data) {
-        await saveTokens(data);
+        localStorage.setItem("hass_url", state.hassUrl);
+        saveTokens(data);
         window.location.replace(
           window.location.href.replace(window.location.search, "")
         );
