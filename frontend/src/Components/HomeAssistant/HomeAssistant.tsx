@@ -84,7 +84,9 @@ export async function loadTokens(): Promise<AuthData | null | undefined> {
 }
 
 export function saveTokens(tokens?: AuthData | null): void {
-  localStorage.setItem("hass_tokens", JSON.stringify(tokens));
+  if (tokens) {
+    localStorage.setItem("hass_tokens", JSON.stringify(tokens));
+  }
 }
 
 export function handleChange(
@@ -161,7 +163,6 @@ function HomeAssistant(props: HomeAssistantProps): null {
   const connectToHASS = useCallback(() => {
     if (!connection)
       (async (): Promise<void> => {
-        localStorage.setItem("hass_url", props.url);
         auth = await getAuth({
           hassUrl: props.url,
           saveTokens: saveTokens,
