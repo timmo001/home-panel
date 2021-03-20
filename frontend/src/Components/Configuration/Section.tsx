@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import ReactMarkdown from "react-markdown";
 
 import { ConfigurationProps } from "./Configuration";
-import { HomeAssistantEntityProps } from "../HomeAssistant/HomeAssistant";
 import Item from "./Item";
 import { ConfigSectionItem } from "./Config";
 
@@ -28,9 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-interface SectionProps extends ConfigurationProps, HomeAssistantEntityProps {}
-
-function Section(props: SectionProps): ReactElement {
+function Section(props: ConfigurationProps): ReactElement {
   const classes = useStyles();
 
   return (
