@@ -31,7 +31,7 @@
     "react-markdown": "5.0.3",
     "react-refresh": "0.10.0",
     "react-scripts": "4.0.3",
-    "recharts": "2.0.8",
+    "recharts": "2.0.9",
     "rss-parser": "3.12.0",
     "socket.io-client": "2.3.1",
     "superagent": "6.1.0",
