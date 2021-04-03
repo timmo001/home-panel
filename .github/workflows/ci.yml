@@ -116,7 +116,7 @@ jobs:
         run: |
           find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
       - name: 🚀 Run ShellCheck
-        uses: ludeeus/action-shellcheck@1.0.0
+        uses: ludeeus/action-shellcheck@1.1.0
         env:
           SHELLCHECK_OPTS: -s bash
         with:
