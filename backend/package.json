@@ -42,7 +42,7 @@
     "express": "4.17.1",
     "feathers-nedb": "5.1.0",
     "feathers-swagger": "1.2.1",
-    "helmet": "4.4.1",
+    "helmet": "4.6.0",
     "nedb": "1.8.0",
     "serve-favicon": "2.5.0",
     "winston": "3.3.3"
