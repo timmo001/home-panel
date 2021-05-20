@@ -1863,9 +1863,9 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@15.0.2":
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.2.tgz#51e9c0920d1b45936ea04341aa3e2e58d339fb67"
+"@types/node@*", "@types/node@15.3.1":
+  version "15.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.3.1.tgz#23a06b87eedb524016616e886b116b8fdcb180af"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
