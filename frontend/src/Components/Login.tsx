@@ -167,11 +167,11 @@ function Login(props: LoginProps): ReactElement {
     event.preventDefault();
   }
 
-  const handleChange = (name: keyof State) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setValues({ ...values, [name]: event.target.value });
-  };
+  const handleChange =
+    (name: keyof State) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setValues({ ...values, [name]: event.target.value });
+    };
 
   const classes = useStyles();
   const buttonClassname = clsx(classes.button, {

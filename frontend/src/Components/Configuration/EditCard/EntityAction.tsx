@@ -21,44 +21,44 @@ function EntityAction(props: EntityProps): ReactElement | null {
   const classes = useStyles();
 
   const handleChange = useCallback(
-    (key: string) => (event: React.ChangeEvent<HTMLInputElement>): void => {
-      if (key === "service_data") {
-        let json;
-        try {
-          json = JSON.parse(event.target.value);
-        } catch (e) {}
-        if (json) {
-          if (props.handleValidation)
-            props.handleValidation("click_action_service_data");
-        } else {
-          if (props.handleValidation)
-            props.handleValidation(
-              "click_action_service_data",
-              "Invalid JSON in Service Data"
-            );
+    (key: string) =>
+      (event: React.ChangeEvent<HTMLInputElement>): void => {
+        if (key === "service_data") {
+          let json;
+          try {
+            json = JSON.parse(event.target.value);
+          } catch (e) {}
+          if (json) {
+            if (props.handleValidation)
+              props.handleValidation("click_action_service_data");
+          } else {
+            if (props.handleValidation)
+              props.handleValidation(
+                "click_action_service_data",
+                "Invalid JSON in Service Data"
+              );
+          }
         }
-      }
-      if (props.handleManualChange && props.card.click_action) {
-        props.handleManualChange("click_action", {
-          ...props.card.click_action,
-          [key]: event.target.value,
-        });
-      }
-    },
+        if (props.handleManualChange && props.card.click_action) {
+          props.handleManualChange("click_action", {
+            ...props.card.click_action,
+            [key]: event.target.value,
+          });
+        }
+      },
     [props]
   );
 
   const handleSelectChange = useCallback(
-    (key: string) => (
-      event: React.ChangeEvent<{ name?: string; value: unknown }>
-    ): void => {
-      if (props.handleManualChange && props.card.click_action) {
-        props.handleManualChange("click_action", {
-          ...props.card.click_action,
-          [key]: event.target.value,
-        });
-      }
-    },
+    (key: string) =>
+      (event: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
+        if (props.handleManualChange && props.card.click_action) {
+          props.handleManualChange("click_action", {
+            ...props.card.click_action,
+            [key]: event.target.value,
+          });
+        }
+      },
     [props]
   );
 

@@ -34,7 +34,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: ⤵️ Install dependencies
-        run: yarn install
+        run: yarn install:all
         env:
           CI: true
       - name: 🚀 Run ESLint
@@ -158,7 +158,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: ⤵️ Install dependencies
-        run: yarn install
+        run: yarn install:all
         env:
           CI: true
       - name: 🧪 Backend - Test
@@ -192,7 +192,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: ⤵️ Install dependencies
-        run: yarn install
+        run: yarn install:all
         env:
           CI: true
       - name: 🚀 Backend - Compile

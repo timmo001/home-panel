@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/timmo001/container-base/amd64:1.0.1
+ARG BUILD_FROM=ghcr.io/timmo001/container-base/amd64:1.0.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -11,13 +11,13 @@ COPY . /opt/panel
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-WORKDIR /opt/panel
+WORKDIR /opt/panel/backend
 
 # Install system
 # hadolint ignore=DL3003,DL3018
 RUN \
     apk add --no-cache \
-        nginx=1.18.0-r13 \
+        nginx=1.18.0-r15 \
         nodejs-current=15.10.0-r0 \
         yarn=1.22.10-r0 \
     \

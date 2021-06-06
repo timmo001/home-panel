@@ -11,15 +11,13 @@ describe("authentication", () => {
       password: "supersecret",
     };
 
-    beforeAll(
-      async (): Promise<void> => {
-        try {
-          await app.service("users").create(userInfo);
-        } catch (error) {
-          // Do nothing, it just means the user already exists and can be tested
-        }
+    beforeAll(async (): Promise<void> => {
+      try {
+        await app.service("users").create(userInfo);
+      } catch (error) {
+        // Do nothing, it just means the user already exists and can be tested
       }
-    );
+    });
 
     it("authenticates user and creates accessToken", async (): Promise<void> => {
       const { user, accessToken } = await app.service("authentication").create({
