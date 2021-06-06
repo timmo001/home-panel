@@ -3,4 +3,4 @@ image:
 
 tasks:
   - init: yarn install:all
-    command: yarn start:dev
+    command: REACT_APP_API_HOSTNAME=$(gp url 8234) REACT_APP_API_PORT=443 yarn start:dev
