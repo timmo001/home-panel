@@ -17,7 +17,7 @@ WORKDIR /opt/panel
 # hadolint ignore=DL3003,DL3018
 RUN \
     apk add --no-cache \
-        nginx=1.18.0-r13 \
+        nginx=1.18.0-r15 \
         nodejs-current=15.10.0-r0 \
         yarn=1.22.10-r0 \
     \
@@ -27,7 +27,7 @@ RUN \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
-    && yarn install \
+    && yarn install:all \
     \
     && rm -fr /tmp/*
 
