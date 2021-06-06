@@ -46,14 +46,14 @@ function EditGroup(props: EditGroupProps): ReactElement {
     props.handleUpdate(group);
   }
 
-  const handleChange = (name: string) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setGroup({
-      ...group,
-      [name]: typeof event === "string" ? event : event.target.value,
-    });
-  };
+  const handleChange =
+    (name: string) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setGroup({
+        ...group,
+        [name]: typeof event === "string" ? event : event.target.value,
+      });
+    };
 
   const classes = useStyles();
   const theme = useTheme();

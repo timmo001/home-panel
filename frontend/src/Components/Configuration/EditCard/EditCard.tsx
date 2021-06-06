@@ -67,21 +67,20 @@ function EditCard(props: EditCardProps): ReactElement {
     });
   }
 
-  const handleChange = (name: string) => (
-    event: React.ChangeEvent<HTMLInputElement> | string
-  ): void => {
-    setCard({
-      ...card,
-      [name]: typeof event === "string" ? event : event.target.value,
-    });
-  };
+  const handleChange =
+    (name: string) =>
+    (event: React.ChangeEvent<HTMLInputElement> | string): void => {
+      setCard({
+        ...card,
+        [name]: typeof event === "string" ? event : event.target.value,
+      });
+    };
 
-  const handleSwitchChange = (name: string) => (
-    _event: React.ChangeEvent<unknown>,
-    checked: boolean
-  ): void => {
-    setCard({ ...card, [name]: checked });
-  };
+  const handleSwitchChange =
+    (name: string) =>
+    (_event: React.ChangeEvent<unknown>, checked: boolean): void => {
+      setCard({ ...card, [name]: checked });
+    };
 
   function handleSelectChange(
     event: React.ChangeEvent<{ name?: string; value: unknown }>

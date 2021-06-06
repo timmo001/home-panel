@@ -69,14 +69,14 @@ function EditPage(props: EditPageProps): ReactElement {
     handleClose();
   }
 
-  const handleChange = (name: string) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setPage({
-      ...page,
-      [name]: typeof event === "string" ? event : event.target.value,
-    });
-  };
+  const handleChange =
+    (name: string) =>
+    (event: React.ChangeEvent<HTMLInputElement>): void => {
+      setPage({
+        ...page,
+        [name]: typeof event === "string" ? event : event.target.value,
+      });
+    };
 
   const foundGroups = props.config.groups.find(
     (group: GroupProps) => group.page === props.page.key

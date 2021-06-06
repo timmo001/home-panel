@@ -78,9 +78,11 @@ function Base(props: BaseExtendedProps): ReactElement | null {
     }
   }
 
-  const handleColorChange = (name: string) => (color: ColorResult): void => {
-    props.handleManualChange?.(name, color.hex);
-  };
+  const handleColorChange =
+    (name: string) =>
+    (color: ColorResult): void => {
+      props.handleManualChange?.(name, color.hex);
+    };
 
   const classes = useStyles();
 

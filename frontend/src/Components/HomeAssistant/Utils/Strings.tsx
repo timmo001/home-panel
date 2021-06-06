@@ -1080,8 +1080,7 @@ const data = {
               enable: "enable",
               enable_ha_skill: "Enable the Home Assistant skill for Alexa",
               enable_state_reporting: "Enable State Reporting",
-              info:
-                "With the Alexa integration for Home Assistant Cloud you'll be able to control all your Home Assistant devices via any Alexa-enabled device.",
+              info: "With the Alexa integration for Home Assistant Cloud you'll be able to control all your Home Assistant devices via any Alexa-enabled device.",
               info_state_reporting:
                 "If you enable state reporting, Home Assistant will send all state changes of exposed entities to Amazon. This allows you to always see the latest states in the Alexa app and use the state changes to create routines.",
               manage_entities: "Manage Entities",
@@ -1103,8 +1102,7 @@ const data = {
               enter_pin_hint: "Enter a PIN to use security devices",
               enter_pin_info:
                 "Please enter a pin to interact with security devices. Security devices are doors, garage doors and locks. You will be asked to say/enter this pin when interacting with such devices via Google Assistant.",
-              info:
-                "With the Google Assistant integration for Home Assistant Cloud you'll be able to control all your Home Assistant devices via any Google Assistant-enabled device.",
+              info: "With the Google Assistant integration for Home Assistant Cloud you'll be able to control all your Home Assistant devices via any Google Assistant-enabled device.",
               info_state_reporting:
                 "If you enable state reporting, Home Assistant will send all state changes of exposed entities to Google. This allows you to always see the latest states in the Google app.",
               manage_entities: "Manage Entities",
@@ -1126,8 +1124,7 @@ const data = {
               access_is_being_prepared:
                 "Remote access is being prepared. We will notify you when it's ready.",
               certificate_info: "Certificate Info",
-              info:
-                "Home Assistant Cloud provides a secure remote connection to your instance while away from home.",
+              info: "Home Assistant Cloud provides a secure remote connection to your instance while away from home.",
               instance_is_available: "Your instance is available at",
               instance_will_be_available: "Your instance will be available at",
               link_learn_how_it_works: "Learn how it works",
@@ -1138,8 +1135,7 @@ const data = {
               "Thank you for being part of Home Assistant Cloud. It's because of people like you that we are able to make a great home automation experience for everyone. Thank you!",
             webhooks: {
               disable_hook_error_msg: "Failed to disable webhook:",
-              info:
-                "Anything that is configured to be triggered by a webhook can be given a publicly accessible URL to allow you to send data back to Home Assistant from anywhere, without exposing your instance to the internet.",
+              info: "Anything that is configured to be triggered by a webhook can be given a publicly accessible URL to allow you to send data back to Home Assistant from anywhere, without exposing your instance to the internet.",
               link_learn_more:
                 "Learn more about creating webhook-powered automations.",
               loading: "Loading ...",
@@ -2410,8 +2406,7 @@ const data = {
             cancel: "Never mind",
             close: "Close",
             header: "Take control of your Lovelace UI",
-            para:
-              "By default Home Assistant will maintain your user interface, updating it when new entities or Lovelace UI components become available. If you take control we will no longer make changes automatically for you.",
+            para: "By default Home Assistant will maintain your user interface, updating it when new entities or Lovelace UI components become available. If you take control we will no longer make changes automatically for you.",
             para_sure:
               "Are you sure you want to take control of your user interface?",
             save: "Take control",

@@ -30,10 +30,8 @@ let moveTimeout: NodeJS.Timeout;
 let socket: SocketIOClient.Socket, client: feathers.Application;
 function Onboarding(): ReactElement {
   const [loginAttempt, setLoginAttempt] = useState<ProgressState>(-2);
-  const [
-    loginCredentials,
-    setLoginCredentials,
-  ] = useState<AuthenticationResult>();
+  const [loginCredentials, setLoginCredentials] =
+    useState<AuthenticationResult>();
   const [config, setConfig] = useState<ConfigurationProps>();
   const [configId, setConfigId] = useState<string>();
   const [command, setCommand] = useState<CommandType>();

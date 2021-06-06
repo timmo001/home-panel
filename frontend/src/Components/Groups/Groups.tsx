@@ -172,13 +172,15 @@ function Groups(props: GroupsProps): ReactElement {
     }
   };
 
-  const handleUpdateCard = (card: CardProps) => (data: CardProps): void => {
-    console.log("handleUpdateCard:", card, data);
-    props.handleUpdateConfig(
-      ["cards", findCardIdByCard(props.config, card)],
-      data
-    );
-  };
+  const handleUpdateCard =
+    (card: CardProps) =>
+    (data: CardProps): void => {
+      console.log("handleUpdateCard:", card, data);
+      props.handleUpdateConfig(
+        ["cards", findCardIdByCard(props.config, card)],
+        data
+      );
+    };
 
   const handleEditingGroup = (group: GroupProps) => (): void => {
     setEditingGroup(group);
@@ -188,13 +190,15 @@ function Groups(props: GroupsProps): ReactElement {
     setEditingGroup(undefined);
   }
 
-  const handleUpdateGroup = (group: GroupProps) => (data: GroupProps): void => {
-    console.log("handleUpdateGroup:", group, data);
-    props.handleUpdateConfig(
-      ["groups", findGroupIdByGroup(props.config, group)],
-      data
-    );
-  };
+  const handleUpdateGroup =
+    (group: GroupProps) =>
+    (data: GroupProps): void => {
+      console.log("handleUpdateGroup:", group, data);
+      props.handleUpdateConfig(
+        ["groups", findGroupIdByGroup(props.config, group)],
+        data
+      );
+    };
 
   const handleDeleteConfirm = (group: GroupProps) => (): void => {
     console.log("handleDeleteConfirm:", group);

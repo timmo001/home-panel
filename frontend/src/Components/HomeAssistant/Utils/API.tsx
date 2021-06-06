@@ -44,7 +44,7 @@ export async function handleFetchPromise<T>(
     };
   }
 
-  return (body as unknown) as T;
+  return body as unknown as T;
 }
 
 const fetchWithAuth = async (
