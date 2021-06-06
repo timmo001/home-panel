@@ -9,11 +9,6 @@ RUN sudo apt-get update \
     && sudo apt-get install -y --no-install-recommends \
         apt-transport-https \
         build-essential \
-        ca-certificates \
-        curl \
-        git \
-        gnupg-agent \
-        libssl-dev \
         software-properties-common \
         wget \
         zsh \
