@@ -77,23 +77,21 @@ function Light(props: EntityProps): ReactElement | null {
 
   const getText = (value: number): string => `${value}`;
 
-  const handleSliderChange = (name: string) => (
-    _event: React.ChangeEvent<unknown>,
-    value: number | number[]
-  ): void => {
-    setAttributes({ ...attributes, [name]: value });
-  };
+  const handleSliderChange =
+    (name: string) =>
+    (_event: React.ChangeEvent<unknown>, value: number | number[]): void => {
+      setAttributes({ ...attributes, [name]: value });
+    };
 
-  const handleSliderChangeComplete = (name: string) => (
-    _event: React.ChangeEvent<unknown>,
-    value: number | number[]
-  ): void => {
-    props.handleHassChange &&
-      props.handleHassChange("light", true, {
-        entity_id: props.entity.entity_id,
-        [name]: value,
-      });
-  };
+  const handleSliderChangeComplete =
+    (name: string) =>
+    (_event: React.ChangeEvent<unknown>, value: number | number[]): void => {
+      props.handleHassChange &&
+        props.handleHassChange("light", true, {
+          entity_id: props.entity.entity_id,
+          [name]: value,
+        });
+    };
 
   function handleColorChange(color: ColorResult): void {
     setAttributes({
@@ -107,18 +105,20 @@ function Light(props: EntityProps): ReactElement | null {
       });
   }
 
-  const handleSelectChange = (name: string) => (
-    event: React.ChangeEvent<{ name?: string; value: unknown }>,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _child: React.ReactNode
-  ): void => {
-    setAttributes({ ...attributes, [name]: event.target.value });
-    props.handleHassChange &&
-      props.handleHassChange("light", true, {
-        entity_id: props.entity.entity_id,
-        [name]: event.target.value,
-      });
-  };
+  const handleSelectChange =
+    (name: string) =>
+    (
+      event: React.ChangeEvent<{ name?: string; value: unknown }>,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _child: React.ReactNode
+    ): void => {
+      setAttributes({ ...attributes, [name]: event.target.value });
+      props.handleHassChange &&
+        props.handleHassChange("light", true, {
+          entity_id: props.entity.entity_id,
+          [name]: event.target.value,
+        });
+    };
 
   const controls: Array<ReactElement> = [];
 

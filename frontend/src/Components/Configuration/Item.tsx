@@ -116,49 +116,45 @@ function Item(props: ItemProps): ReactElement {
   );
 
   const handleChange = useCallback(
-    (path: (string | number)[], type: string) => (
-      event: React.ChangeEvent<HTMLInputElement>
-    ): void => {
-      const val =
-        type === "number" ? Number(event.target.value) : event.target.value;
-      handleUpdate(path, val);
-    },
+    (path: (string | number)[], type: string) =>
+      (event: React.ChangeEvent<HTMLInputElement>): void => {
+        const val =
+          type === "number" ? Number(event.target.value) : event.target.value;
+        handleUpdate(path, val);
+      },
     [handleUpdate]
   );
 
   const handleRadioChange = useCallback(
-    (path: (string | number)[]) => (
-      event: React.ChangeEvent<unknown>
-    ): void => {
-      const val = Number((event.target as HTMLInputElement).value);
-      handleUpdate(path, val);
-    },
+    (path: (string | number)[]) =>
+      (event: React.ChangeEvent<unknown>): void => {
+        const val = Number((event.target as HTMLInputElement).value);
+        handleUpdate(path, val);
+      },
     [handleUpdate]
   );
 
   const handleSwitchChange = useCallback(
-    (path: (string | number)[]) => (
-      _event: React.ChangeEvent<unknown>,
-      checked: boolean
-    ): void => {
-      handleUpdate(path, checked);
-    },
+    (path: (string | number)[]) =>
+      (_event: React.ChangeEvent<unknown>, checked: boolean): void => {
+        handleUpdate(path, checked);
+      },
     [handleUpdate]
   );
 
   const handleSelectChange = useCallback(
-    (path: (string | number)[]) => (
-      event: React.ChangeEvent<{ name?: string; value: unknown }>
-    ): void => {
-      handleUpdate(path, event.target.value);
-    },
+    (path: (string | number)[]) =>
+      (event: React.ChangeEvent<{ name?: string; value: unknown }>): void => {
+        handleUpdate(path, event.target.value);
+      },
     [handleUpdate]
   );
 
   const handleColorChange = useCallback(
-    (path: (string | number)[]) => (color: ColorResult): void => {
-      handleUpdate(path, color.hex);
-    },
+    (path: (string | number)[]) =>
+      (color: ColorResult): void => {
+        handleUpdate(path, color.hex);
+      },
     [handleUpdate]
   );
 

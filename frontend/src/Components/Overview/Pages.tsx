@@ -59,21 +59,27 @@ function Pages(props: PagesProps): ReactElement {
     setEditingPage(undefined);
   }
 
-  const handleUpdatePage = (page: Page) => (data?: Page): void => {
-    props.handleUpdateConfig(
-      ["pages", findPageIdByPage(props.config, page)],
-      data
-    );
-    props.setPage(props.config.pages[0].key);
-  };
+  const handleUpdatePage =
+    (page: Page) =>
+    (data?: Page): void => {
+      props.handleUpdateConfig(
+        ["pages", findPageIdByPage(props.config, page)],
+        data
+      );
+      props.setPage(props.config.pages[0].key);
+    };
 
-  const handleMovePage = (page: Page) => (position: number): void => {
-    props.handleUpdateConfig(
-      ["pages", findPageIdByPage(props.config, page)],
-      [position]
-    );
-    props.setPage(props.config.pages[findPageIdByPage(props.config, page)].key);
-  };
+  const handleMovePage =
+    (page: Page) =>
+    (position: number): void => {
+      props.handleUpdateConfig(
+        ["pages", findPageIdByPage(props.config, page)],
+        [position]
+      );
+      props.setPage(
+        props.config.pages[findPageIdByPage(props.config, page)].key
+      );
+    };
 
   const classes = useStyles();
   return (

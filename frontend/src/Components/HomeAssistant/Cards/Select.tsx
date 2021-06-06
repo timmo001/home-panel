@@ -46,17 +46,19 @@ function Select(props: EntityProps): ReactElement {
     setOpen(!open);
   }
 
-  const handleChosen = (option: string) => (
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _event: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ): void => {
-    props.handleHassChange &&
-      props.handleHassChange("input_select", "select_option", {
-        entity_id: props.card.entity,
-        option,
-      });
-    setOpen(false);
-  };
+  const handleChosen =
+    (option: string) =>
+    (
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _event: React.MouseEvent<HTMLLIElement, MouseEvent>
+    ): void => {
+      props.handleHassChange &&
+        props.handleHassChange("input_select", "select_option", {
+          entity_id: props.card.entity,
+          option,
+        });
+      setOpen(false);
+    };
 
   const classes = useStyles();
   const theme = useTheme();
