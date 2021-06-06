@@ -27,7 +27,7 @@ RUN \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
-    && yarn install:all \
+    && yarn install \
     \
     && rm -fr /tmp/*
 
