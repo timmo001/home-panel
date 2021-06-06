@@ -1,11 +1,12 @@
 {
   "private": true,
-  "workspaces": [
-    "backend",
-    "frontend"
-  ],
   "scripts": {
-    "start:dev": "concurrently -k \"yarn start:frontend\" \"yarn start:backend:dev\"",
+    "install:all": "yarn install && yarn install:backend && yarn install:frontend",
+    "install:backend": "cd backend && yarn install",
+    "install:frontend": "cd frontend && yarn install",
+    "start": "concurrently -k \"yarn start:backend\" \"yarn start:frontend\"",
+    "start:dev": "concurrently -k \"yarn start:backend:dev\" \"yarn start:frontend\"",
+    "start:backend": "cd backend && yarn start",
     "start:backend:dev": "cd backend && yarn start:dev",
     "start:frontend": "cd frontend && yarn start",
     "eslint": "eslint --ext .ts --ext .tsx --color ./",
@@ -19,7 +20,6 @@
     "prettier-yml": "prettier --write ./**/*.yml"
   },
   "devDependencies": {
-    "@types/node": "15.0.2",
     "@typescript-eslint/eslint-plugin": "4.22.1",
     "@typescript-eslint/parser": "4.22.1",
     "concurrently": "6.2.0",
@@ -27,7 +27,6 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.23.2",
-    "prettier": "2.2.1",
-    "typescript": "4.2.4"
+    "prettier": "2.2.1"
   }
 }
