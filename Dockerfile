@@ -11,7 +11,7 @@ COPY . /opt/panel
 # Set shell
 SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-WORKDIR /opt/panel
+WORKDIR /opt/panel/backend
 
 # Install system
 # hadolint ignore=DL3003,DL3018
@@ -27,7 +27,7 @@ RUN \
     && rm -rf /opt/panel/frontend \
     && rm -rf /opt/panel/rootfs \
     \
-    && yarn install:all \
+    && yarn install \
     \
     && rm -fr /tmp/*
 
