@@ -5,8 +5,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install packages
 # hadolint ignore=DL3008,DL3009,SC2086
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+RUN sudo apt-get update \
+    && sudo apt-get install -y --no-install-recommends \
         apt-transport-https \
         build-essential \
         ca-certificates \
@@ -17,7 +17,7 @@ RUN apt-get update \
         software-properties-common \
         wget \
         zsh \
-    && apt-get clean \
+    && sudo apt-get clean \
     && curl -o- "https://get.docker.com" | bash \
     && curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" \
         -o /usr/local/bin/docker-compose \
