@@ -1,5 +1,5 @@
 import React, { ReactElement, useMemo } from "react";
-import { ReactMarkdownProps } from "react-markdown/src/ast-to-react";
+import { ReactMarkdownProps } from "react-markdown/lib/ast-to-react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { atomOneDark } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
@@ -12,7 +12,8 @@ function Code({
     inline?: boolean;
   }): ReactElement {
   const language = useMemo<string>(
-    () => className?.replace("language-", ""),
+    () =>
+      typeof className === "string" ? className.replace("language-", "") : "",
     []
   );
   // return !inline && language ? (

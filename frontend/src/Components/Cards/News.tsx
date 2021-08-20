@@ -137,7 +137,7 @@ function News(props: BaseProps): ReactElement {
               )}
               <Grid item xs>
                 <Typography variant="subtitle1" component="h3">
-                  <ReactMarkdown source={item.heading} escapeHtml={false} />
+                  <ReactMarkdown skipHtml={false}>{item.heading}</ReactMarkdown>
                 </Typography>
                 {item.meta && (
                   <Typography
@@ -145,12 +145,14 @@ function News(props: BaseProps): ReactElement {
                     component="h5"
                     gutterBottom
                     noWrap>
-                    <ReactMarkdown source={item.meta} escapeHtml={false} />
+                    <ReactMarkdown skipHtml={false}>{item.meta}</ReactMarkdown>
                   </Typography>
                 )}
                 {item.content && (
                   <Typography variant="body2" component="span">
-                    <ReactMarkdown source={item.content} escapeHtml={false} />
+                    <ReactMarkdown skipHtml={false}>
+                      {item.content}
+                    </ReactMarkdown>
                   </Typography>
                 )}
               </Grid>

@@ -64,10 +64,9 @@ function Section(props: ConfigurationProps): ReactElement {
                 <Grid item xs>
                   <Typography variant="subtitle1">{item.title}</Typography>
                   <Typography variant="body2" component="span">
-                    <ReactMarkdown
-                      source={item.description}
-                      escapeHtml={false}
-                    />
+                    <ReactMarkdown skipHtml={false}>
+                      {item.description}
+                    </ReactMarkdown>
                   </Typography>
                 </Grid>
               )}
