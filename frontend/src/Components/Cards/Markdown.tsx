@@ -4,6 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import ReactMarkdown from "react-markdown";
 
 import { BaseProps } from "./Base";
+import Code from "../MarkdownRenderers/Code";
+import Link from "../MarkdownRenderers/Link";
 
 const useStyles = makeStyles((theme: Theme) => ({
   text: {
@@ -30,7 +32,14 @@ function Markdown(props: BaseProps): ReactElement | null {
       color="textPrimary"
       variant="body1"
       component="span">
-      <ReactMarkdown source={props.card.content} escapeHtml={false} />
+      <ReactMarkdown
+        skipHtml={false}
+        components={{
+          a: Link,
+          code: Code,
+        }}>
+        {props.card.content}
+      </ReactMarkdown>
     </Typography>
   );
 }

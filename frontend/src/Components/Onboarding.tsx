@@ -5,7 +5,7 @@ import feathers from "@feathersjs/feathers";
 import io from "socket.io-client";
 import socketio from "@feathersjs/socketio-client";
 import {
-  createMuiTheme,
+  createTheme,
   responsiveFontSizes,
   Theme,
 } from "@material-ui/core/styles";
@@ -38,7 +38,7 @@ function Onboarding(): ReactElement {
   const [mouseMoved, setMouseMoved] = useState<boolean>(false);
   const [theme, setTheme] = useState<Theme>(
     responsiveFontSizes(
-      createMuiTheme({
+      createTheme({
         palette: defaultPalette,
       })
     )
@@ -65,7 +65,7 @@ function Onboarding(): ReactElement {
   function handleSetTheme(palette: ThemeProps): void {
     setTheme(
       responsiveFontSizes(
-        createMuiTheme({
+        createTheme({
           palette: parseTheme(palette),
           overrides: {
             MuiTypography: {

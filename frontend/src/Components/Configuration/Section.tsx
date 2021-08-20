@@ -35,7 +35,7 @@ function Section(props: ConfigurationProps): ReactElement {
       container
       direction="row"
       alignContent="center"
-      justify="space-between">
+      justifyContent="space-between">
       {props.section.items.map((item: ConfigSectionItem, key: number) => {
         // if (props.section.items === 'array') item.name = Number(key);
         return (
@@ -45,7 +45,7 @@ function Section(props: ConfigurationProps): ReactElement {
             container
             direction="row"
             alignContent="center"
-            justify="space-between"
+            justifyContent="space-between"
             className={classes.item}>
             <Grid
               item
@@ -54,7 +54,7 @@ function Section(props: ConfigurationProps): ReactElement {
               direction="row"
               alignContent="center"
               alignItems="center"
-              justify="space-between">
+              justifyContent="space-between">
               {item.icon && (
                 <Grid item>
                   <span className={clsx("mdi", item.icon, classes.icon)} />
@@ -64,10 +64,9 @@ function Section(props: ConfigurationProps): ReactElement {
                 <Grid item xs>
                   <Typography variant="subtitle1">{item.title}</Typography>
                   <Typography variant="body2" component="span">
-                    <ReactMarkdown
-                      source={item.description}
-                      escapeHtml={false}
-                    />
+                    <ReactMarkdown skipHtml={false}>
+                      {item.description}
+                    </ReactMarkdown>
                   </Typography>
                 </Grid>
               )}

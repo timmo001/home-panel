@@ -137,40 +137,40 @@ jobs:
           config_file: .yamllint.yml
           format: colored
           strict: false
-  tests:
-    name: 🧪 Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
-      - name: 🏗 Set up Node.js
-        uses: actions/setup-node@v2.1.5
-        with:
-          node-version: 14.x
-      - name: ⤵️ Get yarn cache path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: ⤵️ Fetch Yarn cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-      - name: ⤵️ Install dependencies
-        run: yarn install:all
-        env:
-          CI: true
-      - name: 🧪 Backend - Test
-        run: yarn test
-        env:
-          CI: true
-        working-directory: backend
-      - name: 🧪 Frontend - Test
-        run: yarn test
-        env:
-          CI: true
-        working-directory: frontend
+          # tests:
+          #   name: 🧪 Tests
+          #   runs-on: ubuntu-latest
+          #   steps:
+          #     - name: ⤵️ Check out code from GitHub
+          #       uses: actions/checkout@v2.3.4
+          #     - name: 🏗 Set up Node.js
+          #       uses: actions/setup-node@v2.1.5
+          #       with:
+          #         node-version: 14.x
+          #     - name: ⤵️ Get yarn cache path
+          #       id: yarn-cache-dir-path
+          #       run: echo "::set-output name=dir::$(yarn cache dir)"
+          #     - name: ⤵️ Fetch Yarn cache
+          #       uses: actions/cache@v2.1.6
+          #       with:
+          #         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          #         restore-keys: |
+          #           ${{ runner.os }}-yarn-
+          #     - name: ⤵️ Install dependencies
+          #       run: yarn install:all
+          #       env:
+          #         CI: true
+          #     - name: 🧪 Backend - Test
+          #       run: yarn test
+          #       env:
+          #         CI: true
+          #       working-directory: backend
+          #     - name: 🧪 Frontend - Test
+          #       run: yarn test
+          #       env:
+          #         CI: true
+          #       working-directory: frontend
   build-app:
     name: 🚀 Build Application
     runs-on: ubuntu-latest

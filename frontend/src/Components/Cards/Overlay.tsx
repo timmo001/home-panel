@@ -60,7 +60,7 @@ function Overlay(props: BaseProps): ReactElement {
         container
         alignContent="center"
         alignItems="center"
-        justify="center">
+        justifyContent="center">
         <IconButton color="primary" onClick={handleEdit}>
           <EditIcon fontSize="small" />
         </IconButton>

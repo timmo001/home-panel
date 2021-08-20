@@ -117,7 +117,7 @@ function Header(props: HeaderProps): ReactElement | null {
       item
       container
       direction="row"
-      justify="space-between"
+      justifyContent="space-between"
       alignItems="center"
       spacing={2}>
       {columns.map((columnData, key: number) => (

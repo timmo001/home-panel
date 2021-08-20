@@ -101,7 +101,7 @@ function Checklist(props: ItemProps): ReactElement | null {
         xs={12}
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignContent="flex-start"
         alignItems="center">
         <Grid item>

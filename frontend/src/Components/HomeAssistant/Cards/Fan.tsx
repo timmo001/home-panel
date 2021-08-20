@@ -50,14 +50,14 @@ function Fan(props: EntityProps): ReactElement | null {
       container
       spacing={1}
       alignContent="center"
-      justify="center"
+      justifyContent="center"
       direction="column">
       <Grid
         item
         xs
         container
         alignContent="center"
-        justify="center"
+        justifyContent="center"
         direction="row">
         {props.entity.attributes.speed_list.map(
           (speed: string, key: number) => {
@@ -73,7 +73,7 @@ function Fan(props: EntityProps): ReactElement | null {
                 : undefined;
             if (icon)
               return (
-                <Grid key={key} item xs={6} container justify="center">
+                <Grid key={key} item xs={6} container justifyContent="center">
                   <IconButton
                     className={classes.iconContainer}
                     onClick={(): void => handleSpeedChange(speed)}>

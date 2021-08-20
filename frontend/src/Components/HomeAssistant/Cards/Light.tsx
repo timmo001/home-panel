@@ -229,7 +229,7 @@ function Light(props: EntityProps): ReactElement | null {
       container
       direction="row"
       alignContent="center"
-      justify="center"
+      justifyContent="center"
       spacing={1}>
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton

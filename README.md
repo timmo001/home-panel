@@ -9,7 +9,6 @@
 [![GitHub Activity][commits-shield]][commits]
 ![Project Maintenance][maintenance-shield]
 
-[![Docker Version][version-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
 
 ![Supports armhf Architecture][armhf-shield]
@@ -81,7 +80,6 @@ Setup and configuration for the app is available [here][setup-docs]
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
 [license]: https://github.com/timmo001/home-panel/blob/master/LICENSE.md
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2021.svg
-[microbadger]: https://microbadger.com/images/timmo001/home-panel
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
@@ -92,4 +90,3 @@ Setup and configuration for the app is available [here][setup-docs]
 [showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/docs/showcase/timmo/purple-space.png
 [sponsor-badge]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/sponsor.png
 [sponsor]: https://github.com/sponsors/timmo001?o=esc
-[version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg

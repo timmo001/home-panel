@@ -113,9 +113,14 @@ function EditPage(props: EditPageProps): ReactElement {
         <Grid
           container
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignContent="stretch">
-          <Grid item xs container justify="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -125,7 +130,12 @@ function EditPage(props: EditPageProps): ReactElement {
               onChange={handleChange("name")}
             />
           </Grid>
-          <Grid item xs container justify="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}

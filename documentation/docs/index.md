@@ -7,7 +7,6 @@
 [![GitHub Activity][commits-shield]][commits]
 ![Project Maintenance][maintenance-shield]
 
-[![Docker Version][version-shield]][microbadger]
 [![Docker Pulls][pulls-shield]][dockerhub]
 
 ![Supports armhf Architecture][armhf-shield]
@@ -65,7 +64,6 @@ A web frontend for controlling the home. Integrates with
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [license-shield]: https://img.shields.io/github/license/timmo001/home-panel.svg
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2020.svg
-[microbadger]: https://microbadger.com/images/timmo001/home-panel
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-green.svg
 [pulls-shield]: https://img.shields.io/docker/pulls/timmo001/home-panel.svg
 [releases-shield]: https://img.shields.io/github/release/timmo001/home-panel.svg
@@ -74,4 +72,3 @@ A web frontend for controlling the home. Integrates with
 [screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-main.png
 [setup-docs]: https://home-panel-docs.timmo.dev/setup/
 [showcase-purple-space]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/docs/showcase/timmo/purple-space.png
-[version-shield]: https://images.microbadger.com/badges/version/timmo001/home-panel.svg

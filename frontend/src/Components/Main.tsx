@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, ReactElement } from "react";
 import { Auth, HassConfig, HassEntities } from "home-assistant-js-websocket";
 import { AuthenticationResult } from "@feathersjs/authentication/lib";
 import { makeStyles, Theme } from "@material-ui/core/styles";
-import arrayMove from "array-move";
+import { arrayMoveMutable } from "array-move";
 import clsx from "clsx";
 import moment from "moment";
 import Slide from "@material-ui/core/Slide";
@@ -107,7 +107,7 @@ function Main(props: MainProps): ReactElement {
         if (Array.isArray(secondLastItem)) {
           if (data === undefined) secondLastItem.splice(Number(lastItem), 1);
           else if (Array.isArray(data)) {
-            arrayMove.mutate(
+            arrayMoveMutable(
               secondLastItem,
               Number(lastItem),
               lastItem + data[0]

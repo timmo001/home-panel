@@ -62,7 +62,7 @@ function AddCard(props: AddCardProps): ReactElement {
               className={classes.grid}
               container
               alignContent="center"
-              justify="center">
+              justifyContent="center">
               <span className={clsx("mdi", "mdi-plus", classes.icon)} />
             </Grid>
           </CardContent>

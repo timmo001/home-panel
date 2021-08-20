@@ -97,7 +97,7 @@ function State(props: EntityProps): ReactElement | null {
       container
       direction="column"
       alignContent="center"
-      justify="center">
+      justifyContent="center">
       {props.card &&
         props.card.chart &&
         historyData &&

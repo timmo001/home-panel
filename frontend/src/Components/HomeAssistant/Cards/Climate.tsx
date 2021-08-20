@@ -108,14 +108,14 @@ function Climate(props: EntityProps): ReactElement | null {
       className={classes.root}
       container
       spacing={1}
-      justify="space-between"
+      justifyContent="space-between"
       alignContent="center"
       direction="column">
       <Grid
         item
         xs
         container
-        justify="space-around"
+        justifyContent="space-around"
         alignContent="center"
         alignItems="center"
         direction="row">
@@ -134,7 +134,7 @@ function Climate(props: EntityProps): ReactElement | null {
             {props.entity.attributes.temperature ? (
               <Grid
                 container
-                justify="center"
+                justifyContent="center"
                 alignContent="center"
                 alignItems="center"
                 direction="column">
@@ -174,7 +174,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 item
                 container
                 spacing={1}
-                justify="center"
+                justifyContent="center"
                 alignContent="center"
                 alignItems="center"
                 direction="row">
@@ -269,7 +269,7 @@ function Climate(props: EntityProps): ReactElement | null {
             container
             spacing={1}
             alignContent="center"
-            justify="center"
+            justifyContent="center"
             direction="row">
             {props.entity.attributes.hvac_modes.map(
               (mode: string, key: number) => {
@@ -327,7 +327,7 @@ function Climate(props: EntityProps): ReactElement | null {
                 container
                 spacing={1}
                 alignContent="center"
-                justify="space-around"
+                justifyContent="space-around"
                 direction="row">
                 <Grid item>
                   <IconButton onClick={handleAwayToggle}>
