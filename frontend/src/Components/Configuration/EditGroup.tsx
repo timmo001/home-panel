@@ -75,7 +75,12 @@ function EditGroup(props: EditGroupProps): ReactElement {
           direction="row"
           justifyContent="flex-start"
           alignContent="stretch">
-          <Grid item xs container justifyContent="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -85,7 +90,12 @@ function EditGroup(props: EditGroupProps): ReactElement {
               onChange={handleChange("name")}
             />
           </Grid>
-          <Grid item xs container justifyContent="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}

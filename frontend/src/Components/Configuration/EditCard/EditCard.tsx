@@ -137,7 +137,11 @@ function EditCard(props: EditCardProps): ReactElement {
       aria-labelledby="responsive-dialog-title">
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
       <DialogContent className={classes.dialogContent}>
-        <Grid container direction="row" alignContent="center" justifyContent="center">
+        <Grid
+          container
+          direction="row"
+          alignContent="center"
+          justifyContent="center">
           <Grid
             className={classes.editView}
             item
