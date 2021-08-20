@@ -22,9 +22,9 @@ function Code({
       customStyle={
         inline && !language ? { display: "inline", padding: "0.2em" } : {}
       }
-      language={language || "text"}
-      children={String(children).replace(/\n$/, "")}
-    />
+      language={language || "text"}>
+      {String(children).replace(/\n$/, "")}
+    </SyntaxHighlighter>
   );
   // ) : (
   //   <code {...props} className={className} children={children} />
