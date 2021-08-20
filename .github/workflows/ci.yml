@@ -83,7 +83,7 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: 🚀 Run Markdown Links
-        uses: gaurav-nelson/github-action-markdown-link-check@1.0.12
+        uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
         with:
           use-quiet-mode: no
           use-verbose-mode: no
