@@ -244,7 +244,11 @@ function Login(props: LoginProps): ReactElement {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container direction="column" justifyContent="center" alignContent="center">
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignContent="center">
         <div className={classes.wrapper}>
           {errorText && <Typography color="error">{errorText}</Typography>}
           {invalidText && (

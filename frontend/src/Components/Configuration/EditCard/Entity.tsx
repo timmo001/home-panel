@@ -164,7 +164,12 @@ function Entity(props: EntityProps): ReactElement {
           alignItems="flex-end"
           alignContent="flex-end">
           {iconAllowed && props.card.icon && (
-            <Grid item xs container justifyContent="flex-start" alignContent="center">
+            <Grid
+              item
+              xs
+              container
+              justifyContent="flex-start"
+              alignContent="center">
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
@@ -177,7 +182,12 @@ function Entity(props: EntityProps): ReactElement {
             </Grid>
           )}
           {graphAllowed && props.card.entity && (
-            <Grid item xs container justifyContent="flex-start" alignContent="center">
+            <Grid
+              item
+              xs
+              container
+              justifyContent="flex-start"
+              alignContent="center">
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}

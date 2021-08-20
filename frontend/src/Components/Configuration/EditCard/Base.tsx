@@ -89,7 +89,11 @@ function Base(props: BaseExtendedProps): ReactElement | null {
   if (!props.card && !props.handleChange) return null;
   return (
     <div className={classes.root}>
-      <Grid container direction="row" justifyContent="center" alignContent="stretch">
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignContent="stretch">
         <Grid
           container
           direction="row"
@@ -144,7 +148,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         direction="row"
         justifyContent="center"
         alignContent="stretch">
-        <Grid item xs container justifyContent="flex-start" alignContent="center">
+        <Grid
+          item
+          xs
+          container
+          justifyContent="flex-start"
+          alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -155,7 +164,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             onChange={props.handleChange && props.handleChange("elevation")}
           />
         </Grid>
-        <Grid item xs container justifyContent="flex-start" alignContent="center">
+        <Grid
+          item
+          xs
+          container
+          justifyContent="flex-start"
+          alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -180,7 +194,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         direction="row"
         justifyContent="center"
         alignContent="stretch">
-        <Grid item xs container justifyContent="flex-start" alignContent="center">
+        <Grid
+          item
+          xs
+          container
+          justifyContent="flex-start"
+          alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -190,7 +209,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             onChange={props.handleChange && props.handleChange("padding")}
           />
         </Grid>
-        <Grid item xs container justifyContent="flex-start" alignContent="center">
+        <Grid
+          item
+          xs
+          container
+          justifyContent="flex-start"
+          alignContent="center">
           <FormControlLabel
             className={classes.switch}
             label="Square?"
@@ -210,7 +234,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         direction="row"
         justifyContent="center"
         alignContent="stretch">
-        <Grid item xs container justifyContent="flex-start" alignContent="center">
+        <Grid
+          item
+          xs
+          container
+          justifyContent="flex-start"
+          alignContent="center">
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -222,7 +251,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           />
         </Grid>
         {props.card.type === "entity" && (
-          <Grid item xs container justifyContent="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -242,7 +276,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         justifyContent="center"
         alignContent="stretch">
         {props.card.title && (
-          <Grid item xs container justifyContent="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <FormControl className={classes.textField}>
               <InputLabel htmlFor="title_justify">Title Justify</InputLabel>
               <Select
@@ -261,7 +300,12 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           </Grid>
         )}
         {props.card.title && (
-          <Grid item xs container justifyContent="flex-start" alignContent="center">
+          <Grid
+            item
+            xs
+            container
+            justifyContent="flex-start"
+            alignContent="center">
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
