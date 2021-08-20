@@ -110,7 +110,7 @@ function RSS(props: BaseProps): ReactElement {
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               alignContent="center"
               alignItems="center">
               <Grid item xs>

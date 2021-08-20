@@ -121,7 +121,7 @@ function News(props: BaseProps): ReactElement {
             <Grid
               container
               direction="row"
-              justify="center"
+              justifyContent="center"
               alignContent="center"
               alignItems="center">
               {props.card.width && props.card.width > 2 && item.imageURL && (

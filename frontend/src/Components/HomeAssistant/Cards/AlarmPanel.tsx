@@ -57,7 +57,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
     <Grid
       className={classes.root}
       container
-      justify="center"
+      justifyContent="center"
       alignContent="center"
       alignItems="center"
       direction="column">
@@ -73,7 +73,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
             container
             spacing={1}
             alignContent="center"
-            justify="center"
+            justifyContent="center"
             direction="row">
             {!armed && (
               <Grid item>
@@ -142,7 +142,7 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
             item
             container
             alignContent="center"
-            justify="center">
+            justifyContent="center">
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
                 <Button

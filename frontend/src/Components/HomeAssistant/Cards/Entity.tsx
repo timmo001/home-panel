@@ -58,7 +58,7 @@ function Entity(props: EntityBaseProps): ReactElement | null {
         container
         direction="row"
         alignContent="center"
-        justify="center">
+        justifyContent="center">
         <Grid item xs>
           <Typography
             className={classes.text}

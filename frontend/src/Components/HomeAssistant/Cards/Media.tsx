@@ -105,7 +105,7 @@ function Media(props: EntityProps): ReactElement | null {
       className={classes.root}
       container
       direction="row"
-      justify="space-between"
+      justifyContent="space-between"
       alignContent="center"
       alignItems="center">
       {(!props.card.height || props.card.height > 1) && (
@@ -135,7 +135,7 @@ function Media(props: EntityProps): ReactElement | null {
         item
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignContent="center"
         alignItems="center">
         {(!props.card.width || props.card.width > 2) && (
@@ -153,7 +153,7 @@ function Media(props: EntityProps): ReactElement | null {
           xs
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignContent="center"
           alignItems="center">
           {(!props.card.width || props.card.width > 1) &&

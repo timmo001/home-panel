@@ -27,7 +27,7 @@ function Loading(props: LoadingProps): ReactElement {
       className={classes.root}
       container
       direction="column"
-      justify="center"
+      justifyContent="center"
       alignContent="center"
       alignItems="center">
       <CircularProgress size={42} />

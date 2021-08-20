@@ -43,7 +43,7 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
     <Grid
       container
       direction="column"
-      justify="center"
+      justifyContent="center"
       alignContent="center"
       spacing={1}>
       {sections.map((section: ConfigSection, key: number) => (

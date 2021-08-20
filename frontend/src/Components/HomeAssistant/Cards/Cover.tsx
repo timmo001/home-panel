@@ -32,14 +32,14 @@ function Cover(props: EntityProps): ReactElement | null {
       container
       spacing={1}
       alignContent="center"
-      justify="space-between"
+      justifyContent="space-between"
       direction="column">
       <Grid
         item
         xs
         container
         alignContent="center"
-        justify="space-around"
+        justifyContent="space-around"
         direction="row">
         <Grid item>
           <IconButton

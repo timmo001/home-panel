@@ -68,7 +68,7 @@ function EntityAction(props: EntityProps): ReactElement | null {
     return null;
   }
   return (
-    <Grid item xs container justify="flex-start" alignContent="center">
+    <Grid item xs container justifyContent="flex-start" alignContent="center">
       <Grid item xs>
         <FormControl className={classes.textField}>
           <InputLabel htmlFor="click_action_type">Click Action</InputLabel>

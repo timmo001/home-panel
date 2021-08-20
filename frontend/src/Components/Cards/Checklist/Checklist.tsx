@@ -69,7 +69,7 @@ function Checklist(props: BaseProps): ReactElement | null {
       className={classes.root}
       container
       direction="row"
-      justify="center"
+      justifyContent="center"
       alignContent="flex-start"
       alignItems="center">
       {useMemo(() => {

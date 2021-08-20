@@ -100,7 +100,7 @@ function Entity(props: EntityProps): ReactElement {
         className={classes.container}
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="flex-end"
         alignContent="flex-end"
         item
@@ -131,7 +131,7 @@ function Entity(props: EntityProps): ReactElement {
             item
             container
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignItems="flex-end"
             alignContent="flex-end">
             <Grid item xs>
@@ -160,11 +160,11 @@ function Entity(props: EntityProps): ReactElement {
           item
           container
           direction="row"
-          justify="center"
+          justifyContent="center"
           alignItems="flex-end"
           alignContent="flex-end">
           {iconAllowed && props.card.icon && (
-            <Grid item xs container justify="flex-start" alignContent="center">
+            <Grid item xs container justifyContent="flex-start" alignContent="center">
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
@@ -177,7 +177,7 @@ function Entity(props: EntityProps): ReactElement {
             </Grid>
           )}
           {graphAllowed && props.card.entity && (
-            <Grid item xs container justify="flex-start" alignContent="center">
+            <Grid item xs container justifyContent="flex-start" alignContent="center">
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
@@ -197,7 +197,7 @@ function Entity(props: EntityProps): ReactElement {
             item
             container
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignContent="stretch">
             <Grid item xs>
               <FormControl className={classes.textField}>
@@ -225,7 +225,7 @@ function Entity(props: EntityProps): ReactElement {
             item
             container
             direction="row"
-            justify="center"
+            justifyContent="center"
             alignContent="stretch"
             alignItems="flex-end">
             {props.card.chart && props.card.chart !== "radialBar" && (

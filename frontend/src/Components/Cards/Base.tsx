@@ -372,7 +372,7 @@ function Base(props: BaseProps): ReactElement {
           PaperProps={{ style: { background: "transparent" } }}
           open={expandCard}
           onClose={handleCloseExpand}>
-          <Grid container justify="center">
+          <Grid container justifyContent="center">
             <Base
               {...props}
               expandable={false}

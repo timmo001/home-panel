@@ -236,7 +236,7 @@ function Groups(props: GroupsProps): ReactElement {
             item
             container
             direction="row"
-            justify="flex-start"
+            justifyContent="flex-start"
             alignContent="flex-start"
             style={{
               width: groupWidth,
@@ -245,7 +245,7 @@ function Groups(props: GroupsProps): ReactElement {
               item
               container
               direction="row"
-              justify="flex-start"
+              justifyContent="flex-start"
               alignContent="flex-start">
               <Grid item xs>
                 <Typography
@@ -262,7 +262,7 @@ function Groups(props: GroupsProps): ReactElement {
                   style={{ width: "fit-content" }}
                   container
                   alignContent="center"
-                  justify="flex-end">
+                  justifyContent="flex-end">
                   <IconButton
                     color="primary"
                     onClick={handleEditingGroup(group)}>
@@ -300,7 +300,7 @@ function Groups(props: GroupsProps): ReactElement {
               item
               container
               direction="row"
-              justify="flex-start"
+              justifyContent="flex-start"
               alignContent="flex-start"
               spacing={1}>
               {cards.map((card: CardProps, cardKey: number) => (
@@ -336,7 +336,7 @@ function Groups(props: GroupsProps): ReactElement {
           item
           container
           direction="row"
-          justify="flex-start"
+          justifyContent="flex-start"
           alignContent="flex-start"
           style={{
             width: theme.breakpoints.down("sm") ? 140 : 120,

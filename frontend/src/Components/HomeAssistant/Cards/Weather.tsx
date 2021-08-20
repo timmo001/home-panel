@@ -75,7 +75,7 @@ function Weather(props: EntityProps): ReactElement {
       direction="row"
       alignContent="space-around"
       alignItems="center"
-      justify="space-around">
+      justifyContent="space-around">
       <Grid
         item
         xs
@@ -83,7 +83,7 @@ function Weather(props: EntityProps): ReactElement {
         direction="row"
         alignContent="center"
         alignItems="center"
-        justify="center">
+        justifyContent="center">
         <Grid item>
           <Typography className={classes.forecastTextIcon} variant="body2">
             <span

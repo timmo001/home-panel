@@ -95,7 +95,7 @@ function News(props: BaseProps): ReactElement {
         className={classes.container}
         container
         direction="row"
-        justify="center"
+        justifyContent="center"
         alignItems="flex-end"
         alignContent="flex-end"
         item
