@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useCallback, useMemo } from "react";
-import arrayMove from "array-move";
+import { arrayMoveMutable } from "array-move";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -39,10 +39,11 @@ function Checklist(props: BaseProps): ReactElement | null {
   const handleMoveItem = useCallback(
     (key: number) => (amount: number) => {
       const items = clone(props.card.checklist_items) || [];
-      props.handleUpdate({
-        ...props.card,
-        checklist_items: arrayMove(items, key, key + amount),
-      });
+      arrayMoveMutable(items, key, key + amount),
+        props.handleUpdate({
+          ...props.card,
+          checklist_items: items,
+        });
     },
     [props]
   );
