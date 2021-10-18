@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🏗 Set up Node.js
         uses: actions/setup-node@v2.4.0
         with:
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: Hadolint
         uses: brpaz/hadolint-action@v1.5.0
         with:
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🚀 Run JSONLint
         run: |
           sudo apt install -y jsonlint
@@ -73,7 +73,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🚀 Run mdl
         uses: actionshub/markdownlint@2.0.2
   lint-markdown-links:
@@ -81,7 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🚀 Run Markdown Links
         uses: gaurav-nelson/github-action-markdown-link-check@1.0.13
         with:
@@ -99,7 +99,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
         with:
           ref: ${{ github.head_ref }}
       - name: 🚀 Run Prettier
@@ -113,7 +113,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: ✏ Setup
         run: |
           find . -type f -print0 | xargs -0 sed -i 's:#!/usr/bin/with-contenv bash:#!/bin/bash:g'
@@ -129,7 +129,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🚀 Run YAMLLint
         uses: ibiqlik/action-yamllint@v3.0.4
         with:
@@ -142,7 +142,7 @@ jobs:
           #   runs-on: ubuntu-latest
           #   steps:
           #     - name: ⤵️ Check out code from GitHub
-          #       uses: actions/checkout@v2.3.4
+          #       uses: actions/checkout@v2.3.5
           #     - name: 🏗 Set up Node.js
           #       uses: actions/setup-node@v2.4.0
           #       with:
@@ -176,7 +176,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: 🏗 Set up Node.js
         uses: actions/setup-node@v2.4.0
         with:
@@ -233,7 +233,7 @@ jobs:
           - i386
     steps:
       - name: ⤵️ Check out code from GitHub
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
       - name: ⤵️ Backend - Download Artifacts
         uses: actions/download-artifact@v2
         with:
