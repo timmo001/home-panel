@@ -62,14 +62,14 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: ⤵️ Backend - Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.15.0
         with:
           name: backend-lib
           path: backend/lib
           workflow: ci.yml
           workflow_conclusion: success
       - name: ⤵️ Frontend - Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.15.0
         with:
           name: frontend-build
           path: frontend/build
@@ -146,14 +146,14 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v2.3.4
       - name: ⤵️ Backend - Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.15.0
         with:
           name: backend-lib
           path: backend/lib
           workflow: ci.yml
           workflow_conclusion: success
       - name: ⤵️ Frontend - Download Artifacts
-        uses: dawidd6/action-download-artifact@v2.14.1
+        uses: dawidd6/action-download-artifact@v2.15.0
         with:
           name: frontend-build
           path: frontend/build
