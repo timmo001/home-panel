@@ -7,7 +7,8 @@ export async function handleFetchPromise<T>(
 
   try {
     response = await fetchPromise;
-  } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
     // eslint-disable-next-line
     throw {
       error: "Request error",
@@ -23,7 +24,8 @@ export async function handleFetchPromise<T>(
   if (contentType && contentType.includes("application/json")) {
     try {
       body = await response.json();
-    } catch (err) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
       // eslint-disable-next-line
       throw {
         error: "Unable to parse JSON response",

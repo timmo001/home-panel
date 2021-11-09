@@ -139,7 +139,8 @@ function Onboarding(): ReactElement {
           getConfig(clientData.user._id);
           const controllerService = await client.service("controller");
           controllerService.on("created", handleCommand);
-        } catch (error) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
           console.error("Error in handleLogin:", error);
           setLoginAttempt(2);
           setLoginCredentials(undefined);

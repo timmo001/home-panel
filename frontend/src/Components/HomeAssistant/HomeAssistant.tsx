@@ -172,12 +172,11 @@ function HomeAssistant(props: HomeAssistantProps): null {
           connection = await createConnection({ auth });
         } catch (err) {
           try {
-            if (err !== ERR_HASS_HOST_REQUIRED) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (err !== ERR_HASS_HOST_REQUIRED || err !== ERR_INVALID_AUTH)
               throw err;
-            }
-            if (err !== ERR_INVALID_AUTH) {
-              throw err;
-            }
+
             // We can get invalid auth if auth tokens were stored that are no longer valid
             // Clear stored tokens.
             saveTokens();
