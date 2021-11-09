@@ -20,15 +20,15 @@
     "prettier-yml": "prettier --write ./**/*.yml"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "4.31.1",
-    "@typescript-eslint/parser": "4.31.0",
-    "concurrently": "6.2.1",
+    "@typescript-eslint/eslint-plugin": "5.3.1",
+    "@typescript-eslint/parser": "5.3.1",
+    "concurrently": "6.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-prettier": "4.0.0",
-    "eslint-plugin-react": "7.25.2",
-    "prettier": "2.3.2",
-    "typescript": "4.4.3"
+    "eslint-plugin-react": "7.26.1",
+    "prettier": "2.4.1",
+    "typescript": "4.4.4"
   },
   "dependencies": {
     "react-syntax-highlighter": "15.4.4"
