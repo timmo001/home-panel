@@ -75,12 +75,14 @@ function Header(props: HeaderProps): ReactElement | null {
       variant="h2"
       component="h2"
       noWrap
-      style={{ fontSize: props.config.header.time_font_size }}>
+      style={{ fontSize: props.config.header.time_font_size }}
+    >
       {timeRows[0][0]}
       {timeRows[0][1] && (
         <span
           className={classes.timePeriod}
-          style={{ fontSize: props.config.header.time_period_font_size }}>
+          style={{ fontSize: props.config.header.time_period_font_size }}
+        >
           {timeRows[0][1]}
         </span>
       )}
@@ -95,7 +97,8 @@ function Header(props: HeaderProps): ReactElement | null {
       variant="h2"
       component="h2"
       noWrap
-      style={{ fontSize: props.config.header.date_font_size }}>
+      style={{ fontSize: props.config.header.date_font_size }}
+    >
       {moment().format(props.config.header.date_format)}
     </Typography>
   );
@@ -119,7 +122,8 @@ function Header(props: HeaderProps): ReactElement | null {
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      spacing={2}>
+      spacing={2}
+    >
       {columns.map((columnData, key: number) => (
         <Grid
           key={key}
@@ -127,7 +131,8 @@ function Header(props: HeaderProps): ReactElement | null {
           xs
           style={{
             textAlign: key === 2 ? "end" : key === 1 ? "center" : "start",
-          }}>
+          }}
+        >
           {columnData}
         </Grid>
       ))}

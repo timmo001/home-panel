@@ -69,13 +69,15 @@ function Select(props: EntityProps): ReactElement {
       onClick={handleToggle}
       ref={(node: HTMLButtonElement): void => {
         PopoverNode = node;
-      }}>
+      }}
+    >
       <Grid
         className={classes.root}
         container
         direction="row"
         alignContent="center"
-        justifyContent="center">
+        justifyContent="center"
+      >
         <Grid className={classes.iconContainer} item xs={12}>
           {props.card.icon && (
             <Typography
@@ -92,7 +94,8 @@ function Select(props: EntityProps): ReactElement {
             className={classes.text}
             color="textPrimary"
             variant={props.card.disabled ? "body2" : "body1"}
-            component="h5">
+            component="h5"
+          >
             {props.entity.state}
           </Typography>
         </Grid>
@@ -102,7 +105,8 @@ function Select(props: EntityProps): ReactElement {
         id="options"
         anchorEl={PopoverNode}
         open={open}
-        onClose={handleToggle}>
+        onClose={handleToggle}
+      >
         <Paper
           square
           style={{
@@ -110,14 +114,16 @@ function Select(props: EntityProps): ReactElement {
             width: PopoverNode ? PopoverNode.clientWidth : undefined,
             marginTop: theme.spacing(1),
             overflow: "auto",
-          }}>
+          }}
+        >
           {props.entity.attributes.options &&
             props.entity.attributes.options.map(
               (option: string, key: number) => (
                 <MenuItem
                   key={key}
                   onClick={handleChosen(option)}
-                  value={option}>
+                  value={option}
+                >
                   {option}
                 </MenuItem>
               )

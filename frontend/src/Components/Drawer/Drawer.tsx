@@ -168,7 +168,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
         className={clsx(
           classes.drawerHeader,
           props.config.general.dense_toolbar && classes.drawerHeaderDense
-        )}>
+        )}
+      >
         {props.config.general.drawer_type !== "persistent_icons_only" && (
           <Typography className={classes.drawerHeaderText} variant="h6" noWrap>
             Home Panel
@@ -186,7 +187,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               key={key}
               selected={props.currentPage === item.name ? true : false}
               button
-              onClick={handleItemClicked(item)}>
+              onClick={handleItemClicked(item)}
+            >
               <ListItemIcon>
                 <span className={clsx("mdi", item.icon, classes.icon)} />
               </ListItemIcon>
@@ -246,7 +248,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
             drawerOpen
           ? classes.persistentToolbarIcons
           : null
-      )}>
+      )}
+    >
       <Slide direction="down" in={showToolbar} mountOnEnter unmountOnExit>
         <AppBar
           className={clsx(
@@ -255,7 +258,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               props.config.general.drawer_type === "permanent_icons_only"
               ? classes.permanentIconsRoot
               : null
-          )}>
+          )}
+        >
           <Toolbar
             className={clsx(
               props.config.general.drawer_type === "persistent" && drawerOpen
@@ -268,14 +272,16 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
               props.config.general.dense_toolbar
                 ? "dense"
                 : "regular"
-            }>
+            }
+          >
             {props.config.general.drawer_type !== "permanent_icons_only" && (
               <IconButton
                 color="inherit"
                 aria-label="Open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                className={classes.menuButton}>
+                className={classes.menuButton}
+              >
                 <MenuIcon />
               </IconButton>
             )}
@@ -291,7 +297,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
                     color="inherit"
                     aria-label={item.name}
                     className={classes.menuButton}
-                    onClick={handleToggleEditing}>
+                    onClick={handleToggleEditing}
+                  >
                     <span
                       className={clsx(
                         "mdi",
@@ -332,7 +339,8 @@ function ResponsiveDrawer(props: ResponsiveDrawerProps): ReactElement {
           }}
           ModalProps={{
             keepMounted: true,
-          }}>
+          }}
+        >
           {drawer}
         </SwipeableDrawer>
       </nav>

@@ -39,7 +39,8 @@ function ColorAdornment(props: ColorAdornmentProps): ReactElement {
         onClick={handleToggleColorPicker}
         ref={(node: HTMLButtonElement): void => {
           PopoverNode = node;
-        }}>
+        }}
+      >
         <PaletteIcon fontSize="small" />
       </IconButton>
       <Popover
@@ -47,7 +48,8 @@ function ColorAdornment(props: ColorAdornmentProps): ReactElement {
         id="options"
         anchorEl={PopoverNode}
         open={showColorPicker}
-        onClose={handleToggleColorPicker}>
+        onClose={handleToggleColorPicker}
+      >
         <Paper className={classes.menuContent}>
           <SketchPicker
             color={props.color}

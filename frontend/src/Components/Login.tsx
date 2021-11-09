@@ -184,7 +184,8 @@ function Login(props: LoginProps): ReactElement {
       direction="column"
       justifyContent="center"
       alignContent="center"
-      alignItems="center">
+      alignItems="center"
+    >
       <Grid item>
         <CardMedia className={classes.media} image={Logo} title="Home Panel" />
         <Grid
@@ -192,12 +193,14 @@ function Login(props: LoginProps): ReactElement {
           direction="column"
           justifyContent="center"
           alignContent="center"
-          component="form">
+          component="form"
+        >
           <Typography
             color="textPrimary"
             variant="h5"
             component="h2"
-            align="center">
+            align="center"
+          >
             {createAccount ? "Welcome!" : "Login"}
           </Typography>
           <FormControl className={clsx(classes.margin, classes.textField)}>
@@ -235,7 +238,8 @@ function Login(props: LoginProps): ReactElement {
                   <IconButton
                     aria-label="Toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}>
+                    onMouseDown={handleMouseDownPassword}
+                  >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
@@ -248,7 +252,8 @@ function Login(props: LoginProps): ReactElement {
         container
         direction="column"
         justifyContent="center"
-        alignContent="center">
+        alignContent="center"
+      >
         <div className={classes.wrapper}>
           {errorText && <Typography color="error">{errorText}</Typography>}
           {invalidText && (
@@ -262,7 +267,8 @@ function Login(props: LoginProps): ReactElement {
             className={classes.button}
             size="small"
             variant="contained"
-            onClick={toggleCreateAccount}>
+            onClick={toggleCreateAccount}
+          >
             {createAccount ? "Already have an account?" : "Create New Account"}
           </Button>
           {createAccount === true ? (
@@ -272,7 +278,8 @@ function Login(props: LoginProps): ReactElement {
               variant="contained"
               color="primary"
               disabled={loading || invalidText ? true : false}
-              onClick={handleCreateAccount}>
+              onClick={handleCreateAccount}
+            >
               Sign Up
               {loading && (
                 <CircularProgress
@@ -288,7 +295,8 @@ function Login(props: LoginProps): ReactElement {
               variant="contained"
               color="primary"
               disabled={loading || invalidText ? true : false}
-              onClick={handleLogin}>
+              onClick={handleLogin}
+            >
               Log In
               {loading && (
                 <CircularProgress

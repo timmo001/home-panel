@@ -46,7 +46,8 @@ function AddCard(props: AddCardProps): ReactElement {
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple
-        onClick={props.handleAdd}>
+        onClick={props.handleAdd}
+      >
         <Card className={classes.card} elevation={1}>
           <CardContent
             className={classes.cardContent}
@@ -57,12 +58,14 @@ function AddCard(props: AddCardProps): ReactElement {
               minWidth: cardSize,
               maxHeight: cardSize,
               maxWidth: cardSize,
-            }}>
+            }}
+          >
             <Grid
               className={classes.grid}
               container
               alignContent="center"
-              justifyContent="center">
+              justifyContent="center"
+            >
               <span className={clsx("mdi", "mdi-plus", classes.icon)} />
             </Grid>
           </CardContent>

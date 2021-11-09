@@ -97,7 +97,8 @@ function State(props: EntityProps): ReactElement | null {
       container
       direction="column"
       alignContent="center"
-      justifyContent="center">
+      justifyContent="center"
+    >
       {props.card &&
         props.card.chart &&
         historyData &&
@@ -127,7 +128,8 @@ function State(props: EntityProps): ReactElement | null {
           color="textPrimary"
           variant={props.card.disabled ? "body2" : "body1"}
           component="span"
-          style={{ fontSize: props.card.state_size }}>
+          style={{ fontSize: props.card.state_size }}
+        >
           {props.entity.state}
           <span className={classes.textSecondary}>
             {props.entity.attributes.unit_of_measurement}

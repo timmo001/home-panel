@@ -110,7 +110,8 @@ function Climate(props: EntityProps): ReactElement | null {
       spacing={1}
       justifyContent="space-between"
       alignContent="center"
-      direction="column">
+      direction="column"
+    >
       <Grid
         item
         xs
@@ -118,7 +119,8 @@ function Climate(props: EntityProps): ReactElement | null {
         justifyContent="space-around"
         alignContent="center"
         alignItems="center"
-        direction="row">
+        direction="row"
+      >
         <Grid item>
           <div className={classes.temperature}>
             <Typography className={classes.text} variant="h4">
@@ -137,13 +139,15 @@ function Climate(props: EntityProps): ReactElement | null {
                 justifyContent="center"
                 alignContent="center"
                 alignItems="center"
-                direction="column">
+                direction="column"
+              >
                 <IconButton
                   className={classes.iconContainer}
                   onClick={handleTempChange(
                     "temperature",
                     props.entity.attributes.temperature + 0.5
-                  )}>
+                  )}
+                >
                   <KeyboardArrowUp
                     className={clsx(classes.icon, classes.iconNormal)}
                     fontSize="small"
@@ -162,7 +166,8 @@ function Climate(props: EntityProps): ReactElement | null {
                   onClick={handleTempChange(
                     "temperature",
                     props.entity.attributes.temperature - 0.5
-                  )}>
+                  )}
+                >
                   <KeyboardArrowDown
                     className={clsx(classes.icon, classes.iconNormal)}
                     fontSize="small"
@@ -177,19 +182,22 @@ function Climate(props: EntityProps): ReactElement | null {
                 justifyContent="center"
                 alignContent="center"
                 alignItems="center"
-                direction="row">
+                direction="row"
+              >
                 <Grid
                   item
                   xs
                   container
                   alignContent="center"
-                  direction="column">
+                  direction="column"
+                >
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
                       "target_temp_low",
                       props.entity.attributes.target_temp_low + 0.5
-                    )}>
+                    )}
+                  >
                     <KeyboardArrowUp
                       className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -208,7 +216,8 @@ function Climate(props: EntityProps): ReactElement | null {
                     onClick={handleTempChange(
                       "target_temp_low",
                       props.entity.attributes.target_temp_low - 0.5
-                    )}>
+                    )}
+                  >
                     <KeyboardArrowDown
                       className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -225,13 +234,15 @@ function Climate(props: EntityProps): ReactElement | null {
                   xs
                   container
                   alignContent="center"
-                  direction="column">
+                  direction="column"
+                >
                   <IconButton
                     className={classes.iconContainer}
                     onClick={handleTempChange(
                       "target_temp_high",
                       props.entity.attributes.target_temp_high + 0.5
-                    )}>
+                    )}
+                  >
                     <KeyboardArrowUp
                       className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -250,7 +261,8 @@ function Climate(props: EntityProps): ReactElement | null {
                     onClick={handleTempChange(
                       "target_temp_high",
                       props.entity.attributes.target_temp_high - 0.5
-                    )}>
+                    )}
+                  >
                     <KeyboardArrowDown
                       className={clsx(classes.icon, classes.iconNormal)}
                       fontSize="small"
@@ -270,7 +282,8 @@ function Climate(props: EntityProps): ReactElement | null {
             spacing={1}
             alignContent="center"
             justifyContent="center"
-            direction="row">
+            direction="row"
+          >
             {props.entity.attributes.hvac_modes.map(
               (mode: string, key: number) => {
                 const icon: string | undefined =
@@ -295,7 +308,8 @@ function Climate(props: EntityProps): ReactElement | null {
                     <Grid key={key} item>
                       <IconButton
                         className={classes.iconContainer}
-                        onClick={handleHvacChange(mode)}>
+                        onClick={handleHvacChange(mode)}
+                      >
                         <span
                           className={clsx(
                             "mdi",
@@ -313,7 +327,8 @@ function Climate(props: EntityProps): ReactElement | null {
                       className={clsx(
                         props.entity.state === mode && classes.iconActive
                       )}
-                      onClick={handleHvacChange(mode)}>
+                      onClick={handleHvacChange(mode)}
+                    >
                       {mode}
                     </Button>
                   </Grid>
@@ -328,7 +343,8 @@ function Climate(props: EntityProps): ReactElement | null {
                 spacing={1}
                 alignContent="center"
                 justifyContent="space-around"
-                direction="row">
+                direction="row"
+              >
                 <Grid item>
                   <IconButton onClick={handleAwayToggle}>
                     <span

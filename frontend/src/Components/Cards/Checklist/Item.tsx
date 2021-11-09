@@ -103,7 +103,8 @@ function Checklist(props: ItemProps): ReactElement | null {
         direction="row"
         justifyContent="center"
         alignContent="flex-start"
-        alignItems="center">
+        alignItems="center"
+      >
         <Grid item>
           <Checkbox
             checked={item.checked}
@@ -129,7 +130,8 @@ function Checklist(props: ItemProps): ReactElement | null {
             aria-label="more"
             aria-controls="long-menu"
             aria-haspopup="true"
-            onClick={handleOpenMenu}>
+            onClick={handleOpenMenu}
+          >
             <MoreVertIcon />
           </IconButton>
         </Grid>
@@ -144,7 +146,8 @@ function Checklist(props: ItemProps): ReactElement | null {
           style: {
             minWidth: "20ch",
           },
-        }}>
+        }}
+      >
         {props.position > 0 && (
           <MenuItem onClick={handleMoveUp}>Move Up</MenuItem>
         )}

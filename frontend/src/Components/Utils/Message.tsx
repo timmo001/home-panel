@@ -45,7 +45,8 @@ function Message(props: MessageProps): ReactElement {
       style={{
         backgroundColor: color,
         padding: props.padding ? props.padding : theme.spacing(1),
-      }}>
+      }}
+    >
       <Typography className={classes.text} component="h4" variant="subtitle1">
         {props.text}
       </Typography>

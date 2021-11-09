@@ -33,14 +33,16 @@ function Cover(props: EntityProps): ReactElement | null {
       spacing={1}
       alignContent="center"
       justifyContent="space-between"
-      direction="column">
+      direction="column"
+    >
       <Grid
         item
         xs
         container
         alignContent="center"
         justifyContent="space-around"
-        direction="row">
+        direction="row"
+      >
         <Grid item>
           <IconButton
             className={classes.iconContainer}
@@ -50,7 +52,8 @@ function Cover(props: EntityProps): ReactElement | null {
               props.handleHassChange("cover", "open_cover", {
                 entity_id: props.entity.entity_id,
               })
-            }>
+            }
+          >
             <span
               className={clsx(
                 "mdi",
@@ -68,7 +71,8 @@ function Cover(props: EntityProps): ReactElement | null {
               props.handleHassChange("cover", "stop_cover", {
                 entity_id: props.entity.entity_id,
               })
-            }>
+            }
+          >
             <span className={clsx("mdi", "mdi-stop", classes.icon)} />
           </IconButton>
           <IconButton
@@ -79,7 +83,8 @@ function Cover(props: EntityProps): ReactElement | null {
               props.handleHassChange("cover", "close_cover", {
                 entity_id: props.entity.entity_id,
               })
-            }>
+            }
+          >
             <span
               className={clsx(
                 "mdi",
@@ -102,7 +107,8 @@ function Cover(props: EntityProps): ReactElement | null {
                 props.handleHassChange("cover", "open_cover_tilt", {
                   entity_id: props.entity.entity_id,
                 })
-              }>
+              }
+            >
               <span
                 className={clsx(
                   "mdi",
@@ -120,7 +126,8 @@ function Cover(props: EntityProps): ReactElement | null {
                 props.handleHassChange("cover", "stop_cover_tilt", {
                   entity_id: props.entity.entity_id,
                 })
-              }>
+              }
+            >
               <span className={clsx("mdi", "mdi-stop", classes.icon)} />
             </IconButton>
             <IconButton
@@ -131,7 +138,8 @@ function Cover(props: EntityProps): ReactElement | null {
                 props.handleHassChange("cover", "close_cover_tilt", {
                   entity_id: props.entity.entity_id,
                 })
-              }>
+              }
+            >
               <span
                 className={clsx(
                   "mdi",

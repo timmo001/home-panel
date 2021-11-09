@@ -45,7 +45,8 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
       direction="column"
       justifyContent="center"
       alignContent="center"
-      spacing={1}>
+      spacing={1}
+    >
       {sections.map((section: ConfigSection, key: number) => (
         <Grid
           className={classes.section}
@@ -56,7 +57,8 @@ function Configuration(props: ConfigurationBaseProps): ReactElement {
           lg={4}
           md={8}
           sm={10}
-          xs={12}>
+          xs={12}
+        >
           <Grid item xs container>
             {section.title && (
               <Grid item xs>

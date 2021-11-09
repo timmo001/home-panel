@@ -60,7 +60,8 @@ function Overlay(props: BaseProps): ReactElement {
         container
         alignContent="center"
         alignItems="center"
-        justifyContent="center">
+        justifyContent="center"
+      >
         <IconButton color="primary" onClick={handleEdit}>
           <EditIcon fontSize="small" />
         </IconButton>
@@ -73,13 +74,15 @@ function Overlay(props: BaseProps): ReactElement {
         <IconButton
           disabled={props.position === 0}
           color="primary"
-          onClick={props.handleMoveUp}>
+          onClick={props.handleMoveUp}
+        >
           <ArrowLeftIcon fontSize="small" />
         </IconButton>
         <IconButton
           disabled={props.position === props.maxPosition}
           color="primary"
-          onClick={props.handleMoveDown}>
+          onClick={props.handleMoveDown}
+        >
           <ArrowRightIcon fontSize="small" />
         </IconButton>
         {deleteConfirm && (

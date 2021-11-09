@@ -29,7 +29,8 @@ function Markdown(props: BaseProps): ReactElement {
         <Typography
           className={classes.heading}
           variant="subtitle1"
-          gutterBottom>
+          gutterBottom
+        >
           Markdown Configuration
         </Typography>
         <Divider variant="fullWidth" />
@@ -42,7 +43,8 @@ function Markdown(props: BaseProps): ReactElement {
         alignItems="flex-end"
         alignContent="flex-end"
         item
-        xs>
+        xs
+      >
         <Grid item xs>
           <TextField
             className={classes.textField}

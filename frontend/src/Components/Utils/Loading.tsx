@@ -29,13 +29,15 @@ function Loading(props: LoadingProps): ReactElement {
       direction="column"
       justifyContent="center"
       alignContent="center"
-      alignItems="center">
+      alignItems="center"
+    >
       <CircularProgress size={42} />
       <Typography
         className={classes.text}
         color="textPrimary"
         variant="subtitle1"
-        component="h3">
+        component="h3"
+      >
         {props.text}
       </Typography>
     </Grid>

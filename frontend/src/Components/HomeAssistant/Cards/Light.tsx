@@ -209,7 +209,8 @@ function Light(props: EntityProps): ReactElement | null {
             inputProps={{
               name: "effect",
               id: "effect",
-            }}>
+            }}
+          >
             <MenuItem value="none">None</MenuItem>
             {attributes &&
               attributes.effect_list &&
@@ -230,11 +231,13 @@ function Light(props: EntityProps): ReactElement | null {
       direction="row"
       alignContent="center"
       justifyContent="center"
-      spacing={1}>
+      spacing={1}
+    >
       <Grid className={classes.iconContainer} item xs={10}>
         <IconButton
           disabled={props.card.click_action?.type === "call-service"}
-          onClick={props.handleHassToggle}>
+          onClick={props.handleHassToggle}
+        >
           <Typography
             className={clsx(
               "mdi",
@@ -253,7 +256,8 @@ function Light(props: EntityProps): ReactElement | null {
             className={classes.text}
             color="textPrimary"
             variant={props.card.disabled ? "body2" : "body1"}
-            component="h5">
+            component="h5"
+          >
             {props.entity.state}
           </Typography>
         </Grid>

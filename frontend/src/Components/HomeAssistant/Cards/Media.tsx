@@ -107,7 +107,8 @@ function Media(props: EntityProps): ReactElement | null {
       direction="row"
       justifyContent="space-between"
       alignContent="center"
-      alignItems="center">
+      alignItems="center"
+    >
       {(!props.card.height || props.card.height > 1) && (
         <div className={classes.info}>
           {props.entity.attributes.media_title && (
@@ -137,13 +138,15 @@ function Media(props: EntityProps): ReactElement | null {
         direction="row"
         justifyContent="center"
         alignContent="center"
-        alignItems="center">
+        alignItems="center"
+      >
         {(!props.card.width || props.card.width > 2) && (
           <Grid item>
             <IconButton
               className={classes.button}
               aria-label="Power"
-              onClick={handleChange("power")}>
+              onClick={handleChange("power")}
+            >
               <PowerSettingsNewIcon fontSize="small" />
             </IconButton>
           </Grid>
@@ -155,14 +158,16 @@ function Media(props: EntityProps): ReactElement | null {
           direction="row"
           justifyContent="center"
           alignContent="center"
-          alignItems="center">
+          alignItems="center"
+        >
           {(!props.card.width || props.card.width > 1) &&
             props.entity.state !== "off" && (
               <IconButton
                 className={classes.button}
                 aria-label="Volume Down"
                 size="small"
-                onClick={handleChange("vol_down")}>
+                onClick={handleChange("vol_down")}
+              >
                 <VolumeDownIcon fontSize="small" />
               </IconButton>
             )}
@@ -174,7 +179,8 @@ function Media(props: EntityProps): ReactElement | null {
               props.entity.state !== "paused"
             }
             size="small"
-            onClick={handleChange("previous")}>
+            onClick={handleChange("previous")}
+          >
             <SkipPreviousIcon fontSize="small" />
           </IconButton>
           {props.entity.state === "playing" ? (
@@ -182,7 +188,8 @@ function Media(props: EntityProps): ReactElement | null {
               color="primary"
               aria-label="Pause"
               size="small"
-              onClick={handleChange("pause")}>
+              onClick={handleChange("pause")}
+            >
               <PauseIcon fontSize="small" />
             </Fab>
           ) : props.entity.state === "paused" ? (
@@ -190,7 +197,8 @@ function Media(props: EntityProps): ReactElement | null {
               color="primary"
               aria-label="Play"
               size="small"
-              onClick={handleChange("play")}>
+              onClick={handleChange("play")}
+            >
               <PlayArrowIcon fontSize="small" />
             </Fab>
           ) : (
@@ -206,7 +214,8 @@ function Media(props: EntityProps): ReactElement | null {
               props.entity.state !== "paused"
             }
             size="small"
-            onClick={handleChange("next")}>
+            onClick={handleChange("next")}
+          >
             <SkipNextIcon fontSize="small" />
           </IconButton>
           {(!props.card.width || props.card.width > 1) &&
@@ -215,7 +224,8 @@ function Media(props: EntityProps): ReactElement | null {
                 className={classes.button}
                 aria-label="Volume Up"
                 size="small"
-                onClick={handleChange("vol_up")}>
+                onClick={handleChange("vol_up")}
+              >
                 <VolumeUpIcon fontSize="small" />
               </IconButton>
             )}
@@ -232,7 +242,8 @@ function Media(props: EntityProps): ReactElement | null {
               inputProps={{
                 name: "source",
                 id: "source",
-              }}>
+              }}
+            >
               {props.entity.attributes.source_list &&
                 props.entity.state !== "off" &&
                 props.entity.attributes.source_list.map(

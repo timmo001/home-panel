@@ -240,19 +240,22 @@ function Groups(props: GroupsProps): ReactElement {
             alignContent="flex-start"
             style={{
               width: groupWidth,
-            }}>
+            }}
+          >
             <Grid
               item
               container
               direction="row"
               justifyContent="flex-start"
-              alignContent="flex-start">
+              alignContent="flex-start"
+            >
               <Grid item xs>
                 <Typography
                   className={classes.title}
                   variant="h4"
                   component="h2"
-                  gutterBottom>
+                  gutterBottom
+                >
                   {group.name}
                 </Typography>
               </Grid>
@@ -262,27 +265,32 @@ function Groups(props: GroupsProps): ReactElement {
                   style={{ width: "fit-content" }}
                   container
                   alignContent="center"
-                  justifyContent="flex-end">
+                  justifyContent="flex-end"
+                >
                   <IconButton
                     color="primary"
-                    onClick={handleEditingGroup(group)}>
+                    onClick={handleEditingGroup(group)}
+                  >
                     <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton
                     color="primary"
-                    onClick={handleDeleteConfirm(group)}>
+                    onClick={handleDeleteConfirm(group)}
+                  >
                     <DeleteIcon fontSize="small" />
                   </IconButton>
                   <IconButton
                     disabled={groupKey === 0}
                     color="primary"
-                    onClick={handleMoveUp(group)}>
+                    onClick={handleMoveUp(group)}
+                  >
                     <ArrowLeftIcon fontSize="small" />
                   </IconButton>
                   <IconButton
                     disabled={groupKey === groupLength}
                     color="primary"
-                    onClick={handleMoveDown(group)}>
+                    onClick={handleMoveDown(group)}
+                  >
                     <ArrowRightIcon fontSize="small" />
                   </IconButton>
                   {deleteConfirm && (
@@ -302,7 +310,8 @@ function Groups(props: GroupsProps): ReactElement {
               direction="row"
               justifyContent="flex-start"
               alignContent="flex-start"
-              spacing={1}>
+              spacing={1}
+            >
               {cards.map((card: CardProps, cardKey: number) => (
                 <Grid key={cardKey} item>
                   <Base
@@ -340,7 +349,8 @@ function Groups(props: GroupsProps): ReactElement {
           alignContent="flex-start"
           style={{
             width: theme.breakpoints.down("sm") ? 140 : 120,
-          }}>
+          }}
+        >
           <AddGroup handleAdd={handleAddGroup} />
         </Grid>
       )}

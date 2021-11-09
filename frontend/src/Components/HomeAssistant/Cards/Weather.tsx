@@ -75,7 +75,8 @@ function Weather(props: EntityProps): ReactElement {
       direction="row"
       alignContent="space-around"
       alignItems="center"
-      justifyContent="space-around">
+      justifyContent="space-around"
+    >
       <Grid
         item
         xs
@@ -83,7 +84,8 @@ function Weather(props: EntityProps): ReactElement {
         direction="row"
         alignContent="center"
         alignItems="center"
-        justifyContent="center">
+        justifyContent="center"
+      >
         <Grid item>
           <Typography className={classes.forecastTextIcon} variant="body2">
             <span
@@ -100,12 +102,14 @@ function Weather(props: EntityProps): ReactElement {
           style={{
             textAlign:
               !props.card.width || props.card.width < 1 ? "center" : "left",
-          }}>
+          }}
+        >
           <Typography
             className={classes.name}
             component="span"
             variant="h5"
-            noWrap>
+            noWrap
+          >
             {weatherNameMap[props.entity.state]}
           </Typography>
           <br />
@@ -113,7 +117,8 @@ function Weather(props: EntityProps): ReactElement {
             className={classes.name}
             component="span"
             variant="h6"
-            noWrap>
+            noWrap
+          >
             {props.entity.attributes.temperature}
             <span className={classes.textSecondary}>
               {getUnit("temperature", props.hassConfig)}
@@ -142,7 +147,8 @@ function Weather(props: EntityProps): ReactElement {
                       <Typography
                         noWrap
                         className={classes.forecastText}
-                        variant="body2">
+                        variant="body2"
+                      >
                         {datetime.format("ddd")}
                         <br />
                         {datetime.format("h a")}
@@ -150,7 +156,8 @@ function Weather(props: EntityProps): ReactElement {
 
                       <Typography
                         className={classes.forecastTextIcon}
-                        variant="body2">
+                        variant="body2"
+                      >
                         <span
                           className={clsx(
                             "mdi",
@@ -163,7 +170,8 @@ function Weather(props: EntityProps): ReactElement {
                       <Typography
                         noWrap
                         className={classes.forecastText}
-                        variant="body2">
+                        variant="body2"
+                      >
                         {w.temperature}
                         <span className={classes.textSecondary}>
                           {getUnit("temperature", props.hassConfig)}
@@ -172,7 +180,8 @@ function Weather(props: EntityProps): ReactElement {
                       <Typography
                         noWrap
                         className={classes.forecastText}
-                        variant="body2">
+                        variant="body2"
+                      >
                         {w.precipitation}
                       </Typography>
                     </div>

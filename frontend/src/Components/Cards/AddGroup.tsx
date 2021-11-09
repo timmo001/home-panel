@@ -38,11 +38,13 @@ function AddGroup(props: AddGroupProps): ReactElement {
       style={{
         height: cardSize,
         width: cardSize * 2,
-      }}>
+      }}
+    >
       <ButtonBase
         className={classes.buttonCardContainer}
         focusRipple
-        onClick={props.handleAdd}>
+        onClick={props.handleAdd}
+      >
         <CardContent>
           <span className={clsx("mdi", "mdi-plus", classes.icon)} />
         </CardContent>
