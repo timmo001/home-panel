@@ -24,7 +24,7 @@ export async function handleFetchPromise<T>(
   if (contentType && contentType.includes("application/json")) {
     try {
       body = await response.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // eslint-disable-next-line
       throw {
