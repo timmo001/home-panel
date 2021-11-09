@@ -88,7 +88,8 @@ function Pages(props: PagesProps): ReactElement {
         className={classes.root}
         value={props.currentPage}
         onChange={handlePageChange}
-        showLabels>
+        showLabels
+      >
         {props.config &&
           props.config.pages.map((page: Page, key: number) => (
             <BottomNavigationAction

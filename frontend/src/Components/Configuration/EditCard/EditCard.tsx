@@ -134,14 +134,16 @@ function EditCard(props: EditCardProps): ReactElement {
       fullScreen={fullScreen}
       fullWidth={true}
       maxWidth="lg"
-      aria-labelledby="responsive-dialog-title">
+      aria-labelledby="responsive-dialog-title"
+    >
       <DialogTitle id="responsive-dialog-title">Edit Card</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid
           container
           direction="row"
           alignContent="center"
-          justifyContent="center">
+          justifyContent="center"
+        >
           <Grid
             className={classes.editView}
             item
@@ -149,7 +151,8 @@ function EditCard(props: EditCardProps): ReactElement {
             container
             direction="row"
             justifyContent="flex-start"
-            alignContent="stretch">
+            alignContent="stretch"
+          >
             <Base
               {...props}
               card={card}
@@ -166,7 +169,8 @@ function EditCard(props: EditCardProps): ReactElement {
             xs
             container
             alignContent="center"
-            justifyContent="space-around">
+            justifyContent="space-around"
+          >
             <CardBase
               {...props}
               card={card}

@@ -66,7 +66,8 @@ function EditGroup(props: EditGroupProps): ReactElement {
       fullWidth={true}
       PaperProps={{ className: classes.dialog }}
       maxWidth="md"
-      aria-labelledby="responsive-dialog-title">
+      aria-labelledby="responsive-dialog-title"
+    >
       <DialogTitle id="responsive-dialog-title">Edit Group</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid
@@ -74,13 +75,15 @@ function EditGroup(props: EditGroupProps): ReactElement {
           container
           direction="row"
           justifyContent="flex-start"
-          alignContent="stretch">
+          alignContent="stretch"
+        >
           <Grid
             item
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -95,7 +98,8 @@ function EditGroup(props: EditGroupProps): ReactElement {
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}

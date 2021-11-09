@@ -91,7 +91,8 @@ function Entity(props: EntityProps): ReactElement {
         <Typography
           className={classes.heading}
           variant="subtitle1"
-          gutterBottom>
+          gutterBottom
+        >
           Entity Configuration
         </Typography>
         <Divider variant="fullWidth" />
@@ -104,7 +105,8 @@ function Entity(props: EntityProps): ReactElement {
         alignItems="flex-end"
         alignContent="flex-end"
         item
-        xs>
+        xs
+      >
         <Grid item xs>
           {props.hassEntities ? (
             <EntitySelect
@@ -133,7 +135,8 @@ function Entity(props: EntityProps): ReactElement {
             direction="row"
             justifyContent="center"
             alignItems="flex-end"
-            alignContent="flex-end">
+            alignContent="flex-end"
+          >
             <Grid item xs>
               <TextField
                 className={classes.textField}
@@ -149,7 +152,8 @@ function Entity(props: EntityProps): ReactElement {
                 <Button
                   variant="text"
                   color="primary"
-                  onClick={handleGetEntityIcon}>
+                  onClick={handleGetEntityIcon}
+                >
                   Get from HA
                 </Button>
               </Grid>
@@ -162,14 +166,16 @@ function Entity(props: EntityProps): ReactElement {
           direction="row"
           justifyContent="center"
           alignItems="flex-end"
-          alignContent="flex-end">
+          alignContent="flex-end"
+        >
           {iconAllowed && props.card.icon && (
             <Grid
               item
               xs
               container
               justifyContent="flex-start"
-              alignContent="center">
+              alignContent="center"
+            >
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
@@ -187,7 +193,8 @@ function Entity(props: EntityProps): ReactElement {
               xs
               container
               justifyContent="flex-start"
-              alignContent="center">
+              alignContent="center"
+            >
               <TextField
                 className={classes.textField}
                 InputLabelProps={{ shrink: true }}
@@ -208,7 +215,8 @@ function Entity(props: EntityProps): ReactElement {
             container
             direction="row"
             justifyContent="center"
-            alignContent="stretch">
+            alignContent="stretch"
+          >
             <Grid item xs>
               <FormControl className={classes.textField}>
                 <InputLabel htmlFor="chart">Chart</InputLabel>
@@ -218,7 +226,8 @@ function Entity(props: EntityProps): ReactElement {
                   inputProps={{
                     name: "chart",
                     id: "chart",
-                  }}>
+                  }}
+                >
                   <MenuItem value="">None</MenuItem>
                   {Object.keys(chartTypes).map((chart: string, key: number) => (
                     <MenuItem key={key} value={chart}>
@@ -237,7 +246,8 @@ function Entity(props: EntityProps): ReactElement {
             direction="row"
             justifyContent="center"
             alignContent="stretch"
-            alignItems="flex-end">
+            alignItems="flex-end"
+          >
             {props.card.chart && props.card.chart !== "radialBar" && (
               <Grid item xs>
                 <FormControl className={classes.textField}>
@@ -248,7 +258,8 @@ function Entity(props: EntityProps): ReactElement {
                     inputProps={{
                       name: "chart_detail",
                       id: "chart_detail",
-                    }}>
+                    }}
+                  >
                     <MenuItem value={18}>Lower</MenuItem>
                     <MenuItem value={12}>Low</MenuItem>
                     <MenuItem value={6}>Medium</MenuItem>

@@ -78,7 +78,8 @@ function EntityAction(props: EntityProps): ReactElement | null {
             inputProps={{
               name: "click_action_type",
               id: "click_action_type",
-            }}>
+            }}
+          >
             <MenuItem value="default">Default</MenuItem>
             <MenuItem value="call-service">Call Service</MenuItem>
           </Select>

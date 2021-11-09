@@ -58,13 +58,15 @@ function Entity(props: EntityBaseProps): ReactElement | null {
         container
         direction="row"
         alignContent="center"
-        justifyContent="center">
+        justifyContent="center"
+      >
         <Grid item xs>
           <Typography
             className={classes.text}
             color="textPrimary"
             variant="body2"
-            component="h5">
+            component="h5"
+          >
             {props.card.entity
               ? `${props.card.entity} not found`
               : "No entity specified"}

@@ -107,20 +107,23 @@ function EditPage(props: EditPageProps): ReactElement {
       fullWidth={true}
       PaperProps={{ className: classes.dialog }}
       maxWidth="md"
-      aria-labelledby="responsive-dialog-title">
+      aria-labelledby="responsive-dialog-title"
+    >
       <DialogTitle id="responsive-dialog-title">Edit Page</DialogTitle>
       <DialogContent className={classes.dialogContent}>
         <Grid
           container
           direction="row"
           justifyContent="flex-start"
-          alignContent="stretch">
+          alignContent="stretch"
+        >
           <Grid
             item
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -135,7 +138,8 @@ function EditPage(props: EditPageProps): ReactElement {
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -151,7 +155,8 @@ function EditPage(props: EditPageProps): ReactElement {
         <IconButton
           color="primary"
           onClick={handleDeleteConfirm}
-          disabled={foundGroups}>
+          disabled={foundGroups}
+        >
           <DeleteIcon fontSize="small" />
         </IconButton>
         {foundGroups && (

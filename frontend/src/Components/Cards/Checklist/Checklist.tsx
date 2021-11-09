@@ -71,7 +71,8 @@ function Checklist(props: BaseProps): ReactElement | null {
       direction="row"
       justifyContent="center"
       alignContent="flex-start"
-      alignItems="center">
+      alignItems="center"
+    >
       {useMemo(() => {
         if (
           props.card.checklist_items !== undefined &&

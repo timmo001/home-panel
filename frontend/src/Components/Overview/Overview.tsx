@@ -71,7 +71,8 @@ function Overview(props: OverviewProps): ReactElement {
       container
       direction="column"
       justifyContent="flex-start"
-      alignContent="flex-start">
+      alignContent="flex-start"
+    >
       <Header {...props} />
       <Grid
         className={classes.groupsContainer}
@@ -81,7 +82,8 @@ function Overview(props: OverviewProps): ReactElement {
         direction="column"
         justifyContent="flex-start"
         alignContent="flex-start"
-        spacing={1}>
+        spacing={1}
+      >
         <Groups {...props} currentPage={currentPage} />
       </Grid>
       <Pages

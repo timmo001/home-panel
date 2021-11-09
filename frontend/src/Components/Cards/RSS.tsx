@@ -112,7 +112,8 @@ function RSS(props: BaseProps): ReactElement {
               direction="row"
               justifyContent="center"
               alignContent="center"
-              alignItems="center">
+              alignItems="center"
+            >
               <Grid item xs>
                 <Typography variant="subtitle1" component="h3">
                   <ReactMarkdown skipHtml={false}>{item.heading}</ReactMarkdown>
@@ -122,7 +123,8 @@ function RSS(props: BaseProps): ReactElement {
                     variant="caption"
                     component="h5"
                     gutterBottom
-                    noWrap>
+                    noWrap
+                  >
                     <ReactMarkdown skipHtml={false}>{item.meta}</ReactMarkdown>
                   </Typography>
                 )}

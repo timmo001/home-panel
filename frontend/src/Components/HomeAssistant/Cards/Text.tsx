@@ -51,7 +51,8 @@ function TextEntity(props: EntityProps): ReactElement {
       container
       direction="row"
       alignContent="center"
-      justifyContent="center">
+      justifyContent="center"
+    >
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
@@ -70,7 +71,8 @@ function TextEntity(props: EntityProps): ReactElement {
           container
           direction="row"
           alignContent="center"
-          justifyContent="center">
+          justifyContent="center"
+        >
           <Grid item>
             <Input
               value={text || ""}

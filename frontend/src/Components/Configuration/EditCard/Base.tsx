@@ -93,7 +93,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         container
         direction="row"
         justifyContent="center"
-        alignContent="stretch">
+        alignContent="stretch"
+      >
         <Grid
           container
           direction="row"
@@ -101,7 +102,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           alignItems="flex-end"
           alignContent="flex-end"
           item
-          xs>
+          xs
+        >
           <Grid item xs>
             <TextField
               className={classes.textField}
@@ -117,7 +119,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               <Button
                 variant="text"
                 color="primary"
-                onClick={handleGetEntityTitle}>
+                onClick={handleGetEntityTitle}
+              >
                 Get from HA
               </Button>
             </Grid>
@@ -132,7 +135,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
               inputProps={{
                 name: "type",
                 id: "type",
-              }}>
+              }}
+            >
               {cardTypes.map((type: CardType, key: number) => (
                 <MenuItem key={key} value={type.name}>
                   {type.title}
@@ -147,13 +151,15 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         container
         direction="row"
         justifyContent="center"
-        alignContent="stretch">
+        alignContent="stretch"
+      >
         <Grid
           item
           xs
           container
           justifyContent="flex-start"
-          alignContent="center">
+          alignContent="center"
+        >
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -169,7 +175,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           xs
           container
           justifyContent="flex-start"
-          alignContent="center">
+          alignContent="center"
+        >
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -193,13 +200,15 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         container
         direction="row"
         justifyContent="center"
-        alignContent="stretch">
+        alignContent="stretch"
+      >
         <Grid
           item
           xs
           container
           justifyContent="flex-start"
-          alignContent="center">
+          alignContent="center"
+        >
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -214,7 +223,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
           xs
           container
           justifyContent="flex-start"
-          alignContent="center">
+          alignContent="center"
+        >
           <FormControlLabel
             className={classes.switch}
             label="Square?"
@@ -233,13 +243,15 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         container
         direction="row"
         justifyContent="center"
-        alignContent="stretch">
+        alignContent="stretch"
+      >
         <Grid
           item
           xs
           container
           justifyContent="flex-start"
-          alignContent="center">
+          alignContent="center"
+        >
           <TextField
             className={classes.textField}
             InputLabelProps={{ shrink: true }}
@@ -256,7 +268,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}
@@ -274,14 +287,16 @@ function Base(props: BaseExtendedProps): ReactElement | null {
         container
         direction="row"
         justifyContent="center"
-        alignContent="stretch">
+        alignContent="stretch"
+      >
         {props.card.title && (
           <Grid
             item
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <FormControl className={classes.textField}>
               <InputLabel htmlFor="title_justify">Title Justify</InputLabel>
               <Select
@@ -290,7 +305,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
                 inputProps={{
                   name: "title_justify",
                   id: "title_justify",
-                }}>
+                }}
+              >
                 <MenuItem value="left">Left</MenuItem>
                 <MenuItem value="center">Center</MenuItem>
                 <MenuItem value="right">Right</MenuItem>
@@ -305,7 +321,8 @@ function Base(props: BaseExtendedProps): ReactElement | null {
             xs
             container
             justifyContent="flex-start"
-            alignContent="center">
+            alignContent="center"
+          >
             <TextField
               className={classes.textField}
               InputLabelProps={{ shrink: true }}

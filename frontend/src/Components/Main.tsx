@@ -204,7 +204,8 @@ function Main(props: MainProps): ReactElement {
       )}
       onClick={props.handleMouseMove}
       onTouchMove={props.handleMouseMove}
-      onMouseMove={props.handleMouseMove}>
+      onMouseMove={props.handleMouseMove}
+    >
       <Drawer
         {...props}
         editing={editing}
@@ -235,7 +236,8 @@ function Main(props: MainProps): ReactElement {
             !showToolbar && classes.contentNoToolbar,
             props.currentPage === "Overview" && classes.overview
           )}
-          style={{ marginLeft: spaceTaken }}>
+          style={{ marginLeft: spaceTaken }}
+        >
           {hassUrl && (
             <HomeAssistant
               connection={hassConnection}

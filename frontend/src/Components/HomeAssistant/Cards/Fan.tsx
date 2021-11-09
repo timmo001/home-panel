@@ -51,14 +51,16 @@ function Fan(props: EntityProps): ReactElement | null {
       spacing={1}
       alignContent="center"
       justifyContent="center"
-      direction="column">
+      direction="column"
+    >
       <Grid
         item
         xs
         container
         alignContent="center"
         justifyContent="center"
-        direction="row">
+        direction="row"
+      >
         {props.entity.attributes.speed_list.map(
           (speed: string, key: number) => {
             const icon: string | undefined =
@@ -76,7 +78,8 @@ function Fan(props: EntityProps): ReactElement | null {
                 <Grid key={key} item xs={6} container justifyContent="center">
                   <IconButton
                     className={classes.iconContainer}
-                    onClick={(): void => handleSpeedChange(speed)}>
+                    onClick={(): void => handleSpeedChange(speed)}
+                  >
                     <span
                       className={clsx(
                         "mdi",
@@ -96,7 +99,8 @@ function Fan(props: EntityProps): ReactElement | null {
                     props.entity.attributes.hvac_action === speed &&
                       classes.iconActive
                   )}
-                  onClick={(): void => handleSpeedChange(speed)}>
+                  onClick={(): void => handleSpeedChange(speed)}
+                >
                   {speed}
                 </Button>
               </Grid>

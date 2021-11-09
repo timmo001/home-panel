@@ -123,7 +123,8 @@ function News(props: BaseProps): ReactElement {
               direction="row"
               justifyContent="center"
               alignContent="center"
-              alignItems="center">
+              alignItems="center"
+            >
               {props.card.width && props.card.width > 2 && item.imageURL && (
                 <Grid className={classes.mediaContainer} item xs={3}>
                   <a href={item.url} target="_blank" rel="noopener noreferrer">
@@ -144,7 +145,8 @@ function News(props: BaseProps): ReactElement {
                     variant="caption"
                     component="h5"
                     gutterBottom
-                    noWrap>
+                    noWrap
+                  >
                     <ReactMarkdown skipHtml={false}>{item.meta}</ReactMarkdown>
                   </Typography>
                 )}

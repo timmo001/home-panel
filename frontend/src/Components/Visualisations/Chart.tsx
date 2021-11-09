@@ -159,7 +159,8 @@ function Chart(props: ChartProps): ReactElement | null {
               fillOpacity={1}
               fill="url(#colorUv)"
               stroke={theme.palette.secondary.main}
-              strokeWidth={2}>
+              strokeWidth={2}
+            >
               {/* {props.labels && (
                 <LabelList
                   data={data}
@@ -203,7 +204,8 @@ function Chart(props: ChartProps): ReactElement | null {
                 r: 4,
               }}
               stroke={theme.palette.secondary.main}
-              strokeWidth={2}>
+              strokeWidth={2}
+            >
               {/* {props.labels && (
                 <LabelList
                   data={data}
@@ -225,7 +227,8 @@ function Chart(props: ChartProps): ReactElement | null {
             endAngle={0}
             barSize={14}
             innerRadius={55}
-            outerRadius={100}>
+            outerRadius={100}
+          >
             <Tooltip content={<TooltipCustom {...props} />} />
             <RadialBar dataKey="value">
               {data.map((_entry: ChartData, key: number) => (

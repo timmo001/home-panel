@@ -60,7 +60,8 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
       justifyContent="center"
       alignContent="center"
       alignItems="center"
-      direction="column">
+      direction="column"
+    >
       <Grid item>
         <Typography className={classes.text} color="textPrimary" component="h5">
           {properCase(props.entity.state)}
@@ -74,7 +75,8 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
             spacing={1}
             alignContent="center"
             justifyContent="center"
-            direction="row">
+            direction="row"
+          >
             {!armed && (
               <Grid item>
                 <Button
@@ -83,7 +85,8 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
                     props.entity.state === "pending"
-                  }>
+                  }
+                >
                   Arm Away
                 </Button>
               </Grid>
@@ -96,7 +99,8 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
                     props.entity.state === "pending"
-                  }>
+                  }
+                >
                   Arm Home
                 </Button>
               </Grid>
@@ -109,7 +113,8 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
                   disabled={
                     (props.entity.attributes.code_arm_required && !code) ||
                     props.entity.state === "pending"
-                  }>
+                  }
+                >
                   Disarm
                 </Button>
               </Grid>
@@ -142,13 +147,15 @@ function AlarmPanel(props: EntityProps): ReactElement | null {
             item
             container
             alignContent="center"
-            justifyContent="center">
+            justifyContent="center"
+          >
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((value: number) => (
               <Grid key={value} item xs={4}>
                 <Button
                   size="large"
                   disabled={props.entity.state === "pending"}
-                  onClick={handleCodePressed(String(value))}>
+                  onClick={handleCodePressed(String(value))}
+                >
                   {value}
                 </Button>
               </Grid>

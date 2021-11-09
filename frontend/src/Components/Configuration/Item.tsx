@@ -173,13 +173,15 @@ function Item(props: ItemProps): ReactElement {
               className={classes.backupButton}
               color="primary"
               variant="contained"
-              onClick={props.handleBackupConfig}>
+              onClick={props.handleBackupConfig}
+            >
               Backup
             </Button>
             <Button
               color="primary"
               variant="contained"
-              onClick={props.handleRestoreConfig}>
+              onClick={props.handleRestoreConfig}
+            >
               Restore
             </Button>
           </Grid>
@@ -239,7 +241,8 @@ function Item(props: ItemProps): ReactElement {
                   <IconButton
                     aria-label="Toggle password visibility"
                     onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}>
+                    onMouseDown={handleMouseDownPassword}
+                  >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
@@ -255,7 +258,8 @@ function Item(props: ItemProps): ReactElement {
               aria-label={props.item.title}
               name={typeof props.item.name === "string" ? props.item.name : ""}
               value={value || ""}
-              onChange={handleRadioChange(props.path)}>
+              onChange={handleRadioChange(props.path)}
+            >
               {props.item.items &&
                 props.item.items.map(
                   (
@@ -284,7 +288,8 @@ function Item(props: ItemProps): ReactElement {
             <Select
               className={classes.root}
               value={value}
-              onChange={handleSelectChange(props.path)}>
+              onChange={handleSelectChange(props.path)}
+            >
               {props.item.items &&
                 props.item.items.map(
                   (

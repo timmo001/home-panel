@@ -31,13 +31,15 @@ function Markdown(props: BaseProps): ReactElement | null {
       className={classes.text}
       color="textPrimary"
       variant="body1"
-      component="span">
+      component="span"
+    >
       <ReactMarkdown
         skipHtml={false}
         components={{
           a: Link,
           code: Code,
-        }}>
+        }}
+      >
         {props.card.content}
       </ReactMarkdown>
     </Typography>

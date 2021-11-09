@@ -315,14 +315,16 @@ function Base(props: BaseProps): ReactElement {
       onTouchCancel={handleHoldCancel}
       onTouchEnd={handleHoldCancel}
       onMouseUp={handleHoldCancel}
-      onMouseLeave={handleHoldCancel}>
+      onMouseLeave={handleHoldCancel}
+    >
       <Card
         className={classes.card}
         square={props.card.square}
         elevation={elevation}
         style={{
           background: background,
-        }}>
+        }}
+      >
         <CardContent
           className={classes.cardContent}
           style={{
@@ -333,7 +335,8 @@ function Base(props: BaseProps): ReactElement {
             maxHeight: height,
             maxWidth: width,
             padding: props.card.padding ? props.card.padding : 12,
-          }}>
+          }}
+        >
           <Grid container direction="row">
             <Grid item xs>
               {props.card.title && (
@@ -347,7 +350,8 @@ function Base(props: BaseProps): ReactElement {
                   component="h3"
                   gutterBottom
                   noWrap
-                  style={{ fontSize: props.card.title_size }}>
+                  style={{ fontSize: props.card.title_size }}
+                >
                   {props.card.title}
                 </Typography>
               )}
@@ -357,7 +361,8 @@ function Base(props: BaseProps): ReactElement {
                 <IconButton
                   aria-label="close"
                   size="small"
-                  onClick={props.handleCloseExpand}>
+                  onClick={props.handleCloseExpand}
+                >
                   <CloseIcon fontSize="small" />
                 </IconButton>
               )}
@@ -371,7 +376,8 @@ function Base(props: BaseProps): ReactElement {
         <Dialog
           PaperProps={{ style: { background: "transparent" } }}
           open={expandCard}
-          onClose={handleCloseExpand}>
+          onClose={handleCloseExpand}
+        >
           <Grid container justifyContent="center">
             <Base
               {...props}

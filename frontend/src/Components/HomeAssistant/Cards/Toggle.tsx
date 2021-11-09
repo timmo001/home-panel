@@ -45,7 +45,8 @@ function Toggle(props: EntityProps): ReactElement {
       container
       direction="row"
       alignContent="center"
-      justifyContent="center">
+      justifyContent="center"
+    >
       <Grid className={classes.iconContainer} item xs={12}>
         {props.card.icon && (
           <Typography
@@ -63,7 +64,8 @@ function Toggle(props: EntityProps): ReactElement {
             className={classes.text}
             color="textPrimary"
             variant={props.card.disabled ? "body2" : "body1"}
-            component="h5">
+            component="h5"
+          >
             {props.entity.state}
           </Typography>
         </Grid>
