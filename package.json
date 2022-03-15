@@ -31,6 +31,6 @@
     "typescript": "4.6.2"
   },
   "dependencies": {
-    "react-syntax-highlighter": "15.4.4"
+    "react-syntax-highlighter": "15.5.0"
   }
 }
