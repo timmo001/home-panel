@@ -77,7 +77,7 @@ jobs:
           workflow_conclusion: success
       - name: 🏗 Set up build cache
         id: cache
-        uses: actions/cache@v2.1.6
+        uses: actions/cache@v3
         with:
           path: /tmp/.docker-cache
           key: docker-${{ github.ref }}-${{ matrix.architecture }}-${{ github.sha }}
