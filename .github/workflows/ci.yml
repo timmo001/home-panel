@@ -193,7 +193,7 @@ jobs:
           NODE_ENV: "production"
         working-directory: backend
       - name: ⬆ Backend - Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: backend-lib
           path: backend/lib
@@ -205,7 +205,7 @@ jobs:
           INLINE_RUNTIME_CHUNK: false
         working-directory: frontend
       - name: ⬆ Frontend - Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: frontend-build
           path: frontend/build
