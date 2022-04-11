@@ -226,12 +226,12 @@ jobs:
       - name: ⤵️ Check out code from GitHub
         uses: actions/checkout@v3
       - name: ⤵️ Backend - Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: backend-lib
           path: backend/lib
       - name: ⤵️ Frontend - Download Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: frontend-build
           path: frontend/build
