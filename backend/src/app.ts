@@ -21,7 +21,7 @@ const app: Application = express(feathers());
 
 // Load app configuration
 app.configure(configuration());
-// Enable security, CORS, compression, favicon and body parsing
+// Enable security, CORS, favicon and body parsing
 app.use(
   helmet({
     contentSecurityPolicy: false,
