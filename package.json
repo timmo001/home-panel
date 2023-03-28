@@ -20,7 +20,7 @@
     "prettier-yml": "prettier --write ./**/*.yml"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.52.0",
+    "@typescript-eslint/eslint-plugin": "5.57.0",
     "@typescript-eslint/parser": "5.52.0",
     "concurrently": "7.6.0",
     "eslint": "8.34.0",
