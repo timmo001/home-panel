@@ -29,6 +29,8 @@ export function Header() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
 
+  console.log(session, status, pathname);
+
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar variant="dense">
