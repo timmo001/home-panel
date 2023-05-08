@@ -1,4 +1,3 @@
-"use client";
 import { Item } from "@/components/Item";
 import { Section } from "@/components/Section";
 
