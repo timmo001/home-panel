@@ -36,11 +36,11 @@ Setup and configuration for the app is available [here][docs-setup]
 ![Configuration Screenshot][screen-configuration]
 
 [banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/banner.png
-[code-of-conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
-[contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[code-of-conduct]: .github/CODE_OF_CONDUCT.md
+[contributing]: .github/CONTRIBUTING.md
 [discussions]: https://github.com/timmo001/home-panel/discussions
-[docs-setup]: https://home-panel-docs.timmo.dev/setup/
+[docs-setup]: https://home-panel-docs.timmo.dev/setup
 [home-assistant]: https://www.home-assistant.io/
-[license]: https://github.com/timmo001/home-panel/blob/master/LICENSE.md
+[license]: LICENSE
 [screen-configuration]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-main.png
 [screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-main.png
