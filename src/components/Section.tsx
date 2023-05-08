@@ -9,11 +9,20 @@ export function Section({
   title: string;
 }): JSX.Element {
   return (
-    <Grid>
-      <Typography variant="h5">{title}</Typography>
-      <Grid container spacing={2}>
+    <Grid
+      container
+      direction="column"
+      xs={3}
+      sx={{ height: "100%", margin: "1rem" }}
+    >
+      <Typography variant="h5" gutterBottom>
+        {title}
+      </Typography>
+      <Grid container spacing={2} xs>
         {children.map((child, index) => (
-          <Grid key={index}>{child}</Grid>
+          <Grid key={index} xs={6}>
+            {child}
+          </Grid>
         ))}
       </Grid>
     </Grid>

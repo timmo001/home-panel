@@ -4,7 +4,8 @@ import { Inter } from "next/font/google";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { Header } from "@/components/Header";
+import { Container } from "@/components/Container";
+import { DrawerComponent as Drawer } from "@/components/Drawer";
 import { MUIProvider } from "@/providers/MUIProvider";
 
 import "@/app/globals.css";
@@ -38,8 +39,8 @@ export default async function RootLayout({
       <body className={inter.variable}>
         <AuthProvider session={session}>
           <MUIProvider>
-            <Header />
-            <section>{session ? children : <AccessDenied />}</section>
+            <Drawer />
+            <Container>{session ? children : <AccessDenied />}</Container>
           </MUIProvider>
         </AuthProvider>
       </body>
