@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { Header } from "@/components/Header";
-import { MuiProvider } from "@/providers/mui-provider";
+import { MUIProvider } from "@/providers/MUIProvider";
 
 import "@/app/globals.css";
 
@@ -30,10 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.variable}>
-        <MuiProvider>
+        <MUIProvider>
           <Header />
           {children}
-        </MuiProvider>
+        </MUIProvider>
       </body>
     </html>
   );

@@ -5,7 +5,11 @@ import { ReactNode } from "react";
 
 import { theme } from "@/utils/theme";
 
-export const MuiProvider = ({ children }: { children: ReactNode }) => {
+export function MUIProvider({
+  children,
+}: {
+  children: ReactNode;
+}): JSX.Element {
   return (
     <>
       <NextAppDirEmotionCacheProvider options={{ key: "css" }}>
@@ -16,4 +20,4 @@ export const MuiProvider = ({ children }: { children: ReactNode }) => {
       </NextAppDirEmotionCacheProvider>
     </>
   );
-};
+}
