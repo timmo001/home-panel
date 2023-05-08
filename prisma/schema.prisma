@@ -19,14 +19,6 @@ model Dashboard {
   widgets     Widget[]
 }
 
-model User {
-  id         String      @id @default(cuid())
-  username   String      @unique
-  name       String?
-  image      String?
-  dashboards Dashboard[]
-}
-
 model Widget {
   id           String     @id @default(cuid())
   title        String?
@@ -40,4 +32,21 @@ model WidgetType {
   id     String   @id @default(cuid())
   name   String
   Widget Widget[]
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id         String      @id @default(cuid())
+  username   String      @unique
+  name       String?
+  image      String?
+  dashboards Dashboard[]
+  sessions   Session[]
 }
