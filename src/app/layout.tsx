@@ -31,11 +31,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }): Promise<JSX.Element> {
   const session = await getServerSession();
+  console.log("Server session:", session);
 
   return (
     <html lang="en">
       <body className={inter.variable}>
-        <AuthProvider>
+        <AuthProvider session={session}>
           <MUIProvider>
             <Header />
             <section>{session ? children : <AccessDenied />}</section>
