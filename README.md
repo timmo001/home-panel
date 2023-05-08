@@ -21,7 +21,7 @@ Setup and configuration for the app is available [here][docs-setup]
 
 ## Links
 
-[Support / Discussion][forum]
+[Discussions / Support][discussions]
 
 [Code of Conduct][code-of-conduct]
 
@@ -38,6 +38,7 @@ Setup and configuration for the app is available [here][docs-setup]
 [banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/banner.png
 [code-of-conduct]: https://github.com/timmo001/home-panel/blob/master/.github/CODE_OF_CONDUCT.md
 [contributing]: https://github.com/timmo001/home-panel/blob/master/.github/CONTRIBUTING.md
+[discussions]: https://github.com/timmo001/home-panel/discussions
 [docs-setup]: https://home-panel-docs.timmo.dev/setup/
 [home-assistant]: https://www.home-assistant.io/
 [license]: https://github.com/timmo001/home-panel/blob/master/LICENSE.md
