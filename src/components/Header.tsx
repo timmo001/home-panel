@@ -2,51 +2,32 @@
 import {
   AppBar,
   Avatar,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Skeleton,
   Stack,
   Toolbar,
-  Tooltip,
   Typography,
 } from "@mui/material";
-import { DashboardRounded, PersonRounded } from "@mui/icons-material";
-import { useState } from "react";
+import { DashboardRounded } from "@mui/icons-material";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-import type { RecordProfile } from "@/types/database.types";
-
-const links = [
-  {
-    label: "Dashboard",
-    href: "/",
-    icon: <DashboardRounded fontSize="small" sx={{ marginRight: "0.2rem" }} />,
-  },
-];
-
-interface User extends Partial<RecordProfile> {
-  email?: string;
-  loggedIn: boolean;
-}
+// const links = [
+//   {
+//     label: "Dashboard",
+//     href: "/",
+//     icon: <DashboardRounded fontSize="small" sx={{ marginRight: "0.2rem" }} />,
+//   },
+// ];
 
 export function Header() {
-  const [user, setUser] = useState<User>();
-  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
+  const { data: session, status } = useSession();
   const pathname = usePathname();
-
-  function handleOpenUserMenu(event: React.MouseEvent<HTMLElement>): void {
-    setAnchorElUser(event.currentTarget);
-  }
-
-  function handleCloseUserMenu(): void {
-    setAnchorElUser(null);
-  }
-
-  function handleLogout(): void {
-    handleCloseUserMenu();
-  }
 
   return (
     <AppBar position="static" color="transparent" elevation={0}>
@@ -59,73 +40,64 @@ export function Header() {
         >
           Home Panel
         </Typography>
-        <Stack direction="row" justifyContent="center" sx={{ flexGrow: 1 }}>
-          {user && user.loggedIn
-            ? links.map(({ label, href, icon }) => (
-                <Link key={label} href={href} passHref>
-                  <Button
-                    color={href === pathname ? "primary" : "inherit"}
-                    sx={{ marginRight: "0.4rem" }}
-                  >
-                    {icon}
-                    {label}
-                  </Button>
-                </Link>
-              ))
-            : null}
-        </Stack>
-        <Stack direction="row" sx={{ flexGrow: 0 }}>
-          {user && user.loggedIn && user.first_name && user.last_name ? (
-            <Tooltip title={`${user.first_name} ${user.last_name}`}>
-              <IconButton onClick={handleOpenUserMenu} sx={{ padding: 0 }}>
-                <Avatar
-                  alt={`${user.first_name} ${user.last_name}`}
-                  src={user.picture}
-                  sx={{ width: 38, height: 38 }}
-                >
-                  {user.first_name[0]}
-                  {user.last_name[0]}
-                </Avatar>
-              </IconButton>
-            </Tooltip>
-          ) : (
-            <Avatar alt="User" sx={{ width: 38, height: 38 }}>
-              <PersonRounded color="inherit" fontSize="large" />
-            </Avatar>
-          )}
-        </Stack>
       </Toolbar>
-      <Menu
-        sx={{ mt: "45px" }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        open={user && anchorElUser ? true : false}
-        onClose={handleCloseUserMenu}
+      {/* <Drawer
+        anchor="left"
+        open
+        onClose={() => {}}
+        sx={{ marginTop: 68 }}
+      > */}
+      <Stack
+        direction="column"
+        spacing={1}
+        sx={{ padding: "1rem", width: "100%" }}
       >
-        <Link href="/profile" passHref>
-          <MenuItem
-            disabled={user && user.loggedIn ? false : true}
-            onClick={handleCloseUserMenu}
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Avatar
+            alt={session?.user?.name ?? "Unknown"}
+            src={session?.user?.image ?? undefined}
+          />
+          <Typography
+            component="div"
+            noWrap
+            variant="h6"
+            sx={{ flexGrow: 0, userSelect: "none" }}
           >
-            <Typography textAlign="center">Profile</Typography>
-          </MenuItem>
-        </Link>
-        <MenuItem
-          disabled={user && user.loggedIn ? false : true}
-          onClick={handleLogout}
-        >
-          <Typography textAlign="center">Logout</Typography>
-        </MenuItem>
-      </Menu>
+            {session?.user?.name ?? "Unknown"}
+          </Typography>
+        </Stack>
+        <Stack direction="column" spacing={1}>
+          <List>
+            <Link href="/" passHref>
+              <ListItemButton component="a" selected={pathname === "/"}>
+                <ListItemIcon>
+                  <DashboardRounded fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </ListItemButton>
+            </Link>
+          </List>
+        </Stack>
+        <Stack direction="column" spacing={1}>
+          <List>
+            {status === "loading" ? (
+              <Skeleton variant="rectangular" width="100%" height={40} />
+            ) : (
+              <ListItemButton
+                component="a"
+                onClick={() =>
+                  status === "authenticated" ? signOut() : signIn()
+                }
+              >
+                <ListItemText
+                  primary={`Sign ${status === "authenticated" ? "Out" : "In"}`}
+                />
+              </ListItemButton>
+            )}
+          </List>
+        </Stack>
+      </Stack>
+      {/* </Drawer> */}
     </AppBar>
   );
 }
