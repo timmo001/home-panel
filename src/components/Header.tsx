@@ -12,7 +12,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { DashboardRounded } from "@mui/icons-material";
+import { DashboardRounded, PersonRounded } from "@mui/icons-material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -52,20 +52,6 @@ export function Header() {
         spacing={1}
         sx={{ padding: "1rem", width: "100%" }}
       >
-        <Stack direction="row" spacing={1} alignItems="center">
-          <Avatar
-            alt={session?.user?.name ?? "Unknown"}
-            src={session?.user?.image ?? undefined}
-          />
-          <Typography
-            component="div"
-            noWrap
-            variant="h6"
-            sx={{ flexGrow: 0, userSelect: "none" }}
-          >
-            {session?.user?.name ?? "Unknown"}
-          </Typography>
-        </Stack>
         <Stack direction="column" spacing={1}>
           <List>
             <Link href="/" passHref>
@@ -80,6 +66,14 @@ export function Header() {
         </Stack>
         <Stack direction="column" spacing={1}>
           <List>
+            <Link href="/users" passHref>
+              <ListItemButton component="a" selected={pathname === "/users"}>
+                <ListItemIcon>
+                  <PersonRounded fontSize="small" />
+                </ListItemIcon>
+                <ListItemText primary="Users" />
+              </ListItemButton>
+            </Link>
             {status === "loading" ? (
               <Skeleton variant="rectangular" width="100%" height={40} />
             ) : (
@@ -89,6 +83,14 @@ export function Header() {
                   status === "authenticated" ? signOut() : signIn()
                 }
               >
+                <ListItemIcon>
+                  <Avatar
+                    alt={session?.user?.name ?? "Unknown"}
+                    src={session?.user?.image ?? undefined}
+                    sizes="24px"
+                    variant="circular"
+                  />
+                </ListItemIcon>
                 <ListItemText
                   primary={`Sign ${status === "authenticated" ? "Out" : "In"}`}
                 />

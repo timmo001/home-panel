@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import { getServerSession } from "next-auth";
 import { Inter } from "next/font/google";
 
+import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Header } from "@/components/Header";
 import { MUIProvider } from "@/providers/MUIProvider";
@@ -23,21 +25,23 @@ const inter = Inter({
   variable: "--inter-font",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}): Promise<JSX.Element> {
+  const session = await getServerSession();
+
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={inter.variable}>
+    <html lang="en">
+      <body className={inter.variable}>
+        <AuthProvider>
           <MUIProvider>
             <Header />
-            {children}
+            {session ? children : <AccessDenied />}
           </MUIProvider>
-        </body>
-      </html>
-    </AuthProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }
