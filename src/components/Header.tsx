@@ -2,6 +2,7 @@
 import {
   AppBar,
   Avatar,
+  Divider,
   Drawer,
   List,
   ListItemButton,
@@ -25,7 +26,7 @@ export function Header() {
 
   return (
     <AppBar color="transparent" elevation={0} position="fixed">
-      <Toolbar variant="dense">
+      <Toolbar variant="regular">
         <Typography
           component="div"
           noWrap
@@ -50,46 +51,45 @@ export function Header() {
           },
         }}
       >
-        <Toolbar variant="dense" />
+        <Toolbar variant="regular" />
+        <Divider />
         <Stack
           direction="column"
-          sx={{ padding: "1rem", overflow: "auto", width: "100%" }}
+          sx={{ flexGrow: 1, overflow: "auto", width: "100%" }}
         >
-          <Stack direction="column">
-            <List>
-              <Link href="/">
-                <ListItemButton selected={pathname === "/"}>
-                  <ListItemIcon>
-                    <DashboardRounded />
-                  </ListItemIcon>
-                  <ListItemText primary="Dashboard" />
-                </ListItemButton>
-              </Link>
-            </List>
-          </Stack>
-          <Stack direction="column">
-            {status === "loading" ? (
-              <Skeleton variant="rectangular" width="100%" height={40} />
-            ) : (
-              <ListItemButton
-                onClick={() =>
-                  status === "authenticated" ? signOut() : signIn()
-                }
-              >
+          <List>
+            <Link href="/">
+              <ListItemButton selected={pathname === "/"}>
                 <ListItemIcon>
-                  <Avatar
-                    alt={session?.user?.name ?? "Unknown"}
-                    src={session?.user?.image ?? undefined}
-                    variant="circular"
-                    sx={{ height: 28, width: 28 }}
-                  />
+                  <DashboardRounded />
                 </ListItemIcon>
-                <ListItemText
-                  primary={`Sign ${status === "authenticated" ? "Out" : "In"}`}
-                />
+                <ListItemText primary="Dashboard" />
               </ListItemButton>
-            )}
-          </Stack>
+            </Link>
+          </List>
+        </Stack>
+        <Divider />
+        <Stack direction="column">
+          {status === "loading" ? (
+            <Skeleton variant="rectangular" width="100%" height={40} />
+          ) : (
+            <ListItemButton
+              onClick={() =>
+                status === "authenticated" ? signOut() : signIn()
+              }
+            >
+              <ListItemIcon sx={{ marginLeft: "-0.2rem" }}>
+                <Avatar
+                  alt={session?.user?.name ?? "Unknown"}
+                  src={session?.user?.image ?? undefined}
+                  variant="circular"
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={`Sign ${status === "authenticated" ? "Out" : "In"}`}
+              />
+            </ListItemButton>
+          )}
         </Stack>
       </Drawer>
     </AppBar>
