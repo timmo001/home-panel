@@ -18,7 +18,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
-export function Header() {
+export function Header(): JSX.Element {
   const { data: session, status } = useSession();
   const pathname = usePathname();
 
