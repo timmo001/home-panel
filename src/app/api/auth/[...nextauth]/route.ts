@@ -1,4 +1,4 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, RequestInternal } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth from "next-auth";
@@ -14,7 +14,10 @@ export const authOptions: NextAuthOptions = {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(
+        credentials: Record<"username" | "password", string> | undefined,
+        _req: Pick<RequestInternal, "body" | "query" | "headers" | "method">
+      ) {
         if (!credentials) return null;
 
         const user = await prisma.user.findUnique({

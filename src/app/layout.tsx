@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 import { Inter } from "next/font/google";
 
 import { AccessDenied } from "@/components/AccessDenied";
@@ -38,7 +38,7 @@ export default async function RootLayout({
         <AuthProvider>
           <MUIProvider>
             <Header />
-            {session ? children : <AccessDenied />}
+            <section>{session ? children : <AccessDenied />}</section>
           </MUIProvider>
         </AuthProvider>
       </body>

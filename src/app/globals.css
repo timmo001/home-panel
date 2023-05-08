@@ -103,6 +103,11 @@ a {
   text-decoration: none;
 }
 
+main section {
+  margin-left: 240px;
+  padding: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
