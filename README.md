@@ -16,12 +16,6 @@
 ![Supports amd64 Architecture][amd64-shield]
 ![Supports i386 Architecture][i386-shield]
 
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/timmo001/home-panel)
-
-[![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
-
-[![Sponsor Timmo][sponsor-badge]][sponsor]
-
 A web frontend for controlling the home. Integrates with
 [Home Assistant][hass] as an additional frontend.
 
