@@ -1,12 +1,12 @@
 # Home Panel
 
-A web frontend for controlling the home. Integrates with [Home Assistant][https://www.home-assistant.io] as an additional frontend.
+A web frontend for controlling the home. Integrates with [Home Assistant](https://www.home-assistant.io) as an additional frontend.
 
 ![banner](public/banner.png)
 
 ## Features
 
-- Supports [Home Assistant][https://www.home-assistant.io] entities, cameras, news feeds, iframes and more.
+- Supports [Home Assistant](https://www.home-assistant.io) entities, cameras, news feeds, iframes and more.
 - Made for touch screens and desktops with a sideways scrolling Material Design interface.
 - Fully customizable interface.
 - Custom theme support.
