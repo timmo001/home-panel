@@ -3,7 +3,7 @@
 A web frontend for controlling the home. Integrates with
 [Home Assistant][home-assistant] as an additional frontend.
 
-![banner][banner]
+![banner][public/banner.png]
 
 ## Features
 
@@ -17,27 +17,12 @@ A web frontend for controlling the home. Integrates with
 
 ## Documentation / Setup
 
-Setup and configuration for the app is available [here][docs-setup]
+Setup and configuration for the app is available [here][https://home-panel.timmo.dev/docs/setup]
 
 ## Links
 
-[Discussions / Support][discussions]
+[Discussions / Support][https://github.com/timmo001/home-panel/discussions]
 
-[Code of Conduct][code-of-conduct]
+[Code of Conduct][.github/CODE_OF_CONDUCT.md]
 
-[License][license]
-
-## Screenshots
-
-![Main Screen Screenshot][screen-main]
-
-![Configuration Screenshot][screen-configuration]
-
-[banner]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/banner.png
-[code-of-conduct]: .github/CODE_OF_CONDUCT.md
-[discussions]: https://github.com/timmo001/home-panel/discussions
-[docs-setup]: https://home-panel-docs.timmo.dev/setup
-[home-assistant]: https://www.home-assistant.io/
-[license]: LICENSE
-[screen-configuration]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-configuration-main.png
-[screen-main]: https://raw.githubusercontent.com/timmo001/home-panel/master/documentation/resources/screen-main.png
+[License][LICENSE]
