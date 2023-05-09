@@ -1,7 +1,7 @@
 "use client";
 import { Card, Typography } from "@mui/material";
 
-export function CardBaseStandard({
+export function CardBase({
   children,
   title,
 }: {
