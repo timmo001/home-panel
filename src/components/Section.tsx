@@ -12,7 +12,7 @@ export function Section({
     <Grid
       container
       direction="column"
-      xs={3}
+      xs={4}
       sx={{ height: "100%", margin: "0.5rem 1rem" }}
     >
       <Typography variant="h5" gutterBottom>
