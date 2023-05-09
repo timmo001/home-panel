@@ -13,7 +13,7 @@ export function Section({
       container
       direction="column"
       xs={3}
-      sx={{ height: "100%", margin: "1rem" }}
+      sx={{ height: "100%", margin: "0.5rem 1rem" }}
     >
       <Typography variant="h5" gutterBottom>
         {title}
