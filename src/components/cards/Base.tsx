@@ -6,16 +6,16 @@ export function CardBase({
   title,
 }: {
   children: Array<JSX.Element> | JSX.Element;
-  title: string;
+  title?: string;
 }): JSX.Element {
   return (
     <Card
       sx={{
-        padding: "0.2rem 0.4rem 0.4rem",
+        padding: title ? "0.2rem 0.4rem 0.4rem" : "0.4rem",
         width: "100%",
       }}
     >
-      <Typography variant="h6">{title}</Typography>
+      {title && <Typography variant="h6">{title}</Typography>}
       {children}
     </Card>
   );
