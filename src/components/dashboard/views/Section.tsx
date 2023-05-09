@@ -10,6 +10,7 @@ export function Section({
 }): JSX.Element {
   return (
     <Grid2
+      component="section"
       container
       direction="column"
       xs={4}

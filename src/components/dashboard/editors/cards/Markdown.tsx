@@ -14,8 +14,9 @@ export function EditCardMarkdown({ dataIn }: { dataIn: Data }): JSX.Element {
   return (
     <>
       <TextField
-        label="Content"
         name="content"
+        label="Content"
+        margin="dense"
         value={data.content}
         onChange={handleTextFieldChange}
       />

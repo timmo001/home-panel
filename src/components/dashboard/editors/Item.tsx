@@ -4,7 +4,6 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardHeader,
   Typography,
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
@@ -17,14 +16,21 @@ import { Section } from "@/components/dashboard/views/Section";
 
 export function EditItem({ data }: { data?: any }): JSX.Element {
   return (
-    <Grid2 container spacing={2}>
-      <Grid2 xs="auto">
+    <Grid2
+      container
+      direction="row"
+      alignItems="center"
+      spacing={2}
+      sx={{ width: "100%" }}
+      xs
+    >
+      <Grid2 xs>
         <Card>
-          <CardHeader>
-            <Typography variant="h6">Edit Item</Typography>
-          </CardHeader>
           <CardContent>
-            <Grid2 container spacing={2}>
+            <Typography variant="h5" gutterBottom>
+              Edit Item
+            </Typography>
+            <Grid2 container direction="column">
               <EditCardBase dataIn={data} />
               <EditCardMarkdown dataIn={data} />
             </Grid2>
@@ -37,7 +43,7 @@ export function EditItem({ data }: { data?: any }): JSX.Element {
           </CardActions>
         </Card>
       </Grid2>
-      <Grid2 xs="auto">
+      <Grid2 xs>
         <Section>{[<Item key={0} data={data} />]}</Section>
       </Grid2>
     </Grid2>

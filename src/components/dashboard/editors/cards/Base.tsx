@@ -14,8 +14,9 @@ export function EditCardBase({ dataIn }: { dataIn: Data }): JSX.Element {
   return (
     <>
       <TextField
-        label="Title"
         name="title"
+        label="Title"
+        margin="dense"
         value={data.title}
         onChange={handleTextFieldChange}
       />
