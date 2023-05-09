@@ -56,7 +56,11 @@ export function Dashboard(): JSX.Element {
       </Section>
       <Section title="Section 06">
         <Item title="Item 01" />
-        <Item title="Item 02" />
+        <Item />
+      </Section>
+      <Section>
+        <Item />
+        <Item />
       </Section>
     </>
   );

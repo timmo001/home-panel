@@ -6,7 +6,7 @@ export function Section({
   title,
 }: {
   children: Array<JSX.Element>;
-  title: string;
+  title?: string;
 }): JSX.Element {
   return (
     <Grid
@@ -15,9 +15,11 @@ export function Section({
       xs={4}
       sx={{ height: "100%", margin: "0.5rem 1rem" }}
     >
-      <Typography variant="h5" gutterBottom>
-        {title}
-      </Typography>
+      {title && (
+        <Typography variant="h5" gutterBottom>
+          {title}
+        </Typography>
+      )}
       <Grid container spacing={2} xs="auto">
         {children.map((child, index) => (
           <Grid key={index} xs={6}>
