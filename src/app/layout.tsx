@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { Inter } from "next/font/google";
 
-import { AccessDenied } from "@/views/AccessDenied";
+import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { Container } from "@/views/Container";
-import { DrawerComponent as Drawer } from "@/views/Drawer";
+import { Container } from "@/components/Container";
+import { DrawerComponent as Drawer } from "@/components/Drawer";
 import { MUIProvider } from "@/providers/MUIProvider";
 
 import "@/app/globals.css";

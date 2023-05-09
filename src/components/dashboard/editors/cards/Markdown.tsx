@@ -4,7 +4,7 @@ import { TextField } from "@mui/material";
 
 type Data = { title: string; content: string };
 
-export function CardMarkdown(dataIn: Data): JSX.Element {
+export function EditCardMarkdown(dataIn: Data): JSX.Element {
   const [data, setData] = useState<Data>(dataIn);
 
   function handleTextFieldChange(e: React.ChangeEvent<HTMLInputElement>) {

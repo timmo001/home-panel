@@ -1,6 +1,6 @@
 "use client";
-import { CardBase } from "@/views/cards/Base";
-import { CardMarkdown } from "@/views/cards/Markdown";
+import { CardBase } from "@/components/dashboard/views/cards/Base";
+import { CardMarkdown } from "@/components/dashboard/views/cards/Markdown";
 
 export function Item({ title }: { title?: string }): JSX.Element {
 
