@@ -10,28 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Dashboard {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  widgets     Widget[]
-}
-
-model Widget {
-  id           String     @id @default(cuid())
-  title        String?
-  dashboardId  String
-  dashboard    Dashboard  @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
-  widgetTypeId String
-  widgetType   WidgetType @relation(fields: [widgetTypeId], references: [id], onDelete: Cascade)
-}
-
-model WidgetType {
-  id     String   @id @default(cuid())
-  name   String
-  Widget Widget[]
+model User {
+  id         String      @id @default(cuid())
+  username   String      @unique
+  password   String
+  name       String?
+  image      String?
+  dashboards Dashboard[]
+  sessions   Session[]
 }
 
 model Session {
@@ -42,12 +28,27 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id         String      @id @default(cuid())
-  username   String      @unique
-  password   String
-  name       String?
-  image      String?
-  dashboards Dashboard[]
-  sessions   Session[]
+model Dashboard {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  widgets     Widget[]
+}
+
+model Widget {
+  id             String           @id @default(cuid())
+  title          String?
+  dashboardId    String
+  dashboard      Dashboard        @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+  widgetTypeId   String
+  WidgetMarkdown WidgetMarkdown[]
+}
+
+model WidgetMarkdown {
+  id       String  @id @default(cuid())
+  content  String?
+  widget   Widget? @relation(fields: [widgetId], references: [id])
+  widgetId String?
 }

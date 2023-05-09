@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { Inter } from "next/font/google";
 
-import { AccessDenied } from "@/components/AccessDenied";
+import { AccessDenied } from "@/views/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
-import { Container } from "@/components/Container";
-import { DrawerComponent as Drawer } from "@/components/Drawer";
+import { Container } from "@/views/Container";
+import { DrawerComponent as Drawer } from "@/views/Drawer";
 import { MUIProvider } from "@/providers/MUIProvider";
 
 import "@/app/globals.css";
@@ -32,8 +32,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }): Promise<JSX.Element> {
   const session = await getServerSession();
-  console.log("Server session:", session);
-
   return (
     <html lang="en">
       <body className={inter.variable}>

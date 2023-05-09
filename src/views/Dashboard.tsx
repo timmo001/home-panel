@@ -1,5 +1,5 @@
-import { Item } from "@/components/Item";
-import { Section } from "@/components/Section";
+import { Item } from "@/views/Item";
+import { Section } from "@/views/Section";
 
 export function Dashboard(): JSX.Element {
   return (
