@@ -1,5 +1,5 @@
 "use client";
-import { Typography, Unstable_Grid2 as Grid, IconButton } from "@mui/material";
+import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
 import { EditRounded } from "@mui/icons-material";
 import Link from "next/link";
 
@@ -11,14 +11,14 @@ export function EditSection({
   title?: string;
 }): JSX.Element {
   return (
-    <Grid
+    <Grid2
       container
       direction="column"
       xs={4}
       sx={{ height: "100%", margin: "0.5rem 1rem" }}
     >
       {title && (
-        <Grid>
+        <Grid2>
           <Typography variant="h5" gutterBottom>
             {title}
           </Typography>
@@ -27,15 +27,15 @@ export function EditSection({
               <EditRounded />
             </IconButton>
           </Link>
-        </Grid>
+        </Grid2>
       )}
-      <Grid container spacing={2} xs="auto">
+      <Grid2 container spacing={2} xs="auto">
         {children.map((child, index) => (
-          <Grid key={index} xs={6}>
+          <Grid2 key={index} xs={6}>
             {child}
-          </Grid>
+          </Grid2>
         ))}
-      </Grid>
-    </Grid>
+      </Grid2>
+    </Grid2>
   );
 }

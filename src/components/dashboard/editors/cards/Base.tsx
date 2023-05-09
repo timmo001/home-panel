@@ -1,21 +1,24 @@
 "use client";
-import { Card, CardContent, Unstable_Grid2 as Grid } from "@mui/material";
+import { useState } from "react";
+import { TextField } from "@mui/material";
 
-import { CardBase } from "@/components/dashboard/views/cards/Base";
+type Data = { title: string };
 
-export function EditCardBase({
-  children,
-  data,
-}: {
-  children: Array<JSX.Element> | JSX.Element;
-  data: any;
-}): JSX.Element {
+export function EditCardBase({ dataIn }: { dataIn: Data }): JSX.Element {
+  const [data, setData] = useState<Data>(dataIn);
+
+  function handleTextFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
   return (
-    <Grid direction="column">
-      <CardBase {...data} />
-      <Card sx={{ padding: "0.4rem" }}>
-        <CardContent>{children}</CardContent>
-      </Card>
-    </Grid>
+    <>
+      <TextField
+        label="Title"
+        name="title"
+        value={data.title}
+        onChange={handleTextFieldChange}
+      />
+    </>
   );
 }

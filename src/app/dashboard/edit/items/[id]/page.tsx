@@ -10,9 +10,15 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 export default async function Page({
-  id,
+  params,
 }: {
-  id: string;
+  params: { id: string };
 }): Promise<JSX.Element> {
-  return <EditItem />;
+  const data = {
+    id: params.id,
+    title: "Item 01",
+    content: "Hello",
+  };
+
+  return <EditItem data={data} />;
 }

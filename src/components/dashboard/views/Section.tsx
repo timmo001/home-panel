@@ -1,5 +1,5 @@
 "use client";
-import { Typography, Unstable_Grid2 as Grid } from "@mui/material";
+import { Typography, Unstable_Grid2 as Grid2 } from "@mui/material";
 
 export function Section({
   children,
@@ -9,7 +9,7 @@ export function Section({
   title?: string;
 }): JSX.Element {
   return (
-    <Grid
+    <Grid2
       container
       direction="column"
       xs={4}
@@ -20,13 +20,13 @@ export function Section({
           {title}
         </Typography>
       )}
-      <Grid container spacing={2} xs="auto">
+      <Grid2 container spacing={2} xs="auto">
         {children.map((child, index) => (
-          <Grid key={index} xs={6}>
+          <Grid2 key={index} xs={6}>
             {child}
-          </Grid>
+          </Grid2>
         ))}
-      </Grid>
-    </Grid>
+      </Grid2>
+    </Grid2>
   );
 }

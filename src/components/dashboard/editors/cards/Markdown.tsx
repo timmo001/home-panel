@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
 
-type Data = { title: string; content: string };
+type Data = { content: string };
 
-export function EditCardMarkdown(dataIn: Data): JSX.Element {
+export function EditCardMarkdown({ dataIn }: { dataIn: Data }): JSX.Element {
   const [data, setData] = useState<Data>(dataIn);
 
   function handleTextFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -13,12 +13,6 @@ export function EditCardMarkdown(dataIn: Data): JSX.Element {
 
   return (
     <>
-      <TextField
-        label="Title"
-        name="title"
-        value={data.title}
-        onChange={handleTextFieldChange}
-      />
       <TextField
         label="Content"
         name="content"
