@@ -10,7 +10,9 @@ export function Container({
     <Grid
       container
       direction="column"
+      alignContent="flex-start"
       sx={{
+        overflowY: "auto",
         padding: "0.4rem",
         width: "100%",
       }}

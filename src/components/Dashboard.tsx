@@ -13,6 +13,10 @@ export function Dashboard(): JSX.Element {
         <Item title="Item 06" />
         <Item title="Item 07" />
         <Item title="Item 08" />
+        <Item title="Item 09" />
+        <Item title="Item 10" />
+        <Item title="Item 11" />
+        <Item title="Item 12" />
       </Section>
       <Section title="Section 02">
         <Item title="Item 01" />
@@ -23,6 +27,36 @@ export function Dashboard(): JSX.Element {
         <Item title="Item 06" />
         <Item title="Item 07" />
         <Item title="Item 08" />
+        <Item title="Item 09" />
+        <Item title="Item 10" />
+      </Section>
+      <Section title="Section 03">
+        <Item title="Item 01" />
+        <Item title="Item 02" />
+        <Item title="Item 03" />
+        <Item title="Item 04" />
+        <Item title="Item 05" />
+        <Item title="Item 06" />
+        <Item title="Item 07" />
+        <Item title="Item 08" />
+      </Section>
+      <Section title="Section 04">
+        <Item title="Item 01" />
+        <Item title="Item 02" />
+        <Item title="Item 03" />
+        <Item title="Item 04" />
+        <Item title="Item 05" />
+        <Item title="Item 06" />
+      </Section>
+      <Section title="Section 05">
+        <Item title="Item 01" />
+        <Item title="Item 02" />
+        <Item title="Item 03" />
+        <Item title="Item 04" />
+      </Section>
+      <Section title="Section 06">
+        <Item title="Item 01" />
+        <Item title="Item 02" />
       </Section>
     </>
   );

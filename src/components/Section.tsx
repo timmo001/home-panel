@@ -18,7 +18,7 @@ export function Section({
       <Typography variant="h5" gutterBottom>
         {title}
       </Typography>
-      <Grid container spacing={2} xs>
+      <Grid container spacing={2} xs="auto">
         {children.map((child, index) => (
           <Grid key={index} xs={6}>
             {child}
