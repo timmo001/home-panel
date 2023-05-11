@@ -1,14 +1,11 @@
 "use client";
-import type { Section as SectionModel } from "@prisma/client";
+import type { Widget as WidgetModel } from "@prisma/client";
 import { Typography, Unstable_Grid2 as Grid2 } from "@mui/material";
 
-export function Section({
-  children,
-  data,
-}: {
-  children: Array<JSX.Element>;
-  data: SectionModel;
-}): JSX.Element {
+import type { SectionModel } from "@/types/section.type";
+import { Widget } from "@/components/dashboard/views/Widget";
+
+export function Section({ data }: { data: SectionModel }): JSX.Element {
   return (
     <Grid2
       component="section"
@@ -22,9 +19,13 @@ export function Section({
         </Typography>
       )}
       <Grid2 container spacing={2} xs="auto">
-        {children.map((child, index) => (
-          <Grid2 key={index} xs={6}>
-            {child}
+        {data.widgets.map((widget: WidgetModel) => (
+          <Grid2 key={widget.id} xs={6}>
+            <Widget
+              dashboardId={data.dashboardId}
+              sectionId={data.id}
+              data={widget}
+            />
           </Grid2>
         ))}
       </Grid2>

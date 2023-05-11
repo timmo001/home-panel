@@ -3,7 +3,7 @@ import { useLongPress } from "use-long-press";
 import { ButtonBase, Card, Typography } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
 
-export function CardBase({
+export function WidgetBase({
   children,
   dashboardId,
   sectionId,

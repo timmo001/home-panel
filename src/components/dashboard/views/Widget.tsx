@@ -1,25 +1,44 @@
-"use client";
+"use server";
+import type {
+  Widget as WidgetModel,
+  WidgetMarkdown as WidgetMarkdownModel,
+} from "@prisma/client";
 
-import type { WidgetWithSectionModel } from "@/types/widget.type";
-import { CardBase } from "@/components/dashboard/views/cards/Base";
-// import { CardMarkdown } from "@/components/dashboard/views/cards/Markdown";
+import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
+import { widgetGetData } from "@/utils/widgetActions";
+import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
 
-export function Widget({
+export async function Widget({
   dashboardId,
+  sectionId,
   data,
 }: {
   dashboardId: string;
-  data: WidgetWithSectionModel;
-}): JSX.Element {
+  sectionId: string;
+  data: WidgetModel;
+}): Promise<JSX.Element> {
+  let widgetView: JSX.Element;
+  switch (data.type) {
+    case "markdown":
+      widgetView = (
+        <WidgetMarkdown
+          data={(await widgetGetData(data)) as WidgetMarkdownModel}
+        />
+      );
+      break;
+    default:
+      widgetView = <div>Unknown widget type</div>;
+      break;
+  }
+
   return (
-    <CardBase
+    <WidgetBase
       dashboardId={dashboardId}
       sectionId={data.sectionId}
       widgetId={data.id}
       title={data.title}
     >
-      {/* data.widgetType */}
-      {/* <CardMarkdown content={data.content} /> */}
-    </CardBase>
+      {widgetView}
+    </WidgetBase>
   );
 }
