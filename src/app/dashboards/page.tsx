@@ -1,4 +1,7 @@
-import type { Dashboard } from "@prisma/client";
+import type {
+  Dashboard as DashboardModel,
+  User as UserModel,
+} from "@prisma/client";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
@@ -17,7 +20,13 @@ export default async function Page(): Promise<JSX.Element> {
   const session = await getServerSession();
   if (!session) return <AccessDenied />;
 
-  let dashboard: Dashboard | null = await prisma.dashboard.findFirst();
+  const user: UserModel = await prisma.user.findUniqueOrThrow({
+    where: {
+      username: session.user!.email!,
+    },
+  });
+
+  let dashboard: DashboardModel | null = await prisma.dashboard.findFirst();
   if (!dashboard)
     dashboard = await prisma.dashboard.create({
       data: {
@@ -47,7 +56,7 @@ export default async function Page(): Promise<JSX.Element> {
         },
         user: {
           connect: {
-            id: session.user!.email!,
+            id: user?.id,
           },
         },
       },

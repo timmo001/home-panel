@@ -32,7 +32,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }): Promise<JSX.Element> {
   const session = await getServerSession();
-  console.log("Session", session);
   return (
     <html lang="en">
       <body className={inter.variable}>
