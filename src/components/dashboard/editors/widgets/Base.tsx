@@ -1,10 +1,10 @@
 "use client";
+import type { Widget } from "@prisma/client";
 import { TextField } from "@mui/material";
 
-import type { CardData } from "@/types/card.type";
-import { cardUpdate } from "@/utils/cardActions";
+import { widgetUpdate } from "@/utils/widgetActions";
 
-export function EditCardBase({ data }: { data: CardData }): JSX.Element {
+export function EditWidgetBase({ data }: { data: Widget }): JSX.Element {
   return (
     <>
       <TextField
@@ -13,7 +13,7 @@ export function EditCardBase({ data }: { data: CardData }): JSX.Element {
         margin="dense"
         defaultValue={data.title}
         onChange={async (e) =>
-          await cardUpdate({ ...data, [e.target.name]: e.target.value })
+          await widgetUpdate({ ...data, [e.target.name]: e.target.value })
         }
       />
     </>

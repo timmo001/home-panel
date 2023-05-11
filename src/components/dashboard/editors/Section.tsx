@@ -5,9 +5,13 @@ import Link from "next/link";
 
 export function EditSection({
   children,
+  dashboardId,
+  sectionId,
   title,
 }: {
   children: Array<JSX.Element>;
+  dashboardId: string;
+  sectionId: string;
   title?: string;
 }): JSX.Element {
   return (
@@ -22,7 +26,7 @@ export function EditSection({
           <Typography variant="h5" gutterBottom>
             {title}
           </Typography>
-          <Link href={`/dashboard/edit/section/${"abc123"}`}>
+          <Link href={`/dashboards/${dashboardId}/sections/${sectionId}/edit`}>
             <IconButton>
               <EditRounded />
             </IconButton>

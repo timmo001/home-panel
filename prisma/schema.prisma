@@ -29,26 +29,36 @@ model Session {
 }
 
 model Dashboard {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String?
   userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sections    Section[]
+}
+
+model Section {
+  id          String    @id @default(cuid())
+  title       String
+  subtitle    String?
+  width       String
+  dashboardId String
+  dashboard   Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
   widgets     Widget[]
 }
 
 model Widget {
-  id             String           @id @default(cuid())
-  title          String?
-  dashboardId    String
-  dashboard      Dashboard        @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
-  widgetTypeId   String
-  WidgetMarkdown WidgetMarkdown[]
+  id        String           @id @default(cuid())
+  type      String
+  title     String?
+  sectionId String
+  section   Section          @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  markdown  WidgetMarkdown[]
 }
 
 model WidgetMarkdown {
   id       String  @id @default(cuid())
   content  String?
-  widget   Widget? @relation(fields: [widgetId], references: [id])
   widgetId String?
+  widget   Widget? @relation(fields: [widgetId], references: [id], onDelete: Cascade)
 }

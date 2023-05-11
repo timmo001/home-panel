@@ -1,25 +1,24 @@
 "use client";
+import type { Section as SectionModel } from "@prisma/client";
 import { Typography, Unstable_Grid2 as Grid2 } from "@mui/material";
 
 export function Section({
   children,
-  title,
-  width = "480px",
+  data,
 }: {
   children: Array<JSX.Element>;
-  title?: string;
-  width?: string;
+  data: SectionModel;
 }): JSX.Element {
   return (
     <Grid2
       component="section"
       container
       direction="column"
-      sx={{ height: "100%", width: width, margin: "0.5rem 1rem" }}
+      sx={{ height: "100%", width: data.width, margin: "0.5rem 1rem" }}
     >
-      {title && (
+      {data.title && (
         <Typography variant="h5" gutterBottom>
-          {title}
+          {data.title}
         </Typography>
       )}
       <Grid2 container spacing={2} xs="auto">

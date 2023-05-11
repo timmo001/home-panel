@@ -1,29 +1,24 @@
-import { Item } from "@/components/dashboard/views/Item";
+import type { Widget as WidgetModel } from "@prisma/client";
+
+import type { DashboardModel } from "@/types/dashboard.type";
+import type { SectionModel } from "@/types/section.type";
+import { Widget } from "@/components/dashboard/views/Widget";
 import { Section } from "@/components/dashboard/views/Section";
 
-export function Dashboard(): JSX.Element {
-  const data = {
-    id: "abc123",
-    title: "Item 01",
-    content: "Hello",
-  };
-
+export function Dashboard({
+  dashboard,
+}: {
+  dashboard: DashboardModel;
+}): JSX.Element {
   return (
     <>
-      <Section title="Section 01">
-        <Item data={data} />
-        <Item data={data} />
-        <Item data={data} />
-        <Item data={data} />
-        <Item />
-        <Item />
-      </Section>
-      <Section title="Section 02">
-        <Item data={data} />
-        <Item data={data} />
-        <Item />
-        <Item />
-      </Section>
+      {dashboard.sections.map((section: SectionModel) => (
+        <Section key={section.id} data={section}>
+          {section.widgets.map((widget: WidgetModel) => (
+            <Widget key={widget.id} dashboardId={dashboard.id} data={widget} />
+          ))}
+        </Section>
+      ))}
     </>
   );
 }

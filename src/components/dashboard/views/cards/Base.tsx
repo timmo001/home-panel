@@ -5,22 +5,28 @@ import { usePathname, useRouter } from "next/navigation";
 
 export function CardBase({
   children,
-  id,
+  dashboardId,
+  sectionId,
+  widgetId,
   title,
 }: {
   children: Array<JSX.Element> | JSX.Element;
-  id: string;
-  title?: string;
+  dashboardId: string;
+  sectionId: string;
+  widgetId: string;
+  title?: string | null;
 }): JSX.Element {
-  const longPress = useLongPress(handleOpenItem);
+  const longPress = useLongPress(handleOpenWidgetEdit);
   const path = usePathname();
   const router = useRouter();
 
-  function handleOpenItem(): void {
-    router.push(`/dashboard/edit/items/${id}`);
+  function handleOpenWidgetEdit(): void {
+    router.push(
+      `/dashboards/${dashboardId}/${sectionId}/widgets/${widgetId}/edit`
+    );
   }
 
-  const disabled = path !== "/dashboard";
+  const disabled = !path.startsWith("/dashboards");
 
   return (
     <>
