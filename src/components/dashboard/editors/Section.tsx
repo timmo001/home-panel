@@ -1,44 +1,71 @@
 "use client";
-import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
-import { EditRounded } from "@mui/icons-material";
-import Link from "next/link";
+import type { Section as SectionModel } from "@prisma/client";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Unstable_Grid2 as Grid2,
+  TextField,
+} from "@mui/material";
+
+import { Section } from "@/components/dashboard/views/Section";
+import { sectionUpdate } from "@/utils/sectionActions";
 
 export function EditSection({
-  children,
   dashboardId,
-  sectionId,
-  title,
+  data,
 }: {
-  children: Array<JSX.Element>;
   dashboardId: string;
-  sectionId: string;
-  title?: string;
+  data: SectionModel;
 }): JSX.Element {
   return (
     <Grid2
       container
-      direction="column"
-      xs={4}
-      sx={{ height: "100%", margin: "0.5rem 1rem" }}
+      direction="row"
+      alignItems="center"
+      spacing={2}
+      sx={{ width: "100%" }}
+      xs
     >
-      {title && (
-        <Grid2>
-          <Typography variant="h5" gutterBottom>
-            {title}
-          </Typography>
-          <Link href={`/dashboards/${dashboardId}/sections/${sectionId}/edit`}>
-            <IconButton>
-              <EditRounded />
-            </IconButton>
-          </Link>
-        </Grid2>
-      )}
-      <Grid2 container spacing={2} xs="auto">
-        {children.map((child, index) => (
-          <Grid2 key={index} xs={6}>
-            {child}
-          </Grid2>
-        ))}
+      <Grid2 xs sx={{ height: "100%" }}>
+        <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography variant="h5">Edit Section</Typography>
+            <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
+              <TextField
+                name="title"
+                label="Title"
+                margin="dense"
+                defaultValue={data.title}
+                onChange={async (e) =>
+                  await sectionUpdate(
+                    dashboardId,
+                    data.id,
+                    e.target.name,
+                    e.target.value
+                  )
+                }
+              />
+              <TextField
+                name="subtitle"
+                label="Subtitle"
+                margin="dense"
+                defaultValue={data.subtitle}
+                onChange={async (e) =>
+                  await sectionUpdate(
+                    dashboardId,
+                    data.id,
+                    e.target.name,
+                    e.target.value
+                  )
+                }
+              />
+            </Grid2>
+          </CardContent>
+        </Card>
+      </Grid2>
+      <Grid2 xs>
+        <Section data={data}>{[]}</Section>
       </Grid2>
     </Grid2>
   );

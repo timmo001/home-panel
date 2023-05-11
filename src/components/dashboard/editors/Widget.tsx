@@ -31,10 +31,10 @@ export function EditWidget({
       <Grid2 xs sx={{ height: "100%" }}>
         <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
           <CardContent sx={{ flexGrow: 1 }}>
-            <Typography variant="h5">Edit Item</Typography>
+            <Typography variant="h5">Edit Widget</Typography>
             <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
-              <EditWidgetBase data={data} />
-              {/* <EditWidgetMarkdown data={data} /> */}
+              <EditWidgetBase dashboardId={dashboardId} data={data} />
+              {/* <EditWidgetMarkdown dashboardId={dashboardId} data={data} /> */}
             </Grid2>
           </CardContent>
         </Card>

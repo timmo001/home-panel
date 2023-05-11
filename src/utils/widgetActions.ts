@@ -1,5 +1,5 @@
 "use server";
-import type { Prisma, Widget } from "@prisma/client";
+import type { Widget } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/utils/prisma";
