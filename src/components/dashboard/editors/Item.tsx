@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import {
   Button,
   Card,
@@ -14,7 +15,13 @@ import { EditCardMarkdown } from "@/components/dashboard/editors/cards/Markdown"
 import { Item } from "@/components/dashboard/views/Item";
 import { Section } from "@/components/dashboard/views/Section";
 
-export function EditItem({ data }: { data?: any }): JSX.Element {
+export function EditItem({ dataIn }: { dataIn?: any }): JSX.Element {
+  const [data, setData] = useState<Data>(dataIn);
+
+  function handleTextFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setData({ ...data, [e.target.name]: e.target.value });
+  }
+
   return (
     <Grid2
       container
@@ -24,20 +31,24 @@ export function EditItem({ data }: { data?: any }): JSX.Element {
       sx={{ width: "100%" }}
       xs
     >
-      <Grid2 xs>
-        <Card>
-          <CardContent>
-            <Typography variant="h5" gutterBottom>
-              Edit Item
-            </Typography>
-            <Grid2 container direction="column">
-              <EditCardBase dataIn={data} />
-              <EditCardMarkdown dataIn={data} />
+      <Grid2 xs sx={{ height: "100%" }}>
+        <Card sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
+          <CardContent sx={{ flexGrow: 1 }}>
+            <Typography variant="h5">Edit Item</Typography>
+            <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
+              <EditCardBase
+                data={data}
+                handleTextFieldChange={handleTextFieldChange}
+              />
+              <EditCardMarkdown
+                data={data}
+                handleTextFieldChange={handleTextFieldChange}
+              />
             </Grid2>
           </CardContent>
-          <CardActions sx={{ justifyContent: "flex-end" }}>
+          <CardActions sx={{ justifyContent: "center" }}>
             <Button>
-              <SaveRounded />
+              <SaveRounded sx={{ marginRight: "0.4rem" }} />
               Save
             </Button>
           </CardActions>

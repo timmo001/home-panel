@@ -20,5 +20,5 @@ export default async function Page({
     content: "Hello",
   };
 
-  return <EditItem data={data} />;
+  return <EditItem dataIn={data} />;
 }
