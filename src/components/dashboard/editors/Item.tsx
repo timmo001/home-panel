@@ -10,20 +10,13 @@ import {
 } from "@mui/material";
 import { SaveRounded } from "@mui/icons-material";
 
+import type { CardData } from "@/types/card.type";
 import { EditCardBase } from "@/components/dashboard/editors/cards/Base";
 import { EditCardMarkdown } from "@/components/dashboard/editors/cards/Markdown";
 import { Item } from "@/components/dashboard/views/Item";
 import { Section } from "@/components/dashboard/views/Section";
 
-type Data = { title: string; content: string };
-
-export function EditItem({ dataIn }: { dataIn?: any }): JSX.Element {
-  const [data, setData] = useState<Data>(dataIn);
-
-  function handleTextFieldChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setData({ ...data, [e.target.name]: e.target.value });
-  }
-
+export function EditItem({ data }: { data: CardData }): JSX.Element {
   return (
     <Grid2
       container
@@ -38,22 +31,16 @@ export function EditItem({ dataIn }: { dataIn?: any }): JSX.Element {
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography variant="h5">Edit Item</Typography>
             <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
-              <EditCardBase
-                data={data}
-                handleTextFieldChange={handleTextFieldChange}
-              />
-              <EditCardMarkdown
-                data={data}
-                handleTextFieldChange={handleTextFieldChange}
-              />
+              <EditCardBase data={data} />
+              <EditCardMarkdown data={data} />
             </Grid2>
           </CardContent>
-          <CardActions sx={{ justifyContent: "center" }}>
-            <Button>
+          {/* <CardActions sx={{ justifyContent: "center" }}>
+            <Button onClick={() => handleSaveCard()}>
               <SaveRounded sx={{ marginRight: "0.4rem" }} />
               Save
             </Button>
-          </CardActions>
+          </CardActions> */}
         </Card>
       </Grid2>
       <Grid2 xs>

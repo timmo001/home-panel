@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import type { CardData } from "@/types/card.type";
 import { EditItem } from "@/components/dashboard/editors/Item";
 
 export const metadata: Metadata = {
@@ -14,11 +15,11 @@ export default async function Page({
 }: {
   params: { id: string };
 }): Promise<JSX.Element> {
-  const data = {
+  const data: CardData = {
     id: params.id,
     title: "Item 01",
     content: "Hello",
   };
 
-  return <EditItem dataIn={data} />;
+  return <EditItem data={data} />;
 }

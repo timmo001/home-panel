@@ -1,23 +1,20 @@
 "use client";
 import { TextField } from "@mui/material";
 
-type Data = { content: string };
+import type { CardData } from "@/types/card.type";
+import { cardUpdate } from "@/utils/cardActions";
 
-export function EditCardMarkdown({
-  data,
-  handleTextFieldChange,
-}: {
-  data: Data;
-  handleTextFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}): JSX.Element {
+export function EditCardMarkdown({ data }: { data: CardData }): JSX.Element {
   return (
     <>
       <TextField
         name="content"
         label="Content"
         margin="dense"
-        value={data.content}
-        onChange={handleTextFieldChange}
+        defaultValue={data.content}
+        onChange={async (e) =>
+          await cardUpdate({ ...data, [e.target.name]: e.target.value })
+        }
       />
     </>
   );
