@@ -1,14 +1,10 @@
 "use client";
-import { useState } from "react";
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
   Typography,
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
-import { SaveRounded } from "@mui/icons-material";
 
 import type { CardData } from "@/types/card.type";
 import { EditCardBase } from "@/components/dashboard/editors/cards/Base";
@@ -35,12 +31,6 @@ export function EditItem({ data }: { data: CardData }): JSX.Element {
               <EditCardMarkdown data={data} />
             </Grid2>
           </CardContent>
-          {/* <CardActions sx={{ justifyContent: "center" }}>
-            <Button onClick={() => handleSaveCard()}>
-              <SaveRounded sx={{ marginRight: "0.4rem" }} />
-              Save
-            </Button>
-          </CardActions> */}
         </Card>
       </Grid2>
       <Grid2 xs>
