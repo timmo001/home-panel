@@ -5,15 +5,20 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 
 export async function widgetDelete(
+  dashboardId: string,
   idOrWidget: string | Widget
 ): Promise<Widget> {
   console.log("Delete widget:", idOrWidget);
 
-  return await prisma.widget.delete({
+  const data = await prisma.widget.delete({
     where: {
       id: typeof idOrWidget === "string" ? idOrWidget : idOrWidget.id,
     },
   });
+
+  revalidatePath(`/dashboards/${dashboardId}`);
+
+  return data;
 }
 
 export async function widgetUpdate(
@@ -33,6 +38,7 @@ export async function widgetUpdate(
     },
   });
 
+  revalidatePath(`/dashboards/${dashboardId}`);
   revalidatePath(
     `/dashboards/${dashboardId}/sections/${newData.sectionId}/widgets/${newData.id}/edit`
   );

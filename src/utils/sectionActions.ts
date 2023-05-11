@@ -5,15 +5,20 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 
 export async function sectionDelete(
+  dashboardId: string,
   idOrSection: string | Section
 ): Promise<Section> {
   console.log("Delete section:", idOrSection);
 
-  return await prisma.section.delete({
+  const data = await prisma.section.delete({
     where: {
       id: typeof idOrSection === "string" ? idOrSection : idOrSection.id,
     },
   });
+
+  revalidatePath(`/dashboards/${dashboardId}`);
+
+  return data;
 }
 
 export async function sectionUpdate(
@@ -33,6 +38,7 @@ export async function sectionUpdate(
     },
   });
 
+  revalidatePath(`/dashboards/${dashboardId}`);
   revalidatePath(`/dashboards/${dashboardId}/sections/${newData.id}/edit`);
 
   return newData;
