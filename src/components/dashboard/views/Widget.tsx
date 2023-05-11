@@ -1,8 +1,5 @@
 "use server";
-import type {
-  Widget as WidgetModel,
-  WidgetMarkdown as WidgetMarkdownModel,
-} from "@prisma/client";
+import type { Widget as WidgetModel } from "@prisma/client";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/widgetActions";
@@ -18,13 +15,12 @@ export async function Widget({
   data: WidgetModel;
 }): Promise<JSX.Element> {
   let widgetView: JSX.Element;
+
+  const widgetData: any = await widgetGetData(data.id, data.type);
+
   switch (data.type) {
     case "markdown":
-      widgetView = (
-        <WidgetMarkdown
-          data={(await widgetGetData(data)) as WidgetMarkdownModel}
-        />
-      );
+      widgetView = <WidgetMarkdown data={widgetData} />;
       break;
     default:
       widgetView = <div>Unknown widget type</div>;

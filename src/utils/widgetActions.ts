@@ -21,17 +21,17 @@ export async function widgetDelete(
   return data;
 }
 
-export async function widgetGetData(data: WidgetModel): Promise<any> {
-  console.log("Get widget view:", data.id, data.type);
-  switch (data.type) {
+export async function widgetGetData(id: string, type: string): Promise<any> {
+  console.log("Get widget view:", id, type);
+  switch (type) {
     case "markdown":
       return await prisma.widgetMarkdown.findUniqueOrThrow({
         where: {
-          id: data.id,
+          id,
         },
       });
     default:
-      throw new Error(`Unknown widget type: ${data.type}`);
+      throw new Error(`Unknown widget type: ${type}`);
   }
 }
 
