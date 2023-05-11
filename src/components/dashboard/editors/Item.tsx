@@ -15,6 +15,8 @@ import { EditCardMarkdown } from "@/components/dashboard/editors/cards/Markdown"
 import { Item } from "@/components/dashboard/views/Item";
 import { Section } from "@/components/dashboard/views/Section";
 
+type Data = { title: string; content: string };
+
 export function EditItem({ dataIn }: { dataIn?: any }): JSX.Element {
   const [data, setData] = useState<Data>(dataIn);
 
