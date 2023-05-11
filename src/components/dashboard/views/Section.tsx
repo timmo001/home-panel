@@ -4,17 +4,18 @@ import { Typography, Unstable_Grid2 as Grid2 } from "@mui/material";
 export function Section({
   children,
   title,
+  width = "480px",
 }: {
   children: Array<JSX.Element>;
   title?: string;
+  width?: string;
 }): JSX.Element {
   return (
     <Grid2
       component="section"
       container
       direction="column"
-      xs={4}
-      sx={{ height: "100%", margin: "0.5rem 1rem" }}
+      sx={{ height: "100%", width: width, margin: "0.5rem 1rem" }}
     >
       {title && (
         <Typography variant="h5" gutterBottom>
