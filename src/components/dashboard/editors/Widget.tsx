@@ -1,5 +1,4 @@
 "use client";
-import type { Widget } from "@prisma/client";
 import {
   Card,
   CardContent,
@@ -7,12 +6,19 @@ import {
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
 
+import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
-import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
+// import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
 import { Widget } from "@/components/dashboard/views/Widget";
 import { Section } from "@/components/dashboard/views/Section";
 
-export function EditWidget({ data }: { data: Widget }): JSX.Element {
+export function EditWidget({
+  dashboardId,
+  data,
+}: {
+  dashboardId: string;
+  data: WidgetWithSectionModel;
+}): JSX.Element {
   return (
     <Grid2
       container
@@ -28,13 +34,15 @@ export function EditWidget({ data }: { data: Widget }): JSX.Element {
             <Typography variant="h5">Edit Item</Typography>
             <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
               <EditWidgetBase data={data} />
-              <EditWidgetMarkdown data={data} />
+              {/* <EditWidgetMarkdown data={data} /> */}
             </Grid2>
           </CardContent>
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section>{[<Widget key={0} data={data} />]}</Section>
+        <Section data={data.section}>
+          {[<Widget key={0} dashboardId={dashboardId} data={data} />]}
+        </Section>
       </Grid2>
     </Grid2>
   );

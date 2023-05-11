@@ -4,7 +4,13 @@ import { TextField } from "@mui/material";
 
 import { widgetUpdate } from "@/utils/widgetActions";
 
-export function EditWidgetBase({ data }: { data: Widget }): JSX.Element {
+export function EditWidgetBase({
+  dashboardId,
+  data,
+}: {
+  dashboardId: string;
+  data: Widget;
+}): JSX.Element {
   return (
     <>
       <TextField
@@ -13,7 +19,12 @@ export function EditWidgetBase({ data }: { data: Widget }): JSX.Element {
         margin="dense"
         defaultValue={data.title}
         onChange={async (e) =>
-          await widgetUpdate({ ...data, [e.target.name]: e.target.value })
+          await widgetUpdate(
+            dashboardId,
+            data.id,
+            e.target.name,
+            e.target.value
+          )
         }
       />
     </>

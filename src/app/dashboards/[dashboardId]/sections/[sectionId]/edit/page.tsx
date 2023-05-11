@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 export default async function Page({
-  id,
+  params,
 }: {
-  id: string;
+  params: { dashboardId: string; sectionId: string };
 }): Promise<JSX.Element> {
   return <EditSection />;
 }

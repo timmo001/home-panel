@@ -1,6 +1,6 @@
 "use client";
-import type { Widget as WidgetModel } from "@prisma/client";
 
+import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { CardBase } from "@/components/dashboard/views/cards/Base";
 // import { CardMarkdown } from "@/components/dashboard/views/cards/Markdown";
 
@@ -9,7 +9,7 @@ export function Widget({
   data,
 }: {
   dashboardId: string;
-  data: WidgetModel;
+  data: WidgetWithSectionModel;
 }): JSX.Element {
   return (
     <CardBase

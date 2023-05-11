@@ -1,10 +1,14 @@
 "use client";
 import { TextField } from "@mui/material";
-import { Widget } from "@prisma/client";
+import { WidgetMarkdown } from "@prisma/client";
 
 import { widgetUpdate } from "@/utils/widgetActions";
 
-export function EditWidgetMarkdown({ data }: { data: Widget }): JSX.Element {
+export function EditWidgetMarkdown({
+  data,
+}: {
+  data: WidgetMarkdown;
+}): JSX.Element {
   return (
     <>
       <TextField
@@ -12,9 +16,14 @@ export function EditWidgetMarkdown({ data }: { data: Widget }): JSX.Element {
         label="Content"
         margin="dense"
         defaultValue={data.content}
-        onChange={async (e) =>
-          await widgetUpdate({ ...data, [e.target.name]: e.target.value })
-        }
+        // onChange={async (e) =>
+        //   await widgetUpdate(
+        //     dashboardId,
+        //     data.id,
+        //     e.target.name,
+        //     e.target.value
+        //   )
+        // }
       />
     </>
   );

@@ -1,8 +1,8 @@
-import type { Widget } from "@prisma/client";
 import type { Metadata } from "next";
 
+import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
-import { widgetCreate, widgetGet } from "@/utils/widgetActions";
+import { prisma } from "@/utils/prisma";
 
 export const metadata: Metadata = {
   title: "Edit Item | Home Panel",
@@ -14,15 +14,37 @@ export const revalidate = 0;
 export default async function Page({
   params,
 }: {
-  params: { id: string };
+  params: { dashboardId: string; sectionId: string; widgetId: string };
 }): Promise<JSX.Element> {
-  const data: Widget | null = await widgetGet(id);
+  let data: WidgetWithSectionModel | null = await prisma.widget.findUnique({
+    where: {
+      id: params.widgetId,
+    },
+    include: {
+      section: true,
+    },
+  });
 
-  if (!data) {
-    await widgetCreate({
+  if (!data)
+    data = await prisma.widget.create({
+      data: {
+        type: "markdown",
+        title: "",
+        markdown: {
+          create: {
+            content: "",
+          },
+        },
+        section: {
+          connect: {
+            id: params.sectionId,
+          },
+        },
+      },
+      include: {
+        section: true,
+      },
     });
-    return <div>404</div>;
-  }
 
-  return <EditWidget data={data} />;
+  return <EditWidget dashboardId={params.dashboardId} data={data} />;
 }
