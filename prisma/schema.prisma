@@ -57,8 +57,7 @@ model Widget {
 }
 
 model WidgetMarkdown {
-  id       String  @id @default(cuid())
+  widgetId String  @id
+  Widget   Widget  @relation(fields: [widgetId], references: [id])
   content  String?
-  widgetId String?
-  widget   Widget? @relation(fields: [widgetId], references: [id], onDelete: Cascade)
 }

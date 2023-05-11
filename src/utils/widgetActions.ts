@@ -21,13 +21,16 @@ export async function widgetDelete(
   return data;
 }
 
-export async function widgetGetData(id: string, type: string): Promise<any> {
-  console.log("Get widget view:", id, type);
+export async function widgetGetData(
+  widgetId: string,
+  type: string
+): Promise<any> {
+  console.log("Get widget view:", widgetId, type);
   switch (type) {
     case "markdown":
       return await prisma.widgetMarkdown.findUniqueOrThrow({
         where: {
-          id,
+          widgetId,
         },
       });
     default:
