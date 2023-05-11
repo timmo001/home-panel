@@ -22,7 +22,7 @@ export function CardBase({
 
   function handleOpenWidgetEdit(): void {
     router.push(
-      `/dashboards/${dashboardId}/${sectionId}/widgets/${widgetId}/edit`
+      `/dashboards/${dashboardId}/sections/${sectionId}/widgets/${widgetId}/edit`
     );
   }
 
