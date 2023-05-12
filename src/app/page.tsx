@@ -1,14 +1,7 @@
-import type { Metadata } from "next";
-
-import { Dashboard } from "@/components/Dashboard";
-
-export const metadata: Metadata = {
-  title: "Dashboard | Home Panel",
-  description: "Dashboard - Home Panel",
-};
+import { redirect } from "next/navigation";
 
 export const revalidate = 0;
 
 export default async function Page(): Promise<JSX.Element> {
-  return <Dashboard />;
+  return redirect("/dashboards");
 }

@@ -21,8 +21,6 @@ export function DrawerComponent(): JSX.Element {
   const { data: session, status } = useSession();
   const pathname = usePathname();
 
-  console.log(session, status, pathname);
-
   return (
     <Drawer
       variant="permanent"

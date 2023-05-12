@@ -1,5 +1,5 @@
 "use client";
-import { Unstable_Grid2 as Grid } from "@mui/material";
+import { Unstable_Grid2 as Grid2 } from "@mui/material";
 
 export function Container({
   children,
@@ -7,7 +7,7 @@ export function Container({
   children: React.ReactNode | Array<React.ReactNode>;
 }): JSX.Element {
   return (
-    <Grid
+    <Grid2
       container
       direction="column"
       alignContent="flex-start"
@@ -18,6 +18,6 @@ export function Container({
       }}
     >
       {children}
-    </Grid>
+    </Grid2>
   );
 }

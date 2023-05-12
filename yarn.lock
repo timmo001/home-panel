@@ -2774,6 +2774,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-long-press@3.1.3:
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/use-long-press/-/use-long-press-3.1.3.tgz#85d81bfb5ec1dd8b21fd71cc55aece3b569713fe"
+  integrity sha512-RAK+i3mIPAFL10Q9wVqfzjDTIg/oXSB60c+bbwNkc1GzIWNF7UfRydJ2VX8IQ+yG2eptzEuWb1CmJc2UNu6fOg==
+
 uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
