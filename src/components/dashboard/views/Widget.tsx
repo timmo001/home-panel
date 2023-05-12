@@ -1,19 +1,17 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
+import { useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@mui/material";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/widgetActions";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
-import { useEffect, useMemo, useState } from "react";
 
 export function Widget({
   dashboardId,
-  sectionId,
   data,
 }: {
   dashboardId: string;
-  sectionId: string;
   data: WidgetModel;
 }): JSX.Element {
   const [widgetData, setWidgetData] = useState<any>(null);

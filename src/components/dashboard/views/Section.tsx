@@ -21,11 +21,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
       <Grid2 container spacing={2} xs="auto">
         {data.widgets.map((widget: WidgetModel) => (
           <Grid2 key={widget.id} xs={6}>
-            <Widget
-              dashboardId={data.dashboardId}
-              sectionId={data.id}
-              data={widget}
-            />
+            <Widget dashboardId={data.dashboardId} data={widget} />
           </Grid2>
         ))}
       </Grid2>

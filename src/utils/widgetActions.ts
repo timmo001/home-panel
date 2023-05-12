@@ -25,7 +25,7 @@ export async function widgetGetData(
   widgetId: string,
   type: string
 ): Promise<any> {
-  console.log("Get widget view:", widgetId, type);
+  console.log("Get widget data:", widgetId, type);
   switch (type) {
     case "markdown":
       return await prisma.widgetMarkdown.findUniqueOrThrow({

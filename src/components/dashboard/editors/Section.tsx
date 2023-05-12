@@ -65,7 +65,7 @@ export function EditSection({
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section data={data}>{[]}</Section>
+        <Section data={{ ...data, widgets: [] }}>{[]}</Section>
       </Grid2>
     </Grid2>
   );
