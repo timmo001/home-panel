@@ -12,14 +12,22 @@ import { HassConfig, HassEntities } from "home-assistant-js-websocket";
 import { HomeAssistant } from "@/utils/homeAssistant";
 
 type HomeAssistantContextType = {
-  client: HomeAssistant;
-  config?: HassConfig;
-  entities?: HassEntities;
+  client: HomeAssistant | null;
+  config: HassConfig | null;
+  entities: HassEntities | null;
 };
 
-const HomeAssistantContext = createContext<HomeAssistantContextType | null>(
-  null
+const defaultHomeAssistantContext: HomeAssistantContextType = {
+  client: null,
+  config: null,
+  entities: null,
+};
+
+const HomeAssistantContext = createContext<HomeAssistantContextType>(
+  defaultHomeAssistantContext
 );
+
+let client: HomeAssistant | null = null;
 
 export function HomeAssistantProvider({
   dashboardId,
@@ -28,29 +36,35 @@ export function HomeAssistantProvider({
   dashboardId: string;
   children: ReactNode;
 }): JSX.Element {
-  const [homeAssistant, setHomeAssistant] =
-    useState<HomeAssistantContextType | null>(null);
-
-  const configCallback = useCallback(
-    (config: HassConfig): void => {
-      setHomeAssistant(homeAssistant ? { ...homeAssistant, config } : null);
-    },
-    [homeAssistant]
+  const [homeAssistant, setHomeAssistant] = useState<HomeAssistantContextType>(
+    defaultHomeAssistantContext
   );
 
-  const entitiesCallback = useCallback(
-    (entities: HassEntities): void => {
-      setHomeAssistant(homeAssistant ? { ...homeAssistant, entities } : null);
-    },
-    [homeAssistant]
-  );
+  const connectedCallback = useCallback((client: HomeAssistant): void => {
+    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+      ...prevHomeAssistant,
+      client,
+    }));
+  }, []);
+
+  const configCallback = useCallback((config: HassConfig): void => {
+    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+      ...prevHomeAssistant,
+      config,
+    }));
+  }, []);
+
+  const entitiesCallback = useCallback((entities: HassEntities): void => {
+    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+      ...prevHomeAssistant,
+      entities,
+    }));
+  }, []);
 
   useEffect(() => {
-    const client = new HomeAssistant(
+    client = new HomeAssistant(
       dashboardId,
-      (connected: boolean): void => {
-        setHomeAssistant(connected ? { client } : null);
-      },
+      connectedCallback,
       configCallback,
       entitiesCallback
     );
@@ -61,10 +75,10 @@ export function HomeAssistantProvider({
     }
 
     return () => {
-      client.disconnect();
-      setHomeAssistant(null);
+      if (client) client.disconnect();
+      setHomeAssistant(defaultHomeAssistantContext);
     };
-  }, [dashboardId, configCallback, entitiesCallback]);
+  }, [configCallback, connectedCallback, dashboardId, entitiesCallback]);
 
   return (
     <HomeAssistantContext.Provider value={homeAssistant}>
@@ -73,14 +87,6 @@ export function HomeAssistantProvider({
   );
 }
 
-export function useHomeAssistant(): HomeAssistantContextType | null {
-  const homeAssistantContext = useContext<HomeAssistantContextType | null>(
-    HomeAssistantContext
-  );
-  if (!homeAssistantContext) {
-    throw new Error(
-      "useHomeAssistant must be used within a HomeAssistantProvider"
-    );
-  }
-  return homeAssistantContext;
+export function useHomeAssistant(): HomeAssistantContextType {
+  return useContext<HomeAssistantContextType>(HomeAssistantContext);
 }

@@ -26,18 +26,18 @@ export class HomeAssistant {
   public connection: Connection | null = null;
   public dashboardId: string;
 
-  private connectionCallback: (connected: boolean) => void;
+  private clientCallback: (client: HomeAssistant) => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
 
   constructor(
     dashboardId: string,
-    connectionCallback: (connected: boolean) => void,
+    clientCallback: (client: HomeAssistant) => void,
     configCallback: (config: HassConfig) => void,
     entitiesCallback: (entities: HassEntities) => void
   ) {
     this.dashboardId = dashboardId;
-    this.connectionCallback = connectionCallback;
+    this.clientCallback = clientCallback;
     this.configCallback = configCallback;
     this.entitiesCallback = entitiesCallback;
   }
@@ -103,23 +103,25 @@ export class HomeAssistant {
     this.connection = await createConnection({ auth });
     this.connection.addEventListener("ready", () => {
       console.log("Connected to Home Assistant");
-      this.connectionCallback(true);
+      this.clientCallback(true);
     });
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      this.connectionCallback(false);
+      this.clientCallback(false);
+    });
+
+    getUser(this.connection).then((user: HassUser) => {
+      console.log("Logged into Home Assistant as", user.name);
     });
 
     subscribeConfig(this.connection, (config: HassConfig) => {
       console.log("Home Assistant config updated");
       this.configCallback(config);
     });
+
     subscribeEntities(this.connection, (entities: HassEntities) => {
       this.entitiesCallback(entities);
-    });
-    getUser(this.connection).then((user: HassUser) => {
-      console.log("Logged into Home Assistant as", user.name);
     });
   }
 }
