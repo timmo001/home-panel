@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
@@ -25,7 +26,7 @@ export default async function Page({
     },
   });
 
-  if (!data)
+  if (!data) {
     data = await prisma.widget.create({
       data: {
         type: "markdown",
@@ -45,6 +46,10 @@ export default async function Page({
         section: true,
       },
     });
+    return redirect(
+      `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${data.id}/edit`
+    );
+  }
 
   return <EditWidget dashboardId={params.dashboardId} data={data} />;
 }

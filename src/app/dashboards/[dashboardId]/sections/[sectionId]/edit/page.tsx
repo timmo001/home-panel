@@ -1,5 +1,6 @@
 import type { Section } from "@prisma/client";
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 import { EditSection } from "@/components/dashboard/editors/Section";
 import { prisma } from "@/utils/prisma";
@@ -22,7 +23,7 @@ export default async function Page({
     },
   });
 
-  if (!data)
+  if (!data) {
     data = await prisma.section.create({
       data: {
         title: "Section",
@@ -35,6 +36,8 @@ export default async function Page({
         },
       },
     });
+    redirect(`/dashboards/${params.dashboardId}/sections/${data.id}/edit`);
+  }
 
   return <EditSection dashboardId={params.dashboardId} data={data} />;
 }
