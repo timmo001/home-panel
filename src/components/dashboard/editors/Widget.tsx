@@ -40,8 +40,15 @@ export function EditWidget({
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section data={data.section}>
-          {[<Widget key={0} dashboardId={dashboardId} data={data} />]}
+        <Section data={{ ...data.section, widgets: [data] }}>
+          {[
+            <Widget
+              key={0}
+              dashboardId={dashboardId}
+              sectionId={data.sectionId}
+              data={data}
+            />,
+          ]}
         </Section>
       </Grid2>
     </Grid2>
