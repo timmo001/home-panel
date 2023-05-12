@@ -26,11 +26,29 @@ export class HomeAssistant {
   public connection: Connection | null = null;
   public dashboardId: string;
 
-  private callback: (connected: boolean) => void;
+  private connectionCallback: (connected: boolean) => void;
+  private configCallback: (config: HassConfig) => void;
+  private entitiesCallback: (entities: HassEntities) => void;
 
-  constructor(dashboardId: string, callback: (connected: boolean) => void) {
+  constructor(
+    dashboardId: string,
+    connectionCallback: (connected: boolean) => void,
+    configCallback: (config: HassConfig) => void,
+    entitiesCallback: (entities: HassEntities) => void
+  ) {
     this.dashboardId = dashboardId;
-    this.callback = callback;
+    this.connectionCallback = connectionCallback;
+    this.configCallback = configCallback;
+    this.entitiesCallback = entitiesCallback;
+  }
+
+  async callService(
+    domain: string,
+    service: string,
+    serviceData: Record<string, unknown>
+  ): Promise<void> {
+    if (!this.connection) return;
+    await callService(this.connection, domain, service, serviceData);
   }
 
   connected(): boolean {
@@ -85,12 +103,23 @@ export class HomeAssistant {
     this.connection = await createConnection({ auth });
     this.connection.addEventListener("ready", () => {
       console.log("Connected to Home Assistant");
-      this.callback(true);
+      this.connectionCallback(true);
     });
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      this.callback(false);
+      this.connectionCallback(false);
+    });
+
+    subscribeConfig(this.connection, (config: HassConfig) => {
+      console.log("Home Assistant config updated");
+      this.configCallback(config);
+    });
+    subscribeEntities(this.connection, (entities: HassEntities) => {
+      this.entitiesCallback(entities);
+    });
+    getUser(this.connection).then((user: HassUser) => {
+      console.log("Logged into Home Assistant as", user.name);
     });
   }
 }
