@@ -13,6 +13,7 @@ import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
 import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
 import { Section } from "@/components/dashboard/views/Section";
 import { widgetGetData } from "@/utils/serverActions/widget";
+import { WidgetType } from "@/types/widget.type";
 
 export function EditWidget({
   dashboardId,
@@ -33,7 +34,7 @@ export function EditWidget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
-      case "markdown":
+      case WidgetType.Markdown:
         return (
           <EditWidgetMarkdown
             dashboardId={dashboardId}

@@ -6,6 +6,7 @@ import type {
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/utils/prisma";
+import { WidgetType } from "@/types/widget.type";
 
 export async function widgetDelete(
   dashboardId: string,
@@ -30,7 +31,7 @@ export async function widgetGetData(
 ): Promise<any> {
   console.log("Get widget data:", { widgetId, type });
   switch (type) {
-    case "markdown":
+    case WidgetType.Markdown:
       return await prisma.widgetMarkdown.findUniqueOrThrow({
         where: {
           widgetId,

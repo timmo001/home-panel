@@ -6,6 +6,7 @@ import { Skeleton } from "@mui/material";
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
+import { WidgetType } from "@/types/widget.type";
 
 export function Widget({
   dashboardId,
@@ -36,7 +37,7 @@ export function Widget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
-      case "markdown":
+      case WidgetType.Markdown:
         return <WidgetMarkdown data={widgetData} />;
       default:
         return <div>Unknown widget type</div>;

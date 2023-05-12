@@ -4,3 +4,13 @@ import type { Section, Widget } from "@prisma/client";
 export type WidgetWithSectionModel = Widget & {
   section: Section;
 };
+
+export enum WidgetType {
+  Checklist = "checklist",
+  Frame = "frame",
+  HomeAssistant = "homeAssistant",
+  Image = "image",
+  Markdown = "markdown",
+  News = "news",
+  RSS = "rss",
+}

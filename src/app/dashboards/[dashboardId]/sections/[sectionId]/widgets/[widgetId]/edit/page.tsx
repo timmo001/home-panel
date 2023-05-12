@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
 import { prisma } from "@/utils/prisma";
+import { WidgetType } from "@/types/widget.type";
 
 export const metadata: Metadata = {
   title: "Edit Widget | Home Panel",
@@ -29,7 +30,7 @@ export default async function Page({
   if (!data) {
     data = await prisma.widget.create({
       data: {
-        type: "markdown",
+        type: WidgetType.Markdown,
         title: "",
         markdown: {
           create: {
