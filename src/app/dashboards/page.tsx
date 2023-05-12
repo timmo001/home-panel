@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { prisma } from "@/utils/prisma";
+import { WidgetType } from "@/types/widget.type";
 
 export const metadata: Metadata = {
   title: "Dashboards | Home Panel",
@@ -42,7 +43,7 @@ export default async function Page(): Promise<JSX.Element> {
                 create: [
                   {
                     title: "Example",
-                    type: "markdown",
+                    type: WidgetType.Markdown,
                     markdown: {
                       create: {
                         content: "Example widget",
