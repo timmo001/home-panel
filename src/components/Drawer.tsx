@@ -12,16 +12,18 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { DashboardRounded } from "@mui/icons-material";
+import { DashboardRounded, SettingsRounded } from "@mui/icons-material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Icon from "@mdi/react";
-import { mdiHomeAssistant } from "@mdi/js";
 
 export function DrawerComponent(): JSX.Element {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+
+  const dashboardPath =
+    pathname.startsWith("/dashboards") &&
+    pathname.split("/").slice(0, 3).join("/");
 
   return (
     <Drawer
@@ -56,9 +58,14 @@ export function DrawerComponent(): JSX.Element {
       >
         <List>
           <Link href="/">
-            <ListItemButton selected={pathname === "/"}>
+            <ListItemButton
+              selected={
+                pathname !== `${dashboardPath}/edit` &&
+                pathname.startsWith("/dashboards")
+              }
+            >
               <ListItemIcon>
-                <DashboardRounded />
+                <DashboardRounded fontSize="medium" />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
@@ -66,19 +73,17 @@ export function DrawerComponent(): JSX.Element {
         </List>
       </Stack>
       <Divider />
-      {status === "authenticated" && (
+      {status === "authenticated" && dashboardPath && (
         <>
           <Stack direction="column">
-            <ListItemButton onClick={() => {}}>
-              <ListItemIcon>
-                <Icon
-                  path={mdiHomeAssistant}
-                  size={1.4}
-                  color="rgb(65, 189, 245)"
-                />
-              </ListItemIcon>
-              <ListItemText primary="Sign Into Home Assistant" />
-            </ListItemButton>
+            <Link href={`${dashboardPath}/edit`}>
+              <ListItemButton selected={pathname === `${dashboardPath}/edit`}>
+                <ListItemIcon>
+                  <SettingsRounded fontSize="medium" />
+                </ListItemIcon>
+                <ListItemText primary="Configure Dashboard" />
+              </ListItemButton>
+            </Link>
           </Stack>
           <Divider />
         </>
@@ -90,11 +95,12 @@ export function DrawerComponent(): JSX.Element {
           <ListItemButton
             onClick={() => (status === "authenticated" ? signOut() : signIn())}
           >
-            <ListItemIcon sx={{ marginLeft: "-0.2rem" }}>
+            <ListItemIcon sx={{ marginLeft: "-0.1rem" }}>
               <Avatar
                 alt={session?.user?.name ?? "Unknown"}
                 src={session?.user?.image ?? undefined}
                 variant="circular"
+                sx={{ width: 28, height: 28 }}
               />
             </ListItemIcon>
             <ListItemText
