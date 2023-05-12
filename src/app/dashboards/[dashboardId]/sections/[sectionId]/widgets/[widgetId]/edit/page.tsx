@@ -6,8 +6,8 @@ import { EditWidget } from "@/components/dashboard/editors/Widget";
 import { prisma } from "@/utils/prisma";
 
 export const metadata: Metadata = {
-  title: "Edit Item | Home Panel",
-  description: "Edit Item - Home Panel",
+  title: "Edit Widget | Home Panel",
+  description: "Edit Widget - Home Panel",
 };
 
 export const revalidate = 0;
