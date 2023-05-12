@@ -83,7 +83,7 @@ export class HomeAssistant {
           access_token: config.accessToken,
           refresh_token: config.refreshToken,
           clientId: config.clientId,
-          expires: config.expires,
+          expires: Number(config.expires),
           expires_in: config.expiresIn,
           hassUrl: config.url,
         };
@@ -103,12 +103,12 @@ export class HomeAssistant {
     this.connection = await createConnection({ auth });
     this.connection.addEventListener("ready", () => {
       console.log("Connected to Home Assistant");
-      this.clientCallback(true);
+      this.clientCallback(this);
     });
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      this.clientCallback(false);
+      this.clientCallback(this);
     });
 
     getUser(this.connection).then((user: HassUser) => {

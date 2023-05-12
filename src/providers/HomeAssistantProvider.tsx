@@ -27,8 +27,6 @@ const HomeAssistantContext = createContext<HomeAssistantContextType>(
   defaultHomeAssistantContext
 );
 
-let client: HomeAssistant | null = null;
-
 export function HomeAssistantProvider({
   dashboardId,
   children,
@@ -62,7 +60,7 @@ export function HomeAssistantProvider({
   }, []);
 
   useEffect(() => {
-    client = new HomeAssistant(
+    const client = new HomeAssistant(
       dashboardId,
       connectedCallback,
       configCallback,
