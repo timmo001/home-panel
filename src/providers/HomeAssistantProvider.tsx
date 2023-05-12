@@ -60,7 +60,7 @@ export function HomeAssistantProvider({
   );
 }
 
-export function useHomeAssistant() {
+export function useHomeAssistant(): Connection {
   const connection = useContext(HomeAssistantContext);
   if (!connection) {
     throw new Error(
