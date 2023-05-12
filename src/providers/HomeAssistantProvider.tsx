@@ -29,6 +29,11 @@ export function HomeAssistantProvider({
         setHomeAssistant(connected ? client : null);
       }
     );
+    try {
+      client.connect();
+    } catch (e) {
+      console.warn(e);
+    }
 
     return () => {
       client.disconnect();

@@ -70,7 +70,7 @@ model HomeAssistant {
   accessToken  String?
   refreshToken String?
   clientId     String?
-  expires      Int?
+  expires      BigInt?
   expiresIn    Int?
   dashboardId  String    @unique
   dashboard    Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
