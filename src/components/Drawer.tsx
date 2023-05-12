@@ -16,6 +16,8 @@ import { DashboardRounded } from "@mui/icons-material";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Icon from "@mdi/react";
+import { mdiHomeAssistant } from "@mdi/js";
 
 export function DrawerComponent(): JSX.Element {
   const { data: session, status } = useSession();
@@ -64,6 +66,23 @@ export function DrawerComponent(): JSX.Element {
         </List>
       </Stack>
       <Divider />
+      {status === "authenticated" && (
+        <>
+          <Stack direction="column">
+            <ListItemButton onClick={() => {}}>
+              <ListItemIcon>
+                <Icon
+                  path={mdiHomeAssistant}
+                  size={1.4}
+                  color="rgb(65, 189, 245)"
+                />
+              </ListItemIcon>
+              <ListItemText primary="Sign Into Home Assistant" />
+            </ListItemButton>
+          </Stack>
+          <Divider />
+        </>
+      )}
       <Stack direction="column">
         {status === "loading" ? (
           <Skeleton variant="rectangular" width="100%" height={40} />
