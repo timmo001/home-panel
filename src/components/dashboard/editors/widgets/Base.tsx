@@ -2,7 +2,7 @@
 import type { Widget } from "@prisma/client";
 import { TextField } from "@mui/material";
 
-import { widgetUpdate } from "@/utils/widgetActions";
+import { widgetUpdate } from "@/utils/serverActions/widget";
 
 export function EditWidgetBase({
   dashboardId,
