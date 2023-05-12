@@ -6,7 +6,6 @@ import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { Container } from "@/components/Container";
 import { DrawerComponent as Drawer } from "@/components/Drawer";
-import { HomeAssistantProvider } from "@/providers/HomeAssistantProvider";
 import { MUIProvider } from "@/providers/MUIProvider";
 
 import "@/app/globals.css";
@@ -37,12 +36,10 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.variable}>
         <AuthProvider session={session}>
-          <HomeAssistantProvider>
-            <MUIProvider>
-              <Drawer />
-              <Container>{session ? children : <AccessDenied />}</Container>
-            </MUIProvider>
-          </HomeAssistantProvider>
+          <MUIProvider>
+            <Drawer />
+            <Container>{session ? children : <AccessDenied />}</Container>
+          </MUIProvider>
         </AuthProvider>
       </body>
     </html>

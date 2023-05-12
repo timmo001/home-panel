@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@mui/material";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
-import { widgetGetData } from "@/utils/widgetActions";
+import { widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
 
 export function Widget({
