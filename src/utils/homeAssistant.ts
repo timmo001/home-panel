@@ -33,6 +33,10 @@ export class HomeAssistant {
     this.callback = callback;
   }
 
+  connected(): boolean {
+    return this.connection !== null;
+  }
+
   async disconnect(): Promise<void> {
     if (this.connection) {
       this.connection.close();
