@@ -26,8 +26,11 @@ export class HomeAssistant {
   public connection: Connection | null = null;
   public dashboardId: string;
 
+  private callback: (connected: boolean) => void;
+
   constructor(dashboardId: string, callback: (connected: boolean) => void) {
     this.dashboardId = dashboardId;
+    this.callback = callback;
   }
 
   async disconnect(): Promise<void> {
@@ -78,12 +81,12 @@ export class HomeAssistant {
     this.connection = await createConnection({ auth });
     this.connection.addEventListener("ready", () => {
       console.log("Connected to Home Assistant");
-      setHomeAssistant(connection);
+      this.callback(true);
     });
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      setHomeAssistant(null);
+      this.callback(false);
     });
   }
 }

@@ -43,11 +43,11 @@ export function HomeAssistantProvider({
 }
 
 export function useHomeAssistant(): HomeAssistant {
-  const connection = useContext<HomeAssistant | null>(HomeAssistantContext);
-  if (!connection) {
+  const client = useContext<HomeAssistant | null>(HomeAssistantContext);
+  if (!client) {
     throw new Error(
       "useHomeAssistant must be used within a HomeAssistantProvider"
     );
   }
-  return connection;
+  return client;
 }
