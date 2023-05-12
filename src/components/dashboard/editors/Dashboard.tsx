@@ -1,5 +1,8 @@
 "use client";
-import type { Dashboard as DashboardModel } from "@prisma/client";
+import type {
+  Dashboard as DashboardModel,
+  HomeAssistant as HomeAssistantModel,
+} from "@prisma/client";
 import {
   Typography,
   Card,
@@ -9,8 +12,15 @@ import {
 } from "@mui/material";
 
 import { dashboardUpdate } from "@/utils/serverActions/dashboard";
+import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
 
-export function EditDashboard({ data }: { data: DashboardModel }): JSX.Element {
+export function EditDashboard({
+  dashboardConfig,
+  homeAssistantConfig,
+}: {
+  dashboardConfig: DashboardModel;
+  homeAssistantConfig: HomeAssistantModel;
+}): JSX.Element {
   return (
     <Card
       sx={{
@@ -27,18 +37,40 @@ export function EditDashboard({ data }: { data: DashboardModel }): JSX.Element {
             name="name"
             label="Name"
             margin="dense"
-            defaultValue={data.name}
+            defaultValue={dashboardConfig.name}
             onChange={async (e) =>
-              await dashboardUpdate(data.id, e.target.name, e.target.value)
+              await dashboardUpdate(
+                dashboardConfig.id,
+                e.target.name,
+                e.target.value
+              )
             }
           />
           <TextField
             name="description"
             label="Description"
             margin="dense"
-            defaultValue={data.description}
+            defaultValue={dashboardConfig.description}
             onChange={async (e) =>
-              await dashboardUpdate(data.id, e.target.name, e.target.value)
+              await dashboardUpdate(
+                dashboardConfig.id,
+                e.target.name,
+                e.target.value
+              )
+            }
+          />
+          <Typography variant="h6" gutterBottom>
+            Home Assistant
+          </Typography>
+          <TextField
+            name="url"
+            label="URL"
+            margin="dense"
+            defaultValue={homeAssistantConfig.url}
+            onChange={async (e) =>
+              await homeAssistantUpdateConfig(dashboardConfig.id, {
+                [e.target.name]: e.target.value,
+              })
             }
           />
         </Grid2>

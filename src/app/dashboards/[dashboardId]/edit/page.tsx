@@ -1,5 +1,6 @@
 import type {
   Dashboard as DashboardModel,
+  HomeAssistant as HomeAssistantModel,
   User as UserModel,
 } from "@prisma/client";
 import type { Metadata } from "next";
@@ -31,14 +32,15 @@ export default async function Page({
     },
   });
 
-  let data: DashboardModel | null = await prisma.dashboard.findUnique({
-    where: {
-      id: params.dashboardId,
-    },
-  });
+  let dashboardConfig: DashboardModel | null =
+    await prisma.dashboard.findUnique({
+      where: {
+        id: params.dashboardId,
+      },
+    });
 
-  if (!data) {
-    data = await prisma.dashboard.create({
+  if (!dashboardConfig) {
+    dashboardConfig = await prisma.dashboard.create({
       data: {
         name: "Dashboard",
         description: "New dashboard",
@@ -64,5 +66,29 @@ export default async function Page({
     redirect(`/dashboards/${params.dashboardId}/edit`);
   }
 
-  return <EditDashboard data={data} />;
+  let homeAssistantConfig: HomeAssistantModel | null =
+    await prisma.homeAssistant.findUnique({
+      where: {
+        dashboardId: params.dashboardId,
+      },
+    });
+
+  if (!homeAssistantConfig)
+    homeAssistantConfig = await prisma.homeAssistant.create({
+      data: {
+        dashboard: {
+          connect: {
+            id: params.dashboardId,
+          },
+        },
+        url: "http://homeassistant.local:8123",
+      },
+    });
+
+  return (
+    <EditDashboard
+      dashboardConfig={dashboardConfig}
+      homeAssistantConfig={homeAssistantConfig}
+    />
+  );
 }
