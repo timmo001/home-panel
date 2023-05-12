@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@mui/material";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
-import { widgetGetData } from "@/utils/widgetActions";
+import { widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
 
 export function Widget({
@@ -15,6 +15,16 @@ export function Widget({
   data: WidgetModel;
 }): JSX.Element {
   const [widgetData, setWidgetData] = useState<any>(null);
+  // import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
+  // const homeAssistant = useHomeAssistant();
+  // useEffect(() => {
+  //   if (!homeAssistant.entities) return;
+  //   const entity = homeAssistant.entities["sensor.living_room_temperature"];
+  //   if (!entity) return;
+  //   console.log(
+  //     `${entity.attributes.friendly_name}: ${entity.state}${entity.attributes.unit_of_measurement}`
+  //   );
+  // }, [homeAssistant.entities]);
 
   useEffect(() => {
     (async () => {

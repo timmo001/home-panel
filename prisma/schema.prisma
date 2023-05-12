@@ -29,12 +29,13 @@ model Session {
 }
 
 model Dashboard {
-  id          String    @id @default(cuid())
-  name        String
-  description String?
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sections    Section[]
+  id            String          @id @default(cuid())
+  name          String
+  description   String?
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sections      Section[]
+  homeAssistant HomeAssistant[]
 }
 
 model Section {
@@ -60,4 +61,17 @@ model WidgetMarkdown {
   widgetId String  @id
   Widget   Widget  @relation(fields: [widgetId], references: [id])
   content  String?
+}
+
+model HomeAssistant {
+  id           String    @id @default(cuid())
+  name         String?
+  url          String
+  accessToken  String?
+  refreshToken String?
+  clientId     String?
+  expires      BigInt?
+  expiresIn    Int?
+  dashboardId  String    @unique
+  dashboard    Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
 }

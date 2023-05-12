@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 
 import { Section } from "@/components/dashboard/views/Section";
-import { sectionUpdate } from "@/utils/sectionActions";
+import { sectionUpdate } from "@/utils/serverActions/section";
 
 export function EditSection({
   dashboardId,

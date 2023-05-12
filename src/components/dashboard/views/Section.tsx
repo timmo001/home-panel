@@ -6,6 +6,7 @@ import type { SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
+
   return (
     <Grid2
       component="section"

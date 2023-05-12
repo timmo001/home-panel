@@ -2,7 +2,7 @@
 import { TextField } from "@mui/material";
 import { WidgetMarkdown } from "@prisma/client";
 
-import { widgetMarkdownUpdate } from "@/utils/widgetActions";
+import { widgetMarkdownUpdate } from "@/utils/serverActions/widget";
 
 export function EditWidgetMarkdown({
   dashboardId,

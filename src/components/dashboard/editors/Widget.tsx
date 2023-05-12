@@ -11,9 +11,8 @@ import {
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
 import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
-import { Widget } from "@/components/dashboard/views/Widget";
 import { Section } from "@/components/dashboard/views/Section";
-import { widgetGetData } from "@/utils/widgetActions";
+import { widgetGetData } from "@/utils/serverActions/widget";
 
 export function EditWidget({
   dashboardId,
