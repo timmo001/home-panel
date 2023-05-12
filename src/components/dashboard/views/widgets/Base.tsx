@@ -26,7 +26,7 @@ export function WidgetBase({
     );
   }
 
-  const disabled = !path.startsWith("/dashboards");
+  const disabled = path.endsWith("edit");
 
   return (
     <>

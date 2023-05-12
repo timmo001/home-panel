@@ -35,11 +35,17 @@ export function EditWidget({
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
       case "markdown":
-        return <EditWidgetMarkdown data={widgetData} />;
+        return (
+          <EditWidgetMarkdown
+            dashboardId={dashboardId}
+            sectionId={data.sectionId}
+            data={widgetData}
+          />
+        );
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [data.type, widgetData]);
+  }, [dashboardId, data.type, data.sectionId, widgetData]);
 
   return (
     <Grid2
@@ -62,9 +68,7 @@ export function EditWidget({
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section data={{ ...data.section, widgets: [data] }}>
-          {[<Widget key={0} dashboardId={dashboardId} data={data} />]}
-        </Section>
+        <Section data={{ ...data.section, widgets: [data] }} />
       </Grid2>
     </Grid2>
   );
