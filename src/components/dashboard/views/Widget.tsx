@@ -5,6 +5,7 @@ import { Skeleton } from "@mui/material";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/serverActions/widget";
+import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
 import { WidgetType } from "@/types/widget.type";
 
@@ -27,6 +28,8 @@ export function Widget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
+      case WidgetType.HomeAssistant:
+        return <WidgetHomeAssistant data={widgetData} />;
       case WidgetType.Markdown:
         return <WidgetMarkdown data={widgetData} />;
       default:
