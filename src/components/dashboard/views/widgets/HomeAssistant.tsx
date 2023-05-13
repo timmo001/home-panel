@@ -28,12 +28,19 @@ export function WidgetHomeAssistant({
             </Typography>
           )}
           {data.showState && (
-            <Typography>
+            <Typography variant="body1">
               {entity.state}
               {entity.attributes.unit_of_measurement}
             </Typography>
           )}
-          {data.secondaryInfo && <Typography>{data.secondaryInfo}</Typography>}
+          {data.secondaryInfo && (
+            <Typography variant="body2">
+              {data.secondaryInfo === "last_changed" ||
+              data.secondaryInfo === "last_updated"
+                ? entity[data.secondaryInfo]
+                : entity.attributes[data.secondaryInfo]}
+            </Typography>
+          )}
         </>
       ) : (
         <Typography>Entity &#39;{data.entityId}&#39; not found.</Typography>

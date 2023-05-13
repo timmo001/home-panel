@@ -37,9 +37,9 @@ export function EditWidgetHomeAssistant({
 
   const entityAttributes = useMemo<Array<string> | undefined>(() => {
     if (!defaultEntity) return;
-    return Object.keys(defaultEntity.attributes).sort((a, b) =>
-      a.localeCompare(b)
-    );
+    return Object.keys(defaultEntity.attributes)
+      .concat(["last_changed", "last_updated"])
+      .sort((a, b) => a.localeCompare(b));
   }, [defaultEntity]);
 
   return (
