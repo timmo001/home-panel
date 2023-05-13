@@ -1,6 +1,7 @@
 "use server";
 import type {
   Widget as WidgetModel,
+  WidgetHomeAssistant as WidgetHomeAssistantModel,
   WidgetMarkdown as WidgetMarkdownModel,
 } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -30,11 +31,35 @@ export async function widgetGetData(
   type: string
 ): Promise<any> {
   console.log("Get widget data:", { widgetId, type });
+  let data;
   switch (type) {
-    case WidgetType.Markdown:
-      return await prisma.widgetMarkdown.findUniqueOrThrow({
+    case WidgetType.HomeAssistant:
+      data = await prisma.widgetHomeAssistant.findUnique({
         where: {
           widgetId,
+        },
+      });
+      if (data) return data;
+      return await prisma.widgetHomeAssistant.create({
+        data: {
+          entityId: "",
+          widget: { connect: { id: widgetId } },
+          showName: true,
+          showIcon: true,
+          showState: true,
+        },
+      });
+    case WidgetType.Markdown:
+      data = await prisma.widgetMarkdown.findUnique({
+        where: {
+          widgetId,
+        },
+      });
+      if (data) return data;
+      return await prisma.widgetMarkdown.create({
+        data: {
+          content: "",
+          widget: { connect: { id: widgetId } },
         },
       });
     default:
@@ -71,6 +96,35 @@ export async function widgetUpdate(
   });
 
   await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
+
+  return newData;
+}
+
+export async function widgetHomeAssistantUpdate(
+  dashboardId: string,
+  sectionId: string,
+  widgetId: string,
+  name: string,
+  value: any
+): Promise<WidgetHomeAssistantModel> {
+  console.log("Update widget home assistant:", {
+    dashboardId,
+    sectionId,
+    widgetId,
+    name,
+    value,
+  });
+
+  const newData = await prisma.widgetHomeAssistant.update({
+    data: {
+      [name]: value,
+    },
+    where: {
+      widgetId,
+    },
+  });
+
+  await widgetRevalidate(dashboardId, sectionId, widgetId);
 
   return newData;
 }

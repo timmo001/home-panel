@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
+import { HomeAssistantProvider } from "@/providers/HomeAssistantProvider";
 import { prisma } from "@/utils/prisma";
 import { WidgetType } from "@/types/widget.type";
 
@@ -52,5 +53,9 @@ export default async function Page({
     );
   }
 
-  return <EditWidget dashboardId={params.dashboardId} data={data} />;
+  return (
+    <HomeAssistantProvider dashboardId={params.dashboardId}>
+      <EditWidget dashboardId={params.dashboardId} data={data} />
+    </HomeAssistantProvider>
+  );
 }

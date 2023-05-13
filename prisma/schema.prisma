@@ -49,17 +49,28 @@ model Section {
 }
 
 model Widget {
-  id        String           @id @default(cuid())
-  type      String
-  title     String?
-  sectionId String
-  section   Section          @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  markdown  WidgetMarkdown[]
+  id                  String                @id @default(cuid())
+  type                String
+  title               String?
+  sectionId           String
+  section             Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  markdown            WidgetMarkdown[]
+  WidgetHomeAssistant WidgetHomeAssistant[]
+}
+
+model WidgetHomeAssistant {
+  widgetId      String   @id
+  widget        Widget   @relation(fields: [widgetId], references: [id])
+  entityId      String
+  showName      Boolean?
+  showIcon      Boolean?
+  showState     Boolean?
+  secondaryInfo String?
 }
 
 model WidgetMarkdown {
   widgetId String  @id
-  Widget   Widget  @relation(fields: [widgetId], references: [id])
+  widget   Widget  @relation(fields: [widgetId], references: [id])
   content  String?
 }
 

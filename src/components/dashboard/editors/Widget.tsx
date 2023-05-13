@@ -10,6 +10,7 @@ import {
 
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
+import { EditWidgetHomeAssistant } from "./widgets/HomeAssistant";
 import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
 import { Section } from "@/components/dashboard/views/Section";
 import { widgetGetData } from "@/utils/serverActions/widget";
@@ -34,6 +35,14 @@ export function EditWidget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
+      case WidgetType.HomeAssistant:
+        return (
+          <EditWidgetHomeAssistant
+            dashboardId={dashboardId}
+            sectionId={data.sectionId}
+            data={widgetData}
+          />
+        );
       case WidgetType.Markdown:
         return (
           <EditWidgetMarkdown

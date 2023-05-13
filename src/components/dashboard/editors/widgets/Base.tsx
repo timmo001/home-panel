@@ -46,9 +46,10 @@ export function EditWidgetBase({
             required
           />
         )}
-        onChange={async (_, value) =>
-          await widgetUpdate(dashboardId, data.id, "type", value)
-        }
+        onChange={async (_, value: string | null) => {
+          if (!value) return;
+          await widgetUpdate(dashboardId, data.id, "type", value);
+        }}
       />
     </>
   );

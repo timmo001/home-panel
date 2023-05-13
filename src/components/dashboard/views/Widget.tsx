@@ -16,16 +16,6 @@ export function Widget({
   data: WidgetModel;
 }): JSX.Element {
   const [widgetData, setWidgetData] = useState<any>(null);
-  // import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
-  // const homeAssistant = useHomeAssistant();
-  // useEffect(() => {
-  //   if (!homeAssistant.entities) return;
-  //   const entity = homeAssistant.entities["sensor.living_room_temperature"];
-  //   if (!entity) return;
-  //   console.log(
-  //     `${entity.attributes.friendly_name}: ${entity.state}${entity.attributes.unit_of_measurement}`
-  //   );
-  // }, [homeAssistant.entities]);
 
   useEffect(() => {
     (async () => {
