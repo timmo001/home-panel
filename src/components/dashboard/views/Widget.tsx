@@ -2,6 +2,7 @@
 import type { Widget as WidgetModel } from "@prisma/client";
 import { useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@mui/material";
+// import { useRouter } from "next/router";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/serverActions/widget";
@@ -13,11 +14,14 @@ import { WidgetType } from "@/types/widget.type";
 export function Widget({
   dashboardId,
   data,
+  editing,
 }: {
   dashboardId: string;
   data: WidgetModel;
+  editing: boolean;
 }): JSX.Element {
   const [widgetData, setWidgetData] = useState<any>(null);
+  // const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -25,6 +29,16 @@ export function Widget({
       setWidgetData(newData);
     })();
   }, [data.id, data.type]);
+
+  function handleInteraction(): void {
+    console.log("Handle interaction:", { data, editing });
+    if (editing) {
+      // router.push(
+      //   `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
+      // );
+    } else {
+    }
+  }
 
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
@@ -42,8 +56,9 @@ export function Widget({
 
   return (
     <WidgetBase
-      dashboardId={dashboardId}
       data={data}
+      editing={editing}
+      handleInteraction={(_) => handleInteraction}
     >
       {widgetView}
     </WidgetBase>

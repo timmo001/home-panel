@@ -60,6 +60,20 @@ export function EditSection({
                   )
                 }
               />
+              <TextField
+                name="width"
+                label="Width"
+                margin="dense"
+                defaultValue={data.width}
+                onChange={async (e) =>
+                  await sectionUpdate(
+                    dashboardId,
+                    data.id,
+                    e.target.name,
+                    e.target.value
+                  )
+                }
+              />
             </Grid2>
           </CardContent>
         </Card>
