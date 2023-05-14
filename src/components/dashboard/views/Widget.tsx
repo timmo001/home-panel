@@ -9,7 +9,7 @@ import { widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
-import { WidgetType } from "@/types/widget.type";
+import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function Widget({
   dashboardId,
@@ -30,13 +30,27 @@ export function Widget({
     })();
   }, [data.id, data.type]);
 
-  function handleInteraction(): void {
-    console.log("Handle interaction:", { data, editing });
-    if (editing) {
-      // router.push(
-      //   `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
-      // );
-    } else {
+  function handleInteraction(action: WidgetAction): void {
+    console.log("Handle interaction:", action);
+    switch (action) {
+      case WidgetAction.Activate:
+        console.log("Activate widget");
+        break;
+      case WidgetAction.Delete:
+        console.log("Delete widget");
+        break;
+      case WidgetAction.Edit:
+        console.log("Edit widget");
+        // router.push(
+        //   `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
+        // );
+        break;
+      case WidgetAction.MoveDown:
+        console.log("Move widget down");
+        break;
+      case WidgetAction.MoveUp:
+        console.log("Move widget up");
+        break;
     }
   }
 
@@ -58,7 +72,7 @@ export function Widget({
     <WidgetBase
       data={data}
       editing={editing}
-      handleInteraction={(_) => handleInteraction}
+      handleInteraction={handleInteraction}
     >
       {widgetView}
     </WidgetBase>

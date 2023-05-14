@@ -1,10 +1,16 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { MouseEventHandler } from "react";
-import { Box, Card, CardActionArea, Typography } from "@mui/material";
-import { usePathname } from "next/navigation";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Typography,
+  Unstable_Grid2 as Grid2,
+  IconButton,
+} from "@mui/material";
+import { DeleteRounded, EditRounded } from "@mui/icons-material";
 
-import { WidgetType } from "@/types/widget.type";
+import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function WidgetBase({
   children,
@@ -15,17 +21,13 @@ export function WidgetBase({
   children: Array<JSX.Element> | JSX.Element;
   data: WidgetModel;
   editing: boolean;
-  handleInteraction: MouseEventHandler<HTMLButtonElement>;
+  handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
-  const path = usePathname();
-
-  const interactionDisabled = editing || path.endsWith("edit");
-
   return (
     <Card sx={{ width: "100%" }}>
       <CardActionArea
-        disabled={interactionDisabled}
-        onClick={handleInteraction}
+        disabled={editing}
+        onClick={(_) => handleInteraction(WidgetAction.Activate)}
       >
         {data.title && (
           <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
@@ -45,6 +47,30 @@ export function WidgetBase({
           {children}
         </Box>
       </CardActionArea>
+      {editing && (
+        <Grid2
+          container
+          spacing={2}
+          alignContent="center"
+          justifyContent="space-around"
+          sx={{ padding: "1rem" }}
+        >
+          <IconButton
+            aria-label="Edit Widget"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.Edit)}
+          >
+            <EditRounded fontSize="small" />
+          </IconButton>
+          <IconButton
+            aria-label="Delete Widget"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.Delete)}
+          >
+            <DeleteRounded fontSize="small" />
+          </IconButton>
+        </Grid2>
+      )}
     </Card>
   );
 }
