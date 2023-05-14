@@ -5,6 +5,7 @@ import { WidgetHomeAssistant } from "@prisma/client";
 import {
   Autocomplete,
   FormControlLabel,
+  Skeleton,
   Switch,
   TextField,
 } from "@mui/material";
@@ -41,6 +42,9 @@ export function EditWidgetHomeAssistant({
       .concat(["last_changed", "last_updated"])
       .sort((a, b) => a.localeCompare(b));
   }, [defaultEntity]);
+
+  if (!homeAssistant.entities || !entities)
+    return <Skeleton variant="text" width="100%" />;
 
   return (
     <>
