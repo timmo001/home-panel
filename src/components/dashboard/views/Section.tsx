@@ -1,14 +1,16 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { useState } from "react";
+import { CheckRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
-import { CheckRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
   const [editing, setEditing] = useState<boolean>(false);
+  const router = useRouter();
 
   function handleInteraction(action: SectionAction): void {
     console.log("Handle interaction:", action);
@@ -18,7 +20,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
         break;
       case SectionAction.Edit:
         console.log("Edit section");
-        // router.push(`/dashboards/${dashboardId}/sections/${data.sectionId}`);
+        router.push(`/dashboards/${data.dashboardId}/sections/${data.id}/edit`);
         break;
       case SectionAction.MoveDown:
         console.log("Move section down");

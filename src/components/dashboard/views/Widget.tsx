@@ -1,8 +1,8 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { useEffect, useMemo, useState } from "react";
 import { Skeleton } from "@mui/material";
-// import { useRouter } from "next/router";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { widgetGetData } from "@/utils/serverActions/widget";
@@ -21,7 +21,7 @@ export function Widget({
   editing: boolean;
 }): JSX.Element {
   const [widgetData, setWidgetData] = useState<any>(null);
-  // const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
@@ -41,9 +41,9 @@ export function Widget({
         break;
       case WidgetAction.Edit:
         console.log("Edit widget");
-        // router.push(
-        //   `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
-        // );
+        router.push(
+          `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
+        );
         break;
       case WidgetAction.MoveDown:
         console.log("Move widget down");
