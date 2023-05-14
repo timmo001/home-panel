@@ -1,20 +1,18 @@
 "use client";
+import type { Widget as WidgetModel } from "@prisma/client";
+import { Box, ButtonBase, Card, Typography } from "@mui/material";
 import { useLongPress } from "use-long-press";
-import { ButtonBase, Card, Typography } from "@mui/material";
 import { usePathname, useRouter } from "next/navigation";
+import { WidgetType } from "@/types/widget.type";
 
 export function WidgetBase({
   children,
   dashboardId,
-  sectionId,
-  widgetId,
-  title,
+  data,
 }: {
   children: Array<JSX.Element> | JSX.Element;
   dashboardId: string;
-  sectionId: string;
-  widgetId: string;
-  title?: string | null;
+  data: WidgetModel;
 }): JSX.Element {
   const longPress = useLongPress(handleOpenWidgetEdit);
   const path = usePathname();
@@ -22,7 +20,7 @@ export function WidgetBase({
 
   function handleOpenWidgetEdit(): void {
     router.push(
-      `/dashboards/${dashboardId}/sections/${sectionId}/widgets/${widgetId}/edit`
+      `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
     );
   }
 
@@ -38,14 +36,24 @@ export function WidgetBase({
           width: "100%",
         }}
       >
-        <Card
-          sx={{
-            padding: title ? "0.2rem 0.4rem 0.4rem" : "0.4rem",
-            width: "100%",
-          }}
-        >
-          {title && <Typography variant="h6">{title}</Typography>}
-          {children}
+        <Card sx={{ width: "100%" }}>
+          {data.title && (
+            <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
+              {data.title}
+            </Typography>
+          )}
+          <Box
+            sx={{
+              padding:
+                data.type === WidgetType.Image
+                  ? 0
+                  : data.title
+                  ? "0 0.4rem 0.4rem"
+                  : "0.4rem",
+            }}
+          >
+            {children}
+          </Box>
         </Card>
       </ButtonBase>
     </>

@@ -43,9 +43,7 @@ export function Widget({
   return (
     <WidgetBase
       dashboardId={dashboardId}
-      sectionId={data.sectionId}
-      widgetId={data.id}
-      title={data.title}
+      data={data}
     >
       {widgetView}
     </WidgetBase>
