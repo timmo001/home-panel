@@ -3,12 +3,31 @@ import type { Widget as WidgetModel } from "@prisma/client";
 import { useState } from "react";
 import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
 
-import type { SectionModel } from "@/types/section.type";
+import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
-import { CheckRounded, EditRounded } from "@mui/icons-material";
+import { CheckRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
-  const [editSection, setEditSection] = useState<boolean>(false);
+  const [editing, setEditing] = useState<boolean>(false);
+
+  function handleInteraction(action: SectionAction): void {
+    console.log("Handle interaction:", action);
+    switch (action) {
+      case SectionAction.Delete:
+        console.log("Delete section");
+        break;
+      case SectionAction.Edit:
+        console.log("Edit section");
+        // router.push(`/dashboards/${dashboardId}/sections/${data.sectionId}`);
+        break;
+      case SectionAction.MoveDown:
+        console.log("Move section down");
+        break;
+      case SectionAction.MoveUp:
+        console.log("Move section up");
+        break;
+    }
+  }
 
   return (
     <Grid2
@@ -22,17 +41,39 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
       }}
     >
       <Grid2 container xs="auto" sx={{ marginBottom: "0.5rem" }}>
-        {data.title && (
-          <Typography variant="h5" sx={{ flexGrow: 1 }}>
-            {data.title}
-          </Typography>
-        )}
-        <IconButton
-          aria-label="Edit Section"
-          size="small"
-          onClick={() => setEditSection(!editSection)}
+        {data.title && <Typography variant="h5">{data.title}</Typography>}
+        <Grid2
+          container
+          spacing={2}
+          alignContent="center"
+          justifyContent="space-around"
+          sx={{ flexGrow: 1 }}
         >
-          {editSection ? (
+          {editing && (
+            <>
+              <IconButton
+                aria-label="Edit Section"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.Edit)}
+              >
+                <EditRounded fontSize="small" />
+              </IconButton>
+              <IconButton
+                aria-label="Delete Widget"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.Delete)}
+              >
+                <DeleteRounded fontSize="small" />
+              </IconButton>
+            </>
+          )}
+        </Grid2>
+        <IconButton
+          aria-label="Edit"
+          size="small"
+          onClick={() => setEditing(!editing)}
+        >
+          {editing ? (
             <CheckRounded fontSize="small" />
           ) : (
             <EditRounded fontSize="small" />
@@ -45,7 +86,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
             <Widget
               dashboardId={data.dashboardId}
               data={widget}
-              editing={editSection}
+              editing={editing}
             />
           </Grid2>
         ))}
