@@ -11,6 +11,7 @@ import {
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
 import { EditWidgetHomeAssistant } from "./widgets/HomeAssistant";
+import { EditWidgetImage } from "@/components/dashboard/editors/widgets/Image";
 import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
 import { Section } from "@/components/dashboard/views/Section";
 import { widgetGetData } from "@/utils/serverActions/widget";
@@ -38,6 +39,14 @@ export function EditWidget({
       case WidgetType.HomeAssistant:
         return (
           <EditWidgetHomeAssistant
+            dashboardId={dashboardId}
+            sectionId={data.sectionId}
+            data={widgetData}
+          />
+        );
+      case WidgetType.Image:
+        return (
+          <EditWidgetImage
             dashboardId={dashboardId}
             sectionId={data.sectionId}
             data={widgetData}

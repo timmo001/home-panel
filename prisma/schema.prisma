@@ -49,13 +49,14 @@ model Section {
 }
 
 model Widget {
-  id                  String                @id @default(cuid())
-  type                String
-  title               String?
-  sectionId           String
-  section             Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  markdown            WidgetMarkdown[]
-  WidgetHomeAssistant WidgetHomeAssistant[]
+  id            String                @id @default(cuid())
+  type          String
+  title         String?
+  sectionId     String
+  section       Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  markdown      WidgetMarkdown[]
+  homeAssistant WidgetHomeAssistant[]
+  image         WidgetImage[]
 }
 
 model WidgetHomeAssistant {
@@ -66,6 +67,12 @@ model WidgetHomeAssistant {
   showIcon      Boolean?
   showState     Boolean?
   secondaryInfo String?
+}
+
+model WidgetImage {
+  widgetId String  @id
+  widget   Widget  @relation(fields: [widgetId], references: [id])
+  url      String?
 }
 
 model WidgetMarkdown {
