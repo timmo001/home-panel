@@ -50,10 +50,9 @@ export function WidgetBase({
       {editing && (
         <Grid2
           container
-          spacing={2}
           alignContent="center"
           justifyContent="space-around"
-          sx={{ padding: "1rem" }}
+          sx={{ padding: "0.5rem" }}
         >
           <IconButton
             aria-label="Edit Widget"
