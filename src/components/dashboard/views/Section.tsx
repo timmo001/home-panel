@@ -2,6 +2,8 @@
 import type { Widget as WidgetModel } from "@prisma/client";
 import {
   AddRounded,
+  ArrowBackRounded,
+  ArrowForwardRounded,
   CheckRounded,
   DeleteRounded,
   EditRounded,
@@ -13,7 +15,7 @@ import { useState } from "react";
 import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
 import Link from "next/link";
-import { sectionDelete } from "@/utils/serverActions/section";
+import { sectionDelete, sectionUpdate } from "@/utils/serverActions/section";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
   const [editing, setEditing] = useState<boolean>(false);
@@ -32,9 +34,21 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
         break;
       case SectionAction.MoveDown:
         console.log("Move section down");
+        await sectionUpdate(
+          data.dashboardId,
+          data.id,
+          "position",
+          data.position + 15
+        );
         break;
       case SectionAction.MoveUp:
         console.log("Move section up");
+        await sectionUpdate(
+          data.dashboardId,
+          data.id,
+          "position",
+          data.position - 15
+        );
         break;
     }
   }
@@ -56,11 +70,25 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           container
           spacing={2}
           alignContent="center"
-          justifyContent="space-around"
-          sx={{ flexGrow: 1 }}
+          justifyContent={editing ? "space-between" : "flex-end"}
+          sx={{ flexGrow: 1, paddingLeft: "1.5rem", paddingRight: "0.5rem" }}
         >
           {editing && (
             <>
+              <IconButton
+                aria-label="Move Section Backward"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.MoveUp)}
+              >
+                <ArrowBackRounded fontSize="small" />
+              </IconButton>
+              <IconButton
+                aria-label="Move Section Forward"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.MoveDown)}
+              >
+                <ArrowForwardRounded fontSize="small" />
+              </IconButton>
               <IconButton
                 aria-label="Edit Section"
                 size="small"
@@ -77,18 +105,18 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
               </IconButton>
             </>
           )}
+          <IconButton
+            aria-label="Edit"
+            size="small"
+            onClick={() => setEditing(!editing)}
+          >
+            {editing ? (
+              <CheckRounded fontSize="small" />
+            ) : (
+              <EditRounded fontSize="small" />
+            )}
+          </IconButton>
         </Grid2>
-        <IconButton
-          aria-label="Edit"
-          size="small"
-          onClick={() => setEditing(!editing)}
-        >
-          {editing ? (
-            <CheckRounded fontSize="small" />
-          ) : (
-            <EditRounded fontSize="small" />
-          )}
-        </IconButton>
       </Grid2>
       <Grid2 container spacing={2} xs="auto">
         {data.widgets.map((widget: WidgetModel) => (
