@@ -30,6 +30,7 @@ model Session {
 
 model Dashboard {
   id            String          @id @default(cuid())
+  position      Int             @default(10)
   name          String
   description   String?
   userId        String
@@ -40,6 +41,7 @@ model Dashboard {
 
 model Section {
   id          String    @id @default(cuid())
+  position    Int       @default(10)
   title       String
   subtitle    String?
   width       String
@@ -50,6 +52,7 @@ model Section {
 
 model Widget {
   id            String                @id @default(cuid())
+  position      Int                   @default(10)
   type          String
   title         String?
   sectionId     String
