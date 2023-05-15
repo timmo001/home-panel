@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
-import { widgetGetData } from "@/utils/serverActions/widget";
+import { widgetDelete, widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
@@ -30,7 +30,7 @@ export function Widget({
     })();
   }, [data.id, data.type]);
 
-  function handleInteraction(action: WidgetAction): void {
+  async function handleInteraction(action: WidgetAction): Promise<void> {
     console.log("Handle interaction:", action);
     switch (action) {
       case WidgetAction.Activate:
@@ -38,6 +38,7 @@ export function Widget({
         break;
       case WidgetAction.Delete:
         console.log("Delete widget");
+        await widgetDelete(dashboardId, data.id);
         break;
       case WidgetAction.Edit:
         console.log("Edit widget");

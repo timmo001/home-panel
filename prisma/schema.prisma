@@ -61,7 +61,7 @@ model Widget {
 
 model WidgetHomeAssistant {
   widgetId      String   @id
-  widget        Widget   @relation(fields: [widgetId], references: [id])
+  widget        Widget   @relation(fields: [widgetId], references: [id], onDelete: Cascade)
   entityId      String
   showName      Boolean?
   showIcon      Boolean?
@@ -71,13 +71,13 @@ model WidgetHomeAssistant {
 
 model WidgetImage {
   widgetId String  @id
-  widget   Widget  @relation(fields: [widgetId], references: [id])
+  widget   Widget  @relation(fields: [widgetId], references: [id], onDelete: Cascade)
   url      String?
 }
 
 model WidgetMarkdown {
   widgetId String  @id
-  widget   Widget  @relation(fields: [widgetId], references: [id])
+  widget   Widget  @relation(fields: [widgetId], references: [id], onDelete: Cascade)
   content  String?
 }
 

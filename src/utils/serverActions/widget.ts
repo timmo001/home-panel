@@ -12,14 +12,12 @@ import { WidgetType } from "@/types/widget.type";
 
 export async function widgetDelete(
   dashboardId: string,
-  idOrWidget: string | WidgetModel
+  id: string
 ): Promise<WidgetModel> {
-  console.log("Delete widget:", { idOrWidget });
+  console.log("Delete widget:", { id });
 
   const data = await prisma.widget.delete({
-    where: {
-      id: typeof idOrWidget === "string" ? idOrWidget : idOrWidget.id,
-    },
+    where: { id },
   });
 
   revalidatePath(`/dashboards/${dashboardId}`);
