@@ -1,12 +1,19 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { CheckRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
+import {
+  AddRounded,
+  CheckRounded,
+  DeleteRounded,
+  EditRounded,
+} from "@mui/icons-material";
 import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
+import { WidgetAction } from "@/types/widget.type";
+import Link from "next/link";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
   const [editing, setEditing] = useState<boolean>(false);
@@ -92,6 +99,17 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
             />
           </Grid2>
         ))}
+        {editing && (
+          <Grid2 xs={6}>
+            <Link
+              href={`/dashboards/${data.dashboardId}/sections/${data.id}/widgets/0/edit`}
+            >
+              <IconButton aria-label="Add Widget" size="large">
+                <AddRounded fontSize="large" />
+              </IconButton>
+            </Link>
+          </Grid2>
+        )}
       </Grid2>
     </Grid2>
   );
