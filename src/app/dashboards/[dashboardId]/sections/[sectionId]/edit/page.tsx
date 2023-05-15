@@ -27,7 +27,7 @@ export default async function Page({
   });
 
   if (!data) {
-    console.log("Creating new section");
+    console.log("Creating new section..");
     data = await prisma.section.create({
       data: {
         title: "Section",
