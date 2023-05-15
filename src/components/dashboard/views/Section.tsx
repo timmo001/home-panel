@@ -1,28 +1,95 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { Typography, Unstable_Grid2 as Grid2 } from "@mui/material";
+import { CheckRounded, DeleteRounded, EditRounded } from "@mui/icons-material";
+import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
-import type { SectionModel } from "@/types/section.type";
+import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
+  const [editing, setEditing] = useState<boolean>(false);
+  const router = useRouter();
+
+  function handleInteraction(action: SectionAction): void {
+    console.log("Handle interaction:", action);
+    switch (action) {
+      case SectionAction.Delete:
+        console.log("Delete section");
+        break;
+      case SectionAction.Edit:
+        console.log("Edit section");
+        router.push(`/dashboards/${data.dashboardId}/sections/${data.id}/edit`);
+        break;
+      case SectionAction.MoveDown:
+        console.log("Move section down");
+        break;
+      case SectionAction.MoveUp:
+        console.log("Move section up");
+        break;
+    }
+  }
 
   return (
     <Grid2
       component="section"
       container
       direction="column"
-      sx={{ height: "100%", width: data.width, margin: "0.5rem 1rem" }}
+      sx={{
+        height: "100%",
+        margin: "0.5rem 1rem",
+        width: data.width,
+      }}
     >
-      {data.title && (
-        <Typography variant="h5" gutterBottom>
-          {data.title}
-        </Typography>
-      )}
+      <Grid2 container xs="auto" sx={{ marginBottom: "0.5rem" }}>
+        {data.title && <Typography variant="h5">{data.title}</Typography>}
+        <Grid2
+          container
+          spacing={2}
+          alignContent="center"
+          justifyContent="space-around"
+          sx={{ flexGrow: 1 }}
+        >
+          {editing && (
+            <>
+              <IconButton
+                aria-label="Edit Section"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.Edit)}
+              >
+                <EditRounded fontSize="small" />
+              </IconButton>
+              <IconButton
+                aria-label="Delete Widget"
+                size="small"
+                onClick={(_) => handleInteraction(SectionAction.Delete)}
+              >
+                <DeleteRounded fontSize="small" />
+              </IconButton>
+            </>
+          )}
+        </Grid2>
+        <IconButton
+          aria-label="Edit"
+          size="small"
+          onClick={() => setEditing(!editing)}
+        >
+          {editing ? (
+            <CheckRounded fontSize="small" />
+          ) : (
+            <EditRounded fontSize="small" />
+          )}
+        </IconButton>
+      </Grid2>
       <Grid2 container spacing={2} xs="auto">
         {data.widgets.map((widget: WidgetModel) => (
           <Grid2 key={widget.id} xs={6}>
-            <Widget dashboardId={data.dashboardId} data={widget} />
+            <Widget
+              dashboardId={data.dashboardId}
+              data={widget}
+              editing={editing}
+            />
           </Grid2>
         ))}
       </Grid2>

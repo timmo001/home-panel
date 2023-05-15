@@ -4,3 +4,10 @@ import type { Section, Widget } from "@prisma/client";
 export type SectionModel = Section & {
   widgets: Array<Widget>;
 };
+
+export enum SectionAction {
+  Delete = "delete",
+  Edit = "edit",
+  MoveDown = "moveDown",
+  MoveUp = "moveUp",
+}

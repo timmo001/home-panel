@@ -5,6 +5,14 @@ export type WidgetWithSectionModel = Widget & {
   section: Section;
 };
 
+export enum WidgetAction {
+  Activate = "activate",
+  Delete = "delete",
+  Edit = "edit",
+  MoveDown = "moveDown",
+  MoveUp = "moveUp",
+}
+
 export enum WidgetType {
   Checklist = "checklist",
   Frame = "frame",

@@ -1,61 +1,75 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
-import { Box, ButtonBase, Card, Typography } from "@mui/material";
-import { useLongPress } from "use-long-press";
-import { usePathname, useRouter } from "next/navigation";
-import { WidgetType } from "@/types/widget.type";
+import {
+  Box,
+  Card,
+  CardActionArea,
+  Typography,
+  Unstable_Grid2 as Grid2,
+  IconButton,
+} from "@mui/material";
+import { DeleteRounded, EditRounded } from "@mui/icons-material";
+
+import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function WidgetBase({
   children,
-  dashboardId,
   data,
+  editing,
+  handleInteraction,
 }: {
   children: Array<JSX.Element> | JSX.Element;
-  dashboardId: string;
   data: WidgetModel;
+  editing: boolean;
+  handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
-  const longPress = useLongPress(handleOpenWidgetEdit);
-  const path = usePathname();
-  const router = useRouter();
-
-  function handleOpenWidgetEdit(): void {
-    router.push(
-      `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
-    );
-  }
-
-  const disabled = path.endsWith("edit");
-
   return (
-    <>
-      <ButtonBase
-        disabled={disabled}
-        {...(!disabled && longPress())}
-        sx={{
-          textAlign: "left",
-          width: "100%",
-        }}
+    <Card sx={{ width: "100%" }}>
+      <CardActionArea
+        disabled={editing}
+        onClick={(_) => handleInteraction(WidgetAction.Activate)}
       >
-        <Card sx={{ width: "100%" }}>
-          {data.title && (
-            <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
-              {data.title}
-            </Typography>
-          )}
-          <Box
-            sx={{
-              padding:
-                data.type === WidgetType.Image
-                  ? 0
-                  : data.title
-                  ? "0 0.4rem 0.4rem"
-                  : "0.4rem",
-            }}
+        {data.title && (
+          <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
+            {data.title}
+          </Typography>
+        )}
+        <Box
+          sx={{
+            padding:
+              data.type === WidgetType.Image
+                ? 0
+                : data.title
+                ? "0 0.4rem 0.4rem"
+                : "0.4rem",
+          }}
+        >
+          {children}
+        </Box>
+      </CardActionArea>
+      {editing && (
+        <Grid2
+          container
+          alignContent="center"
+          justifyContent="space-around"
+          sx={{ padding: "0.5rem" }}
+        >
+          <IconButton
+            aria-label="Edit Widget"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.Edit)}
           >
-            {children}
-          </Box>
-        </Card>
-      </ButtonBase>
-    </>
+            <EditRounded fontSize="small" />
+          </IconButton>
+          <IconButton
+            aria-label="Delete Widget"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.Delete)}
+          >
+            <DeleteRounded fontSize="small" />
+          </IconButton>
+        </Grid2>
+      )}
+    </Card>
   );
 }
