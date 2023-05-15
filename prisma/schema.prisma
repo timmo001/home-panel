@@ -17,6 +17,8 @@ model User {
   name       String?
   image      String?
   dashboards Dashboard[]
+
+  @@index([username], name: "username_unique")
 }
 
 model Dashboard {
@@ -28,6 +30,8 @@ model Dashboard {
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   sections      Section[]
   homeAssistant HomeAssistant[]
+
+  @@index([userId, position], name: "userId_position_unique")
 }
 
 model Section {
@@ -39,6 +43,8 @@ model Section {
   dashboardId String
   dashboard   Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
   widgets     Widget[]
+
+  @@index([dashboardId, position], name: "dashboardId_position_unique")
 }
 
 model Widget {
@@ -51,6 +57,8 @@ model Widget {
   markdown      WidgetMarkdown[]
   homeAssistant WidgetHomeAssistant[]
   image         WidgetImage[]
+
+  @@index([sectionId, position], name: "sectionId_position_unique")
 }
 
 model WidgetHomeAssistant {
