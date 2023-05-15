@@ -6,14 +6,12 @@ import { prisma } from "@/utils/prisma";
 
 export async function sectionDelete(
   dashboardId: string,
-  idOrSection: string | Section
+  id: string
 ): Promise<Section> {
-  console.log("Delete section:", idOrSection);
+  console.log("Delete section:", { id });
 
   const data = await prisma.section.delete({
-    where: {
-      id: typeof idOrSection === "string" ? idOrSection : idOrSection.id,
-    },
+    where: { id },
   });
 
   revalidatePath(`/dashboards/${dashboardId}`);

@@ -13,16 +13,18 @@ import { useState } from "react";
 import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
 import Link from "next/link";
+import { sectionDelete } from "@/utils/serverActions/section";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
   const [editing, setEditing] = useState<boolean>(false);
   const router = useRouter();
 
-  function handleInteraction(action: SectionAction): void {
+  async function handleInteraction(action: SectionAction): Promise<void> {
     console.log("Handle interaction:", action);
     switch (action) {
       case SectionAction.Delete:
         console.log("Delete section");
+        await sectionDelete(data.dashboardId, data.id);
         break;
       case SectionAction.Edit:
         console.log("Edit section");
