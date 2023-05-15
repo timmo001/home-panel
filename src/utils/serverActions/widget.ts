@@ -20,6 +20,8 @@ export async function widgetDelete(
     where: { id },
   });
 
+  await widgetsReorganise(data.sectionId);
+
   revalidatePath(`/dashboards/${dashboardId}`);
 
   return data;
@@ -75,6 +77,26 @@ export async function widgetGetData(
   }
 }
 
+async function widgetsReorganise(sectionId: string): Promise<void> {
+  console.log("Reorganise widgets:", { sectionId });
+  const ids = await prisma.widget.findMany({
+    select: { id: true },
+    where: { sectionId },
+    orderBy: { position: "asc" },
+  });
+
+  // Reorganise widget positions in 10s
+  for (let i = 0; i < ids.length; i++) {
+    const widget = ids[i];
+    const newPosition = i * 10;
+    console.log("Reorganise widget:", { index: i, id: widget.id, newPosition });
+    await prisma.widget.update({
+      data: { position: newPosition },
+      where: { id: widget.id },
+    });
+  }
+}
+
 async function widgetRevalidate(
   dashboardId: string,
   sectionId: string,
@@ -94,14 +116,19 @@ export async function widgetUpdate(
 ): Promise<WidgetModel> {
   console.log("Update widget:", { dashboardId, widgetId, name, value });
 
-  const newData = await prisma.widget.update({
-    data: {
-      [name]: value,
-    },
-    where: {
-      id: widgetId,
-    },
+  let newData = await prisma.widget.update({
+    data: { [name]: value },
+    where: { id: widgetId },
   });
+
+  if (name === "position") {
+    await widgetsReorganise(newData.sectionId);
+    newData = await prisma.widget.findUniqueOrThrow({
+      where: { id: widgetId },
+    });
+  }
+
+  console.log("New widget data:", newData);
 
   await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
 

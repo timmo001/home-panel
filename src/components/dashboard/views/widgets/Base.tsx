@@ -8,7 +8,12 @@ import {
   Unstable_Grid2 as Grid2,
   IconButton,
 } from "@mui/material";
-import { DeleteRounded, EditRounded } from "@mui/icons-material";
+import {
+  ArrowBackRounded,
+  ArrowForwardRounded,
+  DeleteRounded,
+  EditRounded,
+} from "@mui/icons-material";
 
 import { WidgetAction, WidgetType } from "@/types/widget.type";
 
@@ -54,6 +59,20 @@ export function WidgetBase({
           justifyContent="space-around"
           sx={{ padding: "0.5rem" }}
         >
+          <IconButton
+            aria-label="Move Widget Back"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.MoveUp)}
+          >
+            <ArrowBackRounded fontSize="small" />
+          </IconButton>
+          <IconButton
+            aria-label="Move Widget Forward"
+            size="small"
+            onClick={(_) => handleInteraction(WidgetAction.MoveDown)}
+          >
+            <ArrowForwardRounded fontSize="small" />
+          </IconButton>
           <IconButton
             aria-label="Edit Widget"
             size="small"
