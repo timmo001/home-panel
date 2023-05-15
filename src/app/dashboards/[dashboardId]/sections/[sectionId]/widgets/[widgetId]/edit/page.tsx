@@ -29,6 +29,7 @@ export default async function Page({
   });
 
   if (!data) {
+    console.log("Creating new widget");
     data = await prisma.widget.create({
       data: {
         type: WidgetType.Markdown,

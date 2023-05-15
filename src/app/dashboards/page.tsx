@@ -28,7 +28,8 @@ export default async function Page(): Promise<JSX.Element> {
   });
 
   let dashboard: DashboardModel | null = await prisma.dashboard.findFirst();
-  if (!dashboard)
+  if (!dashboard) {
+    console.log("Creating default dashboard");
     dashboard = await prisma.dashboard.create({
       data: {
         name: "Default",
@@ -62,6 +63,7 @@ export default async function Page(): Promise<JSX.Element> {
         },
       },
     });
+  }
 
   return redirect(`/dashboards/${dashboard.id}`);
 }
