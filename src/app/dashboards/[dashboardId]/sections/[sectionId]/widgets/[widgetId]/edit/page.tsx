@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
@@ -49,6 +50,9 @@ export default async function Page({
         section: true,
       },
     });
+    revalidatePath(
+      `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${data.id}/edit`
+    );
     return redirect(
       `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${data.id}/edit`
     );

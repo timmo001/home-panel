@@ -5,6 +5,7 @@ import type {
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { prisma } from "@/utils/prisma";
@@ -63,6 +64,7 @@ export default async function Page(): Promise<JSX.Element> {
         },
       },
     });
+    revalidatePath(`/dashboards/${dashboard.id}`);
   }
 
   return redirect(`/dashboards/${dashboard.id}`);
