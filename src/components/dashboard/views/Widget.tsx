@@ -5,7 +5,11 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
-import { widgetDelete, widgetGetData } from "@/utils/serverActions/widget";
+import {
+  widgetDelete,
+  widgetGetData,
+  widgetUpdate,
+} from "@/utils/serverActions/widget";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
@@ -48,9 +52,21 @@ export function Widget({
         break;
       case WidgetAction.MoveDown:
         console.log("Move widget down");
+        await widgetUpdate(
+          dashboardId,
+          data.id,
+          "position",
+          data.position + 15
+        );
         break;
       case WidgetAction.MoveUp:
         console.log("Move widget up");
+        await widgetUpdate(
+          dashboardId,
+          data.id,
+          "position",
+          data.position - 15
+        );
         break;
     }
   }

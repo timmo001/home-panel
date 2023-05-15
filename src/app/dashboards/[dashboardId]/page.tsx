@@ -30,8 +30,11 @@ export default async function Page({
     include: {
       sections: {
         include: {
-          widgets: true,
+          widgets: {
+            orderBy: { position: "asc" },
+          },
         },
+        orderBy: { position: "asc" },
       },
     },
   });
