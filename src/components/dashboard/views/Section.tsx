@@ -12,7 +12,6 @@ import { useState } from "react";
 
 import { SectionAction, SectionModel } from "@/types/section.type";
 import { Widget } from "@/components/dashboard/views/Widget";
-import { WidgetAction } from "@/types/widget.type";
 import Link from "next/link";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
