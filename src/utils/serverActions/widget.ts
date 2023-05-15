@@ -126,11 +126,12 @@ export async function widgetUpdate(
     newData = await prisma.widget.findUniqueOrThrow({
       where: { id: widgetId },
     });
+    revalidatePath(`/dashboards/${dashboardId}`);
+  } else {
+    await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
   }
 
   console.log("New widget data:", newData);
-
-  await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
 
   return newData;
 }
