@@ -23,6 +23,8 @@ export default async function Page({
 }: {
   params: { dashboardId: string };
 }): Promise<JSX.Element> {
+  console.log("Edit Dashboard:", params);
+
   const session = await getServerSession();
   if (!session) return <AccessDenied />;
 

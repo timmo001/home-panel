@@ -18,6 +18,8 @@ export default async function Page({
 }: {
   params: { dashboardId: string; sectionId: string };
 }): Promise<JSX.Element> {
+  console.log("Edit Section:", params);
+
   let data: Section | null = await prisma.section.findUnique({
     where: {
       id: params.sectionId,

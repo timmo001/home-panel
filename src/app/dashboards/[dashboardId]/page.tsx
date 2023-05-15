@@ -17,6 +17,8 @@ export default async function Page({
 }: {
   params: { dashboardId: string };
 }): Promise<JSX.Element | null> {
+  console.log("Dashboard:", params);
+
   /**
    * The dashboard object retrieved from the database.
    * Contains all the sections and widgets associated with the dashboard.
