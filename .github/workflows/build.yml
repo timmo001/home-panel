@@ -1,0 +1,21 @@
+name: Build
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-nodejs:
+    uses: timmo001/workflows/.github/workflows/build-node-linux.yml@master
