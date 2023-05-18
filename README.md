@@ -7,10 +7,9 @@ A web frontend for controlling the home. Integrates with [Home Assistant](https:
 ## Features
 
 - Supports [Home Assistant](https://www.home-assistant.io) entities, cameras, news feeds, iframes and more.
-- Made for touch screens and desktops with a sideways scrolling Material Design interface.
 - Fully customizable interface.
 - Custom theme support.
-- Full in application configuration UI.
+- Full in-application configuration UI.
 
 ## Documentation / Setup
 
