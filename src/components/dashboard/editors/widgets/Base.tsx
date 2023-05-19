@@ -28,7 +28,20 @@ export function EditWidgetBase({
           )
         }
       />
-      <Autocomplete
+      <TextField
+        name="width"
+        label="Width"
+        margin="dense"
+        defaultValue={data.width || "6"}
+        onChange={async (e) =>
+          await widgetUpdate(
+            dashboardId,
+            data.id,
+            e.target.name,
+            e.target.value
+          )
+        }
+      />      <Autocomplete
         defaultValue={data.type}
         options={Object.values(WidgetType)}
         getOptionLabel={(option) => {

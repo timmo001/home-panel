@@ -120,7 +120,22 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
       </Grid2>
       <Grid2 container spacing={2} xs="auto">
         {data.widgets.map((widget: WidgetModel) => (
-          <Grid2 key={widget.id} xs={6}>
+          <Grid2
+            key={widget.id}
+            xs={
+              !widget.width
+                ? 6
+                : !isNaN(Number(widget.width))
+                ? Number(widget.width)
+                : "auto"
+            }
+            sx={{
+              width:
+                widget.width && isNaN(Number(widget.width))
+                  ? widget.width
+                  : undefined,
+            }}
+          >
             <Widget
               dashboardId={data.dashboardId}
               data={widget}

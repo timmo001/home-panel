@@ -52,6 +52,7 @@ model Widget {
   position      Int                   @default(10)
   type          String
   title         String?
+  width         String?
   sectionId     String
   section       Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   markdown      WidgetMarkdown[]
