@@ -50,6 +50,8 @@ export function WidgetBase({
                 : data.title
                 ? "0 0.4rem 0.4rem"
                 : "0.4rem",
+            textAlign:
+              data.type === WidgetType.HomeAssistant ? "center" : undefined,
           }}
         >
           {children}
