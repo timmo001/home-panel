@@ -69,6 +69,8 @@ model WidgetHomeAssistant {
   showName      Boolean?
   showIcon      Boolean?
   showState     Boolean?
+  iconColor     String?
+  iconSize      String?
   secondaryInfo String?
 }
 

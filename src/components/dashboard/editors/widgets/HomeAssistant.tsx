@@ -131,6 +131,36 @@ export function EditWidgetHomeAssistant({
         }
         label="Show Icon"
       />
+      <TextField
+        name="iconColor"
+        label="Icon Color"
+        margin="dense"
+        defaultValue={data.iconColor || ""}
+        onChange={async (e) =>
+          await widgetHomeAssistantUpdate(
+            dashboardId,
+            sectionId,
+            data.widgetId,
+            e.target.name,
+            e.target.value
+          )
+        }
+      />
+      <TextField
+        name="iconSize"
+        label="Icon Size"
+        margin="dense"
+        defaultValue={data.iconSize || ""}
+        onChange={async (e) =>
+          await widgetHomeAssistantUpdate(
+            dashboardId,
+            sectionId,
+            data.widgetId,
+            e.target.name,
+            e.target.value
+          )
+        }
+      />
       <Autocomplete
         defaultValue={data.secondaryInfo}
         options={entityAttributes || []}
