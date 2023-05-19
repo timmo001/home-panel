@@ -37,19 +37,17 @@ export function Widget({
 
   async function handleInteraction(action: WidgetAction): Promise<void> {
     console.log("Handle interaction:", action);
+
     switch (action) {
       case WidgetAction.Delete:
-        console.log("Delete widget");
         await widgetDelete(dashboardId, data.id);
         break;
       case WidgetAction.Edit:
-        console.log("Edit widget");
         router.push(
           `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
         );
         break;
       case WidgetAction.MoveDown:
-        console.log("Move widget down");
         await widgetUpdate(
           dashboardId,
           data.id,
@@ -58,7 +56,6 @@ export function Widget({
         );
         break;
       case WidgetAction.MoveUp:
-        console.log("Move widget up");
         await widgetUpdate(
           dashboardId,
           data.id,
@@ -67,7 +64,6 @@ export function Widget({
         );
         break;
       case WidgetAction.ToggleExpanded:
-        console.log("Activate widget");
         setExpanded(!expanded);
         break;
     }
