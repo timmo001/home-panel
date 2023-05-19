@@ -95,14 +95,17 @@ export function WidgetBase({
     </Card>
   );
 
-  return expanded ? (
-    <Dialog
-      open
-      onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
-    >
+  return (
+    <>
       {widget}
-    </Dialog>
-  ) : (
-    widget
+      {expanded && (
+        <Dialog
+          open
+          onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
+        >
+          {widget}
+        </Dialog>
+      )}
+    </>
   );
 }
