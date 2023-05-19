@@ -24,6 +24,7 @@ export function Widget({
   data: WidgetModel;
   editing: boolean;
 }): JSX.Element {
+  const [expanded, setExpanded] = useState<boolean>(false);
   const [widgetData, setWidgetData] = useState<any>(null);
   const router = useRouter();
 
@@ -37,9 +38,6 @@ export function Widget({
   async function handleInteraction(action: WidgetAction): Promise<void> {
     console.log("Handle interaction:", action);
     switch (action) {
-      case WidgetAction.Activate:
-        console.log("Activate widget");
-        break;
       case WidgetAction.Delete:
         console.log("Delete widget");
         await widgetDelete(dashboardId, data.id);
@@ -68,6 +66,10 @@ export function Widget({
           data.position - 15
         );
         break;
+      case WidgetAction.ToggleExpanded:
+        console.log("Activate widget");
+        setExpanded(!expanded);
+        break;
     }
   }
 
@@ -89,6 +91,7 @@ export function Widget({
     <WidgetBase
       data={data}
       editing={editing}
+      expanded={expanded}
       handleInteraction={handleInteraction}
     >
       {widgetView}

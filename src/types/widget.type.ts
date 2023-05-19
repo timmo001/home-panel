@@ -6,11 +6,11 @@ export type WidgetWithSectionModel = Widget & {
 };
 
 export enum WidgetAction {
-  Activate = "activate",
   Delete = "delete",
   Edit = "edit",
   MoveDown = "moveDown",
   MoveUp = "moveUp",
+  ToggleExpanded = "toggleExpanded",
 }
 
 export enum WidgetType {

@@ -7,6 +7,7 @@ import {
   Typography,
   Unstable_Grid2 as Grid2,
   IconButton,
+  Dialog,
 } from "@mui/material";
 import {
   ArrowBackRounded,
@@ -21,18 +22,20 @@ export function WidgetBase({
   children,
   data,
   editing,
+  expanded,
   handleInteraction,
 }: {
   children: Array<JSX.Element> | JSX.Element;
   data: WidgetModel;
   editing: boolean;
+  expanded: boolean;
   handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
-  return (
+  const widget = (
     <Card sx={{ width: "100%" }}>
       <CardActionArea
         disabled={editing}
-        onClick={(_) => handleInteraction(WidgetAction.Activate)}
+        onClick={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
       >
         {data.title && (
           <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
@@ -90,5 +93,16 @@ export function WidgetBase({
         </Grid2>
       )}
     </Card>
+  );
+
+  return expanded ? (
+    <Dialog
+      open
+      onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
+    >
+      {widget}
+    </Dialog>
+  ) : (
+    widget
   );
 }
