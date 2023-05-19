@@ -58,6 +58,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
       component="section"
       container
       direction="column"
+      wrap="nowrap"
       sx={{
         height: "100%",
         margin: "0.5rem 1rem",
@@ -71,7 +72,11 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           spacing={2}
           alignContent="center"
           justifyContent={editing ? "space-between" : "flex-end"}
-          sx={{ flexGrow: 1, paddingLeft: "1.5rem", paddingRight: "0.5rem" }}
+          sx={{
+            flexGrow: 1,
+            paddingLeft: "1.5rem",
+            paddingRight: "0.5rem",
+          }}
         >
           {editing && (
             <>
