@@ -27,6 +27,7 @@ const HomeAssistantContext = createContext<HomeAssistantContextType>(
   defaultHomeAssistantContext
 );
 
+let client: HomeAssistant | null = null;
 export function HomeAssistantProvider({
   dashboardId,
   children,
@@ -38,29 +39,36 @@ export function HomeAssistantProvider({
     defaultHomeAssistantContext
   );
 
-  const connectedCallback = useCallback((client: HomeAssistant): void => {
+  const connectedCallback = useCallback((): void => {
+    console.log("Connected to Home Assistant");
     setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
       ...prevHomeAssistant,
       client,
     }));
-  }, []);
+  }, [setHomeAssistant]);
 
-  const configCallback = useCallback((config: HassConfig): void => {
-    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
-      ...prevHomeAssistant,
-      config,
-    }));
-  }, []);
+  const configCallback = useCallback(
+    (config: HassConfig): void => {
+      setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+        ...prevHomeAssistant,
+        config,
+      }));
+    },
+    [setHomeAssistant]
+  );
 
-  const entitiesCallback = useCallback((entities: HassEntities): void => {
-    setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
-      ...prevHomeAssistant,
-      entities,
-    }));
-  }, []);
+  const entitiesCallback = useCallback(
+    (entities: HassEntities): void => {
+      setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+        ...prevHomeAssistant,
+        entities,
+      }));
+    },
+    [setHomeAssistant]
+  );
 
   useEffect(() => {
-    const client = new HomeAssistant(
+    client = new HomeAssistant(
       dashboardId,
       connectedCallback,
       configCallback,
@@ -68,6 +76,7 @@ export function HomeAssistantProvider({
     );
     try {
       client.connect();
+      connectedCallback();
     } catch (e) {
       console.warn(e);
     }
