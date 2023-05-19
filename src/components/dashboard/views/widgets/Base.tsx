@@ -34,7 +34,7 @@ export function WidgetBase({
   const widget = (
     <Card sx={{ width: "100%" }}>
       <CardActionArea
-        disabled={editing}
+        disabled={editing || data.type !== WidgetType.Image}
         onClick={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
       >
         {data.title && (
