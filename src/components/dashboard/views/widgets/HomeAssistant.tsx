@@ -55,7 +55,9 @@ export function WidgetHomeAssistant({
               color={data.iconColor || "currentColor"}
               path={mdiIcon}
               size={
-                !isNaN(Number(data.iconSize))
+                !isNaN(Number(data.iconSize)) &&
+                Number(data.iconSize) > 0 &&
+                Number(data.iconSize) < 8
                   ? Number(data.iconSize)
                   : data.iconSize || 4
               }
