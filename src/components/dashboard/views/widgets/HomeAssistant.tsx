@@ -3,15 +3,17 @@ import type { WidgetHomeAssistant as WidgetHomeAssistantModel } from "@prisma/cl
 import { useMemo } from "react";
 import { HassEntity } from "home-assistant-js-websocket";
 import { Icon } from "@mdi/react";
-import { Typography } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 
 export function WidgetHomeAssistant({
   data,
+  editing,
   expanded,
 }: {
   data: WidgetHomeAssistantModel;
+  editing: boolean;
   expanded: boolean;
 }): JSX.Element {
   const homeAssistant = useHomeAssistant();
@@ -51,17 +53,31 @@ export function WidgetHomeAssistant({
             </Typography>
           )}
           {data.showIcon && mdiIcon && (
-            <Icon
-              color={data.iconColor || "currentColor"}
-              path={mdiIcon}
-              size={
-                !isNaN(Number(data.iconSize)) &&
-                Number(data.iconSize) > 0 &&
-                Number(data.iconSize) < 8
-                  ? Number(data.iconSize)
-                  : data.iconSize || 4
-              }
-            />
+            <IconButton
+              aria-label={entity.attributes.friendly_name}
+              disabled={editing}
+              onClick={() => {
+                homeAssistant.client?.callService(
+                  entity.entity_id.split(".")[0],
+                  "toggle",
+                  {
+                    entity_id: entity.entity_id,
+                  }
+                );
+              }}
+            >
+              <Icon
+                color={data.iconColor || "currentColor"}
+                path={mdiIcon}
+                size={
+                  !isNaN(Number(data.iconSize)) &&
+                  Number(data.iconSize) > 0 &&
+                  Number(data.iconSize) < 8
+                    ? Number(data.iconSize)
+                    : data.iconSize || 4
+                }
+              />
+            </IconButton>
           )}
           {data.showState && (
             <Typography variant="body1">
