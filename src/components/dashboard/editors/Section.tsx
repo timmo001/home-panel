@@ -23,8 +23,10 @@ export function EditSection({
       container
       direction="row"
       alignItems="center"
-      spacing={2}
-      sx={{ width: "100%" }}
+      sx={{
+        margin: "2.5rem 2.5rem 0",
+        width: "100%",
+      }}
       xs
     >
       <Grid2 xs sx={{ height: "100%" }}>
