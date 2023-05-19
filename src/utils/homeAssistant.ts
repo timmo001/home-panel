@@ -10,9 +10,11 @@ import {
   getUser,
   HassConfig,
   HassEntities,
+  HassServices,
   HassUser,
   subscribeConfig,
   subscribeEntities,
+  subscribeServices,
 } from "home-assistant-js-websocket";
 
 import {
@@ -27,18 +29,21 @@ export class HomeAssistant {
   private connectedCallback: () => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
+  private servicesCallback: (services: HassServices) => void;
 
   constructor(
     dashboardId: string,
     connectedCallback?: () => void,
     configCallback?: (config: HassConfig) => void,
     entitiesCallback?: (entities: HassEntities) => void,
+    servicesCallback?: (services: HassServices) => void,
     connection?: Connection
   ) {
     this.dashboardId = dashboardId;
     this.connectedCallback = connectedCallback || (() => {});
     this.configCallback = configCallback || (() => {});
     this.entitiesCallback = entitiesCallback || (() => {});
+    this.servicesCallback = servicesCallback || (() => {});
     this.connection = connection || null;
   }
 
@@ -122,6 +127,10 @@ export class HomeAssistant {
 
     subscribeEntities(this.connection, (entities: HassEntities) => {
       this.entitiesCallback(entities);
+    });
+
+    subscribeServices(this.connection, (services) => {
+      this.servicesCallback(services);
     });
   }
 }

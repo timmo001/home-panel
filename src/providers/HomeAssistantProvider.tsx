@@ -7,7 +7,11 @@ import {
   useEffect,
   useState,
 } from "react";
-import { HassConfig, HassEntities } from "home-assistant-js-websocket";
+import {
+  HassConfig,
+  HassEntities,
+  HassServices,
+} from "home-assistant-js-websocket";
 
 import { HomeAssistant } from "@/utils/homeAssistant";
 
@@ -15,12 +19,14 @@ type HomeAssistantContextType = {
   client: HomeAssistant | null;
   config: HassConfig | null;
   entities: HassEntities | null;
+  services: HassServices | null;
 };
 
 const defaultHomeAssistantContext: HomeAssistantContextType = {
   client: null,
   config: null,
   entities: null,
+  services: null,
 };
 
 const HomeAssistantContext = createContext<HomeAssistantContextType>(
@@ -67,12 +73,23 @@ export function HomeAssistantProvider({
     [setHomeAssistant]
   );
 
+  const servicesCallback = useCallback(
+    (services: HassServices): void => {
+      setHomeAssistant((prevHomeAssistant: HomeAssistantContextType) => ({
+        ...prevHomeAssistant,
+        services,
+      }));
+    },
+    [setHomeAssistant]
+  );
+
   useEffect(() => {
     client = new HomeAssistant(
       dashboardId,
       connectedCallback,
       configCallback,
-      entitiesCallback
+      entitiesCallback,
+      servicesCallback
     );
     try {
       client.connect();
@@ -85,7 +102,13 @@ export function HomeAssistantProvider({
       if (client) client.disconnect();
       setHomeAssistant(defaultHomeAssistantContext);
     };
-  }, [configCallback, connectedCallback, dashboardId, entitiesCallback]);
+  }, [
+    configCallback,
+    connectedCallback,
+    dashboardId,
+    entitiesCallback,
+    servicesCallback,
+  ]);
 
   return (
     <HomeAssistantContext.Provider value={homeAssistant}>

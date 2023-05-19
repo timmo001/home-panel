@@ -23,6 +23,18 @@ export function WidgetHomeAssistant({
     return homeAssistant.entities[data.entityId];
   }, [data.entityId, homeAssistant.entities]);
 
+  const clickable = useMemo<boolean>(() => {
+    if (!entity) return false;
+    const domain = entity.entity_id.split(".")[0];
+    console.log(
+      domain,
+      homeAssistant.services?.[domain],
+      homeAssistant.services?.[domain]?.["toggle"]
+    );
+    if (!homeAssistant.services?.[domain]?.["toggle"]) return false;
+    return true;
+  }, [entity, homeAssistant.services]);
+
   const entityIcon = useMemo<string>(() => {
     if (!entity?.attributes.icon) return "mdi:help";
     if (entity.attributes.icon.startsWith("mdi:")) {
@@ -31,7 +43,7 @@ export function WidgetHomeAssistant({
     return `mdi:${entity.attributes.icon}`;
   }, [entity?.attributes.icon]);
 
-  const mdiIcon = useMemo<string | null>(() => {
+  const mdiIcon = useMemo<string>(() => {
     try {
       const iconPath = entityIcon.replace(/[:|-](\w)/g, (_, match: string) =>
         match.toUpperCase()
@@ -43,6 +55,20 @@ export function WidgetHomeAssistant({
     }
   }, [entityIcon]);
 
+  const icon = (
+    <Icon
+      color={data.iconColor || "currentColor"}
+      path={mdiIcon}
+      size={
+        !isNaN(Number(data.iconSize)) &&
+        Number(data.iconSize) > 0 &&
+        Number(data.iconSize) < 8
+          ? Number(data.iconSize)
+          : data.iconSize || 4
+      }
+    />
+  );
+
   return (
     <>
       {entity ? (
@@ -53,31 +79,27 @@ export function WidgetHomeAssistant({
             </Typography>
           )}
           {data.showIcon && mdiIcon && (
-            <IconButton
-              aria-label={entity.attributes.friendly_name}
-              disabled={editing}
-              onClick={() => {
-                homeAssistant.client?.callService(
-                  entity.entity_id.split(".")[0],
-                  "toggle",
-                  {
-                    entity_id: entity.entity_id,
-                  }
-                );
-              }}
-            >
-              <Icon
-                color={data.iconColor || "currentColor"}
-                path={mdiIcon}
-                size={
-                  !isNaN(Number(data.iconSize)) &&
-                  Number(data.iconSize) > 0 &&
-                  Number(data.iconSize) < 8
-                    ? Number(data.iconSize)
-                    : data.iconSize || 4
-                }
-              />
-            </IconButton>
+            <>
+              {clickable ? (
+                <IconButton
+                  aria-label={entity.attributes.friendly_name}
+                  disabled={editing}
+                  onClick={() => {
+                    homeAssistant.client?.callService(
+                      entity.entity_id.split(".")[0],
+                      "toggle",
+                      {
+                        entity_id: entity.entity_id,
+                      }
+                    );
+                  }}
+                >
+                  {icon}
+                </IconButton>
+              ) : (
+                icon
+              )}
+            </>
           )}
           {data.showState && (
             <Typography variant="body1">
