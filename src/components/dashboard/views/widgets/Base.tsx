@@ -101,6 +101,7 @@ export function WidgetBase({
       {expanded && (
         <Dialog
           open
+          fullWidth
           onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
         >
           {widget}
