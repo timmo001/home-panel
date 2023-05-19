@@ -73,7 +73,7 @@ export function Widget({
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
       case WidgetType.HomeAssistant:
-        return <WidgetHomeAssistant data={widgetData} />;
+        return <WidgetHomeAssistant data={widgetData} expanded={expanded} />;
       case WidgetType.Image:
         return <WidgetImage data={widgetData} />;
       case WidgetType.Markdown:
@@ -81,7 +81,7 @@ export function Widget({
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [data.type, widgetData]);
+  }, [data.type, expanded, widgetData]);
 
   return (
     <WidgetBase

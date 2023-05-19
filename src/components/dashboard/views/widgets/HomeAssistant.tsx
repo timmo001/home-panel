@@ -8,8 +8,10 @@ import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 
 export function WidgetHomeAssistant({
   data,
+  expanded,
 }: {
   data: WidgetHomeAssistantModel;
+  expanded: boolean;
 }): JSX.Element {
   const homeAssistant = useHomeAssistant();
 
