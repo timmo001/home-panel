@@ -18,7 +18,7 @@ export function EditWidgetBase({
         name="title"
         label="Title"
         margin="dense"
-        defaultValue={data.title}
+        defaultValue={data.title || ""}
         onChange={async (e) =>
           await widgetUpdate(
             dashboardId,
@@ -32,7 +32,7 @@ export function EditWidgetBase({
         name="width"
         label="Width"
         margin="dense"
-        defaultValue={data.width || "6"}
+        defaultValue={data.width || ""}
         onChange={async (e) =>
           await widgetUpdate(
             dashboardId,
@@ -41,7 +41,8 @@ export function EditWidgetBase({
             e.target.value
           )
         }
-      />      <Autocomplete
+      />
+      <Autocomplete
         defaultValue={data.type}
         options={Object.values(WidgetType)}
         getOptionLabel={(option) => {

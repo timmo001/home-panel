@@ -135,7 +135,7 @@ export function EditWidgetHomeAssistant({
         name="iconColor"
         label="Icon Color"
         margin="dense"
-        defaultValue={data.iconColor}
+        defaultValue={data.iconColor || ""}
         onChange={async (e) =>
           await widgetHomeAssistantUpdate(
             dashboardId,
@@ -150,7 +150,7 @@ export function EditWidgetHomeAssistant({
         name="iconSize"
         label="Icon Size"
         margin="dense"
-        defaultValue={data.iconSize}
+        defaultValue={data.iconSize || ""}
         onChange={async (e) =>
           await widgetHomeAssistantUpdate(
             dashboardId,
