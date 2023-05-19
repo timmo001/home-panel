@@ -10,10 +10,11 @@ import {
   widgetGetData,
   widgetUpdate,
 } from "@/utils/serverActions/widget";
+import { WidgetAction, WidgetType } from "@/types/widget.type";
+import { WidgetFrame } from "@/components/dashboard/views/widgets/Frame";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
-import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function Widget({
   dashboardId,
@@ -75,6 +76,8 @@ export function Widget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
+      case WidgetType.Frame:
+        return <WidgetFrame data={widgetData} />;
       case WidgetType.HomeAssistant:
         return (
           <WidgetHomeAssistant

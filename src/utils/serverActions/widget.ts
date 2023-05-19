@@ -1,6 +1,7 @@
 "use server";
 import type {
   Widget as WidgetModel,
+  WidgetFrame as WidgetFrameModel,
   WidgetHomeAssistant as WidgetHomeAssistantModel,
   WidgetImage as WidgetImageModel,
   WidgetMarkdown as WidgetMarkdownModel,
@@ -34,6 +35,17 @@ export async function widgetGetData(
   console.log("Get widget data:", { widgetId, type });
   let data;
   switch (type) {
+    case WidgetType.Frame:
+      data = await prisma.widgetFrame.findUnique({
+        where: { widgetId },
+      });
+      if (data) return data;
+      return await prisma.widgetFrame.create({
+        data: {
+          url: "",
+          widget: { connect: { id: widgetId } },
+        },
+      });
     case WidgetType.HomeAssistant:
       data = await prisma.widgetHomeAssistant.findUnique({
         where: { widgetId },
@@ -132,6 +144,35 @@ export async function widgetUpdate(
   }
 
   console.log("New widget data:", newData);
+
+  return newData;
+}
+
+export async function widgetFrameUpdate(
+  dashboardId: string,
+  sectionId: string,
+  widgetId: string,
+  name: string,
+  value: any
+): Promise<WidgetFrameModel> {
+  console.log("Update widget frame:", {
+    dashboardId,
+    sectionId,
+    widgetId,
+    name,
+    value,
+  });
+
+  const newData = await prisma.widgetFrame.update({
+    data: {
+      [name]: value,
+    },
+    where: {
+      widgetId,
+    },
+  });
+
+  await widgetRevalidate(dashboardId, sectionId, widgetId);
 
   return newData;
 }
