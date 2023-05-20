@@ -15,23 +15,29 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  ArrowBackRounded,
   DashboardRounded,
   MenuRounded,
   SettingsRounded,
 } from "@mui/icons-material";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export function DrawerComponent(): JSX.Element {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const router = useRouter();
 
   const dashboardPath =
     pathname.startsWith("/dashboards") &&
     pathname.split("/").slice(0, 3).join("/");
+
+  useEffect(() => {
+    setDrawerOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -39,26 +45,33 @@ export function DrawerComponent(): JSX.Element {
         position="fixed"
         sx={{
           background: "transparent",
-          left: 0,
+          left: drawerOpen ? 240 : 0,
           top: 0,
           width: "fit-content",
-          // zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
+        elevation={0}
       >
         <Toolbar
           variant="dense"
           sx={{
-            // background: "transparent",
             paddingLeft: "0.2rem !important",
             paddingRight: "0 !important",
           }}
         >
-          <IconButton
-            aria-label="Open drawer"
-            onClick={() => setDrawerOpen(!drawerOpen)}
-          >
-            <MenuRounded />
-          </IconButton>
+          {pathname.endsWith("/edit") ? (
+            <IconButton aria-label="Go Back" onClick={() => router.back()}>
+              <ArrowBackRounded />
+            </IconButton>
+          ) : (
+            !drawerOpen && (
+              <IconButton
+                aria-label="Open drawer"
+                onClick={() => setDrawerOpen(!drawerOpen)}
+              >
+                <MenuRounded />
+              </IconButton>
+            )
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
