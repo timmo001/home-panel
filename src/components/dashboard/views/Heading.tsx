@@ -20,8 +20,8 @@ function HeaderItem({ item }: { item: HeaderItemModel }): JSX.Element | null {
           </Typography>
           <Typography
             align="center"
-            variant="h3"
-            sx={{ lineHeight: "1.0", fontWeight: 300 }}
+            variant="h4"
+            sx={{ lineHeight: "1.2", fontWeight: 300 }}
           >
             <Moment format="ddd, Do MMMM YYYY" />
           </Typography>
