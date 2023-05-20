@@ -45,8 +45,8 @@ export function WidgetHomeAssistant({
       );
       return require(`materialdesign-js/icons/${iconPath}`).default;
     } catch (e) {
-      console.error(`Could not load icon ${entityIcon}: ${e}`);
-      return null;
+      console.warn(`Could not load icon ${entityIcon}:`, e);
+      return require(`materialdesign-js/icons/mdiHelp`).default;
     }
   }, [entityIcon]);
 
