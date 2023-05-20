@@ -17,7 +17,7 @@ export async function widgetCreate(
 ): Promise<WidgetModel> {
   console.log("Create widget:", { dashboardId, sectionId });
 
-  const newData = await prisma.widget.create({
+  let newData = await prisma.widget.create({
     data: {
       type: WidgetType.Markdown,
       title: "",
@@ -34,11 +34,12 @@ export async function widgetCreate(
     },
   });
 
-  revalidatePath(
-    `/dashboards/${dashboardId}/sections/${sectionId}/widgets/${newData.id}/edit`
-  );
-
   await widgetsReorganise(sectionId);
+
+  await widgetRevalidate(dashboardId, sectionId, newData.id);
+  newData = await prisma.widget.findUniqueOrThrow({
+    where: { id: newData.id },
+  });
 
   return newData;
 }
@@ -170,10 +171,9 @@ export async function widgetUpdate(
     newData = await prisma.widget.findUniqueOrThrow({
       where: { id: widgetId },
     });
-    revalidatePath(`/dashboards/${dashboardId}`);
-  } else {
-    await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
   }
+
+  await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
 
   console.log("New widget data:", newData);
 

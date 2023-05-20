@@ -19,11 +19,11 @@ export async function sectionCreate(dashboardId: string): Promise<Section> {
       },
     },
   });
-  revalidatePath(
-    `/dashboards/${newData.dashboardId}/sections/${newData.id}/edit`
-  );
 
   await sectionsReorganise(dashboardId);
+
+  revalidatePath(`/dashboards/${dashboardId}`);
+  revalidatePath(`/dashboards/${dashboardId}/sections/${newData.id}/edit`);
 
   return newData;
 }
@@ -90,10 +90,10 @@ export async function sectionUpdate(
     newData = await prisma.section.findUniqueOrThrow({
       where: { id: sectionId },
     });
-    revalidatePath(`/dashboards/${dashboardId}`);
-  } else {
-    revalidatePath(`/dashboards/${dashboardId}/sections/${newData.id}/edit`);
   }
+
+  revalidatePath(`/dashboards/${dashboardId}`);
+  revalidatePath(`/dashboards/${dashboardId}/sections/${newData.id}/edit`);
 
   console.log("New section data:", newData);
 
