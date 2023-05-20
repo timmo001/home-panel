@@ -28,10 +28,19 @@ model Dashboard {
   description   String?
   userId        String
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sections      Section[]
+  headerItems   HeaderItem[]
   homeAssistant HomeAssistant[]
+  sections      Section[]
 
   @@index([userId, position], name: "userId_position_unique")
+}
+
+model HeaderItem {
+  id          String     @id @default(cuid())
+  position    Int        @default(10)
+  type        String
+  dashboardId String?
+  dashboard   Dashboard? @relation(fields: [dashboardId], references: [id])
 }
 
 model Section {

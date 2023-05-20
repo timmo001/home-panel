@@ -28,6 +28,9 @@ export default async function Page({
       id: params.dashboardId,
     },
     include: {
+      headerItems: {
+        orderBy: { position: "asc" },
+      },
       sections: {
         include: {
           widgets: {

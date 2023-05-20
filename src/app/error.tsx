@@ -17,7 +17,14 @@ export default function Error({
 
   return (
     <main className={styles.main}>
-      <Stack direction="column" spacing={2}>
+      <Stack
+        direction="column"
+        spacing={2}
+        sx={{
+          margin: "2.5rem 2.5rem 0",
+          width: "100%",
+        }}
+      >
         <Typography component="h5" variant="h2">
           Something went wrong!
         </Typography>
