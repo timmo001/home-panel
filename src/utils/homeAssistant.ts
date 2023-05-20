@@ -47,6 +47,10 @@ export class HomeAssistant {
     this.connection = connection || null;
   }
 
+  baseUrl(): string | null {
+    return this.connection?.options.auth?.data.hassUrl || null;
+  }
+
   async callService(
     domain: string,
     service: string,

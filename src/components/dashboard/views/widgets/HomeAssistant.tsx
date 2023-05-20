@@ -6,15 +6,19 @@ import { Icon } from "@mdi/react";
 import { IconButton, Typography } from "@mui/material";
 
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
+import { WidgetAction } from "@/types/widget.type";
+import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 
 export function WidgetHomeAssistant({
   data,
   editing,
   expanded,
+  handleInteraction,
 }: {
   data: WidgetHomeAssistantModel;
   editing: boolean;
   expanded: boolean;
+  handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
   const homeAssistant = useHomeAssistant();
 
@@ -64,6 +68,40 @@ export function WidgetHomeAssistant({
     />
   );
 
+  const state = useMemo<JSX.Element | null>(() => {
+    if (!entity || !data.showState) return null;
+    const domain = entity.entity_id.split(".")[0];
+
+    switch (domain) {
+      case "camera":
+        console.log(entity);
+        return (
+          <WidgetImage
+            data={{
+              url: `${homeAssistant.client?.baseUrl()}${
+                entity.attributes.entity_picture
+              }`,
+              widgetId: data.widgetId,
+            }}
+            editing={editing}
+            handleInteraction={handleInteraction}
+          />
+          // // eslint-disable-next-line @next/next/no-img-element
+          // <img
+          //   src=
+          //   alt={entity.attributes.friendly_name}
+          //   style={{ maxWidth: "100%" }}
+          // />
+        );
+      default:
+        return (
+          <Typography variant="body1">
+            {entity.state} {entity.attributes.unit_of_measurement}
+          </Typography>
+        );
+    }
+  }, [data, editing, entity, homeAssistant.client, handleInteraction]);
+
   return (
     <>
       {entity ? (
@@ -96,12 +134,7 @@ export function WidgetHomeAssistant({
               )}
             </>
           )}
-          {data.showState && (
-            <Typography variant="body1">
-              {entity.state}
-              {entity.attributes.unit_of_measurement}
-            </Typography>
-          )}
+          {state}
           {data.secondaryInfo && (
             <Typography variant="body2">
               {data.secondaryInfo === "last_changed" ||

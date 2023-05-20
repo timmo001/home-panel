@@ -84,6 +84,7 @@ export function Widget({
             data={widgetData}
             editing={editing}
             expanded={expanded}
+            handleInteraction={handleInteraction}
           />
         );
       case WidgetType.Image:
