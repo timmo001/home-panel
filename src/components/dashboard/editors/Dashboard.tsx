@@ -11,15 +11,19 @@ import {
   TextField,
   Typography,
   Unstable_Grid2 as Grid2,
+  Button,
 } from "@mui/material";
 import { MuiChipsInput } from "mui-chips-input";
+import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 import {
+  dashboardDelete,
   dashboardHeaderUpdate,
   dashboardUpdate,
 } from "@/utils/serverActions/dashboard";
+import { DeleteRounded } from "@mui/icons-material";
 import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
-import { useMemo } from "react";
 
 export function EditDashboard({
   dashboardConfig,
@@ -30,6 +34,8 @@ export function EditDashboard({
   headerItemsConfig: Array<HeaderItemModel>;
   homeAssistantConfig: HomeAssistantModel;
 }): JSX.Element {
+  const router = useRouter();
+
   const headerItems = useMemo<Array<string>>(
     () => headerItemsConfig.map((item) => item.type),
     [headerItemsConfig]
@@ -105,6 +111,19 @@ export function EditDashboard({
               await dashboardHeaderUpdate(dashboardConfig.id, data);
             }}
           />
+          <Divider sx={{ marginTop: "1rem", marginBottom: "1rem" }} />
+          <Button
+            color="error"
+            variant="outlined"
+            onClick={async () => {
+              await dashboardDelete(dashboardConfig.id);
+              router.replace("/dashboards");
+            }}
+            sx={{ marginTop: "1rem" }}
+          >
+            <DeleteRounded />
+            Delete
+          </Button>
         </Grid2>
       </CardContent>
     </Card>

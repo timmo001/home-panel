@@ -44,15 +44,11 @@ export async function dashboardCreate(userId: string): Promise<Dashboard> {
   return newData;
 }
 
-export async function dashboardDelete(
-  idOrDashboard: string | Dashboard
-): Promise<Dashboard> {
-  console.log("Delete dashboard:", { idOrDashboard });
+export async function dashboardDelete(id: string): Promise<Dashboard> {
+  console.log("Delete dashboard:", { id });
 
   const data = await prisma.dashboard.delete({
-    where: {
-      id: typeof idOrDashboard === "string" ? idOrDashboard : idOrDashboard.id,
-    },
+    where: { id },
   });
 
   revalidatePath("/dashboards");
