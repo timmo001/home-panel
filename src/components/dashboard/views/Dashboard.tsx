@@ -14,13 +14,15 @@ export function Dashboard({
 }): JSX.Element {
   return (
     <HomeAssistantProvider dashboardId={dashboard.id}>
-      <Stack sx={{ width: "100%" }}>
+      <Stack sx={{ height: "100%", width: "100%" }}>
         <Heading dashboard={dashboard} />
         <Grid2
           container
           direction="column"
           alignContent="flex-start"
           sx={{
+            flexGrow: 1,
+            flexShrink: 0,
             overflowY: "auto",
             width: "100%",
           }}

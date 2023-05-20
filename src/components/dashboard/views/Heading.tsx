@@ -70,8 +70,12 @@ export function Heading({
       container
       justifyContent="space-evenly"
       wrap="nowrap"
-      xs
-      sx={{ width: "100%" }}
+      xs="auto"
+      sx={{
+        flexGrow: 0,
+        flexShrink: 1,
+        width: "100%",
+      }}
     >
       {dashboard.headerItems.map((item: HeaderItemModel) => (
         <Grid2 key={item.id} justifyContent="center">

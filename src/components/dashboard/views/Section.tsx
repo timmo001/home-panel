@@ -138,8 +138,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           alignContent="flex-start"
           justifyContent="flex-start"
           xs="auto"
-          sx={{
-          }}
+          sx={{}}
         >
           {data.widgets.map((widget: WidgetModel) => (
             <Grid2
