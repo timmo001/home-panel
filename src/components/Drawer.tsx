@@ -1,4 +1,5 @@
 "use client";
+import type { Dashboard as DashboardModel } from "@prisma/client";
 import {
   AppBar,
   Avatar,
@@ -8,6 +9,7 @@ import {
   List,
   ListItemButton,
   ListItemIcon,
+  ListItemSecondaryAction,
   ListItemText,
   Skeleton,
   Stack,
@@ -15,6 +17,7 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  AddRounded,
   ArrowBackRounded,
   DashboardRounded,
   MenuRounded,
@@ -25,7 +28,11 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-export function DrawerComponent(): JSX.Element {
+export function DrawerComponent({
+  dashboards,
+}: {
+  dashboards: Array<DashboardModel>;
+}): JSX.Element {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const { data: session, status } = useSession();
   const pathname = usePathname();
@@ -45,7 +52,7 @@ export function DrawerComponent(): JSX.Element {
         position="fixed"
         sx={{
           background: "transparent",
-          left: drawerOpen ? 240 : 0,
+          left: drawerOpen ? 260 : 0,
           top: 0,
           width: "fit-content",
         }}
@@ -79,7 +86,7 @@ export function DrawerComponent(): JSX.Element {
         open={drawerOpen}
         variant="persistent"
         sx={{
-          width: drawerOpen ? 240 : 0,
+          width: drawerOpen ? 260 : 0,
           transition: (theme) =>
             theme.transitions.create("width", {
               easing: theme.transitions.easing.sharp,
@@ -87,7 +94,7 @@ export function DrawerComponent(): JSX.Element {
             }),
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
-            width: 240,
+            width: 260,
             boxSizing: "border-box",
           },
         }}
@@ -120,38 +127,51 @@ export function DrawerComponent(): JSX.Element {
           sx={{ flexGrow: 1, overflow: "auto", width: "100%" }}
         >
           <List>
-            <Link href="/">
-              <ListItemButton
-                selected={
-                  pathname !== `${dashboardPath}/edit` &&
-                  pathname.startsWith("/dashboards")
-                }
-                onClick={() => setDrawerOpen(false)}
-              >
+            {dashboards.map((dashboard: DashboardModel) => (
+              <Link key={dashboard.id} href={`/dashboards/${dashboard.id}`}>
+                <ListItemButton
+                  selected={
+                    dashboardPath === `/dashboards/${dashboard.id}` ||
+                    dashboardPath === `/dashboards/${dashboard.id}/edit`
+                  }
+                  onClick={() => setDrawerOpen(false)}
+                >
+                  <ListItemIcon>
+                    <DashboardRounded fontSize="medium" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={dashboard.name}
+                    secondary={dashboard.description}
+                  />
+                  <ListItemSecondaryAction>
+                    <Link href={`/dashboards/${dashboard.id}/edit`}>
+                      <IconButton
+                        aria-label={`Configure ${dashboard.name}`}
+                        onClick={() =>
+                          router.push(`/dashboards/${dashboard.id}/edit`)
+                        }
+                      >
+                        <SettingsRounded />
+                      </IconButton>
+                    </Link>
+                  </ListItemSecondaryAction>
+                </ListItemButton>
+              </Link>
+            ))}
+            <Link href="/dashboards/0/edit">
+              <ListItemButton>
                 <ListItemIcon>
-                  <DashboardRounded fontSize="medium" />
+                  <AddRounded fontSize="medium" />
                 </ListItemIcon>
-                <ListItemText primary="Dashboard" />
+                <ListItemText
+                  primary="Create Dashboard"
+                  secondary="Create a new dashboard"
+                />
               </ListItemButton>
             </Link>
           </List>
         </Stack>
         <Divider />
-        {status === "authenticated" && dashboardPath && (
-          <>
-            <Stack direction="column">
-              <Link href={`${dashboardPath}/edit`}>
-                <ListItemButton selected={pathname === `${dashboardPath}/edit`}>
-                  <ListItemIcon>
-                    <SettingsRounded fontSize="medium" />
-                  </ListItemIcon>
-                  <ListItemText primary="Configure Dashboard" />
-                </ListItemButton>
-              </Link>
-            </Stack>
-            <Divider />
-          </>
-        )}
         <Stack direction="column">
           {status === "loading" ? (
             <Skeleton variant="rectangular" width="100%" height={40} />
@@ -171,6 +191,11 @@ export function DrawerComponent(): JSX.Element {
               </ListItemIcon>
               <ListItemText
                 primary={`Sign ${status === "authenticated" ? "Out" : "In"}`}
+                secondary={
+                  status !== "authenticated"
+                    ? "Sign in using credentials"
+                    : session?.user?.name ?? "Unknown"
+                }
               />
             </ListItemButton>
           )}
