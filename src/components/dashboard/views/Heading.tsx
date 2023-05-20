@@ -23,7 +23,7 @@ function HeaderItem({ item }: { item: HeaderItemModel }): JSX.Element | null {
             variant="h4"
             sx={{ lineHeight: "1.2", fontWeight: 300 }}
           >
-            <Moment format="ddd, Do MMMM YYYY" />
+            <Moment format="dddd, Do MMMM YYYY" />
           </Typography>
         </>
       );
