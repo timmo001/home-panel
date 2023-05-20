@@ -12,10 +12,14 @@ import {
   Typography,
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
-
-import { dashboardUpdate } from "@/utils/serverActions/dashboard";
-import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
 import { MuiChipsInput } from "mui-chips-input";
+
+import {
+  dashboardHeaderUpdate,
+  dashboardUpdate,
+} from "@/utils/serverActions/dashboard";
+import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
+import { useMemo } from "react";
 
 export function EditDashboard({
   dashboardConfig,
@@ -26,6 +30,11 @@ export function EditDashboard({
   headerItemsConfig: Array<HeaderItemModel>;
   homeAssistantConfig: HomeAssistantModel;
 }): JSX.Element {
+  const headerItems = useMemo<Array<string>>(
+    () => headerItemsConfig.map((item) => item.type),
+    [headerItemsConfig]
+  );
+
   return (
     <Card
       sx={{
@@ -84,15 +93,18 @@ export function EditDashboard({
           <Typography variant="h6" gutterBottom>
             Header Items
           </Typography>
-          {/* <MuiChipsInput
+          <MuiChipsInput
             name="headerItems"
             label="Header Items"
             margin="dense"
-            defaultValue={headerItemsConfig.map((item) => item.name)}
-            onChange={async (e) => {
-              console.log(e);
+            value={headerItems}
+            helperText={
+              headerItems.length > 0 ? "Double click to edit an item" : ""
+            }
+            onChange={async (data: Array<string>) => {
+              await dashboardHeaderUpdate(dashboardConfig.id, data);
             }}
-          /> */}
+          />
         </Grid2>
       </CardContent>
     </Card>
