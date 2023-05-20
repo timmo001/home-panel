@@ -74,7 +74,6 @@ export function WidgetHomeAssistant({
 
     switch (domain) {
       case "camera":
-        console.log(entity);
         return (
           <WidgetImage
             data={{
@@ -86,12 +85,6 @@ export function WidgetHomeAssistant({
             editing={editing}
             handleInteraction={handleInteraction}
           />
-          // // eslint-disable-next-line @next/next/no-img-element
-          // <img
-          //   src=
-          //   alt={entity.attributes.friendly_name}
-          //   style={{ maxWidth: "100%" }}
-          // />
         );
       default:
         return (
