@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { authOptions } from "@/utils/prisma";
-import { WidgetNew } from "@/components/dashboard/views/WidgetNew";
+import { WidgetNew } from "@/components/dashboard/new/Widget";
 
 export const metadata: Metadata = {
   title: "New Widget | Home Panel",

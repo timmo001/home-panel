@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { authOptions } from "@/utils/prisma";
-import { SectionNew } from "@/components/dashboard/views/SectionNew";
+import { SectionNew } from "@/components/dashboard/new/Section";
 
 export const metadata: Metadata = {
   title: "New Section | Home Panel",

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 
 import { AccessDenied } from "@/components/AccessDenied";
-import { DashboardNew } from "@/components/dashboard/views/DashboardNew";
+import { DashboardNew } from "@/components/dashboard/new/Dashboard";
 import { authOptions } from "@/utils/prisma";
 
 export const metadata: Metadata = {
