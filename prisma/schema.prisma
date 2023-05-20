@@ -32,6 +32,7 @@ model Dashboard {
   homeAssistant HomeAssistant[]
   sections      Section[]
 
+  @@index([id, userId], name: "id_userId_unique")
   @@index([userId, position], name: "userId_position_unique")
 }
 
@@ -53,6 +54,7 @@ model Section {
   dashboard   Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
   widgets     Widget[]
 
+  @@index([id, dashboardId], name: "id_dashboardId_unique")
   @@index([dashboardId, position], name: "dashboardId_position_unique")
 }
 
@@ -69,6 +71,7 @@ model Widget {
   image         WidgetImage[]
   markdown      WidgetMarkdown[]
 
+  @@index([id, sectionId], name: "id_sectionId_unique")
   @@index([sectionId, position], name: "sectionId_position_unique")
 }
 
@@ -114,4 +117,6 @@ model HomeAssistant {
   expiresIn    Int?
   dashboardId  String    @unique
   dashboard    Dashboard @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+
+  @@index([id, dashboardId], name: "ha_id_dashboardId_unique")
 }
