@@ -26,11 +26,11 @@ model Dashboard {
   position      Int             @default(10)
   name          String
   description   String?
-  headerItems   HeaderItem[]
   userId        String
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  sections      Section[]
+  headerItems   HeaderItem[]
   homeAssistant HomeAssistant[]
+  sections      Section[]
 
   @@index([userId, position], name: "userId_position_unique")
 }
