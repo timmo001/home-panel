@@ -15,8 +15,6 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 export default async function Page(): Promise<JSX.Element> {
-  console.log("New Dashboard");
-
   const session = await getServerSession();
   if (!session) return <AccessDenied />;
 
@@ -25,6 +23,8 @@ export default async function Page(): Promise<JSX.Element> {
       username: session.user!.email!,
     },
   });
+
+  console.log("New Dashboard:", { userId: user.id });
 
   const newDashboard = await dashboardCreate(user.id);
 
