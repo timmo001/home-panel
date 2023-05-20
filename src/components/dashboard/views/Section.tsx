@@ -139,7 +139,6 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           justifyContent="flex-start"
           xs="auto"
           sx={{
-            height: "100%",
           }}
         >
           {data.widgets.map((widget: WidgetModel) => (
