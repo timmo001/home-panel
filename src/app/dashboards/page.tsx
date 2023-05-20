@@ -65,6 +65,8 @@ export default async function Page(): Promise<JSX.Element> {
       },
     });
     revalidatePath(`/dashboards/${dashboard.id}`);
+    revalidatePath(`/dashboards/${dashboard.id}/edit`);
+    return redirect(`/dashboards/${dashboard.id}/edit`);
   }
 
   return redirect(`/dashboards/${dashboard.id}`);
