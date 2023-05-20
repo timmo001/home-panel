@@ -46,6 +46,8 @@ export function DrawerComponent({
     setDrawerOpen(false);
   }, [pathname]);
 
+  console.log(pathname);
+
   return (
     <>
       <AppBar
