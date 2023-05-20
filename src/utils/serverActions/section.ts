@@ -4,6 +4,30 @@ import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/utils/prisma";
 
+export async function sectionCreate(dashboardId: string): Promise<Section> {
+  console.log("Create section:", { dashboardId });
+
+  const newData = await prisma.section.create({
+    data: {
+      title: "Section",
+      subtitle: "New section",
+      width: "480px",
+      dashboard: {
+        connect: {
+          id: dashboardId,
+        },
+      },
+    },
+  });
+  revalidatePath(
+    `/dashboards/${newData.dashboardId}/sections/${newData.id}/edit`
+  );
+
+  await sectionsReorganise(dashboardId);
+
+  return newData;
+}
+
 export async function sectionDelete(
   dashboardId: string,
   id: string

@@ -1,7 +1,6 @@
 import type { Section } from "@prisma/client";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { notFound } from "next/navigation";
 
 import { EditSection } from "@/components/dashboard/editors/Section";
 import { prisma } from "@/utils/prisma";
@@ -26,27 +25,7 @@ export default async function Page({
     },
   });
 
-  if (!data) {
-    console.log("Creating new section..");
-    data = await prisma.section.create({
-      data: {
-        title: "Section",
-        subtitle: "New section",
-        width: "480px",
-        dashboard: {
-          connect: {
-            id: params.dashboardId,
-          },
-        },
-      },
-    });
-    revalidatePath(
-      `/dashboards/${params.dashboardId}/sections/${data.id}/edit`
-    );
-    return redirect(
-      `/dashboards/${params.dashboardId}/sections/${data.id}/edit`
-    );
-  }
+  if (!data) return notFound();
 
   return <EditSection dashboardId={params.dashboardId} data={data} />;
 }

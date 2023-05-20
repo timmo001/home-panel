@@ -168,7 +168,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           {editing && (
             <Grid2 xs={6}>
               <Link
-                href={`/dashboards/${data.dashboardId}/sections/${data.id}/widgets/0/edit`}
+                href={`/dashboards/${data.dashboardId}/sections/${data.id}/widgets/new`}
               >
                 <IconButton aria-label="Add Widget" size="large">
                   <AddRounded fontSize="large" />
@@ -189,7 +189,7 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
             margin: "0.5rem 1rem",
           }}
         >
-          <Link href={`/dashboards/${data.dashboardId}/sections/0/edit`}>
+          <Link href={`/dashboards/${data.dashboardId}/sections/new`}>
             <IconButton aria-label="Add Widget" size="large">
               <AddRounded fontSize="large" />
             </IconButton>
