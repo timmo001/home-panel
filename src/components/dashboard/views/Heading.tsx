@@ -16,7 +16,7 @@ function HeaderItem({ item }: { item: HeaderItemModel }): JSX.Element | null {
             variant="h2"
             sx={{ lineHeight: "1.0", fontWeight: 300 }}
           >
-            <Moment format="HH:mm" />
+            <Moment format="h:mm a" />
           </Typography>
           <Typography
             align="center"
