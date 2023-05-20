@@ -26,11 +26,6 @@ export function WidgetHomeAssistant({
   const clickable = useMemo<boolean>(() => {
     if (!entity) return false;
     const domain = entity.entity_id.split(".")[0];
-    console.log(
-      domain,
-      homeAssistant.services?.[domain],
-      homeAssistant.services?.[domain]?.["toggle"]
-    );
     if (!homeAssistant.services?.[domain]?.["toggle"]) return false;
     return true;
   }, [entity, homeAssistant.services]);
