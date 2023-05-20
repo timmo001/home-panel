@@ -89,7 +89,7 @@ export default async function Page({
       },
     });
 
-  let headerItemsConfig: Array<HeaderItemModel> =
+  const headerItemsConfig: Array<HeaderItemModel> =
     await prisma.headerItem.findMany({
       where: {
         dashboardId: params.dashboardId,
