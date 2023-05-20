@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import { AccessDenied } from "@/components/AccessDenied";
 import { EditDashboard } from "@/components/dashboard/editors/Dashboard";
 import { prisma } from "@/utils/prisma";
-import { DashboardHeaderItemType } from "@/types/dashboard.type";
+import { HeaderItemType } from "@/types/dashboard.type";
 
 export const metadata: Metadata = {
   title: "Edit Dashboard | Home Panel",
@@ -105,7 +105,7 @@ export default async function Page({
               id: params.dashboardId,
             },
           },
-          type: DashboardHeaderItemType.Spacer,
+          type: HeaderItemType.Spacer,
           position: 0,
         },
       })
@@ -118,7 +118,7 @@ export default async function Page({
               id: params.dashboardId,
             },
           },
-          type: DashboardHeaderItemType.DateTime,
+          type: HeaderItemType.DateTime,
           position: 10,
         },
       })
@@ -131,7 +131,7 @@ export default async function Page({
               id: params.dashboardId,
             },
           },
-          type: DashboardHeaderItemType.Spacer,
+          type: HeaderItemType.Spacer,
           position: 20,
         },
       })

@@ -22,7 +22,6 @@ export function Dashboard({
           alignContent="flex-start"
           sx={{
             overflowY: "auto",
-            padding: "0.4rem",
             width: "100%",
           }}
         >

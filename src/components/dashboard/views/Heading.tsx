@@ -1,7 +1,56 @@
 "use client";
+import { HeaderItem as HeaderItemModel } from "@prisma/client";
 import { Unstable_Grid2 as Grid2, Typography } from "@mui/material";
+import Moment from "react-moment";
 
 import type { DashboardModel } from "@/types/dashboard.type";
+import { HeaderItemType } from "@/types/dashboard.type";
+
+function HeaderItem({ item }: { item: HeaderItemModel }): JSX.Element | null {
+  switch (item.type) {
+    case HeaderItemType.DateTime:
+      return (
+        <>
+          <Typography
+            align="center"
+            variant="h2"
+            sx={{ lineHeight: "1.0", fontWeight: 300 }}
+          >
+            <Moment format="HH:mm" />
+          </Typography>
+          <Typography
+            align="center"
+            variant="h3"
+            sx={{ lineHeight: "1.0", fontWeight: 300 }}
+          >
+            <Moment format="ddd, Do MMMM YYYY" />
+          </Typography>
+        </>
+      );
+    case HeaderItemType.Date:
+      return (
+        <Typography
+          align="center"
+          variant="h2"
+          sx={{ lineHeight: "1.0", fontWeight: 300 }}
+        >
+          <Moment format="Do MMMM YYYY" />
+        </Typography>
+      );
+    case HeaderItemType.Time:
+      return (
+        <Typography
+          align="center"
+          variant="h2"
+          sx={{ lineHeight: "1.0", fontWeight: 300 }}
+        >
+          <Moment format="HH:mm" />
+        </Typography>
+      );
+    default:
+      return null;
+  }
+}
 
 export function Heading({
   dashboard,
@@ -13,22 +62,15 @@ export function Heading({
       component="header"
       container
       justifyContent="space-evenly"
-      spacing={1}
       wrap="nowrap"
       xs
-      sx={{
-        width: "100%",
-      }}
+      sx={{ width: "100%" }}
     >
-      <Grid2>
-        <Typography variant="h2">{dashboard.name}</Typography>
-      </Grid2>
-      <Grid2>
-        <Typography variant="h2">{dashboard.name}</Typography>
-      </Grid2>
-      <Grid2>
-        <Typography variant="h2">{dashboard.name}</Typography>
-      </Grid2>
+      {dashboard.headerItems.map((item: HeaderItemModel) => (
+        <Grid2 key={item.id} justifyContent="center">
+          <HeaderItem item={item} />
+        </Grid2>
+      ))}
     </Grid2>
   );
 }

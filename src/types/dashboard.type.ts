@@ -14,7 +14,9 @@ export type DashboardHeaderModel = Dashboard & {
   headerItems: Array<HeaderItem>;
 };
 
-export enum DashboardHeaderItemType {
+export enum HeaderItemType {
+  Date = "date",
   DateTime = "dateTime",
   Spacer = "spacer",
+  Time = "time",
 }
