@@ -1,5 +1,6 @@
 import type {
   Dashboard as DashboardModel,
+  HeaderItem as HeaderItemModel,
   HomeAssistant as HomeAssistantModel,
   User as UserModel,
 } from "@prisma/client";
@@ -10,6 +11,7 @@ import { redirect } from "next/navigation";
 import { AccessDenied } from "@/components/AccessDenied";
 import { EditDashboard } from "@/components/dashboard/editors/Dashboard";
 import { prisma } from "@/utils/prisma";
+import { DashboardHeaderItemType } from "@/types/dashboard.type";
 
 export const metadata: Metadata = {
   title: "Edit Dashboard | Home Panel",
@@ -87,9 +89,59 @@ export default async function Page({
       },
     });
 
+  let headerItemsConfig: Array<HeaderItemModel> =
+    await prisma.headerItem.findMany({
+      where: {
+        dashboardId: params.dashboardId,
+      },
+    });
+
+  if (headerItemsConfig.length === 0) {
+    headerItemsConfig.push(
+      await prisma.headerItem.create({
+        data: {
+          dashboard: {
+            connect: {
+              id: params.dashboardId,
+            },
+          },
+          type: DashboardHeaderItemType.Spacer,
+          position: 0,
+        },
+      })
+    );
+    headerItemsConfig.push(
+      await prisma.headerItem.create({
+        data: {
+          dashboard: {
+            connect: {
+              id: params.dashboardId,
+            },
+          },
+          type: DashboardHeaderItemType.DateTime,
+          position: 10,
+        },
+      })
+    );
+    headerItemsConfig.push(
+      await prisma.headerItem.create({
+        data: {
+          dashboard: {
+            connect: {
+              id: params.dashboardId,
+            },
+          },
+          type: DashboardHeaderItemType.Spacer,
+          position: 20,
+        },
+      })
+    );
+  }
+
   return (
     <EditDashboard
       dashboardConfig={dashboardConfig}
+      headerItemsConfig={headerItemsConfig}
       homeAssistantConfig={homeAssistantConfig}
     />
   );
