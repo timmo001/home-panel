@@ -6,8 +6,7 @@ import type {
 } from "@prisma/client";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { notFound, redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { notFound } from "next/navigation";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { EditDashboard } from "@/components/dashboard/editors/Dashboard";
