@@ -56,7 +56,15 @@ export function WidgetHomeAssistant({
 
   const icon = (
     <Icon
-      color={data.iconColor || "currentColor"}
+      color={
+        data.iconColor || entity?.state === "unavailiable"
+          ? "rgba(255, 255, 255, 0.5)"
+          : entity?.state === "on"
+          ? `rgba(${
+              entity?.attributes?.rgb_color?.join(", ") || "255, 255, 0"
+            }, ${255 / entity?.attributes?.brightness || 1})`
+          : "currentColor"
+      }
       path={mdiIcon}
       size={
         !isNaN(Number(data.iconSize)) &&
@@ -87,13 +95,21 @@ export function WidgetHomeAssistant({
           />
         );
       default:
+        if (clickable && data.showIcon) return null;
         return (
           <Typography variant="body1">
             {entity.state} {entity.attributes.unit_of_measurement}
           </Typography>
         );
     }
-  }, [data, editing, entity, homeAssistant.client, handleInteraction]);
+  }, [
+    clickable,
+    data,
+    editing,
+    entity,
+    homeAssistant.client,
+    handleInteraction,
+  ]);
 
   return (
     <>
