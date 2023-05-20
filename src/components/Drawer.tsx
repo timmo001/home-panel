@@ -64,9 +64,14 @@ export function DrawerComponent(): JSX.Element {
       <Drawer
         anchor="left"
         open={drawerOpen}
-        variant="temporary"
+        variant="persistent"
         sx={{
-          width: 240,
+          width: drawerOpen ? 240 : 0,
+          transition: (theme) =>
+            theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: theme.transitions.duration.enteringScreen,
+            }),
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: 240,
@@ -108,6 +113,7 @@ export function DrawerComponent(): JSX.Element {
                   pathname !== `${dashboardPath}/edit` &&
                   pathname.startsWith("/dashboards")
                 }
+                onClick={() => setDrawerOpen(false)}
               >
                 <ListItemIcon>
                   <DashboardRounded fontSize="medium" />
