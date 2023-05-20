@@ -54,107 +54,117 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
   }
 
   return (
-    <Grid2
-      component="section"
-      container
-      direction="column"
-      sx={{
-        height: "100%",
-        margin: "0.5rem 1rem",
-        width: data.width,
-      }}
-    >
-      <Grid2 container xs="auto" sx={{ marginBottom: "0.5rem" }}>
-        {data.title && <Typography variant="h5">{data.title}</Typography>}
-        <Grid2
-          container
-          spacing={2}
-          alignContent="center"
-          justifyContent={editing ? "space-between" : "flex-end"}
-          sx={{ flexGrow: 1, paddingLeft: "1.5rem", paddingRight: "0.5rem" }}
-        >
-          {editing && (
-            <>
-              <IconButton
-                aria-label="Move Section Backward"
-                size="small"
-                onClick={(_) => handleInteraction(SectionAction.MoveUp)}
-              >
-                <ArrowBackRounded fontSize="small" />
-              </IconButton>
-              <IconButton
-                aria-label="Move Section Forward"
-                size="small"
-                onClick={(_) => handleInteraction(SectionAction.MoveDown)}
-              >
-                <ArrowForwardRounded fontSize="small" />
-              </IconButton>
-              <IconButton
-                aria-label="Edit Section"
-                size="small"
-                onClick={(_) => handleInteraction(SectionAction.Edit)}
-              >
-                <EditRounded fontSize="small" />
-              </IconButton>
-              <IconButton
-                aria-label="Delete Widget"
-                size="small"
-                onClick={(_) => handleInteraction(SectionAction.Delete)}
-              >
-                <DeleteRounded fontSize="small" />
-              </IconButton>
-            </>
-          )}
-          <IconButton
-            aria-label="Edit"
-            size="small"
-            onClick={() => setEditing(!editing)}
+    <Grid2 component="section" container spacing={2} xs="auto" direction="row">
+      <Grid2
+        container
+        direction="column"
+        sx={{
+          height: "100%",
+          margin: "0.5rem 1rem",
+          width: data.width,
+        }}
+      >
+        <Grid2 container xs="auto" sx={{ marginBottom: "0.5rem" }}>
+          {data.title && <Typography variant="h5">{data.title}</Typography>}
+          <Grid2
+            container
+            spacing={2}
+            alignContent="center"
+            justifyContent={editing ? "space-between" : "flex-end"}
+            sx={{ flexGrow: 1, paddingLeft: "1.5rem", paddingRight: "0.5rem" }}
           >
-            {editing ? (
-              <CheckRounded fontSize="small" />
-            ) : (
-              <EditRounded fontSize="small" />
+            {editing && (
+              <>
+                <IconButton
+                  aria-label="Move Section Backward"
+                  size="small"
+                  onClick={(_) => handleInteraction(SectionAction.MoveUp)}
+                >
+                  <ArrowBackRounded fontSize="small" />
+                </IconButton>
+                <IconButton
+                  aria-label="Move Section Forward"
+                  size="small"
+                  onClick={(_) => handleInteraction(SectionAction.MoveDown)}
+                >
+                  <ArrowForwardRounded fontSize="small" />
+                </IconButton>
+                <IconButton
+                  aria-label="Edit Section"
+                  size="small"
+                  onClick={(_) => handleInteraction(SectionAction.Edit)}
+                >
+                  <EditRounded fontSize="small" />
+                </IconButton>
+                <IconButton
+                  aria-label="Delete Widget"
+                  size="small"
+                  onClick={(_) => handleInteraction(SectionAction.Delete)}
+                >
+                  <DeleteRounded fontSize="small" />
+                </IconButton>
+              </>
             )}
-          </IconButton>
+            <IconButton
+              aria-label="Edit"
+              size="small"
+              onClick={() => setEditing(!editing)}
+            >
+              {editing ? (
+                <CheckRounded fontSize="small" />
+              ) : (
+                <EditRounded fontSize="small" />
+              )}
+            </IconButton>
+          </Grid2>
+        </Grid2>
+        <Grid2 container spacing={2} xs="auto">
+          {data.widgets.map((widget: WidgetModel) => (
+            <Grid2
+              key={widget.id}
+              xs={
+                !widget.width
+                  ? 6
+                  : !isNaN(Number(widget.width))
+                  ? Number(widget.width)
+                  : "auto"
+              }
+              sx={{
+                width:
+                  widget.width && isNaN(Number(widget.width))
+                    ? widget.width
+                    : undefined,
+              }}
+            >
+              <Widget
+                dashboardId={data.dashboardId}
+                data={widget}
+                editing={editing}
+              />
+            </Grid2>
+          ))}
+          {editing && (
+            <Grid2 xs={6}>
+              <Link
+                href={`/dashboards/${data.dashboardId}/sections/${data.id}/widgets/0/edit`}
+              >
+                <IconButton aria-label="Add Widget" size="large">
+                  <AddRounded fontSize="large" />
+                </IconButton>
+              </Link>
+            </Grid2>
+          )}
         </Grid2>
       </Grid2>
-      <Grid2 container spacing={2} xs="auto">
-        {data.widgets.map((widget: WidgetModel) => (
-          <Grid2
-            key={widget.id}
-            xs={
-              !widget.width
-                ? 6
-                : !isNaN(Number(widget.width))
-                ? Number(widget.width)
-                : "auto"
-            }
-            sx={{
-              width:
-                widget.width && isNaN(Number(widget.width))
-                  ? widget.width
-                  : undefined,
-            }}
-          >
-            <Widget
-              dashboardId={data.dashboardId}
-              data={widget}
-              editing={editing}
-            />
-          </Grid2>
-        ))}
-        {editing && (
-          <Grid2 xs={6}>
-            <Link
-              href={`/dashboards/${data.dashboardId}/sections/${data.id}/widgets/0/edit`}
-            >
-              <IconButton aria-label="Add Widget" size="large">
-                <AddRounded fontSize="large" />
-              </IconButton>
-            </Link>
-          </Grid2>
-        )}
-      </Grid2>
+      {editing && (
+        <Grid2 xs="auto">
+          <Link href={`/dashboards/${data.dashboardId}/sections/0/edit`}>
+            <IconButton aria-label="Add Widget" size="large">
+              <AddRounded fontSize="large" />
+            </IconButton>
+          </Link>
+        </Grid2>
+      )}
     </Grid2>
   );
 }
