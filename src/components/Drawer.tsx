@@ -128,35 +128,47 @@ export function DrawerComponent({
         >
           <List>
             {dashboards.map((dashboard: DashboardModel) => (
-              <Link key={dashboard.id} href={`/dashboards/${dashboard.id}`}>
-                <ListItemButton
-                  selected={
-                    dashboardPath === `/dashboards/${dashboard.id}` ||
-                    dashboardPath === `/dashboards/${dashboard.id}/edit`
-                  }
-                  onClick={() => setDrawerOpen(false)}
+              <Stack
+                key={dashboard.id}
+                direction="row"
+                flexWrap="nowrap"
+                sx={{ width: "100%" }}
+              >
+                <Link
+                  href={`/dashboards/${dashboard.id}`}
+                  style={{ flexGrow: 1 }}
                 >
-                  <ListItemIcon>
-                    <DashboardRounded fontSize="medium" />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={dashboard.name}
-                    secondary={dashboard.description}
-                  />
-                  <ListItemSecondaryAction>
-                    <Link href={`/dashboards/${dashboard.id}/edit`}>
-                      <IconButton
-                        aria-label={`Configure ${dashboard.name}`}
-                        onClick={() =>
-                          router.push(`/dashboards/${dashboard.id}/edit`)
-                        }
-                      >
-                        <SettingsRounded />
-                      </IconButton>
-                    </Link>
-                  </ListItemSecondaryAction>
-                </ListItemButton>
-              </Link>
+                  <ListItemButton
+                    selected={
+                      dashboardPath === `/dashboards/${dashboard.id}` ||
+                      dashboardPath === `/dashboards/${dashboard.id}/edit`
+                    }
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{ height: "100%", flexGrow: 1 }}
+                  >
+                    <ListItemIcon>
+                      <DashboardRounded fontSize="medium" />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={dashboard.name}
+                      secondary={dashboard.description}
+                    />
+                  </ListItemButton>
+                </Link>
+                <Link href={`/dashboards/${dashboard.id}/edit`}>
+                  <ListItemButton
+                    aria-label={`Configure ${dashboard.name}`}
+                    selected={
+                      dashboardPath === `/dashboards/${dashboard.id}` ||
+                      dashboardPath === `/dashboards/${dashboard.id}/edit`
+                    }
+                    onClick={() => setDrawerOpen(false)}
+                    sx={{ height: "100%" }}
+                  >
+                    <SettingsRounded />
+                  </ListItemButton>
+                </Link>
+              </Stack>
             ))}
             <Link href="/dashboards/new">
               <ListItemButton>
