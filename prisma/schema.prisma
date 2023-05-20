@@ -55,11 +55,19 @@ model Widget {
   width         String?
   sectionId     String
   section       Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
-  markdown      WidgetMarkdown[]
+  frame         WidgetFrame[]
   homeAssistant WidgetHomeAssistant[]
   image         WidgetImage[]
+  markdown      WidgetMarkdown[]
 
   @@index([sectionId, position], name: "sectionId_position_unique")
+}
+
+model WidgetFrame {
+  widgetId String  @id
+  widget   Widget  @relation(fields: [widgetId], references: [id], onDelete: Cascade)
+  url      String
+  height   String?
 }
 
 model WidgetHomeAssistant {
@@ -69,13 +77,15 @@ model WidgetHomeAssistant {
   showName      Boolean?
   showIcon      Boolean?
   showState     Boolean?
+  iconColor     String?
+  iconSize      String?
   secondaryInfo String?
 }
 
 model WidgetImage {
-  widgetId String  @id
-  widget   Widget  @relation(fields: [widgetId], references: [id], onDelete: Cascade)
-  url      String?
+  widgetId String @id
+  widget   Widget @relation(fields: [widgetId], references: [id], onDelete: Cascade)
+  url      String
 }
 
 model WidgetMarkdown {

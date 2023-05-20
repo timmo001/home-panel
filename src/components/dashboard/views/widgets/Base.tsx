@@ -33,28 +33,25 @@ export function WidgetBase({
 }): JSX.Element {
   const widget = (
     <Card sx={{ width: "100%" }}>
-      <CardActionArea
-        disabled={editing || data.type !== WidgetType.Image}
-        onClick={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
+      {data.title && (
+        <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
+          {data.title}
+        </Typography>
+      )}
+      <Box
+        sx={{
+          padding:
+            data.type === WidgetType.Image
+              ? 0
+              : data.title
+              ? "0 0.4rem 0.4rem"
+              : "0.4rem",
+          textAlign:
+            data.type === WidgetType.HomeAssistant ? "center" : undefined,
+        }}
       >
-        {data.title && (
-          <Typography variant="h6" sx={{ margin: "0.2rem 0.4rem 0.2rem" }}>
-            {data.title}
-          </Typography>
-        )}
-        <Box
-          sx={{
-            padding:
-              data.type === WidgetType.Image
-                ? 0
-                : data.title
-                ? "0 0.4rem 0.4rem"
-                : "0.4rem",
-          }}
-        >
-          {children}
-        </Box>
-      </CardActionArea>
+        {children}
+      </Box>
       {editing && (
         <Grid2
           container

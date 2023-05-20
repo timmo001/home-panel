@@ -1,7 +1,7 @@
 "use client";
 import type { Widget as WidgetModel } from "@prisma/client";
 import { Skeleton } from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
@@ -10,10 +10,11 @@ import {
   widgetGetData,
   widgetUpdate,
 } from "@/utils/serverActions/widget";
+import { WidgetAction, WidgetType } from "@/types/widget.type";
+import { WidgetFrame } from "@/components/dashboard/views/widgets/Frame";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
-import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function Widget({
   dashboardId,
@@ -35,53 +36,70 @@ export function Widget({
     })();
   }, [data.id, data.type]);
 
-  async function handleInteraction(action: WidgetAction): Promise<void> {
-    console.log("Handle interaction:", action);
+  const handleInteraction = useCallback(
+    async (action: WidgetAction): Promise<void> => {
+      console.log("Handle interaction:", action);
 
-    switch (action) {
-      case WidgetAction.Delete:
-        await widgetDelete(dashboardId, data.id);
-        break;
-      case WidgetAction.Edit:
-        router.push(
-          `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
-        );
-        break;
-      case WidgetAction.MoveDown:
-        await widgetUpdate(
-          dashboardId,
-          data.id,
-          "position",
-          data.position + 15
-        );
-        break;
-      case WidgetAction.MoveUp:
-        await widgetUpdate(
-          dashboardId,
-          data.id,
-          "position",
-          data.position - 15
-        );
-        break;
-      case WidgetAction.ToggleExpanded:
-        setExpanded(!expanded);
-        break;
-    }
-  }
+      switch (action) {
+        case WidgetAction.Delete:
+          await widgetDelete(dashboardId, data.id);
+          break;
+        case WidgetAction.Edit:
+          router.push(
+            `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
+          );
+          break;
+        case WidgetAction.MoveDown:
+          await widgetUpdate(
+            dashboardId,
+            data.id,
+            "position",
+            data.position + 15
+          );
+          break;
+        case WidgetAction.MoveUp:
+          await widgetUpdate(
+            dashboardId,
+            data.id,
+            "position",
+            data.position - 15
+          );
+          break;
+        case WidgetAction.ToggleExpanded:
+          setExpanded(!expanded);
+          break;
+      }
+    },
+    [dashboardId, data.id, data.position, data.sectionId, expanded, router]
+  );
 
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
+      case WidgetType.Frame:
+        return <WidgetFrame data={widgetData} />;
       case WidgetType.HomeAssistant:
-        return <WidgetHomeAssistant data={widgetData} expanded={expanded} />;
+        return (
+          <WidgetHomeAssistant
+            data={widgetData}
+            editing={editing}
+            expanded={expanded}
+          />
+        );
       case WidgetType.Image:
-        return <WidgetImage data={widgetData} />;
+        return (
+          <WidgetImage
+            data={widgetData}
+            editing={editing}
+            handleInteraction={handleInteraction}
+          />
+        );
       case WidgetType.Markdown:
         return <WidgetMarkdown data={widgetData} />;
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [data.type, expanded, widgetData]);
+  }, [data.type, editing, expanded, handleInteraction, widgetData]);
 
   return (
     <WidgetBase

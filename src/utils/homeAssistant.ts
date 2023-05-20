@@ -6,15 +6,15 @@ import {
   callService,
   Connection,
   createConnection,
-  ERR_HASS_HOST_REQUIRED,
-  ERR_INVALID_AUTH,
   getAuth,
   getUser,
   HassConfig,
   HassEntities,
+  HassServices,
   HassUser,
   subscribeConfig,
   subscribeEntities,
+  subscribeServices,
 } from "home-assistant-js-websocket";
 
 import {
@@ -26,20 +26,25 @@ export class HomeAssistant {
   public connection: Connection | null = null;
   public dashboardId: string;
 
-  private clientCallback: (client: HomeAssistant) => void;
+  private connectedCallback: () => void;
   private configCallback: (config: HassConfig) => void;
   private entitiesCallback: (entities: HassEntities) => void;
+  private servicesCallback: (services: HassServices) => void;
 
   constructor(
     dashboardId: string,
-    clientCallback: (client: HomeAssistant) => void,
-    configCallback: (config: HassConfig) => void,
-    entitiesCallback: (entities: HassEntities) => void
+    connectedCallback?: () => void,
+    configCallback?: (config: HassConfig) => void,
+    entitiesCallback?: (entities: HassEntities) => void,
+    servicesCallback?: (services: HassServices) => void,
+    connection?: Connection
   ) {
     this.dashboardId = dashboardId;
-    this.clientCallback = clientCallback;
-    this.configCallback = configCallback;
-    this.entitiesCallback = entitiesCallback;
+    this.connectedCallback = connectedCallback || (() => {});
+    this.configCallback = configCallback || (() => {});
+    this.entitiesCallback = entitiesCallback || (() => {});
+    this.servicesCallback = servicesCallback || (() => {});
+    this.connection = connection || null;
   }
 
   async callService(
@@ -103,12 +108,12 @@ export class HomeAssistant {
     this.connection = await createConnection({ auth });
     this.connection.addEventListener("ready", () => {
       console.log("Connected to Home Assistant");
-      this.clientCallback(this);
+      this.connectedCallback();
     });
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      this.clientCallback(this);
+      this.connectedCallback();
     });
 
     getUser(this.connection).then((user: HassUser) => {
@@ -122,6 +127,10 @@ export class HomeAssistant {
 
     subscribeEntities(this.connection, (entities: HassEntities) => {
       this.entitiesCallback(entities);
+    });
+
+    subscribeServices(this.connection, (services) => {
+      this.servicesCallback(services);
     });
   }
 }
