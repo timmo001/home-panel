@@ -25,7 +25,7 @@ export default function Error({
           width: "100%",
         }}
       >
-        <Typography component="h5" variant="h2">
+        <Typography align="center" component="h2" variant="h2">
           Something went wrong!
         </Typography>
         <Button variant="contained" onClick={() => reset()}>
