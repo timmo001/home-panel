@@ -16,7 +16,14 @@ function HeaderItem({ item }: { item: HeaderItemModel }): JSX.Element | null {
             variant="h2"
             sx={{ lineHeight: "1.0", fontWeight: 300 }}
           >
-            <Moment format="h:mm a" />
+            <Moment format="h:mm" />
+            <Typography
+              component="span"
+              variant="h4"
+              sx={{ lineHeight: "1.2", fontWeight: 300 }}
+            >
+              <Moment format=" a" />
+            </Typography>
           </Typography>
           <Typography
             align="center"
