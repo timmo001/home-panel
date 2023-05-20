@@ -6,7 +6,7 @@ import type {
 } from "@prisma/client";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { AccessDenied } from "@/components/AccessDenied";
@@ -44,33 +44,7 @@ export default async function Page({
       },
     });
 
-  if (!dashboardConfig) {
-    dashboardConfig = await prisma.dashboard.create({
-      data: {
-        name: "Dashboard",
-        description: "New dashboard",
-        sections: {
-          create: [
-            {
-              title: "Section 01",
-              subtitle: "Example section",
-              width: "480px",
-              widgets: {
-                create: [],
-              },
-            },
-          ],
-        },
-        user: {
-          connect: {
-            id: user?.id,
-          },
-        },
-      },
-    });
-    revalidatePath(`/dashboards/${params.dashboardId}/edit`);
-    return redirect(`/dashboards/${params.dashboardId}/edit`);
-  }
+  if (!dashboardConfig) return notFound();
 
   let homeAssistantConfig: HomeAssistantModel | null =
     await prisma.homeAssistant.findUnique({

@@ -3,6 +3,46 @@ import type { Dashboard, HeaderItem } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/utils/prisma";
+import { HeaderItemType } from "@/types/dashboard.type";
+
+export async function dashboardCreate(userId: string): Promise<Dashboard> {
+  console.log("Create dashboard");
+
+  const newData = await prisma.dashboard.create({
+    data: {
+      name: "Dashboard",
+      description: "New dashboard",
+      sections: {
+        create: [
+          {
+            title: "Section 01",
+            subtitle: "Example section",
+            width: "480px",
+            widgets: {
+              create: [],
+            },
+          },
+        ],
+      },
+      headerItems: {
+        create: {
+          type: HeaderItemType.DateTime,
+        },
+      },
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+    },
+  });
+
+  revalidatePath("/dashboards");
+  revalidatePath(`/dashboards/${newData.id}`);
+  revalidatePath(`/dashboards/${newData.id}/edit`);
+
+  return newData;
+}
 
 export async function dashboardDelete(
   idOrDashboard: string | Dashboard

@@ -158,7 +158,7 @@ export function DrawerComponent({
                 </ListItemButton>
               </Link>
             ))}
-            <Link href="/dashboards/0/edit">
+            <Link href="/dashboards/new">
               <ListItemButton>
                 <ListItemIcon>
                   <AddRounded fontSize="medium" />
