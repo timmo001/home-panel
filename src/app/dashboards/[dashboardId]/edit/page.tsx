@@ -7,11 +7,12 @@ import type {
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { EditDashboard } from "@/components/dashboard/editors/Dashboard";
-import { prisma } from "@/utils/prisma";
 import { HeaderItemType } from "@/types/dashboard.type";
+import { prisma } from "@/utils/prisma";
 
 export const metadata: Metadata = {
   title: "Edit Dashboard | Home Panel",
@@ -67,7 +68,8 @@ export default async function Page({
         },
       },
     });
-    redirect(`/dashboards/${params.dashboardId}/edit`);
+    revalidatePath(`/dashboards/${params.dashboardId}/edit`);
+    return redirect(`/dashboards/${params.dashboardId}/edit`);
   }
 
   let homeAssistantConfig: HomeAssistantModel | null =
