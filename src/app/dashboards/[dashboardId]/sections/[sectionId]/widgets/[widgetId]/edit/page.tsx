@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { notFound } from "next/navigation";
 
 import type { WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
 import { HomeAssistantProvider } from "@/providers/HomeAssistantProvider";
 import { prisma } from "@/utils/prisma";
-import { WidgetType } from "@/types/widget.type";
 
 export const metadata: Metadata = {
   title: "Edit Widget | Home Panel",
@@ -31,34 +29,7 @@ export default async function Page({
     },
   });
 
-  if (!data) {
-    console.log("Creating new widget..");
-    data = await prisma.widget.create({
-      data: {
-        type: WidgetType.Markdown,
-        title: "",
-        markdown: {
-          create: {
-            content: "",
-          },
-        },
-        section: {
-          connect: {
-            id: params.sectionId,
-          },
-        },
-      },
-      include: {
-        section: true,
-      },
-    });
-    revalidatePath(
-      `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${data.id}/edit`
-    );
-    return redirect(
-      `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${data.id}/edit`
-    );
-  }
+  if (!data) return notFound();
 
   return (
     <HomeAssistantProvider dashboardId={params.dashboardId}>

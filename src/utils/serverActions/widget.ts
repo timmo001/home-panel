@@ -11,6 +11,38 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 import { WidgetType } from "@/types/widget.type";
 
+export async function widgetCreate(
+  dashboardId: string,
+  sectionId: string
+): Promise<WidgetModel> {
+  console.log("Create widget:", { dashboardId, sectionId });
+
+  const newData = await prisma.widget.create({
+    data: {
+      type: WidgetType.Markdown,
+      title: "",
+      markdown: {
+        create: {
+          content: "",
+        },
+      },
+      section: {
+        connect: {
+          id: sectionId,
+        },
+      },
+    },
+  });
+
+  revalidatePath(
+    `/dashboards/${dashboardId}/sections/${sectionId}/widgets/${newData.id}/edit`
+  );
+
+  await widgetsReorganise(sectionId);
+
+  return newData;
+}
+
 export async function widgetDelete(
   dashboardId: string,
   id: string
