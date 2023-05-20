@@ -11,7 +11,7 @@ import { notFound } from "next/navigation";
 import { AccessDenied } from "@/components/AccessDenied";
 import { EditDashboard } from "@/components/dashboard/editors/Dashboard";
 import { HeaderItemType } from "@/types/dashboard.type";
-import { prisma } from "@/utils/prisma";
+import { authOptions, prisma } from "@/utils/prisma";
 
 export const metadata: Metadata = {
   title: "Edit Dashboard | Home Panel",
@@ -27,7 +27,7 @@ export default async function Page({
 }): Promise<JSX.Element> {
   console.log("Edit Dashboard:", params);
 
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) return <AccessDenied />;
 
   const user: UserModel = await prisma.user.findUniqueOrThrow({

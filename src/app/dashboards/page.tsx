@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { AccessDenied } from "@/components/AccessDenied";
-import { prisma } from "@/utils/prisma";
+import { authOptions, prisma } from "@/utils/prisma";
 import { WidgetType } from "@/types/widget.type";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 export const revalidate = 0;
 
 export default async function Page(): Promise<JSX.Element> {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) return <AccessDenied />;
 
   const user: UserModel = await prisma.user.findUniqueOrThrow({

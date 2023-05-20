@@ -5,13 +5,16 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/utils/prisma";
 import { HeaderItemType } from "@/types/dashboard.type";
 
-export async function dashboardCreate(userId: string): Promise<Dashboard> {
-  console.log("Create dashboard");
+export async function dashboardCreate(username: string): Promise<Dashboard> {
+  const user = await prisma.user.findUniqueOrThrow({
+    where: { username },
+  });
+
+  console.log("Create dashboard:", { userId: user.id });
 
   const newData = await prisma.dashboard.create({
     data: {
       name: "Dashboard",
-      description: "New dashboard",
       sections: {
         create: [
           {
@@ -31,7 +34,7 @@ export async function dashboardCreate(userId: string): Promise<Dashboard> {
       },
       user: {
         connect: {
-          id: userId,
+          id: user.id,
         },
       },
     },

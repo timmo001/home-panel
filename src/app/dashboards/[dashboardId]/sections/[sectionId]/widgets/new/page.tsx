@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { redirect } from "next/navigation";
 
 import { AccessDenied } from "@/components/AccessDenied";
-import { widgetCreate } from "@/utils/serverActions/widget";
+import { authOptions } from "@/utils/prisma";
+import { WidgetNew } from "@/components/dashboard/views/WidgetNew";
 
 export const metadata: Metadata = {
   title: "New Widget | Home Panel",
@@ -17,14 +17,9 @@ export default async function Page({
 }: {
   params: { dashboardId: string; sectionId: string };
 }): Promise<JSX.Element> {
-  console.log("New Widget:", params);
-
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   if (!session) return <AccessDenied />;
-
-  const newWidget = await widgetCreate(params.dashboardId, params.sectionId);
-
-  return redirect(
-    `/dashboards/${params.dashboardId}/sections/${params.sectionId}/widgets/${newWidget.id}/edit`
+  return (
+    <WidgetNew dashboardId={params.dashboardId} sectionId={params.sectionId} />
   );
 }

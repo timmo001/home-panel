@@ -10,7 +10,6 @@ export async function sectionCreate(dashboardId: string): Promise<Section> {
   const newData = await prisma.section.create({
     data: {
       title: "Section",
-      subtitle: "New section",
       width: "480px",
       dashboard: {
         connect: {

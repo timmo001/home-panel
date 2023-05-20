@@ -10,7 +10,7 @@ import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
 import { DrawerComponent as Drawer } from "@/components/Drawer";
 import { MUIProvider } from "@/providers/MUIProvider";
-import { prisma } from "@/utils/prisma";
+import { authOptions, prisma } from "@/utils/prisma";
 
 import "@/app/globals.css";
 
@@ -35,7 +35,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }): Promise<JSX.Element> {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   let dashboards: Array<DashboardModel> = [];
   if (session?.user?.email) {
