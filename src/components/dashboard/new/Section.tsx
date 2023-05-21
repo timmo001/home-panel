@@ -15,7 +15,7 @@ export function SectionNew({
   useEffect(() => {
     (async () => {
       const newSection = await sectionCreate(dashboardId);
-      router.replace(`/dashboards/${dashboardId}/${newSection.id}/edit`);
+      router.replace(`/dashboards/${dashboardId}/sections/${newSection.id}/edit`);
     })();
   }, [dashboardId, router]);
 
