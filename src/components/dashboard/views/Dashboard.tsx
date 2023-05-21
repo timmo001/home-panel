@@ -32,8 +32,8 @@ export function Dashboard({
           direction="column"
           alignContent="flex-start"
           sx={{
-            overflowX: "hidden",
-            overflowY: "auto",
+            overflowX: "auto",
+            overflowY: "clip",
             width: "100%",
             height: "100%",
             maxHeight: "100%",

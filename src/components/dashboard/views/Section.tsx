@@ -137,9 +137,10 @@ export function Section({ data }: { data: SectionModel }): JSX.Element {
           spacing={2}
           alignContent="flex-start"
           justifyContent="flex-start"
-          xs="auto"
           sx={{
-            overflow: "visible",
+            overflow: "auto",
+            marginBottom: "0.5rem",
+            paddingBottom: "0.5rem",
           }}
         >
           {data.widgets.map((widget: WidgetModel) => (
