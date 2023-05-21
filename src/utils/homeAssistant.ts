@@ -6,6 +6,8 @@ import {
   callService,
   Connection,
   createConnection,
+  ERR_HASS_HOST_REQUIRED,
+  ERR_INVALID_AUTH,
   getAuth,
   getUser,
   HassConfig,
@@ -17,17 +19,56 @@ import {
   subscribeServices,
 } from "home-assistant-js-websocket";
 
-import {
-  homeAssistantGetConfig,
-  homeAssistantUpdateConfig,
-} from "@/utils/serverActions/homeAssistant";
+import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
+
+async function loadTokens(
+  config: HomeAssistantConfig
+): Promise<AuthData | null> {
+  console.log("Load Home Assistant tokens:", config);
+
+  if (
+    !config.accessToken ||
+    !config.refreshToken ||
+    !config.clientId ||
+    !config.expires ||
+    !config.expiresIn ||
+    !config.url
+  )
+    return null;
+
+  return {
+    access_token: config.accessToken,
+    refresh_token: config.refreshToken,
+    clientId: config.clientId,
+    expires: Number(config.expires),
+    expires_in: config.expiresIn,
+    hassUrl: config.url,
+  };
+}
+
+async function saveTokens(
+  dashboardId: string,
+  data: AuthData | null
+): Promise<void> {
+  console.log("Save Home Assistant tokens:", data);
+
+  await homeAssistantUpdateConfig(dashboardId, {
+    accessToken: data?.access_token,
+    refreshToken: data?.refresh_token,
+    clientId: data?.clientId,
+    expires: data?.expires,
+    expiresIn: data?.expires_in,
+  });
+}
 
 export class HomeAssistant {
+  public config: HomeAssistantConfig | null = null;
   public connection: Connection | null = null;
   public dashboardId: string;
 
-  private connectedCallback: () => void;
+  private auth: Auth | null = null;
   private configCallback: (config: HassConfig) => void;
+  private connectedCallback: () => void;
   private entitiesCallback: (entities: HassEntities) => void;
   private servicesCallback: (services: HassServices) => void;
 
@@ -37,7 +78,8 @@ export class HomeAssistant {
     configCallback?: (config: HassConfig) => void,
     entitiesCallback?: (entities: HassEntities) => void,
     servicesCallback?: (services: HassServices) => void,
-    connection?: Connection
+    connection?: Connection,
+    config?: HomeAssistantConfig
   ) {
     this.dashboardId = dashboardId;
     this.connectedCallback = connectedCallback || (() => {});
@@ -45,6 +87,7 @@ export class HomeAssistant {
     this.entitiesCallback = entitiesCallback || (() => {});
     this.servicesCallback = servicesCallback || (() => {});
     this.connection = connection || null;
+    this.config = config || null;
   }
 
   baseUrl(): string | null {
@@ -72,56 +115,55 @@ export class HomeAssistant {
   }
 
   async connect(): Promise<void> {
-    // Get home assistant config from database
-    let config: HomeAssistantConfig = await homeAssistantGetConfig(
-      this.dashboardId
-    );
+    if (this.connection) return;
+    if (!this.config) throw new Error("Config not loaded");
 
-    const auth: Auth = await getAuth({
-      hassUrl: config.url,
-      loadTokens: async (): Promise<AuthData | null | undefined> => {
-        config = await homeAssistantGetConfig(this.dashboardId);
-        if (
-          !config.accessToken ||
-          !config.refreshToken ||
-          !config.expires ||
-          !config.expiresIn
-        )
-          return null;
-        return {
-          access_token: config.accessToken,
-          refresh_token: config.refreshToken,
-          clientId: config.clientId,
-          expires: Number(config.expires),
-          expires_in: config.expiresIn,
-          hassUrl: config.url,
-        };
-      },
-      saveTokens: async (data: AuthData | null) => {
-        if (!data) return;
-        await homeAssistantUpdateConfig(this.dashboardId, {
-          accessToken: data.access_token,
-          refreshToken: data.refresh_token,
-          clientId: data.clientId,
-          expires: data.expires,
-          expiresIn: data.expires_in,
-        });
-      },
-    });
+    console.log("Connecting to Home Assistant:", this.config);
 
-    this.connection = await createConnection({ auth });
+    try {
+      // Create auth object
+      this.auth = await getAuth({
+        hassUrl: this.config.url,
+        loadTokens: async (): Promise<AuthData | null | undefined> => {
+          if (!this.config) {
+            console.error("loadTokens - Config not loaded");
+            return undefined;
+          }
+          return await loadTokens(this.config);
+        },
+        saveTokens: async (data: AuthData | null) =>
+          await saveTokens(this.dashboardId, data),
+      });
+
+      // Connect to Home Assistant
+      this.connection = await createConnection({ auth: this.auth });
+    } catch (err) {
+      console.warn("Failed to connect to Home Assistant:", err);
+      if (err !== ERR_HASS_HOST_REQUIRED && err !== ERR_INVALID_AUTH) throw err;
+
+      // Clear stored tokens
+      await saveTokens(this.dashboardId, null);
+
+      if (err === ERR_HASS_HOST_REQUIRED)
+        throw new Error("No Home Assistant URL provided");
+
+      console.warn("Invalid Home Assistant credentials");
+      this.auth = await getAuth({ hassUrl: this.config.url });
+      return;
+    }
+
     this.connection.addEventListener("ready", () => {
-      console.log("Connected to Home Assistant");
-      this.connectedCallback();
+      console.log("Home Assistant connection ready");
     });
+
     this.connection.addEventListener("disconnected", () => {
       console.log("Disconnected from Home Assistant");
       if (this.connection) this.connection.reconnect();
-      this.connectedCallback();
     });
 
     getUser(this.connection).then((user: HassUser) => {
       console.log("Logged into Home Assistant as", user.name);
+      this.connectedCallback();
     });
 
     subscribeConfig(this.connection, (config: HassConfig) => {

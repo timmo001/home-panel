@@ -10,6 +10,7 @@ export async function homeAssistantGetConfig(
   dashboardId: string
 ): Promise<HomeAssistantConfig> {
   console.log("Get Home Assistant config:", { dashboardId });
+  if (!dashboardId) throw new Error("Dashboard ID is required");
 
   return await prisma.homeAssistant.findUniqueOrThrow({
     where: {
@@ -23,6 +24,7 @@ export async function homeAssistantUpdateConfig(
   data: Prisma.HomeAssistantUpdateInput
 ): Promise<HomeAssistantConfig> {
   console.log("Update Home Assistant config:", { dashboardId, data });
+  if (!dashboardId) throw new Error("Dashboard ID is required");
 
   return await prisma.homeAssistant.update({
     data,

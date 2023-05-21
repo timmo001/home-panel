@@ -12,8 +12,10 @@ import {
   HassEntities,
   HassServices,
 } from "home-assistant-js-websocket";
+import { usePathname, useRouter } from "next/navigation";
 
 import { HomeAssistant } from "@/utils/homeAssistant";
+import { homeAssistantGetConfig } from "@/utils/serverActions/homeAssistant";
 
 type HomeAssistantContextType = {
   client: HomeAssistant | null;
@@ -41,6 +43,9 @@ export function HomeAssistantProvider({
   dashboardId: string;
   children: ReactNode;
 }): JSX.Element {
+  const pathname = usePathname();
+  const router = useRouter();
+
   const [homeAssistant, setHomeAssistant] = useState<HomeAssistantContextType>(
     defaultHomeAssistantContext
   );
@@ -51,7 +56,10 @@ export function HomeAssistantProvider({
       ...prevHomeAssistant,
       client,
     }));
-  }, [setHomeAssistant]);
+
+    // Cleanup search params
+    router.replace(pathname);
+  }, [pathname, router, setHomeAssistant]);
 
   const configCallback = useCallback(
     (config: HassConfig): void => {
@@ -84,6 +92,10 @@ export function HomeAssistantProvider({
   );
 
   useEffect(() => {
+    if (!dashboardId) return;
+
+    console.log("Connecting to Home Assistant:", { dashboardId });
+
     client = new HomeAssistant(
       dashboardId,
       connectedCallback,
@@ -91,12 +103,17 @@ export function HomeAssistantProvider({
       entitiesCallback,
       servicesCallback
     );
-    try {
-      client.connect();
-      connectedCallback();
-    } catch (e) {
-      console.warn(e);
-    }
+
+    (async () => {
+      // Get home assistant config from database
+      client.config = await homeAssistantGetConfig(dashboardId);
+
+      try {
+        await client.connect();
+      } catch (err) {
+        console.error(err);
+      }
+    })();
 
     return () => {
       if (client) client.disconnect();
