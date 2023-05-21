@@ -5,6 +5,8 @@ import { HassEntity } from "home-assistant-js-websocket";
 import { Icon } from "@mdi/react";
 import { IconButton, Typography } from "@mui/material";
 
+import { DEFAULT_DOMAIN_ICON } from "@/utils/homeAssistant/const";
+import { domainIcon } from "@/utils/homeAssistant/icons";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
@@ -34,25 +36,26 @@ export function WidgetHomeAssistant({
     return true;
   }, [entity, homeAssistant.services]);
 
-  const entityIcon = useMemo<string>(() => {
-    if (!entity?.attributes.icon) return "mdi:help";
-    if (entity.attributes.icon.startsWith("mdi:")) {
-      return entity.attributes.icon;
-    }
-    return `mdi:${entity.attributes.icon}`;
-  }, [entity?.attributes.icon]);
-
   const mdiIcon = useMemo<string>(() => {
-    try {
-      const iconPath = entityIcon.replace(/[:|-](\w)/g, (_, match: string) =>
-        match.toUpperCase()
+    if (!entity) return DEFAULT_DOMAIN_ICON;
+    const domain = entity.entity_id.split(".")[0];
+    let icon = domainIcon(domain, entity, entity.state);
+
+    if (entity.attributes?.icon) {
+      const iconPath = entity.attributes.icon.replace(
+        /[:|-](\w)/g,
+        (_, match: string) => match.toUpperCase()
       );
-      return require(`materialdesign-js/icons/${iconPath}`).default;
-    } catch (e) {
-      console.warn(`Could not load icon ${entityIcon}:`, e);
-      return require(`materialdesign-js/icons/mdiHelp`).default;
+
+      try {
+        icon = require(`materialdesign-js/icons/${iconPath}`).default;
+      } catch (e) {
+        console.warn(`Could not load icon ${iconPath}:`, e);
+        if (!icon) icon = require(`materialdesign-js/icons/mdiHelp`).default;
+      }
     }
-  }, [entityIcon]);
+    return icon;
+  }, [entity]);
 
   const icon = (
     <Icon
