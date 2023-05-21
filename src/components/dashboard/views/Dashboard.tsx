@@ -14,17 +14,29 @@ export function Dashboard({
 }): JSX.Element {
   return (
     <HomeAssistantProvider dashboardId={dashboard.id}>
-      <Stack sx={{ height: "100%", width: "100%" }}>
+      <Stack
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: "100%",
+          width: "100%",
+          maxHeight: "100%",
+          maxWidth: "100%",
+          overflow: "hidden",
+        }}
+      >
         <Heading dashboard={dashboard} />
         <Grid2
           container
           direction="column"
           alignContent="flex-start"
           sx={{
-            flexGrow: 1,
-            flexShrink: 0,
+            overflowX: "hidden",
             overflowY: "auto",
             width: "100%",
+            height: "100%",
+            maxHeight: "100%",
           }}
         >
           {dashboard.sections.map((section: SectionModel) => (
