@@ -12,6 +12,7 @@ import {
   getUser,
   HassConfig,
   HassEntities,
+  HassEntity,
   HassServices,
   HassUser,
   subscribeConfig,
@@ -20,6 +21,25 @@ import {
 } from "home-assistant-js-websocket";
 
 import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
+
+export function getToggleServiceFromDomain(
+  domain: string,
+  turnOn: boolean = true
+) {
+  switch (domain) {
+    case "lock":
+      return turnOn ? "unlock" : "lock";
+    case "cover":
+      return turnOn ? "open_cover" : "close_cover";
+    case "button":
+    case "input_button":
+      return "press";
+    case "scene":
+      return "turn_on";
+    default:
+      return turnOn ? "turn_on" : "turn_off";
+  }
+}
 
 async function loadTokens(
   config: HomeAssistantConfig
@@ -65,6 +85,10 @@ export class HomeAssistant {
   public config: HomeAssistantConfig | null = null;
   public connection: Connection | null = null;
   public dashboardId: string;
+  public haConfig: HassConfig | null = null;
+  public haEntities: HassEntities | null = null;
+  public haServices: HassServices | null = null;
+  public haUser: HassUser | null = null;
 
   private auth: Auth | null = null;
   private configCallback: (config: HassConfig) => void;
@@ -90,21 +114,21 @@ export class HomeAssistant {
     this.config = config || null;
   }
 
-  baseUrl(): string | null {
-    return this.connection?.options.auth?.data.hassUrl || null;
-  }
+  baseUrl: string | null = this.config?.url || null;
+  connected: boolean = this.connection !== null;
 
   async callService(
     domain: string,
     service: string,
     serviceData: Record<string, unknown>
-  ): Promise<void> {
+  ): Promise<unknown> {
     if (!this.connection) return;
-    await callService(this.connection, domain, service, serviceData);
-  }
-
-  connected(): boolean {
-    return this.connection !== null;
+    console.log("Call Home Assistant service:", {
+      domain,
+      service,
+      serviceData,
+    });
+    return await callService(this.connection, domain, service, serviceData);
   }
 
   async disconnect(): Promise<void> {
@@ -161,22 +185,47 @@ export class HomeAssistant {
       if (this.connection) this.connection.reconnect();
     });
 
-    getUser(this.connection).then((user: HassUser) => {
-      console.log("Logged into Home Assistant as", user.name);
-      this.connectedCallback();
-    });
-
     subscribeConfig(this.connection, (config: HassConfig) => {
       console.log("Home Assistant config updated");
+      this.haConfig = config;
       this.configCallback(config);
     });
 
     subscribeEntities(this.connection, (entities: HassEntities) => {
+      this.haEntities = entities;
       this.entitiesCallback(entities);
     });
 
     subscribeServices(this.connection, (services) => {
+      this.haServices = services;
       this.servicesCallback(services);
     });
+
+    getUser(this.connection).then((user: HassUser) => {
+      console.log("Logged into Home Assistant as", user.name);
+      this.haUser = user;
+      this.connectedCallback();
+    });
+  }
+
+  entityCanTurnOnOff(entity: HassEntity | undefined): boolean {
+    if (!entity) return false;
+    const domain = entity.entity_id.split(".")[0];
+    const service = getToggleServiceFromDomain(domain);
+    if (this.haServices?.[domain]?.[service]) return true;
+    return false;
+  }
+
+  async entityTurnOnOff(entity: HassEntity, turnOn = true): Promise<unknown> {
+    if (!this.connection) return;
+    const domain = entity.entity_id.split(".")[0];
+
+    return await this.callService(
+      domain === "group" ? "homeassistant" : domain,
+      getToggleServiceFromDomain(domain, turnOn),
+      {
+        entity_id: entity.entity_id,
+      }
+    );
   }
 }

@@ -5,7 +5,11 @@ import { HassEntity } from "home-assistant-js-websocket";
 import { Icon } from "@mdi/react";
 import { IconButton, Typography } from "@mui/material";
 
-import { DEFAULT_DOMAIN_ICON } from "@/utils/homeAssistant/const";
+import {
+  DEFAULT_DOMAIN_ICON,
+  DOMAINS_TOGGLE,
+  STATES_OFF,
+} from "@/utils/homeAssistant/const";
 import { domainIcon } from "@/utils/homeAssistant/icons";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
@@ -30,11 +34,9 @@ export function WidgetHomeAssistant({
   }, [data.entityId, homeAssistant.entities]);
 
   const clickable = useMemo<boolean>(() => {
-    if (!entity) return false;
-    const domain = entity.entity_id.split(".")[0];
-    if (!homeAssistant.services?.[domain]?.["toggle"]) return false;
-    return true;
-  }, [entity, homeAssistant.services]);
+    if (!homeAssistant.client || !entity) return false;
+    return homeAssistant.client.entityCanTurnOnOff(entity);
+  }, [entity, homeAssistant.client]);
 
   const mdiIcon = useMemo<string>(() => {
     if (!entity) return DEFAULT_DOMAIN_ICON;
@@ -57,27 +59,11 @@ export function WidgetHomeAssistant({
     return icon;
   }, [entity]);
 
-  const icon = (
-    <Icon
-      color={
-        data.iconColor || entity?.state === "unavailiable"
-          ? "rgba(255, 255, 255, 0.5)"
-          : entity?.state === "on"
-          ? `rgba(${
-              entity?.attributes?.rgb_color?.join(", ") || "126, 87, 194"
-            }, ${255 / entity?.attributes?.brightness || 1})`
-          : "currentColor"
-      }
-      path={mdiIcon}
-      size={
-        !isNaN(Number(data.iconSize)) &&
-        Number(data.iconSize) > 0 &&
-        Number(data.iconSize) < 8
-          ? Number(data.iconSize)
-          : data.iconSize || 4
-      }
-    />
-  );
+  const entityIsOn = useMemo<boolean>(() => {
+    if (!entity) return false;
+    const domain = entity.entity_id.split(".")[0];
+    return DOMAINS_TOGGLE.has(domain) && !STATES_OFF.includes(entity.state);
+  }, [entity]);
 
   const state = useMemo<JSX.Element | null>(() => {
     if (!entity || !data.showState) return null;
@@ -88,9 +74,7 @@ export function WidgetHomeAssistant({
         return (
           <WidgetImage
             data={{
-              url: `${homeAssistant.client?.baseUrl()}${
-                entity.attributes.entity_picture
-              }`,
+              url: `${homeAssistant.client?.baseUrl}${entity.attributes?.entity_picture}`,
               widgetId: data.widgetId,
             }}
             editing={editing}
@@ -101,7 +85,7 @@ export function WidgetHomeAssistant({
         if (clickable && data.showIcon) return null;
         return (
           <Typography variant="body1">
-            {entity.state} {entity.attributes.unit_of_measurement}
+            {entity.state} {entity.attributes?.unit_of_measurement}
           </Typography>
         );
     }
@@ -113,6 +97,39 @@ export function WidgetHomeAssistant({
     homeAssistant.client,
     handleInteraction,
   ]);
+
+  const icon = useMemo<JSX.Element>(
+    () => (
+      <Icon
+        color={
+          data.iconColor || entity?.state === "unavailiable"
+            ? "rgba(255, 255, 255, 0.5)"
+            : entityIsOn
+            ? `rgba(${
+                entity?.attributes?.rgb_color?.join(", ") || "126, 87, 194"
+              }, ${255 / entity?.attributes?.brightness || 1})`
+            : "currentColor"
+        }
+        path={mdiIcon}
+        size={
+          !isNaN(Number(data.iconSize)) &&
+          Number(data.iconSize) > 0 &&
+          Number(data.iconSize) < 8
+            ? Number(data.iconSize)
+            : data.iconSize || 4
+        }
+      />
+    ),
+    [
+      data.iconColor,
+      data.iconSize,
+      entity?.attributes?.brightness,
+      entity?.attributes?.rgb_color,
+      entity?.state,
+      entityIsOn,
+      mdiIcon,
+    ]
+  );
 
   return (
     <>
@@ -129,15 +146,9 @@ export function WidgetHomeAssistant({
                 <IconButton
                   aria-label={entity.attributes.friendly_name}
                   disabled={editing}
-                  onClick={() => {
-                    homeAssistant.client?.callService(
-                      entity.entity_id.split(".")[0],
-                      "toggle",
-                      {
-                        entity_id: entity.entity_id,
-                      }
-                    );
-                  }}
+                  onClick={() =>
+                    homeAssistant.client?.entityTurnOnOff(entity, !entityIsOn)
+                  }
                 >
                   {icon}
                 </IconButton>
