@@ -74,7 +74,7 @@ export function WidgetHomeAssistant({
         return (
           <WidgetImage
             data={{
-              url: `${homeAssistant.client?.baseUrl}${entity.attributes?.entity_picture}`,
+              url: `${homeAssistant.client?.baseUrl()}${entity.attributes?.entity_picture}`,
               widgetId: data.widgetId,
             }}
             editing={editing}

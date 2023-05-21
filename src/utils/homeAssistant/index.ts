@@ -114,8 +114,11 @@ export class HomeAssistant {
     this.config = config || null;
   }
 
-  baseUrl: string | null = this.config?.url || null;
-  connected: boolean = this.connection !== null;
+  public baseUrl(): string | null {
+    return this.config?.url || null;
+  }
+
+  public connected: boolean = this.connection !== null;
 
   async callService(
     domain: string,
