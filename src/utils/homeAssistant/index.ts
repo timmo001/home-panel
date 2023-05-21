@@ -41,6 +41,13 @@ export function getToggleServiceFromDomain(
   }
 }
 
+export function entitySupportsFeature(
+  entity: HassEntity,
+  feature: number
+): boolean {
+  return (entity.attributes?.supported_features! & feature) !== 0;
+}
+
 async function loadTokens(
   config: HomeAssistantConfig
 ): Promise<AuthData | null> {

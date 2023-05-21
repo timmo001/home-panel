@@ -11,9 +11,12 @@ import {
   STATES_OFF,
 } from "@/utils/homeAssistant/const";
 import { domainIcon } from "@/utils/homeAssistant/icons";
+import { ExpandedHomeAssistantCover } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Cover";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
+
+const DOMAINS_WITH_ACTIVATE_CONDITION = new Set(["cover"]);
 
 export function WidgetHomeAssistant({
   data,
@@ -33,10 +36,15 @@ export function WidgetHomeAssistant({
     return homeAssistant.entities[data.entityId];
   }, [data.entityId, homeAssistant.entities]);
 
-  const clickable = useMemo<boolean>(() => {
+  const canTurnOnOff = useMemo<boolean>(() => {
     if (!homeAssistant.client || !entity) return false;
     return homeAssistant.client.entityCanTurnOnOff(entity);
   }, [entity, homeAssistant.client]);
+
+  const clickable = useMemo<boolean>(() => {
+    if (!homeAssistant.client || !entity) return false;
+    return canTurnOnOff;
+  }, [canTurnOnOff, entity, homeAssistant.client]);
 
   const mdiIcon = useMemo<string>(() => {
     if (!entity) return DEFAULT_DOMAIN_ICON;
@@ -64,39 +72,6 @@ export function WidgetHomeAssistant({
     const domain = entity.entity_id.split(".")[0];
     return DOMAINS_TOGGLE.has(domain) && !STATES_OFF.includes(entity.state);
   }, [entity]);
-
-  const state = useMemo<JSX.Element | null>(() => {
-    if (!entity || !data.showState) return null;
-    const domain = entity.entity_id.split(".")[0];
-
-    switch (domain) {
-      case "camera":
-        return (
-          <WidgetImage
-            data={{
-              url: `${homeAssistant.client?.baseUrl()}${entity.attributes?.entity_picture}`,
-              widgetId: data.widgetId,
-            }}
-            editing={editing}
-            handleInteraction={handleInteraction}
-          />
-        );
-      default:
-        if (clickable && data.showIcon) return null;
-        return (
-          <Typography variant="body1">
-            {entity.state} {entity.attributes?.unit_of_measurement}
-          </Typography>
-        );
-    }
-  }, [
-    clickable,
-    data,
-    editing,
-    entity,
-    homeAssistant.client,
-    handleInteraction,
-  ]);
 
   const icon = useMemo<JSX.Element>(
     () => (
@@ -131,6 +106,83 @@ export function WidgetHomeAssistant({
     ]
   );
 
+  const state = useMemo<JSX.Element | null>(() => {
+    if (!entity || !data.showState) return null;
+    const domain = entity.entity_id.split(".")[0];
+
+    if (expanded && DOMAINS_WITH_ACTIVATE_CONDITION.has(domain)) {
+      switch (domain) {
+        case "cover":
+          return <ExpandedHomeAssistantCover entity={entity} />;
+        default:
+          return null;
+      }
+    } else {
+      switch (domain) {
+        case "camera":
+          return (
+            <WidgetImage
+              data={{
+                url: `${homeAssistant.client?.baseUrl()}${
+                  entity.attributes?.entity_picture
+                }`,
+                widgetId: data.widgetId,
+              }}
+              editing={editing}
+              handleInteraction={handleInteraction}
+            />
+          );
+        default:
+          return (
+            <>
+              {data.showIcon && mdiIcon && (
+                <>
+                  {clickable ? (
+                    <IconButton
+                      aria-label={entity.attributes.friendly_name}
+                      disabled={editing}
+                      onClick={() => {
+                        if (
+                          canTurnOnOff &&
+                          !DOMAINS_WITH_ACTIVATE_CONDITION.has(
+                            entity.entity_id.split(".")[0]
+                          )
+                        )
+                          homeAssistant.client?.entityTurnOnOff(
+                            entity,
+                            !entityIsOn
+                          );
+                        else handleInteraction(WidgetAction.ToggleExpanded);
+                      }}
+                    >
+                      {icon}
+                    </IconButton>
+                  ) : (
+                    icon
+                  )}
+                </>
+              )}
+              <Typography variant="body1">
+                {entity.state} {entity.attributes?.unit_of_measurement}
+              </Typography>
+            </>
+          );
+      }
+    }
+  }, [
+    canTurnOnOff,
+    clickable,
+    data,
+    editing,
+    entity,
+    entityIsOn,
+    expanded,
+    handleInteraction,
+    homeAssistant.client,
+    icon,
+    mdiIcon,
+  ]);
+
   return (
     <>
       {entity ? (
@@ -139,23 +191,6 @@ export function WidgetHomeAssistant({
             <Typography variant="h6">
               {entity.attributes.friendly_name}
             </Typography>
-          )}
-          {data.showIcon && mdiIcon && (
-            <>
-              {clickable ? (
-                <IconButton
-                  aria-label={entity.attributes.friendly_name}
-                  disabled={editing}
-                  onClick={() =>
-                    homeAssistant.client?.entityTurnOnOff(entity, !entityIsOn)
-                  }
-                >
-                  {icon}
-                </IconButton>
-              ) : (
-                icon
-              )}
-            </>
           )}
           {state}
           {data.secondaryInfo && (
