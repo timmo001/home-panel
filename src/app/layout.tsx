@@ -4,7 +4,6 @@ import type {
 } from "@prisma/client";
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth/next";
-import { Inter } from "next/font/google";
 
 import { AccessDenied } from "@/components/AccessDenied";
 import { AuthProvider } from "@/providers/AuthProvider";
@@ -24,11 +23,6 @@ export const metadata: Metadata = {
     },
   ],
 };
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--inter-font",
-});
 
 export default async function RootLayout({
   children,
@@ -53,7 +47,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.variable}>
+      <body>
         <AuthProvider session={session}>
           <MUIProvider>
             <Drawer dashboards={dashboards} />
