@@ -64,7 +64,7 @@ export function WidgetHomeAssistant({
           ? "rgba(255, 255, 255, 0.5)"
           : entity?.state === "on"
           ? `rgba(${
-              entity?.attributes?.rgb_color?.join(", ") || "255, 255, 0"
+              entity?.attributes?.rgb_color?.join(", ") || "126, 87, 194"
             }, ${255 / entity?.attributes?.brightness || 1})`
           : "currentColor"
       }
