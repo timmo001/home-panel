@@ -107,7 +107,7 @@ export function WidgetHomeAssistant({
             : entityIsOn
             ? `rgba(${
                 entity?.attributes?.rgb_color?.join(", ") || "126, 87, 194"
-              }, ${255 / entity?.attributes?.brightness || 1})`
+              }, ${entity?.attributes?.brightness / 255 || 1})`
             : "currentColor"
         }
         path={mdiIcon}
