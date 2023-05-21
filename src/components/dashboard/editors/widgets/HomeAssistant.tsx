@@ -81,7 +81,7 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showName"
-            defaultChecked={Boolean(data.showName)}
+            defaultChecked={data.showName || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
@@ -99,7 +99,7 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showState"
-            defaultChecked={Boolean(data.showState)}
+            defaultChecked={data.showState || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
@@ -117,7 +117,7 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showIcon"
-            defaultChecked={Boolean(data.showIcon)}
+            defaultChecked={data.showIcon || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
