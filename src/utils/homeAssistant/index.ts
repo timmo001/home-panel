@@ -22,6 +22,14 @@ import {
 
 import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
 
+export const UNAVAILABLE = "unavailable";
+export const UNKNOWN = "unknown";
+export const ON = "on";
+export const OFF = "off";
+
+export const UNAVAILABLE_STATES = [UNAVAILABLE, UNKNOWN] as const;
+export const OFF_STATES = [UNAVAILABLE, UNKNOWN, OFF] as const;
+
 export function getToggleServiceFromDomain(
   domain: string,
   turnOn: boolean = true

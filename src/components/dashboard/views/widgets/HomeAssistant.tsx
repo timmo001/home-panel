@@ -12,6 +12,7 @@ import {
 } from "@/utils/homeAssistant/const";
 import { domainIcon } from "@/utils/homeAssistant/icons";
 import { ExpandedHomeAssistantCover } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Cover";
+import { primaryColorRgb } from "@/utils/theme";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
@@ -81,7 +82,7 @@ export function WidgetHomeAssistant({
             ? "rgba(255, 255, 255, 0.5)"
             : entityIsOn
             ? `rgba(${
-                entity?.attributes?.rgb_color?.join(", ") || "126, 87, 194"
+                entity?.attributes?.rgb_color?.join(", ") || primaryColorRgb
               }, ${entity?.attributes?.brightness / 255 || 1})`
             : "currentColor"
         }
