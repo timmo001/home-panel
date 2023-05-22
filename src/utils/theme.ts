@@ -8,6 +8,8 @@ export const roboto = Roboto({
   fallback: ["Helvetica", "Arial", "sans-serif"],
 });
 
+export const primaryColorRgb = "126, 87, 194";
+
 // Create a theme instance.
 export const theme = createTheme({
   palette: {

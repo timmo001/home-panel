@@ -22,6 +22,14 @@ import {
 
 import { homeAssistantUpdateConfig } from "@/utils/serverActions/homeAssistant";
 
+export const UNAVAILABLE = "unavailable";
+export const UNKNOWN = "unknown";
+export const ON = "on";
+export const OFF = "off";
+
+export const UNAVAILABLE_STATES = [UNAVAILABLE, UNKNOWN] as const;
+export const OFF_STATES = [UNAVAILABLE, UNKNOWN, OFF] as const;
+
 export function getToggleServiceFromDomain(
   domain: string,
   turnOn: boolean = true
@@ -39,6 +47,13 @@ export function getToggleServiceFromDomain(
     default:
       return turnOn ? "turn_on" : "turn_off";
   }
+}
+
+export function entitySupportsFeature(
+  entity: HassEntity,
+  feature: number
+): boolean {
+  return (entity.attributes?.supported_features! & feature) !== 0;
 }
 
 async function loadTokens(
