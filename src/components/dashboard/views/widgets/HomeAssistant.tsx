@@ -1,9 +1,10 @@
 "use client";
 import type { WidgetHomeAssistant as WidgetHomeAssistantModel } from "@prisma/client";
-import { useMemo } from "react";
 import { HassEntity } from "home-assistant-js-websocket";
 import { Icon } from "@mdi/react";
 import { IconButton, Typography } from "@mui/material";
+import { useLongPress } from "use-long-press";
+import { useMemo } from "react";
 
 import {
   DEFAULT_DOMAIN_ICON,
@@ -30,6 +31,9 @@ export function WidgetHomeAssistant({
   expanded: boolean;
   handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
+  const longPress = useLongPress(() =>
+    handleInteraction(WidgetAction.ToggleExpanded)
+  );
   const homeAssistant = useHomeAssistant();
 
   const entity = useMemo<HassEntity | undefined>(() => {
@@ -155,6 +159,7 @@ export function WidgetHomeAssistant({
                           );
                         else handleInteraction(WidgetAction.ToggleExpanded);
                       }}
+                      {...longPress()}
                     >
                       {icon}
                     </IconButton>
