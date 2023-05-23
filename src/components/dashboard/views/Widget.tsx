@@ -11,6 +11,7 @@ import {
   widgetUpdate,
 } from "@/utils/serverActions/widget";
 import { WidgetAction, WidgetType } from "@/types/widget.type";
+import { WidgetChecklist } from "@/components/dashboard/views/widgets/Checklist";
 import { WidgetFrame } from "@/components/dashboard/views/widgets/Frame";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
@@ -76,6 +77,14 @@ export function Widget({
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
     switch (data.type) {
+      case WidgetType.Checklist:
+        return (
+          <WidgetChecklist
+            dashboardId={dashboardId}
+            data={widgetData}
+            sectionId={data.sectionId}
+          />
+        );
       case WidgetType.Frame:
         return <WidgetFrame data={widgetData} />;
       case WidgetType.HomeAssistant:
@@ -100,7 +109,15 @@ export function Widget({
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [data.type, editing, expanded, handleInteraction, widgetData]);
+  }, [
+    dashboardId,
+    data.sectionId,
+    data.type,
+    editing,
+    expanded,
+    handleInteraction,
+    widgetData,
+  ]);
 
   return (
     <WidgetBase
