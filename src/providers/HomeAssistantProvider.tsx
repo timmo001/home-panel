@@ -108,6 +108,16 @@ export function HomeAssistantProvider({
       // Get home assistant config from database
       client.config = await homeAssistantGetConfig(dashboardId);
 
+      if (!client.config) {
+        console.warn("No config found for dashboard:", { dashboardId });
+        return;
+      }
+
+      if (!client.config.url) {
+        console.warn("No url found for dashboard:", { dashboardId });
+        return;
+      }
+
       try {
         await client.connect();
       } catch (err) {
