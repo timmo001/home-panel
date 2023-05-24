@@ -13,7 +13,8 @@ import {
   CheckBoxRounded,
   AddRounded,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 
 import { WidgetChecklistModel } from "@/types/widget.type";
 import { widgetChecklistUpdate } from "@/utils/serverActions/widget";
@@ -22,10 +23,12 @@ function WidgetChecklistItem({
   dashboardId,
   data,
   sectionId,
+  handleDeleted,
 }: {
   dashboardId: string;
   data: WidgetChecklistItemModel;
   sectionId: string;
+  handleDeleted: () => void;
 }): JSX.Element {
   const { id, checklistWidgetId, content } = data;
   const [checked, setChecked] = useState<boolean>(data.checked);
@@ -41,9 +44,9 @@ function WidgetChecklistItem({
             <InputAdornment position="start">
               <IconButton
                 aria-label="Check item"
-                onClick={() => {
+                onClick={async () => {
                   setChecked(!checked);
-                  widgetChecklistUpdate(
+                  await widgetChecklistUpdate(
                     dashboardId,
                     sectionId,
                     checklistWidgetId,
@@ -66,8 +69,8 @@ function WidgetChecklistItem({
             <InputAdornment position="end">
               <IconButton
                 aria-label="Delete item"
-                onClick={() => {
-                  widgetChecklistUpdate(
+                onClick={async () => {
+                  await widgetChecklistUpdate(
                     dashboardId,
                     sectionId,
                     checklistWidgetId,
@@ -75,6 +78,7 @@ function WidgetChecklistItem({
                     "id",
                     "DELETE"
                   );
+                  handleDeleted();
                 }}
                 edge="end"
               >
@@ -107,16 +111,27 @@ export function WidgetChecklist({
   data: WidgetChecklistModel;
   sectionId: string;
 }): JSX.Element {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   return (
     <Grid2 container direction="column">
-      {data.items.map((item: WidgetChecklistItemModel) => (
-        <WidgetChecklistItem
-          key={item.id}
-          dashboardId={dashboardId}
-          data={item}
-          sectionId={sectionId}
-        />
-      ))}
+      {isPending ? (
+        <></>
+      ) : (
+        data.items.map((item: WidgetChecklistItemModel) => (
+          <WidgetChecklistItem
+            key={item.id}
+            dashboardId={dashboardId}
+            data={item}
+            sectionId={sectionId}
+            handleDeleted={() => {
+              startTransition(() => {
+                router.refresh();
+              });
+            }}
+          />
+        ))
+      )}
       <Grid2>
         <Button
           fullWidth
@@ -131,6 +146,9 @@ export function WidgetChecklist({
               "content",
               ""
             );
+            startTransition(() => {
+              router.refresh();
+            });
           }}
         >
           <AddRounded />
