@@ -26,7 +26,7 @@ export default async function Page({
    * The dashboard object retrieved from the database.
    * Contains all the sections and widgets associated with the dashboard.
    */
-  let dashboard: DashboardModel | null = await prisma.dashboard.findUnique({
+  let dashboard: DashboardModel | null = (await prisma.dashboard.findUnique({
     where: {
       id: params.dashboardId,
     },
@@ -43,7 +43,7 @@ export default async function Page({
         orderBy: { position: "asc" },
       },
     },
-  });
+  })) as DashboardModel | null;
 
   if (!dashboard) return notFound();
 

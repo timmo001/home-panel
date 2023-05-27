@@ -12,7 +12,7 @@ export type WidgetWithSectionModel = Widget & {
 
 // Combined types for widget and generic widget data
 export type WidgetModel<T = any> = Widget & {
-  data?: T;
+  data: T;
 };
 
 export enum WidgetAction {

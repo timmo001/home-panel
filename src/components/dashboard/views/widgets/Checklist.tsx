@@ -18,6 +18,52 @@ import { useState } from "react";
 import type { WidgetChecklistModel, WidgetModel } from "@/types/widget.type";
 import { widgetChecklistUpdate } from "@/utils/serverActions/widget";
 
+export function WidgetChecklist({
+  dashboardId,
+  sectionId,
+  widget,
+}: {
+  dashboardId: string;
+  sectionId: string;
+  widget: WidgetModel<WidgetChecklistModel>;
+}): JSX.Element {
+  const { id } = widget;
+  const { items } = widget.data;
+
+  return (
+    <Grid2 container direction="column">
+      {items.map((item: WidgetChecklistItemModel) => (
+        <WidgetChecklistItem
+          key={item.id}
+          dashboardId={dashboardId}
+          item={item}
+          sectionId={sectionId}
+        />
+      ))}
+      <Grid2>
+        <Button
+          fullWidth
+          variant="outlined"
+          sx={{ mt: 1 }}
+          onClick={async () => {
+            await widgetChecklistUpdate(
+              dashboardId,
+              sectionId,
+              id,
+              "",
+              "content",
+              ""
+            );
+          }}
+        >
+          <AddRounded />
+          Add item
+        </Button>
+      </Grid2>
+    </Grid2>
+  );
+}
+
 function WidgetChecklistItem({
   dashboardId,
   item,
@@ -94,53 +140,6 @@ function WidgetChecklistItem({
           );
         }}
       />
-    </Grid2>
-  );
-}
-
-export function WidgetChecklist({
-  dashboardId,
-  sectionId,
-  widget,
-}: {
-  dashboardId: string;
-  sectionId: string;
-  widget: WidgetModel<WidgetChecklistModel>;
-}): JSX.Element {
-  const { id } = widget;
-  if (!widget.data) return <div>Widget data not found</div>;
-  const { items } = widget.data;
-
-  return (
-    <Grid2 container direction="column">
-      {items.map((item: WidgetChecklistItemModel) => (
-        <WidgetChecklistItem
-          key={item.id}
-          dashboardId={dashboardId}
-          item={item}
-          sectionId={sectionId}
-        />
-      ))}
-      <Grid2>
-        <Button
-          fullWidth
-          variant="outlined"
-          sx={{ mt: 1 }}
-          onClick={async () => {
-            await widgetChecklistUpdate(
-              dashboardId,
-              sectionId,
-              id,
-              "",
-              "content",
-              ""
-            );
-          }}
-        >
-          <AddRounded />
-          Add item
-        </Button>
-      </Grid2>
     </Grid2>
   );
 }
