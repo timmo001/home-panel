@@ -22,13 +22,12 @@ import { WidgetType } from "@/types/widget.type";
 export function EditWidget({
   dashboardId,
   section,
-  widget,
 }: {
   dashboardId: string;
   section: SectionModel;
-  widget: WidgetModel;
 }): JSX.Element {
-  const { id, type, sectionId } = widget;
+  const widget: WidgetModel = section.widgets[0];
+  const { id, position, sectionId, title, type, width } = widget;
   const [widgetData, setWidgetData] = useState<any>(null);
 
   useEffect(() => {
@@ -101,17 +100,24 @@ export function EditWidget({
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section
-          data={{
-            ...section,
-            widgets: [
-              {
-                ...widget,
-                data: widgetData,
-              },
-            ],
-          }}
-        />
+        {widgetData && (
+          <Section
+            data={{
+              ...section,
+              widgets: [
+                {
+                  id,
+                  position,
+                  type,
+                  title,
+                  width,
+                  sectionId,
+                  data: widgetData,
+                },
+              ],
+            }}
+          />
+        )}
       </Grid2>
     </Grid2>
   );
