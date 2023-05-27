@@ -6,7 +6,7 @@ import { IconButton, Typography } from "@mui/material";
 import { useLongPress } from "use-long-press";
 import { useMemo } from "react";
 
-import type { WidgetModel } from "@/types/widget.type";
+import type { WidgetActionFunction, WidgetModel } from "@/types/widget.type";
 import {
   DEFAULT_DOMAIN_ICON,
   DOMAINS_TOGGLE,
@@ -30,7 +30,7 @@ export function WidgetHomeAssistant({
   editing: boolean;
   expanded: boolean;
   widget: WidgetModel<WidgetHomeAssistantModel>;
-  handleInteraction: (action: WidgetAction) => void;
+  handleInteraction: WidgetActionFunction;
 }): JSX.Element {
   const { id } = widget;
   const {

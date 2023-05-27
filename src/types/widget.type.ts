@@ -10,6 +10,8 @@ export type WidgetModel<T = any> = Widget & {
   data: T;
 };
 
+export type WidgetActionFunction = (action: WidgetAction) => void;
+
 export enum WidgetAction {
   Delete = "delete",
   Edit = "edit",

@@ -2,7 +2,7 @@
 import type { WidgetImage as WidgetImageModel } from "@prisma/client";
 import { CardActionArea } from "@mui/material";
 
-import type { WidgetModel } from "@/types/widget.type";
+import type { WidgetActionFunction, WidgetModel } from "@/types/widget.type";
 import { WidgetAction } from "@/types/widget.type";
 
 export function WidgetImage({
@@ -12,7 +12,7 @@ export function WidgetImage({
 }: {
   editing: boolean;
   widget: WidgetModel<WidgetImageModel>;
-  handleInteraction: (action: WidgetAction) => void;
+  handleInteraction: WidgetActionFunction;
 }): JSX.Element {
   const { url } = widget.data;
   return (

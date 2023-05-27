@@ -16,6 +16,7 @@ import {
   EditRounded,
 } from "@mui/icons-material";
 
+import type { WidgetActionFunction } from "@/types/widget.type";
 import { WidgetAction, WidgetType } from "@/types/widget.type";
 
 export function WidgetBase({
@@ -29,7 +30,7 @@ export function WidgetBase({
   data: WidgetModel;
   editing: boolean;
   expanded: boolean;
-  handleInteraction: (action: WidgetAction) => void;
+  handleInteraction: WidgetActionFunction;
 }): JSX.Element {
   const widget = (
     <Card sx={{ width: "100%" }}>
