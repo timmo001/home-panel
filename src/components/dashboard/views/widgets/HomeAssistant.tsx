@@ -210,7 +210,11 @@ export function WidgetHomeAssistant({
 
   return (
     <>
-      {entity ? (
+      {!homeAssistant.entities ? (
+        <Typography color="secondary">
+          Home Assistant is connecting / not connected.
+        </Typography>
+      ) : entity ? (
         <>
           {showName && (
             <Typography variant="h6">
@@ -228,7 +232,9 @@ export function WidgetHomeAssistant({
           )}
         </>
       ) : (
-        <Typography>Entity &#39;{entityId}&#39; not found.</Typography>
+        <Typography color="error">
+          Entity &#39;{entityId}&#39; not found.
+        </Typography>
       )}
     </>
   );
