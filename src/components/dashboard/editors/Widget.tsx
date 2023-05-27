@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   Card,
   CardContent,
@@ -16,7 +16,6 @@ import { EditWidgetHomeAssistant } from "./widgets/HomeAssistant";
 import { EditWidgetImage } from "@/components/dashboard/editors/widgets/Image";
 import { EditWidgetMarkdown } from "@/components/dashboard/editors/widgets/Markdown";
 import { Section } from "@/components/dashboard/views/Section";
-import { widgetGetData } from "@/utils/serverActions/widget";
 import { WidgetType } from "@/types/widget.type";
 
 export function EditWidget({
@@ -27,25 +26,17 @@ export function EditWidget({
   section: SectionModel;
 }): JSX.Element {
   const widget: WidgetModel = section.widgets[0];
-  const { id, position, sectionId, title, type, width } = widget;
-  const [widgetData, setWidgetData] = useState<any>(null);
-
-  useEffect(() => {
-    (async () => {
-      const newData = await widgetGetData(id, type);
-      setWidgetData(newData);
-    })();
-  }, [id, type]);
+  const { id, data, position, sectionId, title, type, width } = widget;
 
   const widgetView: JSX.Element = useMemo(() => {
-    if (!widgetData) return <Skeleton variant="text" />;
+    if (!data) return <Skeleton variant="text" />;
     switch (type) {
       case WidgetType.Frame:
         return (
           <EditWidgetFrame
             dashboardId={dashboardId}
             sectionId={sectionId}
-            widgetData={widgetData}
+            widgetData={data}
           />
         );
       case WidgetType.HomeAssistant:
@@ -53,7 +44,7 @@ export function EditWidget({
           <EditWidgetHomeAssistant
             dashboardId={dashboardId}
             sectionId={sectionId}
-            widgetData={widgetData}
+            widgetData={data}
           />
         );
       case WidgetType.Image:
@@ -61,7 +52,7 @@ export function EditWidget({
           <EditWidgetImage
             dashboardId={dashboardId}
             sectionId={sectionId}
-            widgetData={widgetData}
+            widgetData={data}
           />
         );
       case WidgetType.Markdown:
@@ -69,13 +60,13 @@ export function EditWidget({
           <EditWidgetMarkdown
             dashboardId={dashboardId}
             sectionId={sectionId}
-            widgetData={widgetData}
+            widgetData={data}
           />
         );
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [dashboardId, type, sectionId, widgetData]);
+  }, [dashboardId, type, sectionId, data]);
 
   return (
     <Grid2
@@ -100,7 +91,7 @@ export function EditWidget({
         </Card>
       </Grid2>
       <Grid2 xs>
-        {widgetData && (
+        {data && (
           <Section
             data={{
               ...section,
@@ -112,7 +103,7 @@ export function EditWidget({
                   title,
                   width,
                   sectionId,
-                  data: widgetData,
+                  data,
                 },
               ],
             }}
