@@ -3,7 +3,7 @@ import { Skeleton } from "@mui/material";
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import type { WidgetModel } from "@/types/widget.type";
+import type { WidgetActionFunction, WidgetModel } from "@/types/widget.type";
 import { WidgetAction, WidgetType } from "@/types/widget.type";
 import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
 import { WidgetChecklist } from "@/components/dashboard/views/widgets/Checklist";
@@ -26,7 +26,7 @@ export function Widget({
   const [expanded, setExpanded] = useState<boolean>(false);
   const router = useRouter();
 
-  const handleInteraction = useCallback(
+  const handleInteraction: WidgetActionFunction = useCallback(
     async (action: WidgetAction): Promise<void> => {
       console.log("Handle interaction:", action);
 
