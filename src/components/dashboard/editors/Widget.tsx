@@ -8,7 +8,7 @@ import {
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
 
-import type { WidgetWithSectionModel } from "@/types/widget.type";
+import type { WidgetModel, WidgetWithSectionModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
 import { EditWidgetFrame } from "@/components/dashboard/editors/widgets/Frame";
 import { EditWidgetHomeAssistant } from "./widgets/HomeAssistant";
@@ -97,7 +97,17 @@ export function EditWidget({
         </Card>
       </Grid2>
       <Grid2 xs>
-        <Section data={{ ...data.section, widgets: [data] }} />
+        <Section
+          data={{
+            ...data.section,
+            widgets: [
+              {
+                ...data,
+                data: widgetData,
+              },
+            ],
+          }}
+        />
       </Grid2>
     </Grid2>
   );
