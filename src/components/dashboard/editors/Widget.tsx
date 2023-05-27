@@ -8,7 +8,8 @@ import {
   Unstable_Grid2 as Grid2,
 } from "@mui/material";
 
-import type { WidgetModel, WidgetWithSectionModel } from "@/types/widget.type";
+import type { SectionModel } from "@/types/section.type";
+import type { WidgetModel } from "@/types/widget.type";
 import { EditWidgetBase } from "@/components/dashboard/editors/widgets/Base";
 import { EditWidgetFrame } from "@/components/dashboard/editors/widgets/Frame";
 import { EditWidgetHomeAssistant } from "./widgets/HomeAssistant";
@@ -20,59 +21,62 @@ import { WidgetType } from "@/types/widget.type";
 
 export function EditWidget({
   dashboardId,
-  data,
+  section,
+  widget,
 }: {
   dashboardId: string;
-  data: WidgetWithSectionModel;
+  section: SectionModel;
+  widget: WidgetModel;
 }): JSX.Element {
+  const { id, type, sectionId } = widget;
   const [widgetData, setWidgetData] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
-      const newData = await widgetGetData(data.id, data.type);
+      const newData = await widgetGetData(id, type);
       setWidgetData(newData);
     })();
-  }, [data.id, data.type]);
+  }, [id, type]);
 
   const widgetView: JSX.Element = useMemo(() => {
     if (!widgetData) return <Skeleton variant="text" />;
-    switch (data.type) {
+    switch (type) {
       case WidgetType.Frame:
         return (
           <EditWidgetFrame
             dashboardId={dashboardId}
-            sectionId={data.sectionId}
-            data={widgetData}
+            sectionId={sectionId}
+            widgetData={widgetData}
           />
         );
       case WidgetType.HomeAssistant:
         return (
           <EditWidgetHomeAssistant
             dashboardId={dashboardId}
-            sectionId={data.sectionId}
-            data={widgetData}
+            sectionId={sectionId}
+            widgetData={widgetData}
           />
         );
       case WidgetType.Image:
         return (
           <EditWidgetImage
             dashboardId={dashboardId}
-            sectionId={data.sectionId}
-            data={widgetData}
+            sectionId={sectionId}
+            widgetData={widgetData}
           />
         );
       case WidgetType.Markdown:
         return (
           <EditWidgetMarkdown
             dashboardId={dashboardId}
-            sectionId={data.sectionId}
-            data={widgetData}
+            sectionId={sectionId}
+            widgetData={widgetData}
           />
         );
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [dashboardId, data.type, data.sectionId, widgetData]);
+  }, [dashboardId, type, sectionId, widgetData]);
 
   return (
     <Grid2
@@ -90,7 +94,7 @@ export function EditWidget({
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography variant="h5">Edit Widget</Typography>
             <Grid2 container direction="column" sx={{ marginTop: "1rem" }}>
-              <EditWidgetBase dashboardId={dashboardId} data={data} />
+              <EditWidgetBase dashboardId={dashboardId} widget={widget} />
               {widgetView}
             </Grid2>
           </CardContent>
@@ -99,10 +103,10 @@ export function EditWidget({
       <Grid2 xs>
         <Section
           data={{
-            ...data.section,
+            ...section,
             widgets: [
               {
-                ...data,
+                ...widget,
                 data: widgetData,
               },
             ],

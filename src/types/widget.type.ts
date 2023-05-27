@@ -5,11 +5,6 @@ import type {
   WidgetChecklistItem,
 } from "@prisma/client";
 
-// Combined types for widget with section
-export type WidgetWithSectionModel = Widget & {
-  section: Section;
-};
-
 // Combined types for widget and generic widget data
 export type WidgetModel<T = any> = Widget & {
   data: T;

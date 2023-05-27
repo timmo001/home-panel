@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import type { WidgetWithSectionModel } from "@/types/widget.type";
+import type { WidgetModel } from "@/types/widget.type";
 import { EditWidget } from "@/components/dashboard/editors/Widget";
 import { HomeAssistantProvider } from "@/providers/HomeAssistantProvider";
 import { prisma } from "@/utils/prisma";
+import { widgetGetData } from "@/utils/serverActions/widget";
 
 export const metadata: Metadata = {
   title: "Edit Widget | Home Panel",
@@ -20,20 +21,19 @@ export default async function Page({
 }): Promise<JSX.Element> {
   console.log("Edit Widget:", params);
 
-  let data: WidgetWithSectionModel | null = await prisma.widget.findUnique({
+  let widget: WidgetModel | null = (await prisma.widget.findUnique({
     where: {
       id: params.widgetId,
     },
-    include: {
-      section: true,
-    },
-  });
+  })) as WidgetModel | null;
 
-  if (!data) return notFound();
+  if (!widget) return notFound();
+
+  widget.data = await widgetGetData(widget.id, widget.type);
 
   return (
     <HomeAssistantProvider dashboardId={params.dashboardId}>
-      <EditWidget dashboardId={params.dashboardId} data={data} />
+      <EditWidget dashboardId={params.dashboardId} data={widget} />
     </HomeAssistantProvider>
   );
 }

@@ -7,11 +7,11 @@ import { widgetMarkdownUpdate } from "@/utils/serverActions/widget";
 export function EditWidgetMarkdown({
   dashboardId,
   sectionId,
-  data,
+  widgetData,
 }: {
   dashboardId: string;
   sectionId: string;
-  data: WidgetMarkdown;
+  widgetData: WidgetMarkdown;
 }): JSX.Element {
   return (
     <>
@@ -19,12 +19,12 @@ export function EditWidgetMarkdown({
         name="content"
         label="Content"
         margin="dense"
-        defaultValue={data.content}
+        defaultValue={widgetData.content}
         onChange={async (e) =>
           await widgetMarkdownUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )
