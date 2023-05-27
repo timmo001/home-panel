@@ -14,24 +14,24 @@ import {
   AddRounded,
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
-import { WidgetChecklistModel } from "@/types/widget.type";
+import type { WidgetChecklistModel, WidgetModel } from "@/types/widget.type";
 import { widgetChecklistUpdate } from "@/utils/serverActions/widget";
 
 function WidgetChecklistItem({
   dashboardId,
-  data,
+  item,
   sectionId,
   handleDeleted,
 }: {
   dashboardId: string;
-  data: WidgetChecklistItemModel;
+  item: WidgetChecklistItemModel;
   sectionId: string;
   handleDeleted: () => void;
 }): JSX.Element {
-  const { id, checklistWidgetId, content } = data;
-  const [checked, setChecked] = useState<boolean>(data.checked);
+  const { id, checklistWidgetId, content } = item;
+  const [checked, setChecked] = useState<boolean>(item.checked);
   return (
     <Grid2>
       <TextField
@@ -104,34 +104,29 @@ function WidgetChecklistItem({
 
 export function WidgetChecklist({
   dashboardId,
-  data,
   sectionId,
+  widget,
 }: {
   dashboardId: string;
-  data: WidgetChecklistModel;
   sectionId: string;
+  widget: WidgetModel<WidgetChecklistModel>;
 }): JSX.Element {
-  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   return (
     <Grid2 container direction="column">
-      {isPending ? (
-        <></>
-      ) : (
-        data.items.map((item: WidgetChecklistItemModel) => (
-          <WidgetChecklistItem
-            key={item.id}
-            dashboardId={dashboardId}
-            data={item}
-            sectionId={sectionId}
-            handleDeleted={() => {
-              startTransition(() => {
-                router.refresh();
-              });
-            }}
-          />
-        ))
-      )}
+      {widget.data.items.map((item: WidgetChecklistItemModel) => (
+        <WidgetChecklistItem
+          key={item.id}
+          dashboardId={dashboardId}
+          item={item}
+          sectionId={sectionId}
+          handleDeleted={() => {
+            // startTransition(() => {
+            //   router.refresh();
+            // });
+          }}
+        />
+      ))}
       <Grid2>
         <Button
           fullWidth
@@ -141,14 +136,14 @@ export function WidgetChecklist({
             await widgetChecklistUpdate(
               dashboardId,
               sectionId,
-              data.widgetId,
+              widget.id,
               "",
               "content",
               ""
             );
-            startTransition(() => {
-              router.refresh();
-            });
+            // startTransition(() => {
+            //   router.refresh();
+            // });
           }}
         >
           <AddRounded />

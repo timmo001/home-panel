@@ -1,11 +1,13 @@
-import type { Dashboard, HeaderItem, Section, Widget } from "@prisma/client";
+import type { Dashboard, HeaderItem, Section } from "@prisma/client";
+
+import type { WidgetModel } from "@/types/widget.type";
 
 // Combined types for dashboard, section and widget
 export type DashboardModel = Dashboard & {
   headerItems: Array<HeaderItem>;
   sections: Array<
     Section & {
-      widgets: Array<Widget>;
+      widgets: Array<WidgetModel>;
     }
   >;
 };

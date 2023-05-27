@@ -10,6 +10,11 @@ export type WidgetWithSectionModel = Widget & {
   section: Section;
 };
 
+// Combined types for widget and generic widget data
+export type WidgetModel<T = any> = Widget & {
+  data?: T;
+};
+
 export enum WidgetAction {
   Delete = "delete",
   Edit = "edit",

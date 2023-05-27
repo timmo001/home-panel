@@ -2,14 +2,14 @@
 import { Unstable_Grid2 as Grid2, Stack } from "@mui/material";
 
 import type { DashboardModel } from "@/types/dashboard.type";
-import type { SectionModel } from "@/types/section.type";
 import { Heading } from "@/components/dashboard/views/Heading";
 import { HomeAssistantProvider } from "@/providers/HomeAssistantProvider";
-import { Section } from "@/components/dashboard/views/Section";
 
 export function Dashboard({
+  children,
   dashboard,
 }: {
+  children: React.ReactNode;
   dashboard: DashboardModel;
 }): JSX.Element {
   return (
@@ -39,9 +39,7 @@ export function Dashboard({
             maxHeight: "100%",
           }}
         >
-          {dashboard.sections.map((section: SectionModel) => (
-            <Section key={section.id} data={section} />
-          ))}
+          {children}
         </Grid2>
       </Stack>
     </HomeAssistantProvider>

@@ -6,6 +6,7 @@ import { IconButton, Typography } from "@mui/material";
 import { useLongPress } from "use-long-press";
 import { useMemo } from "react";
 
+import type { WidgetModel } from "@/types/widget.type";
 import {
   DEFAULT_DOMAIN_ICON,
   DOMAINS_TOGGLE,
@@ -21,16 +22,27 @@ import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 const DOMAINS_WITH_ACTIVATE_CONDITION = new Set(["cover"]);
 
 export function WidgetHomeAssistant({
-  data,
   editing,
   expanded,
+  widget,
   handleInteraction,
 }: {
-  data: WidgetHomeAssistantModel;
   editing: boolean;
   expanded: boolean;
+  widget: WidgetModel<WidgetHomeAssistantModel>;
   handleInteraction: (action: WidgetAction) => void;
 }): JSX.Element {
+  const { id } = widget;
+  const {
+    entityId,
+    iconColor,
+    iconSize,
+    secondaryInfo,
+    showIcon,
+    showName,
+    showState,
+  } = widget.data;
+
   const longPress = useLongPress(() =>
     handleInteraction(WidgetAction.ToggleExpanded)
   );
@@ -38,8 +50,8 @@ export function WidgetHomeAssistant({
 
   const entity = useMemo<HassEntity | undefined>(() => {
     if (!homeAssistant.entities) return;
-    return homeAssistant.entities[data.entityId];
-  }, [data.entityId, homeAssistant.entities]);
+    return homeAssistant.entities[entityId];
+  }, [entityId, homeAssistant.entities]);
 
   const canTurnOnOff = useMemo<boolean>(() => {
     if (!homeAssistant.client || !entity) return false;
@@ -82,7 +94,7 @@ export function WidgetHomeAssistant({
     () => (
       <Icon
         color={
-          data.iconColor || entity?.state === "unavailiable"
+          iconColor || entity?.state === "unavailiable"
             ? "rgba(255, 255, 255, 0.5)"
             : entityIsOn
             ? `rgba(${
@@ -92,17 +104,17 @@ export function WidgetHomeAssistant({
         }
         path={mdiIcon}
         size={
-          !isNaN(Number(data.iconSize)) &&
-          Number(data.iconSize) > 0 &&
-          Number(data.iconSize) < 8
-            ? Number(data.iconSize)
-            : data.iconSize || 4
+          !isNaN(Number(iconSize)) &&
+          Number(iconSize) > 0 &&
+          Number(iconSize) < 8
+            ? Number(iconSize)
+            : iconSize || 4
         }
       />
     ),
     [
-      data.iconColor,
-      data.iconSize,
+      iconColor,
+      iconSize,
       entity?.attributes?.brightness,
       entity?.attributes?.rgb_color,
       entity?.state,
@@ -112,7 +124,7 @@ export function WidgetHomeAssistant({
   );
 
   const state = useMemo<JSX.Element | null>(() => {
-    if (!entity || !data.showState) return null;
+    if (!entity || !showState) return null;
     const domain = entity.entity_id.split(".")[0];
 
     if (expanded && DOMAINS_WITH_ACTIVATE_CONDITION.has(domain)) {
@@ -127,20 +139,23 @@ export function WidgetHomeAssistant({
         case "camera":
           return (
             <WidgetImage
-              data={{
-                url: `${homeAssistant.client?.baseUrl()}${
-                  entity.attributes?.entity_picture
-                }`,
-                widgetId: data.widgetId,
-              }}
               editing={editing}
               handleInteraction={handleInteraction}
+              widget={{
+                ...widget,
+                data: {
+                  url: `${homeAssistant.client?.baseUrl()}${
+                    entity.attributes?.entity_picture
+                  }`,
+                  widgetId: id,
+                },
+              }}
             />
           );
         default:
           return (
             <>
-              {data.showIcon && mdiIcon && (
+              {showIcon && mdiIcon && (
                 <>
                   {clickable ? (
                     <IconButton
@@ -178,7 +193,6 @@ export function WidgetHomeAssistant({
   }, [
     canTurnOnOff,
     clickable,
-    data,
     editing,
     entity,
     entityIsOn,
@@ -186,30 +200,35 @@ export function WidgetHomeAssistant({
     handleInteraction,
     homeAssistant.client,
     icon,
+    id,
+    longPress,
     mdiIcon,
+    showIcon,
+    showState,
+    widget,
   ]);
 
   return (
     <>
       {entity ? (
         <>
-          {data.showName && (
+          {showName && (
             <Typography variant="h6">
               {entity.attributes.friendly_name}
             </Typography>
           )}
           {state}
-          {data.secondaryInfo && (
+          {secondaryInfo && (
             <Typography variant="body2">
-              {data.secondaryInfo === "last_changed" ||
-              data.secondaryInfo === "last_updated"
-                ? entity[data.secondaryInfo]
-                : entity.attributes[data.secondaryInfo]}
+              {secondaryInfo === "last_changed" ||
+              secondaryInfo === "last_updated"
+                ? entity[secondaryInfo]
+                : entity.attributes[secondaryInfo]}
             </Typography>
           )}
         </>
       ) : (
-        <Typography>Entity &#39;{data.entityId}&#39; not found.</Typography>
+        <Typography>Entity &#39;{entityId}&#39; not found.</Typography>
       )}
     </>
   );
