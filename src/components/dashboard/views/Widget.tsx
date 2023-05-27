@@ -15,11 +15,11 @@ import { WidgetMarkdown } from "@/components/dashboard/views/widgets/Markdown";
 
 export function Widget({
   dashboardId,
-  editing,
   data,
+  editing,
 }: {
-  data: WidgetModel;
   dashboardId: string;
+  data: WidgetModel;
   editing: boolean;
 }): JSX.Element {
   const { id, position, sectionId, type } = data;
