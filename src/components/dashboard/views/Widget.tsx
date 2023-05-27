@@ -1,16 +1,13 @@
 "use client";
-import type { Widget as WidgetModel } from "@prisma/client";
 import { Skeleton } from "@mui/material";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
-import {
-  widgetDelete,
-  widgetGetData,
-  widgetUpdate,
-} from "@/utils/serverActions/widget";
+import type { WidgetModel } from "@/types/widget.type";
 import { WidgetAction, WidgetType } from "@/types/widget.type";
+import { WidgetBase } from "@/components/dashboard/views/widgets/Base";
+import { WidgetChecklist } from "@/components/dashboard/views/widgets/Checklist";
+import { widgetDelete, widgetUpdate } from "@/utils/serverActions/widget";
 import { WidgetFrame } from "@/components/dashboard/views/widgets/Frame";
 import { WidgetHomeAssistant } from "@/components/dashboard/views/widgets/HomeAssistant";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
@@ -25,16 +22,9 @@ export function Widget({
   data: WidgetModel;
   editing: boolean;
 }): JSX.Element {
+  const { id, position, sectionId, type } = data;
   const [expanded, setExpanded] = useState<boolean>(false);
-  const [widgetData, setWidgetData] = useState<any>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    (async () => {
-      const newData = await widgetGetData(data.id, data.type);
-      setWidgetData(newData);
-    })();
-  }, [data.id, data.type]);
 
   const handleInteraction = useCallback(
     async (action: WidgetAction): Promise<void> => {
@@ -42,65 +32,71 @@ export function Widget({
 
       switch (action) {
         case WidgetAction.Delete:
-          await widgetDelete(dashboardId, data.id);
+          await widgetDelete(dashboardId, id);
           break;
         case WidgetAction.Edit:
           router.push(
-            `/dashboards/${dashboardId}/sections/${data.sectionId}/widgets/${data.id}/edit`
+            `/dashboards/${dashboardId}/sections/${sectionId}/widgets/${id}/edit`
           );
           break;
         case WidgetAction.MoveDown:
-          await widgetUpdate(
-            dashboardId,
-            data.id,
-            "position",
-            data.position + 15
-          );
+          await widgetUpdate(dashboardId, id, "position", position + 15);
           break;
         case WidgetAction.MoveUp:
-          await widgetUpdate(
-            dashboardId,
-            data.id,
-            "position",
-            data.position - 15
-          );
+          await widgetUpdate(dashboardId, id, "position", position - 15);
           break;
         case WidgetAction.ToggleExpanded:
           setExpanded(!expanded);
           break;
       }
     },
-    [dashboardId, data.id, data.position, data.sectionId, expanded, router]
+    [dashboardId, id, position, sectionId, expanded, router]
   );
 
   const widgetView: JSX.Element = useMemo(() => {
-    if (!widgetData) return <Skeleton variant="text" />;
-    switch (data.type) {
+    if (!data) return <Skeleton variant="text" />;
+    switch (type) {
+      case WidgetType.Checklist:
+        return (
+          <WidgetChecklist
+            dashboardId={dashboardId}
+            sectionId={sectionId}
+            widget={data}
+          />
+        );
       case WidgetType.Frame:
-        return <WidgetFrame data={widgetData} />;
+        return <WidgetFrame widget={data} />;
       case WidgetType.HomeAssistant:
         return (
           <WidgetHomeAssistant
-            data={widgetData}
             editing={editing}
             expanded={expanded}
+            widget={data}
             handleInteraction={handleInteraction}
           />
         );
       case WidgetType.Image:
         return (
           <WidgetImage
-            data={widgetData}
             editing={editing}
+            widget={data}
             handleInteraction={handleInteraction}
           />
         );
       case WidgetType.Markdown:
-        return <WidgetMarkdown data={widgetData} />;
+        return <WidgetMarkdown widget={data} />;
       default:
         return <div>Unknown widget type</div>;
     }
-  }, [data.type, editing, expanded, handleInteraction, widgetData]);
+  }, [
+    dashboardId,
+    data,
+    editing,
+    expanded,
+    handleInteraction,
+    sectionId,
+    type,
+  ]);
 
   return (
     <WidgetBase

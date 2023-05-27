@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import type { DashboardModel } from "@/types/dashboard.type";
+import type { SectionModel } from "@/types/section.type";
 import { Dashboard } from "@/components/dashboard/views/Dashboard";
 import { prisma } from "@/utils/prisma";
+import { Section } from "@/components/dashboard/views/Section";
+import { widgetGetData } from "@/utils/serverActions/widget";
 
 export const metadata: Metadata = {
   title: "Dashboard | Home Panel",
@@ -23,7 +26,7 @@ export default async function Page({
    * The dashboard object retrieved from the database.
    * Contains all the sections and widgets associated with the dashboard.
    */
-  const dashboard: DashboardModel | null = await prisma.dashboard.findUnique({
+  let dashboard: DashboardModel | null = (await prisma.dashboard.findUnique({
     where: {
       id: params.dashboardId,
     },
@@ -40,9 +43,22 @@ export default async function Page({
         orderBy: { position: "asc" },
       },
     },
-  });
+  })) as DashboardModel | null;
 
   if (!dashboard) return notFound();
 
-  return <Dashboard dashboard={dashboard} />;
+  // Fetch data for all widgets
+  for (const section of dashboard.sections) {
+    for (const widget of section.widgets) {
+      widget.data = await widgetGetData(widget.id, widget.type);
+    }
+  }
+
+  return (
+    <Dashboard dashboard={dashboard}>
+      {dashboard.sections.map((section: SectionModel) => (
+        <Section key={section.id} data={section} />
+      ))}
+    </Dashboard>
+  );
 }

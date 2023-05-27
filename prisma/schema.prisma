@@ -70,9 +70,25 @@ model Widget {
   homeAssistant WidgetHomeAssistant[]
   image         WidgetImage[]
   markdown      WidgetMarkdown[]
+  checklist     WidgetChecklist[]
 
   @@index([id, sectionId], name: "id_sectionId_unique")
   @@index([sectionId, position], name: "sectionId_position_unique")
+}
+
+model WidgetChecklist {
+  widgetId String                @id
+  widget   Widget                @relation(fields: [widgetId], references: [id], onDelete: Cascade)
+  items    WidgetChecklistItem[]
+}
+
+model WidgetChecklistItem {
+  id                String          @id @default(cuid())
+  position          Int             @default(10)
+  content           String
+  checked           Boolean         @default(false)
+  checklist         WidgetChecklist @relation(fields: [checklistWidgetId], references: [widgetId])
+  checklistWidgetId String
 }
 
 model WidgetFrame {

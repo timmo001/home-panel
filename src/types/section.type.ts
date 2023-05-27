@@ -1,8 +1,10 @@
-import type { Section, Widget } from "@prisma/client";
+import type { Section } from "@prisma/client";
+
+import { WidgetModel } from "@/types/widget.type";
 
 // Combined types for section and widget
 export type SectionModel = Section & {
-  widgets: Array<Widget>;
+  widgets: Array<WidgetModel>;
 };
 
 export enum SectionAction {

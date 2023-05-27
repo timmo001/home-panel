@@ -1,5 +1,4 @@
 "use client";
-import type { Widget as WidgetModel } from "@prisma/client";
 import {
   AddRounded,
   ArrowBackRounded,
@@ -12,10 +11,12 @@ import { Typography, Unstable_Grid2 as Grid2, IconButton } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { SectionAction, SectionModel } from "@/types/section.type";
+import type { SectionModel } from "@/types/section.type";
+import type { WidgetModel } from "@/types/widget.type";
+import { SectionAction } from "@/types/section.type";
+import { sectionDelete, sectionUpdate } from "@/utils/serverActions/section";
 import { Widget } from "@/components/dashboard/views/Widget";
 import Link from "next/link";
-import { sectionDelete, sectionUpdate } from "@/utils/serverActions/section";
 
 export function Section({ data }: { data: SectionModel }): JSX.Element {
   const [editing, setEditing] = useState<boolean>(false);

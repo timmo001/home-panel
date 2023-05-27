@@ -7,43 +7,34 @@ import { WidgetType } from "@/types/widget.type";
 
 export function EditWidgetBase({
   dashboardId,
-  data,
+  widget,
 }: {
   dashboardId: string;
-  data: Widget;
+  widget: Widget;
 }): JSX.Element {
+  const { id, title, type, width } = widget;
   return (
     <>
       <TextField
         name="title"
         label="Title"
         margin="dense"
-        defaultValue={data.title || ""}
+        defaultValue={title || ""}
         onChange={async (e) =>
-          await widgetUpdate(
-            dashboardId,
-            data.id,
-            e.target.name,
-            e.target.value
-          )
+          await widgetUpdate(dashboardId, id, e.target.name, e.target.value)
         }
       />
       <TextField
         name="width"
         label="Width"
         margin="dense"
-        defaultValue={data.width || ""}
+        defaultValue={width || ""}
         onChange={async (e) =>
-          await widgetUpdate(
-            dashboardId,
-            data.id,
-            e.target.name,
-            e.target.value
-          )
+          await widgetUpdate(dashboardId, id, e.target.name, e.target.value)
         }
       />
       <Autocomplete
-        defaultValue={data.type}
+        defaultValue={type}
         options={Object.values(WidgetType)}
         getOptionLabel={(option) => {
           // Split camelCase to words and capitalize first letter
@@ -62,7 +53,7 @@ export function EditWidgetBase({
         )}
         onChange={async (_, value: string | null) => {
           if (!value) return;
-          await widgetUpdate(dashboardId, data.id, "type", value);
+          await widgetUpdate(dashboardId, id, "type", value);
         }}
       />
     </>

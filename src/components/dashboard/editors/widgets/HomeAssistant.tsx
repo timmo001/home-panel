@@ -16,11 +16,11 @@ import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 export function EditWidgetHomeAssistant({
   dashboardId,
   sectionId,
-  data,
+  widgetData,
 }: {
   dashboardId: string;
   sectionId: string;
-  data: WidgetHomeAssistant;
+  widgetData: WidgetHomeAssistant;
 }): JSX.Element {
   const homeAssistant = useHomeAssistant();
 
@@ -33,8 +33,8 @@ export function EditWidgetHomeAssistant({
 
   const defaultEntity = useMemo<HassEntity | undefined>(() => {
     if (!homeAssistant.entities) return;
-    return homeAssistant.entities[data.entityId];
-  }, [data.entityId, homeAssistant.entities]);
+    return homeAssistant.entities[widgetData.entityId];
+  }, [widgetData.entityId, homeAssistant.entities]);
 
   const entityAttributes = useMemo<Array<string> | undefined>(() => {
     if (!defaultEntity) return;
@@ -71,7 +71,7 @@ export function EditWidgetHomeAssistant({
           await widgetHomeAssistantUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             "entityId",
             value.entity_id
           );
@@ -81,12 +81,12 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showName"
-            defaultChecked={data.showName || true}
+            defaultChecked={widgetData.showName || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
                 sectionId,
-                data.widgetId,
+                widgetData.widgetId,
                 e.target.name,
                 e.target.checked
               )
@@ -99,12 +99,12 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showState"
-            defaultChecked={data.showState || true}
+            defaultChecked={widgetData.showState || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
                 sectionId,
-                data.widgetId,
+                widgetData.widgetId,
                 e.target.name,
                 e.target.checked
               )
@@ -117,12 +117,12 @@ export function EditWidgetHomeAssistant({
         control={
           <Switch
             name="showIcon"
-            defaultChecked={data.showIcon || true}
+            defaultChecked={widgetData.showIcon || true}
             onChange={async (e) =>
               await widgetHomeAssistantUpdate(
                 dashboardId,
                 sectionId,
-                data.widgetId,
+                widgetData.widgetId,
                 e.target.name,
                 e.target.checked
               )
@@ -135,12 +135,12 @@ export function EditWidgetHomeAssistant({
         name="iconColor"
         label="Icon Color"
         margin="dense"
-        defaultValue={data.iconColor || ""}
+        defaultValue={widgetData.iconColor || ""}
         onChange={async (e) =>
           await widgetHomeAssistantUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )
@@ -150,19 +150,19 @@ export function EditWidgetHomeAssistant({
         name="iconSize"
         label="Icon Size"
         margin="dense"
-        defaultValue={data.iconSize || ""}
+        defaultValue={widgetData.iconSize || ""}
         onChange={async (e) =>
           await widgetHomeAssistantUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )
         }
       />
       <Autocomplete
-        defaultValue={data.secondaryInfo}
+        defaultValue={widgetData.secondaryInfo}
         options={entityAttributes || []}
         renderInput={(params) => (
           <TextField
@@ -177,7 +177,7 @@ export function EditWidgetHomeAssistant({
           await widgetHomeAssistantUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             "secondaryInfo",
             value
           );

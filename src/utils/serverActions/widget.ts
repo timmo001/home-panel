@@ -1,6 +1,7 @@
 "use server";
 import type {
   Widget as WidgetModel,
+  WidgetChecklistItem as WidgetChecklistItemModel,
   WidgetFrame as WidgetFrameModel,
   WidgetHomeAssistant as WidgetHomeAssistantModel,
   WidgetImage as WidgetImageModel,
@@ -68,6 +69,23 @@ export async function widgetGetData(
   console.log("Get widget data:", { widgetId, type });
   let data;
   switch (type) {
+    case WidgetType.Checklist:
+      data = await prisma.widgetChecklist.findUnique({
+        include: { items: { orderBy: { position: "asc" } } },
+        where: { widgetId },
+      });
+      if (data) return data;
+      return await prisma.widgetChecklist.create({
+        data: {
+          items: {
+            create: {
+              content: "",
+            },
+          },
+          widget: { connect: { id: widgetId } },
+        },
+        include: { items: true },
+      });
     case WidgetType.Frame:
       data = await prisma.widgetFrame.findUnique({
         where: { widgetId },
@@ -176,6 +194,75 @@ export async function widgetUpdate(
   await widgetRevalidate(dashboardId, newData.sectionId, widgetId);
 
   console.log("New widget data:", newData);
+
+  return newData;
+}
+
+export async function widgetChecklistUpdate(
+  dashboardId: string,
+  sectionId: string,
+  widgetId: string,
+  checklistItemId: string,
+  name: keyof WidgetChecklistItemModel,
+  value: WidgetChecklistItemModel[keyof WidgetChecklistItemModel]
+): Promise<WidgetChecklistItemModel> {
+  console.log("Update widget checklist:", {
+    dashboardId,
+    sectionId,
+    widgetId,
+    checklistItemId,
+    name,
+    value,
+  });
+
+  let newData: WidgetChecklistItemModel;
+  if (name === "id" && value === "DELETE") {
+    newData = await prisma.widgetChecklistItem.delete({
+      where: {
+        id: checklistItemId,
+      },
+    });
+  } else {
+    newData = await prisma.widgetChecklistItem.upsert({
+      create: {
+        content: "",
+        position: 9999,
+        [name]: value,
+        checklist: {
+          connect: {
+            widgetId,
+          },
+        },
+      },
+      update: {
+        [name]: value,
+      },
+      where: {
+        id: checklistItemId,
+      },
+    });
+  }
+
+  // Sort checklist items
+  const items = await prisma.widgetChecklistItem.findMany({
+    select: { id: true },
+    where: { checklist: { widgetId: widgetId } },
+  });
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    await prisma.widgetChecklistItem.update({
+      data: { position: i * 10 },
+      where: { id: item.id },
+    });
+  }
+
+  // Load new data with new position
+  newData =
+    (await prisma.widgetChecklistItem.findUnique({
+      where: { id: newData.id },
+    })) || newData;
+
+  await widgetRevalidate(dashboardId, sectionId, widgetId);
 
   return newData;
 }

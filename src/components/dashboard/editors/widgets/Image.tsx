@@ -7,11 +7,11 @@ import { widgetImageUpdate } from "@/utils/serverActions/widget";
 export function EditWidgetImage({
   dashboardId,
   sectionId,
-  data,
+  widgetData,
 }: {
   dashboardId: string;
   sectionId: string;
-  data: WidgetImage;
+  widgetData: WidgetImage;
 }): JSX.Element {
   return (
     <>
@@ -19,12 +19,12 @@ export function EditWidgetImage({
         name="url"
         label="Image URL"
         margin="dense"
-        defaultValue={data.url}
+        defaultValue={widgetData.url}
         onChange={async (e) =>
           await widgetImageUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )

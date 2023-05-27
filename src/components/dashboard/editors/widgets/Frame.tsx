@@ -7,11 +7,11 @@ import { widgetFrameUpdate } from "@/utils/serverActions/widget";
 export function EditWidgetFrame({
   dashboardId,
   sectionId,
-  data,
+  widgetData,
 }: {
   dashboardId: string;
   sectionId: string;
-  data: WidgetFrame;
+  widgetData: WidgetFrame;
 }): JSX.Element {
   return (
     <>
@@ -19,12 +19,12 @@ export function EditWidgetFrame({
         name="url"
         label="URL"
         margin="dense"
-        defaultValue={data.url || ""}
+        defaultValue={widgetData.url || ""}
         onChange={async (e) =>
           await widgetFrameUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )
@@ -34,12 +34,12 @@ export function EditWidgetFrame({
         name="height"
         label="Height"
         margin="dense"
-        defaultValue={data.height || ""}
+        defaultValue={widgetData.height || ""}
         onChange={async (e) =>
           await widgetFrameUpdate(
             dashboardId,
             sectionId,
-            data.widgetId,
+            widgetData.widgetId,
             e.target.name,
             e.target.value
           )
