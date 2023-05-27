@@ -13,7 +13,6 @@ import {
   CheckBoxRounded,
   AddRounded,
 } from "@mui/icons-material";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import type { WidgetChecklistModel, WidgetModel } from "@/types/widget.type";
@@ -23,12 +22,10 @@ function WidgetChecklistItem({
   dashboardId,
   item,
   sectionId,
-  handleDeleted,
 }: {
   dashboardId: string;
   item: WidgetChecklistItemModel;
   sectionId: string;
-  handleDeleted: () => void;
 }): JSX.Element {
   const { id, checklistWidgetId, content } = item;
   const [checked, setChecked] = useState<boolean>(item.checked);
@@ -78,7 +75,6 @@ function WidgetChecklistItem({
                     "id",
                     "DELETE"
                   );
-                  handleDeleted();
                 }}
                 edge="end"
               >
@@ -111,20 +107,18 @@ export function WidgetChecklist({
   sectionId: string;
   widget: WidgetModel<WidgetChecklistModel>;
 }): JSX.Element {
-  const router = useRouter();
+  const { id } = widget;
+  if (!widget.data) return <div>Widget data not found</div>;
+  const { items } = widget.data;
+
   return (
     <Grid2 container direction="column">
-      {widget.data.items.map((item: WidgetChecklistItemModel) => (
+      {items.map((item: WidgetChecklistItemModel) => (
         <WidgetChecklistItem
           key={item.id}
           dashboardId={dashboardId}
           item={item}
           sectionId={sectionId}
-          handleDeleted={() => {
-            // startTransition(() => {
-            //   router.refresh();
-            // });
-          }}
         />
       ))}
       <Grid2>
@@ -136,14 +130,11 @@ export function WidgetChecklist({
             await widgetChecklistUpdate(
               dashboardId,
               sectionId,
-              widget.id,
+              id,
               "",
               "content",
               ""
             );
-            // startTransition(() => {
-            //   router.refresh();
-            // });
           }}
         >
           <AddRounded />
