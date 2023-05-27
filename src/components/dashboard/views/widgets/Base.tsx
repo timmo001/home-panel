@@ -100,6 +100,7 @@ export function WidgetBase({
         <Dialog
           open
           fullWidth
+          maxWidth="xl"
           onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
         >
           {widget}
