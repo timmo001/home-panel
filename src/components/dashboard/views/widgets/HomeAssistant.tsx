@@ -13,13 +13,17 @@ import {
   STATES_OFF,
 } from "@/utils/homeAssistant/const";
 import { domainIcon } from "@/utils/homeAssistant/icons";
+import { ExpandedHomeAssistantAlarmControlPanel } from "./expanded/homeAssistant/AlarmControlPanel";
 import { ExpandedHomeAssistantCover } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Cover";
 import { primaryColorRgb } from "@/utils/theme";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
 import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 
-const DOMAINS_WITH_ACTIVATE_CONDITION = new Set(["cover"]);
+const DOMAINS_WITH_ACTIVATE_CONDITION = new Set([
+  "alarm_control_panel",
+  "cover",
+]);
 
 export function WidgetHomeAssistant({
   editing,
@@ -53,10 +57,16 @@ export function WidgetHomeAssistant({
     return homeAssistant.entities[entityId];
   }, [entityId, homeAssistant.entities]);
 
+  const domain = useMemo<string | undefined>(() => {
+    if (!entity) return;
+    return entity.entity_id.split(".")[0];
+  }, [entity]);
+
   const canTurnOnOff = useMemo<boolean>(() => {
     if (!homeAssistant.client || !entity) return false;
+    if (domain === "alarm_control_panel") return true;
     return homeAssistant.client.entityCanTurnOnOff(entity);
-  }, [entity, homeAssistant.client]);
+  }, [domain, entity, homeAssistant.client]);
 
   const clickable = useMemo<boolean>(() => {
     if (!homeAssistant.client || !entity) return false;
@@ -64,8 +74,7 @@ export function WidgetHomeAssistant({
   }, [canTurnOnOff, entity, homeAssistant.client]);
 
   const mdiIcon = useMemo<string>(() => {
-    if (!entity) return DEFAULT_DOMAIN_ICON;
-    const domain = entity.entity_id.split(".")[0];
+    if (!entity || !domain) return DEFAULT_DOMAIN_ICON;
     let icon = domainIcon(domain, entity, entity.state);
 
     if (entity.attributes?.icon) {
@@ -82,13 +91,12 @@ export function WidgetHomeAssistant({
       }
     }
     return icon;
-  }, [entity]);
+  }, [domain, entity]);
 
   const entityIsOn = useMemo<boolean>(() => {
-    if (!entity) return false;
-    const domain = entity.entity_id.split(".")[0];
+    if (!entity || !domain) return false;
     return DOMAINS_TOGGLE.has(domain) && !STATES_OFF.includes(entity.state);
-  }, [entity]);
+  }, [domain, entity]);
 
   const icon = useMemo<JSX.Element>(
     () => (
@@ -124,11 +132,12 @@ export function WidgetHomeAssistant({
   );
 
   const state = useMemo<JSX.Element | null>(() => {
-    if (!entity || !showState) return null;
-    const domain = entity.entity_id.split(".")[0];
+    if (!entity || !domain || !showState) return null;
 
     if (expanded && DOMAINS_WITH_ACTIVATE_CONDITION.has(domain)) {
       switch (domain) {
+        case "alarm_control_panel":
+          return <ExpandedHomeAssistantAlarmControlPanel entity={entity} />;
         case "cover":
           return <ExpandedHomeAssistantCover entity={entity} />;
         default:
@@ -193,6 +202,7 @@ export function WidgetHomeAssistant({
   }, [
     canTurnOnOff,
     clickable,
+    domain,
     editing,
     entity,
     entityIsOn,
