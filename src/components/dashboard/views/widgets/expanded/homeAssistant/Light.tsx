@@ -2,29 +2,23 @@
 import { HassEntity } from "home-assistant-js-websocket";
 import {
   IconButton,
+  Slider,
+  Stack,
+  styled,
   Typography,
   Unstable_Grid2 as Grid2,
-  Slider,
-  Box,
-  styled,
 } from "@mui/material";
-import {
-  BlueSlider,
-  GreenSlider,
-  RedSlider,
-  RGBSliderProvider,
-} from "@igloo_cloud/material-ui-color-sliders";
-import { mdiBrightness7, mdiPalette, mdiPower } from "@mdi/js";
 import { Icon } from "@mdi/react";
-import { useMemo, useState } from "react";
+import { mdiPower } from "@mdi/js";
+import { useMemo } from "react";
+import Moment from "react-moment";
 
 import { OFF_STATES, UNAVAILABLE_STATES } from "@/utils/homeAssistant";
 import { ON } from "@/utils/homeAssistant";
 import { primaryColorRgb } from "@/utils/theme";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
-import Moment from "react-moment";
 
-const BrightnessSlider = styled(Slider)({
+const LightSlider = styled(Slider)({
   height: 8,
   "& .MuiSlider-track": {
     border: "none",
@@ -44,7 +38,6 @@ const BrightnessSlider = styled(Slider)({
 });
 
 export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
-  const [colorMode, setColorMode] = useState<boolean>(false);
   const homeAssistant = useHomeAssistant();
 
   const disabled = useMemo<boolean>(
@@ -112,54 +105,78 @@ export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
               size={1.5}
             />
           </IconButton>
-          <IconButton onClick={() => setColorMode(!colorMode)}>
-            <Icon
-              color={isOn ? "currentColor" : "rgba(255, 255, 255, 0.5)"}
-              path={colorMode ? mdiBrightness7 : mdiPalette}
-              size={1.5}
-            />
-          </IconButton>
         </Grid2>
 
-        {colorMode ? (
-          <Box sx={{ margin: "1rem", width: "100%" }}>
-            <RGBSliderProvider
-              defaultValues={rgbColors}
-              onChange={(r: number, g: number, b: number) => {
-                console.log({ r, g, b });
-              }}
-            >
-              <RedSlider />
-              <GreenSlider />
-              <BlueSlider />
-            </RGBSliderProvider>
-          </Box>
-        ) : (
-          <Box sx={{ margin: "1rem", width: "100%" }}>
-            <BrightnessSlider
-              aria-label="Brightness"
-              defaultValue={brightness}
-              max={100}
-              valueLabelDisplay="auto"
-              sx={{
-                color: isOff
-                  ? "rgba(255, 255, 255, 0.5)"
-                  : isOn
-                  ? `rgb(${
-                      entity?.attributes?.rgb_color?.join(", ") ||
-                      primaryColorRgb
-                    })`
-                  : "currentColor",
-              }}
-              onChange={(_, value) => {
-                homeAssistant.client?.callService("light", "turn_on", {
-                  entity_id: entity.entity_id,
-                  brightness: Math.round((value as number) * 2.55),
-                });
-              }}
-            />
-          </Box>
-        )}
+        <Typography align="left" variant="h6" sx={{ width: "100%" }}>
+          Brightness
+        </Typography>
+        <LightSlider
+          aria-label="Brightness"
+          defaultValue={brightness}
+          max={100}
+          valueLabelDisplay="auto"
+          sx={{
+            color: isOff
+              ? "rgba(255, 255, 255, 0.5)"
+              : isOn
+              ? `rgb(${
+                  entity?.attributes?.rgb_color?.join(", ") || primaryColorRgb
+                })`
+              : "currentColor",
+          }}
+          onChange={(_, value) => {
+            homeAssistant.client?.callService("light", "turn_on", {
+              entity_id: entity.entity_id,
+              brightness: Math.round((value as number) * 2.55),
+            });
+          }}
+        />
+        <Typography
+          align="left"
+          variant="h6"
+          sx={{ marginTop: "1rem", width: "100%" }}
+        >
+          Color
+        </Typography>
+        <LightSlider
+          aria-label="Red"
+          defaultValue={rgbColors[0]}
+          max={255}
+          valueLabelDisplay="auto"
+          sx={{ color: "red" }}
+          onChange={(_, value) => {
+            homeAssistant.client?.callService("light", "turn_on", {
+              entity_id: entity.entity_id,
+              rgb_color: [value, rgbColors[1], rgbColors[2]],
+            });
+          }}
+        />
+        <LightSlider
+          aria-label="Green"
+          defaultValue={rgbColors[1]}
+          max={255}
+          valueLabelDisplay="auto"
+          sx={{ color: "green" }}
+          onChange={(_, value) => {
+            homeAssistant.client?.callService("light", "turn_on", {
+              entity_id: entity.entity_id,
+              rgb_color: [rgbColors[0], value, rgbColors[2]],
+            });
+          }}
+        />
+        <LightSlider
+          aria-label="Blue"
+          defaultValue={rgbColors[2]}
+          max={255}
+          valueLabelDisplay="auto"
+          sx={{ color: "blue" }}
+          onChange={(_, value) => {
+            homeAssistant.client?.callService("light", "turn_on", {
+              entity_id: entity.entity_id,
+              rgb_color: [rgbColors[0], rgbColors[1], value],
+            });
+          }}
+        />
       </Grid2>
     </>
   );
