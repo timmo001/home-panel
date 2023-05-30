@@ -9,10 +9,10 @@ import {
   styled,
 } from "@mui/material";
 import {
-  HSLSliderProvider,
-  HueSlider,
-  SaturationSlider,
-  LightnessSlider,
+  BlueSlider,
+  GreenSlider,
+  RedSlider,
+  RGBSliderProvider,
 } from "@igloo_cloud/material-ui-color-sliders";
 import { mdiBrightness7, mdiPalette, mdiPower } from "@mdi/js";
 import { Icon } from "@mdi/react";
@@ -62,6 +62,11 @@ export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
   const brightness = useMemo<number>(
     () => Math.round((entity.attributes.brightness / 255) * 100) || 0,
     [entity.attributes?.brightness]
+  );
+
+  const rgbColors = useMemo<number[]>(
+    () => entity.attributes.rgb_color || [0, 0, 0],
+    [entity.attributes?.rgb_color]
   );
 
   return (
@@ -118,11 +123,16 @@ export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
 
         {colorMode ? (
           <Box sx={{ margin: "1rem", width: "100%" }}>
-            <HSLSliderProvider>
-              <HueSlider />
-              <SaturationSlider />
-              <LightnessSlider />
-            </HSLSliderProvider>
+            <RGBSliderProvider
+              defaultValues={rgbColors}
+              onChange={(r: number, g: number, b: number) => {
+                console.log({ r, g, b });
+              }}
+            >
+              <RedSlider />
+              <GreenSlider />
+              <BlueSlider />
+            </RGBSliderProvider>
           </Box>
         ) : (
           <Box sx={{ margin: "1rem", width: "100%" }}>
