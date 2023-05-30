@@ -2034,10 +2034,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mui-chips-input@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/mui-chips-input/-/mui-chips-input-2.0.1.tgz#7aa59d3bab391f61839e7ed0e42d37ea59c3a942"
-  integrity sha512-VDijB+owLJm5TAJQ3HDnEDc8qKogO0p+VmiPfdnoJ2eYbKcfP7HsF7baquaqMl72p17+kfIv3EGJpwYRwNiIMQ==
+mui-chips-input@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/mui-chips-input/-/mui-chips-input-2.0.2.tgz#04d97479207b2361e8474e387646b91ef104ca3c"
+  integrity sha512-1k1Er7GnFhOC4oz733Tcg0lrhm/Kh0Cd/6NabJQ/mhrk9Xz9SkndL+Zfb43bkvDXHVYiHTuFgF0wA2ya86gTqQ==
   dependencies:
     "@emotion/react" "^11.5.0"
     "@emotion/styled" "^11.3.0"
