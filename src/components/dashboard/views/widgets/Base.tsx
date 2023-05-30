@@ -99,7 +99,6 @@ export function WidgetBase({
       {expanded && (
         <Dialog
           open
-          fullWidth
           maxWidth="xl"
           onClose={(_) => handleInteraction(WidgetAction.ToggleExpanded)}
         >
