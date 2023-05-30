@@ -14,6 +14,7 @@ import {
 } from "@/utils/homeAssistant/const";
 import { domainIcon } from "@/utils/homeAssistant/icons";
 import { ExpandedHomeAssistantAlarmControlPanel } from "./expanded/homeAssistant/AlarmControlPanel";
+import { ExpandedHomeAssistantClimate } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Climate";
 import { ExpandedHomeAssistantCover } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Cover";
 import { ExpandedHomeAssistantLight } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Light";
 import { primaryColorRgb } from "@/utils/theme";
@@ -23,6 +24,7 @@ import { WidgetImage } from "@/components/dashboard/views/widgets/Image";
 
 const DOMAINS_WITH_ACTIVATE_CONDITION = new Set([
   "alarm_control_panel",
+  "climate",
   "cover",
 ]);
 const DOMAINS_WITH_MORE_INFO = new Set(["cover", "light"]);
@@ -140,6 +142,8 @@ export function WidgetHomeAssistant({
       switch (domain) {
         case "alarm_control_panel":
           return <ExpandedHomeAssistantAlarmControlPanel entity={entity} />;
+        case "climate":
+          return <ExpandedHomeAssistantClimate entity={entity} />;
         case "cover":
           return <ExpandedHomeAssistantCover entity={entity} />;
         case "light":
