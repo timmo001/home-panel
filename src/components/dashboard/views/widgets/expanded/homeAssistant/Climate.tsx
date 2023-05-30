@@ -11,17 +11,14 @@ import { useMemo } from "react";
 
 import {
   CLIMATE_HVAC_ACTION_ICONS,
-  CLIMATE_MODE_FEATURES,
   ClimateEntity,
   ClimateEntityFeature,
-  HVAC_MODE_TO_ACTION,
   HvacAction,
-  HvacMode,
 } from "@/utils/homeAssistant/climate";
 import {
-  OFF_STATES,
-  UNAVAILABLE_STATES,
   entitySupportsFeature,
+  ON,
+  UNAVAILABLE_STATES,
 } from "@/utils/homeAssistant";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { mdiPower } from "@mdi/js";
@@ -58,11 +55,6 @@ export function ExpandedHomeAssistantClimate({
   );
 
   const isOn = useMemo<boolean>(() => entity.state === ON, [entity.state]);
-
-  const isOff = useMemo<boolean>(
-    () => OFF_STATES.has(entity.state),
-    [entity.state]
-  );
 
   const supportsTargetTemperature = useMemo<boolean>(
     () =>
