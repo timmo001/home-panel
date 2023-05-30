@@ -72,7 +72,7 @@ export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
         alignItems="center"
         justifyContent="center"
         direction="column"
-        sx={{ margin: "1rem" }}
+        sx={{ margin: "1rem 2rem" }}
       >
         <Typography variant="h3">
           {isOff
@@ -92,7 +92,7 @@ export function ExpandedHomeAssistantLight({ entity }: { entity: HassEntity }) {
           justifyContent="center"
           direction="row"
           spacing={2}
-          sx={{ margin: "1rem" }}
+          sx={{ margin: "1rem", width: "420px" }}
         >
           <IconButton
             disabled={disabled}
