@@ -27,8 +27,8 @@ export const UNKNOWN = "unknown";
 export const ON = "on";
 export const OFF = "off";
 
-export const UNAVAILABLE_STATES = [UNAVAILABLE, UNKNOWN] as const;
-export const OFF_STATES = [UNAVAILABLE, UNKNOWN, OFF] as const;
+export const UNAVAILABLE_STATES = new Set([UNAVAILABLE, UNKNOWN]);
+export const OFF_STATES = new Set([UNAVAILABLE, UNKNOWN, OFF]);
 
 export function getToggleServiceFromDomain(
   domain: string,

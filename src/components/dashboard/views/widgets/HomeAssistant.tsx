@@ -15,6 +15,7 @@ import {
 import { domainIcon } from "@/utils/homeAssistant/icons";
 import { ExpandedHomeAssistantAlarmControlPanel } from "./expanded/homeAssistant/AlarmControlPanel";
 import { ExpandedHomeAssistantCover } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Cover";
+import { ExpandedHomeAssistantLight } from "@/components/dashboard/views/widgets/expanded/homeAssistant/Light";
 import { primaryColorRgb } from "@/utils/theme";
 import { useHomeAssistant } from "@/providers/HomeAssistantProvider";
 import { WidgetAction } from "@/types/widget.type";
@@ -24,6 +25,7 @@ const DOMAINS_WITH_ACTIVATE_CONDITION = new Set([
   "alarm_control_panel",
   "cover",
 ]);
+const DOMAINS_WITH_MORE_INFO = new Set(["cover", "light"]);
 
 export function WidgetHomeAssistant({
   editing,
@@ -134,12 +136,14 @@ export function WidgetHomeAssistant({
   const state = useMemo<JSX.Element | null>(() => {
     if (!entity || !domain || !showState) return null;
 
-    if (expanded && DOMAINS_WITH_ACTIVATE_CONDITION.has(domain)) {
+    if (expanded && DOMAINS_WITH_MORE_INFO.has(domain)) {
       switch (domain) {
         case "alarm_control_panel":
           return <ExpandedHomeAssistantAlarmControlPanel entity={entity} />;
         case "cover":
           return <ExpandedHomeAssistantCover entity={entity} />;
+        case "light":
+          return <ExpandedHomeAssistantLight entity={entity} />;
         default:
           return null;
       }
