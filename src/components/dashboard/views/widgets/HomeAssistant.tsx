@@ -27,7 +27,7 @@ const DOMAINS_WITH_ACTIVATE_CONDITION = new Set([
   "climate",
   "cover",
 ]);
-const DOMAINS_WITH_MORE_INFO = new Set(["cover", "light"]);
+const DOMAINS_WITH_MORE_INFO = new Set(["cover", "climate", "light"]);
 
 export function WidgetHomeAssistant({
   editing,
