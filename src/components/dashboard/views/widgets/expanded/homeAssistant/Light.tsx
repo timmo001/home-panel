@@ -1,9 +1,8 @@
 "use client";
-import { HassEntity } from "home-assistant-js-websocket";
+import type { HassEntity } from "home-assistant-js-websocket";
 import {
   IconButton,
   Slider,
-  Stack,
   styled,
   Typography,
   Unstable_Grid2 as Grid2,
