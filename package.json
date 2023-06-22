@@ -34,7 +34,7 @@
     "materialdesign-js": "1.0.0",
     "moment": "2.29.4",
     "mui-chips-input": "2.0.2",
-    "next": "13.4.6",
+    "next": "13.4.7",
     "next-auth": "4.22.1",
     "prisma": "4.16.0",
     "react": "18.2.0",
