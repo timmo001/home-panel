@@ -1610,10 +1610,10 @@ hoist-non-react-statics@^3.3.1:
   dependencies:
     react-is "^16.7.0"
 
-home-assistant-js-websocket@8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-8.1.0.tgz#648d67b10c0e79d132136a929744cf559836235e"
-  integrity sha512-wj+WtdozkpuZKdl7QcxrVMzjfg5vNP/Apk+cQpRkBQZFwm4dt8sPoK2Dwr456RECa8ckLzseE1JelkhKaDxkNQ==
+home-assistant-js-websocket@8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-8.2.0.tgz#3505bf004cc3026c5d0cfdae5c031a44b0fcb01b"
+  integrity sha512-B163iuvC1hsObkbSXm89JfjjOguyQXSQeQsGf6KQblUj9QwMgFkQt13TiCYjeFFTMzhQ8Qj3/gKx/6MnSeYUqA==
 
 human-signals@^2.1.0:
   version "2.1.0"
