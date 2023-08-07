@@ -33,7 +33,7 @@
     "home-assistant-js-websocket": "8.2.0",
     "materialdesign-js": "1.0.0",
     "moment": "2.29.4",
-    "mui-chips-input": "2.0.2",
+    "mui-chips-input": "2.1.2",
     "next": "13.4.12",
     "next-auth": "4.22.3",
     "prisma": "5.1.1",
