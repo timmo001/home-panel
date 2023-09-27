@@ -19,7 +19,7 @@
     "@emotion/styled": "11.11.0",
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
-    "@mui/icons-material": "5.14.9",
+    "@mui/icons-material": "5.14.11",
     "@mui/lab": "5.0.0-alpha.145",
     "@mui/material": "5.14.10",
     "@next-auth/prisma-adapter": "1.0.7",
