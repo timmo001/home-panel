@@ -36,7 +36,7 @@
     "mui-chips-input": "2.1.3",
     "next": "13.5.4",
     "next-auth": "4.23.2",
-    "prisma": "5.4.1",
+    "prisma": "5.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-moment": "1.1.3",
