@@ -1,7 +1,7 @@
 {
   "ignorePatterns": [
     {
-      "pattern": "^contact@timmo"
+      "pattern": "^aidan@timmo"
     },
     {
       "pattern": "https://home-panel.timmo.dev"
