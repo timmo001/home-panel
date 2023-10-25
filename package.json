@@ -30,7 +30,7 @@
     "encoding": "0.1.13",
     "eslint": "8.52.0",
     "eslint-config-next": "13.5.6",
-    "home-assistant-js-websocket": "8.2.0",
+    "home-assistant-js-websocket": "9.1.0",
     "materialdesign-js": "1.0.0",
     "moment": "2.29.4",
     "mui-chips-input": "2.1.3",
