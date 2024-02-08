@@ -26,7 +26,7 @@
     "@prisma/client": "5.9.1",
     "@types/node": "20.11.16",
     "@types/react": "18.2.55",
-    "@types/react-dom": "18.2.18",
+    "@types/react-dom": "18.2.19",
     "encoding": "0.1.13",
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
