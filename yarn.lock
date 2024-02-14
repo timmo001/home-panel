@@ -2352,10 +2352,10 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
 
-mui-chips-input@2.1.3:
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/mui-chips-input/-/mui-chips-input-2.1.3.tgz#bbec68e8ca3496316f03eda266835158ef120de5"
-  integrity sha512-T8NJ/2PA2WKEdlddiem0/w53w7d6TPP4fb1DhtUondLIIgzn1Z4opu+S5g/XeanrkXhpdfEObwGQGPTRQQ2JYA==
+mui-chips-input@2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/mui-chips-input/-/mui-chips-input-2.1.4.tgz#4c2e37b5f40cfffbbecef786c5dc6b6caa07c516"
+  integrity sha512-ysgY53fMO5q79znjBh/hW9TSy7c+nRs7sq7eEId8cdihimkDlQ40YaVzHvKhgUsU0McZ8OWE3guchtVdIl8HgA==
 
 nanoid@^3.3.6:
   version "3.3.6"
