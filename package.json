@@ -15,7 +15,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "11.11.3",
+    "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.0",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",
