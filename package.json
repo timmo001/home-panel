@@ -29,7 +29,7 @@
     "@types/react-dom": "18.2.25",
     "encoding": "0.1.13",
     "eslint": "8.56.0",
-    "eslint-config-next": "14.2.0",
+    "eslint-config-next": "14.2.4",
     "home-assistant-js-websocket": "9.2.1",
     "materialdesign-js": "1.0.0",
     "moment": "2.30.1",
